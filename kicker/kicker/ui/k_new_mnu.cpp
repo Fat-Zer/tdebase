@@ -65,7 +65,7 @@
 #include <krun.h>
 #include <kmimetype.h>
 #include <tderecentdocument.h>
-#include <kcompletionbox.h>
+#include <tdecompletionbox.h>
 #include <kurifilter.h>
 #include <kbookmarkmanager.h>
 #include <kbookmark.h>

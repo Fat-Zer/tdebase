@@ -21,7 +21,7 @@
 #include <tqstyle.h>
 #include <kapplication.h>
 #include <tdeconfig.h>
-#include <kcompletionbox.h>
+#include <tdecompletionbox.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kicontheme.h>

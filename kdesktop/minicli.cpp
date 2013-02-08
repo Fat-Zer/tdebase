@@ -67,7 +67,7 @@
 #include <kstdguiitem.h>
 #include <kmimetype.h>
 #include <kurifilter.h>
-#include <kcompletionbox.h>
+#include <tdecompletionbox.h>
 
 #include "minicli.moc"
 #include "minicli_ui.h"
