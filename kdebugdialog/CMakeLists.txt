@@ -25,7 +25,7 @@ link_directories(
 
 tde_add_executable( kdebugdialog AUTOMOC
   SOURCES
-    main.cpp kabstractdebugdialog.cpp kdebugdialog.cpp
+    main.cpp kabstrackbugdialog.cpp kdebugdialog.cpp
     tdelistdebugdialog.cpp
   LINK tdeui-shared
   DESTINATION ${BIN_INSTALL_DIR}

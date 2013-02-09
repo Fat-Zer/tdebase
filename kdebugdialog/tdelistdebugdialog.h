@@ -20,7 +20,7 @@
 #ifndef KLISTDEBUGDIALOG__H
 #define KLISTDEBUGDIALOG__H
 
-#include "kabstractdebugdialog.h"
+#include "kabstrackbugdialog.h"
 #include <tqcheckbox.h>
 #include <tqptrlist.h>
 #include <tqstringlist.h>

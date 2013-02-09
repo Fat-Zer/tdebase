@@ -19,7 +19,7 @@
 #ifndef _KDEBUGDIALOG
 #define _KDEBUGDIALOG
 
-#include "kabstractdebugdialog.h"
+#include "kabstrackbugdialog.h"
 
 class TQLineEdit;
 class TQComboBox;

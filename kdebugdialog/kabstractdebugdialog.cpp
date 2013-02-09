@@ -17,7 +17,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "kabstractdebugdialog.h"
+#include "kabstrackbugdialog.h"
 #include <tdeconfig.h>
 #include <kpushbutton.h>
 #include <tqlayout.h>
@@ -82,4 +82,4 @@ void KAbstractDebugDialog::slotApply()
   pConfig->sync();
 }
 
-#include "kabstractdebugdialog.moc"
+#include "kabstrackbugdialog.moc"
