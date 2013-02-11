@@ -137,7 +137,7 @@ void AppletTab::load( bool useDefaults )
         }
     }
   else
-      l_trusted << "clockapplet" << "ksystemtrayapplet" << "krunapplet" << "quictdelauncher"
+      l_trusted << "clockapplet" << "ksystemtrayapplet" << "krunapplet" << "quicklauncher"
                 << "kminipagerapplet" << "ktaskbarapplet" << "eyesapplet" << "kmixapplet";
 
   for ( TQStringList::Iterator it = available.begin(); it != available.end(); ++it )

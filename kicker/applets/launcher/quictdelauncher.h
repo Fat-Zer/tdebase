@@ -21,8 +21,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#ifndef __quictdelauncher_h__
-#define __quictdelauncher_h__
+#ifndef __quicklauncher_h__
+#define __quicklauncher_h__
 
 #include <dcopobject.h>
 #include <tqimage.h>

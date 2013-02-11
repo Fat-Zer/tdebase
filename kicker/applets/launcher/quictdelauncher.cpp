@@ -52,7 +52,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "configdlg.h"
 #include "popularity.h"
-#include "quictdelauncher.h"
+#include "quicklauncher.h"
 #include "quickbutton.h"
 #include "quickaddappsmenu.h"
 #include "quickbuttongroup.h"
@@ -71,10 +71,10 @@ extern "C"
 {
     KDE_EXPORT KPanelApplet* init(TQWidget *parent, const TQString& configFile)
     {
-        TDEGlobal::locale()->insertCatalogue("quictdelauncher");
+        TDEGlobal::locale()->insertCatalogue("quicklauncher");
         return new QuickLauncher(configFile, KPanelApplet::Normal,
                                  KPanelApplet::Preferences,
-                                 parent, "quictdelauncher");
+                                 parent, "quicklauncher");
     }
 }
 
@@ -107,7 +107,7 @@ QuickLauncher::QuickLauncher(const TQString& configFile, Type type, int actions,
     m_oldButtons = 0;
     m_dragButtons = 0;
 
-    m_configAction = new TDEAction(i18n("Configure Quictdelauncher..."), "configure", TDEShortcut(),
+    m_configAction = new TDEAction(i18n("Configure Quicklauncher..."), "configure", TDEShortcut(),
         TQT_TQOBJECT(this), TQT_SLOT(slotConfigure()), TQT_TQOBJECT(this));
 
     m_saveTimer = new TQTimer(this, "m_saveTimer");
@@ -135,7 +135,7 @@ QuickLauncher::QuickLauncher(const TQString& configFile, Type type, int actions,
         "QuickLauncherApplet",
         "serviceStartedByStorageId(TQString,TQString)",
         false);
-    kdDebug() << "Quictdelauncher registered DCOP signal" << endl;
+    kdDebug() << "Quicklauncher registered DCOP signal" << endl;
 }
 
 
@@ -143,7 +143,7 @@ QuickLauncher::QuickLauncher(const TQString& configFile, Type type, int actions,
 
 QuickLauncher::~QuickLauncher()
 {
-    TDEGlobal::locale()->removeCatalogue("quictdelauncher");
+    TDEGlobal::locale()->removeCatalogue("quicklauncher");
     setCustomMenu(0);
     delete m_popup;
     delete m_appletPopup;
@@ -496,7 +496,7 @@ void QuickLauncher::addAppBeforeManually(TQString url, TQString sender)
 
 void QuickLauncher::about()
 {
-    TDEAboutData about("quictdelauncher", I18N_NOOP("Quick Launcher"), "2.0",
+    TDEAboutData about("quicklauncher", I18N_NOOP("Quick Launcher"), "2.0",
                      I18N_NOOP("A simple application launcher"),
                      TDEAboutData::License_GPL_V2, 
                      "(C) 2000 Bill Nagel\n(C) 2004 Dan Bullok\n(C) 2005 Fred Schaettgen");
@@ -949,7 +949,7 @@ void QuickLauncher::serviceStartedByStorageId(TQString /*starter*/, TQString sto
     QuickURL url = QuickURL(locate("apps", service->desktopEntryPath()));
     TQString desktopMenuId(url.menuId());
     kdDebug() << "storageId=" << storageId << " desktopURL=" << desktopMenuId << endl;
-    // A service was started somwhere else. If the quictdelauncher contains
+    // A service was started somwhere else. If the quicklauncher contains
     // this service too, we flash the icon
     QuickButton *startedButton = 0;
     std::set<TQString> buttonIdSet;
@@ -1127,4 +1127,4 @@ void QuickLauncher::positionChange(Position)
 }
 
 
-#include "quictdelauncher.moc"
+#include "quicklauncher.moc"

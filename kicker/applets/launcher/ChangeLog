@@ -4,9 +4,9 @@
 	* Empty panel now has size>0, so user can still drop icons on it.
 	* Fixed gcc 3.4 incompatibilities in EasyVector
 	* Fixed Drag and Drop Bugs :
-	  * Crash when non-url dropped on quictdelauncher
-	  * Crash panel button dropped on quictdelauncher
-	  * Able to drop objects when quictdelauncher is locked
+	  * Crash when non-url dropped on quicklauncher
+	  * Crash panel button dropped on quicklauncher
+	  * Able to drop objects when quicklauncher is locked
 	* Add application context menu now inserts new app at current location
  	
 2004-06-14   Dan Bullok <dan.kde@bullok.com>
@@ -28,7 +28,7 @@
 	* Spouts tons of debugging info to kdDebug (for now).
 	
 2004-06-12   Dan Bullok <dan.kde@bullok.com>
-	* Fixed bug #75351:  Tooltips change to filenames after rearranging applications in quictdelauncher.
+	* Fixed bug #75351:  Tooltips change to filenames after rearranging applications in quicklauncher.
 	* Moved the URL->(menuID,service,kurl) functionality from the QuickButton constructor to its own class: QuickURL.  Very similar code is used elsewhere in kicker, and should eventually be merged.
 	* Renamed some methods in QuickButton (getId -> menuId, getURL -> url) This matches the predominant KDE naming style.
 	* Groundwork laid for variable-sized buttons.

@@ -26,7 +26,7 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES quictdelauncher.desktop DESTINATION ${DATA_INSTALL_DIR}/kicker/applets )
+install( FILES quicklauncher.desktop DESTINATION ${DATA_INSTALL_DIR}/kicker/applets )
 install( FILES launcherapplet.kcfg DESTINATION ${KCFG_INSTALL_DIR} )
 
 
@@ -37,7 +37,7 @@ install( FILES launcherapplet.kcfg DESTINATION ${KCFG_INSTALL_DIR} )
 
 tde_add_kpart( launcher_panelapplet AUTOMOC
   SOURCES
-    quictdelauncher.skel quictdelauncher.cpp quickbutton.cpp
+    quicklauncher.skel quicklauncher.cpp quickbutton.cpp
     quickaddappsmenu.cpp flowgridmanager.cpp popularity.cpp
     configdlgbase.ui prefs.kcfgc configdlg.cpp
   LINK
