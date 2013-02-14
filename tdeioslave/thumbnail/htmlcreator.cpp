@@ -22,7 +22,7 @@
 #include <tqpixmap.h>
 #include <tqimage.h>
 #include <tqpainter.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdehtml_part.h>
 
 #include "htmlcreator.h"

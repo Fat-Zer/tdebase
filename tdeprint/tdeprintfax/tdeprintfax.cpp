@@ -33,7 +33,7 @@
 #include <tqcombobox.h>
 #include <tqtooltip.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstdaction.h>
 #include <kmenubar.h>
 #include <tdetoolbar.h>

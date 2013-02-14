@@ -22,7 +22,7 @@
 #include <tqradiobutton.h>
 #include <tqtabwidget.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kcolorbutton.h>
 #include <tdeconfig.h>
 #include <kgenericfactory.h>

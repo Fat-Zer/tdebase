@@ -16,7 +16,7 @@
 
 #include "app.h"
 
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <tdeconfig.h>
 #include <klocale.h>
 

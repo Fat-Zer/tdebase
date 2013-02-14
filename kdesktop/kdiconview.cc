@@ -24,7 +24,7 @@
 
 #include <tdeio/paste.h>
 #include <tdeaccel.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcolordrag.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>

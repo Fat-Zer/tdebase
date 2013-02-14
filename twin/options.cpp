@@ -15,7 +15,7 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #include <tqpalette.h>
 #include <tqpixmap.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>

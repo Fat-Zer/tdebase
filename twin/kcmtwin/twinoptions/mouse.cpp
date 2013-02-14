@@ -30,7 +30,7 @@
 
 #include <dcopclient.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdialog.h>
 #include <kglobalsettings.h>

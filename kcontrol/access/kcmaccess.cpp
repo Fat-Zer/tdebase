@@ -27,8 +27,8 @@
 #include <kstandarddirs.h>
 #include <kcolorbutton.h>
 #include <tdefiledialog.h>
-#include <kapplication.h>
-#include <kaboutdata.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
 #include <tdeshortcut.h>
 #include <kkeynative.h>
 #include <knotifydialog.h>

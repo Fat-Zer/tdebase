@@ -45,9 +45,9 @@
 
 #include <dcopclient.h>
 #include <kinstance.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tdeaction.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kdebug.h>
 #include <kdialogbase.h>
 #include <kdiroperator.h>

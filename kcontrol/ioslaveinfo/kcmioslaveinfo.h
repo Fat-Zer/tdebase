@@ -27,7 +27,7 @@
 #include <tqlistbox.h>
 #include <tqstring.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tdecmodule.h>
 #include <tdeio/job.h>
 #include <tdelistbox.h>

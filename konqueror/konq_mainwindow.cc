@@ -68,7 +68,7 @@
 #include <tqwhatsthis.h>
 
 #include <dcopclient.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kbookmarkbar.h>
 #include <kbookmarkmenu.h>
 #include <kcmultidialog.h>

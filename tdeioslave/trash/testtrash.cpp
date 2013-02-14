@@ -28,11 +28,11 @@
 
 #include <kurl.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeio/netaccess.h>
 #include <tdeio/job.h>
 #include <kdebug.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 
 #include <tqdir.h>
 #include <tqfileinfo.h>

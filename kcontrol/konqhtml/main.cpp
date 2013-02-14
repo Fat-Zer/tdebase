@@ -25,7 +25,7 @@
 
 #include <unistd.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <tqtabwidget.h>
 #include <tqlayout.h>
@@ -38,7 +38,7 @@
 #include "filteropts.h"
 
 #include "main.h"
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include "main.moc"
 
 extern "C"

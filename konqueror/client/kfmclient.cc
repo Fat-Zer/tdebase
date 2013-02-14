@@ -26,7 +26,7 @@
 #include <tqdir.h>
 
 #include <tdeio/job.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kpropertiesdialog.h>
 #include <klocale.h>
 #include <ktrader.h>

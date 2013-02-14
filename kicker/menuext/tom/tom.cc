@@ -34,7 +34,7 @@ using namespace std;
 #include <tqfile.h>
 
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcombobox.h>
 #include <kdialog.h>
 #include <kglobal.h>

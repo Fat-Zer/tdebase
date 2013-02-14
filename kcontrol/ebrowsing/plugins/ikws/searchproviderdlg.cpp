@@ -21,7 +21,7 @@
 #include <tqpushbutton.h>
 #include <tqwhatsthis.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kcharsets.h>

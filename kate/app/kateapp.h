@@ -22,7 +22,7 @@
 
 #include "katemain.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <tqvaluelist.h>
 

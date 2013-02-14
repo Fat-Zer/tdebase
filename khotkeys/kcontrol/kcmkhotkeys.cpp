@@ -23,11 +23,11 @@
 #include <tqsplitter.h>
 
 #include <tdecmodule.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <kdebug.h>
 #include <kmessagebox.h>

@@ -33,7 +33,7 @@
 #include <kmessagebox.h>
 #include <kprocess.h>
 #include <kstandarddirs.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 
 #if defined Q_WS_X11 && !defined K_WS_QTONLY
 #include <X11/Xlib.h>

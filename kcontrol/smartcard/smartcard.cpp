@@ -27,8 +27,8 @@
 
 #include <dcopclient.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <kcarddb.h>
 #include <kcardfactory.h>
 #include <kcardgsm_impl.h>

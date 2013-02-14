@@ -13,7 +13,7 @@
 #include <kstatusbar.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
-#include <kaboutapplication.h>
+#include <tdeaboutapplication.h>
 #include <kstandarddirs.h>
 
 #include "kftabdlg.h"

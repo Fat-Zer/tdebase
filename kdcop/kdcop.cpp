@@ -3,10 +3,10 @@
  *
  * Licensed under the Artistic License.
  */
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 
 #include "kdcopwindow.h"
 

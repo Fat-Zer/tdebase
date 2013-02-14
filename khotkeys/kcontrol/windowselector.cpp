@@ -20,7 +20,7 @@
 
 #include <tqcursor.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <X11/Xlib.h>
 #include <fixx11h.h>
 

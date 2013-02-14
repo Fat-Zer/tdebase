@@ -26,7 +26,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeshortcut.h>
 #include <tdeconfig.h>
 #include <tdeshortcutlist.h>

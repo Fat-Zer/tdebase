@@ -59,7 +59,7 @@
 #include <tqmemarray.h>
 #include <tqtimer.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <krootpixmap.h>
 #include <kpixmapio.h>

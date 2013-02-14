@@ -15,7 +15,7 @@
 #include <tqlayout.h>
 #include <tqtabwidget.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tdecmodule.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>

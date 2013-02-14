@@ -25,7 +25,7 @@
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kurllabel.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdefiledialog.h>
 #include <kurlrequester.h>
 #include <klineedit.h>

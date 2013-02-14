@@ -28,7 +28,7 @@
 #include <kpassdlg.h>
 #include <kcombobox.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <tqlabel.h>
 #include <ktextedit.h>

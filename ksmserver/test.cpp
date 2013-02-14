@@ -1,7 +1,7 @@
 #include "shutdowndlg.h"
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <kiconloader.h>
 
 int

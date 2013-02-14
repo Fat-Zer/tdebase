@@ -23,7 +23,7 @@
 #include "konq_settings.h"
 
 #include <tdeio/paste.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeaction.h>
 #include <kdatastream.h>
 #include <kdebug.h>

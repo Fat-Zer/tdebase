@@ -25,7 +25,7 @@
 
 #include <tdefileivi.h>
 #include <tdefileitem.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdirlister.h>
 #include <kstandarddirs.h>
 #include <kiconloader.h>

@@ -31,7 +31,7 @@
 #include <kmimetype.h>
 #include <kmountpoint.h>
 #include <kmessagebox.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kprotocolinfo.h>
 
 #include "dialog.h"

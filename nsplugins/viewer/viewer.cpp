@@ -28,8 +28,8 @@
 #include "nsplugin.h"
 
 #include <dcopclient.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>

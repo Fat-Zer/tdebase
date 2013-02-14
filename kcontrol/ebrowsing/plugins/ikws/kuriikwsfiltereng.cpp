@@ -32,7 +32,7 @@
 #include <kurl.h>
 #include <kdebug.h>
 #include <tdeconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <kprotocolinfo.h>
 #include <ksimpleconfig.h>

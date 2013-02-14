@@ -40,7 +40,7 @@
 #include <tqpainter.h>
 #include <tqpaintdevicemetrics.h>
 #include <tqsettings.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kgenericfactory.h>
 #include <kdiroperator.h>
 #include <kprinter.h>
@@ -53,8 +53,8 @@
 #include <tdestdaccel.h>
 #include <tdefiledialog.h>
 #include <kmessagebox.h>
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 #include <tdeio/job.h>
 #include <tdeio/netaccess.h>
 #include <kdirlister.h>

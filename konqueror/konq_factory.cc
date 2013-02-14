@@ -26,7 +26,7 @@
 #include <konq_settings.h>
 #include <konq_mainwindow.h>
 #include <kdebug.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 

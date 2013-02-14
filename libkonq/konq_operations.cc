@@ -38,7 +38,7 @@
 // For doDrop
 #include <tqdir.h>//first
 #include <assert.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kipc.h>
 #include <kdebug.h>
 #include <tdefileitem.h>

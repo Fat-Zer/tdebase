@@ -9,7 +9,7 @@
 #include <tqtimer.h>
 
 #include <tdecmodule.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <config.h>
 
 #ifdef HAVE_LONG_LONG

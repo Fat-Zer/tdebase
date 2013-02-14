@@ -47,7 +47,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <twin.h>
 #include <klocale.h>
 #include <kglobalsettings.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <netwm.h>
 #include <fixx11h.h>
 #include <twinmodule.h>

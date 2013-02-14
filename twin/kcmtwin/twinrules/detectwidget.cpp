@@ -18,7 +18,7 @@
 
 #include "detectwidget.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <twin.h>

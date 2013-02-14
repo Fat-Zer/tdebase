@@ -30,11 +30,11 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kglobal.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kdialog.h>
 #include <kstandarddirs.h>
 #include <kprocess.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <ktempfile.h>
 #include <kurlrequester.h>

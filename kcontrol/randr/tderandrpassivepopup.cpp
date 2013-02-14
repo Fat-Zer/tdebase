@@ -18,7 +18,7 @@
 
 #include "tderandrpassivepopup.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 // this class is just like KPassivePopup, but it keeps track of the widget
 // it's supposed to be positioned next to, and adjust its position if that

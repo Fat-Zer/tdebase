@@ -12,7 +12,7 @@
 #ifndef __OBJKSTHEME_H__
 #define __OBJKSTHEME_H__
 
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 
 #include <tqstring.h>
 #include <tqstringlist.h>

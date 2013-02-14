@@ -42,7 +42,7 @@
 #include <kdialogbase.h>
 #include <kmimetype.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <twin.h>
 #include <kemailsettings.h>
 #include <kdebug.h>

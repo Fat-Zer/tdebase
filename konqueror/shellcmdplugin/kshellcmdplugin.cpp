@@ -21,7 +21,7 @@
 #include <kmessagebox.h>
 #include <konq_dirpart.h>
 #include <kprocess.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include "kshellcmddialog.h"
 #include <kgenericfactory.h>
 #include <tdeio/netaccess.h>

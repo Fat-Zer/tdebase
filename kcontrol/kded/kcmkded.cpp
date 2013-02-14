@@ -27,8 +27,8 @@
 #include <dcopclient.h>
 #include <dcopref.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <kbuttonbox.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>

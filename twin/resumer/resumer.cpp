@@ -22,8 +22,8 @@ DEALINGS IN THE SOFTWARE.
 
 ****************************************************************************/
 
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
 #include <klocale.h>

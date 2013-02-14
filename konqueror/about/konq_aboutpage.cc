@@ -2,8 +2,8 @@
 
 #include <tqtextcodec.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>

@@ -26,7 +26,7 @@
 #include <tqstringlist.h>
 #include <tqvaluevector.h>
 
-#include <kapplication.h>	// for logout parameters
+#include <tdeapplication.h>	// for logout parameters
 
 class KURL;
 class TQCloseEvent;

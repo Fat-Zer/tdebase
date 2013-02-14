@@ -24,7 +24,7 @@
 
 
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdcopactionproxy.h>
 #include <kdcoppropertyproxy.h>
 #include <kdebug.h>

@@ -1,8 +1,8 @@
 
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <kglobal.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include "htmlsearch.h"
 

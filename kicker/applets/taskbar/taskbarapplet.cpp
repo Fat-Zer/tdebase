@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqlayout.h>
 #include <tqpalette.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kdebug.h>

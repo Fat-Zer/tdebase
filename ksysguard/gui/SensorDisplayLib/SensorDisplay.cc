@@ -28,7 +28,7 @@
 #include <tqwhatsthis.h>
 #include <tqbitmap.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <klocale.h>

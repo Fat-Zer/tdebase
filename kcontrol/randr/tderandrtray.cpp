@@ -21,7 +21,7 @@
 #include <tqtooltip.h>
 
 #include <tdeaction.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcmultidialog.h>
 #include <kdebug.h>
 #include <khelpmenu.h>

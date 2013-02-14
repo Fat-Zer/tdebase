@@ -29,7 +29,7 @@
 #include <tqdir.h>
 #include <tqregexp.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kprotocolinfo.h>
 #include <kstandarddirs.h>

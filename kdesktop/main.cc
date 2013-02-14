@@ -21,8 +21,8 @@
 #include <kuniqueapplication.h>
 #include <klocale.h>
 #include <dcopclient.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <kopenwith.h>
 #include <kcrash.h>
 #include <kdebug.h>

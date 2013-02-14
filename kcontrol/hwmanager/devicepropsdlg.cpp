@@ -35,7 +35,7 @@
 #include <kbuttonbox.h>
 #include <kcombobox.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klineedit.h>
 #include <kstdguiitem.h>
 #include <kmessagebox.h>

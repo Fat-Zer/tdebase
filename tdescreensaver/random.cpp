@@ -21,14 +21,14 @@
 #include <tqwidget.h>
 #include <tqfileinfo.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kdesktopfile.h>
 #include <krandomsequence.h>
 #include <kdebug.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kdialogbase.h>
 #include <tdeconfig.h>
 

@@ -24,7 +24,7 @@
 #include <tdefileitem.h>
 #include <kglobalsettings.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <tqlabel.h>
 #include <tqtooltip.h>

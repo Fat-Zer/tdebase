@@ -27,7 +27,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 FavIconsItrHolder *FavIconsItrHolder::s_self = 0;
 

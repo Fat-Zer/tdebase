@@ -27,7 +27,7 @@
 #include <tqdict.h>
 #include <tqwidget.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <SensorDisplay.h>
 

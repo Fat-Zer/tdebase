@@ -27,7 +27,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "FontPreview.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <tqpainter.h>
 #include <tqimage.h>

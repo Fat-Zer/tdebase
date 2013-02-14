@@ -24,7 +24,7 @@
 
 #include <kiconloader.h>
 #include <tqcursor.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqimage.h>
 #include <tqbitmap.h>
 #include <tdeconfig.h>

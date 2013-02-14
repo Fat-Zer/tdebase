@@ -16,9 +16,9 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tqmessagebox.h>
 #include <tqdir.h>
 
-#include <kapplication.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kglobal.h>

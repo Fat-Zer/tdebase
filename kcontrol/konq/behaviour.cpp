@@ -28,7 +28,7 @@
 
 #include <dcopclient.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <tdeio/uiserver_stub.h>
 #include <klocale.h>

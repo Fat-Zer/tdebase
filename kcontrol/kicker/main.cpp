@@ -18,8 +18,8 @@
 #include <tqcombobox.h>
 
 #include <dcopclient.h>
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <tdecmodulecontainer.h>
 #include <kdirwatch.h>
 #include <kimageio.h>

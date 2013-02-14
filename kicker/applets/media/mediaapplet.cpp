@@ -20,9 +20,9 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <tdeconfig.h>
-#include <kapplication.h>
-#include <kaboutdata.h>
-#include <kaboutapplication.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeaboutapplication.h>
 #include <kdebug.h>
 #include <tdepopupmenu.h>
 #include <kiconloader.h>

@@ -26,7 +26,7 @@
 #ifndef KARTSCONFIG_H
 #define KARTSCONFIG_H
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <tqbuttongroup.h>
 #include <tqcheckbox.h>

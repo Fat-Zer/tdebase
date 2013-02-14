@@ -22,7 +22,7 @@
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kurllabel.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqcheckbox.h>
 #include <tqwhatsthis.h>
 #include <tdefiledialog.h>

@@ -22,7 +22,7 @@
 
 #include <dcopclient.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <tdefontdialog.h>

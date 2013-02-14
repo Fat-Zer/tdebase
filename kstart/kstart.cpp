@@ -21,9 +21,9 @@
 #include <klocale.h>
 #include <twin.h>
 #include <twinmodule.h>
-#include <kapplication.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <kstartupinfo.h>
 #include <kxmessages.h>
 

@@ -30,8 +30,8 @@
 
 #include <dcopclient.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kdialogbase.h>

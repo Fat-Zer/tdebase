@@ -28,7 +28,7 @@
 #include "tdm_greet.h"
 #include <stdlib.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kseparator.h>
 #include <klocale.h>
 #include <kpushbutton.h>

@@ -45,8 +45,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqiconview.h>
 
 #include <dcopclient.h>
-#include <kapplication.h>
-#include <kaboutkde.h>
+#include <tdeapplication.h>
+#include <tdeabouttde.h>
 #include <kpixmapeffect.h>
 #include <tdeaction.h>
 #include <kbookmarkmenu.h>

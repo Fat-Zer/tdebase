@@ -21,12 +21,12 @@
 
 #include <dcopclient.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <tdeconfig.h>
 #include <kgenericfactory.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kdialog.h>
 
 #include "mouse.h"

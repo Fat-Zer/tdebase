@@ -29,8 +29,8 @@
 #include <kiconloader.h>
 #include <kglobal.h>
 #include <tdeconfig.h>
-#include <kaboutapplication.h>
-#include <kaboutdata.h>
+#include <tdeaboutapplication.h>
+#include <tdeaboutdata.h>
 #include <klocale.h>
 #include <tdepopupmenu.h>
 #include <kmessagebox.h>

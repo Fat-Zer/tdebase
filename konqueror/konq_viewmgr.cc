@@ -32,7 +32,7 @@
 #include <tdeaccelgen.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobalsettings.h>
 #include <ktempfile.h>
 #include <dcopclient.h>

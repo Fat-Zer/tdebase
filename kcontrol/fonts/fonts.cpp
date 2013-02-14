@@ -23,7 +23,7 @@
 #include <dcopclient.h>
 
 #include <tdeaccelmanager.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kgenericfactory.h>
 #include <kipc.h>
 #include <kmessagebox.h>

@@ -23,7 +23,7 @@
 #include <tqlayout.h>
 
 #include <kgenericfactory.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kdebug.h>
 #include <klocale.h>
 

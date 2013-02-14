@@ -29,12 +29,12 @@
 
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <tdeconfig.h>
 #include <klocale.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <kmessagebox.h>
 #include <krun.h>
 #include <kuser.h>

@@ -13,7 +13,7 @@
 #include <tqevent.h>
 
 #include <tdecmodule.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 
 #include "config.h"
 

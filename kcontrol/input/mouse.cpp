@@ -61,7 +61,7 @@
 #include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 
 #include <config.h>
 

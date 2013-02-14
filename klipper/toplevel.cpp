@@ -31,9 +31,9 @@
 #include <tqmime.h>
 #include <tqdragobject.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tdeaction.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kglobal.h>
 #include <kipc.h>

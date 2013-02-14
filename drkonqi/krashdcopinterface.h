@@ -34,7 +34,7 @@
 
 #include <tqstring.h>
 #include <tqcstring.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 
 /**
  * Provides information about a crashed process over dcop.

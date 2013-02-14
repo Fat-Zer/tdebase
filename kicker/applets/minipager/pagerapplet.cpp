@@ -32,7 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kglobalsettings.h>
 #include <twin.h>
 #include <twinmodule.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kdebug.h>

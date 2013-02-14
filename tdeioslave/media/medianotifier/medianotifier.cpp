@@ -26,7 +26,7 @@
 #include <tqdir.h>
 #include <tqcheckbox.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <kdebug.h>
 #include <klocale.h>

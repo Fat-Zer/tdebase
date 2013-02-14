@@ -35,7 +35,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "sakdlg.h"
 
 #include <kprocess.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kcrash.h>
 #include <kstandarddirs.h>
 #include <ksimpleconfig.h>

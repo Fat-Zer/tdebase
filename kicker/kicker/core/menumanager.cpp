@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpixmap.h>
 #include <tqtimer.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 
 #include "client_mnu.h"

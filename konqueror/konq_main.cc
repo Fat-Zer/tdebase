@@ -29,7 +29,7 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <dcopclient.h>
 #include <kimageio.h>
 #include <tqfile.h>

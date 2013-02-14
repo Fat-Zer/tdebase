@@ -36,7 +36,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqtooltip.h>
 #include <tqfile.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>
 #include <klocale.h>

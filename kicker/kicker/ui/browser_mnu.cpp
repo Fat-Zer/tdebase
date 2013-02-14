@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqdir.h>
 #include <tqpixmap.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>
 #include <kdirwatch.h>

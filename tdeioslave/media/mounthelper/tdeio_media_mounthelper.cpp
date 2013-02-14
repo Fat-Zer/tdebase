@@ -19,9 +19,9 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kurl.h>
 #include <kmessagebox.h>
 #include <dcopclient.h>

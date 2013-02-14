@@ -21,7 +21,7 @@
 #include <tqdir.h>
 
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
 #include <kimageeffect.h>

@@ -35,7 +35,7 @@
 #include <kdialog.h>
 #include <tdeconfig.h>
 #include <kseparator.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 
 #include "kdebugdialog.h"

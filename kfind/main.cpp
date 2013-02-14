@@ -1,10 +1,10 @@
 #include <tqdir.h>
 #include <tqfile.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <kopenwith.h>
 
 #include "kfinddlg.h"

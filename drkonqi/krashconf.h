@@ -28,7 +28,7 @@
 #ifndef KRASHCONF_H
 #define KRASHCONF_H
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tqstring.h>
 #include <tqobject.h>
 

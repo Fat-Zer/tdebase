@@ -30,8 +30,8 @@
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <kuniqueapplication.h>
 
 #include <kmessagebox.h>

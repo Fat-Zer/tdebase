@@ -29,10 +29,10 @@
 #include <tdelistview.h>
 #include <kmessagebox.h>
 #include <ksocks.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include "socks.h"
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 
 KSocksConfig::KSocksConfig(TQWidget *parent)
   : TDECModule(parent, "kcmtdeio")

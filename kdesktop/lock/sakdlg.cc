@@ -10,7 +10,7 @@
 
 #include <dmctl.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <kpushbutton.h>
 #include <kseparator.h>

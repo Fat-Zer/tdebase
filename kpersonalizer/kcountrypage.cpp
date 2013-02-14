@@ -19,7 +19,7 @@
 #include <tqlabel.h>
 #include <tqmap.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <ksimpleconfig.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -44,7 +44,7 @@ KCountryPage::KCountryPage(TQWidget *parent, const char *name ) : KCountryPageDl
 	b_savedLanguageChanged = false;
 	b_startedLanguageChanged = false;
 
-	// set appropriate Trinity version (kapplication.h)
+	// set appropriate Trinity version (tdeapplication.h)
 	txt_welcome->setText(i18n("<h3>Welcome to Trinity %1</h3>").arg(TDE_VERSION_STRING));
 
 	flang = new KFindLanguage();

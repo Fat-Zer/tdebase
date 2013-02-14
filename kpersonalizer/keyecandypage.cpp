@@ -30,7 +30,7 @@
 #include <klocale.h>
 #include <dcopclient.h>
 #include <kipc.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdelistview.h>
 #include <krun.h>
 #include <kmessagebox.h>

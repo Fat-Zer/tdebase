@@ -31,7 +31,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpainter.h>
 #include <tqmenudata.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 class PopupMenuTitle : public TQCustomMenuItem
 {

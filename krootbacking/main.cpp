@@ -24,9 +24,9 @@
 #include <tqobject.h>
 #include <tqtimer.h>
 
-#include <kapplication.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <klocale.h>
 #include <kdebug.h>
 

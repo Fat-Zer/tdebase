@@ -8,7 +8,7 @@
 
 #include <dcopclient.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcursor.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>

@@ -19,7 +19,7 @@
 
 #include <tqbitmap.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kiconloader.h>
 #include <kmimetype.h>
 #include <kshell.h>

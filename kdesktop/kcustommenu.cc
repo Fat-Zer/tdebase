@@ -22,7 +22,7 @@
 
 #include <tdeconfig.h>
 #include <kiconloader.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include "kcustommenu.h"
 

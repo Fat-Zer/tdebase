@@ -27,7 +27,7 @@
 
 #include <tdeconfig.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>
@@ -36,7 +36,7 @@
 #include <kipc.h>
 #include <ksimpleconfig.h>
 #include <dcopclient.h>
-#include <kstyle.h>
+#include <tdestyle.h>
 #include <kicontheme.h>
 #include <kiconloader.h>
 

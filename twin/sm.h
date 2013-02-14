@@ -13,7 +13,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #define KWIN_SM_H
 
 #include <X11/SM/SMlib.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <netwm_def.h>
 
 class TQSocketNotifier;

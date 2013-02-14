@@ -32,8 +32,8 @@ DESCRIPTION
 #include <tqstringlist.h>
 #include <tqimage.h>
 
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <kglobal.h>
 #include <kglobalaccel.h>
 #include <klocale.h>

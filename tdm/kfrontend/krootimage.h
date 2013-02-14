@@ -23,7 +23,7 @@ Boston, MA 02110-1301, USA.
 #define __TDMDESKTOP_H__
 
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqtimer.h>
 
 #include <bgrender.h>

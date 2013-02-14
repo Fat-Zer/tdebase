@@ -21,7 +21,7 @@
 #include "KonqViewIface.h"
 #include "konq_view.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <kdebug.h>
 

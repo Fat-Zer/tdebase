@@ -43,7 +43,7 @@
 #include <kdesktopfile.h>
 #include <tdeaction.h>
 #include <kmessagebox.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kservice.h>
 #include <kservicegroup.h>
 #include <tdemultipledrag.h>

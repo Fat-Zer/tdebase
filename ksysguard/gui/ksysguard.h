@@ -28,7 +28,7 @@
 
 #include <dcopclient.h>
 #include <dcopobject.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdemainwindow.h>
 #include <dnssd/servicebrowser.h>
 

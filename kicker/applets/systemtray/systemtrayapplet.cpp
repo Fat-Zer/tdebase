@@ -36,7 +36,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpainter.h>
 
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <tdeconfig.h>
 #include <kdebug.h>

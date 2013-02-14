@@ -24,7 +24,7 @@
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>

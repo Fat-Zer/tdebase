@@ -22,10 +22,10 @@
 #include <tqfile.h>
 
 #include <dcopclient.h>
-#include <kapplication.h>
-#include <kaboutdata.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
 #include <kdebug.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <tdesycoca.h>
 #include <kstandarddirs.h>
 

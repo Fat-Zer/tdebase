@@ -22,7 +22,7 @@
 #include <tqstyle.h>
 #include <tqdir.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kurifilter.h>

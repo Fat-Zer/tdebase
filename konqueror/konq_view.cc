@@ -20,7 +20,7 @@
 
 
 #include "konq_view.h"
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include "KonqViewIface.h"
 #include "konq_settingsxt.h"
 #include "konq_frame.h"

@@ -1,11 +1,11 @@
 #include <tqfile.h>
 #include <tqdir.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <ksimpleconfig.h>
 #include <kglobal.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <klocale.h>
 
 static const char description[] =

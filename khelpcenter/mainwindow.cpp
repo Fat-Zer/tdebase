@@ -27,13 +27,13 @@
 #include "fontdialog.h"
 #include "prefs.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <dcopclient.h>
 #include <kiconloader.h>
 #include <kmimemagic.h>
 #include <krun.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kdebug.h>
 #include <tdehtmlview.h>
 #include <tdehtml_settings.h>

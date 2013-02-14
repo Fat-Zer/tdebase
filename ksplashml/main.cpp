@@ -17,9 +17,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <klocale.h>

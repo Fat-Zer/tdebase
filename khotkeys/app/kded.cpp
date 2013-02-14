@@ -16,10 +16,10 @@
 
 #include "kded.h"
 
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <tdeconfig.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <stdio.h>
 #include <stdlib.h>

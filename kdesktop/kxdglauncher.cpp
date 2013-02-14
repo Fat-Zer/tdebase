@@ -25,8 +25,8 @@
 
 #include <krun.h>
 #include <klocale.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <kglobalsettings.h>
 #include <kinputdialog.h>
 #include <kmessagebox.h>

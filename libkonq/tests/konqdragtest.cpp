@@ -21,8 +21,8 @@
 #include <kurldrag.h>
 #include <assert.h>
 #include <tqiconview.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 
 #include <konq_drag.h>
 

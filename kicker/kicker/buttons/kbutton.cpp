@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqstyle.h>
 
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 
 #include "kickerSettings.h"

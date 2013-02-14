@@ -22,7 +22,7 @@
 #include <config.h>
 #endif
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqwidget.h>
 class TQPixmap;
 class TDESharedPixmap;

@@ -13,7 +13,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kdialogbase.h>

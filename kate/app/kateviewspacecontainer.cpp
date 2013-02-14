@@ -30,7 +30,7 @@
 
 #include <dcopclient.h>
 #include <tdeaction.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kdebug.h>
 #include <kdiroperator.h>
 #include <kdockwidget.h>

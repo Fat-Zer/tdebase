@@ -32,7 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <qxembed.h>
 
 #include <dcopobject.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kpanelapplet.h>
 
 #include "clock.h"

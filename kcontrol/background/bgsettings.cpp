@@ -21,7 +21,7 @@
 #include <tqpixmap.h>
 
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>
 #include <ksimpleconfig.h>

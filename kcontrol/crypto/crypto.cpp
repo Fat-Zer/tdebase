@@ -48,7 +48,7 @@
 #include <tqvgroupbox.h>
 #include <tqwhatsthis.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kcombobox.h>
 #include <tdeconfig.h>
 #include <kdatepicker.h>

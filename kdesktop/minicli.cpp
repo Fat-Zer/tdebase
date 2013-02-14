@@ -53,7 +53,7 @@
 #include <kprocess.h>
 #include <kcombobox.h>
 #include <klineedit.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kpassdlg.h>
 #include <krun.h>

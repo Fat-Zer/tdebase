@@ -25,7 +25,7 @@
 #include "lookandfeeltab_impl.h"
 
 #include <X11/Xlib.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kdialog.h>
 
 LookAndFeelConfig::LookAndFeelConfig(TQWidget *parent, const char *name)

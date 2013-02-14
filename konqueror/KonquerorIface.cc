@@ -25,7 +25,7 @@
 #include "konq_viewmgr.h"
 #include "konq_view.h"
 #include <konq_settings.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <kdebug.h>
 #include <tqfile.h>

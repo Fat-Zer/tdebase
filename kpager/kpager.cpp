@@ -42,7 +42,7 @@
 #include <tqtooltip.h>
 #include <tqtimer.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobalsettings.h>
 #include <tdeaction.h>
 #include <kstdaction.h>

@@ -34,9 +34,9 @@
 
 #include <tqpaintdevicemetrics.h>
 
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <dcopclient.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kglobalsettings.h>
 #include <tdeconfig.h>
 #include <kdebug.h>

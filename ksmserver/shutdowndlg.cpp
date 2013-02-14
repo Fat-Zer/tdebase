@@ -39,7 +39,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 
 #include <klocale.h>
 #include <tdeconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>

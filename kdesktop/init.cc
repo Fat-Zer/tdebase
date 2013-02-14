@@ -22,7 +22,7 @@
 #include <kstandarddirs.h>
 #include <kdesktopfile.h>
 #include <kglobalsettings.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kprocess.h>
 #include <kmessagebox.h>
 #include <klocale.h>

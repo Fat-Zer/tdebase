@@ -37,7 +37,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kiconeffect.h>
 #include <kglobalsettings.h>
 #include <kcursor.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kipc.h>
 #include <kiconloader.h>
 #include <kurldrag.h>

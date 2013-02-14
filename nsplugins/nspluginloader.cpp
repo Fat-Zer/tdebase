@@ -27,7 +27,7 @@
 #include <tqdir.h>
 
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kprocess.h>
 #include <kdebug.h>
 #include <kglobal.h>

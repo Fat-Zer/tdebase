@@ -25,7 +25,7 @@
 
 #include <tqtimer.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -42,7 +42,7 @@
 #include <tqgroupbox.h>
 #include <tqlayout.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kpushbutton.h>
 
 

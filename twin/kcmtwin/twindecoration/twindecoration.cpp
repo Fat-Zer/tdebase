@@ -43,7 +43,7 @@
 #include <tqslider.h>
 #include <tqspinbox.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcolorbutton.h>
 #include <kcombobox.h>
 #include <kdebug.h>
@@ -53,7 +53,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 #include <kgenericfactory.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kprocess.h>
 #include <dcopclient.h>
 

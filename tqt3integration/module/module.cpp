@@ -22,7 +22,7 @@
 
 #include <assert.h>
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdefiledialog.h>
 #include <kglobalsettings.h>

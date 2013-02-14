@@ -22,7 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ******************************************************************/
 
 #include "media_watcher.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <dcopclient.h>
 #include <dcopref.h>

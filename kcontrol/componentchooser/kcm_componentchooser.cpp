@@ -15,7 +15,7 @@
 
 #include <tqlayout.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kglobal.h>
 
 #include "kcm_componentchooser.h"

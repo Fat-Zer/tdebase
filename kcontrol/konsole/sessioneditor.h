@@ -24,7 +24,7 @@
 
 #include <tqptrlist.h>
 #include <tqstringlist.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqwidget.h>
 
 #include "sessiondialog.h"

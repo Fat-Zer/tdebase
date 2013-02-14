@@ -30,7 +30,7 @@
 
 #include <dcopclient.h>
 #include <tdeconfig.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kcmultidialog.h>
 #include <kcrash.h>
 #include <kdebug.h>

@@ -24,7 +24,7 @@
 #include <tqcheckbox.h>
 #include <tqslider.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <dcopclient.h>
 #include <klocale.h>

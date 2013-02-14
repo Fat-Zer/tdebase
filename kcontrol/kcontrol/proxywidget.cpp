@@ -22,7 +22,7 @@
 #include <kpushbutton.h>
 #include <tqlayout.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdecmodule.h>
 #include <kseparator.h>
 #include <kdialog.h>

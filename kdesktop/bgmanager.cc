@@ -24,7 +24,7 @@
 #include <kiconloader.h>
 #include <tdeconfig.h>
 #include <twin.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kipc.h>
 #include <tdepopupmenu.h>

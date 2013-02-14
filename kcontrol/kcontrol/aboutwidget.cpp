@@ -31,7 +31,7 @@
 #include <kcursor.h>
 #include <kglobalsettings.h>
 #include <tdehtml_part.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kiconloader.h>
 
 #include "global.h"

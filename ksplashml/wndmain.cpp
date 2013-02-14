@@ -11,7 +11,7 @@
 
 #include <unistd.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kcursor.h>
 #include <kdebug.h>

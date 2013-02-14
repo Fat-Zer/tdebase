@@ -40,7 +40,7 @@
 #include <klocale.h>
 #include <tdeconfig.h>
 #include <knuminput.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kprocess.h>

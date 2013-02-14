@@ -31,7 +31,7 @@
 #include "desktopbehavior_impl.h"
 
 #include <tdeconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 static TQCString configname()
 {

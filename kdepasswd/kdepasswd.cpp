@@ -10,8 +10,8 @@
 
 #include <kuniqueapplication.h>
 #include <klocale.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <kmessagebox.h>
 #include <kuser.h>
 #include <kdebug.h>

@@ -28,7 +28,7 @@
 #include <tqwhatsthis.h>
 
 #include <kactivelabel.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
 #include <kdialog.h>
 #include <khotkeys.h>

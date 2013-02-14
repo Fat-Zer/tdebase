@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tdeconfig.h>
 #include <kdesktopfile.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <krun.h>
 #include <kprocess.h>

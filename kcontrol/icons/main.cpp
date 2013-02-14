@@ -24,7 +24,7 @@
 #include <tqlayout.h>
 
 #include <kgenericfactory.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 
 #include "icons.h"
 #include "iconthemes.h"

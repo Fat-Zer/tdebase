@@ -9,7 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdialogbase.h>
 #include <kglobalsettings.h>

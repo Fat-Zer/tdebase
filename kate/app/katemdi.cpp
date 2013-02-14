@@ -27,7 +27,7 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <tdeconfig.h>
 #include <kiconloader.h>

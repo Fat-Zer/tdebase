@@ -18,7 +18,7 @@
 
 */
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kiconloader.h>
 #include <klocale.h>
 

@@ -47,7 +47,7 @@
 #include <tqglobal.h>
 #if TQT_VERSION < 0x030100
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqwidget.h>
 #include <tqobjectlist.h>
 #include <tqwidgetlist.h>

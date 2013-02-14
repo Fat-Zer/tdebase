@@ -22,7 +22,7 @@
 #include <tqeventloop.h>
 
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kbookmarkmanager.h>
 #include <kdebug.h>
 #include <krun.h>

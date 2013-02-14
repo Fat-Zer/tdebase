@@ -23,7 +23,7 @@
 
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <dcopclient.h>
 #include <kipc.h>

@@ -36,7 +36,7 @@
 
 // KDE 
 #include <kuniqueapplication.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <klocale.h>
 #include <kglobalsettings.h>
 #include <kdebug.h>

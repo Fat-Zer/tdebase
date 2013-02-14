@@ -40,7 +40,7 @@
 
 #include <dcopclient.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
@@ -50,8 +50,8 @@
 #include <kdesktopfile.h>
 #include <kservicetype.h>
 #include <kmimetype.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <klocale.h>
 
 #include "sdk/npupp.h"

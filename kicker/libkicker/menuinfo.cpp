@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqfile.h>
 #include <tqwidget.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <ksimpleconfig.h>
 #include <klibloader.h>
 #include <kstandarddirs.h>

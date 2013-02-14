@@ -20,8 +20,8 @@
 #include "printwrapper.h"
 
 #include <tqtimer.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <klocale.h>
 
 static TDECmdLineOptions options[] =

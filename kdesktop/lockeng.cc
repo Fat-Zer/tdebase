@@ -12,7 +12,7 @@
 #include <stdlib.h>
 
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kservicegroup.h>
 #include <kdebug.h>
 #include <klocale.h>

@@ -12,7 +12,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include "workspace.h"
 #include "utils.h"
 

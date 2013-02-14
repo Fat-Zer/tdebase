@@ -23,8 +23,8 @@
 #include <tqlayout.h>
 #include <tqstringlist.h>
 
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <klocale.h>

@@ -28,7 +28,7 @@
 #include <dcopobject.h>
 #include <dcopclient.h>
 #include <kdatastream.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobalsettings.h>
 #include <twinmodule.h>
 #include <twin.h>

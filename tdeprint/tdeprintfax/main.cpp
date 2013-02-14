@@ -21,10 +21,10 @@
 #include "tdeprintfax.h"
 
 #include <tqfile.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 TQString debugFlag;
 int oneShotFlag = false;

@@ -27,7 +27,7 @@
 #include <tqlineedit.h>
 
 #include <dcopref.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>
 #include <kiconloader.h>

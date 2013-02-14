@@ -30,9 +30,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <kapplication.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <klocale.h>
 #include <dcopclient.h>
 

@@ -33,8 +33,8 @@
 #include <dcopclient.h>
 
 #include <klocale.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <kimageio.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>

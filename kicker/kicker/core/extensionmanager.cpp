@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <unistd.h>
 #include <stdlib.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>

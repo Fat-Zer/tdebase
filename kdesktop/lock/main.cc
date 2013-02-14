@@ -23,7 +23,7 @@
 #include "main.h"
 #include "kdesktopsettings.h"
 
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kdebug.h>

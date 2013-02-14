@@ -31,12 +31,12 @@
 #include <tqwhatsthis.h>
 #include <tqcursor.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeaccelmanager.h>
 #include <kbuttonbox.h>
 #include <tdefiledialog.h>
 #include <kprocess.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>

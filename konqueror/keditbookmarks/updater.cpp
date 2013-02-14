@@ -28,7 +28,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <tdeio/job.h>
 

@@ -27,7 +27,7 @@
 
 #include <dcopclient.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kemailsettings.h>
 #include <kipc.h>
 #include <klocale.h>

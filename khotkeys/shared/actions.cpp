@@ -22,7 +22,7 @@
 #include <kurifilter.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <kdesktopfile.h>
 #include <klocale.h>

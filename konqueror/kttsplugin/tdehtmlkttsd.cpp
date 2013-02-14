@@ -29,7 +29,7 @@
 #include <kspeech.h>
 #include <tqbuffer.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <ktrader.h>
 

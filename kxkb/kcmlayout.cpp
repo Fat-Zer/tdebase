@@ -20,7 +20,7 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kiconloader.h>
 
 #include "extension.h"

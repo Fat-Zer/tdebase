@@ -23,9 +23,9 @@
 
 #include "version.h"
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <klocale.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kuniqueapplication.h>
 #include <kdebug.h>
 #include <dcopclient.h>

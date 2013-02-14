@@ -19,7 +19,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "client.h"
 #include "workspace.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <tqpainter.h>
 #include <twin.h>

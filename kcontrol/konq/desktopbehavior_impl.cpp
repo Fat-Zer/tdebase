@@ -36,7 +36,7 @@
 #include <kglobalsettings.h>
 #include <kmimetype.h>
 #include <ktrader.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcustommenueditor.h>
 #include <dcopclient.h>
 #include <konq_defaults.h> // include default values directly from libkonq

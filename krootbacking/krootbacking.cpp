@@ -22,7 +22,7 @@
 #include <tqrect.h>
 #include <tqimage.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kimageeffect.h>
 #include <kpixmapio.h>
 #include <twinmodule.h>

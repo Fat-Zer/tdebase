@@ -31,7 +31,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <twin.h>
 #include <kstandarddirs.h>
 #include <kmessagebox.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <kglobal.h>
 

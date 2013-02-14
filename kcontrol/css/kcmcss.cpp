@@ -5,7 +5,7 @@
 #include <tqradiobutton.h>
 #include <tqtextbrowser.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcolorbutton.h>
 #include <tdeconfig.h>
 #include <kdialogbase.h>

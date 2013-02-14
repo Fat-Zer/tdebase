@@ -38,7 +38,7 @@
 #include <tqtooltip.h>
 
 #include <tdeaction.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <kglobal.h>

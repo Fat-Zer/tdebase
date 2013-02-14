@@ -23,7 +23,7 @@
 
 #include <tdefiledialog.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <krun.h>
 #include <kprocess.h>
 #include <kpropertiesdialog.h>

@@ -18,8 +18,8 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <kglobal.h>
 #include <kdebug.h>
 #include <stdlib.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <dcopclient.h>
 #include <dcopref.h>
 #include <unistd.h>

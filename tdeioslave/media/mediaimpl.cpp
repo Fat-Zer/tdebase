@@ -27,7 +27,7 @@
 
 #include <kmimetype.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqeventloop.h>
 
 #include <sys/stat.h>

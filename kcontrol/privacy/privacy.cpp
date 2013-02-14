@@ -26,7 +26,7 @@
 #include <tqtooltip.h>
 #include <tqwhatsthis.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tdeconfig.h>
 #include <kdialog.h>
 #include <kglobal.h>

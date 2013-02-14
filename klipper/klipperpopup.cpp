@@ -28,7 +28,7 @@
 #include <tdeaction.h>
 #include <kglobalsettings.h>
 #include <twin.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobalsettings.h>
 #include <kdebug.h>
 

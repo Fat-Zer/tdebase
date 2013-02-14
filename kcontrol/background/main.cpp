@@ -16,8 +16,8 @@
  */
 
 #include <tqlayout.h>
-#include <kapplication.h>
-#include <kaboutdata.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <dcopclient.h>

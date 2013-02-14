@@ -29,7 +29,7 @@
 #include <konq_pixmapprovider.h>
 #include <kiconloader.h>
 #include <tdepopupmenu.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include "konq_view.h"
 #include "konq_settingsxt.h"

@@ -75,7 +75,7 @@
 #include <tdepopupmenu.h>
 #include <kprocess.h>
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <taskmanager.h>
 #include <taskrmbmenu.h>

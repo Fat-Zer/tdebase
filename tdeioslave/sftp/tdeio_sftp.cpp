@@ -52,7 +52,7 @@ So we can't connect.
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kuser.h>
 #include <kdebug.h>
 #include <kmessagebox.h>

@@ -21,8 +21,8 @@
 #include <stdio.h>
 
 #include <tqstring.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <dcopclient.h>
 #include <kdebug.h>
 #include <kstdaction.h>

@@ -25,7 +25,7 @@
 #define __KCMMISC_H__
 
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdecmodule.h>
 
 class KeyboardConfigWidget;

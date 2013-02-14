@@ -18,7 +18,7 @@
 
 */
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeaccelmanager.h>
 #include <kcombobox.h>
 #include <klocale.h>

@@ -23,7 +23,7 @@
 #include <sys/utsname.h>
 #include <kservicegroup.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kuser.h>
 
 #include <tqobjectlist.h>

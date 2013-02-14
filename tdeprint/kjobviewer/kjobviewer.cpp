@@ -24,8 +24,8 @@
 
 #include <stdlib.h>
 #include <tqpixmap.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <ksystemtray.h>

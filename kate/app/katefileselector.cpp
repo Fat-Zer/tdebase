@@ -47,7 +47,7 @@
 #include <tqtimer.h>
 #include <tqdir.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kiconloader.h>
 #include <kurlcombobox.h>
 #include <kurlcompletion.h>

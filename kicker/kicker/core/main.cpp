@@ -23,9 +23,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <config.h>
 #include <klocale.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kdebug.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kglobal.h>
 #include <tdeconfig.h>
 #include <dcopclient.h>

@@ -31,7 +31,7 @@
 
 #include <kdebug.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdecorationfactory.h>
 #include <klocale.h>
 

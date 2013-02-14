@@ -21,7 +21,7 @@
 #include "view.h"
 
 #include <tdeaction.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdemainwindow.h>
 #include <tdepopupmenu.h>

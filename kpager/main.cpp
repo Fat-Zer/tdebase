@@ -23,8 +23,8 @@
 
 #include <kuniqueapplication.h>
 #include <klocale.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <tqcolor.h>
 #include <kdebug.h>
 #include <stdlib.h>

@@ -20,6 +20,6 @@
 #ifndef _MAIN_H
 #define _MAIN_H
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #endif

@@ -19,7 +19,7 @@
 #include <tqlayout.h>
 #include <tqtabwidget.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tdecmodule.h>
 #include <kdialog.h>
 #include <kgenericfactory.h>

@@ -19,7 +19,7 @@
 
 #include <krun.h>
 #include <tdeconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include "krefinepage.h"

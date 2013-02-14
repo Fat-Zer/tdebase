@@ -64,9 +64,9 @@
 #include <kinstance.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kstandarddirs.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tdesu/client.h>
 #include <tdesu/defaults.h>
 #include <ksockaddr.h>

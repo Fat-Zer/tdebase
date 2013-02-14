@@ -28,7 +28,7 @@
 
 #include <dcopclient.h>
 #include <dcopref.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdialog.h>
 #include <tdefontdialog.h>

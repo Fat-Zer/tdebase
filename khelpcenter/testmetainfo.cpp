@@ -1,10 +1,10 @@
 #include <tqstringlist.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 
 #include "docmetainfo.h"
 #include "docentrytraverser.h"

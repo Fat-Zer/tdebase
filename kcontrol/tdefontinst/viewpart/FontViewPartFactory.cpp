@@ -29,7 +29,7 @@
 #include "FontViewPartFactory.h"
 #include "FontViewPart.h"
 #include <kdebug.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kinstance.h>
 #include <assert.h>
 

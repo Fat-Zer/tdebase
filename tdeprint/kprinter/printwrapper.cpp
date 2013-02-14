@@ -32,8 +32,8 @@
 #include <tqregexp.h>
 #include <tqsocketnotifier.h>
 
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <tdeio/netaccess.h>

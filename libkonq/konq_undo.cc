@@ -29,7 +29,7 @@
 #include <dcopclient.h>
 #include <dcopref.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdatastream.h>
 #include <kdebug.h>
 #include <klocale.h>

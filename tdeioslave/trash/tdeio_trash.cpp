@@ -20,11 +20,11 @@
 #include "tdeio_trash.h"
 #include <tdeio/job.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <klargefile.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kmimetype.h>
 #include <kprocess.h>
 

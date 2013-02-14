@@ -28,16 +28,16 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqobjectlist.h>
 #include <qxembed.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <klibloader.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kpanelapplet.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tqfileinfo.h>
 #include <dcopclient.h>
 #include <twin.h>

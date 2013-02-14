@@ -21,7 +21,7 @@
 #include <tdeconfig.h>
 #include <kpushbutton.h>
 #include <tqlayout.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <kstdguiitem.h>
 

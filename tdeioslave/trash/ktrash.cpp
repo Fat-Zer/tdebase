@@ -17,10 +17,10 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeio/netaccess.h>
 #include <tdeio/job.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <klocale.h>
 #include <kdirnotify_stub.h>
 #include <kdebug.h>

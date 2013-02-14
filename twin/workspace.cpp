@@ -13,7 +13,7 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #include "workspace.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstartupinfo.h>
 #include <fixx11h.h>
 #include <tdeconfig.h>

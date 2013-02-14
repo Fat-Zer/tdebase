@@ -23,9 +23,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <kapplication.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kdebug.h>

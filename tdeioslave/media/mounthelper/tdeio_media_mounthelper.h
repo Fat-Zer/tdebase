@@ -22,7 +22,7 @@
 #ifndef _KIO_MEDIA_MOUNTHELPER_H_
 #define _KIO_MEDIA_MOUNTHELPER_H_
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqstring.h>
 #include <tdeio/job.h>
 

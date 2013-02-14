@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "themer/tdmitem.h"
 #include "themer/tdmlabel.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kseparator.h>

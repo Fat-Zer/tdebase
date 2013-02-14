@@ -60,7 +60,7 @@
 #include <twin.h>
 #include <kglobalsettings.h>
 #include <tdepopupmenu.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdirlister.h>
 // Create the equivalent of TDEAccelBase::connectItem
 // and then remove this include and fix reconnects in initRoot() -- ellis

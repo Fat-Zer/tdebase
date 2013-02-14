@@ -27,7 +27,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <klocale.h>
 #include <tdeconfig.h>
 #include <kglobalaccel.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqregexp.h>
 
 #include "client.h"

@@ -29,7 +29,7 @@
 
 #include <dcopclient.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>
@@ -38,7 +38,7 @@
 #include <ksavefile.h>
 #include <ktempfile.h>
 #include <klocale.h>
-#include <kstyle.h>
+#include <tdestyle.h>
 
 #include "krdb.h"
 

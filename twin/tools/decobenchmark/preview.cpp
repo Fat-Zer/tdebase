@@ -21,7 +21,7 @@
 
 #include <kdebug.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <tdeconfig.h>
 #include <kglobal.h>

@@ -23,7 +23,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tqdir.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kiconloader.h>

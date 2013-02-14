@@ -34,10 +34,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tdeaction.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <kdebug.h>
 #include <kedittoolbar.h>
 #include <kglobal.h>

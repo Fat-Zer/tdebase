@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <tqdir.h>
 
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdatastream.h>
 #include <kdebug.h>
@@ -41,7 +41,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <ktar.h>
-#include <kstyle.h>
+#include <tdestyle.h>
 
 KTheme::KTheme( TQWidget *parent, const TQString & xmlFile )
 	: m_parent(parent)

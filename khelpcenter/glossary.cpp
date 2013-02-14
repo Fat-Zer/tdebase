@@ -20,7 +20,7 @@
 #include "glossary.h"
 #include "view.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kiconloader.h>

@@ -19,13 +19,13 @@
  */
 
 #include "kprivacymanager.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <tdeconfig.h>
 #include <ksimpleconfig.h>
 #include <kprocess.h>
 #include <kglobal.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <tderecentdocument.h>
 #include <kstandarddirs.h>

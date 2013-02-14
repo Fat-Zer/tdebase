@@ -71,7 +71,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <unistd.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstaticdeleter.h>
 #include <ktempfile.h>
 #include <kprocess.h>

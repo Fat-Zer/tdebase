@@ -7,7 +7,7 @@
 #include "lockprocess.h"
 #include "autologout.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <kglobalsettings.h>
 #include <tdeconfig.h>

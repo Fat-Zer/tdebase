@@ -21,7 +21,7 @@
 #ifndef SESSION_H
 #define SESSION_H
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdemainwindow.h>
 #include <tqstrlist.h>
 

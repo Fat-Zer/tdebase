@@ -1083,7 +1083,7 @@ appropriate plugin.</para>
 #include &lt;qlabel.h&gt;
 #include &lt;qwidget.h&gt;
 
-#include &lt;kapplication.h&gt;
+#include &lt;tdeapplication.h&gt;
 #include &lt;tdeconfig.h&gt;
 #include &lt;kdebug.h&gt;
 #include &lt;kdialogbase.h&gt;

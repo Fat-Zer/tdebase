@@ -21,9 +21,9 @@
 #include <kglobal.h>
 #include <tqlayout.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 
 #include "ruleslist.h"
 

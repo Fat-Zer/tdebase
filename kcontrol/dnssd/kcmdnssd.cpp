@@ -39,7 +39,7 @@
 #include <klineedit.h>
 #include <kpassdlg.h>
 #include <ksimpleconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
 
 #include "kcmdnssd.h"

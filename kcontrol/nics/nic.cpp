@@ -30,7 +30,7 @@
 #include <sys/sockio.h>
 #endif
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kdialog.h>
 #include <kgenericfactory.h>
 #include <kglobal.h>

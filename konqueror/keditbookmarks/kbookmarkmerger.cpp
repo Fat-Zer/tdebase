@@ -22,10 +22,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <kbookmarkmanager.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
 

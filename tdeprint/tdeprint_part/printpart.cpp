@@ -25,7 +25,7 @@
 #include <klocale.h>
 #include <kinstance.h>
 #include <kiconloader.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kdebug.h>
 #include <tdeparts/genericfactory.h>
 #include <tqwidget.h>

@@ -31,7 +31,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <klocale.h>
 #include <kdesktopfile.h>
 #include <kglobalsettings.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kurldrag.h>
 #include <tderecentdocument.h>
 

@@ -28,7 +28,7 @@
 
 #include <X11/Xlib.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kxerrorhandler.h>
 #include <kkeynative.h>

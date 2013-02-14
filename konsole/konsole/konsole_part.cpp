@@ -27,7 +27,7 @@
 #include <tqlayout.h>
 #include <tqwmatrix.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kcharsets.h>
 #include <kdebug.h>
 #include <tdefontdialog.h>

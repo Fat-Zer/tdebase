@@ -37,7 +37,7 @@
 #include <kbugreport.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 
 #include "backtrace.h"

@@ -44,7 +44,7 @@
 #include <kglobalsettings.h>
 #include <kpassivepopup.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstringhandler.h>
 #include <kcolorbutton.h>
 #include <kdialog.h>

@@ -5,7 +5,7 @@
 #include <kdesktopfile.h>
 #include <kurl.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include "prefs.h"
 

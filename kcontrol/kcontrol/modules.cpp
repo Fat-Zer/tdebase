@@ -24,7 +24,7 @@
 #include <tqlabel.h>
 #include <tqlayout.h>
 #include <tqvbox.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kservicegroup.h>
 #include <kprocess.h>

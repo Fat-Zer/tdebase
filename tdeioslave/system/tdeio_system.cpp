@@ -21,8 +21,8 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <dcopclient.h>
 
 #include <tqeventloop.h>

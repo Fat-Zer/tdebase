@@ -1,8 +1,8 @@
 #include <fcntl.h>
 
-#include <kapplication.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprocess.h>

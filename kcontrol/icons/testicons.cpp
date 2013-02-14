@@ -1,6 +1,6 @@
 /* Test programme for icons setup module. */
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include "icons.h"
 
 int main(int argc, char **argv)

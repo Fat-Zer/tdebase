@@ -29,7 +29,7 @@
 // (C) Craig Drummond, 2004
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeparts/part.h>
 #include <tdeparts/mainwindow.h>
 

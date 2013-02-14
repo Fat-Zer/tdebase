@@ -27,7 +27,7 @@
 #include <tqpopupmenu.h>
 #include <tqkeysequence.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>

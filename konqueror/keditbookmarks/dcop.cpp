@@ -34,7 +34,7 @@
 #include <kbookmarkmanager.h>
 #include <dcopclient.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 
 KBookmarkEditorIface::KBookmarkEditorIface()

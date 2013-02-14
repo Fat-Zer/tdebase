@@ -12,7 +12,7 @@
 #ifndef __WNDMAIN_H__
 #define __WNDMAIN_H__
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <tqptrlist.h>
 #include <tqstring.h>

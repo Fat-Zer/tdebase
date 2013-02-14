@@ -22,8 +22,8 @@
 #include "mainwindow.h"
 #include "version.h"
 
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 
 using namespace KHC;
 

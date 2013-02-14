@@ -10,7 +10,7 @@
 
 #include <tqmap.h>
 #undef None	// Qt4
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #define MAX_HOTSPOTS   28
 #define SCROLLBAR_SIZE 16

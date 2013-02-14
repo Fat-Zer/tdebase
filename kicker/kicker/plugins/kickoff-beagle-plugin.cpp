@@ -23,7 +23,7 @@
 #include <tqregexp.h>
 #include <tqtimer.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdesktopfile.h>
 #include <kgenericfactory.h>
 #include <kservice.h>

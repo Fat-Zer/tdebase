@@ -20,7 +20,7 @@
 
 #include <dcopclient.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdialog.h>
 #include <kgenericfactory.h>
 #include <tdespell.h>

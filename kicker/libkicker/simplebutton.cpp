@@ -23,7 +23,7 @@
 #include <tqpainter.h>
 #include <tqstyle.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcursor.h>
 #include <kdialog.h>
 #include <kglobalsettings.h>

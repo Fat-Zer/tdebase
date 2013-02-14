@@ -7,7 +7,7 @@
 #include <tqtabwidget.h>
 
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <dcopref.h>

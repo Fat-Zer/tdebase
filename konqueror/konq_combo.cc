@@ -19,7 +19,7 @@
 
 #include <tqpainter.h>
 #include <tqstyle.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <tdecompletionbox.h>
 #include <kdebug.h>

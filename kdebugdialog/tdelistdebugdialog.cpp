@@ -20,7 +20,7 @@
 
 #include "tdelistdebugdialog.h"
 #include <tdeconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <tqlayout.h>
 #include <tqscrollview.h>

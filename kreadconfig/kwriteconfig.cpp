@@ -8,10 +8,10 @@
  */
 #include <tdeconfig.h>
 #include <kglobal.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <klocale.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <stdio.h>
 
 static TDECmdLineOptions options[] =

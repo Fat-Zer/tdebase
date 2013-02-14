@@ -22,7 +22,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kprocess.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <krun.h>
 
 #include "global.h"

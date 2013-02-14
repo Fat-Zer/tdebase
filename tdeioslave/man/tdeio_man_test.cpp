@@ -5,7 +5,7 @@
 #include "tdeio_man.h"
 
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 
 

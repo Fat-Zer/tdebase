@@ -4,7 +4,7 @@
 #include <kdebug.h>
 #include <tdefileitem.h>
 #include <tdefilemetainfo.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kstandarddirs.h>

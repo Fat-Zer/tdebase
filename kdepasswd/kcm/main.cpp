@@ -38,7 +38,7 @@
 #include <kdialog.h>
 #include <kimageio.h>
 #include <kstandarddirs.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kgenericfactory.h>
 #include <kmessagebox.h>
 #include <kprocess.h>

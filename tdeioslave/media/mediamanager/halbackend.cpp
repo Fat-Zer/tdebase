@@ -23,7 +23,7 @@
 #include <stdlib.h>
 #include <locale.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
 #include <tqeventloop.h>
 #include <tqfile.h>

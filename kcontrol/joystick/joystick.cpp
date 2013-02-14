@@ -19,7 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.             *
  ***************************************************************************/
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kgenericfactory.h>
 #include <kglobal.h>
 #include <klocale.h>

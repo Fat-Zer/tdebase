@@ -21,7 +21,7 @@
 #ifndef DMCTL_H
 #define DMCTL_H
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 struct SessEnt {
 	TQString display, from, user, session;

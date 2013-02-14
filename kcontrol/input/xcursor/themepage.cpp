@@ -21,7 +21,7 @@
 #endif
 
 #include <klocale.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kstandarddirs.h>
 #include <tdelistview.h>
 #include <ksimpleconfig.h>

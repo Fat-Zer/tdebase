@@ -24,7 +24,7 @@
 #include <tqradiobutton.h>
 #include <tqslider.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <kcolorbutton.h>
 #include <klocale.h>

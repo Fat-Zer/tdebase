@@ -21,7 +21,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <tdeaccel.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <tqlabel.h>
 #include <tqlineedit.h>

@@ -21,7 +21,7 @@
     without including the source code for Qt in the source distribution.
 */
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kiconloader.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>

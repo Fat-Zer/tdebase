@@ -39,7 +39,7 @@
 #include <kcolorbutton.h>
 #include <tdeconfig.h>
 #include <knuminput.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdialog.h>
 #include <dcopclient.h>
 #include <kglobal.h>

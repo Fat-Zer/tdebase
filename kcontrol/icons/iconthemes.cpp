@@ -27,7 +27,7 @@
 #include <tqpushbutton.h>
 
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <kservice.h>
 #include <klocale.h>

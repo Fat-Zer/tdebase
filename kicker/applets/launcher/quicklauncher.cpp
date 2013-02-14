@@ -30,9 +30,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <dcopclient.h>
 #include <tdeaction.h>
-#include <kapplication.h>
-#include <kaboutapplication.h>
-#include <kaboutdata.h>
+#include <tdeapplication.h>
+#include <tdeaboutapplication.h>
+#include <tdeaboutdata.h>
 #include <kdialogbase.h>
 #include <kglobal.h>
 #include <klocale.h>

@@ -7,7 +7,7 @@
 #include <dom/html_misc.h>
 #include <tdeaction.h>
 #include <tdeactioncollection.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdehtml_settings.h>
 #include <tdehtmlview.h>

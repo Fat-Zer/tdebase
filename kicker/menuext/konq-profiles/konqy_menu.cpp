@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kglobal.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <krun.h>
 #include <kstandarddirs.h>
 #include <tdeio/global.h>

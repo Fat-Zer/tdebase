@@ -1,7 +1,7 @@
 
 #include "kaccess.h"
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <kdebug.h>
 
 extern "C" KDE_EXPORT int kdemain(int argc, char * argv[] )

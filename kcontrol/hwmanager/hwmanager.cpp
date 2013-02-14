@@ -26,8 +26,8 @@
 
 #include <dcopclient.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kcombobox.h>
 #include <kdebug.h>

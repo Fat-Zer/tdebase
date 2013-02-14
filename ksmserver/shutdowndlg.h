@@ -28,7 +28,7 @@ class TQString;
 class TDEAction;
 
 #include "timed.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kpixmapio.h>
 
 #include <config.h>

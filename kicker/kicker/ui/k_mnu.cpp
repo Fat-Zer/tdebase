@@ -36,8 +36,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqeventloop.h>
 
 #include <dcopclient.h>
-#include <kapplication.h>
-#include <kaboutkde.h>
+#include <tdeapplication.h>
+#include <tdeabouttde.h>
 #include <tdeaction.h>
 #include <kbookmarkmenu.h>
 #include <tdeconfig.h>

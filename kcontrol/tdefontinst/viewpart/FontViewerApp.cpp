@@ -28,8 +28,8 @@
 
 #include "FontViewerApp.h"
 #include "KfiConstants.h"
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <klibloader.h>
 #include <klocale.h>
 #include <kglobal.h>

@@ -36,7 +36,7 @@
 
 #include <kdatastream.h> // Do not remove, needed for correct bool serialization
 #include <kurl.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <kimageeffect.h>

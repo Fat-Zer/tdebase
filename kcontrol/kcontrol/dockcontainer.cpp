@@ -25,7 +25,7 @@
 #include <tqapplication.h>
 #include <tqpushbutton.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kdebug.h>

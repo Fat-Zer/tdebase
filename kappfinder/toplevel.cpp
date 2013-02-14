@@ -20,7 +20,7 @@
 */
 
 #include <tdeaccelmanager.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kbuttonbox.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>

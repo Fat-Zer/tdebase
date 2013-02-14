@@ -19,7 +19,7 @@
 #include <tdeconfig.h>
 #include <klocale.h>
 #include <kglobal.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tdefiledialog.h>
 
 #include <tqlayout.h>

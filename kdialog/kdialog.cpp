@@ -30,20 +30,20 @@
 #include <tqregexp.h>
 #include <tqtimer.h>
 #include <kmessagebox.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 //#include <ktopwidget.h>
 #include <tdemainwindow.h>
 #include <kpassivepopup.h>
 #include <tderecentdocument.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include "widgets.h"
 
 #include <klocale.h>
 #include <tqdialog.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <tdefiledialog.h>
 #include <kicondialog.h>
 #include <kdirselectdialog.h>

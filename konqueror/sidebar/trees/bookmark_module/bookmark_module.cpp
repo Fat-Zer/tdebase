@@ -22,7 +22,7 @@
 
 #include <tdeaction.h>
 #include <tdeactioncollection.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kbookmarkdrag.h>
 #include <kiconloader.h>
 #include <klineedit.h>

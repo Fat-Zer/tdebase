@@ -31,7 +31,7 @@
 #include <dcopref.h>
 
 #include <tdeaction.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>
 #include <kdirnotify_stub.h>

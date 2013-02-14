@@ -19,7 +19,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tqdict.h>
 #include <tqptrqueue.h>
 #include <tqptrdict.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqtimer.h>
 #include <dcopobject.h>
 

@@ -51,7 +51,7 @@
 #include <stdlib.h>
 
 #include "schema.h"
-#include "kapplication.h"
+#include "tdeapplication.h"
 
 #include <tqdir.h>
 #include <tqdatetime.h>

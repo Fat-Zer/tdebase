@@ -33,7 +33,7 @@
 #include <tqregexp.h>
 #include <tqcursor.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdeio/previewjob.h>
 #include <tdefileivi.h>

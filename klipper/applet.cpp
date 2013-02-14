@@ -20,7 +20,7 @@
 */
 #include "applet.h"
 
-#include <kaboutapplication.h>
+#include <tdeaboutapplication.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <dcopclient.h>

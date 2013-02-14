@@ -28,7 +28,7 @@
 #include <tqtabwidget.h>
 #include <tqvgroupbox.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kdialog.h>

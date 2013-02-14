@@ -22,7 +22,7 @@
 
 #include <tqpainter.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcursor.h>
 #include <kglobalsettings.h>
 #include <kiconeffect.h>

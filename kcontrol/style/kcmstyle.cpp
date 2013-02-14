@@ -42,17 +42,17 @@
 #include <tqpushbutton.h>
 
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobalsettings.h>
 #include <kdebug.h>
 #include <kipc.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kdialog.h>
 #include <klibloader.h>
 #include <tdelistview.h>
 #include <kmessagebox.h>
 #include <ksimpleconfig.h>
-#include <kstyle.h>
+#include <tdestyle.h>
 #include <kstandarddirs.h>
 
 #include "../krdb/krdb.h"

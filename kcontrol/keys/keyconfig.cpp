@@ -25,7 +25,7 @@
 #include <kmessagebox.h>
 #include <kseparator.h>
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kkey_x11.h>	// Used in KKeyModule::init()
 
 #include "keyconfig.h"

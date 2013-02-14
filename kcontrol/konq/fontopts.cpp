@@ -26,7 +26,7 @@
 
 #include <dcopclient.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcolorbutton.h>
 #include <tdeconfig.h>
 #include <kdebug.h>

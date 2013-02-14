@@ -24,7 +24,7 @@
 #include <tqmap.h>
 
 #include <configdialog.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 
 class KSimpleConfig;
 class KCMDnssd: public ConfigDialog

@@ -19,7 +19,7 @@
  */
 #include "fontdialog.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcharsets.h>
 #include <kcombobox.h>
 #include <tdeconfig.h>

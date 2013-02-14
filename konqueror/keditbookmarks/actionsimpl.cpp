@@ -40,7 +40,7 @@
 #include <dcopclient.h>
 #include <dcopref.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <tdeaction.h>
 #include <kstdaction.h>

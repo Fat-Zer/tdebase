@@ -13,7 +13,7 @@
 #include <kdatastream.h>
 #include <kstdaction.h>
 #include <tdeaction.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
 #include <kdialog.h>
 #include <kglobal.h>

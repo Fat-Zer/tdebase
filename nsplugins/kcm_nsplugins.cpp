@@ -32,7 +32,7 @@
 #include <tqvgroupbox.h>
 #include <kdebug.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <kprocio.h>
 
