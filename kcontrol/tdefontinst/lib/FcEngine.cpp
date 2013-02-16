@@ -5,7 +5,7 @@
 #include <tqtextstream.h>
 #include <kurl.h>
 #include <tdeconfig.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdeio/netaccess.h>
 #include <math.h>
 #include "FcEngine.h"

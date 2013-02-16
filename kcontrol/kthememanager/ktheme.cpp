@@ -31,12 +31,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <tdeconfig.h>
 #include <kdatastream.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <tdeio/job.h>
 #include <tdeio/netaccess.h>
 #include <kipc.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kservice.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>

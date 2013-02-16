@@ -32,7 +32,7 @@
 
 #include <kpushbutton.h>
 #include <kguiitem.h>
-#include <kemailsettings.h>
+#include <tdeemailsettings.h>
 #include <kpassdlg.h>
 #include <kuser.h>
 #include <kdialog.h>
@@ -40,7 +40,7 @@
 #include <kstandarddirs.h>
 #include <tdeaboutdata.h>
 #include <kgenericfactory.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
 #include <tdeio/netaccess.h>
 #include <kurl.h>

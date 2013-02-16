@@ -21,7 +21,7 @@
 
 */
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ksgrd/SensorManager.h>
 
 #include <tqwhatsthis.h>

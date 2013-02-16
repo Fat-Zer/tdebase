@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <kstandarddirs.h>
 #include <kdesktopfile.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdesycocaentry.h>
 #include <kservice.h>
 #include <kservicegroup.h>

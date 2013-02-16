@@ -25,7 +25,7 @@
 #include <tqlabel.h>
 
 #include <dcopclient.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "filteropts.h"
 

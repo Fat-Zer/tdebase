@@ -28,14 +28,14 @@
 #include <dcopclient.h>
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <krun.h>
 #include <kuser.h>
 

@@ -18,13 +18,13 @@
 
 #include <kdebug.h>
 #include <kprocess.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <twin.h>
 #include <twinmodule.h>
 #include <tdeapplication.h>
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 #include <kxmessages.h>
 
 #include <netwm.h>

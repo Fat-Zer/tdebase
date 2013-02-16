@@ -11,8 +11,8 @@
 #include <tqdrawutil.h>
 #include <kpixmapeffect.h>
 #include <kdrawutil.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tqbitmap.h>
 
 namespace Laptop {

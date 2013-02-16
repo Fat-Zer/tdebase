@@ -50,12 +50,12 @@
 #include <kbookmarkmenu.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
 #include <klineedit.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kstandarddirs.h>
 #include <kcombobox.h>
 #include <twin.h>

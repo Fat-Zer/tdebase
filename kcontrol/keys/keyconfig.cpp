@@ -19,10 +19,10 @@
 #include <tqregexp.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <ksimpleconfig.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kseparator.h>
 #include <dcopclient.h>
 #include <tdeapplication.h>

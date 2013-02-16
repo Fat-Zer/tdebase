@@ -20,7 +20,7 @@
   Boston, MA 02110-1301, USA.
  */
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqbitmap.h>
 #include <tqdatetime.h>

@@ -29,7 +29,7 @@
 
 #include "FontEngine.h"
 #include "Misc.h"
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>

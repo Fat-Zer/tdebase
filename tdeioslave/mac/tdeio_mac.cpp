@@ -20,7 +20,7 @@
 
 #include <kinstance.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <tqstring.h>
 #include <tqregexp.h>

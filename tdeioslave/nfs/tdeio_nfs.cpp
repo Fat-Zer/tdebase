@@ -50,7 +50,7 @@
 
 #include <kdebug.h>
 #include <kinstance.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tdeio/global.h>
 #include <iostream>

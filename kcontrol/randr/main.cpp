@@ -19,10 +19,10 @@
 #include <stdlib.h>
 #include <kdebug.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include "tderandrapp.h"
 

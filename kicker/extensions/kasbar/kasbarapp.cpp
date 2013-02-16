@@ -57,8 +57,8 @@
 #include <kdebug.h>
 #include <dcopclient.h>
 #include <twin.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 
 #include "kasitem.h"
 #include "kastasker.h"

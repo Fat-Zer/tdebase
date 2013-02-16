@@ -32,8 +32,8 @@
 #include <kdesktopfile.h>
 #include <kiconloader.h>
 #include <tdelistview.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <knuminput.h>
 #include <kstandarddirs.h>
 #include <tdefontrequester.h>

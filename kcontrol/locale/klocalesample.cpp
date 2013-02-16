@@ -31,7 +31,7 @@
 
 #include <stdio.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "klocalesample.h"
 #include "klocalesample.moc"

@@ -25,10 +25,10 @@
 #include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdialog.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <twin.h>
 
 #include <tqcheckbox.h>

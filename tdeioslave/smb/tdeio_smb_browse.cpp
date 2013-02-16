@@ -36,7 +36,7 @@
 
 #include <tqtextcodec.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include "tdeio_smb.h"
 #include "tdeio_smb_internal.h"

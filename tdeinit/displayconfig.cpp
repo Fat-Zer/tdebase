@@ -27,7 +27,7 @@
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <tdeconfig.h>
 

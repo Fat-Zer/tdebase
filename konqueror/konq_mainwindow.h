@@ -34,7 +34,7 @@
 #include <kbookmarkmanager.h>
 #include <kcompletion.h>
 #include <kurlcompletion.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <dcopobject.h>
 #include <kxmlguifactory.h>
 #include <kxmlguiclient.h>

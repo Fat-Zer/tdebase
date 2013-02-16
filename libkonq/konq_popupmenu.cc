@@ -21,7 +21,7 @@
 #include <tqdir.h>
 #include <tqeventloop.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <kbookmarkmanager.h>
 #include <kdebug.h>
@@ -29,7 +29,7 @@
 #include <kprotocolinfo.h>
 #include <kiconloader.h>
 #include <kinputdialog.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kstandarddirs.h>
 #include <kxmlguifactory.h>
 #include <kxmlguibuilder.h>

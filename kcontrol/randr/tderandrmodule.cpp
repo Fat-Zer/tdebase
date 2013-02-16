@@ -33,8 +33,8 @@
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kgenericfactory.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 
 #include "tderandrmodule.h"
 #include "tderandrmodule.moc"

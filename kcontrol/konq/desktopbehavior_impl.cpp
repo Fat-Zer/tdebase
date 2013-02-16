@@ -32,8 +32,8 @@
 #include <tqwhatsthis.h>
 #include <tdelistview.h>
 #include <kservice.h>
-#include <klocale.h>
-#include <kglobalsettings.h>
+#include <tdelocale.h>
+#include <tdeglobalsettings.h>
 #include <kmimetype.h>
 #include <ktrader.h>
 #include <tdeapplication.h>

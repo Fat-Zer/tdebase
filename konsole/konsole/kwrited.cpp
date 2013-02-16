@@ -37,13 +37,13 @@
 // KDE 
 #include <kuniqueapplication.h>
 #include <tdecmdlineargs.h>
-#include <klocale.h>
-#include <kglobalsettings.h>
+#include <tdelocale.h>
+#include <tdeglobalsettings.h>
 #include <kdebug.h>
 #include <kcrash.h>
 #include <kpty.h>
 #include <kuser.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 // kwrited
 #include "kwrited.h"

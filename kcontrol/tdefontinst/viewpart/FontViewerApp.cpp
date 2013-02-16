@@ -31,8 +31,8 @@
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
 #include <klibloader.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <tdefiledialog.h>
 #include <tdeconfig.h>
 

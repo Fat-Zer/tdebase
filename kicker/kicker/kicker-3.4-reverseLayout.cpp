@@ -6,10 +6,10 @@
 
 #include <tdeapplication.h>
 #include <tdecmdlineargs.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kprocess.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 
 struct AppletInfo
 {

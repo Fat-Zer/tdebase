@@ -28,7 +28,7 @@
 #include <tdeaboutdata.h>
 #include <kgenericfactory.h>
 #include <kimageio.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kurldrag.h>
 
 #include "tdm-appear.h"

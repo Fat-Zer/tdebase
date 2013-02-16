@@ -26,7 +26,7 @@
 #include <tqregexp.h>
 #include <tqfile.h>
 #include <tqpaintdevice.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <klargefile.h>
 #include <tqdir.h>
 #include <tqsettings.h>

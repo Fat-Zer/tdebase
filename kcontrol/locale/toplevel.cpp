@@ -32,7 +32,7 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kdialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
 #include <kservice.h>
 

@@ -31,7 +31,7 @@
 #include "Misc.h"
 #include "KfiConstants.h"
 #include "KfiPrint.h"
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqframe.h>
@@ -46,7 +46,7 @@
 #include <tqtimer.h>
 #include <tdeio/netaccess.h>
 #include <kinstance.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <knuminput.h>
 #include <kstdaction.h>
 #include <tdeaction.h>

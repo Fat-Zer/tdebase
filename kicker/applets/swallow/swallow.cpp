@@ -27,8 +27,8 @@
 #include <tdecmdlineargs.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
 #include <kshell.h>
 #include <twin.h>

@@ -30,7 +30,7 @@
 #include <tqlayout.h>
 
 #include <kdialogbase.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kseparator.h>
 #include <tdeapplication.h>

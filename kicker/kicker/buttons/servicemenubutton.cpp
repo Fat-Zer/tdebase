@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tdeconfig.h>
 #include <kservicegroup.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "service_mnu.h"
 

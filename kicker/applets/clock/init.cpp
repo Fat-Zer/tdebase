@@ -44,12 +44,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kstandarddirs.h>
 #include <tdeapplication.h>
 #include <kprocess.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdepopupmenu.h>
 #include <kstringhandler.h>
 #include <tdefiledialog.h>
 #include <tdefontrequester.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdeconfigdialogmanager.h>
 #include <kcalendarsystem.h>
 #include <kicontheme.h>

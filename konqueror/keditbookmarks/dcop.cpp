@@ -30,7 +30,7 @@
 #include <tqpopupmenu.h>
 #include <tqpainter.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kbookmarkmanager.h>
 #include <dcopclient.h>
 #include <kdebug.h>

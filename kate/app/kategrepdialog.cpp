@@ -37,9 +37,9 @@
 #include <tdefiledialog.h>
 #include <kprocess.h>
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kpushbutton.h>
 #include <kurlrequester.h>
 #include <kurlcompletion.h>

@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdemultipledrag.h>
 #include <kpanelapplet.h>
 #include <kurldrag.h>

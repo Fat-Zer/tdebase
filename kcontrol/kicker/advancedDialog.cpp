@@ -25,7 +25,7 @@
 #include <tqslider.h>
 
 #include <kcolorbutton.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "advancedDialog.h"
 #include "advancedOptions.h"

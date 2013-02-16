@@ -21,7 +21,7 @@
 #include <tqlayout.h>
 
 #include <krun.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <tdeio/global.h>
 #include <tdelistbox.h>

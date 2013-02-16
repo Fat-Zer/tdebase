@@ -35,12 +35,12 @@
 #include <kcrash.h>
 #include <kdebug.h>
 #include <kdirwatch.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kglobalaccel.h>
 #include <kiconloader.h>
 #include <kimageio.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kstandarddirs.h>
 #include <twin.h>
 #include <twinmodule.h>

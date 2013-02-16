@@ -27,7 +27,7 @@
 
 #include <tdefiledialog.h>
 #include <tdelistview.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <ksocks.h>
 #include <tdeapplication.h>
 

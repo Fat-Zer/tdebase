@@ -29,11 +29,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tdeaboutdata.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeio/netaccess.h>
-#include <klocale.h>
-#include <kmenubar.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemenubar.h>
+#include <tdemessagebox.h>
 #include <kstandarddirs.h>
 #include <twinmodule.h>
 #include <dcopref.h>

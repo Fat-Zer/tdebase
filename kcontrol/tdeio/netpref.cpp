@@ -5,7 +5,7 @@
 
 #include <tdeio/ioslave_defaults.h>
 #include <knuminput.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialog.h>
 #include <tdeconfig.h>
 

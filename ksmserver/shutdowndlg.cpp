@@ -37,7 +37,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tqregexp.h>
 #include <tqeventloop.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <tdeapplication.h>
 #include <kdebug.h>
@@ -45,7 +45,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <kstdguiitem.h>
 #include <kguiitem.h>
 #include <kiconloader.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <twin.h>
 #include <kuser.h>
 #include <kpixmap.h>

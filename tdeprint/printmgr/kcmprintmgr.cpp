@@ -25,7 +25,7 @@
 #include <kgenericfactory.h>
 #include <tdeaboutdata.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 typedef KGenericFactory<KCMPrintMgr, TQWidget> KPrintMgrFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_printmgr, KPrintMgrFactory("kcmprintmgr") )

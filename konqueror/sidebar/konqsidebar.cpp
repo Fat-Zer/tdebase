@@ -78,7 +78,7 @@ void KonqSidebar::customEvent(TQCustomEvent* ev)
 // It's usually safe to leave the factory code alone.. with the
 // notable exception of the TDEAboutData data
 #include <tdeaboutdata.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kinstance.h>
 
 TDEInstance*  KonqSidebarFactory::s_instance = 0L;

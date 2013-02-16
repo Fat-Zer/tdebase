@@ -27,9 +27,9 @@
 
 #include <tqregexp.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdefiledialog.h>
 
 #include <kbookmarkmanager.h>

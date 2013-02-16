@@ -23,8 +23,8 @@
 #ifndef DIALOG_H_
 #define DIALOG_H_
 
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kdialogbase.h>

@@ -24,7 +24,7 @@
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 #include <kipc.h>
 #include <krun.h>

@@ -32,17 +32,17 @@
 #include <tqradiobutton.h>
 #include <tqlabel.h>
 #include <tqcombobox.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include <kactivelabel.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kcolorbutton.h>
 #include <tdeconfig.h>
 #include <knuminput.h>
 #include <tdeapplication.h>
 #include <kdialog.h>
 #include <dcopclient.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kprocess.h>
 #include <tqtabwidget.h>
 

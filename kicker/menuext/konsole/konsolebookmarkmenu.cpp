@@ -17,7 +17,7 @@
 #include <tqfile.h>
 
 #include <tdeaction.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 
 KonsoleBookmarkMenu::KonsoleBookmarkMenu( KBookmarkManager* mgr,

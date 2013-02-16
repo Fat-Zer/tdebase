@@ -23,7 +23,7 @@
 
 #include <tdeparts/genericfactory.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqdir.h>
 #include <kinstance.h>

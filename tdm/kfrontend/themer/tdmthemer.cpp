@@ -30,7 +30,7 @@
 
 #include <kiconloader.h>
 #include <kimageeffect.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
 #include <kdebug.h>
 

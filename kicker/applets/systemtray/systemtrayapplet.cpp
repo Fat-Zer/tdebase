@@ -37,10 +37,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <dcopclient.h>
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <krun.h>
 #include <twinmodule.h>
 #include <kdialogbase.h>

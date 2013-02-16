@@ -29,7 +29,7 @@
 #include <tqdatastream.h>
 #include <tqregexp.h>
 #include <tqtimer.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeapplication.h>
 #include <kdebug.h>
 //#include <ktopwidget.h>
@@ -40,7 +40,7 @@
 
 #include "widgets.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqdialog.h>
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>

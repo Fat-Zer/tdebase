@@ -19,7 +19,7 @@
 
 #include "notifiersettings.h"
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdesktopfile.h>
 #include <kstandarddirs.h>
 #include <tqdir.h>

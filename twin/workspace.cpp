@@ -14,17 +14,17 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "workspace.h"
 
 #include <tdeapplication.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 #include <fixx11h.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tqpopupmenu.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqregexp.h>
 #include <tqpainter.h>
 #include <tqbitmap.h>
 #include <tqclipboard.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <kprocess.h>
 #include <kglobalaccel.h>
 #include <dcopclient.h>

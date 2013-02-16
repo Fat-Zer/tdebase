@@ -31,7 +31,7 @@
 #include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <tdeio/uiserver_stub.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <konq_defaults.h>
 #include <kstandarddirs.h>
 #include <kurlrequester.h>

@@ -25,11 +25,11 @@
 #include <kpushbutton.h>
 #include <tqlabel.h>
 #include <twinmodule.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqregexp.h>
 #include <tqwhatsthis.h>
 #include <assert.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tqtabwidget.h>
 #include <tqtimer.h>
 

@@ -41,12 +41,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kicker.h>
 #include <kstandarddirs.h>
 #include <twin.h>
-#include <klocale.h>
-#include <kglobalsettings.h>
+#include <tdelocale.h>
+#include <tdeglobalsettings.h>
 #include <tdeapplication.h>
 #include <netwm.h>
 #include <fixx11h.h>

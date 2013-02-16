@@ -2,7 +2,7 @@
 #include <tqfile.h>
 
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
 #include <kopenwith.h>

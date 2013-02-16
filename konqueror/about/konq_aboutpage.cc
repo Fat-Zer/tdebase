@@ -5,8 +5,8 @@
 #include <tdeaboutdata.h>
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <ksavefile.h>
 #include <kstandarddirs.h>
 #include <tdeaction.h>

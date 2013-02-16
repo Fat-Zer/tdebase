@@ -2,8 +2,8 @@
 // Melchior FRANZ  <a8603365@unet.univie.ac.at>   configuration options
 
 #include <tdeconfig.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tqlayout.h>
 #include <tqdrawutil.h>
 #include <kpixmapeffect.h>

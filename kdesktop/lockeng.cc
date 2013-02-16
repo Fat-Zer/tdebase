@@ -15,7 +15,7 @@
 #include <tdeapplication.h>
 #include <kservicegroup.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqfile.h>
 #include <tqtimer.h>
 #include <dcopclient.h>

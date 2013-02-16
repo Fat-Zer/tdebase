@@ -35,11 +35,11 @@
 #include <tqcheckbox.h>
 #include <tqstyle.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <klineedit.h>
 #include <kimageio.h>
 #include <kcombobox.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kstandarddirs.h>
 #include <tdeio/netaccess.h>
 #include <kiconloader.h>

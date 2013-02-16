@@ -17,10 +17,10 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <tqlabel.h>
 #include <tqdrawutil.h>
 #include <tqstyle.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <fixx11h.h>
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqapplication.h>
 #include <tqdesktopwidget.h>
 #include <kstringhandler.h>
@@ -28,7 +28,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <kdebug.h>
 #include <kglobalaccel.h>
 #include <kkeynative.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kiconeffect.h>
 #include <X11/keysym.h>
 #include <X11/keysymdef.h>

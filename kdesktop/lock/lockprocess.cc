@@ -40,9 +40,9 @@
 #include <tdeapplication.h>
 #include <kservicegroup.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
-#include <kglobalsettings.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdeglobalsettings.h>
+#include <tdelocale.h>
 #include <klibloader.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>

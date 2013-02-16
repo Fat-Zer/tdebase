@@ -19,7 +19,7 @@
 #include <tqlayout.h>
 #include <tqtabwidget.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialog.h>
 
 #include "kcmperformance.h"

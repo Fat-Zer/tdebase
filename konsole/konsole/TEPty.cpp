@@ -81,7 +81,7 @@
 #include <termios.h>
                      
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kpty.h>
 

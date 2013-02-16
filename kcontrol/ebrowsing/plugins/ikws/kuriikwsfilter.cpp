@@ -21,10 +21,10 @@
 #include <unistd.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kurl.h>
 #include <kinstance.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include "ikwsopts.h"
 #include "kuriikwsfiltereng.h"

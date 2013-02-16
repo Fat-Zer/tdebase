@@ -26,12 +26,12 @@
 #include <kdebug.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdepopupmenu.h>
 #include <kstdaction.h>
 #include <kstdguiitem.h>
-#include <kglobal.h>
-#include <kmessagebox.h>
+#include <tdeglobal.h>
+#include <tdemessagebox.h>
 #include <kstandarddirs.h>
 
 #include <cstdlib>

@@ -25,8 +25,8 @@
 #  include <config.h>
 #endif
 
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <dcopref.h>
 #include <tqfile.h>

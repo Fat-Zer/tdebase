@@ -28,7 +28,7 @@
 #include <kdcopactionproxy.h>
 #include <kdcoppropertyproxy.h>
 #include <kdebug.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 #include <twin.h>
 
 KonqMainWindowIface::KonqMainWindowIface( KonqMainWindow * mainWindow )

@@ -40,7 +40,7 @@
 #include <kcmultidialog.h>
 #include <kbookmarkmenu.h>
 #include <konqbookmarkmanager.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knewmenu.h>
 #include <dcopclient.h>
 #include <dcopref.h>
@@ -48,8 +48,8 @@
 #include <kdebug.h>
 #include <twindowlistmenu.h>
 #include <twin.h>
-#include <kmenubar.h>
-#include <kmessagebox.h>
+#include <tdemenubar.h>
+#include <tdemessagebox.h>
 #include <kuser.h>
 #include <tqfile.h>
 

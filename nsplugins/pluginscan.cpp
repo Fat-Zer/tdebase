@@ -42,7 +42,7 @@
 
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <klibloader.h>
 #include <tdeconfig.h>
@@ -52,7 +52,7 @@
 #include <kmimetype.h>
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "sdk/npupp.h"
 #include <X11/Intrinsic.h>

@@ -24,7 +24,7 @@
 
 #include <klineedit.h>
 #include <kcombobox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "policydlg.h"
 #include "policydlg_ui.h"

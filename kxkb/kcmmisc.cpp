@@ -37,11 +37,11 @@
 #include <tqvbuttongroup.h>
 #include <tqradiobutton.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <knuminput.h>
 #include <tdeapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <kprocess.h>
 #include <kdialog.h>

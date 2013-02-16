@@ -13,8 +13,8 @@
 #include <tqlabel.h>
 #include <tqpushbutton.h>
 
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 
 #include "gesturerecordpage.h"
 #include "gesturerecorder.h"

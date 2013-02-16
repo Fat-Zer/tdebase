@@ -407,10 +407,10 @@
 </tabstops>
 <includes>
     <include location="global" impldecl="in implementation">tdeio/netaccess.h</include>
-    <include location="global" impldecl="in implementation">kmessagebox.h</include>
+    <include location="global" impldecl="in implementation">tdemessagebox.h</include>
     <include location="global" impldecl="in implementation">kiconloader.h</include>
-    <include location="global" impldecl="in implementation">klocale.h</include>
-    <include location="global" impldecl="in implementation">kglobalsettings.h</include>
+    <include location="global" impldecl="in implementation">tdelocale.h</include>
+    <include location="global" impldecl="in implementation">tdeglobalsettings.h</include>
     <include location="global" impldecl="in implementation">ksimpleconfig.h</include>
     <include location="global" impldecl="in implementation">tdeapplication.h</include>
     <include location="global" impldecl="in implementation">kstandarddirs.h</include>

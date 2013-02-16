@@ -19,7 +19,7 @@
 
 #include "serviceconfigdialog.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <klineedit.h>
 #include <tdeactionselector.h>
 #include <kicondialog.h>

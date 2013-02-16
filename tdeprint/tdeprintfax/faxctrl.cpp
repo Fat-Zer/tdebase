@@ -36,19 +36,19 @@
 #include <tqstylesheet.h>
 
 #include <kprocess.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialogbase.h>
 #include <kmimetype.h>
 #include <kstandarddirs.h>
 #include <tdeapplication.h>
 #include <twin.h>
-#include <kemailsettings.h>
+#include <tdeemailsettings.h>
 #include <kdebug.h>
 #include <kstdguiitem.h>
 #include <tdefiledialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include <stdlib.h>
 #include <stdarg.h>

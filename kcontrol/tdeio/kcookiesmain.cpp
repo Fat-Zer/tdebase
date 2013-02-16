@@ -6,9 +6,9 @@
 #include <tqlayout.h>
 #include <tqtabwidget.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
 #include <dcopref.h>
 

@@ -22,7 +22,7 @@
 
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <assert.h>
 
 #include <X11/Xlib.h>

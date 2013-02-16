@@ -19,7 +19,7 @@
  */
 
 #include "styleconfdialog.h"
-#include <klocale.h>
+#include <tdelocale.h>
 
 StyleConfigDialog::StyleConfigDialog(TQWidget* parent, TQString styleName):
   KDialogBase(parent, "StyleConfigDialog",

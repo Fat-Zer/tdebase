@@ -17,9 +17,9 @@
 #include "sidebarextension.h"
 #include "sidebarextension.moc"
 #include <kdebug.h>
-#include <kmessagebox.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tdeparts/part.h>
 #include <tdeparts/componentfactory.h>
 #include <tqlayout.h>

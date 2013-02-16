@@ -37,7 +37,7 @@
 #include <kdatastream.h> // Do not remove, needed for correct bool serialization
 #include <kurl.h>
 #include <tdeapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <kimageeffect.h>
 #include <kmimetype.h>
@@ -47,7 +47,7 @@
 #include <kservicetype.h>
 #include <kuserprofile.h>
 #include <tdefilemetainfo.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <config.h> // For HAVE_NICE
 #include "thumbnail.h"

@@ -22,9 +22,9 @@
 #include <kdebug.h>
 
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tqlabel.h>
 #include <tqstyle.h>
 #include <kiconloader.h>

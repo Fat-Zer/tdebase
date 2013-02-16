@@ -25,9 +25,9 @@
 #include <tqslider.h>
 
 #include <tdeapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <dcopclient.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
 #include <knuminput.h>

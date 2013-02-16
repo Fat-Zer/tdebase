@@ -26,7 +26,7 @@
 #include <tqstring.h>
 #include <tqstringlist.h>
 #include <stdlib.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tqfile.h>
 #include <tqtimer.h>
 #include <tqregexp.h>
@@ -34,12 +34,12 @@
 
 #include <tdeapplication.h>
 #include <tdecmdlineargs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <tdeio/netaccess.h>
 #include <kurl.h>
 #include <kdebug.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 
 #include <kprinter.h>
 #include <tdeprint/kmmanager.h>

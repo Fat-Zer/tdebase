@@ -28,9 +28,9 @@
 #include <tqradiobutton.h>
 #include <tqtabwidget.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <klineedit.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include "ksaveioconfig.h"
 #include "kenvvarproxydlg.h"

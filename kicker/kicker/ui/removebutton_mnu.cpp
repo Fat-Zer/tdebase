@@ -23,8 +23,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tqregexp.h>
 #include <kiconloader.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 
 #include "panelbutton.h"

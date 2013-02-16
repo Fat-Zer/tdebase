@@ -23,7 +23,7 @@
 #include <tdeaboutdata.h>
 #include <kstandarddirs.h>
 #include <tqtextstream.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kuniqueapplication.h>
 #include <tdeconfig.h>

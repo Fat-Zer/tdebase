@@ -20,7 +20,7 @@
 #include <dcopclient.h>
 #include <tdeapplication.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kmimetype.h>
 
 #include "konq_faviconmgr.moc"

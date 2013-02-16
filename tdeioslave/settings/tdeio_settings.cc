@@ -21,7 +21,7 @@
 #include <kinstance.h>
 #include <kdebug.h>
 #include <tqtextstream.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <sys/stat.h>
 #include <dcopclient.h>
 #include <tqdatastream.h>

@@ -24,8 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqtooltip.h>
 #include <tqdragobject.h>
 
-#include <klocale.h>
-#include <kglobalsettings.h>
+#include <tdelocale.h>
+#include <tdeglobalsettings.h>
 #include <konq_operations.h>
 #include <tdefileitem.h>
 

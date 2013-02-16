@@ -37,11 +37,11 @@ using namespace std;
 #include <tdeapplication.h>
 #include <kcombobox.h>
 #include <kdialog.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <kiconeffect.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kmimetype.h>
 #include <kpixmap.h>
 #include <tderecentdocument.h>

@@ -67,10 +67,10 @@
 
 #include <kdebug.h>
 #include <kdialog.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <tdelistview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kpassivepopup.h>
 #include <tdepopupmenu.h>
 #include <kprocess.h>

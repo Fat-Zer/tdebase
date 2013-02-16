@@ -32,8 +32,8 @@
 #undef HAVE_XKB
 #endif
 
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 
 #include "TEmuVt102.h"
 #include "TEWidget.h"

@@ -28,7 +28,7 @@
 #include <tqwhatsthis.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 #include "../background/bgsettings.h"
 #include "../background/bgdialog.h"

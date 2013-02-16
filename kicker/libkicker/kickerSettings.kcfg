@@ -5,7 +5,7 @@
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
 
 <include>tdeapplication.h</include>
-<include>klocale.h</include>
+<include>tdelocale.h</include>
 <kcfgfile arg="true" />
 
 <group name="General">

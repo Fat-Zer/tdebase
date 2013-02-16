@@ -27,12 +27,12 @@
 #include <tqstyle.h>
 #include <tqtooltip.h>
 
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kmimetype.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdesktopfile.h>
 #include <krun.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kcursor.h>
 #include <tdeapplication.h>
 #include <kipc.h>

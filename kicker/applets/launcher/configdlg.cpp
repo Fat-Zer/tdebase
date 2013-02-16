@@ -23,7 +23,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 #include <tqcombobox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include "prefs.h"

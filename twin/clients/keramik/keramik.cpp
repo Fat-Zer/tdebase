@@ -21,7 +21,7 @@
  */
 
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconeffect.h>
 
 #include <tqpainter.h>

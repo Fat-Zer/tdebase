@@ -24,12 +24,12 @@
 #include <tqtextcodec.h>
 
 #include <krun.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <tdecmdlineargs.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kinputdialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeconfig.h>
 
 #include <stdlib.h>

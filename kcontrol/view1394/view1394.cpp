@@ -24,8 +24,8 @@
 #include <tqtextstream.h>
 
 #include <kdialog.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 
 #include "view1394.h"

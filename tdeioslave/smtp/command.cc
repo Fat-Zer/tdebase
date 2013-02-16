@@ -38,7 +38,7 @@
 #include "transactionstate.h"
 
 #include <kidna.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kmdcodec.h>
 #include <tdeio/slavebase.h> // for test_commands, where SMTPProtocol is not derived from TCPSlaveBase

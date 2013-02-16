@@ -32,12 +32,12 @@
 
 #include <tdeparts/factory.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <tdeconfig.h>
 #include <klibloader.h>
 #include <kmdcodec.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kencodingfiledialog.h>
 #include <tdeio/job.h>
 #include <twin.h>

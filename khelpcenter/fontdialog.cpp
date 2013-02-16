@@ -25,7 +25,7 @@
 #include <tdeconfig.h>
 #include <tdefontcombo.h>
 #include <tdehtmldefaults.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knuminput.h>
 
 #include <tqgroupbox.h>

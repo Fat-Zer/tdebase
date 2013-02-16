@@ -21,9 +21,9 @@
 
 #include <kdebug.h>
 #include <tdefiledialog.h>
-#include <kglobalsettings.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdeglobalsettings.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
 #include <kpushbutton.h>
 #include <kstandarddirs.h>

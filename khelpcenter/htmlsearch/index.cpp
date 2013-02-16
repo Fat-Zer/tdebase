@@ -1,7 +1,7 @@
 
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeapplication.h>
 
 #include "htmlsearch.h"

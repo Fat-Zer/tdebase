@@ -20,7 +20,7 @@
 
 #include <tqlayout.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kurllabel.h>
 #include <tdeapplication.h>
 #include <tqcheckbox.h>

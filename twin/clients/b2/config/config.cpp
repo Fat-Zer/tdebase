@@ -7,10 +7,10 @@
  */
 
 #include "config.h"
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tqwhatsthis.h>
 #include <tqvbox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 
 extern "C"

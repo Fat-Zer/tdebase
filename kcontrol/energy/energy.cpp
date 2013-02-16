@@ -31,7 +31,7 @@
 #include <kcursor.h>
 #include <kdialog.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knuminput.h>
 #include <krun.h>
 #include <kstandarddirs.h>

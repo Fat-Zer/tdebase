@@ -19,8 +19,8 @@
 #include "homedirnotifymodule.h"
 
 #include <kdebug.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 
 HomeDirNotifyModule::HomeDirNotifyModule(const TQCString &obj)
 	: KDEDModule(obj)

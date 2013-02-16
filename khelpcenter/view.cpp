@@ -11,7 +11,7 @@
 #include <kdebug.h>
 #include <tdehtml_settings.h>
 #include <tdehtmlview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdepopupmenu.h>
 #include <kstandarddirs.h>
 

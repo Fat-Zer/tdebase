@@ -5,8 +5,8 @@
 #include <tdefileitem.h>
 #include <tdefilemetainfo.h>
 #include <tdeapplication.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <kzip.h>
 

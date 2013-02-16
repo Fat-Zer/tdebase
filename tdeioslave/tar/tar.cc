@@ -9,7 +9,7 @@
 
 #include <tqfile.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kurl.h>
 #include <kdebug.h>
 #include <kinstance.h>
@@ -17,7 +17,7 @@
 #include <kzip.h>
 #include <kar.h>
 #include <kmimemagic.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kde_file.h>
 #include <tdeio/global.h>
 #include <kremoteencoding.h>

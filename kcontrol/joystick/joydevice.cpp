@@ -21,7 +21,7 @@
 
 #include "joydevice.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include <sys/types.h>

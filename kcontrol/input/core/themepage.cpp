@@ -19,14 +19,14 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
 #include <kprocess.h>
 #include <tdeio/job.h>
 #include <tdeio/netaccess.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <tdelistview.h>
 #include <kdialog.h>

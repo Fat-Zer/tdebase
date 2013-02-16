@@ -33,11 +33,11 @@
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <tdeapplication.h>
-#include <kglobalsettings.h>
-#include <ktempfile.h>
+#include <tdeglobalsettings.h>
+#include <tdetempfile.h>
 #include <dcopclient.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 
 #include <assert.h>
 #include <tdepopupmenu.h>

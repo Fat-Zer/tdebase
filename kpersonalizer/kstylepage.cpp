@@ -28,10 +28,10 @@
 #include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <tdeapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdelistview.h>
 #include <kipc.h>
 #include <ksimpleconfig.h>

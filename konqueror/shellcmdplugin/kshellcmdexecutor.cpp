@@ -27,9 +27,9 @@
 #include <tqsocketnotifier.h>
 
 #include <kinputdialog.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdesu/process.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KShellCommandExecutor::KShellCommandExecutor(const TQString& command, TQWidget* parent)
 :TQTextView(parent)

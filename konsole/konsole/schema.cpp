@@ -56,7 +56,7 @@
 #include <tqdir.h>
 #include <tqdatetime.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 

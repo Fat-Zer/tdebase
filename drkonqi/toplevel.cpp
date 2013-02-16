@@ -31,11 +31,11 @@
 
 #include "netwm.h"
 
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <kbugreport.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
 #include <tdeapplication.h>
 #include <dcopclient.h>

@@ -31,8 +31,8 @@
 
 #include <kdebug.h>
 #include <kdialog.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 
 #include <config.h>
 

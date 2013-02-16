@@ -22,7 +22,7 @@
 #include <tqpopupmenu.h>
 #include <tqtooltip.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <krun.h>
 #include <tdepopupmenu.h>
 

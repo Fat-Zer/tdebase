@@ -18,10 +18,10 @@
 
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaccel.h>
-#include <kglobal.h>
-#include <kmessagebox.h>
+#include <tdeglobal.h>
+#include <tdemessagebox.h>
 
 #include "triggers.h"
 #include "conditions.h"

@@ -17,7 +17,7 @@
 #include <tdecmdlineargs.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <twin.h>
 
 #include <tqevent.h>

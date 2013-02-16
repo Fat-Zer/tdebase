@@ -31,18 +31,18 @@
 #include <tdeaction.h>
 #include <tdecmdlineargs.h>
 #include <kdebug.h>
-#include <kdiroperator.h>
+#include <tdediroperator.h>
 #include <kdockwidget.h>
 #include <kencodingfiledialog.h>
 #include <kiconloader.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tdetoolbar.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <ksimpleconfig.h>
 #include <kstdaction.h>
 #include <kstandarddirs.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdestdaccel.h>
 
 #include <tdetexteditor/encodinginterface.h>

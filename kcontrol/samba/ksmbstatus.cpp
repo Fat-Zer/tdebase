@@ -24,7 +24,7 @@
 
 #include <tqlayout.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialog.h>
 
 #include "ksmbstatus.h"

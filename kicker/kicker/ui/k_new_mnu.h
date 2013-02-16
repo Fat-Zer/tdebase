@@ -34,8 +34,8 @@
 #include <tqvbox.h>
 #include <tqregexp.h>
 
-#include <kabc/addressbook.h>
-#include <kabc/stdaddressbook.h>
+#include <tdeabc/addressbook.h>
+#include <tdeabc/stdaddressbook.h>
 #include "../interfaces/kickoff-search-plugin.h"
 
 // #include "kmenubase.h"

@@ -65,14 +65,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqguardedptr.h>
 #include <tqtimer.h>
 
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <unistd.h>
 #include <tdeapplication.h>
 #include <kstaticdeleter.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kprocess.h>
 #include <dcopclient.h>
 #include <dcopref.h>

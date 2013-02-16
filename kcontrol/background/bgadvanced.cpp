@@ -34,8 +34,8 @@
 
 #include <tdeconfig.h>
 #include <kcolorbutton.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kpixmap.h>
 #include <kstandarddirs.h>
 #include <twin.h>

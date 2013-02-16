@@ -20,7 +20,7 @@
 #include "konq_listview.h"
 #include <konq_settings.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <assert.h>
 #include <stdio.h>
 #include <tqpainter.h>

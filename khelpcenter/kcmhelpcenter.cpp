@@ -28,17 +28,17 @@
 
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <tdeaboutdata.h>
 #include <kdialog.h>
 #include <kstandarddirs.h>
 #include <kprocess.h>
 #include <tdeapplication.h>
 #include <dcopclient.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kurlrequester.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdelistview.h>
 #include <klineedit.h>
 #include <tqlayout.h>

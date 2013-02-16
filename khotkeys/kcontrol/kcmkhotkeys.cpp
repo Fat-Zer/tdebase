@@ -24,14 +24,14 @@
 
 #include <tdecmodule.h>
 #include <tdeaboutdata.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <tdeapplication.h>
 #include <dcopclient.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
-#include <kglobal.h>
+#include <tdemessagebox.h>
+#include <tdeglobal.h>
 #include <ksimpleconfig.h>
 #include <tdefiledialog.h>
 #include <dcopref.h>

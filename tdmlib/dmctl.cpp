@@ -21,7 +21,7 @@
 
 #ifdef Q_WS_X11
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 
 #include <tqregexp.h>

@@ -26,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <kdebug.h>
 #include <tqapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <assert.h>
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
 #include <X11/Xlib.h>

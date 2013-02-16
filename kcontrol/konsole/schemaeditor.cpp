@@ -34,11 +34,11 @@
 //#include <errno.h>
 
 #include <tqslider.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdefiledialog.h>
 #include <kinputdialog.h>
 #include <tqtoolbutton.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <ksharedpixmap.h>
 #include <kimageeffect.h>
 #include <tqimage.h>

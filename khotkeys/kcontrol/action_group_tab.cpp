@@ -19,8 +19,8 @@
 #include <tqlineedit.h>
 #include <tqcheckbox.h>
 
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <ktextedit.h>
 
 #include <actions.h>

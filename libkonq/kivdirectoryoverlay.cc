@@ -30,7 +30,7 @@
 #include <kstandarddirs.h>
 #include <kiconloader.h>
 #include <konq_settings.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include "kivdirectoryoverlay.h"

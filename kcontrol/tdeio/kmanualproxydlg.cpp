@@ -27,13 +27,13 @@
 #include <tqpushbutton.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knuminput.h>
 #include <tdelistbox.h>
 #include <klineedit.h>
 #include <kicontheme.h>
 #include <kurifilter.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kiconloader.h>
 #include <kinputdialog.h>
 #include <tdeio/ioslave_defaults.h>

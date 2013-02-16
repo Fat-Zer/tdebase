@@ -27,7 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kbookmark.h>
 #include <kbookmarkmenu.h>
 #include <konqbookmarkmanager.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdepopupmenu.h>
 
 #include "bookmarksbutton.h"

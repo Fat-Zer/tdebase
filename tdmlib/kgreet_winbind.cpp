@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "themer/tdmthemer.h"
 #include "themer/tdmitem.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kcombobox.h>
 #include <klineedit.h>

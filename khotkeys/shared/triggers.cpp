@@ -20,7 +20,7 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <twinmodule.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <netwm_def.h>
 #include <tdeaccel.h>
 

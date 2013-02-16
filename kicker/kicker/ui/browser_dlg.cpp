@@ -25,12 +25,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqlayout.h>
 #include <tqvbox.h>
 
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kicondialog.h>
 #include <tdefiledialog.h>
 #include <klineedit.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include "browser_dlg.h"
 #include "browser_dlg.moc"

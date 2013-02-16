@@ -34,9 +34,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tdeaboutapplication.h>
 #include <tdeaboutdata.h>
 #include <kdialogbase.h>
-#include <kglobal.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <knuminput.h>
 #include <tdeconfig.h>
 #include <kstandarddirs.h>

@@ -27,7 +27,7 @@
 #include <kimageeffect.h>
 #include <kprocess.h>
 #include <kpixmapio.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kcursor.h>
 #include <kmimetype.h>
 #include <tdefilemetainfo.h>

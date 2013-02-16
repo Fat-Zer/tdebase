@@ -32,7 +32,7 @@
 #include <kdebug.h>
 #include <tdefontcombo.h>
 #include <tdefontdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <konq_defaults.h> // include default values directly from konqueror
 
 #include "fontopts.h"

@@ -22,7 +22,7 @@
 ***************************************************************************/
 
 #include <kuniqueapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
 #include <tqcolor.h>

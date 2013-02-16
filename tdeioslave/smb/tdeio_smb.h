@@ -53,7 +53,7 @@
 #include <tdeio/global.h>
 #include <tdeio/slavebase.h>
 #include <kurl.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 //-----------------------------
 // Standard C library includes

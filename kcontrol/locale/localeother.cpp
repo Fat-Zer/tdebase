@@ -27,7 +27,7 @@
 #include <tqprinter.h>
 
 #include <kdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 

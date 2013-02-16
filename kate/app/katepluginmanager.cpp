@@ -28,7 +28,7 @@
 
 #include <tdeconfig.h>
 #include <tqstringlist.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
 #include <tqfile.h>
 

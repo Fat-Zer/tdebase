@@ -23,7 +23,7 @@
 #include <tqfile.h>
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 
 TQString debugFlag;

@@ -16,7 +16,7 @@
 #include <kurlrequester.h>
 #include <kdebug.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdehtml_settings.h>
 #include <knuminput.h>
 

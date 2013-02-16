@@ -19,7 +19,7 @@
 
 #include "mediaimpl.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <dcopclient.h>
 #include <dcopref.h>

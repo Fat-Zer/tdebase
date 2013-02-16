@@ -16,11 +16,11 @@
 #include <dmctl.h>
 
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kpushbutton.h>
 #include <kseparator.h>
 #include <kstandarddirs.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdeconfig.h>
 #include <kiconloader.h>
 #include <tdesu/defaults.h>
@@ -28,7 +28,7 @@
 #include <kdebug.h>
 #include <kuser.h>
 #include <dcopref.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include <tqlayout.h>
 #include <tqpushbutton.h>

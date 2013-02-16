@@ -22,15 +22,15 @@
 #include <tqdragobject.h>
 
 #include <tdefiledialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <krun.h>
 #include <kprocess.h>
 #include <kpropertiesdialog.h>
 #include <kstandarddirs.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kmimetype.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdepopupmenu.h>
 #include <tdeio/netaccess.h>
 #include <kurldrag.h>

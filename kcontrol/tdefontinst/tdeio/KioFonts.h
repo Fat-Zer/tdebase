@@ -33,7 +33,7 @@
 #include <time.h>
 #include <tdeio/slavebase.h>
 #include <kurl.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqstring.h>
 #include <tqcstring.h>
 #include <tqmap.h>

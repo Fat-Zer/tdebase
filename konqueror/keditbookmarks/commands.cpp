@@ -30,7 +30,7 @@
 #include <tqvaluevector.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <kbookmarkdrag.h>
 #include <kbookmarkmanager.h>

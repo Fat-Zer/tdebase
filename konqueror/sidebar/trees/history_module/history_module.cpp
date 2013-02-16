@@ -26,7 +26,7 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <krun.h>
 #include <kstaticdeleter.h>
 

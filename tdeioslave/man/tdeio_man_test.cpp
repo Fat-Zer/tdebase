@@ -6,7 +6,7 @@
 
 
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 
 class tdeio_man_test : public  MANProtocol

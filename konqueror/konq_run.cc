@@ -22,8 +22,8 @@
 #include "konq_run.h"
 #include "konq_view.h"
 #include <kuserprofile.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 
 #include <konq_historymgr.h>
 

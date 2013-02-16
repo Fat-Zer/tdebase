@@ -16,8 +16,8 @@
 
 #include <tdeconfig.h>
 #include <kdrawutil.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kpixmapeffect.h>
 #include <tqbitmap.h>
 #include <tqdrawutil.h>

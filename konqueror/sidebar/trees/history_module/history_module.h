@@ -24,8 +24,8 @@
 #include <tqdict.h>
 #include <tqpixmap.h>
 
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <konq_sidebartreemodule.h>
 
 #include "history_item.h"

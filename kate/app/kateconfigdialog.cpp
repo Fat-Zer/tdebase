@@ -48,12 +48,12 @@
 #include <kdebug.h>
 #include <kdialogbase.h>
 #include <kglobalaccel.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
 #include <kkeydialog.h>
 #include <tdelistbox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
 #include <kstdaction.h>
 #include <kstandarddirs.h>

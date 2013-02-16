@@ -22,7 +22,7 @@
 #include <tqtimer.h>
 #include <tdeapplication.h>
 #include <tdecmdlineargs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 static TDECmdLineOptions options[] =
 {

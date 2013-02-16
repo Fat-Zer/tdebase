@@ -20,7 +20,7 @@
 
 #include <kdebug.h>
 #include <kdesktopfile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "extensionInfo.h"
 

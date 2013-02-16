@@ -27,13 +27,13 @@
 #include <tqstringlist.h>
 #include <tqucomextra_p.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kicondialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kinputdialog.h>
 #include <konq_events.h>
 #include <tdefileitem.h>

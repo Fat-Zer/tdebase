@@ -101,8 +101,8 @@ Time to start a requirement list.
 #include <kkeydialog.h>
 #include <kstandarddirs.h>
 #include <tqpainter.h>
-#include <kmenubar.h>
-#include <kmessagebox.h>
+#include <tdemenubar.h>
+#include <tdemessagebox.h>
 #include <krootpixmap.h>
 #include <krun.h>
 #include <kstdaction.h>
@@ -110,7 +110,7 @@ Time to start a requirement list.
 #include <kdebug.h>
 #include <kipc.h>
 #include <dcopclient.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <knotifydialog.h>
 #undef B0
 #include <kprinter.h>
@@ -121,7 +121,7 @@ Time to start a requirement list.
 #include <kshell.h>
 #include <tqlabel.h>
 #include <tdepopupmenu.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <signal.h>

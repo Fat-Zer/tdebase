@@ -31,10 +31,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqfileinfo.h>
 
 #include <tdeapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <tdeio/global.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <krun.h>
 #include <kshell.h>
 #include <ksimpleconfig.h>

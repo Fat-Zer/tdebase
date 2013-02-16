@@ -34,11 +34,11 @@
 
 #include <kbuttonbox.h>
 #include <kcombobox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <klineedit.h>
 #include <kstdguiitem.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include "devicepropsdlg.h"
 

@@ -33,16 +33,16 @@
 #include <tqregexp.h>
 #include <tqstringlist.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <kinputdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kdesktopfile.h>
 #include <tdeaction.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeapplication.h>
 #include <kservice.h>
 #include <kservicegroup.h>

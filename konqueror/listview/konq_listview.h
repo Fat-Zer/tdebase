@@ -21,7 +21,7 @@
 #define __konq_listview_h__
 
 #include <tdeparts/browserextension.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <konq_operations.h>
 #include <tdeparts/factory.h>
 #include <konq_dirpart.h>

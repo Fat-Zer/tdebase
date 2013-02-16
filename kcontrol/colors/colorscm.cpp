@@ -26,11 +26,11 @@
 #include <kcursor.h>
 #include <tdefiledialog.h>
 #include <kgenericfactory.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kinputdialog.h>
 #include <tdeio/netaccess.h>
 #include <kipc.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
 #include <kstandarddirs.h>
 #include <tdeaboutdata.h>

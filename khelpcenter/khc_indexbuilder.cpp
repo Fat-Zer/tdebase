@@ -24,7 +24,7 @@
 #include "version.h"
 
 #include <tdeaboutdata.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdecmdlineargs.h>
 #include <kuniqueapplication.h>
 #include <kdebug.h>

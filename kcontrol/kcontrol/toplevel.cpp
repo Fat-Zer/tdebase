@@ -23,7 +23,7 @@
 #include <tdeconfig.h>
 #include <kbugreport.h>
 #include <tdeaboutapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kinstance.h>
 #include <tdeaction.h>
 #include <twin.h>

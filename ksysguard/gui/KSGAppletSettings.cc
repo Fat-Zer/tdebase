@@ -23,7 +23,7 @@
 #include <tqspinbox.h>
 
 #include <tdeaccelmanager.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "KSGAppletSettings.h"
 

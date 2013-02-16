@@ -18,7 +18,7 @@
 
 #include "removablebackend.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdirwatch.h>
 #include <kurl.h>
 #include <kmountpoint.h>

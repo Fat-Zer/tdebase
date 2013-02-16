@@ -19,7 +19,7 @@
 
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeparts/componentfactory.h>
 #include <tdeparts/plugin.h>
 #include <kplugininfo.h>

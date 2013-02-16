@@ -22,7 +22,7 @@
 #define MYMAIN_H
 
 #include <tdecmodule.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 class TQTabWidget;
 

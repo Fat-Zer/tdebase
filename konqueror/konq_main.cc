@@ -25,8 +25,8 @@
 #include "konq_settingsxt.h"
 #include "KonquerorIface.h"
 
-#include <ktempfile.h>
-#include <klocale.h>
+#include <tdetempfile.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <tdecmdlineargs.h>

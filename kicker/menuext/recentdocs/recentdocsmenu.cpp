@@ -25,12 +25,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqstring.h>
 #include <tqstringlist.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <kmimetype.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdesktopfile.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdeapplication.h>
 #include <kurldrag.h>
 #include <tderecentdocument.h>

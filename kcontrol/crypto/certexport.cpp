@@ -31,9 +31,9 @@
 #include <tqvbuttongroup.h>
 #include <tqlayout.h>
 #include <tqlabel.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <ksslall.h>
 
 

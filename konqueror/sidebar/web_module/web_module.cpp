@@ -25,8 +25,8 @@
 #include <dom/html_inline.h>
 #include <kdebug.h>
 #include <kdialog.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <konq_pixmapprovider.h>
 #include <tdeparts/browserextension.h>
 #include <kstandarddirs.h>

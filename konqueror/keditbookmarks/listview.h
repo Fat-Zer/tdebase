@@ -26,7 +26,7 @@
 #include <tqmap.h>
 #include <tqvaluevector.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kbookmark.h>
 #include <tdelistview.h>
 #include <kiconloader.h>

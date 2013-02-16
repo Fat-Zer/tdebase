@@ -18,15 +18,15 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <tqlabel.h>
 #include <tqdrawutil.h>
 #include <tqstyle.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <fixx11h.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqapplication.h>
 #include <tqdesktopwidget.h>
 #include <kstringhandler.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 // specify externals before namespace
 

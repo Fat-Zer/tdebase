@@ -19,17 +19,17 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <klineedit.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaction.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <twin.h>
 #include <tdeapplication.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kdebug.h>
 
 #include "klipperpopup.h"

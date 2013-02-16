@@ -20,7 +20,7 @@
 
 #include <keditlistbox.h>
 #include <knuminput.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqvbox.h>
 
 #include "NaughtyConfigDialog.h"

@@ -29,14 +29,14 @@
 #include <kdebug.h>
 #include <kdirlister.h>
 #include <kiconloader.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <konq_drag.h>
 #include <tdeparts/browserextension.h>
 #include <kurldrag.h>
 #include <kuserprofile.h>
 #include <kurifilter.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #include <tqapplication.h>
 #include <tqclipboard.h>

@@ -26,7 +26,7 @@
 #include "updater.h"
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 
 FavIconsItrHolder *FavIconsItrHolder::s_self = 0;

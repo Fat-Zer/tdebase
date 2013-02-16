@@ -23,7 +23,7 @@
 #include <kdebug.h>
 #include <twinmodule.h>
 #include <twin.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "khotkeysglobal.h"
 

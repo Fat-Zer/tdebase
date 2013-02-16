@@ -5,9 +5,9 @@
 
 #include <kdebug.h>
 #include <tdeapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdepopupmenu.h>
 #include <kprocess.h>
 #include <twinmodule.h>

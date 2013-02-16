@@ -43,13 +43,13 @@
 #include <tqtimer.h>
 
 #include <tdeapplication.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdeaction.h>
 #include <kstdaction.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <twin.h>
 #include <twinmodule.h>
 #include <netwm.h>

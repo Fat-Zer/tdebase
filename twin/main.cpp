@@ -14,8 +14,8 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #include "main.h"
 
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 #include <stdlib.h>
 #include <tdecmdlineargs.h>

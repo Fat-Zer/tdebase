@@ -36,7 +36,7 @@
 #include <tqpopupmenu.h>
 #include <tqpainter.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 #include <dcopref.h>
 #include <kdebug.h>
@@ -47,12 +47,12 @@
 #include <kedittoolbar.h>
 #include <tdefiledialog.h>
 #include <kkeydialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kinputdialog.h>
 #include <krun.h>
 
 #include <kdatastream.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kstandarddirs.h>
 
 #include <tdeparts/part.h>

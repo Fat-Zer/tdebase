@@ -27,7 +27,7 @@
 #include <assert.h>
 
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdepopupmenu.h>
 #include <twinmodule.h>
 #include <kregexpeditorinterface.h>

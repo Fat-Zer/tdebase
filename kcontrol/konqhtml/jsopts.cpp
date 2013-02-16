@@ -26,7 +26,7 @@
 #include "htmlopts.h"
 #include "policydlg.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "jsopts.h"
 

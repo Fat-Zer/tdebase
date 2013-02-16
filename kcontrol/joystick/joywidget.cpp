@@ -34,9 +34,9 @@
 #include <tqfontmetrics.h>
 #include <tqpushbutton.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kiconloader.h>
 
 //--------------------------------------------------------------

@@ -22,7 +22,7 @@
 #include "managermodule.h"
 
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopref.h>
 #include <tqbutton.h>
 #include <tqcheckbox.h>

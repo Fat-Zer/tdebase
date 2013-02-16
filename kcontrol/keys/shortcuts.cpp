@@ -36,8 +36,8 @@
 #include <kipc.h>
 #include <kkeynative.h>
 #include <kinputdialog.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <tdeshortcutlist.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>

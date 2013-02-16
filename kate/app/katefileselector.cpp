@@ -52,12 +52,12 @@
 #include <kurlcombobox.h>
 #include <kurlcompletion.h>
 #include <kprotocolinfo.h>
-#include <kdiroperator.h>
+#include <tdediroperator.h>
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kcombobox.h>
 #include <tdeaction.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdetoolbarbutton.h>
 #include <tqtoolbar.h>
 #include <tdepopupmenu.h>

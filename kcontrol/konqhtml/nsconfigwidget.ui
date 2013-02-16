@@ -256,7 +256,7 @@
     </vbox>
 </widget>
 <includes>
-    <include location="global" impldecl="in declaration">klocale.h</include>
+    <include location="global" impldecl="in declaration">tdelocale.h</include>
     <include location="global" impldecl="in declaration">kurlrequester.h</include>
     <include location="global" impldecl="in declaration">tdelistbox.h</include>
     <include location="local" impldecl="in implementation">kdialog.h</include>

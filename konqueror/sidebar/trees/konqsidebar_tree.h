@@ -9,7 +9,7 @@
 #include <kdialogbase.h>
 #include <tqcombobox.h>
 #include <tqstringlist.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqlineedit.h>
 class KonqSidebarTree;
 class TQVBox;

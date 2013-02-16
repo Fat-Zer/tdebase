@@ -29,11 +29,11 @@
 
 #include <kactivelabel.h>
 #include <tdeapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kdialog.h>
 #include <khotkeys.h>
 #include <kkeybutton.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 static bool treeFilled = false;
 CommandShortcutsModule::CommandShortcutsModule( TQWidget *parent, const char *name )

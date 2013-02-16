@@ -28,13 +28,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tdefileitem.h>
 #include <konq_operations.h>
 #include <kicontheme.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconeffect.h>
 #include <kpropertiesdialog.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <krun.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <kdebug.h>
 

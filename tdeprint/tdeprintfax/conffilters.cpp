@@ -29,11 +29,11 @@
 #include <tqregexp.h>
 #include <tqheader.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdelistview.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 ConfFilters::ConfFilters(TQWidget *parent, const char *name)
 : TQWidget(parent, name)

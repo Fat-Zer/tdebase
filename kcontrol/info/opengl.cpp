@@ -29,8 +29,8 @@
 #include <tqfile.h>
 #include <tqstring.h>
 
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
 
 #include <X11/Xlib.h>

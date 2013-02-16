@@ -19,7 +19,7 @@
 
 #include "notifieropenaction.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 NotifierOpenAction::NotifierOpenAction()
 	: NotifierAction()

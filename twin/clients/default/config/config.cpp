@@ -8,10 +8,10 @@
  */
 
 #include "config.h"
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tqwhatsthis.h>
 #include <kdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqpixmap.h>
 #include <tqvbox.h>
 

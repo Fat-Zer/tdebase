@@ -18,9 +18,9 @@
 
 #include "kcm.h"
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <dcopclient.h>
 #include <tdeaboutdata.h>

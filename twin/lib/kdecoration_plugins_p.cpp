@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <klibloader.h>
 #include <assert.h>
 

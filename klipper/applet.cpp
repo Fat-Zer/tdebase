@@ -21,8 +21,8 @@
 #include "applet.h"
 
 #include <tdeaboutapplication.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 #include <tdeconfig.h>
 

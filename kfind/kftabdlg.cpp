@@ -17,11 +17,11 @@
 #include <tqapplication.h>
 
 #include <kcalendarsystem.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kcombobox.h>
 #include <klineedit.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <tdefiledialog.h>
 #include <kregexpeditorinterface.h>
 #include <tdeparts/componentfactory.h>

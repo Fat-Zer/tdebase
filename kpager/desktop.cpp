@@ -29,11 +29,11 @@
 #include <dcopclient.h>
 #include <kdatastream.h>
 #include <tdeapplication.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <twinmodule.h>
 #include <twin.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 #include <ksharedpixmap.h>
 #include <kpixmapio.h>

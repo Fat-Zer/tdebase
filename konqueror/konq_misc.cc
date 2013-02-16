@@ -24,14 +24,14 @@
 
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kurifilter.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <twin.h>
 #include <kprotocolinfo.h>
 #include <kurldrag.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 
 #include "konq_misc.h"
 #include "konq_mainwindow.h"

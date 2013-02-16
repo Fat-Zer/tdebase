@@ -9,14 +9,14 @@
 #include "kdcoplistview.h"
 
 #include <dcopclient.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdatastream.h>
 #include <kstdaction.h>
 #include <tdeaction.h>
 #include <tdeapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kdialog.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <klineedit.h>
 #include <keditlistbox.h>

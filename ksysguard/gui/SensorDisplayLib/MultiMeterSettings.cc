@@ -20,7 +20,7 @@
 #include "MultiMeterSettings.h"
 #include "MultiMeterSettingsWidget.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 MultiMeterSettings::MultiMeterSettings( TQWidget *parent, const char *name )
     : KDialogBase( parent, name, true, i18n( "Multimeter Settings" ),

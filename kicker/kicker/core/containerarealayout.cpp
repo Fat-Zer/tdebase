@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tqapplication.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include "containerarea.h"
 #include "containerarealayout.h"

@@ -23,7 +23,7 @@
 #include <kdedmodule.h>
 #include <tdefileitem.h>
 #include <tdeio/job.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include <tqstring.h>
 #include <tqmap.h>

@@ -21,7 +21,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kpanelextension.h>
 #include <kstdguiitem.h>

@@ -25,14 +25,14 @@
 
 #include <tdeaction.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kiconloader.h>
 #include <tdepopupmenu.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include <tqvbox.h>
 #include <tqhbox.h>

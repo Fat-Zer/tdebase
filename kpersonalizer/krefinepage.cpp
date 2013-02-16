@@ -20,7 +20,7 @@
 #include <krun.h>
 #include <tdeconfig.h>
 #include <tdeapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include "krefinepage.h"
 #include "kpersonalizer.h"

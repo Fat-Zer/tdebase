@@ -22,7 +22,7 @@
 #include <tqlineedit.h>
 #include <tqtextedit.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 KNewThemeDlg::KNewThemeDlg( TQWidget * parent, const char * name )
     : KDialogBase(parent, name, true, i18n("New Theme"), Ok|Cancel, Ok)

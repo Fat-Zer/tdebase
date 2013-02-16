@@ -11,7 +11,7 @@
 #include <kdialogbase.h>
 #include <tdefontdialog.h>
 #include <kgenericfactory.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kstandarddirs.h>
 #include <kurlrequester.h>
 

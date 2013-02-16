@@ -8,13 +8,13 @@
 #include "autologout.h"
 
 #include <tdeapplication.h>
-#include <klocale.h>
-#include <kglobalsettings.h>
+#include <tdelocale.h>
+#include <tdeglobalsettings.h>
 #include <tdeconfig.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 #include <dcopref.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kdialog.h>
 
 #include <tqlayout.h>

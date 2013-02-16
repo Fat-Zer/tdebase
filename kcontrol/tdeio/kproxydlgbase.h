@@ -27,7 +27,7 @@
 #include <tqstringlist.h>
 
 #include <kdialogbase.h>
-#include <kprotocolmanager.h>
+#include <tdeprotocolmanager.h>
 
 class KProxyData
 {

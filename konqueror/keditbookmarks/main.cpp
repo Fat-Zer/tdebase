@@ -26,7 +26,7 @@
 
 #include <dcopclient.h>
 #include <dcopref.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
@@ -34,7 +34,7 @@
 #include <tdeaboutdata.h>
 #include <kuniqueapplication.h>
 
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <twin.h>
 
 #include <kbookmarkmanager.h>

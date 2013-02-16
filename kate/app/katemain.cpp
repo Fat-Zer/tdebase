@@ -20,13 +20,13 @@
 #include "kateapp.h"
 
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <kinstance.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 #include <dcopclient.h>
 #include <dcopref.h>
 #include <kdebug.h>

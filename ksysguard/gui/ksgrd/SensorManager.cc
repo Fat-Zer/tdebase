@@ -29,7 +29,7 @@
 
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "HostConnector.h"
 #include "SensorShellAgent.h"

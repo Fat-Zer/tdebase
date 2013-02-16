@@ -48,8 +48,8 @@
 #include <tqstylesheet.h>
 
 #include <dcopclient.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
 #include <kcombobox.h>
 #include <klineedit.h>

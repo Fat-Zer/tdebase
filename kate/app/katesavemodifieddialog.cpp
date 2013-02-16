@@ -19,7 +19,7 @@
 #include "katesavemodifieddialog.h"
 #include "katesavemodifieddialog.moc"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqlistview.h>
 #include <tdelistview.h>
 #include <kguiitem.h>
@@ -29,7 +29,7 @@
 #include <tqlabel.h>
 #include <tqpushbutton.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
 #include <kencodingfiledialog.h>
 #include <tdetexteditor/encodinginterface.h>

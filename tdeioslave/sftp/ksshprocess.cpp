@@ -66,7 +66,7 @@
 #endif
 
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqregexp.h>
 
 /*

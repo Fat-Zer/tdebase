@@ -17,8 +17,8 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <tqpixmap.h>
 #include <tdeapplication.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <tqtooltip.h>
 
 #include "client.h"

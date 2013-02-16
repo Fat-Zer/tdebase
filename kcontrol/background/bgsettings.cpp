@@ -23,7 +23,7 @@
 #include <dcopclient.h>
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <krandomsequence.h>

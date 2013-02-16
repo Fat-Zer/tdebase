@@ -22,7 +22,7 @@
 
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <ktip.h>
 #include <kuniqueapplication.h>

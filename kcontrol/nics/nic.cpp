@@ -33,7 +33,7 @@
 #include <tdeaboutdata.h>
 #include <kdialog.h>
 #include <kgenericfactory.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include <tqlayout.h>
 #include <tqlistview.h>

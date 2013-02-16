@@ -30,7 +30,7 @@
 #include <tqlayout.h>
 #include <tqframe.h>
 #include <tqlabel.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 namespace KFI
 {

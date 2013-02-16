@@ -56,11 +56,11 @@
 #include <kdialog.h>
 #include <tdefiledialog.h>
 #include <kgenericfactory.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kmdcodec.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kpassdlg.h>
 #include <kprocess.h>
 #include <kpushbutton.h>

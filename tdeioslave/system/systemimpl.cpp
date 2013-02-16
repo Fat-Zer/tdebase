@@ -20,7 +20,7 @@
 #include "systemimpl.h"
 
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kstandarddirs.h>
 #include <kdesktopfile.h>
 

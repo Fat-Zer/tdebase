@@ -15,7 +15,7 @@
 #include <kipc.h>
 #include <klineedit.h>
 #include <tdelistview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 
 #include "newtypedlg.h"

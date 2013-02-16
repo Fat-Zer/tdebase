@@ -20,7 +20,7 @@
 #include <tqtabwidget.h>
 #include <tqfile.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialog.h>
 #include <fixx11h.h>
 #include <tdecmoduleloader.h>

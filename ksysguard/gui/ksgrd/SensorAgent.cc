@@ -21,7 +21,7 @@
 #include <stdlib.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kpassdlg.h> 
 
 #include "SensorClient.h"

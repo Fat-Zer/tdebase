@@ -21,7 +21,7 @@
 
 #include <kpushbutton.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <tdecmodule.h>
 #include <kseparator.h>

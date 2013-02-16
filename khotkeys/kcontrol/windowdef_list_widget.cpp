@@ -23,7 +23,7 @@
 #include <tqpopupmenu.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <khlistview.h>
 

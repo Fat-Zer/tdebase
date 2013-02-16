@@ -25,9 +25,9 @@
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "kcmsambalog.h"
 #include "kcmsambalog.moc"

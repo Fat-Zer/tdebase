@@ -31,7 +31,7 @@
 #include <tqwhatsthis.h>
 #include <tqlayout.h>
 
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
 #include <kdialog.h>
 

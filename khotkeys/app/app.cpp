@@ -18,7 +18,7 @@
 
 #include <tdecmdlineargs.h>
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <stdio.h>
 #include <stdlib.h>

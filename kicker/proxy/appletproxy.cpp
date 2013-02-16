@@ -29,13 +29,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <qxembed.h>
 
 #include <tdeapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <klibloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <tdecmdlineargs.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kpanelapplet.h>
 #include <tdeaboutdata.h>
 #include <tqfileinfo.h>

@@ -37,10 +37,10 @@
 #include <ktip.h>
 #include <kdebug.h>
 #include <klibloader.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 
 #include <tqfile.h>
 #include <tqtimer.h>

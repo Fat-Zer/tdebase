@@ -25,7 +25,7 @@
 #include <tqlabel.h>
 #include <tqlayout.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 FilterDlg::FilterDlg(TQWidget *parent, const char *name)
 : KDialogBase(parent, name, true, i18n("Filter Parameters"), Ok|Cancel, Ok)

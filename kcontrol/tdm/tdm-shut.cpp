@@ -30,7 +30,7 @@
 #include <ksimpleconfig.h>
 #include <karrowbutton.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialog.h>
 #include <kurlrequester.h>
 

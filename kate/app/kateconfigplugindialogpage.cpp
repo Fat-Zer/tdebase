@@ -27,7 +27,7 @@
 #include <tqstringlist.h>
 #include <tqhbox.h>
 #include <tqlabel.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqpushbutton.h>
 #include <tqtooltip.h>
 #include <kiconloader.h>

@@ -20,7 +20,7 @@
 #include <tqcheckbox.h>
 #include <tqcombobox.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <ktextedit.h>
 

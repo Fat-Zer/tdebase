@@ -31,16 +31,16 @@
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdirlister.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kinputdialog.h>
 #include <konq_settings.h>
 #include <kpropertiesdialog.h>
 #include <kstdaction.h>
 #include <tdeparts/factory.h>
 #include <ktrader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kivdirectoryoverlay.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kstaticdeleter.h>
 
 #include <tqregexp.h>

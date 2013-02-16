@@ -24,13 +24,13 @@
 #include "katedocmanager.h"
 
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kdirwatch.h>
 #include <tdelistview.h>
 #include <kinputdialog.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kmdcodec.h>
 #include <kstdguiitem.h>
 #include <kpushbutton.h>

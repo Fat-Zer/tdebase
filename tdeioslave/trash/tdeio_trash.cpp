@@ -22,7 +22,7 @@
 
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <klargefile.h>
 #include <tdecmdlineargs.h>
 #include <kmimetype.h>

@@ -26,11 +26,11 @@
 
 #include <kiconloader.h>
 #include <tdelistview.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kprocio.h>
 #include <krun.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kpushbutton.h>
 
 #include <tqlabel.h>

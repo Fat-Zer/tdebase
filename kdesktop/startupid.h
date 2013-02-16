@@ -27,7 +27,7 @@
 #include <tqstring.h>
 #include <tqtimer.h>
 #include <tqmap.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 
 class TQStyle;
 

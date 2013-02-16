@@ -26,7 +26,7 @@
 #include <tqspinbox.h>
 
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "StyleSettings.h"
 

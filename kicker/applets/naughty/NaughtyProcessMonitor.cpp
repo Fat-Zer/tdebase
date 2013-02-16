@@ -42,7 +42,7 @@
 #include <tqmap.h>
 #include <tqdatetime.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "NaughtyProcessMonitor.h"
 

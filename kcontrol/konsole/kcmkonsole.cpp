@@ -27,7 +27,7 @@
 #include <kdebug.h>
 #include <tdefontdialog.h>
 #include <kgenericfactory.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include "schemaeditor.h"
 #include "sessioneditor.h"

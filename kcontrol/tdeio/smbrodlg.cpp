@@ -22,9 +22,9 @@
 #include <tqlabel.h>
 #include <tqtextcodec.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kcharsets.h>
 #include <kcombobox.h>
 #include <kdialog.h>

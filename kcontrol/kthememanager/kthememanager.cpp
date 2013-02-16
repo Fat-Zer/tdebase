@@ -27,13 +27,13 @@
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdialog.h>
-#include <kemailsettings.h>
+#include <tdeemailsettings.h>
 #include <tdefiledialog.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <tdelistview.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kservicegroup.h>
 #include <kstandarddirs.h>
 #include <kurldrag.h>

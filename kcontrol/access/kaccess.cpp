@@ -8,15 +8,15 @@
 #include <tqlabel.h>
 
 #include <kdialogbase.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kcombobox.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 #include <kaudioplayer.h>
 #include <knotifyclient.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <netwm.h>
 #include <tdeshortcut.h>
 #include <kkeynative.h>

@@ -25,13 +25,13 @@
 #include <kpushbutton.h>
 #include <tdelistview.h>
 #include <tqheader.h>
-#include <klocale.h>
-#include <kabc/stdaddressbook.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdeabc/stdaddressbook.h>
+#include <tdemessagebox.h>
 #include <kiconloader.h>
 #include <krun.h>
 #include <kstdguiitem.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 
 FaxAB::FaxAB(TQWidget *parent, const char *name)

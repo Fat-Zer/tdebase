@@ -32,7 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kdebug.h>
 #include <kstandarddirs.h>
 #include <kstringhandler.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqfile.h>
 #include <tqtooltip.h>

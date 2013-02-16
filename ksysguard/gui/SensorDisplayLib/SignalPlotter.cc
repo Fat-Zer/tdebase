@@ -28,7 +28,7 @@
 #include <tqpixmap.h>
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include <ksgrd/StyleEngine.h>
 

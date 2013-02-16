@@ -10,7 +10,7 @@
 #include <kicondialog.h>
 #include <klineedit.h>
 #include <kinputdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "kservicelistwidget.h"
 #include "filetypedetails.h"

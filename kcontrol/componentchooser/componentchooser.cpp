@@ -28,10 +28,10 @@
 #include <dcopclient.h>
 
 #include <tdeapplication.h>
-#include <kemailsettings.h>
+#include <tdeemailsettings.h>
 #include <kipc.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kopenwith.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>

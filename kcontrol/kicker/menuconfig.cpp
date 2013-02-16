@@ -18,7 +18,7 @@
 #include <tqlayout.h>
 #include <tqtimer.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include "kickerSettings.h"

@@ -23,7 +23,7 @@
 #include <tqregexp.h>
 #include <tqlayout.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <tdefiledialog.h>
 #include <kurlrequester.h>

@@ -21,7 +21,7 @@
 #include "konq_infolistviewitem.h"
 #include "konq_listview.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdefilemetainfo.h>
 #include <kdebug.h>
 #include <tdeaction.h>

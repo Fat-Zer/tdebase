@@ -20,8 +20,8 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
 #include <kdebug.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include "server.h"
 
