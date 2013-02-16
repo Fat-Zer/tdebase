@@ -26,7 +26,7 @@
 
 #include <tqfile.h>
 #include <tqtextstream.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kinstance.h>
 #include <tdeio/global.h>
@@ -38,7 +38,7 @@
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
 #include <kprocess.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <tqfile.h>
 #include <tqdom.h>
 

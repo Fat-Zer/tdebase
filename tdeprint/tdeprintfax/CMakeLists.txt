@@ -37,6 +37,6 @@ tde_add_executable( tdeprintfax AUTOMOC
     confgeneral.cpp configdlg.cpp conffax.cpp
     confsystem.cpp conffilters.cpp filterdlg.cpp
     defcmds.cpp
-  LINK kabc-shared tdeprint-shared
+  LINK tdeabc-shared tdeprint-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

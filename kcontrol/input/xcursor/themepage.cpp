@@ -20,14 +20,14 @@
 #  include <config.h>
 #endif
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaboutdata.h>
 #include <kstandarddirs.h>
 #include <tdelistview.h>
 #include <ksimpleconfig.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kdialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kurlrequesterdlg.h>
 #include <tdeio/job.h>
 #include <tdeio/netaccess.h>

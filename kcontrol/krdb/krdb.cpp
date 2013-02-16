@@ -32,12 +32,12 @@
 #include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kstandarddirs.h>
 #include <kprocio.h>
 #include <ksavefile.h>
-#include <ktempfile.h>
-#include <klocale.h>
+#include <tdetempfile.h>
+#include <tdelocale.h>
 #include <tdestyle.h>
 
 #include "krdb.h"

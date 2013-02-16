@@ -53,9 +53,9 @@ extern "C" {
 
 #include <kdebug.h>
 #include <kinstance.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kmdcodec.h>
-#include <kprotocolmanager.h>
+#include <tdeprotocolmanager.h>
 #include <ksock.h>
 
 #include <tdeio/connection.h>

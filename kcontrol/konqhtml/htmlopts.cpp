@@ -15,8 +15,8 @@
 #include "advancedTabDialog.h"
 
 #include <konq_defaults.h> // include default values directly from konqueror
-#include <kglobalsettings.h> // get default for DEFAULT_CHANGECURSOR
-#include <klocale.h>
+#include <tdeglobalsettings.h> // get default for DEFAULT_CHANGECURSOR
+#include <tdelocale.h>
 #include <kdialog.h>
 #include <knuminput.h>
 #include <kseparator.h>

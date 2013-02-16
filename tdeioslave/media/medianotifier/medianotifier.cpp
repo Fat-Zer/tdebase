@@ -27,12 +27,12 @@
 #include <tqcheckbox.h>
 
 #include <tdeapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprocess.h>
 #include <krun.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kstdguiitem.h>
 #include <kstandarddirs.h>
 

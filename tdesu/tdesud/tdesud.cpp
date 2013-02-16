@@ -63,7 +63,7 @@
 
 #include <kinstance.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdecmdlineargs.h>
 #include <kstandarddirs.h>
 #include <tdeaboutdata.h>

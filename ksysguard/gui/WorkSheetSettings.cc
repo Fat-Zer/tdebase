@@ -24,7 +24,7 @@
 #include <tdeaccelmanager.h>
 #include <klineedit.h>
 #include <knuminput.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqgroupbox.h>
 #include <tqlabel.h>

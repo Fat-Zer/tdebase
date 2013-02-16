@@ -26,7 +26,7 @@
 #include <tdeaction.h>
 #include <tdefileitem.h>
 #include <kdirnotify.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include <dcopclient.h>
 

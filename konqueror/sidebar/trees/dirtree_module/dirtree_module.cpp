@@ -23,7 +23,7 @@
 #include <kdebug.h>
 #include <kprotocolinfo.h>
 #include <kdesktopfile.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kiconloader.h>
 #include <kdirlister.h>
 #include "konqsidebariface_p.h"

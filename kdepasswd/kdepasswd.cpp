@@ -9,10 +9,10 @@
 #include <config.h>
 
 #include <kuniqueapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kuser.h>
 #include <kdebug.h>
 

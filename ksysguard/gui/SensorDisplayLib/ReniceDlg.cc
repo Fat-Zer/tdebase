@@ -22,7 +22,7 @@
 
 */
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knuminput.h>
 
 #include "ReniceDlg.moc"

@@ -75,8 +75,8 @@
 #include <kdebug.h>
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
-#include <kmenubar.h>
-#include <kmessagebox.h>
+#include <tdemenubar.h>
+#include <tdemessagebox.h>
 #include <knewmenu.h>
 #include <konq_defaults.h>
 #include <konq_dirpart.h>
@@ -89,13 +89,13 @@
 #include <kstdaction.h>
 #include <kstandarddirs.h>
 #include <tdesycoca.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kurlrequesterdlg.h>
 #include <kurlrequester.h>
 #include <kuserprofile.h>
 #include <twin.h>
 #include <tdefiledialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <tdepopupmenu.h>
 #include <kprocess.h>

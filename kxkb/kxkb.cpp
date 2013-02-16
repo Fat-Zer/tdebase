@@ -34,13 +34,13 @@ DESCRIPTION
 
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kglobalaccel.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprocess.h>
 #include <twinmodule.h>
 #include <twin.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kstandarddirs.h>
 #include <kipc.h>
 #include <tdeaction.h>

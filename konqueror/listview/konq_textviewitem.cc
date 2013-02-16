@@ -22,7 +22,7 @@
 
 #include <assert.h>
 #include <stdio.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 int KonqTextViewItem::compare( TQListViewItem *item, int col, bool ascending ) const
 {

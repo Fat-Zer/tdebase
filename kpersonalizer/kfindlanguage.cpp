@@ -22,9 +22,9 @@
 #include <tqmap.h>
 
 #include <ksimpleconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "kfindlanguage.h"
 

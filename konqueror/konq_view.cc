@@ -46,8 +46,8 @@
 #include <tqobjectlist.h>
 #include <config.h>
 #include <tqucomextra_p.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 
 #include <fixx11h.h>
 

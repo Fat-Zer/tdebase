@@ -22,7 +22,7 @@
 #include <tqradiobutton.h>
 #include <tqwhatsthis.h>
 #include <kdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 FileGroupDetails::FileGroupDetails(TQWidget *parent, const char *name )
     : TQWidget( parent, name )

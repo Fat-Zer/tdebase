@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "tdmconfig.h"
 #include "tdm_greet.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqlayout.h>
 #include <tqlabel.h>

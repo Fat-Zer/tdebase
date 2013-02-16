@@ -20,7 +20,7 @@
 #include <tdeapplication.h>
 #include <dcopclient.h>
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <twin.h>
 
 #include <X11/Xlib.h>

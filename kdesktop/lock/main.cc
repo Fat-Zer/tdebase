@@ -24,10 +24,10 @@
 #include "kdesktopsettings.h"
 
 #include <tdecmdlineargs.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <dcopref.h>
 #include <ksimpleconfig.h>
 

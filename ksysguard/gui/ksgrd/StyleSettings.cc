@@ -33,7 +33,7 @@
 #include <tdeaccelmanager.h>
 #include <kcolorbutton.h>
 #include <kcolordialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "StyleSettings.h"
 

@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqdragobject.h>
 
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <konq_operations.h>
 #include <tdefileitem.h>
 

@@ -25,7 +25,7 @@
 #include <tqptrvector.h>
 #include <tqbitarray.h>
 
-#include <ktempfile.h>
+#include <tdetempfile.h>
 
 #include "TECommon.h"
 

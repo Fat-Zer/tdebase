@@ -29,7 +29,7 @@
 #include <tqlayout.h>
 #include <tqlabel.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include <tdeapplication.h>
@@ -40,7 +40,7 @@
 
 #include <kkeydialog.h>
 #include <kedittoolbar.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <klineedit.h>
 #include <tdefiledialog.h>
 

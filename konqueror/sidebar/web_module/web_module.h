@@ -22,7 +22,7 @@
 #include <assert.h>
 #include <tdehtml_part.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <konqsidebarplugin.h>
 #include <tdepopupmenu.h>
 #include <tqobject.h>

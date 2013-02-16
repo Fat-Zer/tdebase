@@ -19,12 +19,12 @@
 #include <kdialogbase.h>
 #include <tdefontcombo.h>
 #include <kgenericfactory.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <kuser.h>
-#include <kemailsettings.h>
+#include <tdeemailsettings.h>
 
 #include <tqcheckbox.h>
 #include <tqdesktopwidget.h>

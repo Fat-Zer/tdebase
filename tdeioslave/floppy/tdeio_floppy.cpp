@@ -45,7 +45,7 @@
 #include <kinstance.h>
 #include <kdebug.h>
 #include <tdeio/global.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 using namespace TDEIO;
 

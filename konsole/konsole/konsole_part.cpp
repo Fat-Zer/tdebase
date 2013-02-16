@@ -31,11 +31,11 @@
 #include <kcharsets.h>
 #include <kdebug.h>
 #include <tdefontdialog.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
 #include <kinputdialog.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <krun.h>
 #include <kstdaction.h>
 #include <tqlabel.h>

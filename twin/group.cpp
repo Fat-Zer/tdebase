@@ -23,7 +23,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "client.h"
 
 #include <assert.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 
 
 /*

@@ -24,7 +24,7 @@
 #include "tdelistboxdialog.h"
 #include "tdelistboxdialog.moc"
 
-#include "klocale.h"
+#include "tdelocale.h"
 
 TDEListBoxDialog::TDEListBoxDialog(TQString text, TQWidget *parent)
     : KDialogBase( parent, 0, true, TQString::null, Ok|Cancel, Ok, true )

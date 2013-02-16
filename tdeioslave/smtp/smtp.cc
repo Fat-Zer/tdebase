@@ -53,13 +53,13 @@ using KioSMTP::Request;
 using KioSMTP::Response;
 using KioSMTP::TransactionState;
 
-#include <kemailsettings.h>
+#include <tdeemailsettings.h>
 #include <ksock.h>
 #include <kdebug.h>
 #include <kinstance.h>
 #include <tdeio/connection.h>
 #include <tdeio/slaveinterface.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqstring.h>
 #include <tqstringlist.h>

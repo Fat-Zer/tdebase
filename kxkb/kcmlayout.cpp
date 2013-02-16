@@ -15,9 +15,9 @@
 #include <tqspinbox.h>
 
 #include <kkeydialog.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <tdeapplication.h>

@@ -20,7 +20,7 @@
 
 #include <tdeapplication.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <ksgrd/SensorManager.h>
 #include <ksgrd/StyleEngine.h>

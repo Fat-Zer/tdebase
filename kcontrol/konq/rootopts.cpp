@@ -27,12 +27,12 @@
 #include <kcustommenueditor.h>
 #include <kdebug.h>
 #include <tdefileitem.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kipc.h>
 #include <tdelistview.h>
 #include <tdeio/job.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kmimetype.h>
 #include <kstandarddirs.h>
 #include <ktrader.h>

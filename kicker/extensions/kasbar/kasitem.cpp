@@ -58,10 +58,10 @@
 #include <tqtimer.h>
 
 #include <kdebug.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "kasitem.h"
 

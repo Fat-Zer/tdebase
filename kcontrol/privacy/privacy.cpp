@@ -29,10 +29,10 @@
 #include <tdeaboutdata.h>
 #include <tdeconfig.h>
 #include <kdialog.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdelistview.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <ktextedit.h>
 
 #include "privacy.h"

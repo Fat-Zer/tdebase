@@ -26,12 +26,12 @@
  *****************************************************************/
 
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 #include <dcopclient.h>
 #include <kmacroexpander.h>
 

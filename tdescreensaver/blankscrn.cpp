@@ -11,12 +11,12 @@
 #include <tqlabel.h>
 #include <tqlayout.h>
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kcolordialog.h>
 #include <kbuttonbox.h>
 #include <kcolorbutton.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include "blankscrn.h"
 #include "blankscrn.moc"
 

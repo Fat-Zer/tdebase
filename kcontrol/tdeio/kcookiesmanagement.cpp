@@ -31,13 +31,13 @@
 
 #include <kidna.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialog.h>
 #include <kiconloader.h>
 #include <klineedit.h>
 #include <tdelistview.h>
 #include <tdelistviewsearchline.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <dcopref.h>
 
 #include "kcookiesmain.h"

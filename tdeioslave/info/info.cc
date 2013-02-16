@@ -12,7 +12,7 @@
 #include <kstandarddirs.h>
 #include <kiconloader.h>
 #include <kinstance.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "info.h"
 

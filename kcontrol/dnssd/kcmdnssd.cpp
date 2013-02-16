@@ -32,15 +32,15 @@
 #include <tqcursor.h>
 #include <tqbuttongroup.h>
 
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <tdeparts/genericfactory.h>
 #include <kprocess.h>
 #include <klineedit.h>
 #include <kpassdlg.h>
 #include <ksimpleconfig.h>
 #include <tdeapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include "kcmdnssd.h"
 #include <dnssd/settings.h>

@@ -27,7 +27,7 @@
 #include <kcombobox.h>
 #include <kdebug.h>
 #include <kimagefilepreview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 //#include <tderecentdocument.h>
 #include <kstandarddirs.h>
 #include <kurlrequester.h>

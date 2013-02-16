@@ -19,8 +19,8 @@
 
 #include "konq_settings.h"
 #include "konq_defaults.h"
-#include "kglobalsettings.h"
-#include <kglobal.h>
+#include "tdeglobalsettings.h"
+#include <tdeglobal.h>
 #include <kservicetype.h>
 #include <kdesktopfile.h>
 #include <kdebug.h>

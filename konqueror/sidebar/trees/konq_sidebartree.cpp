@@ -35,7 +35,7 @@
 #include <kdebug.h>
 #include <kdesktopfile.h>
 #include <kdirnotify_stub.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
 #include <kinputdialog.h>
 #include <tdeio/netaccess.h>

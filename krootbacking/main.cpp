@@ -27,7 +27,7 @@
 #include <tdeapplication.h>
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include "krootbacking.h"

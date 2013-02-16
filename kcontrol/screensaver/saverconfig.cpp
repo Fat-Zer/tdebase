@@ -1,5 +1,5 @@
 #include <kdesktopfile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "saverconfig.h"
 

@@ -25,14 +25,14 @@
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdefiledialog.h>
-#include <kglobalsettings.h>
-#include <klocale.h>
+#include <tdeglobalsettings.h>
+#include <tdelocale.h>
 #include <tderecentdocument.h>
 #include <twin.h>
 #include <tqtimer.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include <X11/Xutil.h>
 

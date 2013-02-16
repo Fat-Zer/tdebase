@@ -21,11 +21,11 @@
 #include <tqheader.h>
 #include <tqcursor.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <kservicegroup.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include <kdebug.h>
 

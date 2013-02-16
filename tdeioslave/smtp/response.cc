@@ -33,7 +33,7 @@
 
 #include "response.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeio/global.h>
 
 #include <tqstring.h>

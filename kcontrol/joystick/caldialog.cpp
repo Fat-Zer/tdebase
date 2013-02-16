@@ -27,8 +27,8 @@
 #include <tqapplication.h>
 #include <tqvbox.h>
 
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
 
 //--------------------------------------------------------------

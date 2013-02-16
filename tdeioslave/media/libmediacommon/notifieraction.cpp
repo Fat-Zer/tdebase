@@ -20,7 +20,7 @@
 #include "notifieraction.h"
 
 #include <tqfile.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <kicontheme.h>
 

@@ -33,9 +33,9 @@
 #include <tqregexp.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprocess.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kdialog.h>
 #include <tdeconfig.h>
 

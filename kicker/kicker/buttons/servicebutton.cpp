@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqtooltip.h>
 
 #include <kdesktopfile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconeffect.h>
 #include <kicontheme.h>
 #include <kpropertiesdialog.h>

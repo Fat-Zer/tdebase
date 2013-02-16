@@ -25,7 +25,7 @@
 #include "conffilters.h"
 
 #include <tqvbox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 
 ConfigDlg::ConfigDlg(TQWidget *parent, const char *name)

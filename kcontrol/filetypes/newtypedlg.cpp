@@ -4,7 +4,7 @@
 #include <tqwhatsthis.h>
 #include <tqcombobox.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <klineedit.h>
 
 #include "newtypedlg.h"

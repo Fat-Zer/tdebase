@@ -1,7 +1,7 @@
 #include "test.h"
 
 #include <tqtooltip.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 
 namespace KWinTest

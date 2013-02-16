@@ -22,8 +22,8 @@
 #include <dcopclient.h>
 
 #include <tdeapplication.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kgenericfactory.h>
 #include <tdeaboutdata.h>

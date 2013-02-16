@@ -29,7 +29,7 @@
 #include <kservicegroup.h>
 #include <kprocess.h>
 #include <qxembed.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 
 

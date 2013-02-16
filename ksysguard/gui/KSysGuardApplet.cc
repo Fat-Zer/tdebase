@@ -31,8 +31,8 @@
 #include <tqtooltip.h>
 
 #include <kdebug.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <ksavefile.h>
 #include <kstandarddirs.h>
 #include <tdepopupmenu.h>

@@ -24,16 +24,16 @@
 #include <kbuttonbox.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kprogress.h>
 #include <kservice.h>
 #include <kservicegroup.h>
 #include <kstandarddirs.h>
 #include <kstdguiitem.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 
 #include <tqaccel.h>
 #include <tqlabel.h>

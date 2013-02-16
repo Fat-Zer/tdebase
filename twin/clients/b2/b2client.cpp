@@ -19,7 +19,7 @@
 #include <kicontheme.h>
 #include <kiconeffect.h>
 #include <kdrawutil.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <tqbitmap.h>
 #include <tqlabel.h>

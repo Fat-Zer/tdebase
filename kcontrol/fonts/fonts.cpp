@@ -26,7 +26,7 @@
 #include <tdeapplication.h>
 #include <kgenericfactory.h>
 #include <kipc.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <knuminput.h>
 #include <kprocio.h>
 #include <ksimpleconfig.h>
@@ -522,7 +522,7 @@ TDEFonts::TDEFonts(TQWidget *parent, const char *name, const TQStringList &)
 
   TQValueList<TQFont> defaultFontList;
 
-  // Keep in sync with tdelibs/tdecore/kglobalsettings.cpp
+  // Keep in sync with tdelibs/tdecore/tdeglobalsettings.cpp
 
   TQFont f0("Sans Serif", 10);
   TQFont f1("Monospace", 10);

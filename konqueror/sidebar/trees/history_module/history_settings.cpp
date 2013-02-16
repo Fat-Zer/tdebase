@@ -1,7 +1,7 @@
 
 #include <tdeapplication.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <dcopclient.h>
 
 #include "history_settings.h"

@@ -40,7 +40,7 @@
 
 #include <tdeapplication.h>
 
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <knuminput.h>
 
 #include <config.h>

@@ -15,9 +15,9 @@
 
 #include <kcolordrag.h>
 #include <kpixmapeffect.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kpixmap.h>
 
 #include "widgetcanvas.h"
@@ -280,7 +280,7 @@ void WidgetCanvas::drawSampleWidgets()
 
     TDEConfig * c = new TDEConfig("kcmfonts");
 
-    // Keep in sync with kglobalsettings.
+    // Keep in sync with tdeglobalsettings.
 
     TQFont windowFontGuess(TDEGlobalSettings::generalFont().family(), 12, TQFont::SansSerif, true);
     windowFontGuess.setPixelSize(12);

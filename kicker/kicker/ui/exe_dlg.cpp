@@ -23,7 +23,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tqfileinfo.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 
 #include <tqcheckbox.h>
@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqvbox.h>
 
 #include <kicondialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kmimetype.h>
 #include <kstandarddirs.h>
 #include <kurlcompletion.h>

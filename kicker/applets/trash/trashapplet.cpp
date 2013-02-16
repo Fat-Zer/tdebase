@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <tdeapplication.h>
 #include <tdeaboutdata.h>

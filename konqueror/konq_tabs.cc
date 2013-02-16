@@ -30,7 +30,7 @@
 
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kurldrag.h>
 #include <kstringhandler.h>
 

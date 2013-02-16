@@ -22,9 +22,9 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <tqslider.h>
 #include <tqtooltip.h>
 #include <tqpopupmenu.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kglobalaccel.h>
 #include <tdeapplication.h>

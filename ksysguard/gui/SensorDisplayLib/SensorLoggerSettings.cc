@@ -20,7 +20,7 @@
 #include "SensorLoggerSettings.h"
 #include "SensorLoggerSettingsWidget.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 SensorLoggerSettings::SensorLoggerSettings( TQWidget *parent, const char *name )
     : KDialogBase( parent, name, true, i18n( "Sensor Logger Settings" ),

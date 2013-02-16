@@ -42,12 +42,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kbookmarkmenu.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
 #include <klineedit.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kstandarddirs.h>
 #include <tdetoolbarbutton.h>
 #include <twin.h>

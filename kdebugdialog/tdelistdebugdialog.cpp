@@ -25,7 +25,7 @@
 #include <tqlayout.h>
 #include <tqscrollview.h>
 #include <tqvbox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqpushbutton.h>
 #include <klineedit.h>
 #include <dcopclient.h>

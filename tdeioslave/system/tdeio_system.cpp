@@ -20,7 +20,7 @@
 #include <stdlib.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <tdecmdlineargs.h>
 #include <dcopclient.h>

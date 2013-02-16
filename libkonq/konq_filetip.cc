@@ -22,7 +22,7 @@
 #include <konq_filetip.h>
 
 #include <tdefileitem.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kstandarddirs.h>
 #include <tdeapplication.h>
 

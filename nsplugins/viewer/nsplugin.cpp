@@ -46,14 +46,14 @@
 #include <dcopclient.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeio/netaccess.h>
 #include <klibloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprocess.h>
-#include <kprotocolmanager.h>
+#include <tdeprotocolmanager.h>
 #include <kstandarddirs.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kurl.h>
 
 #include <X11/Intrinsic.h>

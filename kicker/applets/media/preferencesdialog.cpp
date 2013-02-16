@@ -19,7 +19,7 @@
 
 #include "preferencesdialog.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kmimetype.h>
 #include <tqvbox.h>
 #include <tqwhatsthis.h>

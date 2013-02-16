@@ -28,7 +28,7 @@
 #include <tqradiobutton.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprocess.h>
 #include <knuminput.h>
 

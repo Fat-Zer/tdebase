@@ -18,7 +18,7 @@
 
 #include "kshellcmdplugin.h"
 #include <kinputdialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <konq_dirpart.h>
 #include <kprocess.h>
 #include <tdeapplication.h>

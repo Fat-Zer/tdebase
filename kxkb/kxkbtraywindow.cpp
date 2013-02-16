@@ -12,7 +12,7 @@
 #include <tqtooltip.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconeffect.h>
 #include <kiconloader.h>
 #include <tdepopupmenu.h>

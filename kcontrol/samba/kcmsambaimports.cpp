@@ -26,7 +26,7 @@
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialog.h>
 
 #include <stdio.h>

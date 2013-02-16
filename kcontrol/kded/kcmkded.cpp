@@ -35,7 +35,7 @@
 #include <kdialog.h>
 #include <kgenericfactory.h>
 #include <tdelistview.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kservice.h>
 #include <kstandarddirs.h>
 

@@ -23,7 +23,7 @@
 #define __importers_h
 
 #include "commands.h"
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeio/job.h>
 
 #include <kcommand.h>

@@ -29,7 +29,7 @@
 #include "tdmlayout.h"
 #include "tdmconfig.h"
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 
 #include <tqframe.h>

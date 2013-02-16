@@ -27,11 +27,11 @@
 
 #include <kdebug.h>
 #include <kdirlister.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprotocolinfo.h>
 #include <tdeaction.h>
 #include <kurldrag.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kiconloader.h>
 #include <kiconeffect.h>
 

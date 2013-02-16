@@ -39,7 +39,7 @@
 #include <tdefileivi.h>
 #include <konq_settings.h>
 #include <konq_drag.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kpropertiesdialog.h>
 #include <kipc.h>
 #include <kicontheme.h>
@@ -51,7 +51,7 @@
 
 #include <assert.h>
 #include <unistd.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 
 struct KonqIconViewWidgetPrivate

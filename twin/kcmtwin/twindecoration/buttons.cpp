@@ -37,8 +37,8 @@
 #include <kdebug.h>
 
 #include <kdialog.h>
-#include <klocale.h>
-#include <kglobalsettings.h>
+#include <tdelocale.h>
+#include <tdeglobalsettings.h>
 
 #include <kdecorationfactory.h>
 

@@ -25,9 +25,9 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kedittoolbar.h>
-#include <kglobal.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kservice.h>
 #include <kstdaction.h>
 #include <tdestdaccel.h>

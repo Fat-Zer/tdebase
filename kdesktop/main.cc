@@ -19,15 +19,15 @@
 
 #include <config.h>
 #include <kuniqueapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
 #include <kopenwith.h>
 #include <kcrash.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
-#include <kglobal.h>
+#include <tdeglobalsettings.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <kmanagerselection.h>
 

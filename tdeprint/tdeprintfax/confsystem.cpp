@@ -26,9 +26,9 @@
 #include <tqlayout.h> 
 #include <tqcombobox.h>
  
-#include <kglobal.h> 
+#include <tdeglobal.h> 
 #include <tdeconfig.h> 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kseparator.h>
 
 #include <stdlib.h>

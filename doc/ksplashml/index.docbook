@@ -1088,8 +1088,8 @@ appropriate plugin.</para>
 #include &lt;kdebug.h&gt;
 #include &lt;kdialogbase.h&gt;
 #include &lt;kgenericfactory.h&gt;
-#include &lt;kglobalsettings.h&gt;
-#include &lt;klocale.h&gt;
+#include &lt;tdeglobalsettings.h&gt;
+#include &lt;tdelocale.h&gt;
 #include &lt;ksplash/objkstheme.h&gt;
 #include &lt;kstandarddirs.h&gt;
 

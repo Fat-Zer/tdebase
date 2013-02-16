@@ -26,7 +26,7 @@
 #include <kcolordialog.h>
 #include <klineedit.h>
 #include <tdelistview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knuminput.h>
 
 #include <tqcheckbox.h>

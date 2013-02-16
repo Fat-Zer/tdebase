@@ -27,7 +27,7 @@
 #include <kdebug.h>
 #include <tdefiledialog.h>
 #include <tdeio/netaccess.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeparts/browserinterface.h>
 #include <tdeparts/browserextension.h>
 

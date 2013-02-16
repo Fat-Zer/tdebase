@@ -22,7 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ******************************************************************/
 
 #undef Bool // For enable-final
-#include <klocale.h>
+#include <tdelocale.h>
 #include <twinmodule.h>
 #include <kdebug.h>
 #include <tdeconfig.h>
@@ -30,10 +30,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kshell.h>
 #include <twin.h>
 #include <kstandarddirs.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeapplication.h>
 #include <dcopclient.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include "dockbarextension.h"
 #include "dockbarextension.moc"

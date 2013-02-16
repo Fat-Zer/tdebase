@@ -19,8 +19,8 @@
 
 #include <dcopref.h>
 #include <tdeconfig.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kstaticdeleter.h>
 #include <tdeio/ioslave_defaults.h>
 

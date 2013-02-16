@@ -30,15 +30,15 @@
 #include <tqlabel.h>
 
 #include <kdialog.h>
-#include <klocale.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <tdefiledialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>
 #include <ktextbrowser.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 
 #include "backtrace.h"
 #include "krashconf.h"

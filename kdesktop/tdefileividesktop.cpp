@@ -31,7 +31,7 @@
 #include <kwordwrap.h>
 #include <kiconview.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #include <kshadowengine.h>
 #include "kdesktopshadowsettings.h"

@@ -20,7 +20,7 @@
 #include "ListViewSettings.h"
 #include "ListViewSettingsWidget.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 ListViewSettings::ListViewSettings( TQWidget *parent, const char *name )
     : KDialogBase( parent, name, true, i18n( "List View Settings" ),

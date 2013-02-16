@@ -32,15 +32,15 @@
 
 #include <dcopclient.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
 #include <kimageio.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdeio/netaccess.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include <config.h>
 

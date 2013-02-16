@@ -18,7 +18,7 @@
 #include <kcursor.h>
 #include <kdebug.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <twin.h>
 
 #include <tqdesktopwidget.h>

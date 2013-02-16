@@ -16,7 +16,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include <tqwidget.h>
 #include <tqpainter.h>
@@ -24,7 +24,7 @@
 #include <tqstring.h>
 #include <tqcursor.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>

@@ -22,7 +22,7 @@
 #include <tqtabwidget.h>
 #include <tqlayout.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaboutdata.h>
 #include <kdialog.h>
 

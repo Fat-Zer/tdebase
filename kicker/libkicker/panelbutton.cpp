@@ -37,14 +37,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kcursor.h>
 #include <kdialog.h>
 #include <kdirwatch.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
 #include <kicontheme.h>
 #include <kiconeffect.h>
 #include <kipc.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include "global.h"

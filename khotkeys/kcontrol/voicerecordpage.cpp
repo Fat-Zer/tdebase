@@ -14,8 +14,8 @@
 #include <klineedit.h>
 #include <kstandarddirs.h>
 
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 
 #include "voicerecordpage.h"
 #include "voicerecorder.h"

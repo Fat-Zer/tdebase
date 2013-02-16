@@ -19,7 +19,7 @@
 #include <kpixmapeffect.h>
 #include <kimageeffect.h>
 #include <kdrawutil.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqbitmap.h>
 #include <tqimage.h>

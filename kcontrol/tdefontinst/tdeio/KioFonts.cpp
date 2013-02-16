@@ -51,14 +51,14 @@
 #include <tdeio/connection.h>
 #include <tqtextstream.h>
 #include <kmimetype.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
 #include <tqdir.h>
 #include <tqdatastream.h>
 #include <tqregexp.h>
 #include <kinstance.h>
 #include <klargefile.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <tdesu/su.h>
 #include <kprocess.h>
 #include <kdebug.h>

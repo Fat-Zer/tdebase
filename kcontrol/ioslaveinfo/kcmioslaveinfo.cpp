@@ -36,10 +36,10 @@
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kgenericfactory.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <tdeio/job.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprotocolinfo.h>
 #include <kstandarddirs.h>
 

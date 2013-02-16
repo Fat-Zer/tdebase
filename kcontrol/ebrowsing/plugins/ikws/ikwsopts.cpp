@@ -28,15 +28,15 @@
 #include <tqwhatsthis.h>
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <dcopref.h>
 #include <tdeapplication.h>
 #include <kcombobox.h>
 #include <tdeconfig.h>
 #include <kiconloader.h>
 #include <tdelistview.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kservice.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>

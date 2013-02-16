@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <assert.h>
 
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "taskmanager.h"
 

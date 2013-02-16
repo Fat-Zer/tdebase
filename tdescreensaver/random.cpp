@@ -23,8 +23,8 @@
 
 #include <tdeapplication.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kdesktopfile.h>
 #include <krandomsequence.h>
 #include <kdebug.h>

@@ -31,9 +31,9 @@
 #include <kprocess.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <kmessagebox.h>
-#include <klocale.h>
-#include <ktempfile.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
+#include <tdetempfile.h>
 
 #include "krashconf.h"
 #include "backtrace.h"

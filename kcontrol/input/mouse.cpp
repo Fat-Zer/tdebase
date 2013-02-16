@@ -56,7 +56,7 @@
 #include <tqtabwidget.h>
 #include <tqradiobutton.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialog.h>
 #include <tdeconfig.h>
 #include <kstandarddirs.h>

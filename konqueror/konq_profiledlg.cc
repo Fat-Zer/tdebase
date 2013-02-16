@@ -33,7 +33,7 @@
 #include <kstdguiitem.h>
 #include <tdeio/global.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
 #include <kseparator.h>
 #include <kpushbutton.h>

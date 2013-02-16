@@ -23,7 +23,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tqpopupmenu.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 

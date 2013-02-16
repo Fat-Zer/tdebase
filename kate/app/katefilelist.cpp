@@ -40,8 +40,8 @@
 
 #include <kiconloader.h>
 #include <tdeconfig.h>
-#include <klocale.h>
-#include <kglobalsettings.h>
+#include <tdelocale.h>
+#include <tdeglobalsettings.h>
 #include <kpassivepopup.h>
 #include <kdebug.h>
 #include <tdeapplication.h>

@@ -49,8 +49,8 @@
 #include <kdebug.h>
 #include <kdesktopfile.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kdialog.h>
 #include <kgenericfactory.h>
 #include <tdeaboutdata.h>

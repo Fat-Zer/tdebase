@@ -27,8 +27,8 @@
 #include <kdesktopfile.h>
 #include <kprocess.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 
 #include <stdlib.h>

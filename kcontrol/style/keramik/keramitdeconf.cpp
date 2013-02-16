@@ -25,8 +25,8 @@ DEALINGS IN THE SOFTWARE.
 #include <tqlayout.h>
 #include <tqsettings.h>
 #include <kdialog.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 
 #include "keramitdeconf.h"
 

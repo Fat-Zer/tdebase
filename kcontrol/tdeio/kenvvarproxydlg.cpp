@@ -28,9 +28,9 @@
 #include <tqpushbutton.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <klineedit.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include "envvarproxy_ui.h"
 #include "kenvvarproxydlg.h"

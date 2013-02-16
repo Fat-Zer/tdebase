@@ -41,7 +41,7 @@
 
 #include <tqapplication.h>
 #include <tqwidgetintdict.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 // resolve the conflict between X11's FocusIn and TQEvent::FocusIn
 const int XFocusOut = FocusOut;

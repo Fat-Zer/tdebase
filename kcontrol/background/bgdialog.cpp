@@ -44,10 +44,10 @@
 #include <kdebug.h>
 #include <tdefiledialog.h>
 #include <tdefilemetainfo.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <kimageio.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kpixmap.h>
 #include <kstandarddirs.h>
 #include <kstringhandler.h>

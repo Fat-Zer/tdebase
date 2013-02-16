@@ -23,7 +23,7 @@ Boston, MA 02110-1301, USA.
 
 #include <tdecmdlineargs.h>
 #include <ksimpleconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqfile.h>
 

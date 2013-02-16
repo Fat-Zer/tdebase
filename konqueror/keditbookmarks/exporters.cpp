@@ -21,7 +21,7 @@
 #include "exporters.h"
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 
 #include <tqfile.h>

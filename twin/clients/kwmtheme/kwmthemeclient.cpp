@@ -1,13 +1,13 @@
 #include <tdeconfig.h>
 #include "kwmthemeclient.h"
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tqlayout.h>
 #include <tqdrawutil.h>
 #include <tqpainter.h>
 #include <kpixmapeffect.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqbitmap.h>
 #include <tqstyle.h>
 #include <tqlabel.h>

@@ -31,7 +31,7 @@
 #include <tqintdict.h>
 #include <tqfile.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <stdio.h>
 #include <stddef.h>

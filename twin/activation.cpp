@@ -18,9 +18,9 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #include <tqpopupmenu.h>
 #include <kxerrorhandler.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 #include <kstringhandler.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "client.h"
 #include "workspace.h"

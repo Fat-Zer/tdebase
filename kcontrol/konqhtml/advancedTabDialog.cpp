@@ -27,7 +27,7 @@
 #include <tdeapplication.h>
 #include <dcopclient.h>
 #include <kcolorbutton.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 
 #include "advancedTabDialog.h"

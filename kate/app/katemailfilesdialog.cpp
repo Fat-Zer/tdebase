@@ -22,7 +22,7 @@
 #include "katedocmanager.h"
 
 #include <tdelistview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kurl.h>
 
 #include <tqevent.h>

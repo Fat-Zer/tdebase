@@ -23,7 +23,7 @@
 #include <kgenericfactory.h>
 #include <kiconloader.h>
 #include <tqmessagebox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqstring.h>
 #include <tqtimer.h>
 #include <kspeech.h>

@@ -29,7 +29,7 @@
 #include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdialog.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <knotifyclient.h>
 #include <knuminput.h>
 

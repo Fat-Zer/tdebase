@@ -7,11 +7,11 @@
 #include <tqlayout.h>
 #include <tqpushbutton.h>
 
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <kguiitem.h>
 #include <kstatusbar.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
 #include <tdeaboutapplication.h>
 #include <kstandarddirs.h>

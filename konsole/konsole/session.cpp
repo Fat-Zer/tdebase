@@ -23,9 +23,9 @@
 
 #include <kdebug.h>
 #include <dcopclient.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <knotifyclient.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprocio.h>
 #include <krun.h>
 #include <kshell.h>

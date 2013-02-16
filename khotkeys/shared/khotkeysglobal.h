@@ -20,7 +20,7 @@
 
 #include <tqstring.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 class TDEConfig;
 class TQObject;

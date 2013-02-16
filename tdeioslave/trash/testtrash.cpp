@@ -27,7 +27,7 @@
 #include <config.h>
 
 #include <kurl.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <tdeio/netaccess.h>
 #include <tdeio/job.h>

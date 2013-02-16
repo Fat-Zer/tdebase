@@ -28,8 +28,8 @@
 #include <tqfileinfo.h>
 
 #include <tdeconfig.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kdialog.h>
 #include <kstandarddirs.h>
 #include <tdelistview.h>

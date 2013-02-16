@@ -25,9 +25,9 @@
 #include <kiconeffect.h>
 #include <kiconloader.h>
 #include <kipc.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kseparator.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <dcopclient.h>
 
 #include "icons.h"

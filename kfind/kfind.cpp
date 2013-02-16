@@ -31,7 +31,7 @@
 
 #include <kdialog.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kseparator.h>
 #include <tqlineedit.h>
 #include <tqcheckbox.h>

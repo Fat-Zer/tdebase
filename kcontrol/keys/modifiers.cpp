@@ -12,8 +12,8 @@
 #include <kdialog.h>
 #include <kkeynative.h>
 #include <tdelistview.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 
 #define XK_MISCELLANY
 #define XK_XKB_KEYS

@@ -37,7 +37,7 @@
 #include <tdecmdlineargs.h>
 #include <dcopclient.h>
 #include <tdeaboutdata.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 

@@ -34,9 +34,9 @@
 #include <kate/document.h>
 
 #include <tdelistbox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kmimetypechooser.h>
 #include <tdeconfig.h>
 #include <krun.h>

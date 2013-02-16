@@ -62,11 +62,11 @@
 #endif
 
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kinstance.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kremoteencoding.h>
 #include <kurl.h>
 #include <ksock.h>

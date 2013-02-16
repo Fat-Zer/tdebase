@@ -22,7 +22,7 @@
 
 #include <tqlayout.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 SensorLoggerDlg::SensorLoggerDlg( TQWidget *parent, const char *name )
     : KDialogBase( parent, name, true, i18n( "Sensor Logger" ),

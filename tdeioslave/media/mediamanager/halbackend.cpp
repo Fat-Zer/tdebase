@@ -24,17 +24,17 @@
 #include <locale.h>
 
 #include <tdeapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tqeventloop.h>
 #include <tqfile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kurl.h>
 #include <kdebug.h>
 #include <kprocess.h>
 #include <tdeconfig.h>
 #include <tqstylesheet.h>
 #include <kmountpoint.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeio/job.h>
 #include <kprotocolinfo.h>
 #include <kstandarddirs.h>

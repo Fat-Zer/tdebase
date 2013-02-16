@@ -2,7 +2,7 @@
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
 
 #include "htmlsearch.h"

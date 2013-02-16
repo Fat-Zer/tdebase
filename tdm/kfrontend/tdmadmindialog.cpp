@@ -30,7 +30,7 @@
 
 #include <tdeapplication.h>
 #include <kseparator.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>
 

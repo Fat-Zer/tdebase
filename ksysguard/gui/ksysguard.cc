@@ -40,10 +40,10 @@
 #include <tdecmdlineargs.h>
 #include <kdebug.h>
 #include <kedittoolbar.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <ksgrd/SensorAgent.h>
 #include <ksgrd/SensorManager.h>
 #include <ksgrd/StyleEngine.h>

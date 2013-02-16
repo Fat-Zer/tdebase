@@ -26,7 +26,7 @@
 #include <tqtabwidget.h>
 
 #include <tdecmoduleloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "kcookiesmain.h"
 #include "netpref.h"

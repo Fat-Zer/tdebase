@@ -26,7 +26,7 @@
 #include <tqcursor.h>
 
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kservicegroup.h>
 

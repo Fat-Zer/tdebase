@@ -34,7 +34,7 @@
 #include <tqtextcodec.h>
 
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 
 //===========================================================================

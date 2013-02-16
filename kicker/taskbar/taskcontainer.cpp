@@ -38,8 +38,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
-#include <klocale.h>
+#include <tdeglobalsettings.h>
+#include <tdelocale.h>
 #include <kiconeffect.h>
 #include <kiconloader.h>
 #include <kimageeffect.h>

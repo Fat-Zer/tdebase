@@ -20,7 +20,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include "workspace.h"
 
 #include <tdeapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tqpainter.h>
 #include <twin.h>
 

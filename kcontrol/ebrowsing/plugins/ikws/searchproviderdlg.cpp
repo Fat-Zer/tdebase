@@ -22,12 +22,12 @@
 #include <tqwhatsthis.h>
 
 #include <tdeapplication.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <kcharsets.h>
 #include <klineedit.h>
 #include <kcombobox.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include "searchproviderdlg_ui.h"
 #include "searchproviderdlg.h"

@@ -41,11 +41,11 @@
 #include <tdeapplication.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <tdelistview.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kiconloader.h>
 #include <kprocio.h>
 #include <kcharsets.h>

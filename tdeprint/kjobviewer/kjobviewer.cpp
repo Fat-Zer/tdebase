@@ -26,14 +26,14 @@
 #include <tqpixmap.h>
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 #include <ksystemtray.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <tdepopupmenu.h>
 #include <twin.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 
 class JobTray : public KSystemTray
 {

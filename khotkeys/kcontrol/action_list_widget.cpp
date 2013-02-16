@@ -22,7 +22,7 @@
 #include <tqheader.h>
 #include <tqlineedit.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include <khlistview.h>

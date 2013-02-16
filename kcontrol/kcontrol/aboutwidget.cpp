@@ -24,12 +24,12 @@
 #include <tqfile.h>
 
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kpixmap.h>
 #include <kpixmapeffect.h>
 #include <kcursor.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdehtml_part.h>
 #include <tdeapplication.h>
 #include <kiconloader.h>

@@ -25,18 +25,18 @@
 #include <tqfont.h>
 
 #include <ksimpleconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 #include <kipc.h>
 #include <tdeapplication.h>
 #include <tdelistview.h>
 #include <krun.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kiconloader.h>
 #include <ktrader.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #include <stdlib.h>
 

@@ -29,7 +29,7 @@
 
 #include <tdefontdialog.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kcolorbutton.h>
 
 #include <ksgrd/StyleEngine.h>

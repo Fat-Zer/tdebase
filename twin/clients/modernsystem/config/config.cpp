@@ -3,8 +3,8 @@
 #include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdialog.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 #include "config.h"

@@ -31,7 +31,7 @@
 #include <arts/kartsdispatcher.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqtimer.h>
 
 

@@ -21,7 +21,7 @@
 #include <tdeio/netaccess.h>
 #include <tdeio/job.h>
 #include <tdecmdlineargs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdirnotify_stub.h>
 #include <kdebug.h>
 

@@ -34,7 +34,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqwmatrix.h>
 
 #include <tdeapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
 #include <kdebug.h>
@@ -44,7 +44,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kprocess.h>
 #include <krootpixmap.h>
 #include <kpixmap.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeio/netaccess.h>
 #include <kservice.h>
 #include <kurldrag.h>

@@ -27,13 +27,13 @@
 #include <tqlayout.h>
 
 #include <kiconloader.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <tdeaboutapplication.h>
 #include <tdeaboutdata.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdepopupmenu.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tqpushbutton.h>
 
 extern "C"

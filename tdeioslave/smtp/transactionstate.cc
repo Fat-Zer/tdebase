@@ -34,7 +34,7 @@
 #include "transactionstate.h"
 
 #include <tdeio/global.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqstringlist.h>
 

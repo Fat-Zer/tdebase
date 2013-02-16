@@ -20,7 +20,7 @@
 
 #include <tqtextedit.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 ZModemDialog::ZModemDialog(TQWidget *parent, bool modal, const TQString &caption)
  : KDialogBase(parent, "zmodem_progress", modal, caption,

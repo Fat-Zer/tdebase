@@ -18,8 +18,8 @@
 */
 
 #include <kdebug.h>
-#include <klocale.h>
-#include <kmenubar.h>
+#include <tdelocale.h>
+#include <tdemenubar.h>
 #include "konq_view.h"
 #include "konq_settingsxt.h"
 #include "konq_frame.h"

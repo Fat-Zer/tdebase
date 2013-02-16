@@ -33,10 +33,10 @@
 #include <kdialog.h>
 #include <tdefontdialog.h>
 #include <kgenericfactory.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <knuminput.h>
 #include "history_dlg.h"
 

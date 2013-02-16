@@ -26,13 +26,13 @@
 #include <tqhbox.h>
 #include <tqwhatsthis.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdialog.h>
 #include <kkeybutton.h>
 #include <klineedit.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kicondialog.h>
 #include <kdesktopfile.h>
 #include <kurlrequester.h>

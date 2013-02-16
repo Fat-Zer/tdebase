@@ -28,13 +28,13 @@
 #include <tdeio/job.h>
 #include <tdecmdlineargs.h>
 #include <kpropertiesdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ktrader.h>
 #include <kprocess.h>
 #include <kstandarddirs.h>
 #include <kopenwith.h>
 #include <kurlrequesterdlg.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdefiledialog.h>
 #include <kdebug.h>
 #include <dcopclient.h>

@@ -20,9 +20,9 @@
 */
 
 #include <tdecmdlineargs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kinstance.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 
 #include <tqstringlist.h>

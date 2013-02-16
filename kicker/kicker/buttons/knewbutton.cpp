@@ -31,7 +31,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqcursor.h>
 #include <tqeffects_p.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <kiconloader.h>

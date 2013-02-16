@@ -10,7 +10,7 @@
 
 #include "voice_settings_tab.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqcombobox.h>
 #include <knuminput.h>
 #include <tqcheckbox.h>

@@ -26,8 +26,8 @@
 #include <tqpushbutton.h>
 
 #include <tdeapplication.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kiconloader.h>

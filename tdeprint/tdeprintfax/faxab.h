@@ -24,7 +24,7 @@
 #include <kdialog.h>
 #include <tqmap.h>
 #include <tqstringlist.h>
-#include <kabc/phonenumber.h>
+#include <tdeabc/phonenumber.h>
 
 class TDEListView;
 class AddressBook;

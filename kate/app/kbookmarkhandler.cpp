@@ -28,7 +28,7 @@
 #include <tdepopupmenu.h>
 #include <ksavefile.h>
 #include <kstandarddirs.h>
-#include <kdiroperator.h>
+#include <tdediroperator.h>
 #include <tdeaction.h>
 
 #include "kbookmarkhandler.h"

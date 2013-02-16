@@ -43,14 +43,14 @@
 
 #include <dcopclient.h>
 #include <tdeapplication.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kdebug.h>
 #include <kipc.h>
 #include <tdeaboutdata.h>
 #include <kdialog.h>
 #include <klibloader.h>
 #include <tdelistview.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <ksimpleconfig.h>
 #include <tdestyle.h>
 #include <kstandarddirs.h>

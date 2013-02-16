@@ -23,7 +23,7 @@
  */
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kpixmap.h>
 #include <kstandarddirs.h>
 #include <kurldrag.h>

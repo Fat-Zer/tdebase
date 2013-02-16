@@ -36,7 +36,7 @@
 #include <tqfile.h>
 #endif
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeio/job.h>
 #include <tdeio/netaccess.h>
 #include <kdebug.h>

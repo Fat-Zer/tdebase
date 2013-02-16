@@ -76,9 +76,9 @@
 #include <krun.h>
 #include <kcursor.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knotifyclient.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdeshortcut.h>
 #include <kurldrag.h>
 #include <tdeio/netaccess.h>

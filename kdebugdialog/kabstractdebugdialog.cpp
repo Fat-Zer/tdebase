@@ -22,7 +22,7 @@
 #include <kpushbutton.h>
 #include <tqlayout.h>
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstdguiitem.h>
 
 KAbstractDebugDialog::KAbstractDebugDialog( TQWidget *parent, const char *name, bool modal )

@@ -22,11 +22,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ******************************************************************/
 
 #include <config.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdecmdlineargs.h>
 #include <kdebug.h>
 #include <tdeaboutdata.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <dcopclient.h>
 #include <dcopref.h>

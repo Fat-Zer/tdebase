@@ -13,12 +13,12 @@
 #include <tqtimer.h>
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <twin.h>
 #include <kiconloader.h>
 #include <kpixmap.h>
 #include <kpixmapeffect.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <tdepopupmenu.h>
 

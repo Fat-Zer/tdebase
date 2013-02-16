@@ -23,7 +23,7 @@
 #include <tqpainter.h>
 #include <tqbitmap.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kservicegroup.h>
 #include <kdebug.h>

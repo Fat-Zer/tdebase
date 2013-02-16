@@ -24,7 +24,7 @@
 #include <tqfileinfo.h>
 #include <kstddirs.h>
 #include <kdesktopfile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 NotifierServiceAction::NotifierServiceAction()
 	: NotifierAction()

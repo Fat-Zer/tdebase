@@ -29,11 +29,11 @@
 #include <tqtooltip.h>
 
 #include <dcopclient.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdialog.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kseparator.h>
 
 #include <X11/X.h>

@@ -19,7 +19,7 @@
 
 #include "notifiermodule.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqlayout.h>
 #include <kcombobox.h>

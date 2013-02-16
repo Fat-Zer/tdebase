@@ -20,11 +20,11 @@
 #include "remoteimpl.h"
 
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kstandarddirs.h>
 #include <kdesktopfile.h>
 #include <kservice.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqdir.h>
 #include <tqfile.h>

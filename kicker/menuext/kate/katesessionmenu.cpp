@@ -23,12 +23,12 @@
 
 #include <tdeapplication.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <kinputdialog.h>
 #include <klibloader.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 

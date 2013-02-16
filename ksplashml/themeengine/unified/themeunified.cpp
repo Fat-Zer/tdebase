@@ -13,8 +13,8 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>
-#include <kglobalsettings.h>
-#include <klocale.h>
+#include <tdeglobalsettings.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <kprogress.h>
 

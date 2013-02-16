@@ -17,8 +17,8 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #include "client.h"
 
-#include <kstartupinfo.h>
-#include <kglobal.h>
+#include <tdestartupinfo.h>
+#include <tdeglobal.h>
 #include <X11/extensions/shape.h>
 
 #include "notifications.h"

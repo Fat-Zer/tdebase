@@ -35,16 +35,16 @@
 
 #include <tdeapplication.h>
 #include <kstdaction.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <tdetoolbar.h>
 #include <tdeaction.h>
 #include <tdelistbox.h>
 #include <tdelistview.h>
 #include <tqheader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <tdeio/netaccess.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdefiledialog.h>
 #include <kmimetype.h>
 #include <kseparator.h>

@@ -21,7 +21,7 @@
 
 #include <kdebug.h>
 #include <kdesktopfile.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 
 #include <tqdir.h>

@@ -24,9 +24,9 @@ DEALINGS IN THE SOFTWARE.
 
 #include <tdecmdlineargs.h>
 #include <tdeapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <unistd.h>
 #include <twin.h>
 #include <X11/Xlib.h>

@@ -24,7 +24,7 @@
 
 #include <tqwidget.h>
 #include <tqbitmap.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "../../lib/kcommondecoration.h"
 

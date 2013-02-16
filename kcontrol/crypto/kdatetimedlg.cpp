@@ -25,7 +25,7 @@
 #include "kdatetimedlg.h"
 #include <tqlayout.h>
 #include <tqlabel.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kdatepicker.h>
 #include <kpushbutton.h>

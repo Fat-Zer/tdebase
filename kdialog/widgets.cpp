@@ -18,8 +18,8 @@
 //
 
 
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 
 #include "widgets.h"
 #include "tdelistboxdialog.h"

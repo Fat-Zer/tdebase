@@ -20,7 +20,7 @@
 #ifndef KSAVEIO_CONFIG_H_
 #define KSAVEIO_CONFIG_H_
 
-#include <kprotocolmanager.h>
+#include <tdeprotocolmanager.h>
 
 class TQWidget;
 class KSaveIOConfigPrivate;

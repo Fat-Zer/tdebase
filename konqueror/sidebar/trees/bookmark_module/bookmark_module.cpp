@@ -26,7 +26,7 @@
 #include <kbookmarkdrag.h>
 #include <kiconloader.h>
 #include <klineedit.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include <dcopclient.h>
 #include <dcopref.h>

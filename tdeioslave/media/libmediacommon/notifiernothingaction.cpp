@@ -19,7 +19,7 @@
 
 #include "notifiernothingaction.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 NotifierNothingAction::NotifierNothingAction()
 	: NotifierAction()

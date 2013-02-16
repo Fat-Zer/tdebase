@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqtooltip.h>
 
 #include <twindowlistmenu.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "windowlistbutton.h"
 #include "windowlistbutton.moc"

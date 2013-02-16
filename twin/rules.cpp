@@ -13,7 +13,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <fixx11h.h>
 #include <tdeconfig.h>
 #include <tqregexp.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <ksimpleconfig.h>
 #include <tqfile.h>
 

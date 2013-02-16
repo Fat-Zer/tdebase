@@ -19,8 +19,8 @@
 #include "systemdirnotifymodule.h"
 
 #include <kdebug.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 
 SystemDirNotifyModule::SystemDirNotifyModule(const TQCString &obj)
 	: KDEDModule(obj)

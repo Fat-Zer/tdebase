@@ -55,7 +55,7 @@
 #include <tqapplication.h>
 
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kpixmapeffect.h>
 
 #include <taskmanager.h>

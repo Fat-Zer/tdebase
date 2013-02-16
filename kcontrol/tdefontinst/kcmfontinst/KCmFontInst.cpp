@@ -42,7 +42,7 @@
 #include <tqsettings.h>
 #include <tdeaboutdata.h>
 #include <kgenericfactory.h>
-#include <kdiroperator.h>
+#include <tdediroperator.h>
 #include <kprinter.h>
 #include "Misc.h"
 #include "KFileFontIconView.h"
@@ -52,7 +52,7 @@
 #include <tdetoolbarbutton.h>
 #include <tdestdaccel.h>
 #include <tdefiledialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdecmdlineargs.h>
 #include <tdeapplication.h>
 #include <tdeio/job.h>

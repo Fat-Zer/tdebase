@@ -13,7 +13,7 @@
 #include <tdeapplication.h>
 #include <kcursor.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
 #include <kprogress.h>
 #include <twin.h>

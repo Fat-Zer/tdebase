@@ -60,9 +60,9 @@
 #include <tqtextstream.h>
 
 #include <tdeversion.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <ktextbrowser.h>
 

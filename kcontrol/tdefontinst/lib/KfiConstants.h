@@ -1,7 +1,7 @@
 #ifndef __KFI_CONSTANTS_H__
 #define __KFI_CONSTANTS_H__
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 #define KFI_CATALOGUE                "tdefontinst"
 

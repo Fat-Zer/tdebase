@@ -12,9 +12,9 @@
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdialogbase.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <tdeconfig.h>
 

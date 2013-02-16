@@ -25,10 +25,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "kfdialog.h"
 #include "tdmconfig.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #include <tqlabel.h>
 #include <tqlayout.h>

@@ -29,9 +29,9 @@
 #include <kdebug.h>
 #include <kdesktopfile.h>
 #include <kdirlister.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kpropertiesdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <konqbookmarkmanager.h>
 #include <konq_defaults.h>
 #include <konq_drag.h>

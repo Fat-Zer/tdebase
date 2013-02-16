@@ -13,9 +13,9 @@
 #include <kdebug.h>
 #include <kdialog.h>
 #include <tdefontcombo.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdehtmldefaults.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knuminput.h>
 
 #if defined Q_WS_X11 && !defined K_WS_QTONLY

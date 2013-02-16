@@ -30,14 +30,14 @@
 #include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <kservice.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
 #undef Unsorted
 #include <kipc.h>
 
 #include <tdelistview.h>
 #include <kurlrequesterdlg.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kprogress.h>
 #include <kiconloader.h>
 

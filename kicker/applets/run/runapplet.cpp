@@ -28,14 +28,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqhbox.h>
 
 #include <tdeapplication.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kcombobox.h>
 #include <kurifilter.h>
 #include <kdialog.h>
 #include <krun.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include "runapplet.h"
 #include "runapplet.moc"

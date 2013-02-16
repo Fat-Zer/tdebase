@@ -19,7 +19,7 @@
 #include "medium.h"
 
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 const TQString Medium::SEPARATOR = "---";
 

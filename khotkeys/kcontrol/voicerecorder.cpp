@@ -18,11 +18,11 @@
 #include "khotkeysglobal.h"
 #include <kpushbutton.h>
 #include <klineedit.h>
-#include <klocale.h>
-#include <ktempfile.h>
+#include <tdelocale.h>
+#include <tdetempfile.h>
 #include <tqlabel.h>
 #include <tqpainter.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <klibloader.h>
 #include <kstandarddirs.h>
 

@@ -31,11 +31,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tdeactionclasses.h>
 #include <kickertip.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdesktopfile.h>
 #include <krun.h>
 #include <kiconeffect.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kcursor.h>
 #include <tdeapplication.h>
 #include <kipc.h>

@@ -19,7 +19,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <pwd.h>
 #include <fixx11h.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include "workspace.h"
 #include "client.h"

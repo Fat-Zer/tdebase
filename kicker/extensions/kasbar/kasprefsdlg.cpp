@@ -65,9 +65,9 @@
 #include <kcolorbutton.h>
 #include <tdeconfig.h>
 #include <kdialogbase.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knuminput.h>
 
 #include "kastasker.h"

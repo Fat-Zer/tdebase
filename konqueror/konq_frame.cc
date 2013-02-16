@@ -29,10 +29,10 @@
 
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
 #include <kprogress.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ksqueezedtextlabel.h>
 #include <networkstatusindicator.h>
 

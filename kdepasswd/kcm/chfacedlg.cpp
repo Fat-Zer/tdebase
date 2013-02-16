@@ -35,12 +35,12 @@
 #include <tqcheckbox.h>
 
 #include <kdialogbase.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdefiledialog.h>
 #include <kiconview.h>
 #include <kimagefilepreview.h>
 #include <kimageio.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <konq_operations.h>
 #include <kurl.h>
 

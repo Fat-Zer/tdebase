@@ -20,12 +20,12 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kurifilter.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <tdeapplication.h>
 #include <dcopclient.h>
 #include <kdesktopfile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaccel.h>
 #include <kservice.h>
 #include <kprocess.h>

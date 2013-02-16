@@ -27,11 +27,11 @@
 #include <kdebug.h>
 #include <kpushbutton.h>
 #include <tdefileshare.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
 #include <kstandarddirs.h>
 #include <kdialog.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <dcopref.h>
 
 #include "propertiespage.h"

@@ -24,7 +24,7 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <tqwhatsthis.h>
 #include <twin.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <stdlib.h>
 
 #include "bridge.h"

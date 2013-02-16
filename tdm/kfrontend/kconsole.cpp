@@ -56,7 +56,7 @@ extern "C" {
 #include "tdmconfig.h"
 #include "tdm_greet.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kpty.h>
 
 #include <tqsocketnotifier.h>

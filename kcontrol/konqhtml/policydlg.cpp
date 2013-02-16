@@ -7,9 +7,9 @@
 #include <tqwhatsthis.h>
 #include <tqcombobox.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kbuttonbox.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include <tqpushbutton.h>
 

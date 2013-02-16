@@ -6,8 +6,8 @@
  * Copyright (C) 2000 Geert Jansen <jansen@kde.org>
  */
 
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 
 #include "passwd.h"
 #include "passwddlg.h"

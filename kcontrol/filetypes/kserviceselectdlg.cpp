@@ -20,7 +20,7 @@
 #include "kserviceselectdlg.moc"
 #include "kservicelistwidget.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqvbox.h>
 #include <tqlabel.h>

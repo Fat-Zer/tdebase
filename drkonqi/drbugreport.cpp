@@ -28,8 +28,8 @@
 
 #include <tqmultilineedit.h>
 
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 
 #include "drbugreport.moc"
 #include "drbugreport.h"

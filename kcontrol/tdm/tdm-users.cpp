@@ -33,9 +33,9 @@
 #include <kimageio.h>
 #include <kimagefilepreview.h>
 #include <tdeio/netaccess.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kurldrag.h>
 
 #include "tdm-users.h"

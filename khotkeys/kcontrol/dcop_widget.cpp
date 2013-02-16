@@ -20,8 +20,8 @@
 #include <tqpushbutton.h>
 
 #include <krun.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 
 #include <actions.h>
 

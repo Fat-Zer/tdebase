@@ -26,14 +26,14 @@
 
 #include <kdebug.h>
 #include <tdeaction.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <kcharsets.h>
 #include <tdepopupmenu.h>
 #include <dcopclient.h>
 #include <kgenericfactory.h>
-#include <kprotocolmanager.h>
+#include <tdeprotocolmanager.h>
 #include <kprotocolinfo.h>
 #include <tdeio/slaveconfig.h>
 #include <konq_dirpart.h>

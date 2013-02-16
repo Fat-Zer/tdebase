@@ -23,11 +23,11 @@
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdefiledialog.h>
 #include <kinputdialog.h>
 #include <kicondialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kurlrequester.h>
 #include <klineedit.h>
 #include <kiconloader.h>

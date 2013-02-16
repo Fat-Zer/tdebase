@@ -32,8 +32,8 @@
 #include <tdeapplication.h>
 #include <kdatastream.h>
 #include <kdebug.h>
-#include <klocale.h>
-#include <kglobalsettings.h>
+#include <tdelocale.h>
+#include <tdeglobalsettings.h>
 #include <tdeconfig.h>
 #include <kipc.h>
 

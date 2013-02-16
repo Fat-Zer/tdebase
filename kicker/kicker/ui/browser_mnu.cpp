@@ -29,12 +29,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kdesktopfile.h>
 #include <kdirwatch.h>
 #include <tdefileitem.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <tdeconfig.h>
 #include <kiconloader.h>
 #include <tdeio/global.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kmimetype.h>
 #include <konq_operations.h>
 #include <kprocess.h>

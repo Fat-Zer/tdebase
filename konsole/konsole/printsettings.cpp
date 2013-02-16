@@ -20,7 +20,7 @@
 
 #include "printsettings.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqcheckbox.h>
 #include <tqlayout.h>
 

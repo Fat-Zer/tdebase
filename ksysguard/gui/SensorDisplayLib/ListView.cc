@@ -30,9 +30,9 @@
 
 #include <kcolorbutton.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <ksgrd/SensorManager.h>
 #include <ksgrd/StyleEngine.h>
 

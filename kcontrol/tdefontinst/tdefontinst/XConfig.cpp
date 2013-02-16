@@ -35,7 +35,7 @@
 #include <string.h>
 #include <tqdir.h>
 #include <tqregexp.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <sys/types.h>
 #include <signal.h>
 

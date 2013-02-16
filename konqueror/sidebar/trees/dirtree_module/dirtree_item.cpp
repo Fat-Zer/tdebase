@@ -23,7 +23,7 @@
 #include <konq_operations.h>
 #include <konq_drag.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kuserprofile.h>
 #include <tqapplication.h>
 #include <tqclipboard.h>

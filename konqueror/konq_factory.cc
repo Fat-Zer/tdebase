@@ -27,8 +27,8 @@
 #include <konq_mainwindow.h>
 #include <kdebug.h>
 #include <tdeaboutdata.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 
 #include <tqwidget.h>
 #include <tqfile.h>

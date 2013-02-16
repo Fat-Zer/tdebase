@@ -25,7 +25,7 @@
 #include <tdeconfig.h>
 #include <kdialogbase.h>
 #include <ktextedit.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdepopupmenu.h>
 #include <kservice.h>
 #include <kiconloader.h>

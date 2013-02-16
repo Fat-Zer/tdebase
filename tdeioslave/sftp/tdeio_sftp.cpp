@@ -55,11 +55,11 @@ So we can't connect.
 #include <tdeapplication.h>
 #include <kuser.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kinstance.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kurl.h>
 #include <tdeio/ioslave_defaults.h>
 #include <kmimetype.h>

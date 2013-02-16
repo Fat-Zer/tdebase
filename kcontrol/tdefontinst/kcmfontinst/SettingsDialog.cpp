@@ -33,9 +33,9 @@
 #include <tqcheckbox.h>
 #include <tqvbox.h>
 #include <tqwhatsthis.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeio/job.h>
 #include <tdeio/netaccess.h>
 

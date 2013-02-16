@@ -23,14 +23,14 @@
 #include <tqeventloop.h>
 #include <tqstylesheet.h>
 
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <tdeio/job.h>
 #include <kprocess.h>
 #include <kmimetype.h>
 #include <kmountpoint.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeapplication.h>
 #include <kprotocolinfo.h>
 

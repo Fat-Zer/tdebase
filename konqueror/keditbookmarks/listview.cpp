@@ -35,7 +35,7 @@
 #include <tqheader.h>
 
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 #include <kdebug.h>
 #include <tdeapplication.h>
@@ -45,7 +45,7 @@
 #include <kedittoolbar.h>
 #include <tdefiledialog.h>
 #include <kkeydialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <klineedit.h>
 #include <krun.h>
 #include <tdelistviewsearchline.h>

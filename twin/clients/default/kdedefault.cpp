@@ -13,11 +13,11 @@
 #include "kdedefault.h"
 
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kpixmapeffect.h>
 #include <kimageeffect.h>
 #include <kdrawutil.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqlayout.h>
 #include <tqdrawutil.h>
 #include <tqbitmap.h>

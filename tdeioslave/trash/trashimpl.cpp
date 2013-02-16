@@ -18,7 +18,7 @@
 */
 
 #include "trashimpl.h"
-#include <klocale.h>
+#include <tdelocale.h>
 #include <klargefile.h>
 #include <tdeio/global.h>
 #include <tdeio/renamedlg.h>
@@ -26,9 +26,9 @@
 #include <kdebug.h>
 #include <kurl.h>
 #include <kdirnotify_stub.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kmountpoint.h>
 #include <tdefileitem.h>
 #include <tdeio/chmodjob.h>

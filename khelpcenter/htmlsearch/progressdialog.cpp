@@ -2,7 +2,7 @@
 #include <tqlabel.h>
 
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprogress.h>
 #include <kstandarddirs.h>
 

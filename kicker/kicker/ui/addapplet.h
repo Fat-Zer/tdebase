@@ -29,7 +29,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpixmap.h>
 #include <tqvaluelist.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialogbase.h>
 
 #include "appletinfo.h"

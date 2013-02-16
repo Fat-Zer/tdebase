@@ -20,18 +20,18 @@
 */
 
 #include <tdecmdlineargs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <kurl.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <dcopclient.h>
 #include <dcopref.h>
 #include <tqtimer.h>
 #include <stdlib.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kprocess.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 #include <kmimetype.h>
 
 #include "dialog.h"

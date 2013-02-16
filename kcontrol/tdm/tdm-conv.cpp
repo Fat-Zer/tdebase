@@ -33,7 +33,7 @@
 
 #include <kdialog.h>
 #include <ksimpleconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "tdm-conv.h"
 

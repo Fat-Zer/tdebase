@@ -11,7 +11,7 @@
 
 #include <kdebug.h>
 #include <kinstance.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #ifdef HAVE_SASL_SASL_H //prefer libsasl2
 #include <sasl/sasl.h>
@@ -20,7 +20,7 @@
 #include <sasl.h>
 #endif
 #endif
-#include <kabc/ldif.h>
+#include <tdeabc/ldif.h>
 
 #include "tdeio_ldap.h"
 

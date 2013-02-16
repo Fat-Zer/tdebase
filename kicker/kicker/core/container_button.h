@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __container_button_h__
 #define __container_button_h__
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kservice.h>
 #include <kurl.h>
 

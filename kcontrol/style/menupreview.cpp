@@ -24,7 +24,7 @@
 
 #include <kpixmap.h>
 #include <kpixmapeffect.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kimageeffect.h>
 #include <kiconloader.h>
 

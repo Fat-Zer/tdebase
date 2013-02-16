@@ -35,11 +35,11 @@
 #include <tdeaction.h>
 #include <tdeapplication.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kipc.h>
 #include <kkeydialog.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <ksavefile.h>
 #include <kstandarddirs.h>
 #include <ksimpleconfig.h>
@@ -48,7 +48,7 @@
 #include <kurldrag.h>
 #include <twin.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <dcopclient.h>
 #include <kiconloader.h>
 #include <khelpmenu.h>

@@ -25,7 +25,7 @@
 
 #include <klineedit.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdelistbox.h>
 
 #include "searchwidget.h"

@@ -22,7 +22,7 @@
 #include <tdeaboutdata.h>
 
 #include "kjobviewer.h"
-#include <klocale.h>
+#include <tdelocale.h>
 #include <stdlib.h>
 
 static TDECmdLineOptions options[] = {

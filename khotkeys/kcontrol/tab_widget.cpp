@@ -18,7 +18,7 @@
 
 #include <typeinfo>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include <actions.h>

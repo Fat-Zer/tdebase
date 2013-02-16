@@ -38,7 +38,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqvaluevector.h>
 
 #include <ksharedptr.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 #include <twin.h>
 
 #include <config.h>

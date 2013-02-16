@@ -26,7 +26,7 @@
 #include <kprocess.h>
 #include <kstandarddirs.h>
 #include <kinstance.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 
 #include "cgi.h"

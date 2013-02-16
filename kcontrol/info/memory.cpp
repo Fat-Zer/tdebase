@@ -29,7 +29,7 @@
 #include <tqdrawutil.h>
 #include <tqtooltip.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdialog.h>
 #include <kseparator.h>
 
