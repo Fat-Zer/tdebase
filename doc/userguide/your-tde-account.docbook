@@ -26,7 +26,7 @@ you may find useful are:<filename>.kde/share/config</filename>, which
 contains configuration files for individual applications;
 <filename>.kde/Autostart</filename>, which contains links to
 applications which should start each time you start &tde;; and
-<filename>.kde/share/apps/kabc</filename>, where your address book is
+<filename>.kde/share/apps/tdeabc</filename>, where your address book is
 stored.</para>
 </listitem>
 <!-- FIXME: Apparently TDEDIR and TDEDIRS are deprecated. I need to -->
