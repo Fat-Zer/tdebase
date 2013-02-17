@@ -53,7 +53,7 @@
 
 extern KSimpleConfig *config;
 
-#define TSAK_LOCTDEFILE "/tmp/tdesocket-global/tsak.lock"
+#define TSAK_LOCKFILE "/tmp/tdesocket-global/tsak.lock"
 
 TDMAppearanceWidget::TDMAppearanceWidget(TQWidget *parent, const char *name)
   : TQWidget(parent, name), sakwarning(0)
@@ -486,7 +486,7 @@ void TDMAppearanceWidget::save()
   }
   else {
     // Get PID
-    TQFile file(TSAK_LOCTDEFILE);
+    TQFile file(TSAK_LOCKFILE);
     if (file.open(IO_ReadOnly)) {
       TQTextStream stream(&file);
       unsigned long tsakpid = stream.readLine().toULong();
