@@ -45,7 +45,7 @@ using namespace std;
 
 #define FIFO_DIR "/tmp/tdesocket-global"
 #define FIFO_FILE_OUT "/tmp/tdesocket-global/tsak"
-#define FIFO_LOCTDEFILE_OUT "/tmp/tdesocket-global/tsak.lock"
+#define FIFO_LOCKFILE_OUT "/tmp/tdesocket-global/tsak.lock"
 
 // WARNING
 // MAX_KEYBOARDS must be greater than or equal to MAX_INPUT_NODE
@@ -266,7 +266,7 @@ void tearDownPipe()
 void tearDownLockingPipe()
 {
 	close(mPipe_lockfd_out);
-	unlink(FIFO_LOCTDEFILE_OUT);
+	unlink(FIFO_LOCKFILE_OUT);
 }
 
 bool setFileLock(int fd, bool close_on_failure)
@@ -296,7 +296,7 @@ bool checkFileLock()
 	fl.l_whence  = SEEK_SET;
 	fl.l_len     = 0;
 
-	int fd = open(FIFO_LOCTDEFILE_OUT, O_RDWR | O_NONBLOCK);
+	int fd = open(FIFO_LOCKFILE_OUT, O_RDWR | O_NONBLOCK);
 	fcntl(fd, F_GETLK, &fl);  /* Overwrites lock structure with preventors. */
 
 	if (fd > -1) {
@@ -333,10 +333,10 @@ bool setupLockingPipe(bool writepid)
 	umask(0);
 	mkdir(FIFO_DIR,0644);
 
-	mknod(FIFO_LOCTDEFILE_OUT, 0600, 0);
-	chmod(FIFO_LOCTDEFILE_OUT, 0600);
+	mknod(FIFO_LOCKFILE_OUT, 0600, 0);
+	chmod(FIFO_LOCKFILE_OUT, 0600);
 
-	mPipe_lockfd_out = open(FIFO_LOCTDEFILE_OUT, O_RDWR | O_NONBLOCK);
+	mPipe_lockfd_out = open(FIFO_LOCKFILE_OUT, O_RDWR | O_NONBLOCK);
 	if (mPipe_lockfd_out > -1) {
 		if (writepid) {
 			// Write my PID to the file
