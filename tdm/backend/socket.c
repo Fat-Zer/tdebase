@@ -99,9 +99,9 @@ CreateListeningSocket( struct sockaddr *sock_addr, int salen )
 	return fd;
 }
 
-struct soctdelist {
-	struct soctdelist *next;
-	struct soctdelist *mcastgroups;
+struct socklist {
+	struct socklist *next;
+	struct socklist *mcastgroups;
 	struct sockaddr *addr;
 	int salen;
 	int addrlen;
@@ -109,12 +109,12 @@ struct soctdelist {
 	int ref; /* referenced bit - see UpdateListenSockets */
 };
 
-static struct soctdelist *listensocks;
+static struct socklist *listensocks;
 
 static void
-DestroyListeningSocket( struct soctdelist *s )
+DestroyListeningSocket( struct socklist *s )
 {
-	struct soctdelist *g, *n;
+	struct socklist *g, *n;
 
 	if (s->fd >= 0) {
 		CloseNClearCloseOnFork( s->fd );
@@ -134,10 +134,10 @@ DestroyListeningSocket( struct soctdelist *s )
 	s->mcastgroups = NULL;
 }
 
-static struct soctdelist*
-FindInList( struct soctdelist *list, ARRAY8Ptr addr )
+static struct socklist*
+FindInList( struct socklist *list, ARRAY8Ptr addr )
 {
-	struct soctdelist *s;
+	struct socklist *s;
 
 	for (s = list; s; s = s->next) {
 		if (s->addrlen == addr->length) {
@@ -165,12 +165,12 @@ FindInList( struct soctdelist *list, ARRAY8Ptr addr )
 	return NULL;
 }
 
-static struct soctdelist *
-CreateSoctdelistEntry( ARRAY8Ptr addr )
+static struct socklist *
+CreateSocklistEntry( ARRAY8Ptr addr )
 {
-	struct soctdelist *s;
+	struct socklist *s;
 
-	if (!(s = Calloc( 1, sizeof(struct soctdelist) )))
+	if (!(s = Calloc( 1, sizeof(struct socklist) )))
 		return NULL;
 
 	if (addr->length == 4) { /* IPv4 */
@@ -212,7 +212,7 @@ CreateSoctdelistEntry( ARRAY8Ptr addr )
 static void
 UpdateListener( ARRAY8Ptr addr, void **closure )
 {
-	struct soctdelist *s;
+	struct socklist *s;
 
 	*closure = NULL;
 
@@ -242,7 +242,7 @@ UpdateListener( ARRAY8Ptr addr, void **closure )
 		return;
 	}
 
-	if (!(s = CreateSoctdelistEntry( addr )))
+	if (!(s = CreateSocklistEntry( addr )))
 		return;
 
 	if ((s->fd = CreateListeningSocket( s->addr, s->salen )) < 0) {
@@ -260,7 +260,7 @@ UpdateListener( ARRAY8Ptr addr, void **closure )
 #define LEAVE_MCAST_GROUP 1
 
 static void
-ChangeMcastMembership( struct soctdelist *s, struct soctdelist *g, int op )
+ChangeMcastMembership( struct socklist *s, struct socklist *g, int op )
 {
 	int sockopt;
 
@@ -342,8 +342,8 @@ ChangeMcastMembership( struct soctdelist *s, struct soctdelist *g, int op )
 static void
 UpdateMcastGroup( ARRAY8Ptr addr, void **closure )
 {
-	struct soctdelist *s = (struct soctdelist *)*closure;
-	struct soctdelist *g;
+	struct socklist *s = (struct socklist *)*closure;
+	struct socklist *g;
 
 	if (!s)
 		return;
@@ -355,7 +355,7 @@ UpdateMcastGroup( ARRAY8Ptr addr, void **closure )
 	}
 
 	/* Need to join the group */
-	if (!(g = CreateSoctdelistEntry( addr )))
+	if (!(g = CreateSocklistEntry( addr )))
 		return;
 
 	ChangeMcastMembership( s, g, JOIN_MCAST_GROUP );
@@ -367,7 +367,7 @@ UpdateMcastGroup( ARRAY8Ptr addr, void **closure )
 void
 UpdateListenSockets( void )
 {
-	struct soctdelist *s, *g, **ls, **lg;
+	struct socklist *s, *g, **ls, **lg;
 	void *tmpPtr = NULL;
 
 	/* Clear Ref bits - any not marked by UpdateCallback will be closed */
@@ -404,7 +404,7 @@ AnyListenSockets( void )
 int
 ProcessListenSockets( FD_TYPE *reads )
 {
-	struct soctdelist *s;
+	struct socklist *s;
 	int ret = 0;
 
 	for (s = listensocks; s; s = s->next)

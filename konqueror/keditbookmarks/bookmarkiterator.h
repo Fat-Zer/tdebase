@@ -53,7 +53,7 @@ protected:
 
 private:
    KBookmark m_bk;
-   TQValueList<KBookmark> m_btdelist;
+   TQValueList<KBookmark> m_bklist;
 };
 
 class BookmarkIteratorHolder

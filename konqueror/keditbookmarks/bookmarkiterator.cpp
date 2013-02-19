@@ -28,7 +28,7 @@
 
 #include <tqtimer.h>
 
-BookmarkIterator::BookmarkIterator(TQValueList<KBookmark> bks) : m_btdelist(bks) {
+BookmarkIterator::BookmarkIterator(TQValueList<KBookmark> bks) : m_bklist(bks) {
     connect(this, TQT_SIGNAL( deleteSelf(BookmarkIterator *) ), 
             TQT_SLOT( slotCancelTest(BookmarkIterator *) ));
     delayedEmitNextOne();
@@ -60,12 +60,12 @@ const KBookmark BookmarkIterator::curBk() const {
 void BookmarkIterator::nextOne() {
     // kdDebug() << "BookmarkIterator::nextOne" << endl;
 
-    if (m_btdelist.isEmpty()) {
+    if (m_bklist.isEmpty()) {
         emit deleteSelf(this);
         return;
     }
 
-    TQValueListIterator<KBookmark> head = m_btdelist.begin();
+    TQValueListIterator<KBookmark> head = m_bklist.begin();
     KBookmark bk = (*head);
 
     bool viable = bk.hasParent() && isApplicable(bk);
@@ -75,7 +75,7 @@ void BookmarkIterator::nextOne() {
         doAction();
     }
 
-    m_btdelist.remove(head);
+    m_bklist.remove(head);
 
     if (!viable)
         delayedEmitNextOne();
