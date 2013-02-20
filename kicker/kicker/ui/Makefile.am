@@ -17,7 +17,7 @@ libkicker_ui_la_SOURCES = addbutton_mnu.cpp appletitem.ui appletview.ui addapple
         media_watcher.cpp media_watcher.skel mykickoffsearchinterface.cpp query.cpp
 
 libkicker_ui_la_LIBADD = $(top_builddir)/libkonq/libkonq.la $(top_builddir)/tdmlib/libdmctl.la \
-		$(LIB_KABC) ../interfaces/libkickoffsearch_interfaces.la
+		$(LIB_TDEABC) ../interfaces/libkickoffsearch_interfaces.la
 
 libkicker_ui_la_METASOURCES = AUTO
 

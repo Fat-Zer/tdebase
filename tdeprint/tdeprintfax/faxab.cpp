@@ -66,7 +66,7 @@ FaxAB::FaxAB(TQWidget *parent, const char *name)
 	resize( conf->readSizeEntry( "ABSize", &defsize ) );
 
 	initialize();
-	connect(KABC::StdAddressBook::self(), TQT_SIGNAL(addressBookChanged(AddressBook*)), TQT_SLOT(slotAbChanged(AddressBook*)));
+	connect(TDEABC::StdAddressBook::self(), TQT_SIGNAL(addressBookChanged(AddressBook*)), TQT_SLOT(slotAbChanged(AddressBook*)));
 }
 
 FaxAB::~FaxAB()
@@ -81,19 +81,19 @@ void FaxAB::initialize()
 	m_entries.clear();
 	m_list->clear();
 
-	KABC::AddressBook	*bk = KABC::StdAddressBook::self();
-	for (KABC::AddressBook::Iterator it=bk->begin(); it!=bk->end(); ++it)
+	TDEABC::AddressBook	*bk = TDEABC::StdAddressBook::self();
+	for (TDEABC::AddressBook::Iterator it=bk->begin(); it!=bk->end(); ++it)
 	{
-		KABC::PhoneNumber::List	numbers = (*it).phoneNumbers();
-		KABC::PhoneNumber::List faxNumbers;
-		for (TQValueList<KABC::PhoneNumber>::Iterator nit=numbers.begin(); nit!=numbers.end(); ++nit)
+		TDEABC::PhoneNumber::List	numbers = (*it).phoneNumbers();
+		TDEABC::PhoneNumber::List faxNumbers;
+		for (TQValueList<TDEABC::PhoneNumber>::Iterator nit=numbers.begin(); nit!=numbers.end(); ++nit)
 		{
-			if (((*nit).type() & KABC::PhoneNumber::Fax) && !(*nit).number().isEmpty())
+			if (((*nit).type() & TDEABC::PhoneNumber::Fax) && !(*nit).number().isEmpty())
 				faxNumbers << ( *nit );
 		}
 		if (faxNumbers.count() > 0)
 		{
-			for ( KABC::PhoneNumber::List::ConstIterator nit = faxNumbers.begin(); nit != faxNumbers.end(); ++nit )
+			for ( TDEABC::PhoneNumber::List::ConstIterator nit = faxNumbers.begin(); nit != faxNumbers.end(); ++nit )
 			{
 				FaxABEntry entry;
 				entry.m_number = ( *nit );
@@ -176,14 +176,14 @@ bool FaxAB::getEntry(TQStringList& number, TQStringList& name, TQStringList& ent
 
 bool FaxAB::getEntryByNumber(const TQString& number, TQString& name, TQString& enterprise)
 {
-	KABC::AddressBook *bk = KABC::StdAddressBook::self();
-	for (KABC::AddressBook::Iterator it=bk->begin(); it!=bk->end(); ++it)
+	TDEABC::AddressBook *bk = TDEABC::StdAddressBook::self();
+	for (TDEABC::AddressBook::Iterator it=bk->begin(); it!=bk->end(); ++it)
 	{
-		KABC::PhoneNumber::List	numbers = (*it).phoneNumbers();
+		TDEABC::PhoneNumber::List	numbers = (*it).phoneNumbers();
 		TQStringList	filteredNumbers;
-		for (TQValueList<KABC::PhoneNumber>::Iterator nit=numbers.begin(); nit!=numbers.end(); ++nit)
+		for (TQValueList<TDEABC::PhoneNumber>::Iterator nit=numbers.begin(); nit!=numbers.end(); ++nit)
 		{
-			if (((*nit).type() & KABC::PhoneNumber::Fax) )
+			if (((*nit).type() & TDEABC::PhoneNumber::Fax) )
 			{
 				TQString strippedNumber;
 				for (uint i = 0; i < (*nit).number().length(); ++i)

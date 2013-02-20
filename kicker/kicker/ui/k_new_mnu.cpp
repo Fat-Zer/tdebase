@@ -2114,7 +2114,7 @@ void KMenu::searchBookmarks(KBookmarkGroup group)
 void KMenu::initSearch()
 {
     if (!m_addressBook && KickerSettings::kickoffSearchAddressBook())
-       m_addressBook = KABC::StdAddressBook::self( false );
+       m_addressBook = TDEABC::StdAddressBook::self( false );
 
     if (!bookmarkManager)
       bookmarkManager = KBookmarkManager::userBookmarksManager();
@@ -2139,9 +2139,9 @@ void KMenu::searchAddressbook()
       return;
 
     if (!m_addressBook)
-      m_addressBook = KABC::StdAddressBook::self( false );
+      m_addressBook = TDEABC::StdAddressBook::self( false );
 
-    KABC::AddressBook::ConstIterator it = m_addressBook->begin();
+    TDEABC::AddressBook::ConstIterator it = m_addressBook->begin();
     while (it!=m_addressBook->end()) {
         if (!current_query.matches((*it).assembledName()+' '+(*it).fullEmail())) {
             it++;

@@ -276,7 +276,7 @@ private:
     TQRegExp emailRegExp,uriRegExp,uri2RegExp,authRegExp;
 
     KBookmarkManager *bookmarkManager;
-    KABC::AddressBook* m_addressBook;
+    TDEABC::AddressBook* m_addressBook;
 
     enum ContextMenuEntry { AddItemToPanel, EditItem, AddMenuToPanel, EditMenu,
                             AddItemToDesktop, AddMenuToDesktop, PutIntoRunDialog,

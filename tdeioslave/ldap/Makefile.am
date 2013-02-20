@@ -10,7 +10,7 @@ LDADD      = $(LIB_KIO) $(LDAP_LIBS)
 kde_module_LTLIBRARIES = tdeio_ldap.la
 
 tdeio_ldap_la_SOURCES = tdeio_ldap.cpp
-tdeio_ldap_la_LIBADD = $(LIB_KIO) $(LDAP_LIBS) $(LIB_KABC)
+tdeio_ldap_la_LIBADD = $(LIB_KIO) $(LDAP_LIBS) $(LIB_TDEABC)
 tdeio_ldap_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LDAP_RPATH) -module $(KDE_PLUGIN)
 
 noinst_HEADERS = tdeio_ldap.h

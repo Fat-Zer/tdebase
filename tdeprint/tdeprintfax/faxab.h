@@ -52,7 +52,7 @@ private:
 	struct FaxABEntry
 	{
 		TQString           m_name;
-		KABC::PhoneNumber m_number;
+		TDEABC::PhoneNumber m_number;
 		TQString           m_enterprise;
 	};
 

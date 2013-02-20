@@ -52,12 +52,12 @@ class LDAPProtocol : public TDEIO::SlaveBase
     void addModOp( LDAPMod ***pmods, int mod_type, 
       const TQString &attr, const TQByteArray &value );
     void LDAPEntry2UDSEntry( const TQString &dn, TDEIO::UDSEntry &entry, 
-      const KABC::LDAPUrl &usrc, bool dir=false );
-    int asyncSearch( KABC::LDAPUrl &usrc );
+      const TDEABC::LDAPUrl &usrc, bool dir=false );
+    int asyncSearch( TDEABC::LDAPUrl &usrc );
     
     TQCString LDAPEntryAsLDIF( LDAPMessage *msg );
     void LDAPErr( const KURL &url, int err = LDAP_SUCCESS );
-    void changeCheck( KABC::LDAPUrl &url );
+    void changeCheck( TDEABC::LDAPUrl &url );
 
     void fillAuthInfo( TDEIO::AuthInfo &info );
 };
