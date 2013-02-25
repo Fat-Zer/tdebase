@@ -1,4 +1,4 @@
-/* kastastdepopup.h
+/* kastaskpopup.h
 **
 ** Copyright (C) 2001-2004 Richard Moore <rich@kde.org>
 ** Contributor: Mosfet

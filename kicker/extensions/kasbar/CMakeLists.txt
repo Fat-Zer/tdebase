@@ -33,7 +33,7 @@ set( target kasbar )
 
 set( ${target}_SRCS
   kasbar.cpp kasitem.cpp kastaskitem.cpp kastasker.cpp
-  kaspopup.cpp kastastdepopup.cpp kasstartupitem.cpp
+  kaspopup.cpp kastaskpopup.cpp kasstartupitem.cpp
   kasaboutdlg.cpp kasprefsdlg.cpp kasclockitem.cpp
   kasgroupitem.cpp kasresources.cpp kasgrouper.cpp
   kasloaditem.cpp

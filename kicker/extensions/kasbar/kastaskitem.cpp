@@ -81,7 +81,7 @@
 #include <taskrmbmenu.h>
 
 #include "kastasker.h"
-#include "kastastdepopup.h"
+#include "kastaskpopup.h"
 #include "kastaskitem.h"
 #include "kasbarextension.h"
 
