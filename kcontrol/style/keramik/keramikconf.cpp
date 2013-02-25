@@ -28,7 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #include <tdeglobal.h>
 #include <tdelocale.h>
 
-#include "keramitdeconf.h"
+#include "keramikconf.h"
 
 extern "C"
 {
@@ -100,4 +100,4 @@ void KeramikStyleConfig::updateChanged()
 		emit changed(true);
 }
 
-#include "keramitdeconf.moc"
+#include "keramikconf.moc"
