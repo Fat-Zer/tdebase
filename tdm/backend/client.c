@@ -133,7 +133,7 @@ static char tty[16], hostname[100];
 static struct spwd *sp;
 # endif
 # ifdef KERBEROS
-static char krbttdefile[MAXPATHLEN];
+static char krbtkfile[MAXPATHLEN];
 # endif
 #endif
 
@@ -719,24 +719,24 @@ Verify( GConvFunc gconv, int rootok )
 			V_RET_FAIL( 0 );
 		}
 
-		sprintf( krbttdefile, "%s.%.*s", TKT_ROOT, MAXPATHLEN - strlen( TKT_ROOT ) - 2, td->name );
-		krb_set_tkt_string( krbttdefile );
-		unlink( krbttdefile );
+		sprintf( krbtkfile, "%s.%.*s", TKT_ROOT, MAXPATHLEN - strlen( TKT_ROOT ) - 2, td->name );
+		krb_set_tkt_string( krbtkfile );
+		unlink( krbtkfile );
 
 		ret = krb_verify_user( curuser, "", realm, curpass, 1, "rcmd" );
 		if (ret == KSUCCESS) {
-			chown( krbttdefile, p->pw_uid, p->pw_gid );
+			chown( krbtkfile, p->pw_uid, p->pw_gid );
 			Debug( "KerberosIV verify succeeded\n" );
 			goto done;
 		} else if (ret != KDC_PR_UNKNOWN && ret != SKDC_CANT) {
 			LogError( "KerberosIV verification failure %\"s for %s\n",
 			          krb_get_err_text( ret ), curuser );
-			krbttdefile[0] = '\0';
+			krbtkfile[0] = '\0';
 			V_RET_FAIL( 0 );
 		}
 		Debug( "KerberosIV verify failed: %s\n", krb_get_err_text( ret ) );
 	}
-	krbttdefile[0] = '\0';
+	krbtkfile[0] = '\0';
 # endif	 /* KERBEROS */
 
 # if defined(ultrix) || defined(__ultrix__)
@@ -1259,7 +1259,7 @@ StartClient()
 	}
 # else /* _AIX */
 #  if defined(KERBEROS) && !defined(NO_AFS)
-	if (krbttdefile[0] != '\0') {
+	if (krbtkfile[0] != '\0') {
 		if (k_hasafs()) {
 			if (k_setpag() == -1)
 				LogError( "setpag() for %s failed\n", curuser );
@@ -1307,8 +1307,8 @@ StartClient()
 	if (cursource == PWSRC_AUTOLOGIN)
 		env = setEnv (env, "TDM_AUTOLOGIN", curuser);
 #if !defined(USE_PAM) && !defined(_AIX) && defined(KERBEROS)
-	if (krbttdefile[0] != '\0')
-		env = setEnv( env, "KRBTTDEFILE", krbttdefile );
+	if (krbtkfile[0] != '\0')
+		env = setEnv( env, "KRBTKFILE", krbtkfile );
 #endif
 #ifdef WITH_CONSOLE_KIT
 	if (ck_session_cookie != NULL) {
@@ -1752,7 +1752,7 @@ SessionExit( int status )
 #endif /* K5AUTH */
 #if !defined(USE_PAM) && !defined(_AIX)
 # ifdef KERBEROS
-				if (krbttdefile[0]) {
+				if (krbtkfile[0]) {
 					(void)dest_tkt();
 #  ifndef NO_AFS
 					if (k_hasafs())

@@ -632,7 +632,7 @@ the following environment variables are passed:</para>
   <listitem><para>may be set to a non-standard authority file</para></listitem>
  </varlistentry>
  <varlistentry>
-  <term>KRBTTDEFILE</term>
+  <term>KRBTKFILE</term>
   <listitem><para>may be set to a Kerberos4 credentials cache name</para>
   </listitem>
  </varlistentry>
