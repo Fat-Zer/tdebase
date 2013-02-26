@@ -37,6 +37,7 @@ link_directories(
 
 ##### other data ################################
 
+install( FILES shutdown.png DESTINATION ${DATA_INSTALL_DIR}/ksmserver/pics )
 install( FILES shutdownkonq.png DESTINATION ${DATA_INSTALL_DIR}/ksmserver/pics )
 install( FILES ksmserver.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 install( FILES move_session_config.sh DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
