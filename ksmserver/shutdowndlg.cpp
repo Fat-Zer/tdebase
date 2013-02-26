@@ -752,7 +752,12 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 		buttonlay->setAlignment( Qt::AlignHCenter );
 
 		TQLabel* icon = new TQLabel( lfrm );
-		icon->setPixmap( UserIcon( "shutdownkonq" ) );
+		if (TDEConfigGroup(TDEGlobal::config(), "Logout").readBoolEntry("doNotUseKonqyPicture", false)) {
+			icon->setPixmap( UserIcon( "shutdown" ) );
+		}
+		else {
+			icon->setPixmap( UserIcon( "shutdownkonq" ) );
+		}
 		lfrm->setFixedSize( icon->sizeHint());
 		icon->setFixedSize( icon->sizeHint());
 
