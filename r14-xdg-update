@@ -507,9 +507,15 @@ if [ ! -f $PROFILE_DIR/share/config/twin4rc ] && [ -f $PROFILE_DIR/share/config/
 fi
 
 # Disable some features new to R14, otherwise users will see an unfamiliar desktop.
-$TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "ShowDeepButtons" --type bool "false"
-$TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "UseResizeHandle" --type bool "false"
-$TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "MenubarPanelBlurred" --type bool "false"
+if [[ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "ShowDeepButtons" --default false) == "false" ]]; then
+	$TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "ShowDeepButtons" --type bool "false"
+fi
+if [[ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "UseResizeHandle" --default false) == "false" ]]; then
+	$TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "UseResizeHandle" --type bool "false"
+fi
+if [[ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "MenubarPanelBlurred" --default false) == "false" ]]; then
+	$TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "MenubarPanelBlurred" --type bool "false"
+fi
 
 # Perform some nominal update validations.
 # First clean house from any previous failures.
