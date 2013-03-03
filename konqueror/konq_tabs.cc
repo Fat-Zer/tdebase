@@ -52,6 +52,8 @@
 #define BREAKOFF_ID 5
 #define CLOSETAB_ID 6
 #define OTHERTABS_ID 7
+#define MOVE_LEFT_ID 8
+#define MOVE_RIGHT_ID 9
 
 //###################################################################
 
@@ -102,6 +104,19 @@ KonqFrameTabs::KonqFrameTabs(TQWidget* parent, KonqFrameContainerBase* parentCon
                             TQT_SLOT( slotBreakOffTabPopup() ),
                             m_pViewManager->mainWindow()->action("breakoffcurrenttab")->shortcut(),
                             BREAKOFF_ID );
+  m_pPopupMenu->insertSeparator();
+  m_pPopupMenu->insertItem( SmallIconSet( "tab_move_left" ),
+                            i18n("Move Tab &Left"),
+                            m_pViewManager->mainWindow(),
+                            TQT_SLOT( slotMoveTabLeft() ),
+                            m_pViewManager->mainWindow()->action("tab_move_left")->shortcut(),
+                            MOVE_LEFT_ID );
+  m_pPopupMenu->insertItem( SmallIconSet( "tab_move_right" ),
+                            i18n("Move Tab &Right"),
+                            m_pViewManager->mainWindow(),
+                            TQT_SLOT( slotMoveTabRight() ),
+                            m_pViewManager->mainWindow()->action("tab_move_right")->shortcut(),
+                            MOVE_RIGHT_ID );
   m_pPopupMenu->insertSeparator();
   m_pSubPopupMenuTab = new TQPopupMenu( this );
   m_pPopupMenu->insertItem( i18n("Other Tabs" ), m_pSubPopupMenuTab, OTHERTABS_ID );
@@ -364,10 +379,16 @@ void KonqFrameTabs::slotContextMenu( const TQPoint &p )
   m_pPopupMenu->setItemEnabled( RELOAD_ID, false );
   m_pPopupMenu->setItemEnabled( DUPLICATE_ID, false );
   m_pPopupMenu->setItemEnabled( BREAKOFF_ID, false );
+  m_pPopupMenu->setItemEnabled( MOVE_LEFT_ID, false );
+  // The following line fails to build. Adapted from konq_mainwindow.cc: 4243. Help!
+  // m_pPopupMenu->setItemEnabled( MOVE_LEFT_ID, m_pViewManager->mainWindow()->currentView() ? m_pViewManager->mainWindow()->currentView()->frame()!=(TQApplication::reverseLayout() ? childFrameList->last() : childFrameList->first()) : false );
+  m_pPopupMenu->setItemEnabled( MOVE_RIGHT_ID, false );
+  // The following line fails to build. Adapted from konq_mainwindow.cc: 4245. Help!
+  // m_pPopupMenu->setItemEnabled( MOVE_RIGHT_ID, m_pViewManager->mainWindow()->currentView() ? m_pViewManager->mainWindow()->currentView()->frame()!=(TQApplication::reverseLayout() ? childFrameList->first() : childFrameList->last()) : false );
   m_pPopupMenu->setItemEnabled( CLOSETAB_ID, false );
   m_pPopupMenu->setItemEnabled( OTHERTABS_ID, true );
   m_pSubPopupMenuTab->setItemEnabled( m_closeOtherTabsId, false );
- 
+
   m_pPopupMenu->exec( p );
 }
 
@@ -379,6 +400,8 @@ void KonqFrameTabs::slotContextMenu( TQWidget *w, const TQPoint &p )
   m_pPopupMenu->setItemEnabled( RELOAD_ID, true );
   m_pPopupMenu->setItemEnabled( DUPLICATE_ID, true );
   m_pPopupMenu->setItemEnabled( BREAKOFF_ID, tabCount>1 );
+  m_pPopupMenu->setItemEnabled( MOVE_LEFT_ID, tabCount>1 );
+  m_pPopupMenu->setItemEnabled( MOVE_RIGHT_ID, tabCount>1 );
   m_pPopupMenu->setItemEnabled( CLOSETAB_ID, tabCount>1 );
   m_pPopupMenu->setItemEnabled( OTHERTABS_ID, tabCount>1 );
   m_pSubPopupMenuTab->setItemEnabled( m_closeOtherTabsId, true );
@@ -520,6 +543,8 @@ void KonqFrameTabs::hideTabBar()
     setTabBarHidden(true);
   }
   m_pPopupMenu->setItemEnabled( BREAKOFF_ID, false );
+  m_pPopupMenu->setItemEnabled( MOVE_LEFT_ID, false );
+  m_pPopupMenu->setItemEnabled( MOVE_RIGHT_ID, false );
   m_pPopupMenu->setItemEnabled( CLOSETAB_ID, false );
 }
 
