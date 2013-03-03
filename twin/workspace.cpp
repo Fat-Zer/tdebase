@@ -243,8 +243,6 @@ Workspace::Workspace( bool restore )
         strcat(filename, home);
         strcat(filename, configfile);
 
-        printf("[twin-workspace] reading '%s' as kompmgr pidfile\n\n", filename);
-
         // Now that we did all that by way of introduction...read the file!
         FILE *pFile;
         char buffer[255];
@@ -252,6 +250,7 @@ Workspace::Workspace( bool restore )
         int kompmgrpid = 0;
         if (pFile)
             {
+            printf("[twin-workspace] Using '%s' as kompmgr pidfile\n\n", filename);
             // obtain file size
             fseek (pFile , 0 , SEEK_END);
             unsigned long lSize = ftell (pFile);
@@ -1095,8 +1094,6 @@ void Workspace::slotReconfigure()
         strcat(filename, home);
         strcat(filename, configfile);
 
-        printf("[twin-workspace] reading '%s' as kompmgr pidfile\n\n", filename);
-
         // Now that we did all that by way of introduction...read the file!
         FILE *pFile;
         char buffer[255];
@@ -1104,6 +1101,7 @@ void Workspace::slotReconfigure()
         int kompmgrpid = 0;
         if (pFile)
             {
+            printf("[twin-workspace] Using '%s' as kompmgr pidfile\n\n", filename);
             // obtain file size
             fseek (pFile , 0 , SEEK_END);
             unsigned long lSize = ftell (pFile);
