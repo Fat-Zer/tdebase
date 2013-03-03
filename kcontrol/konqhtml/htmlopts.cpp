@@ -64,7 +64,7 @@ KMiscHTMLOptions::KMiscHTMLOptions(TDEConfig *config, TQString group, TQWidget *
      // Form completion
 
     TQVGroupBox *bgForm = new TQVGroupBox( i18n("Form Com&pletion"), this );
-    m_pFormCompletionCheckBox = new TQCheckBox(i18n( "Enable completion of &forms" ), bgForm);
+    m_pFormCompletionCheckBox = new TQCheckBox(i18n( "Enable com&pletion of forms" ), bgForm);
     TQWhatsThis::add( m_pFormCompletionCheckBox, i18n( "If this box is checked, Konqueror will remember"
                                                         " the data you enter in web forms and suggest it in similar fields for all forms." ) );
     connect(m_pFormCompletionCheckBox, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
@@ -139,6 +139,12 @@ KMiscHTMLOptions::KMiscHTMLOptions(TDEConfig *config, TQString group, TQWidget *
     TQWhatsThis::add( m_pAutoLoadImagesCheckBox, i18n( "If this box is checked, Konqueror will automatically load any images that are embedded in a web page. Otherwise, it will display placeholders for the images, and you can then manually load the images by clicking on the image button.<br>Unless you have a very slow network connection, you will probably want to check this box to enhance your browsing experience." ) );
     connect(m_pAutoLoadImagesCheckBox, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
     lay->addMultiCellWidget( m_pAutoLoadImagesCheckBox, row, row, 0, 1 );
+    row++;
+
+    m_pEnableFavIconCheckBox = new TQCheckBox( i18n( "Enable &favicons"), this );
+    TQWhatsThis::add( m_pEnableFavIconCheckBox, i18n( "If this box is checked, Konqueror will automatically load and display favicon images that are associated with a web page. These images appear in the Location bar. Otherwise a generic image will appear." ) );
+    connect(m_pEnableFavIconCheckBox, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
+    lay->addMultiCellWidget( m_pEnableFavIconCheckBox, row, row, 0, 1 );
     row++;
 
     m_pUnfinishedImageFrameCheckBox = new TQCheckBox( i18n( "Dra&w frame around not completely loaded images"), this );
@@ -253,6 +259,7 @@ void KMiscHTMLOptions::load( bool useDefaults )
     bool underlineLinks = READ_BOOL("UnderlineLinks", DEFAULT_UNDERLINELINKS);
     bool hoverLinks = READ_BOOL("HoverLinks", true);
     bool bAutoLoadImages = READ_BOOL( "AutoLoadImages", true );
+    bool bEnableFavIcon = READ_BOOL( "EnableFavicon", true );
     bool bUnfinishedImageFrame = READ_BOOL( "UnfinishedImageFrame", true );
     TQString strAnimations = READ_ENTRY( "ShowAnimations" ).lower();
 
@@ -261,6 +268,7 @@ void KMiscHTMLOptions::load( bool useDefaults )
     // *** apply to GUI ***
     m_cbCursor->setChecked( changeCursor );
     m_pAutoLoadImagesCheckBox->setChecked( bAutoLoadImages );
+    m_pEnableFavIconCheckBox->setChecked( bEnableFavIcon );
     m_pUnfinishedImageFrameCheckBox->setChecked( bUnfinishedImageFrame );
     m_pAutoRedirectCheckBox->setChecked( bAutoRedirect );
     m_pOpenMiddleClick->setChecked( bOpenMiddleClick );
@@ -331,6 +339,7 @@ void KMiscHTMLOptions::save()
     m_pConfig->setGroup( "HTML Settings" );
     m_pConfig->writeEntry( "ChangeCursor", m_cbCursor->isChecked() );
     m_pConfig->writeEntry( "AutoLoadImages", m_pAutoLoadImagesCheckBox->isChecked() );
+    m_pConfig->writeEntry( "EnableFavicon", m_pEnableFavIconCheckBox->isChecked() );
     m_pConfig->writeEntry( "UnfinishedImageFrame", m_pUnfinishedImageFrameCheckBox->isChecked() );
     m_pConfig->writeEntry( "AutoDelayedActions", m_pAutoRedirectCheckBox->isChecked() );
     switch(m_pUnderlineCombo->currentItem())

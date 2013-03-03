@@ -55,6 +55,7 @@ private:
     TQComboBox* m_pSmoothScrollingCombo;
     TQCheckBox* m_cbCursor;
     TQCheckBox* m_pAutoLoadImagesCheckBox;
+    TQCheckBox* m_pEnableFavIconCheckBox;
     TQCheckBox* m_pUnfinishedImageFrameCheckBox;
     TQCheckBox* m_pAutoRedirectCheckBox;
     TQCheckBox* m_pOpenMiddleClick;
