@@ -45,6 +45,7 @@ public:
     bool clearQuickStartMenu() const;
     bool clearRecentDocuments() const;
     bool clearFavIcons();
+    bool clearKPDFDocData();
 
 private:
     bool isApplicationRegistered(const TQString &appName);

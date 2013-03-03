@@ -66,6 +66,7 @@ private:
     TQCheckListItem *clearRecentDocuments;
     TQCheckListItem *clearQuickStartMenu;
     TQCheckListItem *clearFavIcons;
+    TQCheckListItem *clearKPDFDocData;
     //TQCheckListItem *clearFileDialogHistory;
 
 

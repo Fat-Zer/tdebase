@@ -97,7 +97,7 @@ Privacy::Privacy(TQWidget *parent, const char *name)
   clearSavedClipboardContents = new TQCheckListItem(generalCLI,
       i18n("Saved Clipboard Contents"),TQCheckListItem::CheckBox);
   clearWebHistory = new TQCheckListItem(webbrowsingCLI,
-      i18n("Web History"),TQCheckListItem::CheckBox);
+      i18n("Web and File Manager History"),TQCheckListItem::CheckBox);
   clearWebCache = new TQCheckListItem(webbrowsingCLI,
       i18n("Web Cache"),TQCheckListItem::CheckBox);
   clearFormCompletion = new TQCheckListItem(webbrowsingCLI,
@@ -108,6 +108,8 @@ Privacy::Privacy(TQWidget *parent, const char *name)
       i18n("Quick Start Menu"),TQCheckListItem::CheckBox);
   clearFavIcons = new TQCheckListItem(webbrowsingCLI,
       i18n("Favorite Icons"),TQCheckListItem::CheckBox);
+  clearKPDFDocData = new TQCheckListItem(generalCLI,
+      i18n("KPDF Document Data"),TQCheckListItem::CheckBox);
 
   TQWhatsThis::add(sw, i18n("Check all cleanup actions you would like to perform. These will be executed by pressing the button below"));
   TQWhatsThis::add(cleaningDialog->cleanupButton, i18n("Immediately performs the cleanup actions selected above"));
@@ -115,13 +117,14 @@ Privacy::Privacy(TQWidget *parent, const char *name)
   clearThumbnails->setText(1, i18n("Clears all cached thumbnails"));
   clearRunCommandHistory->setText(1, i18n("Clears the history of commands run through the Run Command tool on the desktop"));
   clearAllCookies->setText(1, i18n("Clears all stored cookies set by websites"));
-  clearWebHistory->setText(1, i18n("Clears the history of visited websites"));
+  clearWebHistory->setText(1, i18n("Clears the history of visited websites and file manager URLs"));
   clearSavedClipboardContents->setText(1, i18n("Clears the clipboard contents stored by Klipper"));
   clearWebCache->setText(1, i18n("Clears the temporary cache of websites visited"));
   clearFormCompletion->setText(1, i18n("Clears values which were entered into forms on websites"));
   clearRecentDocuments->setText(1, i18n("Clears the list of recently used documents from the TDE applications menu"));
   clearQuickStartMenu->setText(1, i18n("Clears the entries from the list of recently started applications"));
   clearFavIcons->setText(1, i18n("Clears the FavIcons cached from visited websites"));
+  clearKPDFDocData->setText(1, i18n("Clears all KPDF document data files"));
 
   connect(sw, TQT_SIGNAL(selectionChanged()), TQT_SLOT(changed()));
 
@@ -136,6 +139,7 @@ Privacy::Privacy(TQWidget *parent, const char *name)
   checklist.append(clearRecentDocuments);
   checklist.append(clearQuickStartMenu);
   checklist.append(clearFavIcons);
+  checklist.append(clearKPDFDocData);
 
   connect(cleaningDialog->cleanupButton, TQT_SIGNAL(clicked()), TQT_SLOT(cleanup()));
   connect(cleaningDialog->selectAllButton, TQT_SIGNAL(clicked()), TQT_SLOT(selectAll()));
@@ -175,6 +179,7 @@ void Privacy::load(bool useDefaults)
     clearRecentDocuments->setOn(c->readBoolEntry("ClearRecentDocuments", true));
     clearQuickStartMenu->setOn(c->readBoolEntry("ClearQuickStartMenu", true));
     clearFavIcons->setOn(c->readBoolEntry("ClearFavIcons", true));
+    clearKPDFDocData->setOn(c->readBoolEntry("ClearKPDFDocData", true));
   }
 
   {
@@ -210,6 +215,7 @@ void Privacy::save()
     c->writeEntry("ClearRecentDocuments", clearRecentDocuments->isOn());
     c->writeEntry("ClearQuickStartMenu", clearQuickStartMenu->isOn());
     c->writeEntry("ClearFavIcons", clearFavIcons->isOn());
+    c->writeEntry("ClearKPDFDocData", clearKPDFDocData->isOn());
   }
 
   {
@@ -292,6 +298,9 @@ void Privacy::cleanup()
 
       if(item == clearFavIcons)
         error = m_privacymanager->clearFavIcons();
+
+      if(item == clearKPDFDocData)
+        error = m_privacymanager->clearKPDFDocData();
 
       if(error)
       {

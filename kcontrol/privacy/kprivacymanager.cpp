@@ -145,7 +145,7 @@ bool KPrivacyManager::clearFavIcons()
 {
   TQDir favIconDir(TDEGlobal::dirs()->saveLocation( "cache", "favicons/" ));
   favIconDir.setFilter( TQDir::Files );
-  
+
   TQStringList entries = favIconDir.entryList();
 
   // erase all files in favicon directory
@@ -154,6 +154,18 @@ bool KPrivacyManager::clearFavIcons()
   return m_error;
 }
 
+bool KPrivacyManager::clearKPDFDocData()
+{
+  TQDir kPDFDir(TDEGlobal::dirs()->saveLocation( "data", "kpdf/" ));
+  kPDFDir.setFilter( TQDir::Files );
+
+  TQStringList entries = kPDFDir.entryList();
+
+  // erase all files in kpdf directory
+  for( TQStringList::Iterator it = entries.begin() ; it != entries.end() ; ++it)
+    if(!kPDFDir.remove(*it)) m_error = true;
+  return m_error;
+}
 
 bool KPrivacyManager::isApplicationRegistered(const TQString &appName)
 {
