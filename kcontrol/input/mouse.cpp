@@ -55,6 +55,8 @@
 #include <tqwhatsthis.h>
 #include <tqtabwidget.h>
 #include <tqradiobutton.h>
+#include <tqstyle.h>
+#include <tqevent.h>
 
 #include <tdelocale.h>
 #include <kdialog.h>
@@ -223,8 +225,6 @@ MouseConfig::MouseConfig (TQWidget * parent, const char *name)
          " rapidly to different areas on the screen.");
     TQWhatsThis::add( thresh, wtstr );
 
-    // It would be nice if the user had a test field.
-    // Selecting such values in milliseconds is not intuitive
     doubleClickInterval = new KIntNumInput(thresh, 2000, tab2);
     doubleClickInterval->setLabel(i18n("Double click interval:"));
     doubleClickInterval->setRange(0, 2000, 100);
@@ -241,7 +241,33 @@ MouseConfig::MouseConfig (TQWidget * parent, const char *name)
          " separate clicks.");
     TQWhatsThis::add( doubleClickInterval, wtstr );
 
-    lay->addSpacing(15);
+    lay->addSpacing(10);
+
+    doubleClickLabel = new TQLabel(i18n("Double-click on the image below to test your double-click interval:"), tab2);
+    lay->addWidget(doubleClickLabel);
+    wtstr = i18n("The image will change when your double-click"
+         " test time is less than or equal to the interval you"
+         " configured. When changing the interval, be sure to select"
+         " the Apply button before testing. For example, the image"
+         " will not change when you configure a double-click interval"
+         " of 700 milliseconds and the time between two successive"
+         " clicks on the image is 800 milliseconds, but the image will"
+         " change when the time between clicks is 600 milliseconds."
+         " The goal is to select a comfortable interval that you find"
+         " is not too fast or slow.");
+    TQWhatsThis::add( doubleClickLabel, wtstr );
+    doubleClickButton = new TQPushButton( tab2 );
+    doubleClickButton->setAcceptDrops( false );
+    // The images are 32x32.
+    uint sz = style().pixelMetric( TQStyle::PM_ButtonMargin ) * 2 + 48;
+    doubleClickButton->setFixedSize( sz, sz );
+    // Show the first image.
+    doubleClickButton->setPixmap(locate("data", "kcminput/pics/doubleclick_1.png"));
+    lay->addWidget(doubleClickButton);
+    // Use the same What's This help for the pushbutton.
+    TQWhatsThis::add( doubleClickButton, wtstr );
+
+    lay->addSpacing(10);
 
     dragStartTime = new KIntNumInput(doubleClickInterval, 2000, tab2);
     dragStartTime->setLabel(i18n("Drag start time:"));

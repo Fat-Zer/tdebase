@@ -145,12 +145,13 @@ private:
   ThemePage* themetab;
   MouseSettings *settings;
 
- TQCheckBox *mouseKeys;
+  TQCheckBox *mouseKeys;
   KIntNumInput *mk_delay, *mk_interval, *mk_time_to_max, *mk_max_speed,
     *mk_curve;
 
+  TQLabel *doubleClickLabel;
+  TQPushButton *doubleClickButton;
 
 };
 
 #endif
-
