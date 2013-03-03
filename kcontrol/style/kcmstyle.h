@@ -31,6 +31,7 @@
 #include <tqtimer.h>
 
 #include <tdecmodule.h>
+#include <knuminput.h>
 
 #include "stylepreview.h"
 #include "menupreview.h"
@@ -124,6 +125,7 @@ private:
 	TQCheckBox* cbAutoHideAccelerators;
 	TQCheckBox* cbMenuAltKeyNavigation;
 	TQCheckBox* cbEnableTooltips;
+  KIntNumInput *m_popupMenuDelay;
 
 	// Page2 widgets
 	TQCheckBox* cbEnableEffects;

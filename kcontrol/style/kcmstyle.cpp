@@ -193,6 +193,17 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	gbWidgetStyleLayout->addWidget( cbTearOffHandles );
 	cbTearOffHandles->hide(); // reenable when the corresponding Qt method is virtual and properly reimplemented
 
+	gbWidgetStyleLayout->addSpacing(10);
+
+	m_popupMenuDelay = new KIntNumInput(250, gbWidgetStyle);
+	m_popupMenuDelay->setLabel(i18n("Menu popup delay:"));
+	m_popupMenuDelay->setRange(0, 5000, 50);
+	m_popupMenuDelay->setSuffix(i18n(" msec"));
+	m_popupMenuDelay->setSteps(50, 50);
+	gbWidgetStyleLayout->addWidget(m_popupMenuDelay);
+
+	gbWidgetStyleLayout->addSpacing(10);
+
 	TQGroupBox *gbPreview = new TQGroupBox( i18n( "Preview" ), page1 );
 	gbPreview->setColumnLayout( 0, Qt::Vertical );
 	gbPreview->layout()->setMargin( 0 );
@@ -380,7 +391,7 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	connect( comboMenuEffectType, TQT_SIGNAL(activated(int)), this, TQT_SLOT(setStyleDirty()));
 	connect( slOpacity,           TQT_SIGNAL(valueChanged(int)),this, TQT_SLOT(setStyleDirty()));
 	connect( cbMenuShadow,        TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setStyleDirty()));
-	// Page3
+	// Page1 & Page3
 	connect( cbHoverButtons,        TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setToolbarsDirty()));
 	connect( cbTransparentToolbars, TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setToolbarsDirty()));
 	connect( cbEnableTooltips,      TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
@@ -390,6 +401,7 @@ KCMStyle::KCMStyle( TQWidget* parent, const char* name )
 	connect( cbMenuAltKeyNavigation,TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
 	connect( cbTearOffHandles,      TQT_SIGNAL(toggled(bool)),    this, TQT_SLOT(setEffectsDirty()));
 	connect( comboToolbarIcons,     TQT_SIGNAL(activated(int)), this, TQT_SLOT(setToolbarsDirty()));
+	connect( m_popupMenuDelay,      TQT_SIGNAL(valueChanged(int)),this, TQT_SLOT(setStyleDirty()));
 
 	addWhatsThis();
 
@@ -611,6 +623,7 @@ void KCMStyle::save()
 		settings.writeEntry("/TDEStyle/Settings/ScrollablePopupMenus", cbScrollablePopupMenus->isChecked() );
 		settings.writeEntry("/TDEStyle/Settings/AutoHideAccelerators", cbAutoHideAccelerators->isChecked() );
 		settings.writeEntry("/TDEStyle/Settings/MenuAltKeyNavigation", cbMenuAltKeyNavigation->isChecked() );
+		settings.writeEntry("/TDEStyle/Settings/PopupMenuDelay", m_popupMenuDelay->value() );
 	}
 	config.writeEntry( "EffectNoTooltip", !cbEnableTooltips->isChecked(), true, true );
 
@@ -1041,6 +1054,7 @@ void KCMStyle::loadMisc( TDEConfig& config )
 	cbScrollablePopupMenus->setChecked(settings.readBoolEntry("/TDEStyle/Settings/ScrollablePopupMenus", false));
 	cbAutoHideAccelerators->setChecked(settings.readBoolEntry("/TDEStyle/Settings/AutoHideAccelerators", false));
 	cbMenuAltKeyNavigation->setChecked(settings.readBoolEntry("/TDEStyle/Settings/MenuAltKeyNavigation", true));
+	m_popupMenuDelay->setValue(settings.readNumEntry("/TDEStyle/Settings/PopupMenuDelay", 250));
 
 	m_bToolbarsDirty = false;
 }
@@ -1119,6 +1133,9 @@ void KCMStyle::addWhatsThis()
 							"show so called tear-off handles. If you click them, you get the menu "
 							"inside a widget. This can be very helpful when performing "
 							"the same action multiple times.") );
+	TQWhatsThis::add( m_popupMenuDelay, i18n( "The menu popup delay is the time "
+							"(in milliseconds) before a selected menu "
+							"or submenu appears.") );
 }
 
 #include "kcmstyle.moc"
