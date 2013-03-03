@@ -109,6 +109,12 @@
       <whatsthis></whatsthis>
       <!-- checked -->
     </entry>
+    <entry key="TabsCycleWheel" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+      <!-- checked -->
+    </entry>
     <entry key="AlwaysTabbedMode" type="Bool">
       <default>false</default>
       <label></label>

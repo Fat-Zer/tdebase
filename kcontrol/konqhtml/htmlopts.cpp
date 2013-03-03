@@ -95,6 +95,11 @@ KMiscHTMLOptions::KMiscHTMLOptions(TDEConfig *config, TQString group, TQWidget *
     connect(m_pDynamicTabbarHide, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
     laygroup->addWidget(m_pDynamicTabbarHide);
 
+    m_pDynamicTabbarCycle = new TQCheckBox( i18n( "C&ycle tabs with mouse wheel" ), bgTabbedBrowsing );
+    TQWhatsThis::add( m_pDynamicTabbarCycle, i18n("This will cycle through tabs when there are two or more tabs.") );
+    connect(m_pDynamicTabbarCycle, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
+    laygroup->addWidget(m_pDynamicTabbarCycle);
+
     TQHBoxLayout *laytab = new TQHBoxLayout(laygroup, KDialog::spacingHint());
     TQPushButton *advancedTabButton = new TQPushButton( i18n( "Advanced Options"), bgTabbedBrowsing );
     laytab->addWidget(advancedTabButton);
@@ -289,6 +294,7 @@ void KMiscHTMLOptions::load( bool useDefaults )
     m_pConfig->setGroup("FMSettings");
     m_pShowMMBInTabs->setChecked( m_pConfig->readBoolEntry( "MMBOpensTab", false ) );
     m_pDynamicTabbarHide->setChecked( ! (m_pConfig->readBoolEntry( "AlwaysTabbedMode", false )) );
+    m_pDynamicTabbarCycle->setChecked( m_pConfig->readBoolEntry( "TabsCycleWheel", true ) );
 
     TDEConfig config("kbookmarkrc", true, false);
     config.setReadDefaults( useDefaults );
@@ -361,6 +367,7 @@ void KMiscHTMLOptions::save()
     m_pConfig->setGroup("FMSettings");
     m_pConfig->writeEntry( "MMBOpensTab", m_pShowMMBInTabs->isChecked() );
     m_pConfig->writeEntry( "AlwaysTabbedMode", !(m_pDynamicTabbarHide->isChecked()) );
+    m_pConfig->writeEntry( "TabsCycleWheel", m_pDynamicTabbarCycle->isChecked() );
     m_pConfig->sync();
 
     TDEConfig config("kbookmarkrc", false, false);

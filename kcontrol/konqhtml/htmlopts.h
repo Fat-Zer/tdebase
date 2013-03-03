@@ -62,6 +62,7 @@ private:
     TQCheckBox* m_pShowMMBInTabs;
     TQCheckBox* m_pFormCompletionCheckBox;
     TQCheckBox* m_pDynamicTabbarHide;
+    TQCheckBox* m_pDynamicTabbarCycle;
     TQCheckBox* m_pAdvancedAddBookmarkCheckBox;
     TQCheckBox* m_pOnlyMarkedBookmarksCheckBox;
     KIntNumInput* m_pMaxFormCompletionItems;
