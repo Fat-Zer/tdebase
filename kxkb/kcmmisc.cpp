@@ -61,17 +61,15 @@ KeyboardConfig::KeyboardConfig (TQWidget * parent, const char *)
 
   ui->click->setRange(0, 100, 10);
   ui->delay->setRange(100, 5000, 50, false);
-  ui->rate->setRange(0.2, 50, 5, false);
+  ui->rate->setRange(5, 50, 5, false);
 
-  sliderMax = (int)floor (0.5
-		  + 2*(log(5000)-log(100)) / (log(5000)-log(4999)));
-  ui->delaySlider->setRange(0, sliderMax);
-  ui->delaySlider->setSteps(sliderMax/100, sliderMax/10);
-  ui->delaySlider->setTickInterval(sliderMax/10);
+  ui->delaySlider->setRange(1000, 50000);
+  ui->delaySlider->setSteps(50, 500);
+  ui->delaySlider->setTickInterval(2500);
 
-  ui->rateSlider->setRange(20, 5000);
-  ui->rateSlider->setSteps(30, 500);
-  ui->rateSlider->setTickInterval(498);
+  ui->rateSlider->setRange(500, 5000);
+  ui->rateSlider->setSteps(50, 500);
+  ui->rateSlider->setTickInterval(500);
 
   connect(ui->repeatBox, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
   connect(ui->delay, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(delaySpinboxChanged(int)));
@@ -85,11 +83,6 @@ KeyboardConfig::KeyboardConfig (TQWidget * parent, const char *)
 #if !defined(HAVE_XTEST) && !defined(HAVE_XKB)
   ui->numlockGroup->setDisabled( true );
 #endif
-#if !defined(HAVE_XKB) && !defined(HAVE_XF86MISC)
-//  delay->setDisabled( true );
-//  rate->setDisabled( true );
-#endif
-//  lay->addStretch();
   load();
 }
 
@@ -138,8 +131,8 @@ void KeyboardConfig::load()
   config.setGroup("Keyboard");
   bool key = config.readBoolEntry("KeyboardRepeating", true);
   keyboardRepeat = (key ? AutoRepeatModeOn : AutoRepeatModeOff);
-  ui->delay->setValue(config.readNumEntry( "RepeatDelay", 660 ));
-  ui->rate->setValue(config.readDoubleNumEntry( "RepeatRate", 25 ));
+  ui->delay->setValue(config.readNumEntry( "RepeatDelay", 500 ));
+  ui->rate->setValue(config.readDoubleNumEntry( "RepeatRate", 30 ));
   clickVolume = config.readNumEntry("ClickVolume", kbd.key_click_percent);
   numlockState = config.readNumEntry( "NumLock", 2 );
 
@@ -179,7 +172,7 @@ void KeyboardConfig::save()
 void KeyboardConfig::defaults()
 {
     setClick(50);
-    setRepeat(true, 660, 25);
+    setRepeat(true, 500, 30);
     setNumLockState( 2 );
 }
 
@@ -196,25 +189,19 @@ TQString KeyboardConfig::quickHelp() const
 }
 
 void KeyboardConfig::delaySliderChanged (int value) {
-	double alpha  = sliderMax / (log(5000) - log(100));
-	double linearValue = exp (value/alpha + log(100));
-
-	ui->delay->setValue((int)floor(0.5 + linearValue));
+	ui->delay->setValue(value/10);
 
 	emit TDECModule::changed(true);
 }
 
 void KeyboardConfig::delaySpinboxChanged (int value) {
-	double alpha  = sliderMax / (log(5000) - log(100));
-	double logVal = alpha * (log(value)-log(100));
-
-	ui->delaySlider->setValue ((int)floor (0.5 + logVal));
+	ui->delaySlider->setValue ((int)(value*10));
 
 	emit TDECModule::changed(true);
 }
 
 void KeyboardConfig::rateSliderChanged (int value) {
-	ui->rate->setValue(value/100.0);
+	ui->rate->setValue(value/100);
 
 	emit TDECModule::changed(true);
 }
@@ -557,7 +544,7 @@ void KeyboardConfig::init_keyboard()
 						   &kbdc);
 
 	if( key ) {
-		int delay_ = config->readNumEntry("RepeatDelay", 250);
+		int delay_ = config->readNumEntry("RepeatDelay", 500);
 		double rate_ = config->readDoubleNumEntry("RepeatRate", 30);
 		set_repeatrate(delay_, rate_);
 	}
@@ -571,4 +558,3 @@ void KeyboardConfig::init_keyboard()
 }
 
 #include "kcmmisc.moc"
-
