@@ -119,6 +119,11 @@ private:
 	StylePreview* stylePreview;
 	TQStyle* appliedStyle;
 	TQPalette palette;
+	TQCheckBox* cbIconsOnButtons;
+	TQCheckBox* cbScrollablePopupMenus;
+	TQCheckBox* cbAutoHideAccelerators;
+	TQCheckBox* cbMenuAltKeyNavigation;
+	TQCheckBox* cbEnableTooltips;
 
 	// Page2 widgets
 	TQCheckBox* cbEnableEffects;
@@ -147,19 +152,15 @@ private:
 	TQLabel* lblMenuEffectType;
 	TQLabel* lblMenuOpacity;
 	TQCheckBox* cbMenuShadow;
+	TQCheckBox* cbTearOffHandles;
 
 	// Page3 widgets
 	TQGroupBox* gbVisualAppearance;
 
 	TQCheckBox* cbHoverButtons;
 	TQCheckBox* cbTransparentToolbars;
-	TQCheckBox* cbEnableTooltips;
 	TQComboBox* comboToolbarIcons;
 
-	TQCheckBox* cbIconsOnButtons;
-	TQCheckBox* cbScrollablePopupMenus;
-	TQCheckBox* cbAutoHideAccelerators;
-	TQCheckBox* cbTearOffHandles;
 };
 
 #endif // __KCMSTYLE_H
