@@ -297,6 +297,14 @@
                                     <string>Set tab title to match window title</string>
                                 </property>
                             </widget>
+                            <widget class="TQCheckBox" row="12" column="0" rowspan="1" colspan="3">
+                                <property name="name">
+                                    <cstring>tabsCycleWheel</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Cycle tabs with mouse wheel</string>
+                                </property>
+                            </widget>
                         </grid>
                     </widget>
                 </grid>
