@@ -22,6 +22,7 @@ set( VERSION "R14" )
 
 include( FindPkgConfig )
 include( CheckIncludeFile )
+include( CheckIncludeFiles )
 include( CheckCSourceRuns )
 include( CheckCXXSourceRuns )
 include( CheckCXXSourceCompiles )
@@ -84,6 +85,7 @@ option( WITH_HAL "Enable HAL support" ${WITH_ALL_OPTIONS} )
 option( WITH_TDEHWLIB "Enable TDE hardware library support" OFF )
 option( WITH_UPOWER "Enable UPOWER support" ${WITH_ALL_OPTIONS} )
 option( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" ${WITH_ALL_OPTIONS} )
+option( WITH_KDESKTOP_LOCK_BACKTRACE "Enable backtrace in kdesktop_lock exception handler"  ${WITH_ALL_OPTIONS} )
 
 ##### options comments ##########################
 
