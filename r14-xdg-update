@@ -429,8 +429,10 @@ if [ -d "$PROFILE_DIR/Autostart" ]; then
       if [ -n "`echo $LINK_PATH | grep \"$TDEDIR/share/applications/kde\"`" ]; then
         NEW_LINK_PATH="`echo \"$LINK_PATH\" | sed 's|/share/applications/kde|/share/applications/tde|'`"
       fi
-      unlink $i
-      ln -sf "$NEW_LINK_PATH/$LINK_NAME" "$LINK_NAME"
+      if [ "$NEW_LINK_PATH" != "" ]; then
+        unlink $i
+        ln -sf "$NEW_LINK_PATH/$LINK_NAME" "$LINK_NAME"
+      fi
       if [ "$?" != "0" ]; then
         Message_Prefix
         echo "There was an error with creating a new sym link for $LINK." 1>&2
@@ -453,7 +455,7 @@ fi
 # performed in the migratekde3 script, but notice the migratekde3 script uses the key of
 # X-KDE-Kded-autoload whereas X-TDE-Kded-autoload is used here.
 if [ -d $PROFILE_DIR/share/services/kded ]; then
-  if [ "`find $PROFILE_DIR/share/services/kded -name *.desktop`" != "" ]; then
+  if [ "`find $PROFILE_DIR/share/services/kded -name \"*.desktop\"`" != "" ]; then
     Message_Prefix
     echo "Validating KDED services."
     for i in `/bin/ls -1 $PROFILE_DIR/share/services/kded/*.desktop`; do
