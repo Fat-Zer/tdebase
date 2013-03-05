@@ -487,7 +487,7 @@ if [ ! -f $PROFILE_DIR/share/config/tdeprintrc ] && [ -f $PROFILE_DIR/share/conf
 fi
 if [ ! -f $PROFILE_DIR/share/config/tdesurc ] && [ -f $PROFILE_DIR/share/config/kdesurc ]; then
   Message_Prefix
-  echo "  kdesurc->tdesurc"
+  echo "  kdesu->tdesu"
   mv $PROFILE_DIR/share/config/kdesurc $PROFILE_DIR/share/config/tdesurc 2>/dev/null
 fi
 if [ ! -f $PROFILE_DIR/share/config/tdeveloprc ] && [ -f $PROFILE_DIR/share/config/kdeveloprc ]; then
@@ -519,38 +519,44 @@ if [ ! -d $PROFILE_DIR/share/config/tderesources ] && [ -d $PROFILE_DIR/share/co
 fi
 if [ ! -f $PROFILE_DIR/share/config/tdeab2tdeabcrc ] && [ -f $PROFILE_DIR/share/config/kab2kabcrc ]; then
   Message_Prefix
-  echo "  kab2kabcrc->tdeab2tdeabcrc"
+  echo "  kab2kabc->tdeab2tdeabc"
   mv $PROFILE_DIR/share/config/kab2kabcrc $PROFILE_DIR/share/config/tdeab2tdeabcrc 2>/dev/null
 fi
 if [ ! -f $PROFILE_DIR/share/config/tdeconf_updaterc ] && [ -f $PROFILE_DIR/share/config/kconf_updaterc ]; then
   Message_Prefix
-  echo "  kconf_updaterc->tdeconf_updaterc"
+  echo "  kconf_update->tdeconf_update"
   mv $PROFILE_DIR/share/config/kconf_updaterc $PROFILE_DIR/share/config/tdeconf_updaterc 2>/dev/null
   mv $PROFILE_DIR/share/apps/kconf_update $PROFILE_DIR/share/apps/tdeconf_update 2>/dev/null
 fi
 if [ ! -f $PROFILE_DIR/share/config/tdeio_httprc ] && [ -f $PROFILE_DIR/share/config/kio_httprc ]; then
   Message_Prefix
-  echo "  kio_httprc->tdeio_httprc"
+  echo "  kio_http->tdeio_http"
   mv $PROFILE_DIR/share/config/kio_httprc $PROFILE_DIR/share/config/tdeio_httprc 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tdeio_ftprc ] && [ -f $PROFILE_DIR/share/config/kio_ftprc ]; then
+  Message_Prefix
+  echo "  kio_ftp->tdeio_ftp"
+  mv $PROFILE_DIR/share/config/kio_ftprc $PROFILE_DIR/share/config/tdeio_ftprc 2>/dev/null
+  mv $PROFILE_DIR/share/apps/kio_ftp $PROFILE_DIR/share/apps/tdeio_ftp 2>/dev/null
 fi
 if [ ! -f $PROFILE_DIR/share/config/tdeioslaverc ] && [ -f $PROFILE_DIR/share/config/kioslaverc ]; then
   Message_Prefix
-  echo "  kioslaverc->tdeioslaverc"
+  echo "  kioslave->tdeioslave"
   mv $PROFILE_DIR/share/config/kioslaverc $PROFILE_DIR/share/config/tdeioslaverc 2>/dev/null
 fi
 if [ ! -f $PROFILE_DIR/share/config/tdelaunchrc ] && [ -f $PROFILE_DIR/share/config/klaunchrc ]; then
   Message_Prefix
-  echo "  klaunchrc->tdelaunchrc"
+  echo "  klaunch->tdelaunch"
   mv $PROFILE_DIR/share/config/klaunchrc $PROFILE_DIR/share/config/tdelaunchrc 2>/dev/null
 fi
 if [ ! -f $PROFILE_DIR/share/config/tderandrtrayrc ] && [ -f $PROFILE_DIR/share/config/krandrtrayrc ]; then
   Message_Prefix
-  echo "  krandrtrayrc->tderandrtrayrc"
+  echo "  krandrtray->tderandrtray"
   mv $PROFILE_DIR/share/config/krandrtrayrc $PROFILE_DIR/share/config/tderandrtrayrc 2>/dev/null
 fi
 if [ ! -f $PROFILE_DIR/share/config/tdewalletrc ] && [ -f $PROFILE_DIR/share/config/kwalletrc ]; then
   Message_Prefix
-  echo "  kwalletrc->tdewalletrc"
+  echo "  kwallet->tdewallet"
   mv $PROFILE_DIR/share/config/kwalletrc $PROFILE_DIR/share/config/tdewalletrc 2>/dev/null
   mv $PROFILE_DIR/share/apps/kwallet $PROFILE_DIR/share/apps/tdewallet 2>/dev/null
 fi
@@ -558,6 +564,38 @@ if [ ! -d $PROFILE_DIR/share/apps/tdefile ] && [ -d $PROFILE_DIR/share/apps/kfil
   Message_Prefix
   echo "  kfile->tdefile"
   mv $PROFILE_DIR/share/apps/kfile $PROFILE_DIR/share/apps/tdefile 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tdehtmlrc ] && [ -f $PROFILE_DIR/share/config/khtmlrc ]; then
+  Message_Prefix
+  echo "  khtml->tdehtml"
+  mv $PROFILE_DIR/share/config/khtmlrc $PROFILE_DIR/share/config/tdehtmlrc 2>/dev/null
+  mv $PROFILE_DIR/share/apps/khtml $PROFILE_DIR/share/apps/tdehtml 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tdeio_camerarc ] && [ -f $PROFILE_DIR/share/config/kio_camerarc ]; then
+  Message_Prefix
+  echo "  kio_camera->tdeio_camera"
+  mv $PROFILE_DIR/share/config/kio_camerarc $PROFILE_DIR/share/config/tdeio_camerarc 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tdeio_thumbnailrc ] && [ -f $PROFILE_DIR/share/config/kio_thumbnailrc ]; then
+  Message_Prefix
+  echo "  kio_thumbnail->tdeio_thumbnail"
+  mv $PROFILE_DIR/share/config/kio_thumbnailrc $PROFILE_DIR/share/config/tdeio_thumbnailrc 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tdeio_locaterc ] && [ -f $PROFILE_DIR/share/config/kio_locaterc ]; then
+  Message_Prefix
+  echo "  kio_locate->tdeio_locate"
+  mv $PROFILE_DIR/share/config/kio_locaterc $PROFILE_DIR/share/config/tdeio_locaterc 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tdeio_aptrc ] && [ -f $PROFILE_DIR/share/config/kio_aptrc ]; then
+  Message_Prefix
+  echo "  kio_apt->tdeio_apt"
+  mv $PROFILE_DIR/share/config/kio_aptrc $PROFILE_DIR/share/config/tdeio_aptrc 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tderadiorc ] && [ -f $PROFILE_DIR/share/config/kradiorc ]; then
+  Message_Prefix
+  echo "  kradio->tderadio"
+  mv $PROFILE_DIR/share/config/kradiorc $PROFILE_DIR/share/config/tderadiorc 2>/dev/null
+  mv $PROFILE_DIR/share/apps/kradio $PROFILE_DIR/share/apps/tderadio 2>/dev/null
 fi
 
 # Disable some features new to R14, otherwise users will see an unfamiliar desktop.
