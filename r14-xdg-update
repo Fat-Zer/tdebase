@@ -292,7 +292,9 @@ fi
 # Remember that this script may be run more than once. The new directory
 # might already exist.
 if [ -n "$CACHE_DIR" ] && [ -d "$CACHE_DIR" ]; then
-  # Flush the old tdesycoca cache files. This is safe at any time.
+  # Flush the obsolete ksycoca cache files.
+  rm -f ${CACHE_DIR}/ksycoca* 2>/dev/null
+  # Flush the tdesycoca cache files. This is safe at any time.
   rm -f ${CACHE_DIR}/tdesycoca* 2>/dev/null
   # Old cache directory: /var/tmp/kde*cache-$USER
   # New cache directory: /var/tmp/tdecache-$USER
@@ -371,6 +373,9 @@ if [ -r $PROFILE_DIR/share/config/profilerc ]; then
   Message_Prefix
   echo "Updating user-defined app preferences in profilerc."
   sed -i 's|Application=kde-|Application=tde-|g' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
+  sed -i 's|khtml|tdehtml|' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
+  sed -i 's|kfile_|tdefile_|' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
+  sed -i 's|kfilereplace|tdefilereplace|' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
 fi
 
 # Preserve kicker/panel icons.
@@ -505,16 +510,63 @@ if [ ! -f $PROFILE_DIR/share/config/twin4rc ] && [ -f $PROFILE_DIR/share/config/
   echo "  kwin4->twin4"
   mv $PROFILE_DIR/share/config/kwin4rc $PROFILE_DIR/share/config/twin4rc 2>/dev/null
 fi
+if [ ! -d $PROFILE_DIR/share/config/tderesources ] && [ -d $PROFILE_DIR/share/config/kresources ]; then
+  Message_Prefix
+  echo "  kresources->tderesources"
+  mv $PROFILE_DIR/share/config/kresources $PROFILE_DIR/share/config/tderesources 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tdeab2tdeabcrc ] && [ -f $PROFILE_DIR/share/config/kab2kabcrc ]; then
+  Message_Prefix
+  echo "  kab2kabcrc->tdeab2tdeabcrc"
+  mv $PROFILE_DIR/share/config/kab2kabcrc $PROFILE_DIR/share/config/tdeab2tdeabcrc 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tdeconf_updaterc ] && [ -f $PROFILE_DIR/share/config/kconf_updaterc ]; then
+  Message_Prefix
+  echo "  kconf_updaterc->tdeconf_updaterc"
+  mv $PROFILE_DIR/share/config/kconf_updaterc $PROFILE_DIR/share/config/tdeconf_updaterc 2>/dev/null
+  mv $PROFILE_DIR/share/apps/kconf_update $PROFILE_DIR/share/apps/tdeconf_update 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tdeio_httprc ] && [ -f $PROFILE_DIR/share/config/kio_httprc ]; then
+  Message_Prefix
+  echo "  kio_httprc->tdeio_httprc"
+  mv $PROFILE_DIR/share/config/kio_httprc $PROFILE_DIR/share/config/tdeio_httprc 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tdeioslaverc ] && [ -f $PROFILE_DIR/share/config/kioslaverc ]; then
+  Message_Prefix
+  echo "  kioslaverc->tdeioslaverc"
+  mv $PROFILE_DIR/share/config/kioslaverc $PROFILE_DIR/share/config/tdeioslaverc 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tdelaunchrc ] && [ -f $PROFILE_DIR/share/config/klaunchrc ]; then
+  Message_Prefix
+  echo "  klaunchrc->tdelaunchrc"
+  mv $PROFILE_DIR/share/config/klaunchrc $PROFILE_DIR/share/config/tdelaunchrc 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tderandrtrayrc ] && [ -f $PROFILE_DIR/share/config/krandrtrayrc ]; then
+  Message_Prefix
+  echo "  krandrtrayrc->tderandrtrayrc"
+  mv $PROFILE_DIR/share/config/krandrtrayrc $PROFILE_DIR/share/config/tderandrtrayrc 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tdewalletrc ] && [ -f $PROFILE_DIR/share/config/kwalletrc ]; then
+  Message_Prefix
+  echo "  kwalletrc->tdewalletrc"
+  mv $PROFILE_DIR/share/config/kwalletrc $PROFILE_DIR/share/config/tdewalletrc 2>/dev/null
+  mv $PROFILE_DIR/share/apps/kwallet $PROFILE_DIR/share/apps/tdewallet 2>/dev/null
+fi
+if [ ! -d $PROFILE_DIR/share/apps/tdefile ] && [ -d $PROFILE_DIR/share/apps/kfile ]; then
+  Message_Prefix
+  echo "  kfile->tdefile"
+  mv $PROFILE_DIR/share/apps/kfile $PROFILE_DIR/share/apps/tdefile 2>/dev/null
+fi
 
 # Disable some features new to R14, otherwise users will see an unfamiliar desktop.
 if [[ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "ShowDeepButtons" --default false) == "false" ]]; then
-	$TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "ShowDeepButtons" --type bool "false"
+  $TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "ShowDeepButtons" --type bool "false"
 fi
 if [[ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "UseResizeHandle" --default false) == "false" ]]; then
-	$TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "UseResizeHandle" --type bool "false"
+  $TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "UseResizeHandle" --type bool "false"
 fi
 if [[ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "MenubarPanelBlurred" --default false) == "false" ]]; then
-	$TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "MenubarPanelBlurred" --type bool "false"
+  $TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "MenubarPanelBlurred" --type bool "false"
 fi
 
 # Perform some nominal update validations.
