@@ -257,15 +257,29 @@ test -n "$TDEHOME" && tdehome=`echo "$TDEHOME" | sed "s,^~/,$HOME/,"`
 export DESKTOP_SESSION=trinity
 
 if [ -d "$tdehome" ]; then
-  # Possibly run some R14 XDG compliance updates.
+  # Run some R14 updates.
   R14_UPDATED="`$TDEDIR/bin/kreadconfig --file kdeglobals --group "R14 XDG Updates" --key Updated`"
+  if [ "$R14_UPDATED" = "true" ]; then
+    # There were massive renaming changes long after the original XDG renaming changes.
+    # The r14-xdg-update script needs to be run again to ensure users have many rc
+    # config files renamed. So despite the key Updated=true we run the script again with
+    # to make those changes for the user. Otherwise strange things happen. We select
+    # some rc config files that will be created automatically under the new changes.
+    # If those rc files do not exist then we presume the r14-xdg-update script needs to be
+    # run again. There is no harm in running the script multiple times.
+    if [ ! -f $TDEHOME/share/config/tdeconf_updaterc ] || [ ! -f $TDEHOME/share/config/tdelaunchrc ]; then
+      R14_UPDATED="false"
+    fi
+  else
+    R14_UPDATED="false"
+  fi
   if [ "$R14_UPDATED" != "true" ]; then
     if [ -e $TDEDIR/bin/r14-xdg-update ]; then
       sh $TDEDIR/bin/r14-xdg-update
       EXIT_CODE="$?"
     else
       echo "[starttde] $TDEDIR/bin/r14-xdg-update does not exist." 1>&2
-      echo "           Unable to perform a profile update for Trinity release R14 XDG compliance."
+      echo "           Unable to perform a profile update for Trinity release R14."
     fi
     if [ "$EXIT_CODE" != "0" ]; then
       exit 1
