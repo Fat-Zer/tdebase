@@ -36,4 +36,7 @@ PanelDirDropMenu::PanelDirDropMenu(TQWidget *parent, const char *name)
     adjustSize();
 }
 
-
+PanelDirDropMenu::~PanelDirDropMenu()
+{
+    //
+}

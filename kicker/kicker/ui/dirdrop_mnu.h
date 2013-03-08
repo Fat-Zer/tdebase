@@ -32,6 +32,7 @@ class PanelDirDropMenu : public TQPopupMenu
 public:
     enum OpButton{Url=1, Browser};
     PanelDirDropMenu(TQWidget *parent=0, const char *name=0);
+    virtual ~PanelDirDropMenu();
 };
 
 #endif
