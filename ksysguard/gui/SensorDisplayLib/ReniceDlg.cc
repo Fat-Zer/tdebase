@@ -55,6 +55,10 @@ ReniceDlg::ReniceDlg(TQWidget* parent, const char* name, int currentPPrio,
 	vLay->addWidget(input);
 }
 
+ReniceDlg::~ReniceDlg() {
+    //
+}
+
 void ReniceDlg::slotOk()
 {
     done(input->value());

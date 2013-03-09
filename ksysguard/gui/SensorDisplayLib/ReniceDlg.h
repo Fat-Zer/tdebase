@@ -44,6 +44,7 @@ class ReniceDlg : public KDialogBase
 
 public:
 	ReniceDlg(TQWidget* parent, const char* name, int currentPPrio, int pid);
+	virtual ~ReniceDlg();
 
 public slots:
 	void slotOk();
