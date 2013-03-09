@@ -37,7 +37,7 @@ public:
     void closeDialogForced();
 
 private slots:
-    void slotSATDEProcessExited();
+    void slotSAKProcessExited();
 
 protected slots:
     virtual void reject();
@@ -51,7 +51,7 @@ private:
     TQStringList layoutsList;
     TQStringList::iterator currLayout;
     int         sPid, sFd;
-    TDEProcess*   mSATDEProcess;
+    TDEProcess*   mSAKProcess;
 };
 
 #endif

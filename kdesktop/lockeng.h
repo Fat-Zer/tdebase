@@ -89,7 +89,7 @@ protected slots:
 
 private slots:
     void handleSecureDialog();
-    void slotSATDEProcessExited();
+    void slotSAKProcessExited();
 
     /**
      * Enable wallpaper exports
@@ -123,7 +123,7 @@ protected:
     TQValueVector< DCOPClientTransaction* > mLockTransactions;
 
 private:
-    TDEProcess*   mSATDEProcess;
+    TDEProcess*   mSAKProcess;
     bool        mTerminationRequested;
 };
 

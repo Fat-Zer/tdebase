@@ -1833,11 +1833,11 @@ bool LockProcess::checkPass()
 
         if (trinity_desktop_lock_use_sak) {
             // Verify SAK operational status
-            TDEProcess* checkSATDEProcess = new TDEProcess;
-            *checkSATDEProcess << "tdmtsak" << "check";
-            checkSATDEProcess->start(TDEProcess::Block, TDEProcess::NoCommunication);
-            int retcode = checkSATDEProcess->exitStatus();
-            delete checkSATDEProcess;
+            TDEProcess* checkSAKProcess = new TDEProcess;
+            *checkSAKProcess << "tdmtsak" << "check";
+            checkSAKProcess->start(TDEProcess::Block, TDEProcess::NoCommunication);
+            int retcode = checkSAKProcess->exitStatus();
+            delete checkSAKProcess;
             if (retcode != 0) {
                 trinity_desktop_lock_use_sak = false;
             }

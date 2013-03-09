@@ -37,7 +37,7 @@ public:
     void closeDialogForced();
 
 private slots:
-    void slotSATDEProcessExited();
+    void slotSAKProcessExited();
     void handleInputPipe();
 
 protected slots:
@@ -52,7 +52,7 @@ private:
     TQStringList layoutsList;
     TQStringList::iterator currLayout;
     int         sPid, sFd;
-    TDEProcess*   mSATDEProcess;
+    TDEProcess*   mSAKProcess;
     int         mPipe_fd;
     TQString mPipeFilename;
 
