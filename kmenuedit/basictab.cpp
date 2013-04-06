@@ -378,7 +378,7 @@ void BasicTab::setEntryInfo(MenuEntryInfo *entryInfo)
     else
         _terminalCB->setChecked(false);
 
-    _uidCB->setChecked(df->readBoolEntry("X-TDE-SubstituteUID", false));
+    _uidCB->setChecked(df->readBoolEntry("X-TDE-SubstituteUID", false) || df->readBoolEntry("X-KDE-SubstituteUID", false));
 
     enableWidgets(true, entryInfo->hidden);
     blockSignals(false);
