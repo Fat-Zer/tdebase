@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "tdmconfig.h"
 #include "tdmclock.h"
 #include "tdm_greet.h"
+#include "sakdlg.h"
 #include "tdmadmindialog.h"
 #include "themer/tdmthemer.h"
 #include "themer/tdmitem.h"
@@ -180,7 +181,6 @@ KGreeter::KGreeter( bool framed )
   , prevValid( true )
   , needLoad( false )
   , themed( framed )
-  , mPipe_fd( -1 )
   , closingDown( false )
 {
 	stsFile = new KSimpleConfig( _stsFile );
@@ -207,16 +207,22 @@ KGreeter::KGreeter( bool framed )
 		pluginList = KGVerify::init( _pluginsLogin );
 	}
 
-	TQTimer::singleShot( 0, this, TQT_SLOT(handleInputPipe()) );
+	mControlPipeHandlerThread = new TQEventLoopThread();
+	mControlPipeHandler = new ControlPipeHandlerObject();
+	mControlPipeHandler->mKGreeterParent = this;
+	mControlPipeHandler->moveToThread(mControlPipeHandlerThread);
+	TQObject::connect(mControlPipeHandler, SIGNAL(processCommand(TQString)), this, SLOT(processInputPipeCommand(TQString)));
+	TQTimer::singleShot(0, mControlPipeHandler, SLOT(run()));
+	mControlPipeHandlerThread->start();
 }
 
 KGreeter::~KGreeter()
 {
-	if (mPipe_fd != -1) {
-		closingDown = true;
-		::close(mPipe_fd);
-		::unlink(mPipeFilename.ascii());
-	}
+	mControlPipeHandlerThread->terminate();
+	mControlPipeHandlerThread->wait();
+	delete mControlPipeHandler;
+	delete mControlPipeHandlerThread;
+
 	hide();
 	delete userList;
 	delete verify;
@@ -228,85 +234,15 @@ void KGreeter::done(int r) {
 	inherited::done(r);
 }
 
-void KGreeter::handleInputPipe(void) {
-	if (closingDown) {
-		::unlink(mPipeFilename.ascii());
-		return;
-	}
-
-	if (isShown() == false) {
-		TQTimer::singleShot( 100, this, TQT_SLOT(handleInputPipe()) );
-		return;
-	}
-
-	char readbuf[2048];
-	int displayNumber;
-	TQString currentDisplay;
-	currentDisplay = TQString(getenv("DISPLAY"));
-	currentDisplay = currentDisplay.replace(":", "");
-	displayNumber = currentDisplay.toInt();
-	mPipeFilename = TQString(FIFO_FILE).arg(displayNumber);
-	::unlink((TQString(FIFO_SAK_FILE).arg(displayNumber)).ascii());
-
-	/* Create the FIFOs if they do not exist */
-	umask(0);
-	struct stat buffer;
-	int status;
-	char *fifo_parent_dir = strdup(FIFO_DIR);
-	dirname(fifo_parent_dir);
-	status = stat(fifo_parent_dir, &buffer);
-	if (status != 0) {
-		mkdir(fifo_parent_dir, 0644);
-	}
-	free(fifo_parent_dir);
-	status = stat(FIFO_DIR, &buffer);
-	if (status == 0) {
-		int file_mode = ((buffer.st_mode & S_IRWXU) >> 6) * 100;
-		file_mode = file_mode + ((buffer.st_mode & S_IRWXG) >> 3) * 10;
-		file_mode = file_mode + ((buffer.st_mode & S_IRWXO) >> 0) * 1;
-		if ((file_mode != 600) || (buffer.st_uid != 0) || (buffer.st_gid != 0)) {
-			::unlink(mPipeFilename.ascii());
-			printf("[WARNING] Possible security breach!  Please check permissions on " FIFO_DIR " (must be 600 and owned by root/root, got %d %d/%d).  Not listening for login credentials on remote control socket.\n", file_mode, buffer.st_uid, buffer.st_gid); fflush(stdout);
-			return;
-		}
-	}
-	mkdir(FIFO_DIR,0600);
-	mknod(mPipeFilename.ascii(), S_IFIFO|0600, 0);
-	chmod(mPipeFilename.ascii(), 0600);
-
-	mPipe_fd = ::open(mPipeFilename.ascii(), O_RDONLY | O_NONBLOCK);
-	int numread;
-	TQString inputcommand = "";
-	while ((!inputcommand.contains('\n')) && (!closingDown)) {
-		numread = ::read(mPipe_fd, readbuf, 2048);
-		readbuf[numread] = 0;
-		readbuf[2047] = 0;
-		inputcommand += readbuf;
-		if (!tqApp->hasPendingEvents()) {
-			usleep(500);
-		}
-		tqApp->processEvents();
-	}
-	if (closingDown) {
-		::unlink(mPipeFilename.ascii());
-		return;
-	}
-	inputcommand = inputcommand.replace('\n', "");
-	TQStringList commandList = TQStringList::split('\t', inputcommand, false);
+void KGreeter::processInputPipeCommand(TQString command) {
+	command = command.replace('\n', "");
+	TQStringList commandList = TQStringList::split('\t', command, false);
 	if ((*(commandList.at(0))) == "LOGIN") {
 		if (verify) {
 			verify->setUser( (*(commandList.at(1))) );
 			verify->setPassword( (*(commandList.at(2))) );
 			accept();
 		}
-	}
-	if (!closingDown) {
-		TQTimer::singleShot( 0, this, TQT_SLOT(handleInputPipe()) );
-		::close(mPipe_fd);
-		::unlink(mPipeFilename.ascii());
-	}
-	else {
-		::unlink(mPipeFilename.ascii());
 	}
 }
 
@@ -1298,6 +1234,114 @@ KThemedGreeter::slotAskAdminPassword()
 	closingDown = true;
 	done(ex_exit);
    }
+}
+
+//===========================================================================
+//
+// TDM control pipe handler
+//
+ControlPipeHandlerObject::ControlPipeHandlerObject() : TQObject() {
+	mPipe_fd = -1;
+	mKGreeterParent = NULL;
+	mSAKDlgParent = NULL;
+}
+
+ControlPipeHandlerObject::~ControlPipeHandlerObject() {
+	if (mPipe_fd != -1) {
+		if (mKGreeterParent) mKGreeterParent->closingDown = true;
+		if (mSAKDlgParent) mSAKDlgParent->closingDown = true;
+		::close(mPipe_fd);
+		::unlink(mPipeFilename.ascii());
+	}
+}
+
+void ControlPipeHandlerObject::run(void) {
+	while (1) {
+		if ((mKGreeterParent && (mKGreeterParent->closingDown)) || (mSAKDlgParent && (mSAKDlgParent->closingDown))) {
+			::unlink(mPipeFilename.ascii());
+			return;
+		}
+	
+		if ((mKGreeterParent && (mKGreeterParent->isShown())) || (mSAKDlgParent && (mSAKDlgParent->isShown()))) {
+			char readbuf[2048];
+			int displayNumber;
+			TQString currentDisplay;
+			currentDisplay = TQString(getenv("DISPLAY"));
+			currentDisplay = currentDisplay.replace(":", "");
+			displayNumber = currentDisplay.toInt();
+			if (mKGreeterParent) {
+				mPipeFilename = TQString(FIFO_FILE).arg(displayNumber);
+				::unlink((TQString(FIFO_SAK_FILE).arg(displayNumber)).ascii());
+			}
+			if (mSAKDlgParent) {
+				mPipeFilename = TQString(FIFO_SAK_FILE).arg(displayNumber);
+				::unlink((TQString(FIFO_FILE).arg(displayNumber)).ascii());
+			}
+		
+			/* Create the FIFOs if they do not exist */
+			umask(0);
+			struct stat buffer;
+			int status;
+			char *fifo_parent_dir = strdup(FIFO_DIR);
+			dirname(fifo_parent_dir);
+			status = stat(fifo_parent_dir, &buffer);
+			if (status != 0) {
+				mkdir(fifo_parent_dir, 0644);
+			}
+			free(fifo_parent_dir);
+			status = stat(FIFO_DIR, &buffer);
+			if (status == 0) {
+				int file_mode = ((buffer.st_mode & S_IRWXU) >> 6) * 100;
+				file_mode = file_mode + ((buffer.st_mode & S_IRWXG) >> 3) * 10;
+				file_mode = file_mode + ((buffer.st_mode & S_IRWXO) >> 0) * 1;
+				if ((file_mode != 600) || (buffer.st_uid != 0) || (buffer.st_gid != 0)) {
+					::unlink(mPipeFilename.ascii());
+					printf("[WARNING] Possible security breach!  Please check permissions on " FIFO_DIR " (must be 600 and owned by root/root, got %d %d/%d).  Not listening for login credentials on remote control socket.\n", file_mode, buffer.st_uid, buffer.st_gid); fflush(stdout);
+					return;
+				}
+			}
+			mkdir(FIFO_DIR,0600);
+			mknod(mPipeFilename.ascii(), S_IFIFO|0600, 0);
+			chmod(mPipeFilename.ascii(), 0600);
+		
+			mPipe_fd = ::open(mPipeFilename.ascii(), O_RDONLY | O_NONBLOCK);
+			int numread;
+			int retval;
+			fd_set rfds;
+			FD_ZERO(&rfds);
+			FD_SET(mPipe_fd, &rfds);
+			TQString inputcommand = "";
+			while ((!inputcommand.contains('\n')) && ((mKGreeterParent && (!mKGreeterParent->closingDown)) || (mSAKDlgParent && (!mSAKDlgParent->closingDown)))) {
+				// Wait for mPipe_fd to receive input
+				retval = select(mPipe_fd + 1, &rfds, NULL, NULL, NULL);
+				if (retval < 0) {
+					// ERROR
+				}
+				else if (retval) {
+					// New data is available
+					numread = ::read(mPipe_fd, readbuf, 2048);
+					readbuf[numread] = 0;
+					readbuf[2047] = 0;
+					inputcommand += readbuf;
+				}
+			}
+			if ((mKGreeterParent && (mKGreeterParent->closingDown)) || (mSAKDlgParent && (mSAKDlgParent->closingDown))) {
+				::unlink(mPipeFilename.ascii());
+				return;
+			}
+
+			emit processCommand(inputcommand);
+
+			if ((mKGreeterParent && (!mKGreeterParent->closingDown)) || (mSAKDlgParent && (!mSAKDlgParent->closingDown))) {
+				::close(mPipe_fd);
+				::unlink(mPipeFilename.ascii());
+			}
+			else {
+				::unlink(mPipeFilename.ascii());
+				return;
+			}
+		}
+	}
 }
 
 #include "kgreeter.moc"

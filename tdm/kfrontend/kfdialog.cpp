@@ -64,7 +64,12 @@ FDialog::FDialog( TQWidget *parent, bool framed )
 	setCaption(TDM_LOGIN_SCREEN_BASE_TITLE);
 
 	if (framed) {
-		if (m_wmTitle) setFixedSize(sizeHint());
+		if (m_wmTitle) {
+			TQSize sh = sizeHint();
+			if ((sh.width() > 0) && (sh.height() > 0)) {
+				setFixedSize(sh);
+			}
+		}
 	}
 }
 

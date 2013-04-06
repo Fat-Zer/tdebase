@@ -26,6 +26,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef KGREETER_H
 #define KGREETER_H
 
+#include <tqthread.h>
+
 #include "kgverify.h"
 #include "kgdialog.h"
 
@@ -41,6 +43,8 @@ class TQLabel;
 class TQPushButton;
 class TQPopupMenu;
 class TQListViewItem;
+class KGreeter;
+class SAKDlg;
 
 struct SessType {
 	TQString name, type;
@@ -57,6 +61,35 @@ struct SessType {
 	}
 };
 
+//===========================================================================
+//
+// TDM control pipe handler
+//
+class ControlPipeHandlerObject : public TQObject
+{
+	Q_OBJECT
+
+	public:
+		ControlPipeHandlerObject();
+		~ControlPipeHandlerObject();
+
+	public slots:
+		void run();
+	
+	signals:
+		void processCommand(TQString);
+
+	public:
+		KGreeter* mKGreeterParent;
+		SAKDlg* mSAKDlgParent;
+		TQString mPipeFilename;
+		int mPipe_fd;
+};
+
+//===========================================================================
+//
+// TDM greeter
+//
 class KGreeter : public KGDialog, public KGVerifyHandler {
 	Q_OBJECT
 	typedef KGDialog inherited;
@@ -72,7 +105,7 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
 	void slotUserClicked( TQListViewItem * );
 	void slotSessionSelected( int );
 	void slotUserEntered();
-	void handleInputPipe();
+	void processInputPipeCommand(TQString command);
 
   public:
 	TQString curUser, curWMSession, dName;
@@ -107,8 +140,8 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
 	void slotLoadPrevWM();
 
   private:
-	int mPipe_fd;
-	TQString mPipeFilename;
+	ControlPipeHandlerObject* mControlPipeHandler;
+	TQEventLoopThread*        mControlPipeHandlerThread;
 
   protected:
 	bool closingDown;
@@ -120,6 +153,8 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
 	virtual void verifyFailed();
 //	virtual void verifyRetry();
 	virtual void verifySetUser( const TQString &user );
+
+	friend class ControlPipeHandlerObject;
 };
 
 class KStdGreeter : public KGreeter {

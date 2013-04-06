@@ -8,16 +8,20 @@
 #ifndef __SAKDLG_H__
 #define __SAKDLG_H__
 
+#include <tqthread.h>
 #include <tqdialog.h>
 #include <tqstringlist.h>
 
 #include <kprocess.h>
+
+#include "kgreeter.h"
 
 class TQFrame;
 class TQGridLayout;
 class TQLabel;
 class KPushButton;
 class TQListView;
+class SAKDlg;
 
 //===========================================================================
 //
@@ -38,26 +42,28 @@ public:
 
 private slots:
     void slotSAKProcessExited();
-    void handleInputPipe();
+    void processInputPipeCommand(TQString command);
 
 protected slots:
     virtual void reject();
 
 private:
-    TQFrame      *frame;
-    TQGridLayout *frameLayout;
-    TQLabel      *mStatusLabel;
-    int         mCapsLocked;
-    bool        mUnlockingFailed;
-    TQStringList layoutsList;
-    TQStringList::iterator currLayout;
-    int         sPid, sFd;
-    TDEProcess*   mSAKProcess;
-    int         mPipe_fd;
-    TQString mPipeFilename;
+    TQFrame                   *frame;
+    TQGridLayout              *frameLayout;
+    TQLabel                   *mStatusLabel;
+    int                       mCapsLocked;
+    bool                      mUnlockingFailed;
+    TQStringList              layoutsList;
+    TQStringList::iterator    currLayout;
+    int                       sPid, sFd;
+    TDEProcess*               mSAKProcess;
+    ControlPipeHandlerObject* mControlPipeHandler;
+    TQEventLoopThread*        mControlPipeHandlerThread;
 
 protected:
-    bool closingDown;
+    bool                   closingDown;
+
+    friend class ControlPipeHandlerObject;
 };
 
 #endif

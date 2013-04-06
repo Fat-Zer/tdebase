@@ -87,7 +87,7 @@ extern bool trinity_desktop_lock_use_sak;
 //
 SAKDlg::SAKDlg(TQWidget *parent)
     : TQDialog(parent, "information dialog", true, (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)WStyle_StaysOnTop):((WFlags)WX11BypassWM))),
-      mUnlockingFailed(false), mPipe_fd(-1), closingDown(false)
+      mUnlockingFailed(false), closingDown(false)
 {
     if (trinity_desktop_lock_use_system_modal_dialogs) {
         // Signal that we do not want any window controls to be shown at all
@@ -130,7 +130,13 @@ SAKDlg::SAKDlg(TQWidget *parent)
     connect(mSAKProcess, TQT_SIGNAL(processExited(TDEProcess*)), this, TQT_SLOT(slotSAKProcessExited()));
     mSAKProcess->start();
 
-    TQTimer::singleShot( 0, this, TQT_SLOT(handleInputPipe()) );
+    mControlPipeHandlerThread = new TQEventLoopThread();
+    mControlPipeHandler = new ControlPipeHandlerObject();
+    mControlPipeHandler->mSAKDlgParent = this;
+    mControlPipeHandler->moveToThread(mControlPipeHandlerThread);
+    TQObject::connect(mControlPipeHandler, SIGNAL(processCommand(TQString)), this, SLOT(processInputPipeCommand(TQString)));
+    TQTimer::singleShot(0, mControlPipeHandler, SLOT(run()));
+    mControlPipeHandlerThread->start();
 }
 
 void SAKDlg::slotSAKProcessExited()
@@ -141,81 +147,11 @@ void SAKDlg::slotSAKProcessExited()
     hide();
 }
 
-void SAKDlg::handleInputPipe(void) {
-	if (closingDown) {
-		::unlink(mPipeFilename.ascii());
-		return;
-	}
-
-	if (isShown() == false) {
-		TQTimer::singleShot( 100, this, TQT_SLOT(handleInputPipe()) );
-		return;
-	}
-
-	char readbuf[2048];
-	int displayNumber;
-	TQString currentDisplay;
-	currentDisplay = TQString(getenv("DISPLAY"));
-	currentDisplay = currentDisplay.replace(":", "");
-	displayNumber = currentDisplay.toInt();
-	mPipeFilename = TQString(FIFO_SAK_FILE).arg(displayNumber);
-	::unlink((TQString(FIFO_FILE).arg(displayNumber)).ascii());
-
-	/* Create the FIFOs if they do not exist */
-	umask(0);
-	struct stat buffer;
-	int status;
-	char *fifo_parent_dir = strdup(FIFO_DIR);
-	dirname(fifo_parent_dir);
-	status = stat(fifo_parent_dir, &buffer);
-	if (status != 0) {
-		mkdir(fifo_parent_dir, 0644);
-	}
-	free(fifo_parent_dir);
-	status = stat(FIFO_DIR, &buffer);
-	if (status == 0) {
-		int file_mode = ((buffer.st_mode & S_IRWXU) >> 6) * 100;
-		file_mode = file_mode + ((buffer.st_mode & S_IRWXG) >> 3) * 10;
-		file_mode = file_mode + ((buffer.st_mode & S_IRWXO) >> 0) * 1;
-		if ((file_mode != 600) || (buffer.st_uid != 0) || (buffer.st_gid != 0)) {
-			::unlink(mPipeFilename.ascii());
-			printf("[WARNING] Possible security breach!  Please check permissions on " FIFO_DIR " (must be 600 and owned by root/root, got %d %d/%d).  Not listening for login credentials on remote control socket.\n", file_mode, buffer.st_uid, buffer.st_gid); fflush(stdout);
-			return;
-		}
-	}
-	mkdir(FIFO_DIR,0600);
-	mknod(mPipeFilename.ascii(), S_IFIFO|0600, 0);
-	chmod(mPipeFilename.ascii(), 0600);
-
-	mPipe_fd = ::open(mPipeFilename.ascii(), O_RDONLY | O_NONBLOCK);
-	int numread;
-	TQString inputcommand = "";
-	while ((!inputcommand.contains('\n')) && (!closingDown)) {
-		numread = ::read(mPipe_fd, readbuf, 2048);
-		readbuf[numread] = 0;
-		readbuf[2047] = 0;
-		inputcommand += readbuf;
-		if (!tqApp->hasPendingEvents()) {
-			usleep(500);
-		}
-		tqApp->processEvents();
-	}
-	if (closingDown) {
-		::unlink(mPipeFilename.ascii());
-		return;
-	}
-	inputcommand = inputcommand.replace('\n', "");
-	TQStringList commandList = TQStringList::split('\t', inputcommand, false);
+void SAKDlg::processInputPipeCommand(TQString command) {
+	command = command.replace('\n', "");
+	TQStringList commandList = TQStringList::split('\t', command, false);
 	if ((*(commandList.at(0))) == "CLOSE") {
 		mSAKProcess->kill();
-	}
-	if (!closingDown) {
-		TQTimer::singleShot( 0, this, TQT_SLOT(handleInputPipe()) );
-		::close(mPipe_fd);
-		::unlink(mPipeFilename.ascii());
-	}
-	else {
-		::unlink(mPipeFilename.ascii());
 	}
 }
 
@@ -225,11 +161,12 @@ SAKDlg::~SAKDlg()
         mSAKProcess->kill(SIGTERM);
         delete mSAKProcess;
     }
-    if (mPipe_fd != -1) {
-        closingDown = true;
-        ::close(mPipe_fd);
-        ::unlink(mPipeFilename.ascii());
-    }
+
+    mControlPipeHandlerThread->terminate();
+    mControlPipeHandlerThread->wait();
+    delete mControlPipeHandler;
+    delete mControlPipeHandlerThread;
+
     hide();
 }
 
