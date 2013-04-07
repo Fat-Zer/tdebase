@@ -390,9 +390,36 @@ if [ -r $PROFILE_DIR/share/config/kickerrc ]; then
   fi
 fi
 
+if [ -r $PROFILE_DIR/share/config/katerc ]; then
+  Message_Prefix
+  echo "Updating katerc."
+  sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/config/katerc" 2>/dev/null
+else
+  Message_Prefix
+  echo "$PROFILE_DIR/share/config/katerc does not exist."
+fi
+
+if [ -r $PROFILE_DIR/share/config/kwriterc ]; then
+  Message_Prefix
+  echo "Updating kwriterc."
+  sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/config/kwriterc" 2>/dev/null
+else
+  Message_Prefix
+  echo "$PROFILE_DIR/share/config/kwriterc does not exist."
+fi
+
+if [ -r $PROFILE_DIR/share/apps/ark/ark_part.rc ]; then
+  Message_Prefix
+  echo "Updating ark_part.rc."
+  sed -i 's|ark_kparts|ark_tdeparts|g' "$PROFILE_DIR/share/apps/ark/ark_part.rc" 2>/dev/null
+else
+  Message_Prefix
+  echo "$PROFILE_DIR/share/apps/ark/ark_part.rc does not exist."
+fi
+
 # Preserve Quick Launch icons.
-# There should only be one configuration file, but old KDE3 remnant files might exist ofr users who
-# migrated from KDE3. We don't care about those files, but we still need to update the correct configuration file.
+# There should only be one configuration file, but old KDE3 remnant files might exist from users who
+# migrated from KDE3.
 Message_Prefix
 echo "Updating Quick Launch applet."
 if [ -r "$PROFILE_DIR/share/config/kickerrc" ]; then
