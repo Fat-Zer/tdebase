@@ -165,7 +165,7 @@ SAKDlg::~SAKDlg()
     mControlPipeHandlerThread->terminate();
     mControlPipeHandlerThread->wait();
     delete mControlPipeHandler;
-    delete mControlPipeHandlerThread;
+//     delete mControlPipeHandlerThread;
 
     hide();
 }

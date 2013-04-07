@@ -104,6 +104,11 @@ GreeterApp::GreeterApp(Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap) : T
 	init();
 }
 
+GreeterApp::~GreeterApp()
+{
+	//
+}
+
 void GreeterApp::init()
 {
 	pingInterval = _isLocal ? 0 : _pingInterval;

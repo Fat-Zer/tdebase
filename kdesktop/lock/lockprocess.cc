@@ -237,7 +237,6 @@ LockProcess::LockProcess()
 #endif
 
     setupSignals();
-    setupPipe();
 
     // Signal that we want to be transparent to the desktop, not to windows behind us...
     Atom kde_wm_transparent_to_desktop;
@@ -310,6 +309,11 @@ LockProcess::LockProcess()
 //
 LockProcess::~LockProcess()
 {
+    mControlPipeHandlerThread->terminate();
+    mControlPipeHandlerThread->wait();
+    delete mControlPipeHandler;
+//     delete mControlPipeHandlerThread;
+
     if (resizeTimer != NULL) {
         resizeTimer->stop();
         delete resizeTimer;
@@ -404,6 +408,14 @@ void LockProcess::init(bool child, bool useBlankOnly)
     mHackStartupEnabled = trinity_desktop_lock_use_system_modal_dialogs?KDesktopSettings::screenSaverEnabled():true;
 
     configure();
+
+    mControlPipeHandlerThread = new TQEventLoopThread();
+    mControlPipeHandler = new ControlPipeHandlerObject();
+    mControlPipeHandler->mParent = this;
+    mControlPipeHandler->moveToThread(mControlPipeHandlerThread);
+    TQObject::connect(mControlPipeHandler, SIGNAL(processCommand(TQString)), this, SLOT(processInputPipeCommand(TQString)));
+    TQTimer::singleShot(0, mControlPipeHandler, SLOT(run()));
+    mControlPipeHandlerThread->start();
 }
 
 static int signal_pipe[2];
@@ -466,135 +478,6 @@ void LockProcess::resizeEvent(TQResizeEvent *)
 	//
 }
 
-void LockProcess::setupPipe()
-{
-    /* Create the FIFOs if they do not exist */
-    umask(0);
-    mkdir(FIFO_DIR,0644);
-    mknod(FIFO_FILE, S_IFIFO|0644, 0);
-    chmod(FIFO_FILE, 0644);
-
-    mPipe_fd = open(FIFO_FILE, O_RDONLY | O_NONBLOCK);
-    if (mPipe_fd > -1) {
-        mPipeOpen = true;
-        TQTimer::singleShot( PIPE_CHECK_INTERVAL, this, TQT_SLOT(checkPipe()) );
-    }
-
-    mknod(FIFO_FILE_OUT, S_IFIFO|0600, 0);
-    chmod(FIFO_FILE_OUT, 0600);
-
-    mPipe_fd_out = open(FIFO_FILE_OUT, O_RDWR | O_NONBLOCK);
-    if (mPipe_fd_out > -1) {
-        mPipeOpen_out = true;
-    }
-}
-
-void LockProcess::checkPipe()
-{
-    char readbuf[128];
-    int numread;
-    TQString to_display;
-    const char * pin_entry;
-
-    if (mPipeOpen == true) {
-        readbuf[0]=' ';
-        numread = read(mPipe_fd, readbuf, 128);
-        readbuf[numread] = 0;
-        if (numread > 0) {
-            if (readbuf[0] == 'C') {
-                mInfoMessageDisplayed=false;
-                while (mDialogControlLock == true) usleep(100000);
-                mDialogControlLock = true;
-                if (currentDialog != NULL) {
-                    mForceReject = true;
-                    closeCurrentWindow();
-                }
-                mDialogControlLock = false;
-            }
-            if (readbuf[0] == 'T') {
-                to_display = readbuf;
-                to_display = to_display.remove(0,1);
-                // Lock out password dialogs and close any active dialog
-                mInfoMessageDisplayed=true;
-                while (mDialogControlLock == true) usleep(100000);
-                mDialogControlLock = true;
-                if (currentDialog != NULL) {
-                    mForceReject = true;
-                    closeCurrentWindow();
-                }
-                mDialogControlLock = false;
-                // Display info message dialog
-                TQTimer::singleShot( PIPE_CHECK_INTERVAL, this, TQT_SLOT(checkPipe()) );
-                InfoDlg inDlg( this );
-                inDlg.updateLabel(to_display);
-                inDlg.setUnlockIcon();
-                execDialog( &inDlg );
-                mForceReject = false;
-                return;
-            }
-            if ((readbuf[0] == 'E') || (readbuf[0] == 'W') || (readbuf[0] == 'I') || (readbuf[0] == 'K')) {
-                to_display = readbuf;
-                to_display = to_display.remove(0,1);
-                // Lock out password dialogs and close any active dialog
-                mInfoMessageDisplayed=true;
-                while (mDialogControlLock == true) usleep(100000);
-                mDialogControlLock = true;
-                if (currentDialog != NULL) {
-                    mForceReject = true;
-                    closeCurrentWindow();
-                }
-                mDialogControlLock = false;
-                // Display info message dialog
-                TQTimer::singleShot( PIPE_CHECK_INTERVAL, this, TQT_SLOT(checkPipe()) );
-                InfoDlg inDlg( this );
-                inDlg.updateLabel(to_display);
-                if (readbuf[0] == 'K') inDlg.setKDEIcon();
-                if (readbuf[0] == 'I') inDlg.setInfoIcon();
-                if (readbuf[0] == 'W') inDlg.setWarningIcon();
-                if (readbuf[0] == 'E') inDlg.setErrorIcon();
-                execDialog( &inDlg );
-                mForceReject = false;
-                return;
-            }
-            if (readbuf[0] == 'Q') {
-                to_display = readbuf;
-                to_display = to_display.remove(0,1);
-                // Lock out password dialogs and close any active dialog
-                mInfoMessageDisplayed=true;
-                while (mDialogControlLock == true) usleep(100000);
-                mDialogControlLock = true;
-                if (currentDialog != NULL) {
-                    mForceReject = true;
-                    closeCurrentWindow();
-                }
-                mDialogControlLock = false;
-                // Display query dialog
-                TQTimer::singleShot( PIPE_CHECK_INTERVAL, this, TQT_SLOT(checkPipe()) );
-                QueryDlg qryDlg( this );
-                qryDlg.updateLabel(to_display);
-                qryDlg.setUnlockIcon();
-                mForceReject = false;
-                execDialog( &qryDlg );
-                if (mForceReject == false) {
-                    pin_entry = qryDlg.getEntry();
-                    mInfoMessageDisplayed=false;
-                    if (mPipeOpen_out == true) {
-                        if (write(mPipe_fd_out, pin_entry, strlen(pin_entry)+1) == -1) {
-                            // Error handler to shut up gcc warnings
-                        }
-                        if (write(mPipe_fd_out, "\n\r", 3) == -1) {
-                            // Error handler to shut up gcc warnings
-                        }
-                    }
-                }
-                mForceReject = false;
-                return;
-            }
-        }
-        TQTimer::singleShot( PIPE_CHECK_INTERVAL, this, TQT_SLOT(checkPipe()) );
-    }
-}
-
 void LockProcess::setupSignals()
 {
     struct sigaction act;
@@ -626,8 +509,7 @@ void LockProcess::setupSignals()
     if (pipe(signal_pipe) == -1) {
         // Error handler to shut up gcc warnings
     }
-    TQSocketNotifier* notif = new TQSocketNotifier(signal_pipe[0],
-	TQSocketNotifier::Read, TQT_TQOBJECT(this) );
+    TQSocketNotifier* notif = new TQSocketNotifier(signal_pipe[0], TQSocketNotifier::Read, TQT_TQOBJECT(this) );
     connect( notif, TQT_SIGNAL(activated(int)), TQT_SLOT(signalPipeSignal()));
 }
 
@@ -1912,8 +1794,9 @@ bool LockProcess::checkPass()
 
         // Make sure we never launch the SAK or login dialog if windows are being closed down
         // Otherwise we can get stuck in an irrecoverable state where any attempt to show the login screen is instantly aborted
-        if (trinity_desktop_lock_closing_windows)
+        if (trinity_desktop_lock_closing_windows) {
             return 0;
+        }
 
         if (trinity_desktop_lock_use_sak) {
             // Verify SAK operational status
@@ -2694,6 +2577,171 @@ void LockProcess::slotMouseActivity(XEvent *event)
 	if (event->type == ButtonRelease) {
 		m_mouseDown = 0;
 		XChangeActivePointerGrab( tqt_xdisplay(), GRABEVENTS, TQCursor(tqarrowCursor).handle(), CurrentTime);
+	}
+}
+
+void LockProcess::processInputPipeCommand(TQString inputcommand) {
+	TQCString command(inputcommand.ascii());
+	TQString to_display;
+	const char * pin_entry;
+
+	if (command[0] == 'C') {
+		while (mDialogControlLock == true) usleep(100000);
+		mDialogControlLock = true;
+		if (mInfoMessageDisplayed || !trinity_desktop_lock_use_system_modal_dialogs) {
+			if (currentDialog != NULL) {
+				mForceReject = true;
+				closeCurrentWindow();
+			}
+		}
+		trinity_desktop_lock_closing_windows = false;
+		mInfoMessageDisplayed = false;
+		mDialogControlLock = false;
+	}
+	if (command[0] == 'T') {
+		to_display = command.data();
+		to_display = to_display.remove(0,1);
+		// Lock out password dialogs and close any active dialog
+		while (mDialogControlLock == true) usleep(100000);
+		mDialogControlLock = true;
+		if (mInfoMessageDisplayed || !trinity_desktop_lock_use_system_modal_dialogs) {
+			if (currentDialog != NULL) {
+				mForceReject = true;
+				closeCurrentWindow();
+			}
+		}
+		mInfoMessageDisplayed = true;
+		mDialogControlLock = false;
+		// Display info message dialog
+		InfoDlg inDlg( this );
+		inDlg.updateLabel(to_display);
+		inDlg.setUnlockIcon();
+		execDialog( &inDlg );
+		mForceReject = false;
+		trinity_desktop_lock_closing_windows = false;
+		return;
+	}
+	if ((command[0] == 'E') || (command[0] == 'W') || (command[0] == 'I') || (command[0] == 'K')) {
+		to_display = command.data();
+		to_display = to_display.remove(0,1);
+		// Lock out password dialogs and close any active dialog
+		while (mDialogControlLock == true) usleep(100000);
+		mDialogControlLock = true;
+		if (mInfoMessageDisplayed || !trinity_desktop_lock_use_system_modal_dialogs) {
+			if (currentDialog != NULL) {
+				mForceReject = true;
+				closeCurrentWindow();
+			}
+		}
+		mInfoMessageDisplayed = true;
+		mDialogControlLock = false;
+		// Display info message dialog
+		InfoDlg inDlg( this );
+		inDlg.updateLabel(to_display);
+		if (command[0] == 'K') inDlg.setKDEIcon();
+		if (command[0] == 'I') inDlg.setInfoIcon();
+		if (command[0] == 'W') inDlg.setWarningIcon();
+		if (command[0] == 'E') inDlg.setErrorIcon();
+		execDialog( &inDlg );
+		mForceReject = false;
+		trinity_desktop_lock_closing_windows = false;
+		return;
+	}
+	if (command[0] == 'Q') {
+		to_display = command.data();
+		to_display = to_display.remove(0,1);
+		// Lock out password dialogs and close any active dialog
+		while (mDialogControlLock == true) usleep(100000);
+		mDialogControlLock = true;
+		if (mInfoMessageDisplayed || !trinity_desktop_lock_use_system_modal_dialogs) {
+			if (currentDialog != NULL) {
+				mForceReject = true;
+				closeCurrentWindow();
+			}
+		}
+		mInfoMessageDisplayed = true;
+		mDialogControlLock = false;
+		// Display query dialog
+		QueryDlg qryDlg( this );
+		qryDlg.updateLabel(to_display);
+		qryDlg.setUnlockIcon();
+		mForceReject = false;
+		execDialog( &qryDlg );
+		if (mForceReject == false) {
+			pin_entry = qryDlg.getEntry();
+			mInfoMessageDisplayed=false;
+			if (mPipeOpen_out == true) {
+				if (write(mPipe_fd_out, pin_entry, strlen(pin_entry)+1) == -1) {
+					// Error handler to shut up gcc warnings
+				}
+				if (write(mPipe_fd_out, "\n\r", 3) == -1) {
+					// Error handler to shut up gcc warnings
+				}
+			}
+		}
+		mForceReject = false;
+		trinity_desktop_lock_closing_windows = false;
+		return;
+	}
+}
+
+//===========================================================================
+//
+// Control pipe handler
+//
+ControlPipeHandlerObject::ControlPipeHandlerObject() : TQObject() {
+	mParent = NULL;
+}
+
+ControlPipeHandlerObject::~ControlPipeHandlerObject() {
+	//
+}
+
+void ControlPipeHandlerObject::run(void) {
+	/* Create the FIFOs if they do not exist */
+	umask(0);
+	mkdir(FIFO_DIR,0644);
+	mknod(FIFO_FILE, S_IFIFO|0644, 0);
+	chmod(FIFO_FILE, 0644);
+	
+	mParent->mPipe_fd = open(FIFO_FILE, O_RDONLY | O_NONBLOCK);
+	if (mParent->mPipe_fd > -1) {
+		mParent->mPipeOpen = true;
+	}
+	
+	mknod(FIFO_FILE_OUT, S_IFIFO|0600, 0);
+	chmod(FIFO_FILE_OUT, 0600);
+	
+	mParent->mPipe_fd_out = open(FIFO_FILE_OUT, O_RDWR | O_NONBLOCK);
+	if (mParent->mPipe_fd_out > -1) {
+		mParent->mPipeOpen_out = true;
+	}
+
+	int numread;
+	int retval;
+	fd_set rfds;
+	FD_ZERO(&rfds);
+	FD_SET(mParent->mPipe_fd, &rfds);
+	TQByteArray readbuf(128);
+
+	while (mParent->mPipeOpen) {
+		TQString inputcommand = "";
+
+		// Wait for mParent->mPipe_fd to receive input
+		retval = select(mParent->mPipe_fd + 1, &rfds, NULL, NULL, NULL);
+		if (retval < 0) {
+			// ERROR
+		}
+		else if (retval) {
+			// New data is available
+			readbuf[0]=' ';
+			numread = read(mParent->mPipe_fd, readbuf.data(), 128);
+			readbuf[numread] = 0;
+			if (numread > 0) {
+				inputcommand += readbuf;
+				emit processCommand(inputcommand);
+			}
+		}
 	}
 }
 

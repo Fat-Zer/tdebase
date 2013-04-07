@@ -22,12 +22,14 @@
 #include <tqmessagebox.h>
 #include <tqpixmap.h>
 #include <tqdatetime.h>
+#include <tqthread.h>
 
 #include <X11/Xlib.h>
 
 class KLibrary;
 class KWinModule;
 class KSMModalDialog;
+class LockProcess;
 
 struct GreeterPluginHandle {
     KLibrary *library;
@@ -40,6 +42,28 @@ struct GreeterPluginHandle {
 #define PIPE_CHECK_INTERVAL 50
 
 typedef TQValueList<Window> TQXLibWindowList;
+
+//===========================================================================
+//
+// Control pipe handler
+//
+class ControlPipeHandlerObject : public TQObject
+{
+	Q_OBJECT
+
+	public:
+		ControlPipeHandlerObject();
+		~ControlPipeHandlerObject();
+
+	public slots:
+		void run();
+	
+	signals:
+		void processCommand(TQString);
+
+	public:
+		LockProcess* mParent;
+};
 
 //===========================================================================
 //
@@ -74,7 +98,6 @@ public slots:
     void quitSaver();
     void preparePopup();
     void cleanupPopup();
-    void checkPipe();
     void desktopResized();
     void doDesktopResizeFinish();
     void doFunctionKeyBroadcast();
@@ -101,6 +124,7 @@ private slots:
     void repaintRootWindowIfNeeded();
     void startSecureDialog();
     void slotMouseActivity(XEvent *event);
+    void processInputPipeCommand(TQString command);
 
 private:
     void configure();
@@ -121,7 +145,6 @@ private:
     bool startHack();
     void stopHack();
     void setupSignals();
-    void setupPipe();
     bool checkPass();
     void stayOnTop();
     void lockXF86();
@@ -215,6 +238,11 @@ private:
     int m_dialogPrevY;
 
     TQWidget* m_maskWidget;
+
+    ControlPipeHandlerObject* mControlPipeHandler;
+    TQEventLoopThread*        mControlPipeHandlerThread;
+
+    friend class ControlPipeHandlerObject;
 };
 
 #endif

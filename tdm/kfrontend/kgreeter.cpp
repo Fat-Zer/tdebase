@@ -221,7 +221,7 @@ KGreeter::~KGreeter()
 	mControlPipeHandlerThread->terminate();
 	mControlPipeHandlerThread->wait();
 	delete mControlPipeHandler;
-	delete mControlPipeHandlerThread;
+// 	delete mControlPipeHandlerThread;
 
 	hide();
 	delete userList;

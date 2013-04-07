@@ -37,6 +37,7 @@ class GreeterApp : public TDEApplication {
 	GreeterApp();
 	GreeterApp(Display *dpy);
 	GreeterApp(Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap);
+	~GreeterApp();
 	virtual bool x11EventFilter( XEvent * );
 
   protected:
