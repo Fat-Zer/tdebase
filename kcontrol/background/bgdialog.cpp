@@ -1246,7 +1246,7 @@ void BGDialog::slotGetNewStuff()
    //tdecmshellrc or kcontrolrc
    TDEConfig* config = TDEGlobal::config();
    config->setGroup("KNewStuff");
-   config->writeEntry( "ProvidersUrl", "http://download.kde.org/tdehotnewstuff/wallpaper-providers.xml" );
+   config->writeEntry( "ProvidersUrl", "http://download.kde.org/khotnewstuff/wallpaper-providers.xml" );
    config->writeEntry( "StandardResource", "wallpaper" );
    config->sync();
 
