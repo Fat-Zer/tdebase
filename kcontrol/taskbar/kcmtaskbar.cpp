@@ -23,6 +23,7 @@
 #include <tqvaluelist.h>
 #include <tqfile.h>
 #include <tqlabel.h>
+#include <tqbuttongroup.h>
 
 #include <dcopclient.h>
 
@@ -162,15 +163,15 @@ TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringL
     if (args.count() > 0)
     {
         m_configFileName = args[0];
-        m_widget->globalConfigWarning->hide();
-        m_widget->globalConfigReload->show();
+        m_isGlobalConfig = false;
     }
     else
     {
-        m_widget->globalConfigReload->hide();
-        m_widget->globalConfigWarning->show();
+        m_isGlobalConfig = true;
     }
     connect(m_widget->globalConfigReload, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotReloadConfigurationFromGlobals()));
+    connect(m_widget->globalConfigEdit, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotEditGlobalConfiguration()));
+    connect(m_widget->kcfg_UseGlobalSettings, TQT_SIGNAL(clicked()), this, TQT_SLOT(processLockouts()));
 
     TQFile configFile(locateLocal("config", m_configFileName));
     if (!configFile.exists())
@@ -248,6 +249,8 @@ TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringL
     setAboutData(about);
 
     load();
+    processLockouts();
+
     TQTimer::singleShot(0, this, TQT_SLOT(notChanged()));
 }
 
@@ -259,6 +262,42 @@ TaskbarConfig::~TaskbarConfig()
     }
 }
 
+void TaskbarConfig::slotEditGlobalConfiguration() {
+	TQByteArray data;
+	kapp->dcopClient()->send("kicker", "kicker", "reshowTaskBarConfig()", data);
+}
+
+void TaskbarConfig::processLockouts()
+{
+	m_configFileName = GLOBAL_TASKBAR_CONFIG_FILE_NAME;
+	if (m_isGlobalConfig)
+	{
+		m_widget->globalConfigWarning->show();
+		m_widget->globalConfigReload->hide();
+		m_widget->globalConfigEdit->hide();
+		m_widget->kcfg_UseGlobalSettings->hide();
+	}
+	else {
+		m_widget->globalConfigWarning->hide();
+		m_widget->kcfg_UseGlobalSettings->show();
+		if (m_widget->kcfg_UseGlobalSettings->isChecked()) {
+			m_widget->taskbarGroup->hide();
+			m_widget->actionsGroup->hide();
+			m_widget->globalConfigReload->hide();
+			m_widget->globalConfigEdit->hide();
+		}
+		else {
+			m_widget->taskbarGroup->show();
+			m_widget->actionsGroup->show();
+			// FIXME
+			// Disable this feature until a method can be found to force the TDECModule to reload its settings from disk after the global settings have been copied!
+			//m_widget->globalConfigReload->show();
+			m_widget->globalConfigReload->hide();
+			m_widget->globalConfigEdit->show();
+		}
+	}
+}
+
 void TaskbarConfig::slotReloadConfigurationFromGlobals()
 {
     TDEConfig globalConfig(GLOBAL_TASKBAR_CONFIG_FILE_NAME, TRUE, TRUE);
@@ -267,16 +306,17 @@ void TaskbarConfig::slotReloadConfigurationFromGlobals()
     localConfig.sync();
     m_settingsObject->readConfig();
     load();
+    m_widget->kcfg_UseGlobalSettings->setChecked(false);
 }
 
 void TaskbarConfig::slotUpdateCustomColors()
 {
     m_widget->kcfg_ActiveTaskTextColor->setEnabled(m_widget->kcfg_UseCustomColors->isChecked());
     m_widget->activeTaskTextColorLabel->setEnabled(m_widget->kcfg_UseCustomColors->isChecked());
-    
+
     m_widget->kcfg_InactiveTaskTextColor->setEnabled(m_widget->kcfg_UseCustomColors->isChecked());
     m_widget->inactiveTaskTextColorLabel->setEnabled(m_widget->kcfg_UseCustomColors->isChecked());
-    
+
     m_widget->kcfg_TaskBackgroundColor->setEnabled(m_widget->kcfg_UseCustomColors->isChecked());
     m_widget->taskBackgroundColorLabel->setEnabled(m_widget->kcfg_UseCustomColors->isChecked());
 }
@@ -320,7 +360,7 @@ void TaskbarConfig::updateAppearanceCombo()
         return;
     }
 
-    if (m_widget->appearance->count() == m_appearances.count())
+    if (m_widget->appearance->count() == (int)m_appearances.count())
     {
         m_widget->appearance->insertItem(i18n("Custom"));
     }
@@ -330,7 +370,7 @@ void TaskbarConfig::updateAppearanceCombo()
 
 void TaskbarConfig::appearanceChanged(int selected)
 {
-    if (selected < m_appearances.count())
+    if (selected < (int)m_appearances.count())
     {
         unmanagedWidgetChangeState(!m_appearances[selected].matchesSettings());
     }
@@ -348,7 +388,7 @@ void TaskbarConfig::save()
 {
     m_settingsObject->setShowCurrentScreenOnly(!m_widget->showAllScreens->isChecked());
     int selectedAppearance = m_widget->appearance->currentItem();
-    if (selectedAppearance < m_appearances.count())
+    if (selectedAppearance < (int)m_appearances.count())
     {
         m_appearances[selectedAppearance].alterSettings();
         m_settingsObject->writeConfig();

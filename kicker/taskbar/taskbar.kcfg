@@ -6,6 +6,11 @@
     <kcfgfile arg="true"/>
 
     <group name="General">
+        <entry key="UseGlobalSettings" type="Bool" >
+            <default>true</default>
+            <label>Use the global (floating) taskbar configuration</label>
+            <whatsthis>Turning this option off will cause the taskbar to ignore the global (floating) taskbar configuration, instead using a specific configuration for that particular taskbar.</whatsthis>
+        </entry>
         <entry key="ShowAllWindows" type="Bool" >
             <default>true</default>
             <label>Show windows from all desktops</label>

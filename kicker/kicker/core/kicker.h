@@ -59,6 +59,8 @@ k_dcop:
     void showConfig(const TQString& config, const TQString& configFile = TQString::null, int page = -1);
     void showTaskBarConfig();
     void showTaskBarConfig(const TQString& configFile);
+    void hideTaskBarConfig();
+    void reshowTaskBarConfig();
     void configureMenubar();
     // return the region on the desktop, which is not covered by panels
     // and therefore allowed to be used by icons placed on the desktop
@@ -123,10 +125,11 @@ private:
     static void crashHandler(int signal);
 
     TDEGlobalAccel*  keys;
-    KWinModule*    m_twinModule;
-    KCMultiDialog* m_configDialog;
-    bool           m_canAddContainers;
-    TQPoint         m_insertionPoint;
+    KWinModule*      m_twinModule;
+    KCMultiDialog*   m_configDialog;
+    bool             m_canAddContainers;
+    TQPoint          m_insertionPoint;
+    bool             m_reloadingConfigDialog;
 };
 
 #endif

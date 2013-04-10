@@ -45,9 +45,8 @@ public:
     typedef TQValueList<TaskContainer*> List;
     typedef TQValueList<TaskContainer*>::iterator Iterator;
 
-    TaskContainer(Task::Ptr, TaskBar*, TaskBarSettings* settingsObject, TQWidget *parent = 0, const char *name = 0);
-    TaskContainer(Startup::Ptr, PixmapList&, TaskBar*, TaskBarSettings* settingsObject,
-                  TQWidget *parent = 0, const char *name = 0);
+    TaskContainer(Task::Ptr, TaskBar*, TaskBarSettings* settingsObject, TaskBarSettings* globalSettingsObject, TQWidget *parent = 0, const char *name = 0);
+    TaskContainer(Startup::Ptr, PixmapList&, TaskBar*, TaskBarSettings* settingsObject, TaskBarSettings* globalSettingsObject, TQWidget *parent = 0, const char *name = 0);
     virtual ~TaskContainer();
 
     void setArrowType( TQt::ArrowType at );
@@ -151,6 +150,7 @@ private:
     enum                        { ATTENTION_BLINK_TIMEOUT = 4 };
     TQPoint                     m_dragStartPos;
     TaskBarSettings*            m_settingsObject;
+    TaskBarSettings*            m_globalSettingsObject;
 };
 
 #endif

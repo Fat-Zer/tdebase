@@ -44,7 +44,7 @@ class TaskBar : public Panner
     Q_OBJECT
 
 public:
-    TaskBar( TaskBarSettings* settingsObject, TQWidget *parent = 0, const char *name = 0 );
+    TaskBar( TaskBarSettings* settingsObject, TaskBarSettings* globalSettingsObject, TQWidget *parent = 0, const char *name = 0 );
     ~TaskBar();
 
     TQSize sizeHint() const;
@@ -62,7 +62,7 @@ public:
     bool showAllWindows() const { return m_showAllWindows; }
 
     TQImage* blendGradient(const TQSize& size);
-    
+
     KTextShadowEngine *textShadowEngine();
 
 public slots:
@@ -133,6 +133,7 @@ private:
     TQTimer			m_relayoutTimer;
     TQImage			m_blendGradient;
     TaskBarSettings*		m_settingsObject;
+    TaskBarSettings*		m_globalSettingsObject;
 };
 
 #endif

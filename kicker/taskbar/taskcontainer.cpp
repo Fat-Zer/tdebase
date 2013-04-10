@@ -61,6 +61,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "taskcontainer.h"
 #include "taskcontainer.moc"
 
+#define READ_MERGED_TASBKAR_SETTING(x) ((m_settingsObject->useGlobalSettings())?m_globalSettingsObject->x():m_settingsObject->x())
+#define READ_MERGED_TASBKAR_ACTION(x) ((m_settingsObject->useGlobalSettings())?m_globalSettingsObject->action(x):m_settingsObject->action(x))
+
 static Bool netwm_atoms_created = False;
 static Atom net_wm_pid = 0;
 
@@ -112,8 +115,7 @@ bool is_process_resumable(pid_t pid) {
 	}
 }
 
-TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar, TaskBarSettings* settingsObject,
-                             TQWidget *parent, const char *name)
+TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar, TaskBarSettings* settingsObject, TaskBarSettings* globalSettingsObject, TQWidget *parent, const char *name)
     : TQToolButton(parent, name),
       animationTimer(0, "TaskContainer::animationTimer"),
       dragSwitchTimer(0, "TaskContainer::dragSwitchTimer"),
@@ -130,7 +132,8 @@ TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar, TaskBarSettings* sett
       aboutToActivate(false),
       m_mouseOver(false),
       m_paintEventCompression(false),
-      m_settingsObject(settingsObject)
+      m_settingsObject(settingsObject),
+      m_globalSettingsObject(globalSettingsObject)
 {
     init();
     setAcceptDrops(true); // Always enabled to activate task during drag&drop.
@@ -144,8 +147,7 @@ TaskContainer::TaskContainer(Task::Ptr task, TaskBar* bar, TaskBarSettings* sett
     dragSwitchTimer.start(0, true);
 }
 
-TaskContainer::TaskContainer(Startup::Ptr startup, PixmapList& startupFrames,
-                             TaskBar* bar, TaskBarSettings* settingsObject, TQWidget *parent, const char *name)
+TaskContainer::TaskContainer(Startup::Ptr startup, PixmapList& startupFrames, TaskBar* bar, TaskBarSettings* settingsObject, TaskBarSettings* globalSettingsObject, TQWidget *parent, const char *name)
     : TQToolButton(parent, name),
       animationTimer(0, "TaskContainer::animationTimer"),
       dragSwitchTimer(0, "TaskContainer::dragSwitchTimer"),
@@ -163,7 +165,8 @@ TaskContainer::TaskContainer(Startup::Ptr startup, PixmapList& startupFrames,
       aboutToActivate(false),
       m_mouseOver(false),
       m_paintEventCompression(false),
-      m_settingsObject(settingsObject)
+      m_settingsObject(settingsObject),
+      m_globalSettingsObject(globalSettingsObject)
 {
     init();
     setEnabled(false);
@@ -180,6 +183,10 @@ void TaskContainer::init()
     if (m_settingsObject)
     {
         m_settingsObject->readConfig();
+    }
+    if (m_globalSettingsObject)
+    {
+        m_globalSettingsObject->readConfig();
     }
 
     if (!netwm_atoms_created) create_atoms(TQPaintDevice::x11AppDisplay());
@@ -356,11 +363,11 @@ void TaskContainer::checkAttention(const Task::Ptr t)
 void TaskContainer::attentionTimerFired()
 {
     assert( attentionState != -1 );
-    if (attentionState < m_settingsObject->attentionBlinkIterations()*2)
+    if (attentionState < READ_MERGED_TASBKAR_SETTING(attentionBlinkIterations)*2)
     {
         ++attentionState;
     }
-    else if (m_settingsObject->attentionBlinkIterations() < 1000)
+    else if (READ_MERGED_TASBKAR_SETTING(attentionBlinkIterations) < 1000)
     {
         attentionTimer.stop();
     }
@@ -571,12 +578,12 @@ void TaskContainer::drawButton(TQPainter *p)
     TQPixmap *pm((TQPixmap*)p->device());
     TQPixmap pixmap; // icon
     Task::Ptr task = 0;
-    bool iconified = !m_settingsObject->showOnlyIconified();
-    bool halo = m_settingsObject->haloText();
-    bool alwaysDrawButtons = m_settingsObject->drawButtons();
+    bool iconified = !READ_MERGED_TASBKAR_SETTING(showOnlyIconified);
+    bool halo = READ_MERGED_TASBKAR_SETTING(haloText);
+    bool alwaysDrawButtons = READ_MERGED_TASBKAR_SETTING(drawButtons);
     bool drawButton = alwaysDrawButtons ||
                       (m_mouseOver && !halo && isEnabled() &&
-                       m_settingsObject->showButtonOnHover());
+                       READ_MERGED_TASBKAR_SETTING(showButtonOnHover));
     TQFont font(TDEGlobalSettings::taskbarFont());
 
     // draw sunken if we contain the active task
@@ -598,7 +605,7 @@ void TaskContainer::drawButton(TQPainter *p)
 
         if (task->demandsAttention())
         {
-            demandsAttention = attentionState == m_settingsObject->attentionBlinkIterations() ||
+            demandsAttention = attentionState == READ_MERGED_TASBKAR_SETTING(attentionBlinkIterations) ||
                                attentionState % 2 == 0;
         }
     }
@@ -607,12 +614,12 @@ void TaskContainer::drawButton(TQPainter *p)
 
     TQColorGroup colors = palette().active();
     
-    if (m_settingsObject->useCustomColors())
+    if (READ_MERGED_TASBKAR_SETTING(useCustomColors))
     {
-        colors.setColor( TQColorGroup::Button, m_settingsObject->taskBackgroundColor());
-        colors.setColor( TQColorGroup::Background, m_settingsObject->taskBackgroundColor() );
-        colors.setColor( TQColorGroup::ButtonText, m_settingsObject->inactiveTaskTextColor() );
-        colors.setColor( TQColorGroup::Text, m_settingsObject->inactiveTaskTextColor() );
+        colors.setColor( TQColorGroup::Button, READ_MERGED_TASBKAR_SETTING(taskBackgroundColor));
+        colors.setColor( TQColorGroup::Background, READ_MERGED_TASBKAR_SETTING(taskBackgroundColor) );
+        colors.setColor( TQColorGroup::ButtonText, READ_MERGED_TASBKAR_SETTING(inactiveTaskTextColor) );
+        colors.setColor( TQColorGroup::Text, READ_MERGED_TASBKAR_SETTING(inactiveTaskTextColor) );
     }
     
     if (demandsAttention)
@@ -661,7 +668,7 @@ void TaskContainer::drawButton(TQPainter *p)
     // draw button background
     if (drawButton)
     {
-        if (m_settingsObject->drawButtons() && KickerSettings::showDeepButtons()) {
+        if (READ_MERGED_TASBKAR_SETTING(drawButtons) && KickerSettings::showDeepButtons()) {
             style().tqdrawPrimitive(TQStyle::PE_ButtonBevel, p,
                               TQRect(1, 1, width()-3, height()-2),
                               colors, sunken ? TQStyle::Style_On : TQStyle::Style_Raised);
@@ -760,9 +767,9 @@ void TaskContainer::drawButton(TQPainter *p)
         }
         else // hack for the dotNET style and others
         {
-            if (m_settingsObject->useCustomColors())
+            if (READ_MERGED_TASBKAR_SETTING(useCustomColors))
             {
-                textPen = TQPen(m_settingsObject->activeTaskTextColor());
+                textPen = TQPen(READ_MERGED_TASBKAR_SETTING(activeTaskTextColor));
             }
             else
             {
@@ -770,7 +777,7 @@ void TaskContainer::drawButton(TQPainter *p)
             }
         }
 
-        int availableWidth = width() - (br.x() * 2) - textPos - 2 - (m_settingsObject->drawButtons() && KickerSettings::showDeepButtons())?2:0;
+        int availableWidth = width() - (br.x() * 2) - textPos - 2 - (READ_MERGED_TASBKAR_SETTING(drawButtons) && KickerSettings::showDeepButtons())?2:0;
         if (m_filteredTasks.count() > 1)
         {
             availableWidth -= 8;
@@ -846,7 +853,7 @@ void TaskContainer::drawButton(TQPainter *p)
     }
 
     // draw popup arrow
-    if ((m_filteredTasks.count() > 1) && (!(m_settingsObject->drawButtons() && KickerSettings::showDeepButtons())))
+    if ((m_filteredTasks.count() > 1) && (!(READ_MERGED_TASBKAR_SETTING(drawButtons) && KickerSettings::showDeepButtons())))
     {
         TQStyle::PrimitiveElement e = TQStyle::PE_ArrowLeft;
 
@@ -989,14 +996,14 @@ void TaskContainer::mousePressEvent( TQMouseEvent* e )
     switch (e->button())
     {
         case Qt::LeftButton:
-            buttonAction = m_settingsObject->action(m_settingsObject->LeftButton);
+            buttonAction = READ_MERGED_TASBKAR_ACTION(m_settingsObject->LeftButton);
             break;
         case Qt::MidButton:
-            buttonAction = m_settingsObject->action(m_settingsObject->MiddleButton);
+            buttonAction = READ_MERGED_TASBKAR_ACTION(m_settingsObject->MiddleButton);
             break;
         case Qt::RightButton:
         default:
-            buttonAction = m_settingsObject->action(m_settingsObject->RightButton);
+            buttonAction = READ_MERGED_TASBKAR_ACTION(m_settingsObject->RightButton);
             break;
     }
 
@@ -1012,7 +1019,7 @@ void TaskContainer::mouseReleaseEvent(TQMouseEvent *e)
 {
     m_dragStartPos = TQPoint();
 
-    if (!m_settingsObject->drawButtons())
+    if (!READ_MERGED_TASBKAR_SETTING(drawButtons))
     {
         setDown(false);
     }
@@ -1030,14 +1037,14 @@ void TaskContainer::mouseReleaseEvent(TQMouseEvent *e)
     switch (e->button())
     {
         case Qt::LeftButton:
-            buttonAction = m_settingsObject->action(m_settingsObject->LeftButton);
+            buttonAction = READ_MERGED_TASBKAR_ACTION(m_settingsObject->LeftButton);
             break;
         case Qt::MidButton:
-            buttonAction = m_settingsObject->action(m_settingsObject->MiddleButton);
+            buttonAction = READ_MERGED_TASBKAR_ACTION(m_settingsObject->MiddleButton);
             break;
         case Qt::RightButton:
         default:
-            buttonAction = m_settingsObject->action(m_settingsObject->RightButton);
+            buttonAction = READ_MERGED_TASBKAR_ACTION(m_settingsObject->RightButton);
             break;
     }
 
@@ -1547,7 +1554,7 @@ void TaskContainer::updateFilteredTaskList()
     {
         Task::Ptr t = *it;
         if ((taskBar->showAllWindows() || t->isOnCurrentDesktop()) &&
-            (!m_settingsObject->showOnlyIconified() || t->isIconified()))
+            (!READ_MERGED_TASBKAR_SETTING(showOnlyIconified) || t->isIconified()))
         {
             pid_t pid = 0;
 #ifdef Q_WS_X11
@@ -1568,15 +1575,15 @@ void TaskContainer::updateFilteredTaskList()
             if (pid < 0) {
                 m_filteredTasks.append(t);
             }
-            else if (m_settingsObject->showTaskStates() != m_settingsObject->ShowAll) {
+            else if (READ_MERGED_TASBKAR_SETTING(showTaskStates) != m_settingsObject->ShowAll) {
                 if (is_process_resumable(pid)) {
-                    if (m_settingsObject->showTaskStates() == m_settingsObject->ShowAll) {
+                    if (READ_MERGED_TASBKAR_SETTING(showTaskStates) == m_settingsObject->ShowAll) {
                         m_filteredTasks.append(t);
                     }
-                    else if (m_settingsObject->showTaskStates() == m_settingsObject->ShowStopped) {
+                    else if (READ_MERGED_TASBKAR_SETTING(showTaskStates) == m_settingsObject->ShowStopped) {
                         m_filteredTasks.append(t);
                     }
-                    else if (m_settingsObject->showTaskStates() == m_settingsObject->ShowRunning) {
+                    else if (READ_MERGED_TASBKAR_SETTING(showTaskStates) == m_settingsObject->ShowRunning) {
                         t->publishIconGeometry( TQRect());
                     }
                     else {
@@ -1584,13 +1591,13 @@ void TaskContainer::updateFilteredTaskList()
                     }
                 }
                 else {
-                    if (m_settingsObject->showTaskStates() == m_settingsObject->ShowAll) {
+                    if (READ_MERGED_TASBKAR_SETTING(showTaskStates) == m_settingsObject->ShowAll) {
                         m_filteredTasks.append(t);
                     }
-                    else if (m_settingsObject->showTaskStates() == m_settingsObject->ShowStopped) {
+                    else if (READ_MERGED_TASBKAR_SETTING(showTaskStates) == m_settingsObject->ShowStopped) {
                         t->publishIconGeometry( TQRect());
                     }
-                    else if (m_settingsObject->showTaskStates() == m_settingsObject->ShowRunning) {
+                    else if (READ_MERGED_TASBKAR_SETTING(showTaskStates) == m_settingsObject->ShowRunning) {
                         m_filteredTasks.append(t);
                     }
                     else {
@@ -1677,12 +1684,12 @@ void TaskContainer::updateKickerTip(KickerTip::Data& data)
     
     if (m_filteredTasks.count() > 0)
     {
-        if (m_settingsObject->showThumbnails() &&
+        if (READ_MERGED_TASBKAR_SETTING(showThumbnails) &&
             m_filteredTasks.count() == 1)
         {
             Task::Ptr t = m_filteredTasks.first();
     
-            pixmap = t->thumbnail(m_settingsObject->thumbnailMaxDimension());
+            pixmap = t->thumbnail(READ_MERGED_TASBKAR_SETTING(thumbnailMaxDimension));
         }
     
         if (pixmap.isNull() && tasks.count())
@@ -1725,7 +1732,7 @@ void TaskContainer::updateKickerTip(KickerTip::Data& data)
             }
         }
     
-        if (m_settingsObject->showAllWindows() && KWin::numberOfDesktops() > 1)
+        if (READ_MERGED_TASBKAR_SETTING(showAllWindows) && KWin::numberOfDesktops() > 1)
         {
             if (desktopMap.isEmpty())
             {

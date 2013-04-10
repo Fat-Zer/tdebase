@@ -73,6 +73,7 @@ private:
     SimpleButton *               windowListButton;
     KWindowListMenu *            windowListMenu;
     TaskBarSettings *            settingsObject;
+    TaskBarSettings *            globalSettingsObject;
 };
 
 #endif

@@ -66,7 +66,8 @@ Kicker::Kicker()
       keys(0),
       m_twinModule(0),
       m_configDialog(0),
-      m_canAddContainers(true)
+      m_canAddContainers(true),
+      m_reloadingConfigDialog(false)
 {
     // initialize the configuration object
     KickerSettings::instance(instanceName() + "rc");
@@ -367,7 +368,7 @@ void Kicker::showConfig(const TQString& configPath, const TQString& configFile, 
     m_configDialog->raise();
     if (page > -1)
     {
-        if (configFile == "")
+        if ((configFile == "") && (page != 4))
         {
             m_configDialog->showPage(0);
         }
@@ -380,6 +381,19 @@ void Kicker::showConfig(const TQString& configPath, const TQString& configFile, 
 void Kicker::showTaskBarConfig()
 {
     showConfig(TQString(), TQString(), 4);
+}
+
+void Kicker::hideTaskBarConfig()
+{
+    if (m_configDialog) {
+        m_configDialog->close();
+    }
+}
+
+void Kicker::reshowTaskBarConfig()
+{
+    m_reloadingConfigDialog = true;
+    hideTaskBarConfig();
 }
 
 void Kicker::showTaskBarConfig(const TQString& configFile)
@@ -396,6 +410,11 @@ void Kicker::configDialogFinished()
 {
     m_configDialog->delayedDestruct();
     m_configDialog = 0;
+    if (m_reloadingConfigDialog) {
+        TQByteArray data;
+        m_reloadingConfigDialog = false;
+        kapp->dcopClient()->send("kicker", "kicker", "showTaskBarConfig()", data);
+    }
 }
 
 void Kicker::slotDesktopResized()

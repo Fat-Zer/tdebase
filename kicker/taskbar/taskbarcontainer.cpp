@@ -46,6 +46,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #define GLOBAL_TASKBAR_CONFIG_FILE_NAME "ktaskbarrc"
 
+#define READ_MERGED_TASBKAR_SETTING(x) ((settingsObject->useGlobalSettings())?globalSettingsObject->x():settingsObject->x())
+
 TaskBarContainer::TaskBarContainer( bool enableFrame, TQString configFileOverride, TQWidget *parent, const char *name )
     : TQFrame(parent, name),
       configFile(configFileOverride),
@@ -53,7 +55,8 @@ TaskBarContainer::TaskBarContainer( bool enableFrame, TQString configFileOverrid
       showWindowListButton( true ),
       windowListButton(0),
       windowListMenu(0),
-      settingsObject(NULL)
+      settingsObject(NULL),
+      globalSettingsObject(NULL)
 {
     if (configFile == "")
     {
@@ -65,9 +68,11 @@ TaskBarContainer::TaskBarContainer( bool enableFrame, TQString configFileOverrid
         TDEConfig globalConfig(GLOBAL_TASKBAR_CONFIG_FILE_NAME, TRUE, TRUE);
         TDEConfig localConfig(configFile);
         globalConfig.copyTo(configFile, &localConfig);
+        localConfig.writeEntry("UseGlobalSettings", TRUE);
         localConfig.sync();
     }
     settingsObject = new TaskBarSettings(TDESharedConfig::openConfig(configFile));
+    globalSettingsObject = new TaskBarSettings(TDESharedConfig::openConfig(GLOBAL_TASKBAR_CONFIG_FILE_NAME));
 
     setBackgroundOrigin( AncestorOrigin );
 
@@ -89,7 +94,7 @@ TaskBarContainer::TaskBarContainer( bool enableFrame, TQString configFileOverrid
     layout->setMargin( margin );
 
     // scrollable taskbar
-    taskBar = new TaskBar(settingsObject, this);
+    taskBar = new TaskBar(settingsObject, globalSettingsObject, this);
     layout->addWidget( taskBar );
 
     connect( taskBar, TQT_SIGNAL( containerCountChanged() ), TQT_SIGNAL( containerCountChanged() ) );
@@ -107,12 +112,13 @@ TaskBarContainer::~TaskBarContainer()
 {
     if (windowListMenu) delete windowListMenu;
     if (settingsObject) delete settingsObject;
+    if (globalSettingsObject) delete globalSettingsObject;
 }
 
 void TaskBarContainer::configure()
 {
-    setFont(settingsObject->taskbarFont());
-    showWindowListButton = settingsObject->showWindowListBtn();
+    setFont(READ_MERGED_TASBKAR_SETTING(taskbarFont));
+    showWindowListButton = READ_MERGED_TASBKAR_SETTING(showWindowListBtn);
 
     if (!showWindowListButton)
     {
@@ -170,6 +176,7 @@ void TaskBarContainer::configChanged()
     // to change/fix it if/when it changes) without calling
     // configure() twice on taskbar on start up
     settingsObject->readConfig();
+    globalSettingsObject->readConfig();
 
     configure();
     taskBar->configure();

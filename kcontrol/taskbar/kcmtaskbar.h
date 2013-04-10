@@ -72,6 +72,8 @@ protected slots:
 
 private slots:
     void slotReloadConfigurationFromGlobals();
+    void slotEditGlobalConfiguration();
+    void processLockouts();
 
 private:
     TaskbarAppearance::List m_appearances;
@@ -85,6 +87,7 @@ private:
     TaskbarConfigUI *m_widget;
     TQString m_configFileName;
     TaskBarSettings* m_settingsObject;
+    bool m_isGlobalConfig;
 };
 
 #endif
