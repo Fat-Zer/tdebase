@@ -284,7 +284,7 @@ void TaskbarConfig::processLockouts()
 			m_widget->taskbarGroup->hide();
 			m_widget->actionsGroup->hide();
 			m_widget->globalConfigReload->hide();
-			m_widget->globalConfigEdit->hide();
+			m_widget->globalConfigEdit->show();
 		}
 		else {
 			m_widget->taskbarGroup->show();
@@ -293,7 +293,7 @@ void TaskbarConfig::processLockouts()
 			// Disable this feature until a method can be found to force the TDECModule to reload its settings from disk after the global settings have been copied!
 			//m_widget->globalConfigReload->show();
 			m_widget->globalConfigReload->hide();
-			m_widget->globalConfigEdit->show();
+			m_widget->globalConfigEdit->hide();
 		}
 	}
 }
