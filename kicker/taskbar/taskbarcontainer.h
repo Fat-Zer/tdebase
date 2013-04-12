@@ -52,6 +52,11 @@ public:
     TQSize sizeHint( KPanelExtension::Position, TQSize maxSize ) const;
     void setBackground();
 
+protected:
+    void dragEnterEvent(TQDragEnterEvent*);
+    void dragLeaveEvent(TQDragLeaveEvent*);
+    void dropEvent(TQDropEvent*);
+
 k_dcop:
     void configChanged();
 

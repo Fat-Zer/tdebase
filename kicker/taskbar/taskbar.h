@@ -65,6 +65,8 @@ public:
 
     KTextShadowEngine *textShadowEngine();
 
+    int taskMoveHandler(const TQPoint &pos, Task::List taskList);
+
 public slots:
     void configure();
     void setBackground();

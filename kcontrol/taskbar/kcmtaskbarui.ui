@@ -130,6 +130,20 @@ By default this option is selected.</string>
 By default, this option is selected and all windows are shown.</string>
                     </property>
                 </widget>
+                <widget class="TQCheckBox" row="8" column="0" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>kcfg_AllowDragAndDropReArrange</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Allow taskbar items to be rearranged using drag and drop</string>
+                    </property>
+                    <property name="checked">
+                        <bool>true</bool>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Turning this option on will allow tasks on the taskbar to be manually rearranged using drag and drop.</string>
+                    </property>
+                </widget>
                 <widget class="TQCheckBox" row="7" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>kcfg_ShowWindowListBtn</cstring>
@@ -144,7 +158,7 @@ By default, this option is selected and all windows are shown.</string>
                         <string>Selecting this option causes the taskbar to display a button that, when clicked, shows a list of all windows in a popup menu.</string>
                     </property>
                 </widget>
-                <widget class="TQComboBox" row="8" column="2">
+                <widget class="TQComboBox" row="9" column="2">
                     <property name="name">
                         <cstring>kcfg_GroupTasks</cstring>
                     </property>
@@ -164,7 +178,7 @@ You can set the taskbar to &lt;strong&gt;Never&lt;/strong&gt; group windows, to 
 By default the taskbar groups windows when it is full.</string>
                     </property>
                 </widget>
-                <widget class="TQLabel" row="8" column="0" rowspan="1" colspan="2">
+                <widget class="TQLabel" row="9" column="0" rowspan="1" colspan="2">
                     <property name="name">
 			    <cstring>groupTasksLabel</cstring>
                     </property>
@@ -175,7 +189,7 @@ By default the taskbar groups windows when it is full.</string>
                         <cstring>kcfg_ShowTaskStates</cstring>
                     </property>
                 </widget>
-                <widget class="TQComboBox" row="9" column="2">
+                <widget class="TQComboBox" row="10" column="2">
                     <property name="name">
                         <cstring>kcfg_ShowTaskStates</cstring>
                     </property>
@@ -191,7 +205,7 @@ By default the taskbar groups windows when it is full.</string>
 			    <string>The taskbar can show and/or hide tasks based on their current process state.  Select &lt;em&gt;Any&lt;/em&gt; to show all tasks regardless of current state.</string>
                     </property>
                 </widget>
-                <widget class="TQLabel" row="9" column="0" rowspan="1" colspan="2">
+                <widget class="TQLabel" row="10" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>showTaskStatesLabel</cstring>
                     </property>
@@ -247,12 +261,12 @@ By default this option is selected.</string>
 By default, this option is selected and all windows are shown.</string>
                     </property>
                 </widget>
-                <widget class="TQComboBox" row="10" column="2">
+                <widget class="TQComboBox" row="11" column="2">
                     <property name="name">
                         <cstring>appearance</cstring>
                     </property>
                 </widget>
-                <widget class="TQLabel" row="10" column="0" rowspan="1" colspan="2">
+                <widget class="TQLabel" row="11" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>textLabel1</cstring>
                     </property>
@@ -263,7 +277,7 @@ By default, this option is selected and all windows are shown.</string>
                         <cstring>appearance</cstring>
                     </property>
                 </widget>
-                <widget class="TQCheckBox" row="11" column="0" rowspan="1" colspan="2">
+                <widget class="TQCheckBox" row="12" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_UseCustomColors</cstring>
                     </property>
@@ -277,7 +291,7 @@ By default, this option is selected and all windows are shown.</string>
                         <bool>true</bool>
                     </property>
                 </widget>
-                <widget class="TQLayoutWidget" row="12" column="0" rowspan="1" colspan="3">
+                <widget class="TQLayoutWidget" row="13" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>layout9</cstring>
                     </property>

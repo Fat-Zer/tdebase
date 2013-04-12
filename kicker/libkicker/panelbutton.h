@@ -205,6 +205,11 @@ public:
      */
     void updateKickerTip(KickerTip::Data& data);
 
+    /**
+     * @return true if the button should be centered in its parent container, false if not
+     */
+    bool centerButtonInContainer();
+
 signals:
     /**
      * Emitted when the button's icon is changed.
@@ -347,6 +352,11 @@ protected:
      */
     bool calculateIconSize();
 
+    /**
+     * @param center true if the button should be centered in its parent container, false if not
+     */
+    void setCenterButtonInContainer(bool center);
+
     bool m_valid;
     TQPixmap m_icon;
 
@@ -382,6 +392,7 @@ private:
     bool m_highlight;
     bool m_changeCursorOverItem;
     bool m_hasAcceptedDrag;
+    bool m_centerInContainer;
     TQColor m_textColor;
     TQColor m_tileColor;
     TQString m_buttonText;

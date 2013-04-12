@@ -41,6 +41,18 @@ public:
 
     virtual void properties();
 
+    /**
+     * Reimplement this to give Kicker a hint for the width of the button
+     * given a certain height.
+     */
+    virtual int widthForHeight(int height) const;
+
+    /**
+     * Reimplement this to give Kicker a hint for the height of the button
+     * given a certain width.
+     */
+    virtual int heightForWidth(int width) const;
+
 protected:
     virtual TQString tileName() { return "KMenu"; }
     virtual void initPopup();

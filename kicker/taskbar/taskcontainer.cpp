@@ -1393,10 +1393,17 @@ void TaskContainer::publishIconGeometry( TQPoint global )
 
 void TaskContainer::dragEnterEvent( TQDragEnterEvent* e )
 {
-    // ignore task drags and applet drags
-    if (TaskDrag::canDecode(e) || PanelDrag::canDecode(e))
+    // ignore applet drags
+    if (PanelDrag::canDecode(e))
     {
         return;
+    }
+
+    if (TaskDrag::canDecode(e) && READ_MERGED_TASBKAR_SETTING(allowDragAndDropReArrange))
+    {
+        if (!READ_MERGED_TASBKAR_SETTING(sortByApp)) {
+            e->accept();
+        }
     }
 
     // if a dragitem is held for over a taskbutton for two seconds,
@@ -1413,6 +1420,27 @@ void TaskContainer::dragEnterEvent( TQDragEnterEvent* e )
     }
 
     TQToolButton::dragEnterEvent( e );
+}
+
+void TaskContainer::dropEvent( TQDropEvent* e )
+{
+    // Ignore all drops except tasks
+    if (!TaskDrag::canDecode(e)) {
+        return;
+    }
+
+    if (TaskDrag::canDecode(e) && READ_MERGED_TASBKAR_SETTING(allowDragAndDropReArrange))
+    {
+        if (!READ_MERGED_TASBKAR_SETTING(sortByApp)) {
+            if (taskBar->taskMoveHandler(TQWidget::mapTo(taskBar, e->pos()), TaskDrag::decode(e))) {
+                e->accept();
+            }
+        }
+    }
+
+    dragSwitchTimer.stop();
+
+    TQToolButton::dropEvent( e );
 }
 
 void TaskContainer::dragLeaveEvent( TQDragLeaveEvent* e )

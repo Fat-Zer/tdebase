@@ -1295,3 +1295,72 @@ void TaskBar::sortContainersByDesktop(TaskContainer::List& list)
     }
 }
 
+int TaskBar::taskMoveHandler(const TQPoint &pos, Task::List taskList) {
+    TaskContainer* movingContainer = NULL;
+    TaskContainer* destContainer = NULL;
+    bool movingRight = true;
+
+    TaskContainer::Iterator it = containers.begin();
+    for (; it != containers.end(); ++it)
+    {
+        TaskContainer* c = *it;
+        if (c->taskList() == taskList) {
+            movingContainer = c;
+            break;
+        }
+    }
+
+    if (movingContainer) {
+        // Find the best place for the container to go...
+        it = containers.begin();
+        for (; it != containers.end(); ++it)
+        {
+            TaskContainer* c = *it;
+            TQPoint containerPos = c->pos();
+            TQSize containerSize = c->size();
+            TQRect containerRect(containerPos.x(), containerPos.y(), containerSize.width(), containerSize.height());
+            if (containerRect.contains(pos)) {
+                destContainer = c;
+                // Figure out if the mobile container is moving towards the end of the container list (i.e. right or down)
+                for (; it != containers.end(); ++it)
+                {
+                    if (movingContainer == (*it)) {
+                        movingRight = false;
+                    }
+                }
+                break;
+            }
+        }
+
+        if (destContainer == movingContainer) {
+            return false;
+        }
+
+        removeChild(movingContainer);
+        containers.remove(movingContainer);
+
+        if (destContainer) {
+            it = containers.find(destContainer);
+            if ((it != containers.end()) && (movingRight)) {
+                it++;
+            }
+            if (it != containers.end()) {
+                containers.insert(it, movingContainer);
+            }
+            else {
+                containers.append(movingContainer);
+            }
+        }
+        else {
+            containers.append(movingContainer);
+        }
+
+        addChild(movingContainer);
+        reLayoutEventually();
+        emit containerCountChanged();
+
+        return true;
+    }
+
+    return false;
+}

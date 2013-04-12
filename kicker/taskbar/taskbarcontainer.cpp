@@ -74,6 +74,8 @@ TaskBarContainer::TaskBarContainer( bool enableFrame, TQString configFileOverrid
     settingsObject = new TaskBarSettings(TDESharedConfig::openConfig(configFile));
     globalSettingsObject = new TaskBarSettings(TDESharedConfig::openConfig(GLOBAL_TASKBAR_CONFIG_FILE_NAME));
 
+    setAcceptDrops(true); // Always enabled to activate task during drag&drop.
+
     setBackgroundOrigin( AncestorOrigin );
 
     uint margin;
@@ -326,4 +328,43 @@ TQSize TaskBarContainer::sizeHint( KPanelExtension::Position p, TQSize maxSize) 
 void TaskBarContainer::setBackground()
 {
     taskBar->setBackground();
+}
+
+void TaskBarContainer::dragEnterEvent( TQDragEnterEvent* e )
+{
+    // ignore all drags other than tasks
+    if (!TaskDrag::canDecode(e))
+    {
+        return;
+    }
+
+    if (TaskDrag::canDecode(e) && READ_MERGED_TASBKAR_SETTING(allowDragAndDropReArrange))
+    {
+        if (!READ_MERGED_TASBKAR_SETTING(sortByApp)) {
+            e->accept();
+        }
+    }
+}
+
+void TaskBarContainer::dragLeaveEvent( TQDragLeaveEvent* e )
+{
+    TQFrame::dragLeaveEvent( e );
+}
+
+void TaskBarContainer::dropEvent( TQDropEvent* e )
+{
+    // ignore all drags other than tasks
+    if (!TaskDrag::canDecode(e))
+    {
+        return;
+    }
+
+    if (TaskDrag::canDecode(e) && READ_MERGED_TASBKAR_SETTING(allowDragAndDropReArrange))
+    {
+        if (!READ_MERGED_TASBKAR_SETTING(sortByApp)) {
+            if (taskBar->taskMoveHandler(taskBar->mapFrom(this, e->pos()), TaskDrag::decode(e))) {
+                e->accept();
+            }
+        }
+    }
 }

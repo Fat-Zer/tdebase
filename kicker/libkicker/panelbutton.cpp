@@ -70,6 +70,7 @@ PanelButton::PanelButton( TQWidget* parent, const char* name, bool forceStandard
       m_highlight(false),
       m_changeCursorOverItem(forceStandardCursor?false:true),
       m_hasAcceptedDrag(false),
+      m_centerInContainer(true),
       m_arrowDirection(KPanelExtension::Bottom),
       m_popupDirection(KPanelApplet::Up),
       m_iconAlignment(AlignCenter),
@@ -938,12 +939,21 @@ bool PanelButton::calculateIconSize()
     return false;
 }
 
+void PanelButton::setCenterButtonInContainer(bool center) {
+    m_centerInContainer = center;
+}
+
 void PanelButton::updateKickerTip(KickerTip::Data& data)
 {
     data.message = TQStyleSheet::escape(title());
     data.subtext = TQStyleSheet::escape(TQToolTip::textFor(this));
     data.icon = zoomIcon();
     data.direction = popupDirection();
+}
+
+bool PanelButton::centerButtonInContainer()
+{
+    return m_centerInContainer;
 }
 
 //

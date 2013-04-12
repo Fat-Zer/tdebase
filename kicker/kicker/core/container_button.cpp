@@ -145,12 +145,17 @@ void ButtonContainer::embedButton(PanelButton* b)
 {
     if (!b) return;
 
-    delete _layout;
-    _layout = new TQVBoxLayout(this);
-    _button = b;
+    if (_layout) delete _layout;
 
+    _button = b;
     _button->installEventFilter(this);
-    _layout->add(_button);
+
+    if (b->centerButtonInContainer()) {
+        TQVBoxLayout* vbox = new TQVBoxLayout(this);
+        vbox->addWidget(_button);
+        _layout = vbox;
+    }
+
     connect(_button, TQT_SIGNAL(requestSave()), TQT_SIGNAL(requestSave()));
     connect(_button, TQT_SIGNAL(hideme(bool)), TQT_SLOT(hideRequested(bool)));
     connect(_button, TQT_SIGNAL(removeme()), TQT_SLOT(removeRequested()));

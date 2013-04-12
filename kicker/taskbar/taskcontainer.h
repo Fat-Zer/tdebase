@@ -87,9 +87,11 @@ public:
     void updateKickerTip(KickerTip::Data&);
 
     void finish();
-    
+
     void setBackground();
-    
+
+    Task::List taskList() const { return tasks; }
+
 public slots:
     void updateNow();
 
@@ -105,6 +107,7 @@ protected:
     void mouseMoveEvent(TQMouseEvent*);
     void dragEnterEvent(TQDragEnterEvent*);
     void dragLeaveEvent(TQDragLeaveEvent*);
+    void dropEvent(TQDropEvent*);
     void enterEvent(TQEvent*);
     void leaveEvent(TQEvent*);
     bool startDrag(const TQPoint& pos);
