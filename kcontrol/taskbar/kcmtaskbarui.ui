@@ -81,14 +81,6 @@
 					<string>Edit global taskbar configuration</string>
 				</property>
 			</widget>
-      <widget class="TQLabel" row="2" column="0" rowspan="1" colspan="2">
-        <property name="name">
-          <cstring>globalConfigReminder</cstring>
-        </property>
-        <property name="text">
-          <string>&lt;b&gt;NOTE:&lt;/b&gt; Currently you are editing the taskbar configuration for &lt;b&gt;only&lt;/b&gt; this taskbar.</string>
-        </property>
-      </widget>
 		</grid>
 	</widget>
         <widget class="TQButtonGroup">
