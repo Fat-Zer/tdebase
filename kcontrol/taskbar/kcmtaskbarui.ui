@@ -70,7 +70,7 @@
 					<cstring>globalConfigReload</cstring>
 				</property>
 				<property name="text">
-					<string>Overwrite current configuration with the current global floating taskbar configuration</string>
+					<string>Overwrite current configuration with the current global taskbar configuration</string>
 				</property>
 			</widget>
 			<widget class="TQPushButton" row="3" column="0" rowspan="1" colspan="2">
@@ -78,9 +78,17 @@
 					<cstring>globalConfigEdit</cstring>
 				</property>
 				<property name="text">
-					<string>Edt global floating taskbar configuration</string>
+					<string>Edit global taskbar configuration</string>
 				</property>
 			</widget>
+      <widget class="TQLabel" row="2" column="0" rowspan="1" colspan="2">
+        <property name="name">
+          <cstring>globalConfigReminder</cstring>
+        </property>
+        <property name="text">
+          <string>&lt;b&gt;NOTE:&lt;/b&gt; Currently you are editing the taskbar configuration for &lt;b&gt;only&lt;/b&gt; this taskbar.</string>
+        </property>
+      </widget>
 		</grid>
 	</widget>
         <widget class="TQButtonGroup">

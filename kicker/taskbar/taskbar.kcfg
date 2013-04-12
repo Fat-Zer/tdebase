@@ -8,13 +8,13 @@
     <group name="General">
         <entry key="UseGlobalSettings" type="Bool" >
             <default>true</default>
-            <label>Use the global (floating) taskbar configuration</label>
-            <whatsthis>Turning this option off will cause the taskbar to ignore the global (floating) taskbar configuration, instead using a specific configuration for that particular taskbar.</whatsthis>
+            <label>Use the global taskbar configuration</label>
+            <whatsthis>Turning this option off will cause the taskbar to ignore the global taskbar configuration, instead using a specific configuration for that particular taskbar.</whatsthis>
         </entry>
         <entry key="ShowAllWindows" type="Bool" >
             <default>true</default>
             <label>Show windows from all desktops</label>
-            <whatsthis>Turning this option off will cause the taskbar to display <b>only</b> the windows on the current desktop. \n\nBy default, this option is selected and all windows are shown.</whatsthis>
+            <whatsthis>Turning this option off will cause the taskbar to display <b>only</b> the windows on the current desktop. By default, this option is selected and all windows are shown.</whatsthis>
         </entry>
         <entry key="CycleWheel" type="Bool" >
             <default>true</default>
@@ -24,7 +24,7 @@
         <entry key="ShowOnlyIconified" type="Bool" >
             <default>false</default>
             <label>Show only minimized windows</label>
-            <whatsthis>Select this option if you want the taskbar to display <b>only</b> minimized windows. \n\nBy default, this option is not selected and the taskbar will show all windows.</whatsthis>
+            <whatsthis>Select this option if you want the taskbar to display <b>only</b> minimized windows. By default, this option is not selected and the taskbar will show all windows.</whatsthis>
         </entry>
         <entry key="GroupTasks" type="Enum" >
             <choices>
@@ -40,7 +40,7 @@
             </choices>
             <default>GroupWhenFull</default>
             <label>Group similar tasks:</label>
-            <whatsthis>The taskbar can group similar windows into single buttons. When one of these window group buttons are clicked on a menu appears showing all the windows in that group. This can be especially useful with the <em>Show all windows</em> option.\n\nYou can set the taskbar to <strong>Never</strong> group windows, to <strong>Always</strong> group windows or to group windows only <strong>When the Taskbar is Full</strong>.\n\nBy default the taskbar groups windows when it is full.</whatsthis>
+            <whatsthis>The taskbar can group similar windows into single buttons. When one of these window group buttons are clicked on a menu appears showing all the windows in that group. This can be especially useful with the <em>Show all windows</em> option. You can set the taskbar to <strong>Never</strong> group windows, to <strong>Always</strong> group windows or to group windows only <strong>When the Taskbar is Full</strong>. By default the taskbar groups windows when it is full.</whatsthis>
         </entry>
         <entry key="ShowTaskStates" type="Enum" >
             <choices>
@@ -56,22 +56,22 @@
             </choices>
 	    <default>ShowAll</default>
             <label>Show tasks with state:</label>
-	    <whatsthis>The taskbar can show and/or hide tasks based on their current process state.  Select <em>Any</em> to show all tasks regardless of current state.</whatsthis>
+	    <whatsthis>The taskbar can show and/or hide tasks based on their current process state. Select <em>Any</em> to show all tasks regardless of current state.</whatsthis>
         </entry>
         <entry key="SortByDesktop" type="Bool" >
             <default>true</default>
             <label>Sort windows by desktop</label>
-            <whatsthis>Selecting this option causes the taskbar to show windows in order of the desktop they appear on.\n\nBy default this option is selected.</whatsthis>
+            <whatsthis>Selecting this option causes the taskbar to show windows in order of the desktop they appear on. By default this option is selected.</whatsthis>
         </entry>
         <entry key="SortByApp" type="Bool" >
             <default>true</default>
             <label>Sort windows by application</label>
-            <whatsthis>Selecting this option causes the taskbar to show windows ordered by application.\n\nBy default this option is selected.</whatsthis>
+            <whatsthis>Selecting this option causes the taskbar to show windows ordered by application. By default this option is selected.</whatsthis>
         </entry>
         <entry key="ShowIcon" type="Bool" >
             <default>true</default>
             <label>Show application icons</label>
-            <whatsthis>Select this option if you want window icons to appear along with their titles in the taskbar.\n\nBy default this option is selected.</whatsthis>
+            <whatsthis>Select this option if you want window icons to appear along with their titles in the taskbar. By default this option is selected.</whatsthis>
         </entry>
         <entry key="MaximumButtonWidth" type="Int" >
             <default>200</default>
@@ -88,7 +88,7 @@
         <entry key="ShowCurrentScreenOnly" type="Bool" >
             <default>false</default>
             <label>Show windows from all screens</label>
-            <whatsthis>Turning this option off will cause the taskbar to display <b>only</b> windows which are on the same Xinerama screen as the taskbar.\n\nBy default, this option is selected and all windows are shown.</whatsthis>
+            <whatsthis>Turning this option off will cause the taskbar to display <b>only</b> windows which are on the same Xinerama screen as the taskbar. By default, this option is selected and all windows are shown.</whatsthis>
         </entry>
         <entry key="taskbarFont" type="Font" >
             <default></default>
@@ -154,7 +154,7 @@
         <entry key="DrawButtons" type="Bool" >
             <default>false</default>
             <label>Draw taskbar entries "flat" and not as a button</label>
-            <whatsthis>Turning this option on will cause the taskbar to draw visible button frames for each entry in the taskbar. \n\nBy default, this option is off.</whatsthis>
+            <whatsthis>Turning this option on will cause the taskbar to draw visible button frames for each entry in the taskbar. By default, this option is off.</whatsthis>
         </entry>
         <entry key="HaloText" type="Bool" >
             <default>false</default>
