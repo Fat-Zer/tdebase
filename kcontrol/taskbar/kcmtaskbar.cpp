@@ -273,12 +273,14 @@ void TaskbarConfig::processLockouts()
 	if (m_isGlobalConfig)
 	{
 		m_widget->globalConfigWarning->show();
+		m_widget->localConfigWarning->hide();
 		m_widget->globalConfigReload->hide();
 		m_widget->globalConfigEdit->hide();
 		m_widget->kcfg_UseGlobalSettings->hide();
 	}
 	else {
 		m_widget->globalConfigWarning->hide();
+		m_widget->localConfigWarning->show();
 		m_widget->kcfg_UseGlobalSettings->show();
 		if (m_widget->kcfg_UseGlobalSettings->isChecked()) {
 			m_widget->taskbarGroup->hide();

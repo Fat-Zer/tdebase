@@ -40,10 +40,18 @@
 					<cstring>globalConfigWarning</cstring>
 				</property>
 				<property name="text">
-					<string>&lt;b&gt;NOTE: This module is currently editing the global floating taskbar configuration.&lt;/b&gt;&lt;br&gt;To change the configuration of a specific Kicker taskbar applet, please use the corresponding Configure Taskbar menu option.</string>
+					<string>&lt;b&gt;NOTE: Currently you are editing the global taskbar configuration.&lt;/b&gt;&lt;br&gt;To change the configuration of a specific taskbar (when using multiple taskbars), use the corresponding Configure Taskbar menu option, located in the taskbar handle popup menu.</string>
 				</property>
 			</widget>
-			<widget class="TQCheckBox" row="0" column="0" rowspan="1" colspan="2">
+			<widget class="TQLabel" row="0" column="0" rowspan="1" colspan="2">
+				<property name="name">
+					<cstring>localConfigWarning</cstring>
+				</property>
+				<property name="text">
+					<string>&lt;b&gt;NOTE:&lt;/b&gt; Currently you are editing the taskbar configuration for &lt;b&gt;only&lt;/b&gt; this taskbar.</string>
+				</property>
+			</widget>
+			<widget class="TQCheckBox" row="1" column="0" rowspan="1" colspan="2">
 				<property name="name">
 					<cstring>kcfg_UseGlobalSettings</cstring>
 				</property>
@@ -57,7 +65,7 @@
 					<string>Selecting this option causes the taskbar to use the global taskbar configuration.</string>
 				</property>
 			</widget>
-			<widget class="TQPushButton" row="1" column="0" rowspan="1" colspan="2">
+			<widget class="TQPushButton" row="2" column="0" rowspan="1" colspan="2">
 				<property name="name">
 					<cstring>globalConfigReload</cstring>
 				</property>
@@ -65,7 +73,7 @@
 					<string>Overwrite current configuration with the current global floating taskbar configuration</string>
 				</property>
 			</widget>
-			<widget class="TQPushButton" row="2" column="0" rowspan="1" colspan="2">
+			<widget class="TQPushButton" row="3" column="0" rowspan="1" colspan="2">
 				<property name="name">
 					<cstring>globalConfigEdit</cstring>
 				</property>
