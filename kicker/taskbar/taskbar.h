@@ -90,6 +90,7 @@ protected slots:
     void slotActivatePreviousTask();
     void slotSettingsChanged(int);
     void reLayout();
+    void reSort();
 
 protected:
     void reLayoutEventually();
@@ -130,6 +131,7 @@ private:
     TDEGlobalAccel*               keys;
     KTextShadowEngine*		m_textShadowEngine;
     bool			m_ignoreUpdates;
+    bool			m_sortByAppPrev;
     TQTimer			m_relayoutTimer;
     TQImage			m_blendGradient;
     TaskBarSettings*		m_settingsObject;
