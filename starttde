@@ -16,23 +16,43 @@ if [ -r $HOME/.xprofile ]; then
 fi
 
 # Some functions to parse and check path correctly ...
+# Usage: is_in_path PATH /usr/bin
 is_in_path() {
-  search="$1"; ifs="$IFS"; IFS=":"; set $PATH; IFS="$ifs"
+  var="$1"; search="$2";
+  if eval test -z \$$1; then return 1; fi
+  ifs="$IFS"; IFS=":"; eval set \$$var; IFS="$ifs"
   for i in $*; do
     [ "${i}" = "${search}" ] && return 0
   done
   return 1
 }
 
-# Usage: place_before_in_path /opt/trinity/games /usr/games
+# Usage: place_before_in_path PATH /opt/trinity/games /usr/games
 place_before_in_path() {
-  insert="$1"; before="$2"; ifs="$IFS"; IFS=":"; set $PATH; IFS="$ifs"
+  var="$1"; insert="$2";
+  if eval test -z \$$1; then
+    eval export $var=${insert}
+  else
+    before="$3"; ifs="$IFS"; IFS=":"; eval set \$$var; IFS="$ifs"
+    NPATH=""
+    for i in $*; do
+      [ "${i}" = "${before}" ] && NPATH="${NPATH}:${insert}"
+      NPATH="${NPATH}:${i}"
+    done
+    eval export $var=${NPATH#:}
+  fi
+}
+
+# Usage: remove_from_path PATH /opt/trinity/games
+remove_from_path() {
+  var="$1"; remove="$2";
+  if eval test -z \$$1; then return 1; fi
+  ifs="$IFS"; IFS=":"; eval set \$$var; IFS="$ifs"
   NPATH=""
   for i in $*; do
-    [ "${i}" = "${before}" ] && NPATH="${NPATH}:${insert}"
-    NPATH="${NPATH}:${i}"
+    [ "${i}" != "${remove}" ] && NPATH="${NPATH}:${i}"
   done
-  export PATH=${NPATH#:}
+  eval export $var=${NPATH#:}
 }
 
 echo "[starttde] Starting starttde." 1>&2
@@ -143,30 +163,30 @@ fi
 
 # Modify the following environment variables only as necessary.
 if [ -d $TDEDIR/games ]; then
-  if ! is_in_path "$TDEDIR/games" ; then
+  if ! is_in_path PATH "$TDEDIR/games" ; then
     # Respect the traditional path order. Don't blindly place $TDEDIR/games
     # first in the path. Only place $TDEDIR/games before /usr/games. If packagers
     # are adding $TDEDIR/games elsewhere, then they need to ensure the traditional
     # search patch is respected.
     # Is there a way we can check that $TDEDIR/games is always placed only just before
     # /usr/games in the search path?
-    if is_in_path "/usr/games"; then
-      place_before_in_path "$TDEDIR/games" "/usr/games"
+    if is_in_path PATH "/usr/games"; then
+      place_before_in_path PATH "$TDEDIR/games" "/usr/games"
     else
       export PATH=$TDEDIR/games:$PATH
     fi
   fi
 fi
 if [ -d $TDEDIR/bin ]; then
-  if ! is_in_path "$TDEDIR/bin" ]; then
+  if ! is_in_path PATH "$TDEDIR/bin" ]; then
     # Respect the traditional path order. Don't blindly place $TDEDIR/bin
     # first in the path. Only place $TDEDIR/bin before /usr/bin. This order is
     # consistent with tdelibs/tdesu/stub.cpp. If packagers are adding $TDEDIR/bin
     # elsewhere, then they need to ensure the traditional search patch is respected.
     # Is there a way we can check that $TDEDIR/bin is always placed only just before
     # /usr/bin in the search path?
-    if is_in_path "/usr/bin"; then
-      place_before_in_path "$TDEDIR/bin" "/usr/bin"
+    if is_in_path PATH "/usr/bin"; then
+      place_before_in_path PATH "$TDEDIR/bin" "/usr/bin"
     else
       export PATH=$TDEDIR/bin:$PATH
     fi
@@ -229,31 +249,33 @@ fi
 # set in $TDEDIRS are intended to override data files found in $TDEDIR. Those additional
 # directories should be placed before $TDEDIR and before /usr/share.
 if [ "$TDEDIR" != "/usr" ] && [ -d $TDEDIR/share ]; then
-  if [ "$XDG_DATA_DIRS" = "" ]; then
-    # Ensure the standard location of /usr/share is included.
-    XDG_DATA_DIRS=/usr/share
-  else
-    if [ "`echo $XDG_DATA_DIRS | grep \"/usr/share\"`" = "" ]; then
-      XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share
-    fi
+  # If '/usr/share' is not already here, we include it at the last position.
+  if ! is_in_path XDG_DATA_DIRS "/usr/share"; then
+    XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share
   fi
-  if [ "`echo $XDG_DATA_DIRS | grep \"$TDEDIR/share\"`" = "" ]; then
-    XDG_DATA_DIRS=$TDEDIR/share:$XDG_DATA_DIRS
-  fi
+
+  # Ensure that $TDEDIR/share is always before '/usr/share'.
+  remove_from_path XDG_DATA_DIRS $TDEDIR/share
+  place_before_in_path XDG_DATA_DIRS "$TDEDIR/share" "/usr/share"
+
+  # Adds supplementary directories from TDEDIRS, if any, before TDEDIR.
   if [ "$TDEDIRS" != "" ]; then
-    for i in `seq \`echo $TDEDIRS | awk -F : '{print NF}'\` -1 1`; do
-      if [ "`echo $XDG_DATA_DIRS | grep \"\`echo $TDEDIRS | cut -d: -f${i}\`\"`" = "" ]; then
-        XDG_DATA_DIRS=`echo $TDEDIRS | cut -d: -f${i}`/share:$XDG_DATA_DIRS
+    ifs="$IFS"; IFS=":"; set $TDEDIRS; IFS="$ifs"
+    for dir in $*; do
+      if ! is_in_path XDG_DATA_DIRS "$dir/share" && [ -d "$dir/share" ]; then
+        XDG_DATA_DIRS=$dir/share:$XDG_DATA_DIRS
       fi
     done
   fi
   export XDG_DATA_DIRS
 fi
 
+echo "[starttde] XDG_DATA_DIRS: $XDG_DATA_DIRS" 1>&2
+
 test -n "$TDEHOME" && tdehome=`echo "$TDEHOME" | sed "s,^~/,$HOME/,"`
 
 # Allow interested applications, such as the Plasma control wrapper,
-# to know that this is a Trinity desktop and not a TDE one.
+# to know that this is a Trinity desktop and not a KDE one.
 export DESKTOP_SESSION=trinity
 
 if [ -d "$tdehome" ]; then
