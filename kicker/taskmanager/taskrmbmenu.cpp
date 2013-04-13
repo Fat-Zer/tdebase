@@ -38,10 +38,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "taskrmbmenu.h"
 #include "taskrmbmenu.moc"
 
-TaskRMBMenu::TaskRMBMenu(const Task::List& theTasks, bool show, TQWidget *parent, const char *name)
+TaskRMBMenu::TaskRMBMenu(const Task::List& theTasks, bool show, TQPopupMenu* moveMenu, TQWidget *parent, const char *name)
 	: TQPopupMenu( parent, name )
 	, tasks( theTasks )
 	, showAll( show )
+	, taskMoveMenu( moveMenu )
 {
     assert(tasks.count() > 0);
     if (tasks.count() == 1)
@@ -57,6 +58,7 @@ TaskRMBMenu::TaskRMBMenu(const Task::List& theTasks, bool show, TQWidget *parent
 TaskRMBMenu::TaskRMBMenu(Task::Ptr task, bool show, TQWidget *parent, const char *name)
 	: TQPopupMenu( parent, name )
 	, showAll( show )
+	, taskMoveMenu( NULL )
 {
 	fillMenu(task);
 }
@@ -105,6 +107,13 @@ void TaskRMBMenu::fillMenu(Task::Ptr t)
     setItemEnabled(id, !checkActions || t->info().actionSupported(NET::ActionShade));
 
     insertSeparator();
+
+    if (taskMoveMenu) {
+        taskMoveMenu->reparent(this, taskMoveMenu->getWFlags(), taskMoveMenu->geometry().topLeft(), FALSE);
+        insertItem(i18n("Move Task Button"), taskMoveMenu);
+
+        insertSeparator();
+    }
 
     id = insertItem(SmallIcon("fileclose"), i18n("&Close"), t, TQT_SLOT(close()));
     setItemEnabled(id, !checkActions || t->info().actionSupported(NET::ActionClose));

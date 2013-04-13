@@ -70,7 +70,7 @@
 					<cstring>globalConfigReload</cstring>
 				</property>
 				<property name="text">
-					<string>Overwrite current configuration with the current global taskbar configuration</string>
+					<string>Overwrite current configuration with the current global floating taskbar configuration</string>
 				</property>
 			</widget>
 			<widget class="TQPushButton" row="3" column="0" rowspan="1" colspan="2">
@@ -78,7 +78,7 @@
 					<cstring>globalConfigEdit</cstring>
 				</property>
 				<property name="text">
-					<string>Edit global taskbar configuration</string>
+					<string>Edt global floating taskbar configuration</string>
 				</property>
 			</widget>
 		</grid>
@@ -130,7 +130,7 @@ By default this option is selected.</string>
 By default, this option is selected and all windows are shown.</string>
                     </property>
                 </widget>
-                <widget class="TQCheckBox" row="8" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="4" column="1" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_AllowDragAndDropReArrange</cstring>
                     </property>
@@ -144,7 +144,7 @@ By default, this option is selected and all windows are shown.</string>
                         <string>Turning this option on will allow tasks on the taskbar to be manually rearranged using drag and drop.</string>
                     </property>
                 </widget>
-                <widget class="TQCheckBox" row="7" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="8" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>kcfg_ShowWindowListBtn</cstring>
                     </property>
@@ -216,7 +216,7 @@ By default the taskbar groups windows when it is full.</string>
                         <cstring>kcfg_ShowTaskStates</cstring>
                     </property>
                 </widget>
-                <widget class="TQCheckBox" row="5" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="6" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>kcfg_ShowOnlyIconified</cstring>
                     </property>
@@ -229,7 +229,7 @@ By default the taskbar groups windows when it is full.</string>
 By default, this option is not selected and the taskbar will show all windows.</string>
                     </property>
                 </widget>
-                <widget class="TQCheckBox" row="6" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="7" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>kcfg_ShowIcon</cstring>
                     </property>
@@ -437,7 +437,7 @@ By default, this option is selected and all windows are shown.</string>
                         <bool>true</bool>
                     </property>
                 </widget>
-                <widget class="TQCheckBox" row="4" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="5" column="0" rowspan="1" colspan="3">
                   <property name="name">
                     <cstring>kcfg_CycleWheel</cstring>
                   </property>

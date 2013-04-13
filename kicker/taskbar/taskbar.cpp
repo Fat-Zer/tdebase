@@ -1295,7 +1295,46 @@ void TaskBar::sortContainersByDesktop(TaskContainer::List& list)
     }
 }
 
-int TaskBar::taskMoveHandler(const TQPoint &pos, Task::List taskList) {
+TaskMoveDestination::TaskMoveDestination TaskBar::taskMoveCapabilities(TaskContainer* movingContainer) {
+    TaskMoveDestination::TaskMoveDestination ret = TaskMoveDestination::Null;
+
+    bool before = false;
+    bool after = false;
+    bool movingFound = false;
+
+    if (movingContainer) {
+        // Check to see if there are any visible containers before or after the movingContainer
+        TaskContainer::Iterator it = containers.begin();
+        for (; it != containers.end(); ++it)
+        {
+            TaskContainer* c = *it;
+            if (!c->isVisibleTo(this)) {
+                continue;
+            }
+            if (c == movingContainer) {
+                movingFound = true;
+            }
+            else {
+                if (movingFound) {
+                    after = true;
+                }
+                else {
+                    before = true;
+                }
+            }
+        }
+        if (before) {
+            ret = ret | TaskMoveDestination::Left;
+        }
+        if (after) {
+            ret = ret | TaskMoveDestination::Right;
+        }
+    }
+
+    return ret;
+}
+
+int TaskBar::taskMoveHandler(TaskMoveDestination::TaskMoveDestination dest, Task::List taskList, const TQPoint pos) {
     TaskContainer* movingContainer = NULL;
     TaskContainer* destContainer = NULL;
     bool movingRight = true;
@@ -1304,6 +1343,9 @@ int TaskBar::taskMoveHandler(const TQPoint &pos, Task::List taskList) {
     for (; it != containers.end(); ++it)
     {
         TaskContainer* c = *it;
+        if (!c->isVisibleTo(this)) {
+            continue;
+        }
         if (c->taskList() == taskList) {
             movingContainer = c;
             break;
@@ -1311,25 +1353,97 @@ int TaskBar::taskMoveHandler(const TQPoint &pos, Task::List taskList) {
     }
 
     if (movingContainer) {
-        // Find the best place for the container to go...
-        it = containers.begin();
-        for (; it != containers.end(); ++it)
-        {
-            TaskContainer* c = *it;
-            TQPoint containerPos = c->pos();
-            TQSize containerSize = c->size();
-            TQRect containerRect(containerPos.x(), containerPos.y(), containerSize.width(), containerSize.height());
-            if (containerRect.contains(pos)) {
-                destContainer = c;
-                // Figure out if the mobile container is moving towards the end of the container list (i.e. right or down)
-                for (; it != containers.end(); ++it)
-                {
-                    if (movingContainer == (*it)) {
-                        movingRight = false;
-                    }
+        if (dest == TaskMoveDestination::Position) {
+            // Find the best place for the container to go...
+            it = containers.begin();
+            for (; it != containers.end(); ++it)
+            {
+                TaskContainer* c = *it;
+                if (!c->isVisibleTo(this)) {
+                    continue;
                 }
-                break;
+                TQPoint containerPos = c->pos();
+                TQSize containerSize = c->size();
+                TQRect containerRect(containerPos.x(), containerPos.y(), containerSize.width(), containerSize.height());
+                if (containerRect.contains(pos)) {
+                    destContainer = c;
+                    // Figure out if the mobile container is moving towards the end of the container list (i.e. right or down)
+                    for (; it != containers.end(); ++it)
+                    {
+                        if (movingContainer == (*it)) {
+                            movingRight = false;
+                        }
+                    }
+                    break;
+                }
             }
+        }
+        else if (dest == TaskMoveDestination::Beginning) {
+            // Move to beginning
+            it = containers.begin();
+            while ((it != containers.end()) && (!(*it)->isVisibleTo(this))) {
+                it++;
+            }
+            if (it == containers.end()) {
+                return false;
+            }
+            destContainer = *it;
+            movingRight = false;
+        }
+        else if (dest == TaskMoveDestination::Left) {
+            // Move left
+            it = containers.begin();
+            while ((it != containers.end()) && (!(*it)->isVisibleTo(this))) {
+                it++;
+            }
+            if (it == containers.end()) {
+                return false;
+            }
+            TaskContainer* prev = *it;
+            destContainer = prev;
+            for (; it != containers.end(); ++it)
+            {
+                TaskContainer* c = *it;
+                if (!c->isVisibleTo(this)) {
+                    continue;
+                }
+                if (movingContainer == c) {
+                    destContainer = prev;
+                    break;
+                }
+                prev = c;
+            }
+            movingRight = false;
+        }
+        else if (dest == TaskMoveDestination::Right) {
+            // Move right
+            it = containers.begin();
+            destContainer = NULL;
+            for (; it != containers.end(); ++it)
+            {
+                TaskContainer* c = *it;
+                if (!c->isVisibleTo(this)) {
+                    continue;
+                }
+                if (movingContainer == c) {
+                    if (it != containers.end()) {
+                        it++;
+                        while ((it != containers.end()) && (!(*it)->isVisibleTo(this))) {
+                            it++;
+                        }
+                    }
+                    if ((it != containers.end()) && ((*it)->isVisibleTo(this))) {
+                        destContainer = *it;
+                    }
+                    break;
+                }
+            }
+            movingRight = true;
+        }
+        else if (dest == TaskMoveDestination::End) {
+            // Move to end
+            destContainer = NULL;
+            movingRight = true;
         }
 
         if (destContainer == movingContainer) {
@@ -1343,8 +1457,11 @@ int TaskBar::taskMoveHandler(const TQPoint &pos, Task::List taskList) {
             it = containers.find(destContainer);
             if ((it != containers.end()) && (movingRight)) {
                 it++;
+                while ((it != containers.end()) && (!(*it)->isVisibleTo(this))) {
+                    it++;
+                }
             }
-            if (it != containers.end()) {
+            if ((it != containers.end()) && ((*it)->isVisibleTo(this))) {
                 containers.insert(it, movingContainer);
             }
             else {

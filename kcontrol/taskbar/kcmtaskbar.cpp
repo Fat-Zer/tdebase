@@ -172,6 +172,7 @@ TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringL
     connect(m_widget->globalConfigReload, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotReloadConfigurationFromGlobals()));
     connect(m_widget->globalConfigEdit, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotEditGlobalConfiguration()));
     connect(m_widget->kcfg_UseGlobalSettings, TQT_SIGNAL(clicked()), this, TQT_SLOT(processLockouts()));
+    connect(m_widget->kcfg_SortByApp, TQT_SIGNAL(clicked()), this, TQT_SLOT(processLockouts()));
 
     TQFile configFile(locateLocal("config", m_configFileName));
     if (!configFile.exists())
@@ -298,6 +299,8 @@ void TaskbarConfig::processLockouts()
 			m_widget->globalConfigEdit->hide();
 		}
 	}
+
+	m_widget->kcfg_AllowDragAndDropReArrange->setEnabled(!m_widget->kcfg_SortByApp->isChecked());
 }
 
 void TaskbarConfig::slotReloadConfigurationFromGlobals()

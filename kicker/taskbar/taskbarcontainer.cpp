@@ -338,11 +338,9 @@ void TaskBarContainer::dragEnterEvent( TQDragEnterEvent* e )
         return;
     }
 
-    if (TaskDrag::canDecode(e) && READ_MERGED_TASBKAR_SETTING(allowDragAndDropReArrange))
+    if ((e->source()->parent() == taskBar->viewport()) && TaskDrag::canDecode(e) && READ_MERGED_TASBKAR_SETTING(allowDragAndDropReArrange) && (!READ_MERGED_TASBKAR_SETTING(sortByApp)))
     {
-        if (!READ_MERGED_TASBKAR_SETTING(sortByApp)) {
-            e->accept();
-        }
+        e->accept();
     }
 }
 
@@ -359,12 +357,10 @@ void TaskBarContainer::dropEvent( TQDropEvent* e )
         return;
     }
 
-    if (TaskDrag::canDecode(e) && READ_MERGED_TASBKAR_SETTING(allowDragAndDropReArrange))
+    if ((e->source()->parent() == taskBar->viewport()) && TaskDrag::canDecode(e) && READ_MERGED_TASBKAR_SETTING(allowDragAndDropReArrange) && (!READ_MERGED_TASBKAR_SETTING(sortByApp)))
     {
-        if (!READ_MERGED_TASBKAR_SETTING(sortByApp)) {
-            if (taskBar->taskMoveHandler(taskBar->mapFrom(this, e->pos()), TaskDrag::decode(e))) {
-                e->accept();
-            }
+        if (taskBar->taskMoveHandler(TaskMoveDestination::Position, TaskDrag::decode(e), taskBar->mapFrom(this, e->pos()))) {
+            e->accept();
         }
     }
 }

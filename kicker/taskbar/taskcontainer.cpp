@@ -1224,7 +1224,7 @@ void TaskContainer::popupMenu(int action)
             return;
         }
 
-        m_menu = new TaskRMBMenu(m_filteredTasks, taskBar->showAllWindows());
+        m_menu = new TaskRMBMenu(m_filteredTasks, taskBar->showAllWindows(), (READ_MERGED_TASBKAR_SETTING(allowDragAndDropReArrange))?makeTaskMoveMenu():NULL);
     }
     else
     {
@@ -1260,6 +1260,58 @@ void TaskContainer::popupMenu(int action)
 
     delete m_menu;
     m_menu = 0;
+}
+
+TQPopupMenu* TaskContainer::makeTaskMoveMenu()
+{
+    TaskMoveDestination::TaskMoveDestination capabilities = taskBar->taskMoveCapabilities(this);
+
+    int id;
+    TQPopupMenu* menu = new TQPopupMenu();
+
+    menu->setCheckable(false);
+
+    id = menu->insertItem(SmallIconSet("start"),
+                          i18n("Move to Beginning"),
+                          this, TQT_SLOT(slotTaskMoveBeginning()));
+    menu->setItemEnabled(id, (capabilities & TaskMoveDestination::Left));
+
+    id = menu->insertItem(SmallIconSet("back"),
+                          i18n("Move Left"),
+                          this, TQT_SLOT(slotTaskMoveLeft()));
+    menu->setItemEnabled(id, (capabilities & TaskMoveDestination::Left));
+
+    id = menu->insertItem(SmallIconSet("forward"),
+                          i18n("Move Right"),
+                          this, TQT_SLOT(slotTaskMoveRight()));
+    menu->setItemEnabled(id, (capabilities & TaskMoveDestination::Right));
+
+    id = menu->insertItem(SmallIconSet("finish"),
+                          i18n("Move to End"),
+                          this, TQT_SLOT(slotTaskMoveEnd()));
+    menu->setItemEnabled(id, (capabilities & TaskMoveDestination::Right));
+
+    return menu;
+}
+
+void TaskContainer::slotTaskMoveBeginning()
+{
+    taskBar->taskMoveHandler(TaskMoveDestination::Beginning, taskList());
+}
+
+void TaskContainer::slotTaskMoveLeft()
+{
+    taskBar->taskMoveHandler(TaskMoveDestination::Left, taskList());
+}
+
+void TaskContainer::slotTaskMoveRight()
+{
+    taskBar->taskMoveHandler(TaskMoveDestination::Right, taskList());
+}
+
+void TaskContainer::slotTaskMoveEnd()
+{
+    taskBar->taskMoveHandler(TaskMoveDestination::End, taskList());
 }
 
 void TaskContainer::mouseMoveEvent( TQMouseEvent* e )
@@ -1399,11 +1451,9 @@ void TaskContainer::dragEnterEvent( TQDragEnterEvent* e )
         return;
     }
 
-    if (TaskDrag::canDecode(e) && READ_MERGED_TASBKAR_SETTING(allowDragAndDropReArrange))
+    if ((e->source()->parent() == this->parent()) && TaskDrag::canDecode(e) && READ_MERGED_TASBKAR_SETTING(allowDragAndDropReArrange) && (!READ_MERGED_TASBKAR_SETTING(sortByApp)))
     {
-        if (!READ_MERGED_TASBKAR_SETTING(sortByApp)) {
-            e->accept();
-        }
+        e->accept();
     }
 
     // if a dragitem is held for over a taskbutton for two seconds,
@@ -1429,12 +1479,10 @@ void TaskContainer::dropEvent( TQDropEvent* e )
         return;
     }
 
-    if (TaskDrag::canDecode(e) && READ_MERGED_TASBKAR_SETTING(allowDragAndDropReArrange))
+    if ((e->source()->parent() == this->parent()) && TaskDrag::canDecode(e) && READ_MERGED_TASBKAR_SETTING(allowDragAndDropReArrange) && (!READ_MERGED_TASBKAR_SETTING(sortByApp)))
     {
-        if (!READ_MERGED_TASBKAR_SETTING(sortByApp)) {
-            if (taskBar->taskMoveHandler(TQWidget::mapTo(taskBar, e->pos()), TaskDrag::decode(e))) {
-                e->accept();
-            }
+        if (taskBar->taskMoveHandler(TaskMoveDestination::Position, TaskDrag::decode(e), TQWidget::mapTo(taskBar, e->pos()))) {
+            e->accept();
         }
     }
 

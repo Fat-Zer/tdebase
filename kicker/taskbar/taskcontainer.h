@@ -127,22 +127,28 @@ protected slots:
     void taskChanged(bool geometryChangeOnly);
     void showMe();
 
+    void slotTaskMoveBeginning();
+    void slotTaskMoveLeft();
+    void slotTaskMoveRight();
+    void slotTaskMoveEnd();
+
 private:
     void checkAttention(const Task::Ptr changed_task = NULL);
-    TQString                     sid;
-    TQTimer                      animationTimer;
-    TQTimer                      dragSwitchTimer;
-    TQTimer                      attentionTimer;
-    TQTimer                      m_paintEventCompressionTimer;
+    TQPopupMenu* makeTaskMoveMenu();
+    TQString                    sid;
+    TQTimer                     animationTimer;
+    TQTimer                     dragSwitchTimer;
+    TQTimer                     attentionTimer;
+    TQTimer                     m_paintEventCompressionTimer;
     int                         currentFrame;
     PixmapList                  frames;
     int                         attentionState;
-    TQRect                       iconRect;
-    TQPixmap                     animBg;
+    TQRect                      iconRect;
+    TQPixmap                    animBg;
     Task::List                  tasks;
     Task::List                  m_filteredTasks;
     Task::Ptr                   lastActivated;
-    TQPopupMenu*                 m_menu;
+    TQPopupMenu*                m_menu;
     Startup::Ptr                m_startup;
     ArrowType                   arrowType;
     TaskBar*                    taskBar;

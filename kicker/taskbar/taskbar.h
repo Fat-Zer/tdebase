@@ -39,6 +39,34 @@ class Startup;
 class Task;
 class TDEGlobalAccel;
 
+namespace TaskMoveDestination
+{
+    enum TaskMoveDestination
+    {
+        Null      = 0x00,
+        Position  = 0x01,
+        Left      = 0x02,
+        Right     = 0x04,
+        Beginning = 0x08,
+        End       = 0x10
+    };
+
+    inline TaskMoveDestination operator|(TaskMoveDestination a, TaskMoveDestination b)
+    {
+        return static_cast<TaskMoveDestination>(static_cast<int>(a) | static_cast<int>(b));
+    }
+
+    inline TaskMoveDestination operator&(TaskMoveDestination a, TaskMoveDestination b)
+    {
+        return static_cast<TaskMoveDestination>(static_cast<int>(a) & static_cast<int>(b));
+    }
+
+    inline TaskMoveDestination operator~(TaskMoveDestination a)
+    {
+        return static_cast<TaskMoveDestination>(~static_cast<int>(a));
+    }
+};
+
 class TaskBar : public Panner
 {
     Q_OBJECT
@@ -65,7 +93,8 @@ public:
 
     KTextShadowEngine *textShadowEngine();
 
-    int taskMoveHandler(const TQPoint &pos, Task::List taskList);
+    int taskMoveHandler(TaskMoveDestination::TaskMoveDestination dest, Task::List taskList, const TQPoint pos = TQPoint(0,0));
+    TaskMoveDestination::TaskMoveDestination taskMoveCapabilities(TaskContainer* movingContainer);
 
 public slots:
     void configure();

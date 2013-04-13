@@ -32,7 +32,7 @@ class KDE_EXPORT TaskRMBMenu : public TQPopupMenu
 	Q_OBJECT
 
 public:
-	TaskRMBMenu(const Task::List&, bool showAll = true, TQWidget *parent = 0, const char *name = 0);
+	TaskRMBMenu(const Task::List&, bool showAll = true, TQPopupMenu* moveMenu = NULL, TQWidget *parent = 0, const char *name = 0);
 	TaskRMBMenu(Task::Ptr, bool showAll = true, TQWidget *parent = 0, const char *name = 0);
 
 private:
@@ -54,6 +54,7 @@ private slots:
 private:
 	Task::List tasks;
 	bool showAll;
+	TQPopupMenu* taskMoveMenu;
 };
 
 #endif
