@@ -76,6 +76,7 @@ public:
 public slots:
   void slotPreview( bool toggle );
   void slotShowDirectoryOverlays();
+  void slotShowFreeSpaceOverlays();
   void slotShowDot();
   void slotSelect();
   void slotUnselect();
@@ -120,7 +121,9 @@ protected slots:
   virtual void slotClear();
   virtual void slotRedirection( const KURL & );
   virtual void slotDirectoryOverlayStart();
+  virtual void slotFreeSpaceOverlayStart();
   virtual void slotDirectoryOverlayFinished();
+  virtual void slotFreeSpaceOverlayFinished();
 
   /**
    * This is the 'real' finished slot, where we emit the completed() signal
@@ -196,6 +199,7 @@ protected:
 
   TDEToggleAction *m_paDotFiles;
   TDEToggleAction *m_paDirectoryOverlays;
+  TDEToggleAction *m_paFreeSpaceOverlays;
   TDEToggleAction *m_paEnablePreviews;
   TQPtrList<KFileIVI> m_paOutstandingOverlays;
   TQTimer *m_paOutstandingOverlaysTimer;
@@ -226,6 +230,7 @@ protected:
 
   private:
   void showDirectoryOverlay(KFileIVI*  item);
+  void showFreeSpaceOverlay(KFileIVI*  item);
 };
 
 class IconViewBrowserExtension : public KonqDirPartBrowserExtension

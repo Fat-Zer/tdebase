@@ -23,6 +23,7 @@ include_directories(
   ${TQT_INCLUDE_DIRS}
   ${ARTS_INCLUDE_DIRS}
   ${TDE_INCLUDE_DIR}/arts/
+  ${CMAKE_BINARY_DIR}
 )
 
 link_directories(
@@ -39,8 +40,8 @@ install( FILES
     konq_operations.h libkonq_export.h konq_dirpart.h
     konq_propsview.h konq_events.h konq_undo.h
     konq_historymgr.h konq_historycomm.h konq_pixmapprovider.h
-    kivdirectoryoverlay.h konq_faviconmgr.h konq_xmlguiclient.h
-    konqbookmarkmanager.h konq_filetip.h
+    kivdirectoryoverlay.h kivfreespaceoverlay.h konq_faviconmgr.h
+    konq_xmlguiclient.h konqbookmarkmanager.h konq_filetip.h
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
 
@@ -58,8 +59,8 @@ tde_add_library( konq SHARED AUTOMOC
     konq_iconviewwidget.cc konq_settings.cc konq_drag.cc konq_operations.cc
     konq_dirpart.cc konq_propsview.cc konq_events.cc konq_bgnddlg.cc konq_undo.cc
     konq_undo.skel konq_historymgr.cc konq_historycomm.cc konq_historycomm.skel
-    konq_pixmapprovider.cc kivdirectoryoverlay.cc konq_faviconmgr.cc
-    konq_faviconmgr.skel konq_filetip.cc
+    konq_pixmapprovider.cc kivdirectoryoverlay.cc kivfreespaceoverlay.cc
+    konq_faviconmgr.cc konq_faviconmgr.skel konq_filetip.cc
   VERSION 4.2.0
   LINK tdeparts-shared
   DESTINATION ${LIB_INSTALL_DIR}

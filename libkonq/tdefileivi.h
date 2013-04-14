@@ -27,6 +27,7 @@
 class KFileItem;
 class KonqIconViewWidget;
 class KIVDirectoryOverlay;
+class KIVFreeSpaceOverlay;
 
 /**
  * KFileIVI (short form of "Konq - File - IconViewItem")
@@ -146,6 +147,13 @@ public:
     void setOverlay( const TQString & iconName);
 
     /**
+     * Sets a progress bar to be shown on the right side of the icon.
+     * Currently used for disk space overlays.
+     * setOverlayProgressBar(-1) to remove progress bar.
+     */
+    void setOverlayProgressBar( const int progress);
+
+    /**
      * Redetermines the icon (useful if KFileItem might return another icon).
      * Does nothing with thumbnails
      */
@@ -191,6 +199,13 @@ public:
     KIVDirectoryOverlay* setShowDirectoryOverlay( bool );
     bool showDirectoryOverlay( );
 
+    /**
+     * Sets showing of free space overlays. Does nothing if this does
+     * not represent a media device.
+     */
+    KIVFreeSpaceOverlay* setShowFreeSpaceOverlay( bool );
+    bool showFreeSpaceOverlay( );
+
     virtual int compare( TQIconViewItem *i ) const;
 
 protected:
@@ -200,6 +215,11 @@ protected:
      * Contains the logic and code for painting the overlay pixmap.
      */
     void paintOverlay( TQPainter *p ) const;
+
+    /**
+     * Contains the logic and code for painting the overlay progress bar.
+     */
+    void paintOverlayProgressBar( TQPainter *p ) const;
 
     /**
      * Updates the colorgroup.

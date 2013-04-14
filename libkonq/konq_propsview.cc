@@ -94,6 +94,7 @@ KonqPropsView::KonqPropsView( TDEInstance * instance, KonqPropsView * defaultPro
   d->descending = config->readBoolEntry( "SortDescending", false );
   m_bShowDot = config->readBoolEntry( "ShowDotFiles", false );
   m_bShowDirectoryOverlays = config->readBoolEntry( "ShowDirectoryOverlays", false );
+  m_bShowFreeSpaceOverlays = config->readBoolEntry( "ShowFreeSpaceOverlays", false );
 
   m_dontPreview = config->readListEntry( "DontPreview" );
   m_dontPreview.remove("audio/"); //Use the separate setting.
@@ -222,6 +223,7 @@ bool KonqPropsView::enterDir( const KURL & dir )
     m_bShowDot = config->readBoolEntry( "ShowDotFiles", m_bShowDot );
     d->caseInsensitiveSort=config->readBoolEntry("CaseInsensitiveSort",d->caseInsensitiveSort);
     m_bShowDirectoryOverlays = config->readBoolEntry( "ShowDirectoryOverlays", m_bShowDirectoryOverlays );
+    m_bShowFreeSpaceOverlays = config->readBoolEntry( "ShowFreeSpaceOverlays", m_bShowFreeSpaceOverlays );
     if (config->hasKey( "DontPreview" ))
     {
         m_dontPreview = config->readListEntry( "DontPreview" );
@@ -389,6 +391,24 @@ void KonqPropsView::setShowingDirectoryOverlays( bool show )
         kdDebug(1203) << "Saving in current config" << endl;
         TDEConfigGroupSaver cgs(currentConfig(), currentGroup());
         currentConfig()->writeEntry( "ShowDirectoryOverlays", m_bShowDirectoryOverlays );
+        currentConfig()->sync();
+    }
+}
+
+void KonqPropsView::setShowingFreeSpaceOverlays( bool show )
+{
+    kdDebug(1203) << "KonqPropsView::setShowingFreeSpaceOverlays " << show << endl;
+    m_bShowFreeSpaceOverlays = show;
+    if ( m_defaultProps && !m_bSaveViewPropertiesLocally )
+    {
+        kdDebug(1203) << "Saving in default properties" << endl;
+        m_defaultProps->setShowingFreeSpaceOverlays( show );
+    }
+    else if (currentConfig())
+    {
+        kdDebug(1203) << "Saving in current config" << endl;
+        TDEConfigGroupSaver cgs(currentConfig(), currentGroup());
+        currentConfig()->writeEntry( "ShowFreeSpaceOverlays", m_bShowFreeSpaceOverlays );
         currentConfig()->sync();
     }
 }

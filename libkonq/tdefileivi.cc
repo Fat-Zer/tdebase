@@ -19,6 +19,7 @@
 
 #include "tdefileivi.h"
 #include "kivdirectoryoverlay.h"
+#include "kivfreespaceoverlay.h"
 #include "konq_iconviewwidget.h"
 #include "konq_operations.h"
 #include "konq_settings.h"
@@ -44,8 +45,10 @@ struct KFileIVI::Private
     TQString m_animatedIcon; // Name of animation
     bool m_animated;        // Animation currently running ?
 	KIVDirectoryOverlay* m_directoryOverlay;
+	KIVFreeSpaceOverlay* m_freeSpaceOverlay;
 	TQPixmap m_overlay;
 	TQString m_overlayName;
+	int m_progress;
 };
 
 KFileIVI::KFileIVI( KonqIconViewWidget *iconview, KFileItem* fileitem, int size )
@@ -72,12 +75,15 @@ KFileIVI::KFileIVI( KonqIconViewWidget *iconview, KFileItem* fileitem, int size 
         else
             setMouseOverAnimation( "unknown" );
     }
+    d->m_progress = -1;
     d->m_directoryOverlay = 0;
+    d->m_freeSpaceOverlay = 0;
 }
 
 KFileIVI::~KFileIVI()
 {
     delete d->m_directoryOverlay;
+    delete d->m_freeSpaceOverlay;
     delete d;
 }
 
@@ -138,6 +144,13 @@ void KFileIVI::setOverlay( const TQString& iconName )
     refreshIcon(true);
 }
 
+void KFileIVI::setOverlayProgressBar( const int progress )
+{
+    d->m_progress = progress;
+
+    refreshIcon(true);
+}
+
 KIVDirectoryOverlay* KFileIVI::setShowDirectoryOverlay( bool show )
 {
     if ( !m_fileitem->isDir() || m_fileitem->iconName() != "folder" )
@@ -158,6 +171,28 @@ KIVDirectoryOverlay* KFileIVI::setShowDirectoryOverlay( bool show )
 bool KFileIVI::showDirectoryOverlay(  )
 {
     return (bool)d->m_directoryOverlay;
+}
+
+KIVFreeSpaceOverlay* KFileIVI::setShowFreeSpaceOverlay( bool show )
+{
+    if ( !m_fileitem->mimetype().startsWith("media/") )
+        return 0;
+
+    if (show) {
+        if (!d->m_freeSpaceOverlay)
+            d->m_freeSpaceOverlay = new KIVFreeSpaceOverlay(this);
+        return d->m_freeSpaceOverlay;
+    } else {
+        delete d->m_freeSpaceOverlay;
+        d->m_freeSpaceOverlay = 0;
+        setOverlayProgressBar(-1);
+        return 0;
+    }
+}
+
+bool KFileIVI::showFreeSpaceOverlay(  )
+{
+    return (bool)d->m_freeSpaceOverlay;
 }
 
 void KFileIVI::setPixmapDirect( const TQPixmap& pixmap, bool recalc, bool redraw )
@@ -375,6 +410,7 @@ void KFileIVI::paintItem( TQPainter *p, const TQColorGroup &c )
 
     TDEIconViewItem::paintItem( p, cg );
     paintOverlay(p);
+    paintOverlayProgressBar(p);
 
 }
 
@@ -383,6 +419,42 @@ void KFileIVI::paintOverlay( TQPainter *p ) const
     if ( !d->m_overlay.isNull() ) {
         TQRect rect = pixmapRect(true);
         p->drawPixmap(x() + rect.x() , y() + pixmapRect().height() - d->m_overlay.height(), d->m_overlay);
+    }
+}
+
+void KFileIVI::paintOverlayProgressBar( TQPainter *p ) const
+{
+    if (d->m_progress != -1) {
+//         // Pie chart
+//         TQRect rect = pixmapRect(true);
+//         rect.setX(x() + rect.x());
+//         rect.setY(y() + rect.y() + ((pixmapRect().height()*3)/4));
+//         rect.setWidth(pixmapRect().width()/4);
+//         rect.setHeight(pixmapRect().height()/4);
+//
+//         p->save();
+//
+//         p->setPen(TQPen::NoPen);
+//         p->setBrush(TQt::red);
+//         p->drawEllipse(rect);
+//         p->setBrush(TQt::green);
+//         p->drawPie(rect, 1440, (((100-d->m_progress)*5760)/100));
+
+        // Progress bar
+        TQRect rect = pixmapRect(true);
+        int verticalOffset = 0;
+        int usedBarWidth = ((d->m_progress*pixmapRect().width())/100);
+        int endPosition = x() + rect.x() + usedBarWidth;
+
+        p->save();
+
+        p->setPen(TQPen::NoPen);
+        p->setBrush(TQt::red);
+        p->drawRect(TQRect(x() + rect.x(), y() + rect.y() + (pixmapRect().height() - verticalOffset), usedBarWidth, 1));
+        p->setBrush(TQt::green);
+        p->drawRect(TQRect(endPosition, y() + rect.y() + (pixmapRect().height() - verticalOffset), pixmapRect().width() - usedBarWidth, 1));
+
+        p->restore();
     }
 }
 

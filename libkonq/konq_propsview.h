@@ -105,6 +105,9 @@ public:
   void setShowingDirectoryOverlays( bool show );
   bool isShowingDirectoryOverlays() const { return m_bShowDirectoryOverlays; }
 
+  void setShowingFreeSpaceOverlays( bool show );
+  bool isShowingFreeSpaceOverlays() const { return m_bShowFreeSpaceOverlays; }
+
   void setShowingPreview( const TQString &preview, bool show );
   void setShowingPreview( bool show );
   bool isShowingPreview( const TQString &preview ) const { return ! m_dontPreview.contains(preview); }
@@ -143,6 +146,7 @@ private:
   int m_iItemTextPos;
   bool m_bShowDot;
   bool m_bShowDirectoryOverlays;
+  bool m_bShowFreeSpaceOverlays;
   TQStringList m_dontPreview;
   TQColor m_textColor;
   TQColor m_bgColor;

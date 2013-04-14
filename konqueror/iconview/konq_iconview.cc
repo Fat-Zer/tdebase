@@ -40,6 +40,7 @@
 #include <ktrader.h>
 #include <tdelocale.h>
 #include <kivdirectoryoverlay.h>
+#include <kivfreespaceoverlay.h>
 #include <tdemessagebox.h>
 #include <kstaticdeleter.h>
 
@@ -216,6 +217,9 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, cons
 
     m_paDirectoryOverlays = new TDEToggleAction( i18n( "&Folder Icons Reflect Contents" ), 0, this, TQT_SLOT( slotShowDirectoryOverlays() ),
                                       actionCollection(), "show_directory_overlays" );
+
+    m_paFreeSpaceOverlays = new TDEToggleAction( i18n( "&Media Icons Reflect Free Space" ), 0, this, TQT_SLOT( slotShowFreeSpaceOverlays() ),
+                                      actionCollection(), "show_free_space_overlays" );
 
     m_pamPreview = new TDEActionMenu( i18n( "&Preview" ), actionCollection(), "iconview_preview" );
 
@@ -511,6 +515,27 @@ void KonqKfmIconView::slotShowDirectoryOverlays()
             showDirectoryOverlay(kItem);
         } else {
             kItem -> setShowDirectoryOverlay(false);
+        }
+    }
+
+    m_pIconView->updateContents();
+}
+
+void KonqKfmIconView::slotShowFreeSpaceOverlays()
+{
+    bool show = !m_pProps->isShowingFreeSpaceOverlays();
+
+    m_pProps->setShowingFreeSpaceOverlays( show );
+
+    for ( TQIconViewItem *item = m_pIconView->firstItem(); item; item = item->nextItem() )
+    {
+        KFileIVI* kItem = static_cast<KFileIVI*>(item);
+        if ( !kItem->item()->isDir() ) continue;
+
+        if (show) {
+            showFreeSpaceOverlay(kItem);
+        } else {
+            kItem -> setShowFreeSpaceOverlay(false);
         }
     }
 
@@ -978,6 +1003,9 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
         if ( fileItem->isDir() && m_pProps->isShowingDirectoryOverlays() ) {
             showDirectoryOverlay(item);
         }
+        if ( fileItem->mimetype().startsWith("media/") && m_pProps->isShowingFreeSpaceOverlays() ) {
+            showFreeSpaceOverlay(item);
+        }
 
         TQString key;
 
@@ -1074,6 +1102,25 @@ void KonqKfmIconView::showDirectoryOverlay(KFileIVI* item)
     }
 }
 
+void KonqKfmIconView::showFreeSpaceOverlay(KFileIVI* item)
+{
+    KFileItem* fileItem = item->item();
+
+    if ( TDEGlobalSettings::showFilePreview( fileItem->url() ) ) {
+        m_paOutstandingOverlays.append(item);
+        if (m_paOutstandingOverlays.count() == 1)
+        {
+           if (!m_paOutstandingOverlaysTimer)
+           {
+              m_paOutstandingOverlaysTimer = new TQTimer(this);
+              connect(m_paOutstandingOverlaysTimer, TQT_SIGNAL(timeout()),
+                      TQT_SLOT(slotFreeSpaceOverlayStart()));
+           }
+           m_paOutstandingOverlaysTimer->start(20, true);
+        }
+    }
+}
+
 void KonqKfmIconView::slotDirectoryOverlayStart()
 {
     do
@@ -1094,7 +1141,35 @@ void KonqKfmIconView::slotDirectoryOverlayStart()
     } while (true);
 }
 
+void KonqKfmIconView::slotFreeSpaceOverlayStart()
+{
+    do
+    {
+       KFileIVI* item = m_paOutstandingOverlays.first();
+       if (!item)
+          return; // Nothing to do
+
+       KIVFreeSpaceOverlay* overlay = item->setShowFreeSpaceOverlay( true );
+
+       if (overlay)
+       {
+          connect( overlay, TQT_SIGNAL( finished() ), this, TQT_SLOT( slotFreeSpaceOverlayFinished() ) );
+          overlay->start(); // Watch out, may emit finished() immediately!!
+          return; // Let it run....
+       }
+       m_paOutstandingOverlays.removeFirst();
+    } while (true);
+}
+
 void KonqKfmIconView::slotDirectoryOverlayFinished()
+{
+    m_paOutstandingOverlays.removeFirst();
+
+    if (m_paOutstandingOverlays.count() > 0)
+        m_paOutstandingOverlaysTimer->start(0, true); // Don't call directly to prevent deep recursion.
+}
+
+void KonqKfmIconView::slotFreeSpaceOverlayFinished()
 {
     m_paOutstandingOverlays.removeFirst();
 
@@ -1302,6 +1377,7 @@ bool KonqKfmIconView::doOpenURL( const KURL & url )
     {
       m_paDotFiles->setChecked( m_pProps->isShowingDotFiles() );
       m_paDirectoryOverlays->setChecked( m_pProps->isShowingDirectoryOverlays() );
+      m_paFreeSpaceOverlays->setChecked( m_pProps->isShowingFreeSpaceOverlays() );
       m_paEnablePreviews->setChecked( m_pProps->isShowingPreview() );
       for ( m_paPreviewPlugins.first(); m_paPreviewPlugins.current(); m_paPreviewPlugins.next() )
       {

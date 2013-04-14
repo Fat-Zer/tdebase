@@ -36,6 +36,7 @@
   <Action name="iconview_preview" />
   <Action name="show_dot"/>
   <Action name="show_directory_overlays"/>
+  <Action name="show_free_space_overlays"/>
   <Separator/>
   <Action name="bgsettings"/>
  </Menu>
