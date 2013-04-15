@@ -33,6 +33,7 @@
 #include <kprocess.h>
 #include <tdestartupinfo.h>
 #include <kmimetype.h>
+#include <tdehardwaredevices.h>
 
 #include "dialog.h"
 #include "tdeio_media_mounthelper.h"
@@ -186,6 +187,18 @@ MountHelper::MountHelper() : TDEApplication()
 
 void MountHelper::invokeEject(const TQString &device, bool quiet)
 {
+	// Try TDE HW library eject first...
+	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEGenericDevice *hwdevice = hwdevices->findByDeviceNode(device);
+	if (hwdevice->type() == TDEGenericDeviceType::Disk) {
+		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
+		if (sdevice->ejectDrive()) {
+			// Success!
+			::exit(0);
+		}
+	}
+
+	// Then fall back to kdeeject if needed
 	TDEProcess *proc = new TDEProcess(TQT_TQOBJECT(this));
 	*proc << "kdeeject";
 	if (quiet)
