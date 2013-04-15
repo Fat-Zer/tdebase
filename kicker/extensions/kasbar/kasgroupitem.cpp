@@ -290,7 +290,7 @@ void KasGroupItem::showGroupMenuAt( TQMouseEvent *ev )
 
 void KasGroupItem::showGroupMenuAt( const TQPoint &p )
 {
-    TaskRMBMenu *tm = new TaskRMBMenu(items, true, kasbar());
+    TaskRMBMenu *tm = new TaskRMBMenu(items, true, NULL, kasbar());
     tm->insertItem( i18n("&Ungroup" ), this, TQT_SLOT( ungroup() ) );
     tm->insertSeparator();
     tm->insertItem( i18n("&Kasbar"), kasbar()->contextMenu() );
