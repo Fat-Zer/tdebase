@@ -149,8 +149,9 @@ MountHelper::MountHelper() : TDEApplication()
 		if (medium.isMounted())
 		{
 			DCOPReply reply = mediamanager.call( "unmount", medium.id());
-			if (reply.isValid())
-                            reply.get(m_errorStr);
+			if (reply.isValid()) {
+				reply.get(m_errorStr);
+			}
 		}
 
 		/* If this is a decrypted volume and there is no error yet
@@ -158,14 +159,17 @@ MountHelper::MountHelper() : TDEApplication()
 		if (m_errorStr.isNull() && medium.isEncrypted() && !medium.clearDeviceUdi().isNull())
 		{
 			DCOPReply reply = mediamanager.call( "undecrypt", medium.id());
-			if (reply.isValid())
+			if (reply.isValid()) {
 				reply.get(m_errorStr);
+			}
 		}
 
-		if (m_errorStr.isNull())
+		if (m_errorStr.isNull()) {
 			invokeEject(device, true);
-		else
+		}
+		else {
 			error();
+		}
 	}
 	else
 	{

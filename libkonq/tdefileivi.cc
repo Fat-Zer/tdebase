@@ -440,19 +440,33 @@ void KFileIVI::paintOverlayProgressBar( TQPainter *p ) const
 //         p->setBrush(TQt::green);
 //         p->drawPie(rect, 1440, (((100-d->m_progress)*5760)/100));
 
-        // Progress bar
+//         // Horizontal progress bar
+//         TQRect rect = pixmapRect(true);
+//         int verticalOffset = 0;
+//         int usedBarWidth = ((d->m_progress*pixmapRect().width())/100);
+//         int endPosition = x() + rect.x() + usedBarWidth;
+// 
+//         p->save();
+// 
+//         p->setPen(TQPen::NoPen);
+//         p->setBrush(TQt::red);
+//         p->drawRect(TQRect(x() + rect.x(), y() + rect.y() + (pixmapRect().height() - verticalOffset), usedBarWidth, 1));
+//         p->setBrush(TQt::green);
+//         p->drawRect(TQRect(endPosition, y() + rect.y() + (pixmapRect().height() - verticalOffset), pixmapRect().width() - usedBarWidth, 1));
+
+        // Vertical progress bar
         TQRect rect = pixmapRect(true);
-        int verticalOffset = 0;
-        int usedBarWidth = ((d->m_progress*pixmapRect().width())/100);
-        int endPosition = x() + rect.x() + usedBarWidth;
+        int horizontalOffset = 0;
+        int usedBarHeight = (((100-d->m_progress)*pixmapRect().height())/100);
+        int endPosition = y() + rect.y() + usedBarHeight;
 
         p->save();
 
         p->setPen(TQPen::NoPen);
-        p->setBrush(TQt::red);
-        p->drawRect(TQRect(x() + rect.x(), y() + rect.y() + (pixmapRect().height() - verticalOffset), usedBarWidth, 1));
         p->setBrush(TQt::green);
-        p->drawRect(TQRect(endPosition, y() + rect.y() + (pixmapRect().height() - verticalOffset), pixmapRect().width() - usedBarWidth, 1));
+        p->drawRect(TQRect(x() + rect.x() + (pixmapRect().width() - horizontalOffset), y() + rect.y(), 1, usedBarHeight));
+        p->setBrush(TQt::red);
+        p->drawRect(TQRect(x() + rect.x() + (pixmapRect().width() - horizontalOffset), endPosition, 1, pixmapRect().height() - usedBarHeight));
 
         p->restore();
     }

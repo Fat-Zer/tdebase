@@ -440,8 +440,9 @@ void KonqDirPart::updatePasteAction() // KDE4: merge into method above
 void KonqDirPart::newItems( const KFileItemList & entries )
 {
     d->dirSizeDirty = true;
-    if ( m_findPart )
+    if ( m_findPart ) {
         emitTotalCount();
+    }
 
     emit itemsAdded( entries );
 }
@@ -454,8 +455,9 @@ void KonqDirPart::deleteItem( KFileItem * fileItem )
 
 void KonqDirPart::emitTotalCount()
 {
-    if ( !d->dirLister || d->dirLister->url().isEmpty() )
+    if ( !d->dirLister || d->dirLister->url().isEmpty() ) {
         return;
+    }
     if ( d->dirSizeDirty ) {
         m_lDirSize = 0;
         m_lFileCount = 0;
@@ -465,12 +467,14 @@ void KonqDirPart::emitTotalCount()
         {
             if ( !it.current()->isDir() )
             {
-                if (!it.current()->isLink()) // symlinks don't contribute to the size
+                if (!it.current()->isLink()) { // symlinks don't contribute to the size
                     m_lDirSize += it.current()->size();
+                }
                 m_lFileCount++;
             }
-            else
+            else {
                 m_lDirCount++;
+            }
         }
         d->dirSizeDirty = false;
     }
@@ -521,10 +525,12 @@ void KonqDirPart::emitCounts( const KFileItemList & lst )
 
 void KonqDirPart::emitCounts( const KFileItemList & lst, bool selectionChanged )
 {
-    if ( lst.count() == 0 )
+    if ( lst.count() == 0 ) {
         emitTotalCount();
-    else
+    }
+    else {
         emitCounts( lst );
+    }
 
     // Yes, the caller could do that too :)
     // But this bool could also be used to cache the TQString for the last
@@ -533,8 +539,9 @@ void KonqDirPart::emitCounts( const KFileItemList & lst, bool selectionChanged )
     // MiB: no, I don't think it's worth it. Especially regarding the
     //      loss of readability of the code. Thus, this will be removed in
     //      KDE 4.0.
-    if ( selectionChanged )
+    if ( selectionChanged ) {
         emit m_extension->selectionInfo( lst );
+    }
 }
 
 void KonqDirPart::emitMouseOver( const KFileItem* item )

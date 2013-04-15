@@ -80,7 +80,6 @@ bool MediaProtocol::rewriteURL(const KURL &url, KURL &newUrl)
 		return false;
 	}
 
-
 	if ( !m_impl.realURL(name, path, newUrl) )
 	{
 		error( m_impl.lastErrorCode(), m_impl.lastErrorMessage() );

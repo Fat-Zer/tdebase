@@ -94,7 +94,7 @@ KonqPropsView::KonqPropsView( TDEInstance * instance, KonqPropsView * defaultPro
   d->descending = config->readBoolEntry( "SortDescending", false );
   m_bShowDot = config->readBoolEntry( "ShowDotFiles", false );
   m_bShowDirectoryOverlays = config->readBoolEntry( "ShowDirectoryOverlays", false );
-  m_bShowFreeSpaceOverlays = config->readBoolEntry( "ShowFreeSpaceOverlays", false );
+  m_bShowFreeSpaceOverlays = config->readBoolEntry( "ShowFreeSpaceOverlays", true );
 
   m_dontPreview = config->readListEntry( "DontPreview" );
   m_dontPreview.remove("audio/"); //Use the separate setting.

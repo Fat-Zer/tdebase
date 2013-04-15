@@ -910,8 +910,9 @@ void KonqKfmIconView::slotCompleted()
 {
     // Stop the "refresh if busy too long" timer because a viewport
     // update is coming.
-    if ( m_pTimeoutRefreshTimer && m_pTimeoutRefreshTimer->isActive() )
+    if ( m_pTimeoutRefreshTimer && m_pTimeoutRefreshTimer->isActive() ) {
         m_pTimeoutRefreshTimer->stop();
+    }
 
     // If updates to the viewport are still blocked (so slotNewItems() has
     // not been called), a viewport repaint is forced.
@@ -938,23 +939,25 @@ void KonqKfmIconView::slotCompleted()
                                       extension()->urlArgs().yOffset );
     }
 
-    if ( m_pEnsureVisible ){
+    if ( m_pEnsureVisible ) {
         m_pIconView->ensureItemVisible( m_pEnsureVisible );
         m_pEnsureVisible = 0;
     }
 
     m_bUpdateContentsPosAfterListing = false;
 
-    if ( !m_pIconView->firstItem() )
+    if ( !m_pIconView->firstItem() ) {
 	resetCount();
+    }
 
     slotOnViewport();
 
     // slotRenderingFinished will do it
     m_bNeedEmitCompleted = true;
 
-    if (m_pProps->isShowingPreview())
+    if (m_pProps->isShowingPreview()) {
         m_mimeTypeResolver->start( 0 ); // We need the mimetypes asap
+    }
     else
     {
         slotRenderingFinished(); // emit completed, we don't want the wheel...
@@ -972,8 +975,9 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
 {
     // Stop the autorefresh timer since data to display has arrived and will
     // be drawn in moments
-    if ( m_pTimeoutRefreshTimer && m_pTimeoutRefreshTimer->isActive() )
+    if ( m_pTimeoutRefreshTimer && m_pTimeoutRefreshTimer->isActive() ) {
         m_pTimeoutRefreshTimer->stop();
+    }
     // We need to disable graphics updates on the iconview when
     // inserting items, or else a blank paint operation will be
     // performed on the top-left corner for each inserted item!
@@ -1003,7 +1007,7 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
         if ( fileItem->isDir() && m_pProps->isShowingDirectoryOverlays() ) {
             showDirectoryOverlay(item);
         }
-        if ( fileItem->mimetype().startsWith("media/") && m_pProps->isShowingFreeSpaceOverlays() ) {
+        if ( fileItem->mimetype().startsWith("media/") && fileItem->mimetype().contains("_mounted") && m_pProps->isShowingFreeSpaceOverlays() ) {
             showFreeSpaceOverlay(item);
         }
 
@@ -1028,8 +1032,9 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
         item->setKey( key );
 
         //kdDebug() << "KonqKfmIconView::slotNewItems " << (*it)->url().url() << " " << (*it)->mimeTypePtr()->name() << " mimetypeknown:" << (*it)->isMimeTypeKnown() << endl;
-        if ( !(*it)->isMimeTypeKnown() )
+        if ( !(*it)->isMimeTypeKnown() ) {
             m_mimeTypeResolver->m_lstPendingMimeIconItems.append( item );
+        }
 
         m_itemDict.insert( *it, item );
     }
@@ -1037,8 +1042,9 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
     m_pIconView->setUpdatesEnabled( true );
     // Locking the viewport has filtered out blanking and now, since we
     // have some items to draw, we can restore updating.
-    if ( !m_pIconView->viewport()->isUpdatesEnabled() )
+    if ( !m_pIconView->viewport()->isUpdatesEnabled() ) {
         m_pIconView->viewport()->setUpdatesEnabled( true );
+    }
     KonqDirPart::newItems( entries );
 }
 
@@ -1195,13 +1201,19 @@ void KonqKfmIconView::slotRefreshItems( const KFileItemList& entries )
                 bNeedPreviewJob = true;
                 ivi->invalidateThumbnail();
             }
-            else
+            else {
                 ivi->refreshIcon( true );
+            }
             ivi->setText( rit.current()->text() );
-            if ( rit.current()->isMimeTypeKnown() )
+            if ( rit.current()->isMimeTypeKnown() ) {
                 ivi->setMouseOverAnimation( rit.current()->iconName() );
-            if ( !bNeedRepaint && oldSize != ivi->pixmap()->size() )
+            }
+            if ( !bNeedRepaint && oldSize != ivi->pixmap()->size() ) {
                 bNeedRepaint = true;
+            }
+            if ( (*rit)->mimetype().startsWith("media/") && (*rit)->mimetype().contains("_mounted") && m_pProps->isShowingFreeSpaceOverlays() ) {
+                showFreeSpaceOverlay(ivi);
+            }
         }
     }
 
@@ -1212,8 +1224,9 @@ void KonqKfmIconView::slotRefreshItems( const KFileItemList& entries )
     else
     {
         // In case we replace a big icon with a small one, need to repaint.
-        if ( bNeedRepaint )
+        if ( bNeedRepaint ) {
             m_pIconView->updateContents();
+        }
     }
 }
 

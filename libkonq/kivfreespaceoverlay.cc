@@ -85,34 +85,36 @@ void KIVFreeSpaceOverlay::slotCompleted()
 {
     KFileItem* item = m_freespace->item();
     if (item) {
-        bool isLocal = false;
-        KURL localURL = item->mostLocalURL(isLocal);
-        if (!isLocal) {
-            m_freespace->setOverlayProgressBar(-1);
-        }
-        else {
-            TQString localPath = localURL.path();
-            if (localPath != "") {
-                TDEIO::filesize_t m_total = 0;
-                TDEIO::filesize_t m_used = 0;
-                TDEIO::filesize_t m_free = 0;
+        if (item->mimetype().contains("_mounted")) {
+            bool isLocal = false;
+            KURL localURL = item->mostLocalURL(isLocal);
+            if (!isLocal) {
+                m_freespace->setOverlayProgressBar(-1);
+            }
+            else {
+                TQString localPath = localURL.path();
+                if (localPath != "") {
+                    TDEIO::filesize_t m_total = 0;
+                    TDEIO::filesize_t m_used = 0;
+                    TDEIO::filesize_t m_free = 0;
 
-                struct statvfs vfs;
-                memset(&vfs, 0, sizeof(vfs));
+                    struct statvfs vfs;
+                    memset(&vfs, 0, sizeof(vfs));
 
-                if ( ::statvfs(TQFile::encodeName(localPath), &vfs) != -1 )
-                {
-                    m_total = static_cast<TDEIO::filesize_t>(vfs.f_blocks) * static_cast<TDEIO::filesize_t>(vfs.f_frsize);
-                    m_free = static_cast<TDEIO::filesize_t>(vfs.f_bavail) * static_cast<TDEIO::filesize_t>(vfs.f_frsize);
-                    m_used = m_total - m_free;
-                    m_freespace->setOverlayProgressBar((m_used/(m_total*1.0))*100.0);
+                    if ( ::statvfs(TQFile::encodeName(localPath), &vfs) != -1 )
+                    {
+                        m_total = static_cast<TDEIO::filesize_t>(vfs.f_blocks) * static_cast<TDEIO::filesize_t>(vfs.f_frsize);
+                        m_free = static_cast<TDEIO::filesize_t>(vfs.f_bavail) * static_cast<TDEIO::filesize_t>(vfs.f_frsize);
+                        m_used = m_total - m_free;
+                        m_freespace->setOverlayProgressBar((m_used/(m_total*1.0))*100.0);
+                    }
+                    else {
+                        m_freespace->setOverlayProgressBar(-1);
+                    }
                 }
                 else {
                     m_freespace->setOverlayProgressBar(-1);
                 }
-            }
-            else {
-                m_freespace->setOverlayProgressBar(-1);
             }
         }
     }

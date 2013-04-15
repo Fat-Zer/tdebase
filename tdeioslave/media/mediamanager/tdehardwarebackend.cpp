@@ -751,7 +751,7 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 		value = config.readBoolEntry("automount", false);
 	}
 	else {
-		QString current_group = config.group();
+		TQString current_group = config.group();
 		config.setGroup(drive_udi);
 		value = config.readBoolEntry("automount", false);
 		config.setGroup(current_group);
@@ -1125,8 +1125,9 @@ TQString TDEBackend::mount(const Medium *medium)
 TQString TDEBackend::mount(const TQString &_udi)
 {
 	const Medium* medium = m_mediaList.findById(_udi);
-	if (!medium)
+	if (!medium) {
 		return i18n("No such medium: %1").arg(_udi);
+	}
 	
 	return mount(medium);
 }
@@ -1135,11 +1136,13 @@ TQString TDEBackend::unmount(const TQString &_udi)
 {
 	const Medium* medium = m_mediaList.findById(_udi);
 	
-	if ( !medium )
+	if ( !medium ) {
 		return i18n("No such medium: %1").arg(_udi);
+	}
 	
-	if (!medium->isMounted())
+	if (!medium->isMounted()) {
 		return TQString(); // that was easy
+	}
 
 	TQString mountPoint = isInFstab(medium);
 	if (!mountPoint.isNull())
@@ -1221,23 +1224,6 @@ TQString TDEBackend::unmount(const TQString &_udi)
 	TQFileInfo checkDN(node);
 	if (!checkDN.exists()) {
 		m_mediaList.removeMedium(uid, true);
-	}
-	else {
-		TQString mountedPath = sdevice->mountPath();
-		if (!mountedPath.isNull()) {
-			// Because the TDE hardware backend is event driven it might take a little while for the device to show up as unmounted
-			// Wait up to 30 seconds for the mount to disappear...
-			for (int i=0;i<300;i++) {
-				mountedPath = sdevice->mountPath();
-				if (mountedPath.isNull()) {
-					break;
-				}
-				tqApp->processEvents(50);
-				usleep(50000);
-			}
-		}
-
-		ResetProperties(sdevice, false);
 	}
 
 	return TQString();

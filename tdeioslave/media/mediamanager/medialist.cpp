@@ -138,8 +138,7 @@ bool MediaList::changeMediumState(const Medium &medium, bool allowNotification)
 		TQString fs_type = medium.fsType();
 		bool mounted = medium.isMounted();
 
-		m->mountableState( device_node, clear_device_udi, mount_point,
-		                   fs_type, mounted );
+		m->mountableState( device_node, clear_device_udi, mount_point, fs_type, mounted );
 	}
 	else
 	{
