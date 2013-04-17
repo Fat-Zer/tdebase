@@ -115,6 +115,7 @@ void KFileIVIDesktop::paintItem( TQPainter *p, const TQColorGroup &cg)
   p->restore();
 
   paintOverlay(p);
+  paintOverlayProgressBar(p);
 }
 
 bool KFileIVIDesktop::shouldUpdateShadow(bool selected)

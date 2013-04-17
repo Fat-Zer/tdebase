@@ -20,6 +20,7 @@
 #ifndef kdiconview_h
 #define kdiconview_h
 
+#include <tqtimer.h>
 #include <tqlistview.h>
 
 #include <konq_iconviewwidget.h>
@@ -164,6 +165,10 @@ public slots:
     void slotClear();
     void refreshIcons();
 
+protected slots:
+    void slotFreeSpaceOverlayStart();
+    void slotFreeSpaceOverlayFinished();
+    void slotFreeSpaceOverlaySettingChanged();
 
 protected:
     void createActions();
@@ -198,6 +203,8 @@ private:
     static TQRect desktopRect();
     static void saveIconPosition(KSimpleConfig *config, int x, int y);
     static void readIconPosition(KSimpleConfig *config, int &x, int &y);
+
+    void showFreeSpaceOverlay(KFileIVI*  item);
 
     /** Our action collection, parent of all our actions */
     TDEActionCollection m_actionCollection;
@@ -270,6 +277,10 @@ private:
     bool m_needDesktopAlign;
 
     TQListView *mMediaListView;
+
+    TQPtrList<KFileIVI> m_paOutstandingOverlays;
+    TQTimer *m_paOutstandingOverlaysTimer;
+
     TDEConfig *g_pConfig;
 };
 

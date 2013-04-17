@@ -56,8 +56,8 @@ KButton::KButton( TQWidget* parent )
         setButtonText(KickerSettings::kMenuText());
         setFont(KickerSettings::buttonFont());
         setTextColor(KickerSettings::buttonTextColor());
-        setMaximumHeight(30);
-        setMaximumWidth(widthForHeight(30));
+        setMaximumHeight(KickerSettings::maximumTDEMenuButtonHeight());
+        setMaximumWidth(widthForHeight(KickerSettings::maximumTDEMenuButtonHeight()));
         setCenterButtonInContainer(false);
     }
 }
@@ -70,7 +70,7 @@ KButton::~KButton()
 int KButton::widthForHeight(int height) const
 {
     if (KickerSettings::showKMenuText()) {
-        return PanelPopupButton::widthForHeight(30);
+        return PanelPopupButton::widthForHeight((height>KickerSettings::maximumTDEMenuButtonHeight())?KickerSettings::maximumTDEMenuButtonHeight():height);
     }
     else {
         return PanelPopupButton::widthForHeight(height);
@@ -80,7 +80,9 @@ int KButton::widthForHeight(int height) const
 int KButton::heightForWidth(int width) const
 {
     if (KickerSettings::showKMenuText()) {
-        return 30;
+        int recommendation = PanelPopupButton::heightForWidth(width);
+        if (recommendation > KickerSettings::maximumTDEMenuButtonHeight()) recommendation = KickerSettings::maximumTDEMenuButtonHeight();
+        return recommendation;
     }
     else {
         return PanelPopupButton::heightForWidth(width);

@@ -220,6 +220,7 @@ DesktopBehavior::DesktopBehavior(TDEConfig *config, TQWidget *parent, const char
   if (m_bHasMedia)
   {
      connect(enableMediaBox, TQT_SIGNAL(clicked()), this, TQT_SLOT(enableChanged()));
+     connect(enableMediaFreeSpaceOverlayBox, TQT_SIGNAL(clicked()), this, TQT_SLOT(enableChanged()));
   }
   else
   {
@@ -255,6 +256,7 @@ void DesktopBehavior::fillMediaListView()
     TQValueListIterator<KMimeType::Ptr> it2(mimetypes.begin());
     g_pConfig->setGroup( "Media" );
     enableMediaBox->setChecked(g_pConfig->readBoolEntry("enabled",false));
+    enableMediaFreeSpaceOverlayBox->setChecked(g_pConfig->readBoolEntry("FreeSpaceDisplayEnabled",true));
     TQString excludedMedia=g_pConfig->readEntry("exclude","media/hdd_mounted,media/hdd_unmounted,media/floppy_unmounted,media/cdrom_unmounted,media/floppy5_unmounted");
     for (; it2 != mimetypes.end(); ++it2) {
         if ( ((*it2)->name().startsWith("media/")) )
@@ -272,6 +274,7 @@ void DesktopBehavior::saveMediaListView()
 
     g_pConfig->setGroup( "Media" );
     g_pConfig->writeEntry("enabled",enableMediaBox->isChecked());
+    g_pConfig->writeEntry("FreeSpaceDisplayEnabled",enableMediaFreeSpaceOverlayBox->isChecked());
     TQStringList exclude;
     for (DesktopBehaviorMediaItem *it=static_cast<DesktopBehaviorMediaItem *>(mediaListView->firstChild());
         it; it=static_cast<DesktopBehaviorMediaItem *>(it->nextSibling()))
@@ -423,6 +426,7 @@ void DesktopBehavior::enableChanged()
     {
         behaviorTab->setTabEnabled(behaviorTab->page(2), enabled);
         enableMediaBox->setEnabled(enabled);
+        enableMediaFreeSpaceOverlayBox->setEnabled(enabled);
         setMediaListViewEnabled(enableMediaBox->isChecked());
     }
 

@@ -422,8 +422,8 @@ void PasswordDlg::reapVerify()
 {
     ::close( sFd );
     int status;
-    ::waitpid( sPid, &status, 0 );
-    if (WIFEXITED(status))
+    pid_t retpid = ::waitpid( sPid, &status, 0 );
+    if (WIFEXITED(status)) {
         switch (WEXITSTATUS(status)) {
         case AuthOk:
             greet->succeeded();
@@ -441,6 +441,11 @@ void PasswordDlg::reapVerify()
         case AuthAbort:
             return;
         }
+    }
+    else if (WIFSIGNALED(status)) {
+        // FIXME
+        // ERROR
+    }
     cantCheck();
 }
 

@@ -370,7 +370,15 @@
                             <cstring>enableMediaBox</cstring>
                         </property>
                         <property name="text">
-                            <string>&amp;Show device icons:</string>
+                            <string>&amp;Show device icons</string>
+                        </property>
+                    </widget>
+                    <widget class="TQCheckBox">
+                        <property name="name">
+                            <cstring>enableMediaFreeSpaceOverlayBox</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&amp;Show free space overlay on device icons</string>
                         </property>
                     </widget>
                     <widget class="TDEListView">

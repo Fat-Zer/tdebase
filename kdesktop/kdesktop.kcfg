@@ -209,6 +209,11 @@
       <!-- kdiconview.cc:261 -->
       <!--     TQString tmpList=config->readEntry("exclude","media/hdd_mounted,media/hdd_unmounted,media/floppy_unmounted,media/cdrom_unmounted,media/floppy5_unmounted"); -->
     </entry>
+    <entry name="MediaFreeSpaceDisplayEnabled" key="FreeSpaceDisplayEnabled" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
   </group>
   <group name="KDE"> 
     <entry key="macStyle" type="Bool">

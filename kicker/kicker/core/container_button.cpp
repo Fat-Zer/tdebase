@@ -150,11 +150,16 @@ void ButtonContainer::embedButton(PanelButton* b)
     _button = b;
     _button->installEventFilter(this);
 
-    if (b->centerButtonInContainer()) {
-        TQVBoxLayout* vbox = new TQVBoxLayout(this);
-        vbox->addWidget(_button);
-        _layout = vbox;
+    TQVBoxLayout* vbox = new TQVBoxLayout(this);
+    if (!b->centerButtonInContainer()) {
+        b->setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Expanding);
     }
+    vbox->addWidget(_button, 1);
+    if (!b->centerButtonInContainer()) {
+        TQSpacerItem* spacer = new TQSpacerItem(0, 0, TQSizePolicy::Minimum, TQSizePolicy::MinimumExpanding);
+        vbox->addItem(spacer);
+    }
+    _layout = vbox;
 
     connect(_button, TQT_SIGNAL(requestSave()), TQT_SIGNAL(requestSave()));
     connect(_button, TQT_SIGNAL(hideme(bool)), TQT_SLOT(hideRequested(bool)));

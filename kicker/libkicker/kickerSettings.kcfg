@@ -434,6 +434,11 @@
       <default>3</default>
    </entry>
 
+<entry name="MaximumTDEMenuButtonHeight" key="MaximumTDEMenuButtonHeight" type="Int" >
+      <label>The maximum height of the TDE Menu button in pixels</label>
+      <default>30</default>
+   </entry>
+
 <entry name="RemoveButtonsWhenBroken" type="Bool" >
       <label>Buttons that represent KServices (applications, primarily) watch for the removal of the service and delete themselves when this happens. This setting turns this off.</label>
       <default>true</default>

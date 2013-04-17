@@ -177,6 +177,8 @@ AuthReturn Authenticate(const char *caller, const char *method,
       case PAM_MAXTRIES: /* should handle this better ... */
       case PAM_AUTHINFO_UNAVAIL: /* returned for unknown users ... bogus */
         return AuthBad;
+      case PAM_SERVICE_ERR:
+        return AuthError;
       default:
         return AuthError;
     }

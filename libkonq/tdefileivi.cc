@@ -31,6 +31,7 @@
 #include <tdefileitem.h>
 #include <kdebug.h>
 #include <krun.h>
+#include <kservice.h>
 
 #undef Bool
 
@@ -175,8 +176,9 @@ bool KFileIVI::showDirectoryOverlay(  )
 
 KIVFreeSpaceOverlay* KFileIVI::setShowFreeSpaceOverlay( bool show )
 {
-    if ( !m_fileitem->mimetype().startsWith("media/") )
+    if ( !m_fileitem->mimetype().startsWith("media/") ) {
         return 0;
+    }
 
     if (show) {
         if (!d->m_freeSpaceOverlay)
@@ -382,13 +384,31 @@ void KFileIVI::returnPressed()
 {
     if ( static_cast<KonqIconViewWidget*>(iconView())->isDesktop() ) {
         KURL url = m_fileitem->url();
-        // When clicking on a link to e.g. $HOME from the desktop, we want to open $HOME
-        // Symlink resolution must only happen on the desktop though (#63014)
-        if ( m_fileitem->isLink() && url.isLocalFile() )
-            url = KURL( url, m_fileitem->linkDest() );
+        if (url.protocol() == "media") {
+            // The user reasonably expects to be placed within the media:/ tree
+            // when opening a media device from the desktop
+            KService::Ptr service = KService::serviceByDesktopName("konqueror");
+            if (service) {
+                // HACK
+                // There doesn't seem to be a way to prevent KRun from resolving the URL to its
+                // local path, so simpy launch Konqueror with the correct arguments instead...
+                KRun::runCommand("konqueror " + url.url(), "konqueror", service->icon());
+            }
+            else {
+                (void) new KRun( url, m_fileitem->mode(), m_fileitem->isLocalFile() );
+            }
+        }
+        else {
+            // When clicking on a link to e.g. $HOME from the desktop, we want to open $HOME
+            // Symlink resolution must only happen on the desktop though (#63014)
+            if ( m_fileitem->isLink() && url.isLocalFile() ) {
+                url = KURL( url, m_fileitem->linkDest() );
+            }
 
-        (void) new KRun( url, m_fileitem->mode(), m_fileitem->isLocalFile() );
-    } else {
+            (void) new KRun( url, m_fileitem->mode(), m_fileitem->isLocalFile() );
+        }
+    }
+    else {
         m_fileitem->run();
     }
 }

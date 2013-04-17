@@ -39,6 +39,7 @@
 #include <konq_popupmenu.h>
 #include <konq_settings.h>
 #include <konq_undo.h>
+#include <kivfreespaceoverlay.h>
 #include <kprotocolinfo.h>
 #include <kstdaction.h>
 #include <kstandarddirs.h>
@@ -148,7 +149,8 @@ KDIconView::KDIconView( TQWidget *parent, const char* name )
       m_bSortDirectoriesFirst( true ),
       m_itemsAlwaysFirst(),
       m_gotIconsArea(false),
-      m_needDesktopAlign(true)
+      m_needDesktopAlign(true),
+      m_paOutstandingOverlaysTimer( 0L )
 {
     setResizeMode( Fixed );
     setIconArea( desktopRect() );  // the default is the whole desktop
@@ -159,8 +161,7 @@ KDIconView::KDIconView( TQWidget *parent, const char* name )
     // Initialize media handler
     mMediaListView = new TQListView();
 
-    connect( TQApplication::clipboard(), TQT_SIGNAL(dataChanged()),
-             this, TQT_SLOT(slotClipboardDataChanged()) );
+    connect( TQApplication::clipboard(), TQT_SIGNAL(dataChanged()), this, TQT_SLOT(slotClipboardDataChanged()) );
 
     setURL( desktopURL() ); // sets m_url
 
@@ -298,10 +299,12 @@ void KDIconView::initConfig( bool init )
     m_bSortDirectoriesFirst = KDesktopSettings::directoriesFirst();
     m_itemsAlwaysFirst = KDesktopSettings::alwaysFirstItems(); // Distributor plug-in
 
-    if (KProtocolInfo::isKnownProtocol(TQString::fromLatin1("media")))
+    if (KProtocolInfo::isKnownProtocol(TQString::fromLatin1("media"))) {
         m_enableMedia=KDesktopSettings::mediaEnabled();
-    else
+    }
+    else {
         m_enableMedia=false;
+    }
     TQString tmpList=KDesktopSettings::exclude();
     kdDebug(1204)<<"m_excludeList"<<tmpList<<endl;
     m_excludedMedia=TQStringList::split(",",tmpList,false);
@@ -312,6 +315,7 @@ void KDIconView::initConfig( bool init )
         m_dirLister->setShowingDotFiles( m_bShowDot );
         m_dirLister->emitChanges();
     }
+    slotFreeSpaceOverlaySettingChanged();
 
     setArrangement(m_bVertAlign ? TopToBottom : LeftToRight);
 
@@ -666,24 +670,27 @@ void KDIconView::slotMouseButtonPressed(int _button, TQIconViewItem* _item, cons
     //kdDebug(1204) << "KDIconView::slotMouseButtonPressed" << endl;
     if (!m_dirLister) return;
     m_lastDeletedIconPos = TQPoint(); // user action -> not renaming an icon
-    if(!_item)
+    if(!_item) {
         KRootWm::self()->mousePressed( _global, _button );
+    }
 }
 
 void KDIconView::slotMouseButtonClickedKDesktop(int _button, TQIconViewItem* _item, const TQPoint&)
 {
     if (!m_dirLister) return;
     //kdDebug(1204) << "KDIconView::slotMouseButtonClickedKDesktop" << endl;
-    if ( _item && _button == Qt::MidButton )
+    if ( _item && _button == Qt::MidButton ) {
         slotExecuted(_item);
+    }
 }
 
 // -----------------------------------------------------------------------------
 
 void KDIconView::slotReturnPressed( TQIconViewItem *item )
 {
-    if (item && item->isSelected())
+    if (item && item->isSelected()) {
         slotExecuted(item);
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -992,8 +999,9 @@ bool KDIconView::makeFriendlyText( KFileIVI *fileIVI )
         u.addPath( ".directory" );
         // using TDEStandardDirs as this one checks for path being
         // a file instead of a directory
-        if ( TDEStandardDirs::exists( u.path() ) )
+        if ( TDEStandardDirs::exists( u.path() ) ) {
             desktopFile = u.path();
+        }
     }
     else if ( isDesktopFile( item ) )
     {
@@ -1004,36 +1012,44 @@ bool KDIconView::makeFriendlyText( KFileIVI *fileIVI )
     {
         KSimpleConfig cfg( desktopFile, true );
         cfg.setDesktopGroup();
-        if (cfg.readBoolEntry("Hidden"))
+        if (cfg.readBoolEntry("Hidden")) {
             return false;
+        }
 
-        if (cfg.readBoolEntry( "NoDisplay", false ))
+        if (cfg.readBoolEntry( "NoDisplay", false )) {
             return false;
+        }
 
         TQStringList tmpList;
         if (cfg.hasKey("OnlyShowIn"))
         {
-            if (!cfg.readListEntry("OnlyShowIn", ';').contains("TDE"))
+            if (!cfg.readListEntry("OnlyShowIn", ';').contains("TDE")) {
                 return false;
+            }
         }
         if (cfg.hasKey("NotShowIn"))
         {
-            if (cfg.readListEntry("NotShowIn", ';').contains("TDE"))
+            if (cfg.readListEntry("NotShowIn", ';').contains("TDE")) {
                 return false;
+            }
         }
         if (cfg.hasKey("TryExec"))
         {
-            if (TDEStandardDirs::findExe( cfg.readEntry( "TryExec" ) ).isEmpty())
+            if (TDEStandardDirs::findExe( cfg.readEntry( "TryExec" ) ).isEmpty()) {
                 return false;
+            }
         }
 
         TQString name = cfg.readEntry("Name");
-        if ( !name.isEmpty() )
+        if ( !name.isEmpty() ) {
             fileIVI->setText( name );
-        else
+        }
+        else {
             // For compatibility
             fileIVI->setText( stripDesktopExtension( fileIVI->text() ) );
+        }
     }
+
     return true;
 }
 
@@ -1057,8 +1073,9 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
 
   TQString desktopPath;
   KURL desktop_URL = desktopURL();
-  if (desktop_URL.isLocalFile())
+  if (desktop_URL.isLocalFile()) {
     desktopPath = desktop_URL.path();
+  }
   // We have new items, so we'll need to repaint in slotCompleted
   m_bNeedRepaint = true;
   kdDebug(1214) << "KDIconView::slotNewItems count=" << entries.count() << endl;
@@ -1090,12 +1107,14 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
     if (!desktopPath.isEmpty() && url.isLocalFile() && !url.path().startsWith(desktopPath))
     {
       TQString fileName = url.fileName();
-      if (TQFile::exists(desktopPath + fileName))
+      if (TQFile::exists(desktopPath + fileName)) {
          continue; // Don't duplicate entry
+      }
 
       TQString mostLocal = locate("appdata", "Desktop/"+fileName);
-      if (!mostLocal.isEmpty() && (mostLocal != url.path()))
+      if (!mostLocal.isEmpty() && (mostLocal != url.path())) {
          continue; // Don't duplicate entry
+      }
     }
 
     // No delayed mimetype determination on the desktop
@@ -1197,6 +1216,11 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
             newItemsList.append(fileIVI);
       }
     }
+
+    KFileItem* fileItem = fileIVI->item();
+    if ( fileItem->mimetype().startsWith("media/") && fileItem->mimetype().contains("_mounted") && KDesktopSettings::mediaFreeSpaceDisplayEnabled() ) {
+        showFreeSpaceOverlay(fileIVI);
+    }
   }
 
   KFileIVIList::iterator newitemit;
@@ -1249,8 +1273,12 @@ void KDIconView::slotRefreshItems( const KFileItemList & entries )
                 }
                 else
                     fileIVI->refreshIcon( true );
-                if ( rit.current()->isMimeTypeKnown() )
+                if ( rit.current()->isMimeTypeKnown() ) {
                     fileIVI->setMouseOverAnimation( rit.current()->iconName() );
+                }
+                if ( rit.current()->mimetype().startsWith("media/") && rit.current()->mimetype().contains("_mounted") && KDesktopSettings::mediaFreeSpaceDisplayEnabled() ) {
+                    showFreeSpaceOverlay(fileIVI);
+                }
                 break;
             }
         }
@@ -1286,16 +1314,18 @@ void KDIconView::refreshIcons()
 
 void KDIconView::FilesAdded( const KURL & directory )
 {
-    if ( directory.path().length() <= 1 && directory.protocol() == "trash" )
+    if ( directory.path().length() <= 1 && directory.protocol() == "trash" ) {
         refreshTrashIcon();
+    }
 }
 
 void KDIconView::FilesRemoved( const KURL::List & fileList )
 {
     if ( !fileList.isEmpty() ) {
         const KURL url = fileList.first();
-        if ( url.protocol() == "trash" )
+        if ( url.protocol() == "trash" ) {
             refreshTrashIcon();
+        }
     }
 }
 
@@ -1317,6 +1347,73 @@ void KDIconView::refreshTrashIcon()
     }
 }
 
+void KDIconView::slotFreeSpaceOverlaySettingChanged()
+{
+    bool show = KDesktopSettings::mediaFreeSpaceDisplayEnabled();
+
+    for ( TQIconViewItem *item = firstItem(); item; item = item->nextItem() )
+    {
+        KFileIVI* kItem = static_cast<KFileIVI*>(item);
+        if ( !kItem->item()->isDir() ) continue;
+
+        if (show) {
+            showFreeSpaceOverlay(kItem);
+        } else {
+            kItem -> setShowFreeSpaceOverlay(false);
+        }
+    }
+
+    updateContents();
+}
+
+void KDIconView::showFreeSpaceOverlay(KFileIVI* item)
+{
+    KFileItem* fileItem = item->item();
+
+    if ( TDEGlobalSettings::showFilePreview( fileItem->url() ) ) {
+        m_paOutstandingOverlays.append(item);
+        if (m_paOutstandingOverlays.count() == 1)
+        {
+           if (!m_paOutstandingOverlaysTimer)
+           {
+              m_paOutstandingOverlaysTimer = new TQTimer(this);
+              connect(m_paOutstandingOverlaysTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotFreeSpaceOverlayStart()));
+           }
+           m_paOutstandingOverlaysTimer->start(20, true);
+        }
+    }
+}
+
+void KDIconView::slotFreeSpaceOverlayStart()
+{
+    do
+    {
+       KFileIVI* item = m_paOutstandingOverlays.first();
+       if (!item) {
+          return; // Nothing to do
+       }
+
+       KIVFreeSpaceOverlay* overlay = item->setShowFreeSpaceOverlay( true );
+
+       if (overlay)
+       {
+          connect( overlay, TQT_SIGNAL( finished() ), this, TQT_SLOT( slotFreeSpaceOverlayFinished() ) );
+          overlay->start(); // Watch out, may emit finished() immediately!!
+          return; // Let it run....
+       }
+       m_paOutstandingOverlays.removeFirst();
+    } while (true);
+}
+
+void KDIconView::slotFreeSpaceOverlayFinished()
+{
+    m_paOutstandingOverlays.removeFirst();
+
+    if (m_paOutstandingOverlays.count() > 0) {
+        m_paOutstandingOverlaysTimer->start(0, true); // Don't call directly to prevent deep recursion.
+    }
+}
+
 // -----------------------------------------------------------------------------
 
 void KDIconView::slotDeleteItem( KFileItem * _fileitem )
@@ -1332,8 +1429,9 @@ void KDIconView::slotDeleteItem( KFileItem * _fileitem )
 
         TQString group = iconPositionGroupPrefix();
         group.append( fileIVI->item()->url().fileName() );
-        if ( m_dotDirectory->hasGroup( group ) )
+        if ( m_dotDirectory->hasGroup( group ) ) {
             m_dotDirectory->deleteGroup( group );
+        }
 
         m_lastDeletedIconPos = fileIVI->pos();
         delete fileIVI;
