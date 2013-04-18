@@ -624,6 +624,16 @@ if [ ! -f $PROFILE_DIR/share/config/tderadiorc ] && [ -f $PROFILE_DIR/share/conf
   mv $PROFILE_DIR/share/config/kradiorc $PROFILE_DIR/share/config/tderadiorc 2>/dev/null
   mv $PROFILE_DIR/share/apps/kradio $PROFILE_DIR/share/apps/tderadio 2>/dev/null
 fi
+if [ ! -f $HOME/.tderc ] && [ -f $HOME/.kderc ]; then
+  # Do not blindly move $HOME/.kderc because that file might be from KDE4.
+  # The first test is from a Trinity .kderc and the second test is from a KDE4 .kderc.
+  if [ "`grep selectBackground $HOME/.kderc`" != "" ] && [ "`grep smallestReadableFont $HOME/.kderc`" = "" ]; then
+    # Both tests pass. Probably a Trinity .kderc.
+    Message_Prefix
+    echo "  .kderc->.tderc"
+    mv $HOME/.kderc $HOME/.tderc 2>/dev/null
+  fi
+fi
 
 # Disable some features new to R14, otherwise users will see an unfamiliar desktop.
 if [[ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "ShowDeepButtons" --default false) == "false" ]]; then

@@ -655,7 +655,7 @@ void KTheme::apply()
     if ( !fontsElem.isNull() )
     {
         TDEConfig * fontsConf = TDEGlobal::config();
-        TDEConfig * kde1xConf = new KSimpleConfig( TQDir::homeDirPath() + "/.kderc" );
+        TDEConfig * kde1xConf = new KSimpleConfig( TQDir::homeDirPath() + "/.tderc" );
         kde1xConf->setGroup( "General" );
 
         TQDomNodeList fontList = fontsElem.childNodes();
