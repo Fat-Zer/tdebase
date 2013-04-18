@@ -51,6 +51,12 @@ private:
         KURLRequester *urDesktop;
         KURLRequester *urAutostart;
         KURLRequester *urDocument;
+        KURLRequester *urDownload;
+        KURLRequester *urMusic;
+        KURLRequester *urPictures;
+        KURLRequester *urPublicShare;
+        KURLRequester *urTemplates;
+        KURLRequester *urVideos;
 
         bool moveDir( const KURL & src, const KURL & dest, const TQString & type );
         bool m_ok;

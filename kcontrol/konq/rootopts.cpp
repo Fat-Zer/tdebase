@@ -50,7 +50,7 @@ DesktopPathConfig::DesktopPathConfig(TQWidget *parent, const char * )
 
 #undef RO_LASTROW
 #undef RO_LASTCOL
-#define RO_LASTROW 4   // 3 paths + last row
+#define RO_LASTROW 10   // 9 paths + last row
 #define RO_LASTCOL 2
 
   int row = 0;
@@ -109,10 +109,81 @@ DesktopPathConfig::DesktopPathConfig(TQWidget *parent, const char * )
   tmpLabel->setBuddy( urDocument );
   lay->addMultiCellWidget(urDocument, row, row, 1, RO_LASTCOL);
   connect(urDocument, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(changed()));
-  wtstr = i18n("This folder will be used by default to "
-               "load or save documents from or to.");
+  wtstr = i18n("This folder will be used by default to load or save documents from or to.");
   TQWhatsThis::add( tmpLabel, wtstr );
   TQWhatsThis::add( urDocument, wtstr );
+
+  row++;
+  tmpLabel = new TQLabel(i18n("Download path:"), this);
+  lay->addWidget(tmpLabel, row, 0);
+  urDownload = new KURLRequester(this);
+  urDownload->setMode( KFile::Directory );
+  tmpLabel->setBuddy( urDownload );
+  lay->addMultiCellWidget(urDownload, row, row, 1, RO_LASTCOL);
+  connect(urDownload, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(changed()));
+  wtstr = i18n("This folder will be used by default to load or save downloads from or to.");
+  TQWhatsThis::add( tmpLabel, wtstr );
+  TQWhatsThis::add( urDownload, wtstr );
+
+  row++;
+  tmpLabel = new TQLabel(i18n("Music path:"), this);
+  lay->addWidget(tmpLabel, row, 0);
+  urMusic = new KURLRequester(this);
+  urMusic->setMode( KFile::Directory );
+  tmpLabel->setBuddy( urMusic );
+  lay->addMultiCellWidget(urMusic, row, row, 1, RO_LASTCOL);
+  connect(urMusic, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(changed()));
+  wtstr = i18n("This folder will be used by default to load or save music from or to.");
+  TQWhatsThis::add( tmpLabel, wtstr );
+  TQWhatsThis::add( urMusic, wtstr );
+
+  row++;
+  tmpLabel = new TQLabel(i18n("Pictures path:"), this);
+  lay->addWidget(tmpLabel, row, 0);
+  urPictures = new KURLRequester(this);
+  urPictures->setMode( KFile::Directory );
+  tmpLabel->setBuddy( urPictures );
+  lay->addMultiCellWidget(urPictures, row, row, 1, RO_LASTCOL);
+  connect(urPictures, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(changed()));
+  wtstr = i18n("This folder will be used by default to load or save pictures from or to.");
+  TQWhatsThis::add( tmpLabel, wtstr );
+  TQWhatsThis::add( urPictures, wtstr );
+
+  row++;
+  tmpLabel = new TQLabel(i18n("Public Share path:"), this);
+  lay->addWidget(tmpLabel, row, 0);
+  urPublicShare = new KURLRequester(this);
+  urPublicShare->setMode( KFile::Directory );
+  tmpLabel->setBuddy( urPublicShare );
+  lay->addMultiCellWidget(urPublicShare, row, row, 1, RO_LASTCOL);
+  connect(urPublicShare, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(changed()));
+  wtstr = i18n("This folder will be used by default to load or save public shared files from or to.");
+  TQWhatsThis::add( tmpLabel, wtstr );
+  TQWhatsThis::add( urPublicShare, wtstr );
+
+  row++;
+  tmpLabel = new TQLabel(i18n("Templates path:"), this);
+  lay->addWidget(tmpLabel, row, 0);
+  urTemplates = new KURLRequester(this);
+  urTemplates->setMode( KFile::Directory );
+  tmpLabel->setBuddy( urTemplates );
+  lay->addMultiCellWidget(urTemplates, row, row, 1, RO_LASTCOL);
+  connect(urTemplates, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(changed()));
+  wtstr = i18n("This folder will be used by default to load or save templates from or to.");
+  TQWhatsThis::add( tmpLabel, wtstr );
+  TQWhatsThis::add( urTemplates, wtstr );
+
+  row++;
+  tmpLabel = new TQLabel(i18n("Videos path:"), this);
+  lay->addWidget(tmpLabel, row, 0);
+  urVideos = new KURLRequester(this);
+  urVideos->setMode( KFile::Directory );
+  tmpLabel->setBuddy( urVideos );
+  lay->addMultiCellWidget(urVideos, row, row, 1, RO_LASTCOL);
+  connect(urVideos, TQT_SIGNAL(textChanged(const TQString &)), this, TQT_SLOT(changed()));
+  wtstr = i18n("This folder will be used by default to load or save videos from or to.");
+  TQWhatsThis::add( tmpLabel, wtstr );
+  TQWhatsThis::add( urVideos, wtstr );
 
   // -- Bottom --
   Q_ASSERT( row == RO_LASTROW-1 ); // if it fails here, check the row++ and RO_LASTROW above
@@ -134,10 +205,16 @@ void DesktopPathConfig::load( bool useDefaults )
     urAutostart->setURL( config.readPathEntry( "Autostart" , TDEGlobalSettings::autostartPath() ));
 
     TDEConfig xdguserconfig( TQDir::homeDirPath()+"/.config/user-dirs.dirs" );
-     
+
     urDesktop->setURL( xdguserconfig.readPathEntry( "XDG_DESKTOP_DIR" , TQDir::homeDirPath() + "/Desktop" ).remove(  "\"" ));
-    urDocument->setURL( xdguserconfig.readPathEntry( "XDG_DOCUMENTS_DIR", TQDir::homeDirPath()).remove(  "\"" ));
-    
+    urDocument->setURL( xdguserconfig.readPathEntry( "XDG_DOCUMENTS_DIR", TQDir::homeDirPath() + "/Documents").remove(  "\"" ));
+    urDownload->setURL( xdguserconfig.readPathEntry( "XDG_DOWNLOAD_DIR" , TQDir::homeDirPath() + "/Downloads" ).remove(  "\"" ));
+    urMusic->setURL( xdguserconfig.readPathEntry( "XDG_MUSIC_DIR" , TQDir::homeDirPath() + "/Music" ).remove(  "\"" ));
+    urPictures->setURL( xdguserconfig.readPathEntry( "XDG_PICTURES_DIR" , TQDir::homeDirPath() + "/Pictures" ).remove(  "\"" ));
+    urPublicShare->setURL( xdguserconfig.readPathEntry( "XDG_PUBLICSHARE_DIR" , TQDir::homeDirPath() + "/Public" ).remove(  "\"" ));
+    urTemplates->setURL( xdguserconfig.readPathEntry( "XDG_TEMPLATES_DIR" , TQDir::homeDirPath() + "/Templates" ).remove(  "\"" ));
+    urVideos->setURL( xdguserconfig.readPathEntry( "XDG_VIDEOS_DIR" , TQDir::homeDirPath() + "/Videos" ).remove(  "\"" ));
+
     emit changed( useDefaults );
 }
 
@@ -169,6 +246,36 @@ void DesktopPathConfig::save()
     documentURL.setPath( TDEGlobalSettings::documentPath() );
     KURL newDocumentURL;
     newDocumentURL.setPath(urDocument->url());
+
+    KURL downloadURL;
+//     downloadURL.setPath( TDEGlobalSettings::downloadPath() );
+    KURL newDownloadURL;
+    newDownloadURL.setPath(urDownload->url());
+
+    KURL musicURL;
+//     musicURL.setPath( TDEGlobalSettings::musicPath() );
+    KURL newMusicURL;
+    newMusicURL.setPath(urMusic->url());
+
+    KURL picturesURL;
+//     picturesURL.setPath( TDEGlobalSettings::picturesPath() );
+    KURL newPicturesURL;
+    newPicturesURL.setPath(urPictures->url());
+
+    KURL publicShareURL;
+//     publicShareURL.setPath( TDEGlobalSettings::publicSharePath() );
+    KURL newPublicShareURL;
+    newPublicShareURL.setPath(urPublicShare->url());
+
+    KURL templatesURL;
+//     templatesURL.setPath( TDEGlobalSettings::templatesPath() );
+    KURL newTemplatesURL;
+    newTemplatesURL.setPath(urTemplates->url());
+
+    KURL videosURL;
+//     videosURL.setPath( TDEGlobalSettings::videosPath() );
+    KURL newVideosURL;
+    newVideosURL.setPath(urVideos->url());
 
     if ( !newDesktopURL.equals( desktopURL, true ) )
     {
@@ -208,7 +315,7 @@ void DesktopPathConfig::save()
 
         if ( moveDir( KURL( TDEGlobalSettings::desktopPath() ), KURL( urlDesktop ), i18n("Desktop") ) )
         {
-            xdgconfig->writePathEntry( "XDG_DESKTOP_DIR", '"'+ urlDesktop + '"', true, false );
+            xdgconfig->writePathEntry( "XDG_DESKTOP_DIR", '"'+ urlDesktop + '"', true, false, false, false );
             pathChanged = true;
         }
     }
@@ -219,7 +326,7 @@ void DesktopPathConfig::save()
             autostartMoved = moveDir( KURL( TDEGlobalSettings::autostartPath() ), KURL( urAutostart->url() ), i18n("Autostart") );
         if (autostartMoved)
         {
-            config->writePathEntry( "Autostart", urAutostart->url(), true, true );
+            config->writePathEntry( "Autostart", urAutostart->url(), true, true, false, false );
             pathChanged = true;
         }
     }
@@ -240,7 +347,133 @@ void DesktopPathConfig::save()
 
         if (pathOk)
         {
-            xdgconfig->writePathEntry( "XDG_DOCUMENTS_DIR", '"' + path + '"', true, false );
+            xdgconfig->writePathEntry( "XDG_DOCUMENTS_DIR", '"' + path + '"', true, false, false, false );
+            pathChanged = true;
+        }
+    }
+
+    if ( !newDownloadURL.equals( downloadURL, true ) )
+    {
+        bool pathOk = true;
+        TQString path = urDownload->url();
+        if (!TQDir(path).exists())
+        {
+            if (!TDEStandardDirs::makeDir(path))
+            {
+                KMessageBox::sorry(this, TDEIO::buildErrorString(TDEIO::ERR_COULD_NOT_MKDIR, path));
+                urDownload->setURL(downloadURL.path());
+                pathOk = false;
+            }
+        }
+
+        if (pathOk)
+        {
+            xdgconfig->writePathEntry( "XDG_DOWNLOAD_DIR", '"' + path + '"', true, false, false, false );
+            pathChanged = true;
+        }
+    }
+
+    if ( !newMusicURL.equals( musicURL, true ) )
+    {
+        bool pathOk = true;
+        TQString path = urMusic->url();
+        if (!TQDir(path).exists())
+        {
+            if (!TDEStandardDirs::makeDir(path))
+            {
+                KMessageBox::sorry(this, TDEIO::buildErrorString(TDEIO::ERR_COULD_NOT_MKDIR, path));
+                urMusic->setURL(musicURL.path());
+                pathOk = false;
+            }
+        }
+
+        if (pathOk)
+        {
+            xdgconfig->writePathEntry( "XDG_MUSIC_DIR", '"' + path + '"', true, false, false, false );
+            pathChanged = true;
+        }
+    }
+
+    if ( !newPicturesURL.equals( picturesURL, true ) )
+    {
+        bool pathOk = true;
+        TQString path = urPictures->url();
+        if (!TQDir(path).exists())
+        {
+            if (!TDEStandardDirs::makeDir(path))
+            {
+                KMessageBox::sorry(this, TDEIO::buildErrorString(TDEIO::ERR_COULD_NOT_MKDIR, path));
+                urPictures->setURL(picturesURL.path());
+                pathOk = false;
+            }
+        }
+
+        if (pathOk)
+        {
+            xdgconfig->writePathEntry( "XDG_PICTURES_DIR", '"' + path + '"', true, false, false, false );
+            pathChanged = true;
+        }
+    }
+
+    if ( !newPublicShareURL.equals( publicShareURL, true ) )
+    {
+        bool pathOk = true;
+        TQString path = urPublicShare->url();
+        if (!TQDir(path).exists())
+        {
+            if (!TDEStandardDirs::makeDir(path))
+            {
+                KMessageBox::sorry(this, TDEIO::buildErrorString(TDEIO::ERR_COULD_NOT_MKDIR, path));
+                urPublicShare->setURL(publicShareURL.path());
+                pathOk = false;
+            }
+        }
+
+        if (pathOk)
+        {
+            xdgconfig->writePathEntry( "XDG_PUBLICSHARE_DIR", '"' + path + '"', true, false, false, false );
+            pathChanged = true;
+        }
+    }
+
+    if ( !newTemplatesURL.equals( templatesURL, true ) )
+    {
+        bool pathOk = true;
+        TQString path = urTemplates->url();
+        if (!TQDir(path).exists())
+        {
+            if (!TDEStandardDirs::makeDir(path))
+            {
+                KMessageBox::sorry(this, TDEIO::buildErrorString(TDEIO::ERR_COULD_NOT_MKDIR, path));
+                urTemplates->setURL(templatesURL.path());
+                pathOk = false;
+            }
+        }
+
+        if (pathOk)
+        {
+            xdgconfig->writePathEntry( "XDG_TEMPLATES_DIR", '"' + path + '"', true, false, false, false );
+            pathChanged = true;
+        }
+    }
+
+    if ( !newVideosURL.equals( videosURL, true ) )
+    {
+        bool pathOk = true;
+        TQString path = urVideos->url();
+        if (!TQDir(path).exists())
+        {
+            if (!TDEStandardDirs::makeDir(path))
+            {
+                KMessageBox::sorry(this, TDEIO::buildErrorString(TDEIO::ERR_COULD_NOT_MKDIR, path));
+                urVideos->setURL(videosURL.path());
+                pathOk = false;
+            }
+        }
+
+        if (pathOk)
+        {
+            xdgconfig->writePathEntry( "XDG_VIDEOS_DIR", '"' + path + '"', true, false, false, false );
             pathChanged = true;
         }
     }
@@ -261,10 +494,12 @@ void DesktopPathConfig::save()
 
     int konq_screen_number = TDEApplication::desktop()->primaryScreen();
     TQCString appname;
-    if (konq_screen_number == 0)
+    if (konq_screen_number == 0) {
         appname = "kdesktop";
-    else
+    }
+    else {
         appname.sprintf("kdesktop-screen-%d", konq_screen_number);
+    }
     kapp->dcopClient()->send( appname, "KDesktopIface", "configure()", data );
 }
 
