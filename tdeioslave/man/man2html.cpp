@@ -4083,7 +4083,7 @@ static char *scan_request(char *c)
                             out_html( " Manpage</TITLE>\n");
                             out_html( "<link rel=\"stylesheet\" href=\"");
                             out_html(htmlPath);
-                            out_html("/kde-default.css\" type=\"text/css\">\n" );
+                            out_html("/tde-default.css\" type=\"text/css\">\n" );
                             out_html( "<meta name=\"ROFF Type\" content=\"");
                             if (mandoc_command)
                                 out_html("mdoc");

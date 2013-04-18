@@ -40,7 +40,7 @@ View::View( TQWidget *parentWidget, const char *widgetName,
     connect( this, TQT_SIGNAL( popupMenu( const TQString &, const TQPoint& ) ),
              this, TQT_SLOT( showMenu( const TQString &, const TQPoint& ) ) );
              
-    TQString css = langLookup("common/kde-default.css");
+    TQString css = langLookup("common/tde-default.css");
     if (!css.isEmpty())
     {
        TQFile css_file(css);
@@ -48,7 +48,7 @@ View::View( TQWidget *parentWidget, const char *widgetName,
        {
           TQTextStream s(&css_file);
           TQString stylesheet = s.read();
-          preloadStyleSheet("help:/common/kde-default.css", stylesheet);
+          preloadStyleSheet("help:/common/tde-default.css", stylesheet);
        }
     }
 
