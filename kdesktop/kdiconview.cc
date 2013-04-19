@@ -198,8 +198,9 @@ KDIconView::KDIconView( TQWidget *parent, const char* name )
 
 KDIconView::~KDIconView()
 {
-    if (m_dotDirectory && !m_bEditableDesktopIcons)
+    if (m_dotDirectory && !m_bEditableDesktopIcons) {
       m_dotDirectory->rollback(false); // Don't save positions
+    }
 
     delete m_dotDirectory;
     delete m_dirLister;
@@ -210,8 +211,9 @@ void KDIconView::initDotDirectories()
 {
     TQStringList dirs = m_desktopDirs;
     KURL u = desktopURL();
-    if (u.isLocalFile())
+    if (u.isLocalFile()) {
        dirs.prepend(u.path());
+    }
 
     TQString prefix = iconPositionGroupPrefix();
     TQString dotFileName = locateLocal("appdata", "IconPositions");
@@ -1552,8 +1554,9 @@ void KDIconView::slotItemRenamed(TQIconViewItem* _item, const TQString &name)
                || (type->name() == "media/builtin-webbrowser") )
              {
                 bDesktopFile = true;
-                if (!newName.endsWith(".desktop"))
+                if (!newName.endsWith(".desktop")) {
                    newName += ".desktop";
+                }
              }
              else if(type->name() == "inode/directory") {
                 desktopFile += "/.directory";

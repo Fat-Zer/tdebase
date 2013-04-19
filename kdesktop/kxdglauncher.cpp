@@ -24,6 +24,7 @@
 #include <tqtextcodec.h>
 
 #include <krun.h>
+#include <tdefile.h>
 #include <tdelocale.h>
 #include <tdeapplication.h>
 #include <tdecmdlineargs.h>
@@ -31,6 +32,8 @@
 #include <kinputdialog.h>
 #include <tdemessagebox.h>
 #include <tdeconfig.h>
+#include <kurlrequester.h>
+#include <kurlrequesterdlg.h>
 
 #include <stdlib.h>
 
@@ -51,10 +54,12 @@ void readXdgUserDirs(TQString *desktop, TQString *documents)
 	TQString line = s.readLine();
 	while (!line.isNull())
 	{
-		if (line.startsWith("XDG_DESKTOP_DIR="))
+		if (line.startsWith("XDG_DESKTOP_DIR=")) {
 			*desktop = TQString(line.remove("XDG_DESKTOP_DIR=").remove("\"")).replace("$HOME", TQDir::homeDirPath());
-		else if (line.startsWith("XDG_DOCUMENTS_DIR="))
+		}
+		else if (line.startsWith("XDG_DOCUMENTS_DIR=")) {
 			*documents = TQString(line.remove("XDG_DOCUMENTS_DIR=").remove("\"")).replace("$HOME", TQDir::homeDirPath());
+		}
 
 		line = s.readLine();
 	}
@@ -115,50 +120,58 @@ int main( int argc, char **argv)
 				}
 			}
 			else {
-				TQString newDirectory = KInputDialog::text("Create Documents directory", "Please confirm your Documents directory location<br>Upon confimation a new directory will be created", getDocumentPath());
-				if (newDirectory == TQString::null) {
+				KURLRequesterDlg newDirectoryRequester(getDocumentPath(), i18n("Please confirm your Documents directory location<br>Upon confimation a new directory will be created"), 0, NULL, true);
+				newDirectoryRequester.setCaption(i18n("Create Documents directory"));
+				newDirectoryRequester.urlRequester()->setMode(KFile::Directory);
+				if (newDirectoryRequester.exec() != TQDialog::Accepted) {
 					return 1;
 				}
 				else {
-					if (newDirectory.length() < 4096) {
-						bool directoryOk = false;
-						if (myqdir.exists(newDirectory, TRUE) == false) {
-							if (myqdir.mkdir(newDirectory, TRUE) == true) {
+					TQString newDirectory = newDirectoryRequester.urlRequester()->url();
+					if (newDirectory == TQString::null) {
+						return 1;
+					}
+					else {
+						if (newDirectory.length() < 4096) {
+							bool directoryOk = false;
+							if (myqdir.exists(newDirectory, TRUE) == false) {
+								if (myqdir.mkdir(newDirectory, TRUE) == true) {
+									directoryOk = TRUE;
+								}
+							}
+							else {
 								directoryOk = TRUE;
 							}
-						}
-						else {
-							directoryOk = TRUE;
-						}
-						if (directoryOk == true) {
-							TQString xdgModifiedDirectory = newDirectory;
-							xdgModifiedDirectory = xdgModifiedDirectory.replace(TQDir::homeDirPath(), "$HOME");
-							while (xdgModifiedDirectory.endsWith("/")) {
-								xdgModifiedDirectory.truncate(xdgModifiedDirectory.length()-1);
-							}
-							TDEConfig config(TQDir::homeDirPath() + "/.config/user-dirs.dirs", false, false);
-							config.writeEntry("XDG_DOCUMENTS_DIR", TQString("\"") + xdgModifiedDirectory + TQString("\""), true);
-							config.sync();
-							if (args->isSet( "getpath" ) == true) {
-								printf("%s\n\r", (const char *)getDocumentPath().local8Bit());
+							if (directoryOk == true) {
+								TQString xdgModifiedDirectory = newDirectory;
+								xdgModifiedDirectory = xdgModifiedDirectory.replace(TQDir::homeDirPath(), "$HOME");
+								while (xdgModifiedDirectory.endsWith("/")) {
+									xdgModifiedDirectory.truncate(xdgModifiedDirectory.length()-1);
+								}
+								TDEConfig config(TQDir::homeDirPath() + "/.config/user-dirs.dirs", false, false);
+								config.writeEntry("XDG_DOCUMENTS_DIR", TQString("\"") + xdgModifiedDirectory + TQString("\""), true);
+								config.sync();
+								if (args->isSet( "getpath" ) == true) {
+									printf("%s\n\r", (const char *)getDocumentPath().local8Bit());
+									return 0;
+								}
+								else {
+									KRun * run = new KRun( getDocumentPath(), 0, false, false );
+									TQObject::connect( run, TQT_SIGNAL( finished() ), &app, TQT_SLOT( quit() ));
+									TQObject::connect( run, TQT_SIGNAL( error() ), &app, TQT_SLOT( quit() ));
+									app.exec();
+								}
 								return 0;
 							}
 							else {
-								KRun * run = new KRun( getDocumentPath(), 0, false, false );
-								TQObject::connect( run, TQT_SIGNAL( finished() ), &app, TQT_SLOT( quit() ));
-								TQObject::connect( run, TQT_SIGNAL( error() ), &app, TQT_SLOT( quit() ));
-								app.exec();
+								KMessageBox::error(0, i18n("Unable to create directory ") + TQString("\"") + newDirectory + TQString("\"\n") + i18n("Please check folder permissions and try again"), i18n("Unable to create directory"));
+								return 1;
 							}
-							return 0;
 						}
 						else {
-							KMessageBox::error(0, i18n("Unable to create directory ") + TQString("\"") + newDirectory + TQString("\"\n") + i18n("Please check folder permissions and try again"), i18n("Unable to create directory"));
+							KMessageBox::error(0, i18n("Unable to create the directory ") + newDirectory + TQString("\n") + i18n("Directory path cannot be longer than 4096 characters"), i18n("Unable to create directory"));
 							return 1;
 						}
-					}
-					else {
-						KMessageBox::error(0, i18n("Unable to create the directory ") + newDirectory + TQString("\n") + i18n("Directory path cannot be longer than 4096 characters"), i18n("Unable to create directory"));
-						return 1;
 					}
 				}
 			}

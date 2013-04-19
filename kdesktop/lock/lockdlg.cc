@@ -423,28 +423,34 @@ void PasswordDlg::reapVerify()
     ::close( sFd );
     int status;
     pid_t retpid = ::waitpid( sPid, &status, 0 );
-    if (WIFEXITED(status)) {
-        switch (WEXITSTATUS(status)) {
-        case AuthOk:
-            greet->succeeded();
-            accept();
-            return;
-        case AuthBad:
-            greet->failed();
-            mUnlockingFailed = true;
-            updateLabel();
-            mFailedTimerId = startTimer(1500);
-            ok->setEnabled(false);
-            cancel->setEnabled(false);
-            mNewSessButton->setEnabled( false );
-            return;
-        case AuthAbort:
-            return;
-        }
-    }
-    else if (WIFSIGNALED(status)) {
+    if (retpid < 0) {
         // FIXME
         // ERROR
+    }
+    else {
+        if (WIFEXITED(status)) {
+            switch (WEXITSTATUS(status)) {
+            case AuthOk:
+                greet->succeeded();
+                accept();
+                return;
+            case AuthBad:
+                greet->failed();
+                mUnlockingFailed = true;
+                updateLabel();
+                mFailedTimerId = startTimer(1500);
+                ok->setEnabled(false);
+                cancel->setEnabled(false);
+                mNewSessButton->setEnabled( false );
+                return;
+            case AuthAbort:
+                return;
+            }
+        }
+        else if (WIFSIGNALED(status)) {
+            // FIXME
+            // ERROR
+        }
     }
     cantCheck();
 }

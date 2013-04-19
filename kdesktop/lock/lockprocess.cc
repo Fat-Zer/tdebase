@@ -2698,23 +2698,40 @@ ControlPipeHandlerObject::~ControlPipeHandlerObject() {
 }
 
 void ControlPipeHandlerObject::run(void) {
+	int display_number = atoi(TQString(XDisplayString(tqt_xdisplay())).replace(":","").ascii());
+
+	if (display_number < 0) {
+		printf("[kdesktop_lock] Warning: unable to create control socket.  Interactive logon modules may not function properly.\n\r");
+		return;
+	}
+
+	char fifo_file[PATH_MAX];
+	char fifo_file_out[PATH_MAX];
+	snprintf(fifo_file, PATH_MAX, FIFO_FILE, display_number);
+	snprintf(fifo_file_out, PATH_MAX, FIFO_FILE_OUT, display_number);
+
 	/* Create the FIFOs if they do not exist */
 	umask(0);
 	mkdir(FIFO_DIR,0644);
-	mknod(FIFO_FILE, S_IFIFO|0644, 0);
-	chmod(FIFO_FILE, 0644);
+	mknod(fifo_file, S_IFIFO|0644, 0);
+	chmod(fifo_file, 0644);
 	
-	mParent->mPipe_fd = open(FIFO_FILE, O_RDONLY | O_NONBLOCK);
+	mParent->mPipe_fd = open(fifo_file, O_RDONLY | O_NONBLOCK);
 	if (mParent->mPipe_fd > -1) {
 		mParent->mPipeOpen = true;
 	}
 	
-	mknod(FIFO_FILE_OUT, S_IFIFO|0600, 0);
-	chmod(FIFO_FILE_OUT, 0600);
+	mknod(fifo_file_out, S_IFIFO|0600, 0);
+	chmod(fifo_file_out, 0600);
 	
-	mParent->mPipe_fd_out = open(FIFO_FILE_OUT, O_RDWR | O_NONBLOCK);
+	mParent->mPipe_fd_out = open(fifo_file_out, O_RDWR | O_NONBLOCK);
 	if (mParent->mPipe_fd_out > -1) {
 		mParent->mPipeOpen_out = true;
+	}
+
+	if (!mParent->mPipeOpen) {
+		printf("[kdesktop_lock] Warning: unable to create control socket '%s'.  Interactive logon modules may not function properly.\n\r", fifo_file);
+		return;
 	}
 
 	int numread;

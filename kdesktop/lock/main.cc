@@ -25,6 +25,8 @@
 #include "main.h"
 #include "kdesktopsettings.h"
 
+#include <tqfileinfo.h>
+
 #include <tdecmdlineargs.h>
 #include <tdelocale.h>
 #include <tdeglobal.h>
@@ -32,6 +34,7 @@
 #include <tdeglobalsettings.h>
 #include <dcopref.h>
 #include <ksimpleconfig.h>
+#include <kstandarddirs.h>
 
 #include <tdmtsak.h>
 
@@ -313,6 +316,44 @@ int main( int argc, char **argv )
 #else
         MyApp app;
 #endif
+
+        TDELockFile lock(locateLocal("tmp", "kdesktop_lock_lockfile"));
+        lock.setStaleTime(0);
+        TDELockFile::LockResult lockRet = lock.lock();
+        if (lockRet != TDELockFile::LockOK) {
+            // Terminate existing (stale) process if needed
+            int pid;
+            TQString hostName;
+            TQString appName;
+            if (lock.getLockInfo(pid, hostName, appName)) {
+                // Verify that the pid in question is an instance of kdesktop_lock
+                int len;
+                char procpath[PATH_MAX];
+                char fullpath[PATH_MAX];
+                snprintf(procpath, sizeof(procpath), "/proc/%d/exe", pid);
+                len = readlink( procpath, fullpath, sizeof(fullpath) );
+                if (len >= 0) {
+                    fullpath[len] = 0;
+                    TQFileInfo fileInfo(fullpath);
+                    if (fileInfo.baseName() == "kdesktop_lock") {
+                        // Verify that pid in question is owned by current user before killing it
+                        uid_t current_uid = geteuid();
+
+                        struct stat info;
+                        if (lstat(procpath, &info) == 0) {
+                            if (info.st_uid == current_uid) {
+                                kill(pid, SIGKILL);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Force a relock as a stale lockfile or process may have been dealt with above
+        if (!lock.isLocked()) {
+            lockRet = lock.lock(TDELockFile::LockNoBlock | TDELockFile::LockForce);
+        }
 
         kdDebug() << "app " << kdesktop_screen_number << " " << starting_screen << " " << child << " " << child_sockets.count() << " " << parent_connection << endl;
         app.disableSessionManagement();

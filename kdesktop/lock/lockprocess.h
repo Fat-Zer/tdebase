@@ -37,9 +37,8 @@ struct GreeterPluginHandle {
 };
 
 #define FIFO_DIR "/tmp/tdesocket-global"
-#define FIFO_FILE "/tmp/tdesocket-global/kdesktoplockcontrol"
-#define FIFO_FILE_OUT "/tmp/tdesocket-global/kdesktoplockcontrol_out"
-#define PIPE_CHECK_INTERVAL 50
+#define FIFO_FILE "/tmp/tdesocket-global/kdesktoplockcontrol-%d"
+#define FIFO_FILE_OUT "/tmp/tdesocket-global/kdesktoplockcontrol_out-%d"
 
 typedef TQValueList<Window> TQXLibWindowList;
 
