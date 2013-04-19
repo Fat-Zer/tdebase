@@ -116,7 +116,7 @@ MANProtocol::MANProtocol(const TQCString &pool_socket, const TQCString &app_sock
 {
     assert(!_self);
     _self = this;
-    const TQString common_dir = TDEGlobal::dirs()->findResourceDir( "html", "en/common/kde-common.css" );
+    const TQString common_dir = TDEGlobal::dirs()->findResourceDir( "html", "en/common/tde-common.css" );
     const TQString strPath=TQString( "file:%1/en/common" ).arg( common_dir );
     m_htmlPath=strPath.local8Bit(); // ### TODO encode for HTML
     m_cssPath=strPath.local8Bit(); // ### TODO encode for CSS

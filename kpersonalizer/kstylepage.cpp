@@ -188,7 +188,7 @@ void TDEStylePage::saveColors(bool curSettings){
 	////////////////////////////////////////////////////
 	// KDE-1.x support
 	KSimpleConfig *tdeconfig =
-	new KSimpleConfig( TQDir::homeDirPath() + "/.kderc" );
+	new KSimpleConfig( TQDir::homeDirPath() + "/.tderc" );
 	tdeconfig->setGroup( "General" );
 	tdeconfig->writeEntry("background", toSave->background );
 	tdeconfig->writeEntry("selectBackground", toSave->selectBackground );

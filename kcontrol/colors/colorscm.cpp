@@ -372,7 +372,7 @@ void KColorScheme::save()
 
     // KDE-1.x support
     KSimpleConfig *config =
-    new KSimpleConfig( TQDir::homeDirPath() + "/.kderc" );
+    new KSimpleConfig( TQDir::homeDirPath() + "/.tderc" );
     config->setGroup( "General" );
     config->writeEntry("background", cs->back );
     config->writeEntry("selectBackground", cs->select );

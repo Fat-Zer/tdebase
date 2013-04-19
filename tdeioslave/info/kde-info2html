@@ -52,7 +52,7 @@ delete $ENV{CDPATH};
 delete $ENV{ENV};
 require $config_file;  #-- configuration settings
 
-my $STYLESHEET_KDE = "<link rel=\"stylesheet\" href=\"help:common/kde-default.css\" type=\"text/css\"/>";
+my $STYLESHEET_KDE = "<link rel=\"stylesheet\" href=\"help:common/tde-default.css\" type=\"text/css\"/>";
 my $LOGO_KDE = "<img src=\"help:/common/kde_logo.png\" alt=\"TDE - The Trinity Desktop Environment\" width=\"296\" height=\"79\" border=\"0\">";
 
 # the use of a query should make sure it never conflicts with a "real" path

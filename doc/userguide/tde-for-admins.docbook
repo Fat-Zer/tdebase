@@ -184,7 +184,7 @@ TDEDIRS='/opt/kde_staff:/opt/trinity'
 class="directory">/opt/kde_staff</filename> contained additional settings
 and applications for staff members. <quote>User Profiles</quote> allow you
 to add this directory only for certain users and not for others.  Add the
-following to <filename>/etc/kderc</filename>:</para>
+following to <filename>/etc/tderc</filename>:</para>
 
 <programlisting>
 [Directories-staff]
@@ -195,11 +195,11 @@ prefixes=/opt/kde_staff
 <filename class="directory">/opt/kde_staff</filename> directory
 tree. (Note that &SuSE; &Linux; uses
 <filename>/etc/kde3rc</filename> instead of
-<filename>/etc/kderc</filename>. Now that we have a named profile it
+<filename>/etc/tderc</filename>. Now that we have a named profile it
 can be assigned to users.</para>
 
 <para>To map profiles to users a mapping file needs to be specified in
-<filename>/etc/kderc</filename>:</para>
+<filename>/etc/tderc</filename>:</para>
 
 <programlisting>
 [Directories]
@@ -2381,7 +2381,7 @@ Installing Software
 = AutoYaST
 = KickStart
 Maintaining Settings
-= /etc/kderc, other settings
+= /etc/tderc, other settings
 = Use rsync to copy files around
 = Shared filesystem such as NFS
 o store profiles themselves on NFS

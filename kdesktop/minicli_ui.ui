@@ -509,7 +509,7 @@
                 <cstring>cbCommand</cstring>
             </property>
             <property name="whatsThis" stdset="0">
-                <string>Enter the command you wish to execute or the address of the resource you want to open. This can be a remote URL like "www.kde.org" or a local one like "~/.kderc".</string>
+                <string>Enter the command you wish to execute or the address of the resource you want to open. This can be a remote URL like "www.kde.org" or a local one like "~/.tderc".</string>
             </property>
         </widget>
         <widget class="TQLabel" row="0" column="0">
@@ -550,7 +550,7 @@
                 </size>
             </property>
             <property name="whatsThis" stdset="0">
-                <string>Enter the command you wish to execute or the address of the resource you want to open. This can be a remote URL like "www.kde.org" or a local one like "~/.kderc".</string>
+                <string>Enter the command you wish to execute or the address of the resource you want to open. This can be a remote URL like "www.kde.org" or a local one like "~/.tderc".</string>
             </property>
         </widget>
         <widget class="TQLabel" row="0" column="1">

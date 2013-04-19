@@ -2,7 +2,7 @@
 
     <head>
         <title>%1</title>
-        <link rel="stylesheet" href="help:/common/kde-default.css" type="text/css" />
+        <link rel="stylesheet" href="help:/common/tde-default.css" type="text/css" />
     </head>
 
     <body>

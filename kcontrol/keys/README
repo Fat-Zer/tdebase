@@ -2,6 +2,6 @@ CHANGES V0.2
 - Global keys stored by default in ~/.trinity/share/config/kdeglobals 
   [Global Keys] group
 - KKeyDialog checks new key choices against exising bindings for the widget
-and against entries in .kderc [Global Keys]
+and against entries in .tderc [Global Keys]
 - kcmkeys now has two standard kcontrol pages - one for standard desktop
 accelerators and one for global keybindings. 

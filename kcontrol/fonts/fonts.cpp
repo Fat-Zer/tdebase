@@ -733,7 +733,7 @@ void TDEFonts::save()
   }
 
   // KDE-1.x support
-  KSimpleConfig* config = new KSimpleConfig( TQDir::homeDirPath() + "/.kderc" );
+  KSimpleConfig* config = new KSimpleConfig( TQDir::homeDirPath() + "/.tderc" );
   config->setGroup( "General" );
   for ( FontUseItem* i = fontUseList.first(); i; i = fontUseList.next() ) {
       if("font"==i->rcKey())
