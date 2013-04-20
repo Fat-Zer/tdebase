@@ -318,8 +318,9 @@ void KFileIVI::setEffect( int state )
 
 void KFileIVI::refreshIcon( bool redraw )
 {
-    if (!isThumbnail())
+    if (!isThumbnail()) {
         setIcon( m_size, m_state, true, redraw );
+    }
 }
 
 void KFileIVI::invalidateThumbnail()

@@ -255,7 +255,7 @@ void DesktopBehavior::fillMediaListView()
     KMimeType::List mimetypes = KMimeType::allMimeTypes();
     TQValueListIterator<KMimeType::Ptr> it2(mimetypes.begin());
     g_pConfig->setGroup( "Media" );
-    enableMediaBox->setChecked(g_pConfig->readBoolEntry("enabled",false));
+    enableMediaBox->setChecked(g_pConfig->readBoolEntry("enabled",true));
     enableMediaFreeSpaceOverlayBox->setChecked(g_pConfig->readBoolEntry("FreeSpaceDisplayEnabled",true));
     TQString excludedMedia=g_pConfig->readEntry("exclude","media/hdd_mounted,media/hdd_unmounted,media/floppy_unmounted,media/cdrom_unmounted,media/floppy5_unmounted");
     for (; it2 != mimetypes.end(); ++it2) {

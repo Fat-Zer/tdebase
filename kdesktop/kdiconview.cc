@@ -148,6 +148,7 @@ KDIconView::KDIconView( TQWidget *parent, const char* name )
       m_eSortCriterion( NameCaseInsensitive ),
       m_bSortDirectoriesFirst( true ),
       m_itemsAlwaysFirst(),
+      m_enableMedia(false),
       m_gotIconsArea(false),
       m_needDesktopAlign(true),
       m_paOutstandingOverlaysTimer( 0L )
@@ -397,7 +398,7 @@ void KDIconView::configureMedia()
 			}
 		}
 		m_mergeDirs.append(KURL("media:/"));
-		m_dirLister->openURL(KURL("media:/"),true);
+		m_dirLister->openURL(KURL("media:/"), true);
 	}
 	else {
 		for (KURL::List::Iterator it2=m_mergeDirs.begin();it2!=m_mergeDirs.end();++it2) {
@@ -405,8 +406,10 @@ void KDIconView::configureMedia()
 				delete m_dirLister;
 				m_dirLister=0;
 				start();
-// 				m_mergeDirs.remove(it2);
-// 				m_dirLister->stop("media");
+				if (m_mergeDirs.contains(*it2)) {
+					m_mergeDirs.remove(*it2);
+					m_dirLister->stop("media");
+				}
 				return;
 			}
 		}
@@ -1307,9 +1310,14 @@ void KDIconView::refreshIcons()
     for ( ; it ; it = it->nextItem() )
     {
         KFileIVI * fileIVI = static_cast<KFileIVI *>(it);
-        fileIVI->item()->refresh();
+        if (!(fileIVI->item()->mimetype().startsWith("media/"))) {
+            fileIVI->item()->refresh();
+        }
         fileIVI->refreshIcon( true );
         makeFriendlyText( fileIVI );
+    }
+    if (m_enableMedia) {
+        m_dirLister->updateDirectory(KURL("media:/"));
     }
 }
 
