@@ -1928,10 +1928,10 @@ Description:
 
 Key: SessionsDirs
 Type: list
-Default: "/usr/share/xsessions,/var/lib/menu-xdg/xsessions,/usr/share/apps/tdm/sessions"
+Default: "/usr/share/xsessions,/var/lib/menu-xdg/xsessions," TDMDATA "/sessions"
 User: core
 User: greeter-c
-Instance: #*/"/usr/share/xsessions,/var/lib/menu-xdg/xsessions,/usr/share/apps/tdm/sessions"
+Instance: */"/usr/share/xsessions,/var/lib/menu-xdg/xsessions," TDMDATA "/sessions"
 Comment:
  The directories containing session type definitions in .desktop format.
 Description:
