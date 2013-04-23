@@ -376,16 +376,18 @@ void LockProcess::init(bool child, bool useBlankOnly)
     connect(&mSuspendTimer, TQT_SIGNAL(timeout()), TQT_SLOT(suspend()));
 
 #ifdef HAVE_DPMS
-    if (mDPMSDepend) {
+    //if the user  decided that the screensaver should run independent from
+    //dpms, we shouldn't check for it, aleXXX
+    if (KDesktopSettings::dpmsDependent()) {
         BOOL on;
         CARD16 state;
-        DPMSInfo(tqt_xdisplay(), &state, &on);
-        if (on)
-        {
-            connect(&mCheckDPMS, TQT_SIGNAL(timeout()), TQT_SLOT(checkDPMSActive()));
-            // we can save CPU if we stop it as quickly as possible
-            // but we waste CPU if we check too often -> so take 10s
-            mCheckDPMS.start(10000);
+        if (DPMSInfo(tqt_xdisplay(), &state, &on)) {
+            if (on) {
+                connect(&mCheckDPMS, TQT_SIGNAL(timeout()), TQT_SLOT(checkDPMSActive()));
+                // we can save CPU if we stop it as quickly as possible
+                // but we waste CPU if we check too often -> so take 10s
+                mCheckDPMS.start(10000);
+            }
         }
     }
 #endif
@@ -728,12 +730,6 @@ void LockProcess::configure()
         mAutoLogoutTimeout = KDesktopSettings::autoLogoutTimeout();
         mAutoLogoutTimerId = startTimer(mAutoLogoutTimeout * 1000); // in milliseconds
     }
-
-#ifdef HAVE_DPMS
-    //if the user  decided that the screensaver should run independent from
-    //dpms, we shouldn't check for it, aleXXX
-    mDPMSDepend = KDesktopSettings::dpmsDependent();
-#endif
 
     mPriority = KDesktopSettings::priority();
     if (mPriority < 0) mPriority = 0;
@@ -2702,6 +2698,7 @@ void ControlPipeHandlerObject::run(void) {
 
 	if (display_number < 0) {
 		printf("[kdesktop_lock] Warning: unable to create control socket.  Interactive logon modules may not function properly.\n\r");
+		TQApplication::eventLoop()->exit(-1);
 		return;
 	}
 
@@ -2731,6 +2728,7 @@ void ControlPipeHandlerObject::run(void) {
 
 	if (!mParent->mPipeOpen) {
 		printf("[kdesktop_lock] Warning: unable to create control socket '%s'.  Interactive logon modules may not function properly.\n\r", fifo_file);
+		TQApplication::eventLoop()->exit(-1);
 		return;
 	}
 
@@ -2760,6 +2758,9 @@ void ControlPipeHandlerObject::run(void) {
 			}
 		}
 	}
+
+	TQApplication::eventLoop()->exit(0);
+	return;
 }
 
 #include "lockprocess.moc"

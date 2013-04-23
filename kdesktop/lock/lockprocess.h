@@ -174,7 +174,6 @@ private:
     bool        mSuspended;
     TQTimer      mSuspendTimer;
     bool        mVisibility;
-    bool        mDPMSDepend;
     TQTimer      mCheckDPMS;
     TQValueStack< TQWidget* > mDialogs;
     bool        mRestoreXF86Lock;

@@ -1259,6 +1259,7 @@ void ControlPipeHandlerObject::run(void) {
 	while (1) {
 		if ((mKGreeterParent && (mKGreeterParent->closingDown)) || (mSAKDlgParent && (mSAKDlgParent->closingDown))) {
 			::unlink(mPipeFilename.ascii());
+			TQApplication::eventLoop()->exit(-1);
 			return;
 		}
 	
@@ -1297,6 +1298,7 @@ void ControlPipeHandlerObject::run(void) {
 				if ((file_mode != 600) || (buffer.st_uid != 0) || (buffer.st_gid != 0)) {
 					::unlink(mPipeFilename.ascii());
 					printf("[WARNING] Possible security breach!  Please check permissions on " FIFO_DIR " (must be 600 and owned by root/root, got %d %d/%d).  Not listening for login credentials on remote control socket.\n", file_mode, buffer.st_uid, buffer.st_gid); fflush(stdout);
+					TQApplication::eventLoop()->exit(-1);
 					return;
 				}
 			}
@@ -1327,6 +1329,7 @@ void ControlPipeHandlerObject::run(void) {
 			}
 			if ((mKGreeterParent && (mKGreeterParent->closingDown)) || (mSAKDlgParent && (mSAKDlgParent->closingDown))) {
 				::unlink(mPipeFilename.ascii());
+				TQApplication::eventLoop()->exit(-1);
 				return;
 			}
 
@@ -1338,10 +1341,12 @@ void ControlPipeHandlerObject::run(void) {
 			}
 			else {
 				::unlink(mPipeFilename.ascii());
+				TQApplication::eventLoop()->exit(-1);
 				return;
 			}
 		}
 	}
+	TQApplication::eventLoop()->exit(-1);
 }
 
 #include "kgreeter.moc"
