@@ -1258,7 +1258,9 @@ void TaskContainer::popupMenu(int action)
     m_menu->installEventFilter( this );
     m_menu->exec( pos );
 
-    delete m_menu;
+    if (m_menu) {
+        delete m_menu;
+    }
     m_menu = 0;
 }
 
