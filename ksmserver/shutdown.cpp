@@ -83,13 +83,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <libtdersync/tdersync.h>
 
-#ifdef WITH_UPOWER
-	#include <tqdbusdata.h>
-	#include <tqdbusmessage.h>
-	#include <tqdbusproxy.h>
-	#include <tqdbusvariant.h>
-#endif
-
 #include "server.h"
 #include "global.h"
 #include "shutdowndlg.h"
@@ -110,21 +103,21 @@ void KSMServer::logout( int confirm, int sdtype, int sdmode )
               (TDEApplication::ShutdownMode)sdmode );
 }
 
-bool KSMServer::checkStatus( bool &logoutConfirmed, bool &maysd,
+bool KSMServer::checkStatus( bool &logoutConfirmed, bool &maysd, bool &mayrb,
                              TDEApplication::ShutdownConfirm confirm,
                              TDEApplication::ShutdownType sdtype,
                              TDEApplication::ShutdownMode sdmode )
 {
     pendingShutdown.stop();
-    if( dialogActive )
+    if( dialogActive ) {
         return false;
-    if( state >= Shutdown ) // already performing shutdown
+    }
+    if( state >= Shutdown ) { // already performing shutdown
         return false;
-    if( state != Idle ) // performing startup
-    {
+    }
+    if( state != Idle ) { // performing startup
     // perform shutdown as soon as startup is finished, in order to avoid saving partial session
-        if( !pendingShutdown.isActive())
-        {
+        if( !pendingShutdown.isActive()) {
             pendingShutdown.start( 1000 );
             pendingShutdown_confirm = confirm;
             pendingShutdown_sdtype = sdtype;
@@ -142,11 +135,35 @@ bool KSMServer::checkStatus( bool &logoutConfirmed, bool &maysd,
         (confirm == TDEApplication::ShutdownConfirmNo) ? true :
         !config->readBoolEntry( "confirmLogout", true );
     maysd = false;
-    if (config->readBoolEntry( "offerShutdown", true ) && DM().canShutdown())
-        maysd = true;
+    mayrb = false;
+    if (config->readBoolEntry( "offerShutdown", true )) {
+        if (DM().canShutdown()) {
+            maysd = true;
+            mayrb = true;
+        }
+        else {
+            TDERootSystemDevice* rootDevice = hwDevices->rootSystemDevice();
+            if (rootDevice) {
+                if (rootDevice->canPowerOff()) {
+                    maysd = true;
+                }
+                if (rootDevice->canReboot()) {
+                    mayrb = true;
+                }
+            }
+        }
+    }
     if (!maysd) {
         if (sdtype != TDEApplication::ShutdownTypeNone &&
             sdtype != TDEApplication::ShutdownTypeDefault &&
+            sdtype != TDEApplication::ShutdownTypeReboot &&
+            logoutConfirmed)
+            return false; /* unsupported fast shutdown */
+    }
+    if (!mayrb) {
+        if (sdtype != TDEApplication::ShutdownTypeNone &&
+            sdtype != TDEApplication::ShutdownTypeDefault &&
+            sdtype != TDEApplication::ShutdownTypeHalt &&
             logoutConfirmed)
             return false; /* unsupported fast shutdown */
     }
@@ -160,20 +177,27 @@ void KSMServer::shutdownInternal( TDEApplication::ShutdownConfirm confirm,
                                   TQString bopt )
 {
     bool maysd = false;
+    bool mayrb = false;
     bool logoutConfirmed = false;
-    if ( !checkStatus( logoutConfirmed, maysd, confirm, sdtype, sdmode ) )
+    if ( !checkStatus( logoutConfirmed, maysd, mayrb, confirm, sdtype, sdmode ) ) {
         return;
+    }
 
     TDEConfig *config = TDEGlobal::config();
 
     config->setGroup("General" );
-    if (!maysd) {
+    if ((!maysd) && (sdtype != TDEApplication::ShutdownTypeReboot)) {
         sdtype = TDEApplication::ShutdownTypeNone;
-    } else if (sdtype == TDEApplication::ShutdownTypeDefault)
-        sdtype = (TDEApplication::ShutdownType)
-                 config->readNumEntry( "shutdownType", (int)TDEApplication::ShutdownTypeNone );
-    if (sdmode == TDEApplication::ShutdownModeDefault)
+    }
+    if ((!mayrb) && (sdtype != TDEApplication::ShutdownTypeHalt)) {
+        sdtype = TDEApplication::ShutdownTypeNone;
+    }
+    if (sdtype == TDEApplication::ShutdownTypeDefault) {
+        sdtype = (TDEApplication::ShutdownType) config->readNumEntry( "shutdownType", (int)TDEApplication::ShutdownTypeNone );
+    }
+    if (sdmode == TDEApplication::ShutdownModeDefault) {
         sdmode = TDEApplication::ShutdownModeInteractive;
+    }
 
     // shall we show a logout status dialog box?
     bool showLogoutStatusDlg = TDEConfigGroup(TDEGlobal::config(), "Logout").readBoolEntry("showLogoutStatusDlg", true);
@@ -187,7 +211,7 @@ void KSMServer::shutdownInternal( TDEApplication::ShutdownConfirm confirm,
         int selection;
         KSMShutdownFeedback::start(); // make the screen gray
         logoutConfirmed =
-            KSMShutdownDlg::confirmShutdown( maysd, sdtype, bopt, &selection );
+            KSMShutdownDlg::confirmShutdown( maysd, mayrb, sdtype, bopt, &selection );
         // ###### We can't make the screen remain gray while talking to the apps,
         // because this prevents interaction ("do you want to save", etc.)
         // TODO: turn the feedback widget into a list of apps to be closed,
@@ -201,30 +225,15 @@ void KSMServer::shutdownInternal( TDEApplication::ShutdownConfirm confirm,
 		if (lockOnResume) {
 			DCOPRef("kdesktop", "KScreensaverIface").send("lock");
 		}
-#ifdef WITH_UPOWER
-		TQT_DBusConnection dbusConn;
-		dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
-		if (selection == 1) {	// Suspend
-			if ( dbusConn.isConnected() ) {
-				TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
-							"org.freedesktop.UPower",
-							"/org/freedesktop/UPower",
-							"org.freedesktop.UPower",
-							"Suspend");
-				dbusConn.sendWithReply(msg);
+		TDERootSystemDevice* rootDevice = hwDevices->rootSystemDevice();
+		if (rootDevice) {
+			if (selection == 1) {	// Suspend
+				rootDevice->setPowerState(TDESystemPowerState::Suspend);
+			}
+			if (selection == 2) {	// Hibernate
+				rootDevice->setPowerState(TDESystemPowerState::Hibernate);
 			}
 		}
-		if (selection == 2) {	// Hibernate
-			if( dbusConn.isConnected() ) {
-				TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
-							"org.freedesktop.UPower",
-							"/org/freedesktop/UPower",
-							"org.freedesktop.UPower",
-							"Hibernate");
-				dbusConn.sendWithReply(msg);
-			}
-		}
-#endif // WITH_UPOWER
         }
     }
 
@@ -308,12 +317,15 @@ void KSMServer::logoutTimed( int sdtype, int sdmode, TQString bootOption )
     TDEConfig* config = TDEGlobal::config();
     config->setGroup( "General" );
 
-    if ( sdtype == TDEApplication::ShutdownTypeHalt )
+    if ( sdtype == TDEApplication::ShutdownTypeHalt ) {
         confirmDelay = config->readNumEntry( "confirmShutdownDelay", 31 );
-    else if ( sdtype == TDEApplication::ShutdownTypeReboot )
+    }
+    else if ( sdtype == TDEApplication::ShutdownTypeReboot ) {
         confirmDelay = config->readNumEntry( "confirmRebootDelay", 31 );
-    else
+    }
+    else {
         confirmDelay = config->readNumEntry( "confirmLogoutDelay", 31 );
+    }
 
     bool result = true;
     if (confirmDelay) {

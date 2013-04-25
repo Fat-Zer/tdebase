@@ -129,7 +129,7 @@ class KSMShutdownDlg : public TQDialog
 	Q_OBJECT
 
 public:
-	static bool confirmShutdown( bool maysd, TDEApplication::ShutdownType& sdtype, TQString& bopt, int* selection=0 );
+	static bool confirmShutdown( bool maysd, bool mayrb, TDEApplication::ShutdownType& sdtype, TQString& bopt, int* selection=0 );
 
 public slots:
 	void slotLogout();
@@ -143,7 +143,7 @@ protected:
 	~KSMShutdownDlg();
 
 private:
-	KSMShutdownDlg( TQWidget* parent, bool maysd, TDEApplication::ShutdownType sdtype, int* selection=0 );
+	KSMShutdownDlg( TQWidget* parent, bool maysd, bool mayrb, TDEApplication::ShutdownType sdtype, int* selection=0 );
 	TDEApplication::ShutdownType m_shutdownType;
 	TQString m_bootOption;
 	TQPopupMenu *targets;

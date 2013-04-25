@@ -579,7 +579,7 @@ extern "C" int _IceTransNoListen(const char * protocol);
 #endif
 
 KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManagerAddArgs, bool _only_local )
-  : DCOPObject("ksmserver"), sessionGroup( "" ), startupNotifierIPDlg(0), shutdownNotifierIPDlg(0)
+  : DCOPObject("ksmserver"), startupNotifierIPDlg(0), shutdownNotifierIPDlg(0), sessionGroup( "" )
 {
     the_server = this;
     clean = false;
@@ -596,7 +596,9 @@ KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManag
     config->setGroup("General" );
     clientInteracting = 0;
     xonCommand = config->readEntry( "xonCommand", "xon" );
-    
+
+    hwDevices = TDEGlobal::hardwareDevices();
+
     connect( &knotifyTimeoutTimer, TQT_SIGNAL( timeout()), TQT_SLOT( knotifyTimeout()));
     connect( &startupSuspendTimeoutTimer, TQT_SIGNAL( timeout()), TQT_SLOT( startupSuspendTimeout()));
     connect( &pendingShutdown, TQT_SIGNAL( timeout()), TQT_SLOT( pendingShutdownTimeout()));
@@ -700,8 +702,9 @@ void KSMServer::cleanUp()
     // strip the screen number from the display
     display.replace(TQRegExp("\\.[0-9]+$"), "");
     int i;
-    while( (i = display.find(':')) >= 0)
+    while( (i = display.find(':')) >= 0) {
          display[i] = '_';
+    }
 
     fName += "_"+display;
     ::unlink(fName.data());
@@ -710,7 +713,20 @@ void KSMServer::cleanUp()
     signal(SIGTERM, SIG_DFL);
     signal(SIGINT, SIG_DFL);
 
-    DM().shutdown( shutdownType, shutdownMode, bootOption );
+    if (DM().canShutdown()) {
+        DM().shutdown( shutdownType, shutdownMode, bootOption );
+    }
+    else {
+        TDERootSystemDevice* rootDevice = hwDevices->rootSystemDevice();
+        if (rootDevice) {
+            if (shutdownType == TDEApplication::ShutdownTypeHalt) {
+                rootDevice->setPowerState(TDESystemPowerState::PowerOff);
+            }
+            if (shutdownType == TDEApplication::ShutdownTypeReboot) {
+                rootDevice->setPowerState(TDESystemPowerState::Reboot);
+            }
+        }
+    }
 }
 
 

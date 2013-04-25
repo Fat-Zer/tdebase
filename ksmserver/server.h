@@ -23,6 +23,8 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tqtimer.h>
 #include <dcopobject.h>
 
+#include <tdehardwaredevices.h>
+
 #include "server2.h"
 
 #include "KSMServerInterface.h"
@@ -93,7 +95,7 @@ public:
     virtual void suspendStartup( TQCString app );
     virtual void resumeStartup( TQCString app );
 
-    bool checkStatus( bool &logoutConfirmed, bool &maysd, 
+    bool checkStatus( bool &logoutConfirmed, bool &maysd, bool &mayrb,
 		      TDEApplication::ShutdownConfirm confirm,
 		      TDEApplication::ShutdownType sdtype,
 		      TDEApplication::ShutdownMode sdmode );
@@ -230,10 +232,12 @@ private:
     int appsToStart;
     int lastAppStarted;
     TQString lastIdStarted;
-    
+
     TQStringList excludeApps;
 
     WindowMap legacyWindows;
+
+    TDEHardwareDevices* hwDevices;
 };
 
 #endif

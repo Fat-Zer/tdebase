@@ -8,13 +8,6 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 
 #include "shutdowndlg.h"
 
-#ifdef WITH_UPOWER
-	#include <tqdbusdata.h>
-	#include <tqdbusmessage.h>
-	#include <tqdbusproxy.h>
-	#include <tqdbusvariant.h>
-#endif
-
 #include <tqapplication.h>
 #include <tqlayout.h>
 #include <tqgroupbox.h>
@@ -40,6 +33,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tdelocale.h>
 #include <tdeconfig.h>
 #include <tdeapplication.h>
+#include <tdehardwaredevices.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>
@@ -674,7 +668,7 @@ void KSMShutdownIPFeedback::slotPaintEffect()
 //////
 
 KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
-								bool maysd, TDEApplication::ShutdownType sdtype, int* selection )
+								bool maysd, bool mayrb, TDEApplication::ShutdownType sdtype, int* selection )
   : TQDialog( parent, 0, TRUE, (WFlags)WType_Popup ), targets(0), m_selection(selection)
 	// this is a WType_Popup on purpose. Do not change that! Not
 	// having a popup here has severe side effects.
@@ -770,13 +764,11 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 		connect(btnLogout, TQT_SIGNAL(clicked()), TQT_SLOT(slotLogout()));
 	}
 
-#ifndef WITH_UPOWER
 #ifdef COMPILE_HALBACKEND
 	m_halCtx = NULL;
 #endif
-#endif // WITH_UPOWER
 
-	if (maysd) 	{
+	if ((maysd) || (mayrb)) {
 
 		// respect lock on resume & disable suspend/hibernate settings
 		// from power-manager
@@ -788,27 +780,6 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 		bool canSuspend = false;
 		bool canHibernate = false;
 
-#ifdef WITH_UPOWER
-		m_dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
-
-		TQT_DBusProxy upowerProperties("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.DBus.Properties", m_dbusConn);
-
-		// can suspend?
-		TQValueList<TQT_DBusData> params;
-		params << TQT_DBusData::fromString(upowerProperties.interface()) << TQT_DBusData::fromString("CanSuspend");
-		TQT_DBusMessage reply = upowerProperties.sendWithReply("Get", params);
-		if(reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-			canSuspend = reply[0].toVariant().value.toBool();
-		}
-
-		// can hibernate?
-		params.clear();
-		params << TQT_DBusData::fromString(upowerProperties.interface()) << TQT_DBusData::fromString("CanHibernate");
-		reply = upowerProperties.sendWithReply("Get", params);
-		if(reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-			canHibernate = reply[0].toVariant().value.toBool();
-		}
-#else
 #ifdef COMPILE_HALBACKEND
 		// Query HAL for suspend/resume support
 		m_halCtx = libhal_ctx_new();
@@ -864,8 +835,17 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 				canHibernate = true;
 			}
 		}
-#endif
-#endif // WITH_UPOWER
+#else // COMPILE_HALBACKEND
+		TDERootSystemDevice* rootDevice = TDEGlobal::hardwareDevices()->rootSystemDevice();
+		if (rootDevice) {
+			canSuspend = rootDevice->canSuspend();
+			canHibernate = rootDevice->canHibernate();
+		}
+		else {
+			canSuspend = false;
+			canHibernate = false;
+		}
+#endif // COMPILE_HALBACKEND
 
 		if(doUbuntuLogout) {
 
@@ -900,51 +880,59 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 			TQHBoxLayout* hbuttonbox2 = new TQHBoxLayout( vbox, factor * KDialog::spacingHint() );
 			hbuttonbox2->setAlignment( Qt::AlignHCenter );
 
-			// Reboot
-			FlatButton* btnReboot = new FlatButton( frame );
-			btnReboot->setTextLabel( i18n("&Restart"), false );
-			btnReboot->setPixmap( DesktopIcon( "reload") );
-			int i = btnReboot->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
-			btnReboot->setAccel( "ALT+" + btnReboot->textLabel().lower()[i+1] ) ;
-			hbuttonbox2->addWidget ( btnReboot);
-			connect(btnReboot, TQT_SIGNAL(clicked()), TQT_SLOT(slotReboot()));
-			if ( sdtype == TDEApplication::ShutdownTypeReboot )
-				btnReboot->setFocus();
-
-			// BAD CARMA .. this code is copied line by line from standard konqy dialog
-			int def, cur;
-			if ( DM().bootOptions( rebootOptions, def, cur ) ) {
-			btnReboot->setPopupDelay(300); // visually add dropdown
-			targets = new TQPopupMenu( frame );
-			if ( cur == -1 )
-				cur = def;
-
-			int index = 0;
-			for (TQStringList::ConstIterator it = rebootOptions.begin(); it != rebootOptions.end(); ++it, ++index)
-				{
-					TQString label = (*it);
-					label=label.replace('&',"&&");
-				if (index == cur)
-				targets->insertItem( label + i18n("current option in boot loader", " (current)"), index);
-				else
-				targets->insertItem( label, index );
+			if (mayrb) {
+				// Reboot
+				FlatButton* btnReboot = new FlatButton( frame );
+				btnReboot->setTextLabel( i18n("&Restart"), false );
+				btnReboot->setPixmap( DesktopIcon( "reload") );
+				int i = btnReboot->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
+				btnReboot->setAccel( "ALT+" + btnReboot->textLabel().lower()[i+1] ) ;
+				hbuttonbox2->addWidget ( btnReboot);
+				connect(btnReboot, TQT_SIGNAL(clicked()), TQT_SLOT(slotReboot()));
+				if ( sdtype == TDEApplication::ShutdownTypeReboot ) {
+					btnReboot->setFocus();
 				}
-
-			btnReboot->setPopup(targets);
-			connect( targets, TQT_SIGNAL(activated(int)), TQT_SLOT(slotReboot(int)) );
+	
+				// BAD KARMA .. this code is copied line by line from standard konqy dialog
+				int def, cur;
+				if ( DM().bootOptions( rebootOptions, def, cur ) ) {
+					btnReboot->setPopupDelay(300); // visually add dropdown
+					targets = new TQPopupMenu( frame );
+					if ( cur == -1 ) {
+						cur = def;
+					}
+		
+					int index = 0;
+					for (TQStringList::ConstIterator it = rebootOptions.begin(); it != rebootOptions.end(); ++it, ++index) {
+						TQString label = (*it);
+						label=label.replace('&',"&&");
+						if (index == cur) {
+							targets->insertItem( label + i18n("current option in boot loader", " (current)"), index);
+						}
+						else {
+							targets->insertItem( label, index );
+						}
+					}
+		
+					btnReboot->setPopup(targets);
+					connect( targets, TQT_SIGNAL(activated(int)), TQT_SLOT(slotReboot(int)) );
+				}
+				// BAD KARMA .. this code is copied line by line from standard konqy dialog [EOF]
 			}
-			// BAD CARMA .. this code is copied line by line from standard konqy dialog [EOF]
 
-			// Shutdown
-			FlatButton* btnHalt = new FlatButton( frame );
-			btnHalt->setTextLabel( i18n("&Turn Off"), false );
-			btnHalt->setPixmap( DesktopIcon( "exit") );
-			i = btnHalt->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
-			btnHalt->setAccel( "ALT+" + btnHalt->textLabel().lower()[i+1] ) ;
-			hbuttonbox2->addWidget ( btnHalt );
-			connect(btnHalt, TQT_SIGNAL(clicked()), TQT_SLOT(slotHalt()));
-				if ( sdtype == TDEApplication::ShutdownTypeHalt )
+			if (maysd) {
+				// Shutdown
+				FlatButton* btnHalt = new FlatButton( frame );
+				btnHalt->setTextLabel( i18n("&Turn Off"), false );
+				btnHalt->setPixmap( DesktopIcon( "exit") );
+				int i = btnHalt->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
+				btnHalt->setAccel( "ALT+" + btnHalt->textLabel().lower()[i+1] ) ;
+				hbuttonbox2->addWidget ( btnHalt );
+				connect(btnHalt, TQT_SIGNAL(clicked()), TQT_SLOT(slotHalt()));
+				if ( sdtype == TDEApplication::ShutdownTypeHalt ) {
 					btnHalt->setFocus();
+				}
+			}
 
 			// cancel buttonbox
 			TQHBoxLayout* hbuttonbox3 = new TQHBoxLayout( vbox, factor * KDialog::spacingHint() );
@@ -958,47 +946,54 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 		}
 		else
 		{
-			// Shutdown
-			KPushButton* btnHalt = new KPushButton( KGuiItem( i18n("&Turn Off Computer"), "exit"), frame );
-		TQToolTip::add( btnHalt, i18n( "<qt><h3>Turn Off Computer</h3><p>Log out of the current session and turn off the computer</p></qt>" ) );
-			btnHalt->setFont( btnFont );
-			buttonlay->addWidget( btnHalt );
-			connect(btnHalt, TQT_SIGNAL(clicked()), TQT_SLOT(slotHalt()));
-		if ( sdtype == TDEApplication::ShutdownTypeHalt || getenv("TDM_AUTOLOGIN") )
-				btnHalt->setFocus();
-
-			// Reboot
-			KSMDelayedPushButton* btnReboot = new KSMDelayedPushButton( KGuiItem( i18n("&Restart Computer"), "reload"), frame );
-		TQToolTip::add( btnReboot, i18n( "<qt><h3>Restart Computer</h3><p>Log out of the current session and restart the computer</p><p>Hold the mouse button or the space bar for a short while to get a list of options what to boot</p></qt>" ) );
-			btnReboot->setFont( btnFont );
-			buttonlay->addWidget( btnReboot );
-
-			connect(btnReboot, TQT_SIGNAL(clicked()), TQT_SLOT(slotReboot()));
-			if ( sdtype == TDEApplication::ShutdownTypeReboot )
-				btnReboot->setFocus();
-
-			// this section is copied as-is into ubuntulogout as well
-			int def, cur;
-			if ( DM().bootOptions( rebootOptions, def, cur ) ) {
-			targets = new TQPopupMenu( frame );
-			if ( cur == -1 )
-				cur = def;
-
-			int index = 0;
-			for (TQStringList::ConstIterator it = rebootOptions.begin(); it != rebootOptions.end(); ++it, ++index)
-				{
-					TQString label = (*it);
-					label=label.replace('&',"&&");
-				if (index == cur)
-				targets->insertItem( label + i18n("current option in boot loader", " (current)"), index);
-				else
-				targets->insertItem( label, index );
+			if (maysd) {
+				// Shutdown
+				KPushButton* btnHalt = new KPushButton( KGuiItem( i18n("&Turn Off Computer"), "exit"), frame );
+				TQToolTip::add( btnHalt, i18n( "<qt><h3>Turn Off Computer</h3><p>Log out of the current session and turn off the computer</p></qt>" ) );
+				btnHalt->setFont( btnFont );
+				buttonlay->addWidget( btnHalt );
+				connect(btnHalt, TQT_SIGNAL(clicked()), TQT_SLOT(slotHalt()));
+				if ( sdtype == TDEApplication::ShutdownTypeHalt || getenv("TDM_AUTOLOGIN") ) {
+					btnHalt->setFocus();
 				}
-
-			btnReboot->setPopup(targets);
-			connect( targets, TQT_SIGNAL(activated(int)), TQT_SLOT(slotReboot(int)) );
 			}
 
+			if (mayrb) {
+				// Reboot
+				KSMDelayedPushButton* btnReboot = new KSMDelayedPushButton( KGuiItem( i18n("&Restart Computer"), "reload"), frame );
+				TQToolTip::add( btnReboot, i18n( "<qt><h3>Restart Computer</h3><p>Log out of the current session and restart the computer</p><p>Hold the mouse button or the space bar for a short while to get a list of options what to boot</p></qt>" ) );
+				btnReboot->setFont( btnFont );
+				buttonlay->addWidget( btnReboot );
+	
+				connect(btnReboot, TQT_SIGNAL(clicked()), TQT_SLOT(slotReboot()));
+				if ( sdtype == TDEApplication::ShutdownTypeReboot ) {
+					btnReboot->setFocus();
+				}
+	
+				// this section is copied as-is into ubuntulogout as well
+				int def, cur;
+				if ( DM().bootOptions( rebootOptions, def, cur ) ) {
+					targets = new TQPopupMenu( frame );
+					if ( cur == -1 ) {
+						cur = def;
+					}
+		
+					int index = 0;
+					for (TQStringList::ConstIterator it = rebootOptions.begin(); it != rebootOptions.end(); ++it, ++index) {
+						TQString label = (*it);
+						label=label.replace('&',"&&");
+						if (index == cur) {
+							targets->insertItem( label + i18n("current option in boot loader", " (current)"), index);
+						}
+						else {
+							targets->insertItem( label, index );
+						}
+					}
+		
+					btnReboot->setPopup(targets);
+					connect( targets, TQT_SIGNAL(activated(int)), TQT_SLOT(slotReboot(int)) );
+				}
+			}
 
 			if (canSuspend && !disableSuspend)
 			{
@@ -1064,9 +1059,6 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 
 KSMShutdownDlg::~KSMShutdownDlg()
 {
-#ifdef WITH_UPOWER
-#else // WITH_UPOWER
-
 #ifdef COMPILE_HALBACKEND
 	if (m_halCtx)
 	{
@@ -1076,8 +1068,6 @@ KSMShutdownDlg::~KSMShutdownDlg()
 		libhal_ctx_free(m_halCtx);
 	}
 #endif
-
-#endif // WITH_UPOWER
 }
 
 
@@ -1116,9 +1106,6 @@ void KSMShutdownDlg::slotSuspend()
 {
 	*m_selection = 1;	// Suspend
 
-#ifdef WITH_UPOWER
-	// Handled in shutdown.cpp
-#else
 #ifdef COMPILE_HALBACKEND
 	if (m_dbusConn)
 	{
@@ -1136,7 +1123,6 @@ void KSMShutdownDlg::slotSuspend()
 		dbus_message_unref(msg);
 	}
 #endif
-#endif // WITH_UPOWER
 	reject(); // continue on resume
 }
 
@@ -1144,9 +1130,6 @@ void KSMShutdownDlg::slotHibernate()
 {
 	*m_selection = 2;	// Hibernate
 
-#ifdef WITH_UPOWER
-	// Handled in shutdown.cpp
-#else
 #ifdef COMPILE_HALBACKEND
 	if (m_dbusConn)
 	{
@@ -1161,23 +1144,19 @@ void KSMShutdownDlg::slotHibernate()
 		dbus_message_unref(msg);
 	}
 #endif
-#endif // WITH_UPOWER
 	reject(); // continue on resume
 }
 
-bool KSMShutdownDlg::confirmShutdown( bool maysd, TDEApplication::ShutdownType& sdtype, TQString& bootOption, int* selection )
+bool KSMShutdownDlg::confirmShutdown( bool maysd, bool mayrb, TDEApplication::ShutdownType& sdtype, TQString& bootOption, int* selection )
 {
 	kapp->enableStyles();
-	KSMShutdownDlg* l = new KSMShutdownDlg( 0,
-											//KSMShutdownFeedback::self(),
-											maysd, sdtype, selection );
+	KSMShutdownDlg* l = new KSMShutdownDlg( 0 /*KSMShutdownFeedback::self()*/, maysd, mayrb, sdtype, selection );
 
 	// Show dialog (will save the background in showEvent)
 	TQSize sh = l->sizeHint();
 	TQRect rect = TDEGlobalSettings::desktopGeometry(TQCursor::pos());
 
-	l->move(rect.x() + (rect.width() - sh.width())/2,
-			rect.y() + (rect.height() - sh.height())/2);
+	l->move(rect.x() + (rect.width() - sh.width())/2, rect.y() + (rect.height() - sh.height())/2);
 	bool result = l->exec();
 	sdtype = l->m_shutdownType;
 	bootOption = l->m_bootOption;
