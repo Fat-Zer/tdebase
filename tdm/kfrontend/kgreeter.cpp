@@ -663,10 +663,12 @@ void // private
 KGreeter::setPrevWM( int wm )
 {
 	if (curPrev != wm) {
-		if (curPrev != -1)
+		if (curPrev != -1) {
 			sessMenu->changeItem( curPrev, sessionTypes[curPrev].name );
-		if (wm != -1)
+		}
+		if (wm != -1) {
 			sessMenu->changeItem( wm, sessionTypes[wm].name + i18n(" (previous)") );
+		}
 		curPrev = wm;
 	}
 }
@@ -802,7 +804,6 @@ KGreeter::verifyOk()
 		GSendInt( G_PutDmrc );
 		GSendStr( "Session" );
 		GSendStr( "default" );
-		curWMSession = sessionTypes[curSel].type.utf8();
 	}
 	GSendInt( G_Ready );
 	closingDown = true;
@@ -812,8 +813,9 @@ KGreeter::verifyOk()
 void
 KGreeter::verifyFailed()
 {
-	if (needLoad)
+	if (needLoad) {
 		slotLoadPrevWM();
+	}
 }
 
 void

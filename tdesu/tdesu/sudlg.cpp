@@ -15,7 +15,7 @@
 #include "sudlg.h"
 
 KDEsuDialog::KDEsuDialog(TQCString user, TQCString auth_user, bool enableKeep,const TQString& icon, bool withIgnoreButton, int timeout)
-     : KPasswordDialog(Password, enableKeep, (withIgnoreButton ? User1:NoDefault), icon)
+     : KPasswordDialog(Password, enableKeep, 0, icon)
 {
     TDEConfig* config = TDEGlobal::config();
     config->setGroup("super-user-command");
@@ -34,12 +34,10 @@ KDEsuDialog::KDEsuDialog(TQCString user, TQCString auth_user, bool enableKeep,co
     } else {
         if (m_User == "root") {
 	    prompt = i18n("The action you requested needs root privileges. "
-	    "Please enter root's password below or click "
-	    "Ignore to continue with your current privileges.");
+	    "Please enter root's password below.");
         } else {
 	    prompt = i18n("The action you requested needs additional privileges. "
-		"Please enter the password for \"%1\" below or click "
-		"Ignore to continue with your current privileges.").arg(static_cast<const char *>(m_User));
+		"Please enter the password for \"%1\" below.").arg(static_cast<const char *>(m_User));
 	}
     }
     setPrompt(prompt);
