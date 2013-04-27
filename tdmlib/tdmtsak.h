@@ -50,7 +50,7 @@ inline int tde_sak_verify_calling_process()
 
 	pid_t parentproc = getppid();
 #ifdef DEBUG
-	printf("Parent pid is: %d\n\r", parentproc);
+	printf("Parent pid is: %d\n", parentproc);
 #endif
 
 	char parentexecutable[8192];
@@ -60,28 +60,28 @@ inline int tde_sak_verify_calling_process()
 	parentexecutable[8191] = 0;
 	procparent = parentexecutable;
 #ifdef DEBUG
-	printf("Parent executable name and full path is: %s\n\r", procparent.ascii());
+	printf("Parent executable name and full path is: %s\n", procparent.ascii());
 #endif
 
 	TQString tdeBinaryPath = TQString(KDE_BINDIR "/");
 #ifdef DEBUG
-	printf("The TDE binary path is: %s\n\r", tdeBinaryPath.ascii());
+	printf("The TDE binary path is: %s\n", tdeBinaryPath.ascii());
 #endif
 
 	if (!procparent.startsWith(tdeBinaryPath)) {
-		printf("Unauthorized path detected in calling process\n\r");
+		printf("Unauthorized path detected in calling process\n");
 		return 2;
 	}
 	else {
 		procparent = procparent.mid(tdeBinaryPath.length());
 #ifdef DEBUG
-		printf("Parent executable name is: %s\n\r", procparent.ascii());
+		printf("Parent executable name is: %s\n", procparent.ascii());
 #endif
 		if ((procparent == "kdesktop") || (procparent == "kdesktop_lock") || (procparent == "tdm")) {
 			authorized = true;
 		}
 		else if (procparent == "tdeinit") {
-			printf("tdeinit detected\n\r");
+			printf("tdeinit detected\n");
 			// A bit more digging is needed to see if this is an authorized process or not
 			// Get the tdeinit command
 			char tdeinitcmdline[8192];
@@ -117,8 +117,8 @@ inline int tde_sak_verify_calling_process()
 			tdeinitenviron[8191] = 0;
 
 #ifdef DEBUG
-			printf("Called executable name is: %s\n\r", tdeinitCommand.ascii());
-			printf("Environment is: %s\n\r", tdeinitEnvironment.ascii());
+			printf("Called executable name is: %s\n", tdeinitCommand.ascii());
+			printf("Environment is: %s\n", tdeinitEnvironment.ascii());
 #endif
 
 			if ((tdeinitCommand == "kdesktop [tdeinit]") && (tdeinitEnvironment.startsWith(KDE_BINDIR))) {
@@ -129,7 +129,7 @@ inline int tde_sak_verify_calling_process()
 			}
 		}
 		else {
-			printf("Unauthorized calling process detected\n\r");
+			printf("Unauthorized calling process detected\n");
 			return 3;
 		}
 

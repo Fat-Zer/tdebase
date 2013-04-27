@@ -148,10 +148,10 @@ void print_trace()
 	size = backtrace (array, 10);
 	strings = backtrace_symbols (array, size);
 
-	printf ("[kdesktop_lock] Obtained %zd stack frames.\n\r", size);
+	printf ("[kdesktop_lock] Obtained %zd stack frames.\n", size);
 
 	for (i = 0; i < size; i++) {
-		printf ("[kdesktop_lock] %s\n\r", strings[i]);
+		printf ("[kdesktop_lock] %s\n", strings[i]);
 	}
 
 	free (strings);
@@ -160,7 +160,7 @@ void print_trace()
 
 static void segv_handler(int)
 {
-	printf("[kdesktop_lock] WARNING: A fatal exception was encountered.  Trapping and ignoring it so as not to compromise desktop security...\n\r");
+	printf("[kdesktop_lock] WARNING: A fatal exception was encountered.  Trapping and ignoring it so as not to compromise desktop security...\n");
 	print_trace();
 	sleep(1);
 }
@@ -876,7 +876,7 @@ void LockProcess::createSaverWindow()
         if (!(flags & CWColormap)) {
             XVisualInfo vinfo;
             if (!XMatchVisualInfo( x11Display(), x11Screen(), 32, TrueColor, &vinfo )) {
-                printf("[ERROR] Unable to locate matching X11 Visual; this application will not function correctly!\n\r");
+                printf("[ERROR] Unable to locate matching X11 Visual; this application will not function correctly!\n");
             }
             else {
                 visual = vinfo.visual;
@@ -1139,7 +1139,7 @@ void LockProcess::setVRoot(Window win, Window vr)
     Window top = win;
     while (1) {
         if (XQueryTree(tqt_xdisplay(), top, &rootReturn, &parentReturn, &children, &numChildren) == 0) {
-            printf("[WARNING] XQueryTree() failed!\n\r"); fflush(stdout);
+            printf("[WARNING] XQueryTree() failed!\n"); fflush(stdout);
             break;
         }
         if (children) {
@@ -1953,7 +1953,7 @@ void LockProcess::slotForcePaintBackground()
 	TQPixmap blankPixmap(mRootWidth, mRootHeight);
 	blankPixmap.fill(Qt::black);
 	slotPaintBackground(blankPixmap);
-	printf("[WARNING] Unable to obtain desktop wallpaper in a timely manner.  High system load or possibly a TDE bug!\n\r"); fflush(stdout);
+	printf("[WARNING] Unable to obtain desktop wallpaper in a timely manner.  High system load or possibly a TDE bug!\n"); fflush(stdout);
 }
 
 void LockProcess::slotPaintBackground(const TQPixmap &rpm)
@@ -2720,7 +2720,7 @@ void ControlPipeHandlerObject::run(void) {
 	int display_number = atoi(TQString(XDisplayString(tqt_xdisplay())).replace(":","").ascii());
 
 	if (display_number < 0) {
-		printf("[kdesktop_lock] Warning: unable to create control socket.  Interactive logon modules may not function properly.\n\r");
+		printf("[kdesktop_lock] Warning: unable to create control socket.  Interactive logon modules may not function properly.\n");
 		TQApplication::eventLoop()->exit(-1);
 		return;
 	}
@@ -2750,7 +2750,7 @@ void ControlPipeHandlerObject::run(void) {
 	}
 
 	if (!mParent->mPipeOpen) {
-		printf("[kdesktop_lock] Warning: unable to create control socket '%s'.  Interactive logon modules may not function properly.\n\r", fifo_file);
+		printf("[kdesktop_lock] Warning: unable to create control socket '%s'.  Interactive logon modules may not function properly.\n", fifo_file);
 		TQApplication::eventLoop()->exit(-1);
 		return;
 	}

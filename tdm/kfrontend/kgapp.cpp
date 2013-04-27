@@ -301,7 +301,7 @@ kg_main( const char *argv0 )
 		iccCommand += iccconfig.readEntry("ICCFile");
 		iccCommand += TQString(" &");
 		if (system(iccCommand.ascii()) < 0) {
-			printf("WARNING: Unable to execute command \"%s\"\n\r", iccCommand.ascii());
+			printf("WARNING: Unable to execute command \"%s\"\n", iccCommand.ascii());
 		}
 	}
 

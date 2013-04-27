@@ -41,7 +41,7 @@ namespace KWinInternal
  */
 void Workspace::desktopResized()
     {
-    //printf("Workspace::desktopResized()\n\r");
+    //printf("Workspace::desktopResized()\n");
     TQRect geom = TDEApplication::desktop()->geometry();
     NETSize desktop_geometry;
     desktop_geometry.width = geom.width();
@@ -57,7 +57,7 @@ void Workspace::desktopResized()
  */
 void Workspace::kDestopResized()
     {
-    //printf("Workspace::kDesktopResized()\n\r");
+    //printf("Workspace::kDesktopResized()\n");
     TQRect geom = TDEApplication::desktop()->geometry();
     NETSize desktop_geometry;
     desktop_geometry.width = geom.width();

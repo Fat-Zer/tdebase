@@ -508,7 +508,7 @@ void KDisplayConfig::updateDraggableMonitorInformationInternal (int monitor_id, 
 		}
 	}
 	else {
-		printf("[WARNING] Display layout broken...\n\r"); fflush(stdout);
+		printf("[WARNING] Display layout broken...\n"); fflush(stdout);
 	}
 
 	layoutDragDropDisplay();
