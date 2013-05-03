@@ -173,6 +173,7 @@ extern bool trinity_desktop_lock_hide_active_windows;
 extern bool trinity_desktop_lock_forced;
 
 extern bool argb_visual;
+extern pid_t kdesktop_pid;
 
 extern TQXLibWindowList trinity_desktop_lock_hidden_window_list;
 
@@ -224,6 +225,7 @@ LockProcess::LockProcess()
       mHackStartupEnabled(true),
       mOverrideHackStartupEnabled(false),
       mResizingDesktopLock(false),
+      mFullyOnlineSent(false),
       m_rootPixmap(NULL),
       mBackingStartupDelayTimer(0),
       m_startupStatusDialog(NULL),
@@ -972,6 +974,8 @@ void LockProcess::createSaverWindow()
             }
         }
     }
+
+    fullyOnline();
 
     kdDebug(1204) << "Saver window Id: " << winId() << endl;
 }
@@ -2736,6 +2740,21 @@ void LockProcess::processInputPipeCommand(TQString inputcommand) {
 		mForceReject = false;
 		trinity_desktop_lock_closing_windows = false;
 		return;
+	}
+}
+
+void LockProcess::fullyOnline() {
+	if (!mFullyOnlineSent) {
+		if (kdesktop_pid > 0) {
+			if (kill(kdesktop_pid, SIGUSR2) < 0) {
+				// The controlling kdesktop process probably died.  Commit suicide...
+				// Exit uncleanly
+				exit(1);
+			}
+			else {
+				mFullyOnlineSent = true;
+			}
+		}
 	}
 }
 
