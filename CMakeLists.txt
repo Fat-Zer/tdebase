@@ -269,6 +269,16 @@ if( BUILD_STARTTDE )
 endif()
 
 
+##### Determine whether older manpage support is used ##########
+
+if( EXISTS "/usr/sbin/makewhatis" )
+  set( WITH_MAKEWHATIS "1" )
+  message( STATUS "Selected makewhatis for tdeio-man on your system" )
+else()
+  message( STATUS "Selected man-db for tdeio-man on your system" )
+endif()
+
+
 ##### write configure files #####################
 
 configure_file( config.h.cmake config.h @ONLY )
