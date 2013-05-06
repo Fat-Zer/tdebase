@@ -56,7 +56,7 @@ Name[pt]=Bem-vindo ao TDE
 Name[pt_BR]=Bem-vindo ao TDE
 Name[ro]=Bine ați venit în TDE
 Name[ru]=Добро пожаловать в TDE
-Name[rw]=Urakaza neza kuri TDE 
+Name[rw]=Urakaza neza kuri TDE
 Name[se]=Bures boahtin TDE:ii
 Name[sk]=Privítanie TDE
 Name[sl]=Dobrodošli v TDE
@@ -81,3 +81,4 @@ Name[zh_TW]=歡迎使用 TDE
 Name[zu]=Wamukulekile kwi-TDE
 
 X-DOC-Weight=-3000
+Icon=kmenu
