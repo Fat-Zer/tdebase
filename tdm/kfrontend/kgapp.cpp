@@ -218,6 +218,11 @@ kg_main( const char *argv0 )
 #else
 	trinity_desktop_lock_use_sak = false;
 #endif
+ 	if (trinity_desktop_lock_use_sak) {
+		if (system(KDE_BINDIR "/tsak checkdeps") != 0) {
+			trinity_desktop_lock_use_sak = false;
+		}
+	}
 	if (trinity_desktop_lock_use_sak) {
 		tsak = new TDEProcess;
 		*tsak << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + "tsak";
@@ -273,10 +278,11 @@ kg_main( const char *argv0 )
 	XSetErrorHandler( (XErrorHandler)0 );
 
 	GreeterApp *app;
-	if ( (argb_visual_available == true) && (!_compositor.isEmpty()) ) {
+	if ((!_compositor.isEmpty()) && ( argb_visual_available == true )) {
 		app = new GreeterApp(dpyi, Qt::HANDLE( visual ), Qt::HANDLE( colormap ));
 	}
 	else {
+		argb_visual_available = false;
 		app = new GreeterApp(dpyi);
 	}
 	// End ARGB initialization
@@ -359,6 +365,11 @@ kg_main( const char *argv0 )
 		}
 		twin = new TDEProcess;
 		*twin << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + _windowManager.ascii();
+		if (_windowManager == "twin") {
+			// Special case
+			// Do not allow twin to start kompmgr...
+			*twin << "--disablecompositionmanager";
+		}
 		twin->start();
 		has_twin = true;
 	}
@@ -492,7 +503,7 @@ kg_main( const char *argv0 )
 				if (userinfo) {
 					TQString newuid = TQString("%1").arg(userinfo->pw_uid);
 					// kompmgr allows us to change its uid in this manner:
-					// 1.) Send SIGUSER1
+					// 1.) Send SIGUSR1
 					// 2.) Send the new UID to it on the command line
 					comp->kill(SIGUSR1);
 					comp->writeStdin(newuid.ascii(), newuid.length());

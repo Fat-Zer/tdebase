@@ -154,8 +154,9 @@ public:
         return TDEListView::paintEmptyArea(p, rect );
 
         const TQPixmap *pm = TQT_TQPIXMAP_CONST(paletteBackgroundPixmap());
-        if (!pm || pm->isNull())
+        if (!pm || pm->isNull()) {
             return;
+        }
 
         kdDebug() << "paintEmpty " << rect << endl;
         TQRect devRect = p->xForm( rect );
@@ -1355,6 +1356,9 @@ void ControlPipeHandlerObject::run(void) {
 				return;
 			}
 		}
+
+		// Thread cancellation point
+		usleep(1);
 	}
 	TQApplication::eventLoop()->exit(-1);
 }
