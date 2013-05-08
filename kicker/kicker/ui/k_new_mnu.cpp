@@ -3436,8 +3436,9 @@ void KMenu::slotFavoritesMoved( TQListViewItem* item, TQListViewItem* /*afterFir
 void KMenu::updateMedia()
 {
     TQStringList devices = m_mediaWatcher->devices();
-    if ( devices.isEmpty() )
+    if ( devices.isEmpty() ) {
         return;
+    }
 
     int nId = serviceMenuStartId();
     if ( m_media_id ) {
@@ -3457,21 +3458,42 @@ void KMenu::updateMedia()
         m_systemView->insertSeparator( nId++, i18n("Media"), -1);
     }
 
+    // WARNING
+    // This loop MUST be kept in sync with the data structure listed in libmediacommon/medium.h
+    #define SAFE_INCREMENT it++; if (it == devices.constEnd()) { printf("[kicker] Warning: incompatible media device list encountered!\n"); break; }
     for ( TQStringList::ConstIterator it = devices.constBegin(); it != devices.constEnd(); ++it )
     {
-        TQString id = ( *it );
-        TQString name = *++it;
-        TQString label = *++it;
-        TQString userLabel = ( *++it );
-        bool mountable = ( *++it == "true" ); // bool
-        ( void )mountable;
-        TQString deviceNode = ( *++it );
-        TQString mountPoint = ( *++it );
-        TQString fsType = ( *++it );
-        bool mounted = ( *++it == "true" ); // bool
-        TQString baseURL = ( *++it );
-        TQString mimeType = ( *++it );
-        TQString iconName = ( *++it );
+        TQString id = *it;
+        SAFE_INCREMENT
+        TQString uuid = *it;
+        SAFE_INCREMENT
+        TQString name = *it;
+        SAFE_INCREMENT
+        TQString label = *it;
+        SAFE_INCREMENT
+        TQString userLabel = *it;
+        SAFE_INCREMENT
+        bool mountable = ( *it == "true" ); // bool
+        SAFE_INCREMENT
+        TQString deviceNode = ( *it );
+        SAFE_INCREMENT
+        TQString mountPoint = ( *it );
+        SAFE_INCREMENT
+        TQString fsType = ( *it );
+        SAFE_INCREMENT
+        bool mounted = ( *it == "true" ); // bool
+        SAFE_INCREMENT
+        TQString baseURL = ( *it );
+        SAFE_INCREMENT
+        TQString mimeType = ( *it );
+        SAFE_INCREMENT
+        TQString iconName = ( *it );
+        SAFE_INCREMENT
+        bool encrypted = ( *it == "true" ); // bool
+        SAFE_INCREMENT
+        TQString clearDeviceUDI = ( *it );
+        SAFE_INCREMENT
+        bool hidden = ( *it == "true" ); // bool
 
         media_mimetypes["system:/media/"+name] = mimeType;
 
@@ -3498,10 +3520,9 @@ void KMenu::updateMedia()
         }
         m_systemView->insertItem( iconName, userLabel.isEmpty() ? label : userLabel,
                                   descr, "system:/media/" + name, nId++, -1 );
-        ++it;
-        ++it;
-        ++it; // skip separator
+        SAFE_INCREMENT // skip separator
     }
+    #undef SAFE_INCREMENT
 }
 
 bool KMenu::ensureServiceRunning(const TQString & service)
