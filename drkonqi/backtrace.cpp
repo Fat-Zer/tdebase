@@ -34,6 +34,7 @@
 #include <tdemessagebox.h>
 #include <tdelocale.h>
 #include <tdetempfile.h>
+#include <tdehardwaredevices.h>
 
 #include "krashconf.h"
 #include "backtrace.h"
@@ -201,20 +202,61 @@ bool BackTrace::usefulBacktrace()
 // remove stack frames added because of TDECrash
 void BackTrace::processBacktrace()
 {
-  if( !m_krashconf->kcrashRegExp().isEmpty())
-    {
-    TQRegExp kcrashregexp( m_krashconf->kcrashRegExp());
-    int pos = kcrashregexp.search( m_strBt );
-    if( pos >= 0 )
-      {
-      int len = kcrashregexp.matchedLength();
-      if( m_strBt[ pos ] == '\n' )
-        {
-        ++pos;
-        --len;
-        }
-      m_strBt.remove( pos, len );
-      m_strBt.insert( pos, TQString::fromLatin1( "[TDECrash handler]\n" ));
-      }
-    }
+	if( !m_krashconf->kcrashRegExp().isEmpty()) {
+		TQRegExp kcrashregexp( m_krashconf->kcrashRegExp());
+		int pos = -1;
+		while ((pos = kcrashregexp.search( m_strBt )) >= 0) {
+			pos = kcrashregexp.search( m_strBt );
+			if( pos >= 0 ) {
+				int len = kcrashregexp.matchedLength();
+				int nextinfochunkpos = m_strBt.find("====", pos);
+				if (nextinfochunkpos >= 0) {
+					// Trying to delete too much!
+					int chunkpos = pos;
+					TQString limitedstrBt = m_strBt.mid(pos, nextinfochunkpos - pos);
+					pos = kcrashregexp.search( limitedstrBt ) + chunkpos;
+					len = kcrashregexp.matchedLength();
+				}
+				if (pos >= 0) {
+					if( m_strBt[ pos ] == '\n' ) {
+						++pos;
+						--len;
+					}
+					m_strBt.remove( pos, len );
+					m_strBt.insert( pos, TQString::fromLatin1( "[TDECrash handler]\n" ));
+				}
+			}
+		}
+	}
+	if( !m_krashconf->kcrashRegExpSingle().isEmpty()) {
+		TQRegExp kcrashregexp( m_krashconf->kcrashRegExpSingle());
+		int pos = kcrashregexp.search( m_strBt );
+		if( pos >= 0 ) {
+			int len = kcrashregexp.matchedLength();
+			if( m_strBt[ pos ] == '\n' ) {
+				++pos;
+				--len;
+			}
+			m_strBt.remove( pos, len );
+		}
+	}
+
+	// Append potentially important hardware information
+	m_strBt.append("\n\n==== (tdehwlib) hardware information ====\n");
+	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEGenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
+	TDEGenericDevice *hwdevice;
+	for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
+		if (hwdevice->type() == TDEGenericDeviceType::CPU) {
+			TDECPUDevice* cpudevice = static_cast<TDECPUDevice*>(hwdevice);
+			m_strBt.append(TQString("CPU core number:\t\t%1\n").arg(cpudevice->coreNumber()));
+			m_strBt.append(TQString("\tVendor:\t\t\t%1\n").arg(cpudevice->vendorName()));
+			m_strBt.append(TQString("\tModel:\t\t\t%1\n").arg(cpudevice->vendorModel()));
+			m_strBt.append(TQString("\tName:\t\t\t%1\n").arg(cpudevice->name()));
+			m_strBt.append(TQString("\tCurrent Frequency:\t%1 MHz\n").arg(cpudevice->frequency()));
+			m_strBt.append(TQString("\tMinimum Frequency:\t%1 MHz\n").arg(cpudevice->minFrequency()));
+			m_strBt.append(TQString("\tMaximum Frequency:\t%1 MHz\n").arg(cpudevice->maxFrequency()));
+			m_strBt.append("\n");
+		}
+	}
 }
