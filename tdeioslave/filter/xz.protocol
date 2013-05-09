@@ -1,0 +1,10 @@
+[Protocol]
+exec=tdeio_filter
+protocol=xz
+mimetype=application/x-xz
+input=stream
+output=stream
+reading=true
+source=false
+DocPath=tdeioslave/xz.html
+Icon=ark

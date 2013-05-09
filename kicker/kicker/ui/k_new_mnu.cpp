@@ -52,6 +52,7 @@
 #include <kdebug.h>
 #include <tdeglobal.h>
 #include <tdeglobalsettings.h>
+#include <tdehardwaredevices.h>
 #include <kiconloader.h>
 #include <klineedit.h>
 #include <tdelocale.h>
@@ -100,6 +101,18 @@
 #include "k_new_mnu.h"
 #include "k_new_mnu.moc"
 #include "kickoff_bar.h"
+
+#include "config.h"
+
+#ifndef NO_QT3_DBUS_SUPPORT
+/* We acknowledge the the dbus API is unstable */
+#define DBUS_API_SUBJECT_TO_CHANGE
+#include <dbus/connection.h>
+#endif // NO_QT3_DBUS_SUPPORT
+
+#ifdef COMPILE_HALBACKEND
+#include <hal/libhal.h>
+#endif
 
 #define WAIT_BEFORE_QUERYING 700
 
@@ -294,7 +307,7 @@ KMenu::KMenu()
 
     m_searchResultsWidget = new ItemView (m_searchWidget, "m_searchResultsWidget");
     m_searchResultsWidget->setItemMargin(4);
-    m_searchResultsWidget->setIconSize(16);
+//    m_searchResultsWidget->setIconSize(16);
     m_searchActions = new ItemView (m_searchWidget, "m_searchActions");
     m_searchActions->setFocusPolicy(TQ_NoFocus);
     m_searchActions->setItemMargin(4);
@@ -415,6 +428,38 @@ KMenu::KMenu()
     search_tab_top_left.load( locate("data", "kicker/pics/search-tab-top-left.png" ) );
     search_tab_top_right.load( locate("data", "kicker/pics/search-tab-top-right.png" ) );
     search_tab_top_center.load( locate("data", "kicker/pics/search-tab-top-center.png" ) );
+    
+#ifdef COMPILE_HALBACKEND
+    m_halCtx = NULL;
+    m_halCtx = libhal_ctx_new();
+
+    DBusError error;
+    dbus_error_init(&error);
+    m_dbusConn = dbus_connection_open_private(DBUS_SYSTEM_BUS, &error);
+    if (!m_dbusConn) {
+        dbus_error_free(&error);
+        libhal_ctx_free(m_halCtx);
+        m_halCtx = NULL;
+    } else {
+        dbus_bus_register(m_dbusConn, &error);
+        if (dbus_error_is_set(&error)) {
+            dbus_error_free(&error);
+            libhal_ctx_free(m_halCtx);
+            m_dbusConn = NULL;
+            m_halCtx = NULL;
+        } else {
+            libhal_ctx_set_dbus_connection(m_halCtx, m_dbusConn);
+            if (!libhal_ctx_init(m_halCtx, &error)) {
+                if (dbus_error_is_set(&error)) {
+                    dbus_error_free(&error);
+                }
+                libhal_ctx_free(m_halCtx);
+                m_dbusConn = NULL;
+                m_halCtx = NULL;
+            }
+        }
+    }
+#endif
 }
 
 void KMenu::setupUi()
@@ -437,6 +482,15 @@ KMenu::~KMenu()
 
     clearSubmenus();
     delete m_filterData;
+
+#ifdef COMPILE_HALBACKEND
+    if (m_halCtx) {
+        DBusError error;
+        dbus_error_init(&error);
+        libhal_ctx_shutdown(m_halCtx, &error);
+        libhal_ctx_free(m_halCtx);
+    }
+#endif
 }
 
 bool KMenu::eventFilter ( TQObject * receiver, TQEvent* e)
@@ -1342,11 +1396,24 @@ void KMenu::insertStaticItems()
 
     m_systemView->insertSeparator( nId++, i18n("Applications"), index++);
 
-    KService::Ptr p = KService::serviceByStorageId("/usr/share/applications/YaST.desktop");
+#ifdef KICKOFF_DIST_CONFIG_SHORTCUT1
+    KService::Ptr kdcs1 = KService::serviceByStorageId(KICKOFF_DIST_CONFIG_SHORTCUT1);
+    m_systemView->insertMenuItem(kdcs1, nId++, index++);
+#endif
+#ifdef KICKOFF_DIST_CONFIG_SHORTCUT2
+    KService::Ptr kdcs2 = KService::serviceByStorageId(KICKOFF_DIST_CONFIG_SHORTCUT2);
+    m_systemView->insertMenuItem(kdcs2, nId++, index++);
+#endif
+
+    KService::Ptr p = KService::serviceByStorageId("KControl.desktop");
     m_systemView->insertMenuItem(p, nId++, index++);
 
-    m_systemView->insertItem( "info", i18n( "System Information" ),
-                              "sysinfo:/",  "sysinfo:/", nId++, index++ );
+    // run command
+    if (kapp->authorize("run_command"))
+    {
+        m_systemView->insertItem( "run", i18n("Run Command..."),
+                   "", "kicker:/runusercommand", nId++, index++ );
+    }
 
     m_systemView->insertSeparator( nId++, i18n("System Folders"), index++ );
 
@@ -2579,58 +2646,35 @@ void KMenu::slotStartURL(const TQString& u)
         slotLock();
     }
     else if ( u == "kicker:/logout" ) {
-#ifdef KDELIBS_SUSE
         TQByteArray params;
         TQDataStream stream(params, IO_WriteOnly);
         stream << 0 << -1 << "";
 
         kapp->dcopClient()->send("ksmserver", "default", "logoutTimed(int,int,TQString)", params);
-#else
-        DCOPRef mediamanager("ksmserver", "ksmserver");
-        DCOPReply reply = mediamanager.call( "logoutTimed", (int)TDEApplication::ShutdownTypeNone, (int)TDEApplication::ShutdownModeDefault );
-	if (!reply.isValid() && KMessageBox::Continue==KMessageBox::warningContinueCancel(this, i18n("Do you really want to end the session?"),
-                                                                                          i18n("Logout Confirmation"), KGuiItem(i18n("Logout"),"undo")))
-            kapp->requestShutDown( TDEApplication::ShutdownConfirmNo,
-                                   TDEApplication::ShutdownTypeNone,
-                                   TDEApplication::ShutdownModeDefault );
-
-#endif
     }
     else if ( u == "kicker:/runcommand" )
     {
          runCommand();
     }
+    else if ( u == "kicker:/runusercommand" )
+    {
+         runUserCommand();
+    }
     else if ( u == "kicker:/shutdown" ) {
-#ifdef KDELIBS_SUSE
         TQByteArray params;
         TQDataStream stream(params, IO_WriteOnly);
         stream << 2 << -1 << "";
 
         kapp->dcopClient()->send("ksmserver", "default", "logoutTimed(int,int,TQString)", params);
-#else
-        if (KMessageBox::Continue==KMessageBox::warningContinueCancel(this, i18n("Do you really want to turn off the computer?"),
-                                                                      i18n("Shutdown Confirmation"), KGuiItem(i18n("Shutdown"),"exit")))
-            kapp->requestShutDown( TDEApplication::ShutdownConfirmNo,
-                                   TDEApplication::ShutdownTypeHalt,
-                                   TDEApplication::ShutdownModeDefault );
-#endif
     }
     else if ( u == "kicker:/restart" ) {
-#ifdef KDELIBS_SUSE
         TQByteArray params;
         TQDataStream stream(params, IO_WriteOnly);
         stream << 1 << -1 << TQString();
 
         kapp->dcopClient()->send("ksmserver", "default", "logoutTimed(int,int,TQString)", params);
-#else
-        if (KMessageBox::Continue==KMessageBox::warningContinueCancel(this, i18n("Do you really want to reset the computer and boot (another operating system)?"),
-                                                                      i18n("Restart Confirmation"), KGuiItem(i18n("Restart"),"reload")))
-            kapp->requestShutDown( TDEApplication::ShutdownConfirmNo,
-                                   TDEApplication::ShutdownTypeReboot,
-                                   TDEApplication::ShutdownModeDefault );
-#endif
     }
-#ifdef KDELIBS_SUSE
+#ifdef COMPILE_HALBACKEND
     else if ( u == "kicker:/suspend_disk" ) {
         slotSuspend( 1 );
     }
@@ -2656,7 +2700,6 @@ void KMenu::slotStartURL(const TQString& u)
     else if ( u.startsWith("kicker:/switchuser_") )
         DM().lockSwitchVT( u.mid(19).toInt() );
     else if ( u.startsWith("kicker:/restart_") ) {
-#ifdef KDELIBS_SUSE
         TQStringList rebootOptions;
         int def, cur;
         DM().bootOptions( rebootOptions, def, cur );
@@ -2666,9 +2709,6 @@ void KMenu::slotStartURL(const TQString& u)
         stream << 1 << -1 << rebootOptions[u.mid(16).toInt()];
 
         kapp->dcopClient()->send("ksmserver", "default", "logoutTimed(int,int,TQString)", params);
-#else
-        KMessageBox::error( this, TQString( "Sorry, not implemented." ));
-#endif
     }
 #warning restart entry not supported
 #if 0
@@ -3350,7 +3390,7 @@ TQSize KMenu::sizeHint() const
 TQSize KMenu::minimumSizeHint() const
 {
     TQSize minsize;
-    minsize.setWidth( minsize.width() + m_tabBar->sizeHint().width() );
+    minsize.setWidth( minsize.width() + m_tabBar->minimumSizeHint().width()  );
     minsize.setWidth( QMAX( minsize.width(),
                             m_search->minimumSize().width() ) );
     minsize.setWidth( QMAX( minsize.width(),
@@ -3702,98 +3742,125 @@ int KMenu::max_items(int category) const
     return 5;
 }
 
-#define DBUS_HAL_INTERFACE             "org.freedesktop.Hal"
-#define DBUS_HAL_SYSTEM_POWER_INTERFACE        "org.freedesktop.Hal.Device.SystemPowerManagement"
-#define HAL_UDI_COMPUTER               "/org/freedesktop/Hal/devices/computer"
-
-#ifdef KDELIBS_SUSE
-#include <liblazy.h>
-#endif
-
 void KMenu::insertSuspendOption( int &nId, int &index )
 {
-#ifdef KDELIBS_SUSE
-    int supported = -1;
-    bool suspend_ram, suspend_disk, standby;
+    bool suspend_ram = false;
+    bool standby = false;
+    bool suspend_disk = false;
+#ifdef COMPILE_HALBACKEND
+    suspend_ram = libhal_device_get_property_bool(m_halCtx,
+        "/org/freedesktop/Hal/devices/computer",
+        "power_management.can_suspend", 
+        NULL);
 
-    liblazy_hal_get_property_bool(HAL_UDI_COMPUTER, "power_management.can_suspend", &supported);
-    if (supported == 1)
-        suspend_ram = true;
-    else
-        suspend_ram = false;
-	liblazy_hal_get_property_bool(HAL_UDI_COMPUTER, "power_management.can_standby", &supported);
-	if (supported == 1)
-	     standby = true;
-	else
-	     standby = false;
-	liblazy_hal_get_property_bool(HAL_UDI_COMPUTER, "power_management.can_hibernate", &supported);
-	if (supported == 1)
-	     suspend_disk = true;
-	else
-	     suspend_disk = false;
+    standby = libhal_device_get_property_bool(m_halCtx,
+        "/org/freedesktop/Hal/devices/computer",
+        "power_management.can_standby", 
+        NULL);
 
-	if (liblazy_hal_is_caller_privileged("org.freedesktop.hal.power-management.hibernate") != 1)
-	     suspend_disk = false;
-	if (liblazy_hal_is_caller_privileged("org.freedesktop.hal.power-management.suspend") != 1)
-	     suspend_ram = false;
-	if (liblazy_hal_is_caller_privileged("org.freedesktop.hal.power-management.standby") != 1)
-	    standby = false;
-
-	if ( ! ( standby + suspend_ram + suspend_disk ) )
-            return;
-
-        i18n("Suspend Computer");
-
-        if ( suspend_disk )
-            m_exitView->leftView()->insertItem( "suspend2disk", i18n( "Suspend to Disk" ),
-                                                i18n( "Pause without logging out" ), "kicker:/suspend_disk", nId++, index++ );
-
-        if ( suspend_ram )
-            m_exitView->leftView()->insertItem( "suspend2ram", i18n( "Suspend to RAM" ),
-                                                i18n( "Pause without logging out" ), "kicker:/suspend_ram", nId++, index++ );
-
-        if ( standby )
-            m_exitView->leftView()->insertItem( "player_pause", i18n( "Standby" ),
-                                                i18n( "Pause without logging out" ), "kicker:/standby", nId++, index++ );
+    suspend_disk = libhal_device_get_property_bool(m_halCtx,
+        "/org/freedesktop/Hal/devices/computer",
+        "power_management.can_hibernate", 
+        NULL);
+#else // COMPILE_HALBACKEND
+    TDERootSystemDevice* rootDevice = TDEGlobal::hardwareDevices()->rootSystemDevice();
+    if (rootDevice) {
+        suspend_ram = rootDevice->canSuspend();
+        standby = rootDevice->canStandby();
+        suspend_disk = rootDevice->canHibernate();
+    }
 #endif
+
+    if ( suspend_disk ) {
+        m_exitView->leftView()->insertItem(
+            "suspend2disk",
+            i18n( "Suspend to Disk" ),
+            i18n( "Pause without logging out" ),
+            "kicker:/suspend_disk", nId++, index++ );
+    }
+    
+    if ( suspend_ram ) {
+        m_exitView->leftView()->insertItem(
+            "suspend2ram",
+            i18n( "Suspend to RAM" ),
+            i18n( "Pause without logging out" ),
+            "kicker:/suspend_ram", nId++, index++ );
+    }
+
+    if ( standby ) {
+        m_exitView->leftView()->insertItem(
+            "player_pause",
+            i18n( "Standby" ),
+            i18n( "Pause without logging out" ),
+            "kicker:/standby", nId++, index++ );
+    }
 }
 
 void KMenu::slotSuspend(int id)
 {
-#ifdef KDELIBS_SUSE
-    int error = 0;
-    int wake = 0;
-    DBusMessage *reply = 0;
+    bool error = true;
+#ifdef COMPILE_HALBACKEND
+    DBusMessage* msg = NULL;
 
-    if (id == 1) {
-        error = liblazy_dbus_system_send_method_call(DBUS_HAL_INTERFACE,
-                                                     HAL_UDI_COMPUTER,
-                                                     DBUS_HAL_SYSTEM_POWER_INTERFACE,
-                                                     "Hibernate",
-                                                     &reply,
-                                                     DBUS_TYPE_INVALID);
-    } else if (id == 2)
-        error = liblazy_dbus_system_send_method_call(DBUS_HAL_INTERFACE,
-                                                     HAL_UDI_COMPUTER,
-                                                     DBUS_HAL_SYSTEM_POWER_INTERFACE,
-                                                     "Suspend",
-                                                     &reply,
-                                                     DBUS_TYPE_INT32,
-                                                     &wake,
-                                                     DBUS_TYPE_INVALID);
-    else if (id == 3)
-        error = liblazy_dbus_system_send_method_call(DBUS_HAL_INTERFACE,
-                                                     HAL_UDI_COMPUTER,
-                                                     DBUS_HAL_SYSTEM_POWER_INTERFACE,
-                                                     "Standby",
-                                                     &reply,
-                                                     DBUS_TYPE_INVALID);
-    else
-        return;
-    if (error)
+    if (m_dbusConn) {
+        if (id == 1) {
+            msg = dbus_message_new_method_call(
+                              "org.freedesktop.Hal",
+                              "/org/freedesktop/Hal/devices/computer",
+                              "org.freedesktop.Hal.Device.SystemPowerManagement",
+                              "Hibernate");
+        } else if (id == 2) {
+            msg = dbus_message_new_method_call(
+                              "org.freedesktop.Hal",
+                              "/org/freedesktop/Hal/devices/computer",
+                              "org.freedesktop.Hal.Device.SystemPowerManagement",
+                              "Suspend");
+            int wakeup=0;
+            dbus_message_append_args(msg, DBUS_TYPE_INT32, &wakeup, DBUS_TYPE_INVALID);
+        } else if (id == 3) {
+            msg = dbus_message_new_method_call(
+                              "org.freedesktop.Hal",
+                              "/org/freedesktop/Hal/devices/computer",
+                              "org.freedesktop.Hal.Device.SystemPowerManagement",
+                              "Standby");
+        } else {
+            return;
+        }
+
+        if(dbus_connection_send(m_dbusConn, msg, NULL)) {
+            error = false;
+        }
+        dbus_message_unref(msg);
+    }
+#else // COMPILE_HALBACKEND
+    TDERootSystemDevice* rootDevice = TDEGlobal::hardwareDevices()->rootSystemDevice();
+    if (rootDevice) {
+        if (id == 1) {
+            error = !rootDevice->setPowerState(TDESystemPowerState::Hibernate);
+        } else if (id == 2) {
+            error = !rootDevice->setPowerState(TDESystemPowerState::Suspend);
+        } else if (id == 3) {
+            error = !rootDevice->setPowerState(TDESystemPowerState::Standby);
+        } else {
+            return;
+        }
+    }
 #endif
+    if (error)
         KMessageBox::error(this, i18n("Suspend failed"));
 
+}
+
+void KMenu::runUserCommand()
+{
+    TQByteArray data;
+    TQCString appname( "kdesktop" );
+    if ( kicker_screen_number )
+        appname.sprintf("kdesktop-screen-%d", kicker_screen_number);
+
+    kapp->updateRemoteUserTimestamp( appname );
+    kapp->dcopClient()->send( appname, "KDesktopIface",
+                              "popupExecuteCommand()", data );
 }
 
 // vim:cindent:sw=4:
