@@ -280,14 +280,14 @@ void KRandRSystemTray::contextMenuAboutToShow(TDEPopupMenu* menu)
 		// Find any display profiles
 		TQStringList displayProfiles;
 		displayProfiles = getDisplayConfigurationProfiles(locateLocal("config", "/", true));
-		if (displayProfiles.isEmpty() == false) {
+		if (!displayProfiles.isEmpty()) {
 			menu->insertTitle(SmallIcon("background"), i18n("Display Profiles"));
-		}
-		lastIndex = menu->insertItem(SmallIcon("bookmark"), "<default>");
-		menu->connectItem(lastIndex, this, TQT_SLOT(slotDisplayProfileChanged(int)));
-		for (TQStringList::Iterator t(displayProfiles.begin()); t != displayProfiles.end(); ++t) {
-			lastIndex = menu->insertItem(SmallIcon("bookmark"), *t);
+			lastIndex = menu->insertItem(SmallIcon("bookmark"), "<default>");
 			menu->connectItem(lastIndex, this, TQT_SLOT(slotDisplayProfileChanged(int)));
+			for (TQStringList::Iterator t(displayProfiles.begin()); t != displayProfiles.end(); ++t) {
+				lastIndex = menu->insertItem(SmallIcon("bookmark"), *t);
+				menu->connectItem(lastIndex, this, TQT_SLOT(slotDisplayProfileChanged(int)));
+			}
 		}
 	}
 
