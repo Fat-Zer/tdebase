@@ -52,6 +52,7 @@
 #include <kdebug.h>
 #include <tdeglobal.h>
 #include <tdeglobalsettings.h>
+#include <tdehardwaredevices.h>
 #include <kiconloader.h>
 #include <klineedit.h>
 #include <tdelocale.h>
@@ -3761,6 +3762,13 @@ void KMenu::insertSuspendOption( int &nId, int &index )
         "/org/freedesktop/Hal/devices/computer",
         "power_management.can_hibernate", 
         NULL);
+#else // COMPILE_HALBACKEND
+    TDERootSystemDevice* rootDevice = TDEGlobal::hardwareDevices()->rootSystemDevice();
+    if (rootDevice) {
+        suspend_ram = rootDevice->canSuspend();
+        standby = rootDevice->canStandby();
+        suspend_disk = rootDevice->canHibernate();
+    }
 #endif
 
     if ( suspend_disk ) {
@@ -3823,6 +3831,19 @@ void KMenu::slotSuspend(int id)
             error = false;
         }
         dbus_message_unref(msg);
+    }
+#else // COMPILE_HALBACKEND
+    TDERootSystemDevice* rootDevice = TDEGlobal::hardwareDevices()->rootSystemDevice();
+    if (rootDevice) {
+        if (id == 1) {
+            error = !rootDevice->setPowerState(TDESystemPowerState::Hibernate);
+        } else if (id == 2) {
+            error = !rootDevice->setPowerState(TDESystemPowerState::Suspend);
+        } else if (id == 3) {
+            error = !rootDevice->setPowerState(TDESystemPowerState::Standby);
+        } else {
+            return;
+        }
     }
 #endif
     if (error)
