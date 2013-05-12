@@ -33,6 +33,7 @@
 #include <tdemessagebox.h>
 #include <tdeapplication.h>
 #include <kprotocolinfo.h>
+#include <kstandarddirs.h>
 
 #include "dialog.h"
 
@@ -1257,14 +1258,14 @@ TQString TDEBackend::isInFstab(const Medium *medium)
 TQString TDEBackend::listUsingProcesses(const Medium* medium)
 {
 	TQString proclist, fullmsg;
-    TQString fuserpath = TDEStandardDirs::findExe("fuser", TQString("/sbin:/usr/sbin:") + getenv( "PATH" ));
-    FILE *fuser = NULL;
-	
+	TQString fuserpath = TDEStandardDirs::findExe("fuser", TQString("/sbin:/usr/sbin:") + getenv( "PATH" ));
+	FILE *fuser = NULL;
+
 	uint counter = 0;
-    if (!fuserpath.isEmpty()) {
-        TQString cmdline = TQString("/usr/bin/env %1 -vm %2 2>&1").arg(fuserpath, TDEProcess::quote(medium->mountPoint()));
-        fuser = popen(cmdline.latin1(), "r");
-    }
+	if (!fuserpath.isEmpty()) {
+		TQString cmdline = TQString("/usr/bin/env %1 -vm %2 2>&1").arg(fuserpath, TDEProcess::quote(medium->mountPoint()));
+		fuser = popen(cmdline.latin1(), "r");
+	}
 	if (fuser) {
 		proclist += "<pre>";
 		TQTextIStream is(fuser);
@@ -1298,14 +1299,14 @@ TQString TDEBackend::listUsingProcesses(const Medium* medium)
 TQString TDEBackend::killUsingProcesses(const Medium* medium)
 {
 	TQString proclist, fullmsg;
-    TQString fuserpath = TDEStandardDirs::findExe("fuser", TQString("/sbin:/usr/sbin:") + getenv( "PATH" ));
-    FILE *fuser = NULL;
-	
+	TQString fuserpath = TDEStandardDirs::findExe("fuser", TQString("/sbin:/usr/sbin:") + getenv( "PATH" ));
+	FILE *fuser = NULL;
+
 	uint counter = 0;
-    if (!fuserpath.isEmpty()) {
-        TQString cmdline = TQString("/usr/bin/env %1 -vmk %2 2>&1").arg(fuserpath, TDEProcess::quote(medium->mountPoint()));
-        fuser = popen(cmdline.latin1(), "r");
-    }
+	if (!fuserpath.isEmpty()) {
+		TQString cmdline = TQString("/usr/bin/env %1 -vmk %2 2>&1").arg(fuserpath, TDEProcess::quote(medium->mountPoint()));
+		fuser = popen(cmdline.latin1(), "r");
+	}
 	if (fuser) {
 		proclist += "<pre>";
 		TQTextIStream is(fuser);
