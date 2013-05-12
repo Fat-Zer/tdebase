@@ -1257,10 +1257,14 @@ TQString TDEBackend::isInFstab(const Medium *medium)
 TQString TDEBackend::listUsingProcesses(const Medium* medium)
 {
 	TQString proclist, fullmsg;
-	TQString cmdline = TQString("/usr/bin/env fuser -vm %1 2>&1").arg(TDEProcess::quote(medium->mountPoint()));
-	FILE *fuser = popen(cmdline.latin1(), "r");
+    TQString fuserpath = TDEStandardDirs::findExe("fuser", TQString("/sbin:/usr/sbin:") + getenv( "PATH" ));
+    FILE *fuser = NULL;
 	
 	uint counter = 0;
+    if (!fuserpath.isEmpty()) {
+        TQString cmdline = TQString("/usr/bin/env %1 -vm %2 2>&1").arg(fuserpath, TDEProcess::quote(medium->mountPoint()));
+        fuser = popen(cmdline.latin1(), "r");
+    }
 	if (fuser) {
 		proclist += "<pre>";
 		TQTextIStream is(fuser);
@@ -1294,10 +1298,14 @@ TQString TDEBackend::listUsingProcesses(const Medium* medium)
 TQString TDEBackend::killUsingProcesses(const Medium* medium)
 {
 	TQString proclist, fullmsg;
-	TQString cmdline = TQString("/usr/bin/env fuser -vmk %1 2>&1").arg(TDEProcess::quote(medium->mountPoint()));
-	FILE *fuser = popen(cmdline.latin1(), "r");
+    TQString fuserpath = TDEStandardDirs::findExe("fuser", TQString("/sbin:/usr/sbin:") + getenv( "PATH" ));
+    FILE *fuser = NULL;
 	
 	uint counter = 0;
+    if (!fuserpath.isEmpty()) {
+        TQString cmdline = TQString("/usr/bin/env %1 -vmk %2 2>&1").arg(fuserpath, TDEProcess::quote(medium->mountPoint()));
+        fuser = popen(cmdline.latin1(), "r");
+    }
 	if (fuser) {
 		proclist += "<pre>";
 		TQTextIStream is(fuser);
