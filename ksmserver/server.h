@@ -238,6 +238,7 @@ private:
     WindowMap legacyWindows;
 
     TDEHardwareDevices* hwDevices;
+    int initialClientCount;
 };
 
 #endif
