@@ -1615,7 +1615,7 @@ StartClient()
 		}
 #endif
 #ifdef K5AUTH
-		/* do like "kinit" program */
+		/* do like "tdeinit" program */
 		if (!curpass[0])
 			LogInfo( "No password for Kerberos5 provided.\n" );
 		else
