@@ -159,8 +159,9 @@ void KonqSidebarDirTreeItem::itemSelected()
 {
     bool bInTrash = false;
 
-    if ( m_fileItem->url().directory(false) == TDEGlobalSettings::trashPath() )
+    if ( m_fileItem->url().directory(false) == TDEGlobalSettings::trashPath() ) {
         bInTrash = true;
+    }
 
     TQMimeSource *data = TQApplication::clipboard()->data();
     bool paste = ( data->encodedData( data->format() ).size() != 0 );
