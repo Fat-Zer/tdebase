@@ -275,7 +275,7 @@ kg_main( const char *argv0 )
 			}
 		}
 	}
-	XSync( tqt_xdisplay(), False );
+	XSync( dpyi, False );
 	XSetErrorHandler( (XErrorHandler)0 );
 
 	GreeterApp *app;
