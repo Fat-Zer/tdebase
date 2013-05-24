@@ -422,7 +422,10 @@ kg_main( const char *argv0 )
 				KThemedGreeter *tgrt;
 				bool has_twin_bkp = has_twin;
 				is_themed = true;
-				has_twin = false;	// [FIXME] The themed greeter is built on the assumption that there is no window manager available (i.e. it keeps stealing focus) and needs to be repaired.
+				if (has_twin) {
+					has_twin = false;	// [FIXME] The themed greeter is built on the assumption that there is no window manager available (i.e. it keeps stealing focus) and needs to be repaired.
+					twin->kill(SIGKILL);
+				}
 				dialog = tgrt = new KThemedGreeter;
 				kdDebug() << timestamp() << " themed" << endl;
 				if (!tgrt->isOK()) {
