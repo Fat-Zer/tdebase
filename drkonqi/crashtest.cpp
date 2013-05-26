@@ -1,10 +1,27 @@
 // Let's crash.
+#include <unistd.h>
 #include <tdeapplication.h>
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
+#include <tqthread.h>
+#include <tqtimer.h>
 #include <kdebug.h>
 #include <stdio.h>
 #include <assert.h>
+
+#include "crashtest.h"
+
+void WorkerObject::run()
+{
+	while (1) {
+		sleep(10000);
+	}
+}
+
+#define SET_UP_WORKER(x, y)												\
+	WorkerObject x;													\
+	x.moveToThread(&y);												\
+	TQTimer::singleShot(0, &x, SLOT(run()));
 
 static TDECmdLineOptions options[] =
 {
@@ -74,6 +91,17 @@ int main(int argc, char *argv[])
                        TDEAboutData::License_GPL,
                        "(c) 2000-2002 David Faure, Waldo Bastian");
 
+  // Start 3 threads
+  TQEventLoopThread workerthread0;
+  TQEventLoopThread workerthread1;
+  TQEventLoopThread workerthread2;
+  SET_UP_WORKER(worker0, workerthread0)
+  SET_UP_WORKER(worker1, workerthread1)
+  SET_UP_WORKER(worker2, workerthread2)
+  workerthread0.start();
+  workerthread1.start();
+  workerthread2.start();
+
   TDECmdLineArgs::init(argc, argv, &aboutData);
   TDECmdLineArgs::addCmdLineOptions(options);
 
@@ -90,3 +118,5 @@ int main(int argc, char *argv[])
   level1(crashtype);
   return app.exec();
 }
+
+#include "crashtest.moc"

@@ -176,8 +176,22 @@ void BackTrace::slotProcessExited(TDEProcess *proc)
 bool BackTrace::usefulBacktrace()
 {
   // remove crap
-  if( !m_krashconf->removeFromBacktraceRegExp().isEmpty())
+  if( !m_krashconf->removeFromBacktraceRegExp().isEmpty()) {
     m_strBt.replace(TQRegExp( m_krashconf->removeFromBacktraceRegExp()), TQString());
+  }
+
+  // fix threading info output
+  if( !m_krashconf->threadRegExp().isEmpty()) {
+    int pos = -1;
+    TQRegExp threadRegExpression( m_krashconf->threadRegExp());
+    do {
+      threadRegExpression.search(m_strBt);
+      pos = threadRegExpression.pos();
+      if (pos > -1) {
+        m_strBt.insert(threadRegExpression.pos()+1, "==== ");
+      }
+    } while (pos > -1);
+  }
 
   if( m_krashconf->disableChecks())
       return true;
@@ -204,20 +218,32 @@ void BackTrace::processBacktrace()
 {
 	if( !m_krashconf->kcrashRegExp().isEmpty()) {
 		TQRegExp kcrashregexp( m_krashconf->kcrashRegExp());
-		int pos = -1;
-		while ((pos = kcrashregexp.search( m_strBt )) >= 0) {
-			pos = kcrashregexp.search( m_strBt );
+		kcrashregexp.setMinimal(true);
+		int pos = 0;
+		int prevpos = 0;
+		while ((pos = kcrashregexp.search( m_strBt, pos )) >= 0) {
+			if (prevpos == pos) {
+				// Avoid infinite loop
+				// Shouldn't ever get here, but given that this is a crash handler, better safe than sorry!
+				break;
+			}
+			prevpos = pos;
 			if( pos >= 0 ) {
 				int len = kcrashregexp.matchedLength();
 				int nextinfochunkpos = m_strBt.find("====", pos);
 				if (nextinfochunkpos >= 0) {
 					// Trying to delete too much!
-					int chunkpos = pos;
-					TQString limitedstrBt = m_strBt.mid(pos, nextinfochunkpos - pos);
-					pos = kcrashregexp.search( limitedstrBt ) + chunkpos;
-					len = kcrashregexp.matchedLength();
+					int limitedlen = nextinfochunkpos - pos;
+					TQString limitedstrBt = m_strBt.mid(pos, limitedlen);
+					int limitedpos = kcrashregexp.search( limitedstrBt );
+					if (limitedpos >= 0) {
+						len = kcrashregexp.matchedLength();
+					}
+					else {
+						len = 0;
+					}
 				}
-				if (pos >= 0) {
+				if ((pos >= 0) && (len > 0)) {
 					if( m_strBt[ pos ] == '\n' ) {
 						++pos;
 						--len;
@@ -225,6 +251,17 @@ void BackTrace::processBacktrace()
 					m_strBt.remove( pos, len );
 					m_strBt.insert( pos, TQString::fromLatin1( "[TDECrash handler]\n" ));
 				}
+			}
+			if (pos < 0) {
+				// Avoid infinite loop
+				// Shouldn't ever get here, but given that this is a crash handler, better safe than sorry!
+				break;
+			}
+			pos++;
+			if ((uint)pos >= m_strBt.length()) {
+				// Avoid infinite loop
+				// Shouldn't ever get here, but given that this is a crash handler, better safe than sorry!
+				break;
 			}
 		}
 	}
@@ -242,7 +279,7 @@ void BackTrace::processBacktrace()
 	}
 
 	// Append potentially important hardware information
-	m_strBt.append("\n\n==== (tdehwlib) hardware information ====\n");
+	m_strBt.append("\n==== (tdehwlib) hardware information ====\n");
 	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
 	TDEGenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
 	TDEGenericDevice *hwdevice;
@@ -257,6 +294,16 @@ void BackTrace::processBacktrace()
 			m_strBt.append(TQString("\tMinimum Frequency:\t%1 MHz\n").arg(cpudevice->minFrequency()));
 			m_strBt.append(TQString("\tMaximum Frequency:\t%1 MHz\n").arg(cpudevice->maxFrequency()));
 			m_strBt.append("\n");
+		}
+	}
+
+	{
+		// Clean up hard to read debug blocks
+		TQRegExp kcrashregexp( "[^\n]\n==== ");
+		kcrashregexp.setMinimal(true);
+		int pos = 0;
+		while ((pos = kcrashregexp.search( m_strBt, pos )) >= 0) {
+			m_strBt.insert(pos+1, "\n");
 		}
 	}
 }
