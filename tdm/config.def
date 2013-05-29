@@ -96,6 +96,8 @@
  The default TDM startup script /etc/init.d/tdm looks in /etc/default/tdm.d
  for theme-related settings which, if found, take precedence. The possibly
  overridden settings are: UseBackground, BackgroundCfg, UseTheme, Theme.
+ In addition, if a tdmdistrc file is found, this file will be ignored.
+ If a tdmdistrc file is installed, changes should be made to that file.
  See /usr/share/doc/tdm/README.Debian for details
  _
  Definition: the greeter is the login dialog, i.e., the part of &tdm;
