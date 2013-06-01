@@ -213,6 +213,7 @@ private:
     TQCString launcher;
     TQTimer protectionTimer;
     TQTimer restoreTimer;
+    TQTimer shutdownTimer;
     TQString xonCommand;
     int logoutSoundEvent;
     TQTimer knotifyTimeoutTimer;

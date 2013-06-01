@@ -98,6 +98,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	#define SHUTDOWN_MARKER(x)
 #endif // PROFILE_SHUTDOWN
 
+// Time to wait after close request for graceful application termination
+// If set too high running applications may be ungracefully terminated on slow machines
+#define KSMSERVER_SHUTDOWN_CLIENT_UNRESPONSIVE_TIMEOUT 60000
+
 void KSMServer::logout( int confirm, int sdtype, int sdmode )
 {
     shutdown( (TDEApplication::ShutdownConfirm)confirm,
@@ -505,7 +509,7 @@ void KSMServer::cancelShutdown( KSMClient* c )
 
 void KSMServer::startProtection()
 {
-    protectionTimer.start( 10000, true );
+    protectionTimer.start( KSMSERVER_SHUTDOWN_CLIENT_UNRESPONSIVE_TIMEOUT, true );
 }
 
 void KSMServer::endProtection()
@@ -651,11 +655,15 @@ void KSMServer::startKilling()
 
     kdDebug( 1218 ) << " We killed all clients. We have now clients.count()=" << clients.count() << endl;
     completeKilling();
-    TQTimer::singleShot( 10000, this, TQT_SLOT( timeoutQuit() ) );
+    shutdownTimer.start( KSMSERVER_SHUTDOWN_CLIENT_UNRESPONSIVE_TIMEOUT, TRUE );
 }
 
 void KSMServer::completeKilling()
 {
+    // Activity detected; reset forcible shutdown timer...
+    if (shutdownTimer.isActive()) {
+        shutdownTimer.start( KSMSERVER_SHUTDOWN_CLIENT_UNRESPONSIVE_TIMEOUT, TRUE );
+    }
     SHUTDOWN_MARKER("completeKilling");
     kdDebug( 1218 ) << "KSMServer::completeKilling clients.count()=" << clients.count() << endl;
     if( state == Killing ) {

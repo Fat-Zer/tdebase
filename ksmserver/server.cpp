@@ -682,6 +682,7 @@ KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManag
 
     connect( &protectionTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( protectionTimeout() ) );
     connect( &restoreTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( tryRestoreNext() ) );
+    connect( &shutdownTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( timeoutQuit() ) );
     connect( kapp, TQT_SIGNAL( shutDown() ), this, TQT_SLOT( cleanUp() ) );
 }
 
