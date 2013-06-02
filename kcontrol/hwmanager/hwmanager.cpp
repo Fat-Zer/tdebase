@@ -84,6 +84,7 @@ TDEHWManager::TDEHWManager(TQWidget *parent, const char *name, const TQStringLis
 	setUseRootOnlyMsg(true);
 
 	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	hwdevices->setTriggerlessHardwareUpdatesEnabled(true);
 
 	connect(base->showByConnection, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
 	connect(base->showByConnection, TQT_SIGNAL(clicked()), TQT_SLOT(populateTreeView()));
