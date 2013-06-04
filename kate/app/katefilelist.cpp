@@ -364,11 +364,16 @@ void KateFileList::updateFileListLocations()
   TQListViewItem* item = firstChild();
   int i=0;
   while (item) {
+    Kate::Document* itemDocument = ((KateFileListItem *)item)->document();
     if (m_sort == KateFileList::sortManual) {
-      ((KateFileListItem *)item)->document()->setDocumentListPosition(i);
+      if (KateDocManager::self()->findDocument(itemDocument) >= 0) {
+        itemDocument->setDocumentListPosition(i);
+      }
     }
     else {
-      ((KateFileListItem *)item)->document()->setDocumentListPosition(-1);
+      if (KateDocManager::self()->findDocument(itemDocument) >= 0) {
+        itemDocument->setDocumentListPosition(-1);
+      }
     }
     item = item->itemBelow();
     i++;
