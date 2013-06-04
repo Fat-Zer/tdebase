@@ -1539,9 +1539,6 @@ bool LockProcess::startHack()
 {
     trinity_desktop_hack_active = TRUE;
 
-    setCursor( tqblankCursor );
-    XChangeActivePointerGrab( tqt_xdisplay(), GRABEVENTS, TQCursor(tqblankCursor).handle(), CurrentTime);
-
     if ((mEnsureVRootWindowSecurityTimer) && (!mEnsureVRootWindowSecurityTimer->isActive())) mEnsureVRootWindowSecurityTimer->start(250, FALSE);
 
     if (currentDialog || (!mDialogs.isEmpty()))
@@ -1562,6 +1559,9 @@ bool LockProcess::startHack()
 	erase();
         return false;
     }
+
+    setCursor( tqblankCursor );
+    XChangeActivePointerGrab( tqt_xdisplay(), GRABEVENTS, TQCursor(tqblankCursor).handle(), CurrentTime);
 
     if (mSaverExec.isEmpty())
     {
