@@ -116,6 +116,7 @@ KonqBaseListViewWidget::KonqBaseListViewWidget( KonqListView *parent, TQWidget *
    setSelectionModeExt( FileManager );
    setDragEnabled(true);
    setItemsMovable(false);
+   setUseSmallExecuteArea(true);
 
    initConfig();
 #if 0
