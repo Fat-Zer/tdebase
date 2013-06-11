@@ -1131,6 +1131,12 @@ void Workspace::slotReconfigure()
             else
                 {
                 stopKompmgr();
+                if (!kompmgr)
+                    {
+                    kompmgr = new TDEProcess;
+                    connect(kompmgr, TQT_SIGNAL(receivedStderr(TDEProcess*, char*, int)), TQT_SLOT(handleKompmgrOutput(TDEProcess*, char*, int)));
+                    *kompmgr << "kompmgr";
+                    }
                 TQTimer::singleShot( 200, this, TQT_SLOT(startKompmgr()) ); // wait some time to ensure system's ready for restart
                 }
             }
