@@ -230,7 +230,7 @@ Workspace::Workspace( bool restore )
         *kompmgr << "kompmgr";
         startKompmgr();
         }
-    else
+    else if (!disable_twin_composition_manager)
         {
         // If kompmgr is already running, send it SIGTERM
         // Attempt to load the kompmgr pid file

@@ -441,8 +441,9 @@ void handle_siguser (int sig)
 {
     int uidnum;
     if (sig == SIGTERM) {
-        // Trap this signal and keep running...
-        return;
+        my_exit_code=0;
+        delete_pid_file();
+        exit(0);
     }
     if (sig == SIGUSR1) {
         char newuid[1024];
