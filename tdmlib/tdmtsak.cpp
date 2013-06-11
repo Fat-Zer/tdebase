@@ -140,25 +140,38 @@ int main (int argc, char *argv[])
 	}
 
 	if (verifier_result == 0) {
-			// OK, the calling process is authorized to retrieve SAK data
-			// First, flush the buffer
-			mPipe_fd = open(FIFO_FILE, O_RDONLY | O_NONBLOCK);
-			if (checkonly) {
-				if (mPipe_fd < 0) {
-					return 6;	// SAK not available
-				}
-				else {
-					return 0;
-				}
+		// OK, the calling process is authorized to retrieve SAK data
+		// First, flush the buffer
+		mPipe_fd = open(FIFO_FILE, O_RDONLY | O_NONBLOCK);
+		if (checkonly) {
+			if (mPipe_fd < 0) {
+				return 6;	// SAK not available
 			}
-			numread = 1;
-			while (numread > 0) {
-				numread = read(mPipe_fd, readbuf, 6);
+			else {
+				return 0;
 			}
-			close(mPipe_fd);
-			// Now wait for SAK press
+		}
+		numread = 1;
+		while (numread > 0) {
+			numread = read(mPipe_fd, readbuf, 6);
+		}
+		close(mPipe_fd);
+		// Now wait for SAK press
+		while (mPipe_fd > -1) {
 			mPipe_fd = open(FIFO_FILE, O_RDONLY);
-			while (mPipe_fd > -1) {
+
+			if (mPipe_fd <= -1) {
+				// This may be a transient glitch, such as when a KVM is being toggled or a new keyboard has been added
+				// Wait up to 5 seconds while trying to open the pipe again
+				int timeout = 5;
+				while ((mPipe_fd <= -1) && (timeout > 0)) {
+					sleep(1);
+					mPipe_fd = open(FIFO_FILE, O_RDONLY);
+					timeout--;
+				}
+			}
+
+			if (mPipe_fd > -1) {
 				numread = read(mPipe_fd, readbuf, 6);
 				readbuf[numread] = 0;
 				readbuf[127] = 0;
@@ -183,8 +196,10 @@ int main (int argc, char *argv[])
 					usleep(100);
 				}
 			}
+
 			close(mPipe_fd);
-			return 6;
+		}
+		return 6;
 	}
 	else {
 		return verifier_result;
