@@ -95,7 +95,8 @@ KBehaviourOptions::KBehaviourOptions(TDEConfig *config, TQString group, TQWidget
     connect(cbShowTips, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
 
     TQWhatsThis::add( cbShowTips, i18n("Here you can control if, when moving the mouse over a file, you want to see a "
-                                    "small popup window with additional information about that file"));
+                                    "small popup window with additional information about that file."
+                                    "This feature requires 'Enable tooltips' in KControl, Appearance & Themes, Style."));
 
     connect(cbShowTips, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotShowTips(bool)));
 /*
