@@ -448,7 +448,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         firstPopupURL.cleanPath();
         //kdDebug(1203) << "View path is " << url.url() << endl;
         //kdDebug(1203) << "First popup path is " << firstPopupURL.url() << endl;
-        currentDir = firstPopupURL.equals( url, true /* ignore_trailing */ );
+        currentDir = firstPopupURL.equals( url, true /* ignore_trailing */, true /* ignore_internalReferenceURLS */ );
         if ( isLocal && ((m_sMimeType == "application/x-desktop")
                       || (m_sMimeType == "media/builtin-mydocuments")
                       || (m_sMimeType == "media/builtin-mycomputer")
