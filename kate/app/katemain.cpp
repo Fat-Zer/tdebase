@@ -231,7 +231,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
         else
           wRef.call("restore");
       }
-      wRef.call( "raise" );
+      wRef.call( "setActiveWindowFocused" );
 
       // stop startup notification
       TDEStartupInfo::appStarted(  );
