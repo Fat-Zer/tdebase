@@ -435,7 +435,10 @@ static void sigterm_handler(int)
 {
     if (!trinity_desktop_lock_in_sec_dlg) {
         // Exit uncleanly
-        exit(1);
+        char tmp = 'U';
+        if (::write( signal_pipe[1], &tmp, 1) == -1) {
+            // Error handler to shut up gcc warnings
+        }
     }
 }
 
@@ -531,11 +534,17 @@ void LockProcess::signalPipeSignal()
     if (::read( signal_pipe[0], &tmp, 1) == -1) {
         // Error handler to shut up gcc warnings
     }
-    if( tmp == 'T' )
+    if( tmp == 'T' ) {
         quitSaver();
+    }
     else if( tmp == 'H' ) {
         if( !mLocked )
             startLock();
+    }
+    else if( tmp == 'U' ) {
+        // Exit uncleanly
+        quitSaver();
+        exit(1);
     }
 }
 
