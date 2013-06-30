@@ -264,7 +264,7 @@ endif( )
 
 
 # dbus-tqt (tdm, ksmserver, tdeioslaves(media))
-if( BUILD_TDM OR BUILD_KSMSERVER OR (BUILD_TDEIOSLAVES AND WITH_HAL) )
+if( BUILD_TDM OR BUILD_KSMSERVER OR BUILD_KICKER OR (BUILD_TDEIOSLAVES AND WITH_HAL) )
 
   if( BUILD_KSMSERVER AND WITH_UPOWER )
     pkg_check_modules( DBUS_1_TQT dbus-1-tqt )
