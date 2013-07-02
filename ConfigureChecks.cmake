@@ -12,13 +12,13 @@
 tde_setup_architecture_flags( )
 
 # termios.h (tdm, tdeioslave)
-if( BUILD_TDM OR BUILD_KIOSLAVES )
+if( BUILD_TDM OR BUILD_TDEIOSLAVES )
   check_include_file( termios.h HAVE_TERMIOS_H )
 endif( )
 
 
 # sys/ioctl.h (tdeioslave/fish, kcontrol/info)
-if( BUILD_KIOSLAVES OR BUILD_KCONTROL )
+if( BUILD_TDEIOSLAVES OR BUILD_KCONTROL )
   check_include_file( sys/ioctl.h HAVE_SYS_IOCTL_H )
 endif( )
 
@@ -183,7 +183,7 @@ endif( )
 
 
 # kde_socklen_t
-if( BUILD_KIOSLAVES OR BUILD_KSYSGUARD )
+if( BUILD_TDEIOSLAVES OR BUILD_KSYSGUARD )
   set( kde_socklen_t socklen_t )
 endif( )
 
@@ -260,7 +260,7 @@ endif( )
 
 
 # dbus-tqt (tdm, ksmserver, tdeioslaves(media))
-if( BUILD_TDM OR BUILD_KSMSERVER OR (BUILD_KIOSLAVES AND WITH_HAL) )
+if( BUILD_TDM OR BUILD_KSMSERVER OR (BUILD_TDEIOSLAVES AND WITH_HAL) )
 
   if( BUILD_KSMSERVER AND WITH_UPOWER )
     pkg_check_modules( DBUS_1_TQT dbus-1-tqt )
