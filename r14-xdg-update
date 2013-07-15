@@ -634,6 +634,17 @@ if [ ! -f $HOME/.tderc ] && [ -f $HOME/.kderc ]; then
     mv $HOME/.kderc $HOME/.tderc 2>/dev/null
   fi
 fi
+# Copy the following two rc files rather than move because the older versions are for HAL systems.
+if [ ! -f $PROFILE_DIR/share/config/tdenetworkmanagerrc ] && [ -f $PROFILE_DIR/share/config/knetworkmanagerrc ]; then
+  Message_Prefix
+  echo "  knetworkmanager->tdenetworkmanager"
+  cp -a $PROFILE_DIR/share/config/knetworkmanagerrc $PROFILE_DIR/share/config/tdenetworkmanagerrc 2>/dev/null
+fi
+if [ ! -f $PROFILE_DIR/share/config/tdepowersaverc ] && [ -f $PROFILE_DIR/share/config/kpowersaverc ]; then
+  Message_Prefix
+  echo "  kpowersave->tdepowersave"
+  cp -a $PROFILE_DIR/share/config/kpowersaverc $PROFILE_DIR/share/config/tdepowersaverc 2>/dev/null
+fi
 
 # Disable some features new to R14, otherwise users will see an unfamiliar desktop.
 if [[ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "ShowDeepButtons" --default false) == "false" ]]; then
