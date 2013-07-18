@@ -706,15 +706,17 @@ void KSMServer::killWM()
         shutdownNotifierIPDlg=0;
     }
     for ( KSMClient* c = clients.first(); c; c = clients.next() ) {
-        if( isWM( c )) {
+        if( isNotifier( c )) {
             iswm = true;
-            kdDebug( 1218 ) << "killWM: client " << c->program() << "(" << c->clientId() << ")" << endl;
             SmsDie( c->connection() );
         }
         if( isCM( c )) {
+            iswm = true;
             SmsDie( c->connection() );
         }
-        if( isNotifier( c )) {
+        if( isWM( c )) {
+            iswm = true;
+            kdDebug( 1218 ) << "killWM: client " << c->program() << "(" << c->clientId() << ")" << endl;
             SmsDie( c->connection() );
         }
     }
@@ -742,7 +744,19 @@ void KSMServer::completeKillingWM()
 void KSMServer::killingCompleted()
 {
     SHUTDOWN_MARKER("killingCompleted");
-    kapp->quit();
+    DM dmObject;
+    int dmType = dmObject.type();
+    if ((dmType == DM::NewTDM) || (dmType == DM::OldTDM) || (dmType == DM::GDM)) {
+        // Hide any remaining windows until the X server is terminated by the display manager
+        pid_t child;
+        child = fork();
+        if (child != 0) {
+            kapp->quit();
+        }
+    }
+    else {
+        kapp->quit();
+    }
 }
 
 // called when KNotify performs notification for logout (not when sound is finished though)

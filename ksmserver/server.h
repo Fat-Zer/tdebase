@@ -149,6 +149,8 @@ private:
     bool isWM( const TQString& program ) const;
     bool isCM( const KSMClient* client ) const;
     bool isCM( const TQString& program ) const;
+    bool isDesktop( const KSMClient* client ) const;
+    bool isDesktop( const TQString& program ) const;
     bool isNotifier( const KSMClient* client ) const;
     bool isNotifier( const TQString& program ) const;
     bool defaultSession() const; // empty session

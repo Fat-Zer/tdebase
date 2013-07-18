@@ -519,7 +519,7 @@ void KSMShutdownFeedback::slotPaintEffect()
 KSMShutdownIPFeedback * KSMShutdownIPFeedback::s_pSelf = 0L;
 
 KSMShutdownIPFeedback::KSMShutdownIPFeedback()
-: TQWidget( 0L, "systemmodaldialogclass", Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_StaysOnTop ), m_timeout(0), m_isPainted(false), m_sharedRootPixmap(NULL), mPixmapTimeout(0)
+: TQWidget( 0L, "systemmodaldialogclass", Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_StaysOnTop ), m_timeout(0), m_isPainted(false), m_paintedFromSharedRootPixmap(false), m_sharedRootPixmap(NULL), mPixmapTimeout(0)
 
 {
 	setShown(false);
@@ -559,7 +559,10 @@ void KSMShutdownIPFeedback::showNow()
 {
 	setShown(true);
 
-	TQTimer::singleShot( 0, this, SLOT(slotPaintEffect()) );
+	if (!m_isPainted) {
+		setGeometry( TQApplication::desktop()->geometry() );
+		TQTimer::singleShot( 0, this, SLOT(slotPaintEffect()) );
+	}
 }
 
 void KSMShutdownIPFeedback::enableExports()
@@ -588,12 +591,19 @@ KSMShutdownIPFeedback::~KSMShutdownIPFeedback()
 	if (m_sharedRootPixmap) {
 		m_sharedRootPixmap->stop();
 		delete m_sharedRootPixmap;
+		m_sharedRootPixmap = NULL;
 	}
 }
 
-void KSMShutdownIPFeedback::fadeBack( void )
-{
+void KSMShutdownIPFeedback::fadeBack( void ) {
+	//
+}
 
+void KSMShutdownIPFeedback::resizeEvent(TQResizeEvent* re) {
+	if (m_isPainted) {
+		// Resist all attempts to change size
+		setGeometry( m_screenGeometry );
+	}
 }
 
 void KSMShutdownIPFeedback::slotSetBackgroundPixmap(const TQPixmap &rpm) {
@@ -602,6 +612,10 @@ void KSMShutdownIPFeedback::slotSetBackgroundPixmap(const TQPixmap &rpm) {
 
 void KSMShutdownIPFeedback::slotPaintEffect()
 {
+	if (m_isPainted && m_paintedFromSharedRootPixmap) {
+		return;
+	}
+
 	TQPixmap pm = m_rootPixmap;
 	if (mPixmapTimeout == 0) {
 		if (TQPaintDevice::x11AppDepth() != 32) {
@@ -630,6 +644,15 @@ void KSMShutdownIPFeedback::slotPaintEffect()
 		else {
 			pm = TQPixmap(kapp->desktop()->width(), kapp->desktop()->height());
 			pm.fill(Qt::black);
+			m_paintedFromSharedRootPixmap = false;
+		}
+	}
+	else {
+		m_paintedFromSharedRootPixmap = true;
+		if (m_sharedRootPixmap) {
+			m_sharedRootPixmap->stop();
+			delete m_sharedRootPixmap;
+			m_sharedRootPixmap = NULL;
 		}
 	}
 
@@ -657,7 +680,8 @@ void KSMShutdownIPFeedback::slotPaintEffect()
 	setBackgroundPixmap( pm );
 	move(0,0);
 	setWindowState(WindowFullScreen);
-	setGeometry( TQApplication::desktop()->geometry() );
+	m_screenGeometry = TQApplication::desktop()->geometry();
+	setGeometry( m_screenGeometry );
 
 	repaint(true);
 	tqApp->flushX();
@@ -1222,8 +1246,6 @@ void KSMDelayedPushButton::slotReleased()
 void KSMDelayedPushButton::slotTimeout()
 {
   TQPoint bl = mapToGlobal(rect().bottomLeft());
-  TQWidget *par = (TQWidget*)parent();
-  TQPoint br = par->mapToGlobal(par->rect().bottomRight());
   pop->popup( bl );
   popt->stop();
   setDown(false);

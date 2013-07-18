@@ -187,7 +187,7 @@ void ThumbnailProtocol::get(const KURL &url)
 #ifdef THUMBNAIL_HACK
     else if (!m_width || !m_height)
     {
-        kdDebug(7115) << "Guessing height, width, icon sizre!" << endl;
+        kdDebug(7115) << "Guessing height, width, icon size!" << endl;
         m_width=128;
         m_height=128;
         iconSize=128;
@@ -232,7 +232,7 @@ void ThumbnailProtocol::get(const KURL &url)
         }
     }
     ThumbCreator::Flags flags = ThumbCreator::None;
-     
+
     if (!kfmiThumb)
     {
         kdDebug(7115) << "using thumb creator for the thumbnail\n";

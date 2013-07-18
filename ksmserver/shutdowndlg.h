@@ -97,6 +97,7 @@ public:
 
 protected:
 	~KSMShutdownIPFeedback();
+	virtual void resizeEvent(TQResizeEvent* re);
 
 public slots:
 	void slotPaintEffect();
@@ -118,9 +119,11 @@ private:
 	void showNow( void );
 	int m_timeout;
 	bool m_isPainted;
+	bool m_paintedFromSharedRootPixmap;
 	KRootPixmap* m_sharedRootPixmap;
 	TQPixmap m_rootPixmap;
 	int mPixmapTimeout;
+	TQRect m_screenGeometry;
 };
 
 // The confirmation dialog

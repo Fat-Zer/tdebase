@@ -514,8 +514,9 @@ static void sighandler(int sig)
        delete server;
     }
 
-    if (kapp)
+    if (kapp) {
         kapp->quit();
+    }
     //::exit(0);
 }
 
@@ -943,6 +944,17 @@ bool KSMServer::isCM( const TQString& program ) const
 {
     // Returns true if the program in question is a composition manager
     return (program == "kompmgr");
+}
+
+bool KSMServer::isDesktop( const KSMClient* client ) const
+{
+    return isDesktop( client->program());
+}
+
+bool KSMServer::isDesktop( const TQString& program ) const
+{
+    // Returns true if the program in question is a desktop
+    return (program == "kdesktop");
 }
 
 bool KSMServer::isNotifier( const KSMClient* client ) const

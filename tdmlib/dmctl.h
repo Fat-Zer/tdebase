@@ -39,6 +39,8 @@ public:
 	DM();
 	~DM();
 
+	enum { Unknown, NoDM, NewTDM, OldTDM, GDM };
+
 	bool canShutdown();
 	void shutdown( TDEApplication::ShutdownType shutdownType,
 	               TDEApplication::ShutdownMode shutdownMode,
@@ -57,6 +59,8 @@ public:
 
 	static TQString sess2Str( const SessEnt &se );
 	static void sess2Str2( const SessEnt &se, TQString &user, TQString &loc );
+
+	int type();
 
 private:
 	int fd;
@@ -85,6 +89,8 @@ public:
 	void switchVT( int vt ) {}
 
 	bool bootOptions( TQStringList &opts, int &dflt, int &curr );
+
+	int type() { return NoDM }
 
 #endif // Q_WS_X11
 

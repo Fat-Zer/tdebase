@@ -37,7 +37,7 @@
 #include <fcntl.h>
 #include <errno.h>
 
-static enum { Dunno, NoDM, NewTDM, OldTDM, GDM } DMType = Dunno;
+static int DMType = DM::Unknown;
 static const char *ctl, *dpy;
 
 DM::DM() : fd( -1 )
@@ -45,7 +45,7 @@ DM::DM() : fd( -1 )
 	char *ptr;
 	struct sockaddr_un sa;
 
-	if (DMType == Dunno) {
+	if (DMType == Unknown) {
 		if (!(dpy = ::getenv( "DISPLAY" )))
 			DMType = NoDM;
 		else if ((ctl = ::getenv( "DM_CONTROL" )))
@@ -437,6 +437,12 @@ DM::GDMAuthenticate()
 	}
 
 	fclose (fp);
+}
+
+int
+DM::type()
+{
+	return DMType;
 }
 
 #endif // Q_WS_X11
