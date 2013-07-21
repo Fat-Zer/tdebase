@@ -1201,14 +1201,39 @@ TQWidget* KSMShutdownIPDlg::showShutdownIP()
 	return l;
 }
 
+void KSMShutdownIPDlg::showNotificationActionButtons()
+{
+	m_button1->show();
+	m_button2->show();
+	m_buttonframe->show();
+
+	m_gridlayout->invalidate();
+}
+
+void KSMShutdownIPDlg::hideNotificationActionButtons()
+{
+	m_button1->hide();
+	m_button2->hide();
+	m_buttonframe->hide();
+
+	m_gridlayout->invalidate();
+}
+
 KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
   : KSMModalDialog( parent )
 
 {
 	setStatusMessage(i18n("Saving your settings..."));
 
+	m_button1->setText(i18n("Skip Notification"));
+	m_button2->setText(i18n("Abort Logout"));
+	connect(m_button1, SIGNAL(clicked()), this, SIGNAL(skipNotificationClicked()));
+	connect(m_button2, SIGNAL(clicked()), this, SIGNAL(abortLogoutClicked()));
+
 	show();
 	setActiveWindow();
+
+// 	KWin::setOnAllDesktops( winId(), true );
 }
 
 KSMShutdownIPDlg::~KSMShutdownIPDlg()

@@ -102,6 +102,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // If set too high running applications may be ungracefully terminated on slow machines
 #define KSMSERVER_SHUTDOWN_CLIENT_UNRESPONSIVE_TIMEOUT 60000
 
+// Time to wait before showing manual termination options
+// If set too low the user may be confused by buttons briefly flashing up on the screen during an otherwise normal logout process
+#define KSMSERVER_NOTIFICATION_MANUAL_OPTIONS_TIMEOUT 1000
+
 void KSMServer::logout( int confirm, int sdtype, int sdmode )
 {
     shutdown( (TDEApplication::ShutdownConfirm)confirm,
@@ -253,6 +257,11 @@ void KSMServer::shutdownInternal( TDEApplication::ShutdownConfirm confirm,
 	shutdownMode = sdmode;
 	bootOption = bopt;
 	shutdownNotifierIPDlg = 0;
+	shutdownNotifierIPDlg = KSMShutdownIPDlg::showShutdownIP();
+	if (shutdownNotifierIPDlg) {
+    		static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying applications of logout request..."));
+    		notificationTimer.start( KSMSERVER_NOTIFICATION_MANUAL_OPTIONS_TIMEOUT, true );
+	}
 
         // shall we save the session on logout?
         saveSession = ( config->readEntry( "loginMode", "restorePreviousLogout" ) == "restorePreviousLogout" );
@@ -489,11 +498,13 @@ void KSMServer::handlePendingInteractions()
     }
 }
 
-
-void KSMServer::cancelShutdown( KSMClient* c )
+void KSMServer::cancelShutdown( TQString cancellationText )
 {
-    kdDebug( 1218 ) << "Client " << c->program() << " (" << c->clientId() << ") canceled shutdown." << endl;
-    KNotifyClient::event( 0, "cancellogout", i18n( "Logout canceled by '%1'" ).arg( c->program()));
+    if (shutdownNotifierIPDlg) {
+        static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->closeSMDialog();
+        shutdownNotifierIPDlg=0;
+    }
+    KNotifyClient::event( 0, "cancellogout", cancellationText);
     clientInteracting = 0;
     for ( KSMClient* c = clients.first(); c; c = clients.next() ) {
         SmsShutdownCancelled( c->connection() );
@@ -505,6 +516,18 @@ void KSMServer::cancelShutdown( KSMClient* c )
         }
     }
     state = Idle;
+}
+
+void KSMServer::cancelShutdown( KSMClient* c )
+{
+    kdDebug( 1218 ) << "Client " << c->program() << " (" << c->clientId() << ") canceled shutdown." << endl;
+    cancelShutdown(i18n( "Logout canceled by '%1'" ).arg( c->program()));
+}
+
+void KSMServer::cancelShutdown()
+{
+    kdDebug( 1218 ) << "User canceled shutdown." << endl;
+    cancelShutdown(i18n( "Logout canceled by user" ));
 }
 
 void KSMServer::startProtection()
@@ -526,6 +549,30 @@ void KSMServer::protectionTimeout()
     if ( ( state != Shutdown && state != Checkpoint ) || clientInteracting )
         return;
 
+    handleProtectionTimeout();
+
+    startProtection();
+}
+
+void KSMServer::forceSkipSaveYourself()
+{
+    SHUTDOWN_MARKER("forceSkipSaveYourself");
+
+    handleProtectionTimeout();
+
+    startProtection();
+}
+
+void KSMServer::handleProtectionTimeout()
+{
+    SHUTDOWN_MARKER("handleProtectionTimeout");
+
+    notificationTimer.stop();
+    static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->hideNotificationActionButtons();
+    disconnect(shutdownNotifierIPDlg, SIGNAL(abortLogoutClicked()), this, SLOT(cancelShutdown()));
+    disconnect(shutdownNotifierIPDlg, SIGNAL(skipNotificationClicked()), this, SLOT(forceSkipSaveYourself()));
+    static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Forcing interacting application termination").append("..."));
+
     for ( KSMClient* c = clients.first(); c; c = clients.next() ) {
         if ( !c->saveYourselfDone && !c->waitForPhase2 ) {
             kdDebug( 1218 ) << "protectionTimeout: client " << c->program() << "(" << c->clientId() << ")" << endl;
@@ -533,18 +580,27 @@ void KSMServer::protectionTimeout()
         }
     }
     completeShutdownOrCheckpoint();
-    startProtection();
+}
+
+void KSMServer::notificationTimeout()
+{
+	// Display the buttons in the logout dialog
+	connect(shutdownNotifierIPDlg, SIGNAL(abortLogoutClicked()), this, SLOT(cancelShutdown()));
+	connect(shutdownNotifierIPDlg, SIGNAL(skipNotificationClicked()), this, SLOT(forceSkipSaveYourself()));
+	static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->showNotificationActionButtons();
 }
 
 void KSMServer::completeShutdownOrCheckpoint()
 {
     SHUTDOWN_MARKER("completeShutdownOrCheckpoint");
     if ( state != Shutdown && state != Checkpoint ) {
+        SHUTDOWN_MARKER("completeShutdownOrCheckpoint state not Shutdown or Checkpoint");
         return;
     }
 
     for ( KSMClient* c = clients.first(); c; c = clients.next() ) {
         if ( !c->saveYourselfDone && !c->waitForPhase2 ) {
+            SHUTDOWN_MARKER("completeShutdownOrCheckpoint state not done yet");
             return; // not done yet
         }
     }
@@ -559,6 +615,11 @@ void KSMServer::completeShutdownOrCheckpoint()
         }
     }
     if ( waitForPhase2 ) {
+        SHUTDOWN_MARKER("completeShutdownOrCheckpoint state still waiting for Phase 2");
+        if (shutdownNotifierIPDlg) {
+            static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying remaining applications of logout request..."));
+            notificationTimer.start( KSMSERVER_NOTIFICATION_MANUAL_OPTIONS_TIMEOUT, true );
+        }
         return;
     }
     SHUTDOWN_MARKER("Phase 2 complete");
@@ -566,11 +627,18 @@ void KSMServer::completeShutdownOrCheckpoint()
     bool showLogoutStatusDlg = TDEConfigGroup(TDEGlobal::config(), "Logout").readBoolEntry("showLogoutStatusDlg", true);
     if (showLogoutStatusDlg && state != Checkpoint) {
         KSMShutdownIPFeedback::showit(); // hide the UGLY logout process from the user
-        shutdownNotifierIPDlg = KSMShutdownIPDlg::showShutdownIP();
+        if (!shutdownNotifierIPDlg) {
+            shutdownNotifierIPDlg = KSMShutdownIPDlg::showShutdownIP();
+        }
         while (!KSMShutdownIPFeedback::ispainted()) {
             tqApp->processEvents();
         }
     }
+
+    notificationTimer.stop();
+    static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->hideNotificationActionButtons();
+    disconnect(shutdownNotifierIPDlg, SIGNAL(abortLogoutClicked()), this, SLOT(cancelShutdown()));
+    disconnect(shutdownNotifierIPDlg, SIGNAL(skipNotificationClicked()), this, SLOT(forceSkipSaveYourself()));
 
     // synchronize any folders that were requested for shutdown sync
     if (shutdownNotifierIPDlg) {

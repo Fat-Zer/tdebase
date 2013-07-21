@@ -109,6 +109,7 @@ private slots:
     void restoreSessionInternal();
     void restoreSessionDoneInternal();
 
+    void notificationTimeout();
     void protectionTimeout();
     void timeoutQuit();
     void timeoutWMQuit();
@@ -123,6 +124,9 @@ private slots:
     void tryRestoreNext();
     void startupSuspendTimeout();
 
+    void cancelShutdown();
+    void forceSkipSaveYourself();
+
 private:
     void handlePendingInteractions();
     void completeShutdownOrCheckpoint();
@@ -131,6 +135,7 @@ private:
     void completeKilling();
     void killWM();
     void completeKillingWM();
+    void cancelShutdown( TQString cancellationText );
     void cancelShutdown( KSMClient* c );
     void killingCompleted();
 
@@ -139,6 +144,7 @@ private:
 
     void startProtection();
     void endProtection();
+    void handleProtectionTimeout();
 
     void startApplication( TQStringList command,
         const TQString& clientMachine = TQString::null,
@@ -214,6 +220,7 @@ private:
     TQString sessionName;
     TQCString launcher;
     TQTimer protectionTimer;
+    TQTimer notificationTimer;
     TQTimer restoreTimer;
     TQTimer shutdownTimer;
     TQString xonCommand;

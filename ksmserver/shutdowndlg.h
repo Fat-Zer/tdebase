@@ -171,6 +171,13 @@ class KSMShutdownIPDlg : public KSMModalDialog
 public:
 	static TQWidget* showShutdownIP();
 
+	void showNotificationActionButtons();
+	void hideNotificationActionButtons();
+
+signals:
+	void abortLogoutClicked();
+	void skipNotificationClicked();
+
 protected:
 	~KSMShutdownIPDlg();
 

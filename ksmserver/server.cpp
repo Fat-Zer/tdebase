@@ -681,6 +681,7 @@ KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManag
     signal(SIGINT, sighandler);
     signal(SIGPIPE, SIG_IGN);
 
+    connect( &notificationTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( notificationTimeout() ) );
     connect( &protectionTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( protectionTimeout() ) );
     connect( &restoreTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( tryRestoreNext() ) );
     connect( &shutdownTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( timeoutQuit() ) );
