@@ -106,7 +106,7 @@ public:
      * - Unlock: tdm unlock dialog (TODO)
      * - ChangeTok: tdm password change dialog (TODO)
      * - ExUnlock: kdesktop_lock unlock dialog
-     * - ExChangeTok: kdepasswd password change dialog (TODO)
+     * - ExChangeTok: tdepasswd password change dialog (TODO)
      *
      * The Ex* contexts exist within a running session; the talker must know
      * how to obtain the currently logged in user (+ domain/realm, etc.)

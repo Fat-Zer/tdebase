@@ -114,7 +114,7 @@ libraries. Here is an overview of the directories:
     The KDE session manager (saves program status on login, restarts
     those program at the next login).
 
-* kdepasswd
+* tdepasswd
     A KDE frontend for passwd. Also contains the "Password & User Information" KCM.
 
 * ksplashml

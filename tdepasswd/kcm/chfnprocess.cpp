@@ -10,7 +10,7 @@
 
 /**
  * @file Change a user's 'finger' information, specifically their full name.
- * derived from kdepasswd.
+ * derived from tdepasswd.
  */
 
 #include <unistd.h>

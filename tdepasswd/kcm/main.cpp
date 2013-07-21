@@ -108,12 +108,12 @@ KCMUserAccount::KCMUserAccount( TQWidget *parent, const char *name,
 void KCMUserAccount::slotChangePassword()
 {
 	TDEProcess *proc = new TDEProcess;
-	TQString bin = TDEGlobal::dirs()->findExe("kdepasswd");
+	TQString bin = TDEGlobal::dirs()->findExe("tdepasswd");
 	if ( !bin )
 	{
-		kdDebug() << "kcm_useraccount: kdepasswd was not found." << endl;
+		kdDebug() << "kcm_useraccount: tdepasswd was not found." << endl;
 		KMessageBox::sorry ( this, i18n( "A program error occurred: the internal "
-			"program 'kdepasswd' could not be found. You will "
+			"program 'tdepasswd' could not be found. You will "
 			"not be able to change your password."));
 
 		_mw->btnChangePassword->setEnabled(false);

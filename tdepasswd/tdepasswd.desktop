@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kdepasswd
+Exec=tdepasswd
 Icon=password
 Type=Application
 Categories=Qt;TDE;Settings;

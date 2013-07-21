@@ -28,7 +28,7 @@ static TDECmdLineOptions options[] =
 
 int main(int argc, char **argv)
 {
-    TDEAboutData aboutData("kdepasswd", I18N_NOOP("TDE passwd"),
+    TDEAboutData aboutData("tdepasswd", I18N_NOOP("TDE passwd"),
             VERSION, I18N_NOOP("Changes a UNIX password."),
             TDEAboutData::License_Artistic, "Copyright (c) 2000 Geert Jansen");
     aboutData.addAuthor("Geert Jansen", I18N_NOOP("Maintainer"),
@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 
 
     if (!KUniqueApplication::start()) {
-	kdDebug() << "kdepasswd is already running" << endl;
+	kdDebug() << "tdepasswd is already running" << endl;
 	return 0;
     }
 
@@ -54,7 +54,7 @@ int main(int argc, char **argv)
     if (args->count())
 	user = args->arg(0);
 
-    /* You must be able to run "kdepasswd loginName" */
+    /* You must be able to run "tdepasswd loginName" */
     if ( !user.isEmpty() && user!=KUser().loginName().utf8() && !bRoot)
     {
         KMessageBox::sorry(0, i18n("You need to be root to change the password of other users."));
@@ -64,12 +64,12 @@ int main(int argc, char **argv)
     TQCString oldpass;
     if (!bRoot)
     {
-        int result = KDEpasswd1Dialog::getPassword(oldpass);
-        if (result != KDEpasswd1Dialog::Accepted)
+        int result = TDEpasswd1Dialog::getPassword(oldpass);
+        if (result != TDEpasswd1Dialog::Accepted)
 	    return 0;
     }
 
-    KDEpasswd2Dialog *dlg = new KDEpasswd2Dialog(oldpass, user);
+    TDEpasswd2Dialog *dlg = new TDEpasswd2Dialog(oldpass, user);
 
 
     dlg->exec();

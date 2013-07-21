@@ -13,7 +13,7 @@
 #include "passwddlg.h"
 
 
-KDEpasswd1Dialog::KDEpasswd1Dialog()
+TDEpasswd1Dialog::TDEpasswd1Dialog()
     : KPasswordDialog(Password, false, 0)
 {
     setCaption(i18n("Change Password"));
@@ -21,12 +21,12 @@ KDEpasswd1Dialog::KDEpasswd1Dialog()
 }
 
 
-KDEpasswd1Dialog::~KDEpasswd1Dialog()
+TDEpasswd1Dialog::~TDEpasswd1Dialog()
 {
 }
 
 
-bool KDEpasswd1Dialog::checkPassword(const char *password)
+bool TDEpasswd1Dialog::checkPassword(const char *password)
 {
     PasswdProcess proc(0);
 
@@ -66,9 +66,9 @@ bool KDEpasswd1Dialog::checkPassword(const char *password)
 
 
 // static
-int KDEpasswd1Dialog::getPassword(TQCString &password)
+int TDEpasswd1Dialog::getPassword(TQCString &password)
 {
-    KDEpasswd1Dialog *dlg = new KDEpasswd1Dialog();
+    TDEpasswd1Dialog *dlg = new TDEpasswd1Dialog();
     int res = dlg->exec();
     if (res == Accepted)
 	password = dlg->password();
@@ -78,7 +78,7 @@ int KDEpasswd1Dialog::getPassword(TQCString &password)
 
 
 
-KDEpasswd2Dialog::KDEpasswd2Dialog(const char *oldpass, TQCString user)
+TDEpasswd2Dialog::TDEpasswd2Dialog(const char *oldpass, TQCString user)
     : KPasswordDialog(NewPassword, false, 0)
 {
     m_Pass = oldpass;
@@ -92,12 +92,12 @@ KDEpasswd2Dialog::KDEpasswd2Dialog(const char *oldpass, TQCString user)
 }
 
 
-KDEpasswd2Dialog::~KDEpasswd2Dialog()
+TDEpasswd2Dialog::~TDEpasswd2Dialog()
 {
 }
 
 
-bool KDEpasswd2Dialog::checkPassword(const char *password)
+bool TDEpasswd2Dialog::checkPassword(const char *password)
 {
     PasswdProcess proc(m_User);
 

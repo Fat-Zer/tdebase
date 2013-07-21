@@ -11,14 +11,14 @@
 
 #include <kpassdlg.h>
 
-class KDEpasswd1Dialog
+class TDEpasswd1Dialog
     : public KPasswordDialog
 {
     Q_OBJECT
 
 public:
-    KDEpasswd1Dialog();
-    ~KDEpasswd1Dialog();
+    TDEpasswd1Dialog();
+    ~TDEpasswd1Dialog();
 
     static int getPassword(TQCString &password);
 
@@ -27,14 +27,14 @@ protected:
 };
     
 
-class KDEpasswd2Dialog
+class TDEpasswd2Dialog
     : public KPasswordDialog
 {
     Q_OBJECT
 
 public:
-    KDEpasswd2Dialog(const char *oldpass, TQCString user);
-    ~KDEpasswd2Dialog();
+    TDEpasswd2Dialog(const char *oldpass, TQCString user);
+    ~TDEpasswd2Dialog();
 
 protected:
     bool checkPassword(const char *password);
