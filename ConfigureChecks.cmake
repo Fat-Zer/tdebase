@@ -161,6 +161,10 @@ if( WITH_XSCREENSAVER )
   else( )
     tde_message_fatal( "xscreensaver is requested, but was not found on your system" )
   endif( )
+  include( FindXscreensaver.cmake ) # not really good practise
+  if( NOT XSCREENSAVER_FOUND )
+    message( FATAL_ERROR "\nxscreensaver is requested, but was not found on your system" )
+  endif( )
 endif( )
 
 

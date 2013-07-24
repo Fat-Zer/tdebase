@@ -27,6 +27,9 @@
 // xscreensaver
 #cmakedefine HAVE_XSCREENSAVER 1
 
+/* Defines where xscreensaver stores its graphic hacks */
+#define XSCREENSAVER_HACKS_DIR "@XSCREENSAVER_DIR@"
+
 // libart
 #cmakedefine HAVE_LIBART 1
 

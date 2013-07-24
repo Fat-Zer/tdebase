@@ -27,6 +27,7 @@
 #include <tqpushbutton.h>
 #include <tqslider.h>
 #include <tqtimer.h>
+#include <tqfileinfo.h>
 #include <tqwhatsthis.h>
 
 #include <dcopclient.h>
@@ -519,9 +520,28 @@ void KScreenSaver::findSavers()
         TQString file = mSaverFileList[mNumLoaded];
         SaverConfig *saver = new SaverConfig;
         if (saver->read(file)) {
-            mSaverList.append(saver);
-        } else
+            TQString saverexec = TQString("%1/%2").arg(XSCREENSAVER_HACKS_DIR).arg(saver->exec());
+            // find the xscreensaver executable
+            //work around a TDEStandardDirs::findExe() "feature" where it looks in $TDEDIR/bin first no matter what and sometimes finds the wrong executable
+            TQFileInfo checkExe;
+            checkExe.setFile(saverexec);
+            if (checkExe.exists() && checkExe.isExecutable() && checkExe.isFile()) {
+                mSaverList.append(saver);
+            }
+            else {
+                // Executable not present in XScreenSaver directory!
+                // Try standard paths
+                if (TDEStandardDirs::findExe(saver->exec()) != TQString::null) {
+                    mSaverList.append(saver);
+                }
+                else {
+                    delete saver;
+                }
+            }
+        }
+        else {
             delete saver;
+        }
     }
 
     if ( (unsigned)mNumLoaded == mSaverFileList.count() ) {
