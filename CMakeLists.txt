@@ -261,6 +261,8 @@ tde_conditional_add_subdirectory( BUILD_TSAK tsak )
 tde_conditional_add_subdirectory( BUILD_KROOTBACKING krootbacking )
 tde_conditional_add_subdirectory( BUILD_TQT3INTEGRATION tqt3integration )
 
+add_subdirectory( tdekbdledsync )
+
 ##### install starttde & related stuff ##########
 
 if( BUILD_STARTTDE )
