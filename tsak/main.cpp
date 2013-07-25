@@ -334,7 +334,7 @@ bool setupPipe()
 
 bool setupLockingPipe(bool writepid)
 {
-	/* Create the FIFOs if they do not exist */
+	/* Create the FIFOs as they may not exist */
 	umask(0);
 	mkdir(FIFO_DIR,0644);
 
@@ -383,17 +383,6 @@ void restart_tsak()
 		if (child_led_pids[i] != 0) {
 			kill(child_led_pids[i], SIGKILL);
 		}
-	}
-
-	// Wait for process termination
-	sleep(1);
-
-	// Release all exclusive keyboard locks
-	for (int current_keyboard=0;current_keyboard<keyboard_fd_num;current_keyboard++) {
-		if(ioctl(keyboard_fds[current_keyboard], EVIOCGRAB, 0) < 0) {
-			fprintf(stderr, "[tsak] Failed to release exclusive input device lock\n");
-		}
-		close(keyboard_fds[current_keyboard]);
 	}
 
 	// Unset the exclusive file lock
@@ -647,7 +636,7 @@ int main (int argc, char *argv[])
 								while (1) {
 									if ((rd = read(keyboard_fds[current_keyboard], ev, size)) < size) {
 										fprintf(stderr, "[tsak] Read failed.\n");
-										break;
+										return 13;
 									}
 
 									if (ev[0].value == 0 && ev[0].type == 1) { // Read the key release event
@@ -699,13 +688,20 @@ int main (int argc, char *argv[])
 						return 0;
 					}
 
+					// Close all keyboard file descriptors; we don't need them in this process and they can end up dangling/locked during forced restart
+					for (int current_keyboard=0;current_keyboard<keyboard_fd_num;current_keyboard++) {
+						close(keyboard_fds[current_keyboard]);
+						keyboard_fds[current_keyboard] = 0;
+					}
+					keyboard_fd_num = 0;
+
 					// Prevent multiple process instances from starting
 					setupLockingPipe(true);
 
 					// Wait a little bit so that udev hotplug can stabilize before we start monitoring
 					sleep(1);
 
-					fprintf(stderr, "[tsak] Hotplug monitoring process started\n");
+					fprintf(stderr, "[tsak] Hotplug monitoring process started (%ld)\n", getpid());
 
 					// Monitor for hotplugged keyboards
 					int j;
