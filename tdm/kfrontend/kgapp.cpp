@@ -71,6 +71,7 @@ bool argb_visual_available = false;
 bool has_twin = false;
 bool is_themed = false;
 bool trinity_desktop_lock_use_sak = TRUE;
+bool trinity_desktop_synchronize_keyboard_lights = TRUE;
 TQPoint primaryScreenPosition;
 
 static int
@@ -208,6 +209,7 @@ kg_main( const char *argv0 )
 	TDECrash::setSafer( true );
 
 	TDEProcess *tsak = 0;
+	TDEProcess *kbdl = 0;
 	TDEProcess *proc = 0;
 	TDEProcess *comp = 0;
 	TDEProcess *dcop = 0;
@@ -236,6 +238,12 @@ kg_main( const char *argv0 )
 		tsak->closeStdout();
 		tsak->detach();
 		delete tsak;
+	}
+
+	if (trinity_desktop_synchronize_keyboard_lights) {
+		kbdl = new TDEProcess;
+		*kbdl << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + "tdekbdledsync";
+		kbdl->start();
 	}
 
 	XSetErrorHandler( ignoreXError );
@@ -500,6 +508,10 @@ kg_main( const char *argv0 )
 
 	KGVerify::done();
 
+	if (kbdl) {
+		kbdl->closeStdin();
+		kbdl->detach();
+	}
 	if (comp) {
 		if (comp->isRunning()) {
 			if (_compositor == "kompmgr") {
