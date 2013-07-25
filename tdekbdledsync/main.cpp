@@ -296,6 +296,9 @@ int main() {
 	// Get X server VT number
 	x11_vt_num = get_x_vtnum(display);
 
+	// Open console socket
+	vt_fd = getfd(NULL);
+
 	// Monitor for hotplugged keyboards
 	struct udev *udev;
 	struct udev_device *dev;
@@ -337,7 +340,6 @@ int main() {
 
 			while (1) {
 				// Get current active VT
-				vt_fd = getfd(NULL);
 				if (ioctl(vt_fd, VT_GETSTATE, &vtstat)) {
 					fprintf(stderr, "[tdekbdledsync] Unable to get current VT!\n");
 					return -5;
