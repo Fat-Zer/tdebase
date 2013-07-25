@@ -257,10 +257,12 @@ void KSMServer::shutdownInternal( TDEApplication::ShutdownConfirm confirm,
 	shutdownMode = sdmode;
 	bootOption = bopt;
 	shutdownNotifierIPDlg = 0;
-	shutdownNotifierIPDlg = KSMShutdownIPDlg::showShutdownIP();
-	if (shutdownNotifierIPDlg) {
-    		static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying applications of logout request..."));
-    		notificationTimer.start( KSMSERVER_NOTIFICATION_MANUAL_OPTIONS_TIMEOUT, true );
+	if (showLogoutStatusDlg) {
+		shutdownNotifierIPDlg = KSMShutdownIPDlg::showShutdownIP();
+		if (shutdownNotifierIPDlg) {
+			static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying applications of logout request..."));
+			notificationTimer.start( KSMSERVER_NOTIFICATION_MANUAL_OPTIONS_TIMEOUT, true );
+		}
 	}
 
         // shall we save the session on logout?
