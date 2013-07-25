@@ -180,6 +180,7 @@ option( BUILD_NSPLUGINS "Build nsplugins"  ${BUILD_ALL} )
 option( BUILD_KSYSGUARD "Build ksysguard"  ${BUILD_ALL} )
 option( BUILD_KXKB "Build kxkb"  ${BUILD_ALL} )
 option( BUILD_TSAK "Build tsak"  ${BUILD_ALL} )
+option( BUILD_TDEKBDLEDSYNC "Build tdekbdledsync"  ${BUILD_ALL} )
 option( BUILD_KROOTBACKING "Build krootbacking"  ${BUILD_ALL} )
 option( BUILD_TQT3INTEGRATION "Build tqt3integration"  ${BUILD_ALL} )
 option( BUILD_CRASHTEST "Build crash test program"  ${BUILD_ALL} )
@@ -258,10 +259,9 @@ tde_conditional_add_subdirectory( BUILD_NSPLUGINS nsplugins )
 tde_conditional_add_subdirectory( BUILD_KSYSGUARD ksysguard )
 tde_conditional_add_subdirectory( BUILD_KXKB kxkb )
 tde_conditional_add_subdirectory( BUILD_TSAK tsak )
+tde_conditional_add_subdirectory( BUILD_TDEKBDLEDSYNC tdekbdledsync )
 tde_conditional_add_subdirectory( BUILD_KROOTBACKING krootbacking )
 tde_conditional_add_subdirectory( BUILD_TQT3INTEGRATION tqt3integration )
-
-add_subdirectory( tdekbdledsync )
 
 ##### install starttde & related stuff ##########
 

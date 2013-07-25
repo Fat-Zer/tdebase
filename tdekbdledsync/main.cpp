@@ -262,7 +262,7 @@ int main() {
 	struct vt_stat vtstat;
 	int vt_fd;
 	int x11_vt_num = -1;
-	XEvent xev;
+//	XEvent xev;
 	XkbStateRec state;
 
 	bool num_lock_set = false;
