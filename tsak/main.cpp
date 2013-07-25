@@ -34,6 +34,7 @@ License along with tsak. If not, see http://www.gnu.org/licenses/.
 #include <sys/stat.h>
 #include <sys/select.h>
 #include <sys/time.h>
+#include <sys/wait.h>
 #include <termios.h>
 #include <signal.h>
 extern "C" {
@@ -71,6 +72,9 @@ int keyboard_fd_num;
 int keyboard_fds[MAX_KEYBOARDS];
 int child_pids[MAX_KEYBOARDS];
 int child_led_pids[MAX_KEYBOARDS];
+
+int current_keyboard = -1;
+int devout[MAX_KEYBOARDS];
 
 const char *keycode[256] =
 {
@@ -118,6 +122,15 @@ void signal_callback_handler(int signum)
 /*  termination handler */
 void tsak_friendly_termination() {
 	int i;
+
+	if ((current_keyboard >= 0) && (devout[current_keyboard] > 0)) {
+		if (ioctl(devout[current_keyboard],UI_DEV_DESTROY)<0) {
+			fprintf(stderr, "[tsak] Unable to destroy input device with UI_DEV_DESTROY\n");
+		}
+		else {
+			fprintf(stderr, "[tsak] Device destroyed\n");
+		}
+	}
 
 	// Close down all child processes
 	for (i=0; i<MAX_KEYBOARDS; i++) {
@@ -378,10 +391,22 @@ void restart_tsak()
 	// Close down all child processes
 	for (i=0; i<MAX_KEYBOARDS; i++) {
 		if (child_pids[i] != 0) {
-			kill(child_pids[i], SIGKILL);
+			kill(child_pids[i], SIGTERM);
 		}
 		if (child_led_pids[i] != 0) {
-			kill(child_led_pids[i], SIGKILL);
+			kill(child_led_pids[i], SIGTERM);
+		}
+	}
+
+	// Wait for child process termination
+	for (i=0; i<MAX_KEYBOARDS; i++) {
+		if (child_pids[i] != 0) {
+			waitpid(child_pids[i], NULL, 0);
+			child_pids[i] = 0;
+		}
+		if (child_led_pids[i] != 0) {
+			waitpid(child_led_pids[i], NULL, 0);
+			child_led_pids[i] = 0;
 		}
 	}
 
@@ -435,7 +460,6 @@ int main (int argc, char *argv[])
 	struct input_event event;
 	struct input_event revev;
 	struct uinput_user_dev devinfo={{0},{0}};
-	int devout[MAX_KEYBOARDS];
 	int rd;
 	int i;
 	int size = sizeof (struct input_event);
@@ -446,7 +470,6 @@ int main (int argc, char *argv[])
 	bool established = false;
 	bool testrun = false;
 	bool depcheck = false;
-	int current_keyboard;
 	bool can_proceed;
 
 	// Ignore SIGPIPE
@@ -492,6 +515,19 @@ int main (int argc, char *argv[])
 			if (!setupPipe()) {
 				fprintf(stderr, "[tsak] Another instance of this program is already running\n");
 				return 8;
+			}
+		}
+
+		if ((testrun == false) && (depcheck == false)) {
+			// fork to background
+			int i=fork();
+			if (i<0) {
+				return 10; // fork failed
+			}
+			if (i>0) {
+				// Terminate parent
+				controlpipe.active = false;
+				return 0;
 			}
 		}
 
@@ -566,7 +602,7 @@ int main (int argc, char *argv[])
 					for (current_keyboard=0;current_keyboard<keyboard_fd_num;current_keyboard++) {
 						if(ioctl(keyboard_fds[current_keyboard], EVIOCGRAB, 2) < 0) {
 							close(keyboard_fds[current_keyboard]);
-							fprintf(stderr, "[tsak] Failed to grab exclusive input device lock");
+							fprintf(stderr, "[tsak] Failed to grab exclusive input device lock\n");
 							if (established) {
 								sleep(1);
 							}
@@ -586,10 +622,12 @@ int main (int argc, char *argv[])
 							}
 							if (ioctl(devout[current_keyboard],UI_DEV_CREATE)<0) {
 								fprintf(stderr, "[tsak] Unable to create input device with UI_DEV_CREATE\n");
-								if (established)
+								if (established) {
 									sleep(1);
-								else
+								}
+								else {
 									return 2;
+								}
 							}
 							else {
 								fprintf(stderr, "[tsak] Device created.\n");
@@ -636,7 +674,14 @@ int main (int argc, char *argv[])
 								while (1) {
 									if ((rd = read(keyboard_fds[current_keyboard], ev, size)) < size) {
 										fprintf(stderr, "[tsak] Read failed.\n");
-										return 13;
+										if (ioctl(devout[current_keyboard],UI_DEV_DESTROY)<0) {
+											fprintf(stderr, "[tsak] Unable to destroy input device with UI_DEV_DESTROY\n");
+											return 13;
+										}
+										else {
+											fprintf(stderr, "[tsak] Device destroyed.\n");
+										}
+										return 14;
 									}
 
 									if (ev[0].value == 0 && ev[0].type == 1) { // Read the key release event
@@ -677,17 +722,6 @@ int main (int argc, char *argv[])
 						}
 					}
 
-					// fork udev monitor process
-					int i=fork();
-					if (i<0) {
-						return 10; // fork failed
-					}
-					if (i>0) {
-						// Terminate parent
-						controlpipe.active = false;
-						return 0;
-					}
-
 					// Close all keyboard file descriptors; we don't need them in this process and they can end up dangling/locked during forced restart
 					for (int current_keyboard=0;current_keyboard<keyboard_fd_num;current_keyboard++) {
 						close(keyboard_fds[current_keyboard]);
@@ -695,13 +729,17 @@ int main (int argc, char *argv[])
 					}
 					keyboard_fd_num = 0;
 
+					if (testrun == true) {
+						return 0;
+					}
+
 					// Prevent multiple process instances from starting
 					setupLockingPipe(true);
 
 					// Wait a little bit so that udev hotplug can stabilize before we start monitoring
 					sleep(1);
 
-					fprintf(stderr, "[tsak] Hotplug monitoring process started (%ld)\n", getpid());
+					fprintf(stderr, "[tsak] Hotplug monitoring process started\n");
 
 					// Monitor for hotplugged keyboards
 					int j;
