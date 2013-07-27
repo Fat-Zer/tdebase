@@ -78,6 +78,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <dcopclient.h>
 #include <dcopref.h>
 
+#include <tdehw/tdehardwaredevices.h>
+#include <tdehw/tderootsystemdevice.h>
+
 #include "server.h"
 #include "global.h"
 #include "client.h"
@@ -87,6 +90,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kdebug.h>
 
 #include <dmctl.h>
+
 
 KSMServer* the_server = 0;
 
@@ -598,7 +602,7 @@ KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManag
     clientInteracting = 0;
     xonCommand = config->readEntry( "xonCommand", "xon" );
 
-    hwDevices = TDEGlobal::hardwareDevices();
+    hwDevices = TDEHardwareDevices::instance();
 
     connect( &knotifyTimeoutTimer, TQT_SIGNAL( timeout()), TQT_SLOT( knotifyTimeout()));
     connect( &startupSuspendTimeoutTimer, TQT_SIGNAL( timeout()), TQT_SLOT( startupSuspendTimeout()));

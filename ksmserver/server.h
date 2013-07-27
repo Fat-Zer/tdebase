@@ -23,8 +23,6 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tqtimer.h>
 #include <dcopobject.h>
 
-#include <tdehardwaredevices.h>
-
 #include "server2.h"
 
 #include "KSMServerInterface.h"
@@ -36,6 +34,7 @@ typedef TQValueList<TQCString> QCStringList;
 class KSMListener;
 class KSMConnection;
 class KSMClient;
+class TDEHardwareDevices;
 
 enum SMType { SM_ERROR, SM_WMCOMMAND, SM_WMSAVEYOURSELF };
 struct SMData

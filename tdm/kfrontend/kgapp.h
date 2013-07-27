@@ -27,7 +27,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define KGAPP_H
 
 #include <tdeapplication.h>
-#include <tdehardwaredevices.h>
+
+class TDEGenericDevice;
 
 class GreeterApp : public TDEApplication {
 	Q_OBJECT

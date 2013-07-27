@@ -42,6 +42,8 @@
 #include "tderandrtray.h"
 #include "tderandrpassivepopup.h"
 #include "tderandrtray.moc"
+#include <tdehw/tdehardwaredevices.h>
+#include <tdehw/tdegenericdevice.h>
 
 #define OUTPUT_CONNECTED		(1 << 0)
 #define OUTPUT_UNKNOWN			(1 << 1)
@@ -90,7 +92,7 @@ KRandRSystemTray::KRandRSystemTray(TQWidget* parent, const char *name)
 		applyIccConfiguration(cur_profile, NULL);
 	}
 
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
 }
 

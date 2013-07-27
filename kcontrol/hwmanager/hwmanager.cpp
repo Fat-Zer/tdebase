@@ -47,6 +47,8 @@
 #include <stdio.h>
 #include <tqstring.h>
 
+#include <tdehw/tdehardwaredevices.h>
+
 #include "hwmanager.h"
 
 using namespace std;
@@ -83,7 +85,7 @@ TDEHWManager::TDEHWManager(TQWidget *parent, const char *name, const TQStringLis
 	setRootOnlyMsg(i18n("<b>Hardware settings are system wide, and therefore require administrator access</b><br>To alter the system's hardware settings, click on the \"Administrator Mode\" button below."));
 	setUseRootOnlyMsg(true);
 
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 	hwdevices->setTriggerlessHardwareUpdatesEnabled(true);
 
 	connect(base->showByConnection, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
@@ -140,7 +142,7 @@ void TDEHWManager::populateTreeView()
 	base->deviceTree->clear();
 
 	if (show_by_connection) {
-		TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+		TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 		TDEGenericHardwareList hwlist = hwdevices->listByDeviceClass(TDEGenericDeviceType::RootSystem);
 		TDEGenericDevice *hwdevice;
 		for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
@@ -153,7 +155,7 @@ void TDEHWManager::populateTreeView()
 		}
 	}
 	else {
-		TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+		TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 		for (int i=0;i<=TDEGenericDeviceType::Last;i++) {
 			if (i != TDEGenericDeviceType::Root) {
 				DeviceIconItem* rootitem = new DeviceIconItem(base->deviceTree, hwdevices->getFriendlyDeviceTypeStringFromType((TDEGenericDeviceType::TDEGenericDeviceType)i), hwdevices->getDeviceTypeIconFromType((TDEGenericDeviceType::TDEGenericDeviceType)i, base->deviceTree->iconSize()), 0);
@@ -173,7 +175,7 @@ void TDEHWManager::populateTreeView()
 
 void TDEHWManager::populateTreeViewLeaf(DeviceIconItem *parent, bool show_by_connection, TQString selected_syspath) {
 	if (show_by_connection) {
-		TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+		TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 		TDEGenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
 		TDEGenericDevice *hwdevice;
 		for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {

@@ -54,5 +54,6 @@ configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy
 tde_add_tdeinit_executable( kicker
   SOURCES dummy.cpp
   EMBED kicker_core-static
-  LINK kicker_buttons-static kicker_ui-static kickermain-shared tdeabc-shared tdeutils-shared
+  LINK kicker_buttons-static kicker_ui-static kickermain-shared tdeabc-shared
+    tdeutils-shared
 )

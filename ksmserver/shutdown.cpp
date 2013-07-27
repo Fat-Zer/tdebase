@@ -82,6 +82,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <knotifyclient.h>
 
 #include <libtdersync/tdersync.h>
+#include <tdehw/tdehardwaredevices.h>
+#include <tdehw/tderootsystemdevice.h>
 
 #include "server.h"
 #include "global.h"

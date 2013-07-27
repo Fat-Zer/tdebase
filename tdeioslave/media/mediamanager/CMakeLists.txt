@@ -59,7 +59,7 @@ else( )
 
   tde_add_kpart( ${target} AUTOMOC
     SOURCES ${${target}_SRCS}
-    LINK mediacommon-static tdeinit_kded-shared
+    LINK mediacommon-static tdeinit_kded-shared tdehw-shared
     DESTINATION ${PLUGIN_INSTALL_DIR}
   )
 endif( )

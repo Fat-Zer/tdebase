@@ -35,7 +35,6 @@
 #include <dcopobject.h>
 
 #include <libtderandr/libtderandr.h>
-#include <tdehardwaredevices.h>
 
 #include "monitorworkspace.h"
 #include "displayconfigbase.h"
@@ -43,6 +42,7 @@
 class TDEConfig;
 class TDEPopupMenu;
 class TDEListViewItem;
+class TDEGenericDevice;
 
 typedef TQMap< TQString, TQPtrList< SingleScreenData > > ScreenConfigurationMap;
 

@@ -34,7 +34,9 @@
 #include <tdemessagebox.h>
 #include <tdelocale.h>
 #include <tdetempfile.h>
-#include <tdehardwaredevices.h>
+#include <tdehw/tdehardwaredevices.h>
+#include <tdehw/tdegenericdevice.h>
+#include <tdehw/tdecpudevice.h>
 
 #include "krashconf.h"
 #include "backtrace.h"
@@ -280,7 +282,7 @@ void BackTrace::processBacktrace()
 
 	// Append potentially important hardware information
 	m_strBt.append("\n==== (tdehwlib) hardware information ====\n");
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 	TDEGenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
 	TDEGenericDevice *hwdevice;
 	for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {

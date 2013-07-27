@@ -50,6 +50,8 @@
 #include <string>
 #include <stdio.h>
 #include <tqstring.h>
+#include <tdehw/tdehardwaredevices.h>
+#include <tdehw/tdegenericdevice.h>
 
 #include <math.h>
 #define PI 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
@@ -742,7 +744,7 @@ void KDisplayConfig::setRealResolutionSliderValue(int index) {
 KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStringList &)
   : TDECModule(KDisplayCFactory::instance(), parent, name), iccTab(0), numberOfProfiles(0), numberOfScreens(0), m_randrsimple(0), activeProfileName(""), m_gammaApplyTimer(0)
 {
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
 
 	m_randrsimple = new KRandrSimpleAPI();

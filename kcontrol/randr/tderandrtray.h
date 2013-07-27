@@ -25,10 +25,10 @@
 #include <kglobalaccel.h>
 
 #include <libtderandr/libtderandr.h>
-#include <tdehardwaredevices.h>
 
 class KHelpMenu;
 class TDEPopupMenu;
+class TDEGenericDevice;
 
 class KRandRSystemTray :  public KSystemTray, public KRandrSimpleAPI
 {
