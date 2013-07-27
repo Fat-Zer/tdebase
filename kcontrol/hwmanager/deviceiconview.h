@@ -22,10 +22,10 @@
 
 #include <tdelistview.h>
 #include <kiconloader.h>
-#include <tdehardwaredevices.h>
 
 #include "devicepropsdlg.h"
 
+class TDEGenericDevice;
 class ConfigModule;
 class ConfigModuleList;
 

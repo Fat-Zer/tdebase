@@ -35,6 +35,12 @@
 #include <kprotocolinfo.h>
 #include <kstandarddirs.h>
 
+#include <tdehw/tdehardwaredevices.h>
+#include <tdehw/tdegenericdevice.h>
+#include <tdehw/tdestoragedevice.h>
+
+#include <stdlib.h>
+
 #include "dialog.h"
 
 #define MOUNT_SUFFIX (																\
@@ -64,7 +70,7 @@ TDEBackend::TDEBackend(MediaList &list, TQObject* parent)
     , m_parent(parent)
 {
 	// Initialize the TDE device manager
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 
 	// Connect device monitoring signals/slots
 	connect(hwdevices, TQT_SIGNAL(hardwareAdded(TDEGenericDevice*)), this, TQT_SLOT(AddDeviceHandler(TDEGenericDevice*)));
@@ -79,7 +85,7 @@ TDEBackend::TDEBackend(MediaList &list, TQObject* parent)
 TDEBackend::~TDEBackend()
 {
 	// Remove all media from the media list
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 	TDEGenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
 	TDEGenericDevice *hwdevice;
 	for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
@@ -114,7 +120,7 @@ void TDEBackend::ModifyDeviceHandler(TDEGenericDevice *device) {
 // List devices (at startup)
 bool TDEBackend::ListDevices()
 {
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 	TDEGenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
 	TDEGenericDevice *hwdevice;
 	for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
@@ -392,7 +398,7 @@ void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotificat
 
 void TDEBackend::setVolumeProperties(Medium* medium)
 {
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 
 	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
 	if (!sdevice) {
@@ -571,7 +577,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 // Handle floppies and zip drives
 bool TDEBackend::setFloppyProperties(Medium* medium)
 {
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 
 	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
 	if (!sdevice) {
@@ -637,7 +643,7 @@ bool TDEBackend::setFloppyProperties(Medium* medium)
 
 void TDEBackend::setCameraProperties(Medium* medium)
 {
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 
 	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
 	if (!sdevice) {
@@ -703,7 +709,7 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 		return TQStringList();
 	}
 
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 
 	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
 	if (!sdevice) {
@@ -962,7 +968,7 @@ TQString TDEBackend::mount(const Medium *medium)
 		
 	}
 
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 
 	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
 	if (!sdevice) {
@@ -1166,7 +1172,7 @@ TQString TDEBackend::unmount(const TQString &_udi)
 
 	TQString udi = TQString::null;
 
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 
 	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
 	if (!sdevice) {
@@ -1341,7 +1347,7 @@ TQString TDEBackend::generateName(const TQString &devNode)
 }
 
 TQString TDEBackend::driveUDIFromDeviceUID(TQString uuid) {
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 
 	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(uuid);
 	TQString ret;

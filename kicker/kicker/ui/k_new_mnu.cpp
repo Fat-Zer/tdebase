@@ -52,7 +52,8 @@
 #include <kdebug.h>
 #include <tdeglobal.h>
 #include <tdeglobalsettings.h>
-#include <tdehardwaredevices.h>
+#include <tdehw/tdehardwaredevices.h>
+#include <tdehw/tderootsystemdevice.h>
 #include <kiconloader.h>
 #include <klineedit.h>
 #include <tdelocale.h>
@@ -3763,7 +3764,7 @@ void KMenu::insertSuspendOption( int &nId, int &index )
         "power_management.can_hibernate", 
         NULL);
 #else // COMPILE_HALBACKEND
-    TDERootSystemDevice* rootDevice = TDEGlobal::hardwareDevices()->rootSystemDevice();
+    TDERootSystemDevice* rootDevice = TDEHardwareDevices::instance()->rootSystemDevice();
     if (rootDevice) {
         suspend_ram = rootDevice->canSuspend();
         standby = rootDevice->canStandby();
@@ -3833,7 +3834,7 @@ void KMenu::slotSuspend(int id)
         dbus_message_unref(msg);
     }
 #else // COMPILE_HALBACKEND
-    TDERootSystemDevice* rootDevice = TDEGlobal::hardwareDevices()->rootSystemDevice();
+    TDERootSystemDevice* rootDevice = TDEHardwareDevices::instance()->rootSystemDevice();
     if (rootDevice) {
         if (id == 1) {
             error = !rootDevice->setPowerState(TDESystemPowerState::Hibernate);

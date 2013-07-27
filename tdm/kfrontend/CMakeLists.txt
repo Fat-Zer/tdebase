@@ -68,6 +68,7 @@ tde_add_executable( tdm_greet AUTOMOC
     tdmshutdown.cpp tdmadmindialog.cpp kgreeter.cpp
     kgapp.cpp sakdlg.cc
   LINK tdmthemer-static tdeui-shared Xtst ${TDMGREET_OPTIONAL_LINK}
+    tdehw-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

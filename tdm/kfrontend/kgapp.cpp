@@ -63,6 +63,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <X11/extensions/Xcomposite.h>
 #endif
 
+#include <tdehw/tdehardwaredevices.h>
+#include <tdehw/tdegenericdevice.h>
+
 #include <pwd.h>
 
 #define TSAK_FIFO_FILE "/tmp/tdesocket-global/tsak"
@@ -123,7 +126,7 @@ void GreeterApp::init()
 		startTimer( pingInterval * 60000 );
 	}
 
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
 }
 

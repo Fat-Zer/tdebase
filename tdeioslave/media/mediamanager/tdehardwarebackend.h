@@ -34,11 +34,12 @@
 
 #include <config.h>
 
-#include <tdehardwaredevices.h>
 
 namespace TDEIO {
 	class Job;
 }
+class TDEGenericDevice;
+class TDEStorageDevice;
 
 class Dialog;
 

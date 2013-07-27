@@ -40,6 +40,20 @@
 #include <kstdguiitem.h>
 #include <tdemessagebox.h>
 
+#include <tdehw/tdehardwaredevices.h>
+#include <tdehw/tdegenericdevice.h>
+#include <tdehw/tdestoragedevice.h>
+#include <tdehw/tdecpudevice.h>
+#include <tdehw/tdebatterydevice.h>
+#include <tdehw/tdemainspowerdevice.h>
+#include <tdehw/tdenetworkdevice.h>
+#include <tdehw/tdebacklightdevice.h>
+#include <tdehw/tdemonitordevice.h>
+#include <tdehw/tdesensordevice.h>
+#include <tdehw/tderootsystemdevice.h>
+#include <tdehw/tdeeventdevice.h>
+#include <tdehw/tdeinputdevice.h>
+
 #include "devicepropsdlg.h"
 
 SensorDisplayLabelsWidget::SensorDisplayLabelsWidget(TQWidget *parent)
@@ -312,7 +326,7 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 		mainGrid->addWidget(base, 0, 0);
 	}
 
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 
 	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(TDEGenericDevice*)), this, TQT_SLOT(processHardwareRemoved(TDEGenericDevice*)));
 	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(processHardwareUpdated(TDEGenericDevice*)));

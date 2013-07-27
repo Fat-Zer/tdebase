@@ -23,7 +23,7 @@
 
 #include <kdialogbase.h>
 
-#include <tdehardwaredevices.h>
+#include <tdehw/tderootsystemdevice.h>
 
 #include "devicepropsdlgbase.h"
 

@@ -33,7 +33,8 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tdelocale.h>
 #include <tdeconfig.h>
 #include <tdeapplication.h>
-#include <tdehardwaredevices.h>
+#include <tdehw/tdehardwaredevices.h>
+#include <tdehw/tderootsystemdevice.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>
@@ -860,7 +861,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 			}
 		}
 #else // COMPILE_HALBACKEND
-		TDERootSystemDevice* rootDevice = TDEGlobal::hardwareDevices()->rootSystemDevice();
+		TDERootSystemDevice* rootDevice = TDEHardwareDevices::instance()->rootSystemDevice();
 		if (rootDevice) {
 			canSuspend = rootDevice->canSuspend();
 			canHibernate = rootDevice->canHibernate();
