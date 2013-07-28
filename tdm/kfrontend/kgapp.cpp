@@ -63,8 +63,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <X11/extensions/Xcomposite.h>
 #endif
 
-#include <tdehw/tdehardwaredevices.h>
-#include <tdehw/tdegenericdevice.h>
+#include <tdehw/hardwaredevices.h>
+#include <tdehw/genericdevice.h>
 
 #include <pwd.h>
 
@@ -126,13 +126,13 @@ void GreeterApp::init()
 		startTimer( pingInterval * 60000 );
 	}
 
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
-	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
+	TDEHW::HardwareDevices *hwdevices = TDEHW::HardwareDevices::instance();
+	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEHW::GenericDevice*)), this, TQT_SLOT(deviceChanged(TDEHW::GenericDevice*)));
 }
 
-void GreeterApp::deviceChanged(TDEGenericDevice* device) {
+void GreeterApp::deviceChanged(TDEHW::GenericDevice* device) {
 #ifdef WITH_XRANDR
-	if (device->type() == TDEGenericDeviceType::Monitor) {
+	if (device->type() == TDEHW::GenericDeviceType::Monitor) {
 		KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI();
 		randrsimple->applyHotplugRules(KDE_CONFDIR);
 		delete randrsimple;

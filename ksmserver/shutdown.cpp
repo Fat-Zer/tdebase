@@ -82,8 +82,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <knotifyclient.h>
 
 #include <libtdersync/tdersync.h>
-#include <tdehw/tdehardwaredevices.h>
-#include <tdehw/tderootsystemdevice.h>
+#include <tdehw/hardwaredevices.h>
+#include <tdehw/rootsystemdevice.h>
 
 #include "server.h"
 #include "global.h"
@@ -154,7 +154,7 @@ bool KSMServer::checkStatus( bool &logoutConfirmed, bool &maysd, bool &mayrb,
             mayrb = true;
         }
         else {
-            TDERootSystemDevice* rootDevice = hwDevices->rootSystemDevice();
+            TDEHW::RootSystemDevice* rootDevice = hwDevices->rootSystemDevice();
             if (rootDevice) {
                 if (rootDevice->canPowerOff()) {
                     maysd = true;
@@ -241,13 +241,13 @@ void KSMServer::shutdownInternal( TDEApplication::ShutdownConfirm confirm,
 			// If this is not done the desktop of the locked session will be shown after suspend/hibernate until the lock fully engages!
 			DCOPRef("kdesktop", "KScreensaverIface").call("lock()");
 		}
-		TDERootSystemDevice* rootDevice = hwDevices->rootSystemDevice();
+		TDEHW::RootSystemDevice* rootDevice = hwDevices->rootSystemDevice();
 		if (rootDevice) {
 			if (selection == 1) {	// Suspend
-				rootDevice->setPowerState(TDESystemPowerState::Suspend);
+				rootDevice->setPowerState(TDEHW::SystemPowerState::Suspend);
 			}
 			if (selection == 2) {	// Hibernate
-				rootDevice->setPowerState(TDESystemPowerState::Hibernate);
+				rootDevice->setPowerState(TDEHW::SystemPowerState::Hibernate);
 			}
 		}
         }

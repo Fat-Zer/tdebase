@@ -23,7 +23,7 @@
 
 #include <kdialogbase.h>
 
-#include <tdehw/tderootsystemdevice.h>
+#include <tdehw/rootsystemdevice.h>
 
 #include "devicepropsdlgbase.h"
 
@@ -155,7 +155,7 @@ private:
 };
 
 typedef TQPtrList<SensorDisplayWidget> SensorDisplayWidgetList;
-typedef TQMap<TDESystemHibernationMethod::TDESystemHibernationMethod, int> HibernationComboMap;
+typedef TQMap<TDEHW::SystemHibernationMethod::SystemHibernationMethod, int> HibernationComboMap;
 
 /**
  *
@@ -173,15 +173,15 @@ public:
 	* Create a dialog that allows a user to view and edit hardware device properties
 	* @param parent     Parent widget
 	*/
-	DevicePropertiesDialog(TDEGenericDevice* device, TQWidget *parent);
+	DevicePropertiesDialog(TDEHW::GenericDevice* device, TQWidget *parent);
 	virtual ~DevicePropertiesDialog();
 
 protected:
 	virtual void virtual_hook( int id, void* data );
 
 private slots:
-	void processHardwareRemoved(TDEGenericDevice*);
-	void processHardwareUpdated(TDEGenericDevice*);
+	void processHardwareRemoved(TDEHW::GenericDevice*);
+	void processHardwareUpdated(TDEHW::GenericDevice*);
 	void populateDeviceInformation();
 
 	void setCPUGovernor(const TQString &);
@@ -192,7 +192,7 @@ private slots:
 	void unmountDisk();
 
 private:
-	TDEGenericDevice* m_device;
+	TDEHW::GenericDevice* m_device;
 	DevicePropertiesDialogBase* base;
 
 	class DevicePropertiesDialogPrivate;

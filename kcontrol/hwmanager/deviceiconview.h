@@ -25,21 +25,24 @@
 
 #include "devicepropsdlg.h"
 
-class TDEGenericDevice;
+namespace TDEHW {
+	class GenericDevice;
+}
+
 class ConfigModule;
 class ConfigModuleList;
 
 class DeviceIconItem : public TDEListViewItem
 {
 public:
-	DeviceIconItem(TQListViewItem *parent, const TQString& text, const TQPixmap& pm, TDEGenericDevice *d = 0)
+	DeviceIconItem(TQListViewItem *parent, const TQString& text, const TQPixmap& pm, TDEHW::GenericDevice *d = 0)
 		: TDEListViewItem(parent, text)
 		, _tag(TQString::null)
 		, _device(d)
 		{
 			setPixmap(0, pm);
 		}
-	DeviceIconItem(TQListView *parent, const TQString& text, const TQPixmap& pm, TDEGenericDevice *d = 0)
+	DeviceIconItem(TQListView *parent, const TQString& text, const TQPixmap& pm, TDEHW::GenericDevice *d = 0)
 		: TDEListViewItem(parent, text)
 		, _tag(TQString::null)
 		, _device(d)
@@ -47,16 +50,16 @@ public:
 			setPixmap(0, pm);
 		}
 		
-		void setDevice(TDEGenericDevice* d) { _device = d; }
+		void setDevice(TDEHW::GenericDevice* d) { _device = d; }
 		void setTag(const TQString& t) { _tag = t; }
 		
-		TDEGenericDevice* device() { return _device; }
+		TDEHW::GenericDevice* device() { return _device; }
 		TQString tag() { return _tag; }
 	
 	
 private:
 		TQString _tag;
-		TDEGenericDevice *_device;
+		TDEHW::GenericDevice *_device;
 };
 
 class DeviceIconView : public TDEListView
@@ -68,7 +71,7 @@ public:
 	TDEIcon::StdSizes iconSize();
 
 signals:
-	void deviceSelected(TDEGenericDevice*);
+	void deviceSelected(TDEHW::GenericDevice*);
 
 protected slots:
 	void slotItemSelected(TQListViewItem*);

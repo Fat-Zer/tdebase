@@ -34,7 +34,10 @@ typedef TQValueList<TQCString> QCStringList;
 class KSMListener;
 class KSMConnection;
 class KSMClient;
-class TDEHardwareDevices;
+
+namespace TDEHW {
+	class HardwareDevices;
+}
 
 enum SMType { SM_ERROR, SM_WMCOMMAND, SM_WMSAVEYOURSELF };
 struct SMData
@@ -248,7 +251,7 @@ private:
 
     WindowMap legacyWindows;
 
-    TDEHardwareDevices* hwDevices;
+    TDEHW::HardwareDevices* hwDevices;
     int initialClientCount;
     int phase2ClientCount;
     int protectionTimerCounter;

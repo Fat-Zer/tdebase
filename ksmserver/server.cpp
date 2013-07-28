@@ -78,8 +78,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <dcopclient.h>
 #include <dcopref.h>
 
-#include <tdehw/tdehardwaredevices.h>
-#include <tdehw/tderootsystemdevice.h>
+#include <tdehw/hardwaredevices.h>
+#include <tdehw/rootsystemdevice.h>
 
 #include "server.h"
 #include "global.h"
@@ -602,7 +602,7 @@ KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManag
     clientInteracting = 0;
     xonCommand = config->readEntry( "xonCommand", "xon" );
 
-    hwDevices = TDEHardwareDevices::instance();
+    hwDevices = TDEHW::HardwareDevices::instance();
 
     connect( &knotifyTimeoutTimer, TQT_SIGNAL( timeout()), TQT_SLOT( knotifyTimeout()));
     connect( &startupSuspendTimeoutTimer, TQT_SIGNAL( timeout()), TQT_SLOT( startupSuspendTimeout()));
@@ -724,13 +724,13 @@ void KSMServer::cleanUp()
         DM().shutdown( shutdownType, shutdownMode, bootOption );
     }
     else {
-        TDERootSystemDevice* rootDevice = hwDevices->rootSystemDevice();
+        TDEHW::RootSystemDevice* rootDevice = hwDevices->rootSystemDevice();
         if (rootDevice) {
             if (shutdownType == TDEApplication::ShutdownTypeHalt) {
-                rootDevice->setPowerState(TDESystemPowerState::PowerOff);
+                rootDevice->setPowerState(TDEHW::SystemPowerState::PowerOff);
             }
             if (shutdownType == TDEApplication::ShutdownTypeReboot) {
-                rootDevice->setPowerState(TDESystemPowerState::Reboot);
+                rootDevice->setPowerState(TDEHW::SystemPowerState::Reboot);
             }
         }
     }

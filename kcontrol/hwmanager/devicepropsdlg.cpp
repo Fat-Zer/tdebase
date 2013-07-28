@@ -40,21 +40,23 @@
 #include <kstdguiitem.h>
 #include <tdemessagebox.h>
 
-#include <tdehw/tdehardwaredevices.h>
-#include <tdehw/tdegenericdevice.h>
-#include <tdehw/tdestoragedevice.h>
-#include <tdehw/tdecpudevice.h>
-#include <tdehw/tdebatterydevice.h>
-#include <tdehw/tdemainspowerdevice.h>
-#include <tdehw/tdenetworkdevice.h>
-#include <tdehw/tdebacklightdevice.h>
-#include <tdehw/tdemonitordevice.h>
-#include <tdehw/tdesensordevice.h>
-#include <tdehw/tderootsystemdevice.h>
-#include <tdehw/tdeeventdevice.h>
-#include <tdehw/tdeinputdevice.h>
+#include <tdehw/hardwaredevices.h>
+#include <tdehw/genericdevice.h>
+#include <tdehw/storagedevice.h>
+#include <tdehw/cpudevice.h>
+#include <tdehw/batterydevice.h>
+#include <tdehw/mainspowerdevice.h>
+#include <tdehw/networkdevice.h>
+#include <tdehw/backlightdevice.h>
+#include <tdehw/monitordevice.h>
+#include <tdehw/sensordevice.h>
+#include <tdehw/rootsystemdevice.h>
+#include <tdehw/eventdevice.h>
+#include <tdehw/inputdevice.h>
 
 #include "devicepropsdlg.h"
+
+using namespace TDEHW;
 
 SensorDisplayLabelsWidget::SensorDisplayLabelsWidget(TQWidget *parent)
 	: TQWidget(parent)
@@ -257,7 +259,7 @@ void SensorDisplayWidget::updateDisplay() {
 	m_progressBar->m_currentValueString = TQString("%1").arg(current);
 }
 
-DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidget *parent)
+DevicePropertiesDialog::DevicePropertiesDialog(GenericDevice* device, TQWidget *parent)
 	: KDialogBase(Plain, TQString::null, Ok|Cancel, Ok, parent, 0L, true, true)
 {
 	m_device = device;
@@ -267,46 +269,46 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 		base = new DevicePropertiesDialogBase(plainPage());
 
 		// Remove all non-applicable tabs
-		if (m_device->type() != TDEGenericDeviceType::Disk) {
+		if (m_device->type() != GenericDeviceType::Disk) {
 			base->tabBarWidget->removePage(base->tabDisk);
 		}
-		if (m_device->type() != TDEGenericDeviceType::CPU) {
+		if (m_device->type() != GenericDeviceType::CPU) {
 			base->tabBarWidget->removePage(base->tabCPU);
 		}
-		if ((m_device->type() != TDEGenericDeviceType::OtherSensor) && (m_device->type() != TDEGenericDeviceType::ThermalSensor)) {
+		if ((m_device->type() != GenericDeviceType::OtherSensor) && (m_device->type() != GenericDeviceType::ThermalSensor)) {
 			base->tabBarWidget->removePage(base->tabSensor);
 		}
-		if (m_device->type() != TDEGenericDeviceType::Battery) {
+		if (m_device->type() != GenericDeviceType::Battery) {
 			base->tabBarWidget->removePage(base->tabBattery);
 		}
-		if (m_device->type() != TDEGenericDeviceType::PowerSupply) {
+		if (m_device->type() != GenericDeviceType::PowerSupply) {
 			base->tabBarWidget->removePage(base->tabPowerSupply);
 		}
-		if (m_device->type() != TDEGenericDeviceType::Network) {
+		if (m_device->type() != GenericDeviceType::Network) {
 			base->tabBarWidget->removePage(base->tabNetwork);
 		}
-		if (m_device->type() != TDEGenericDeviceType::Backlight) {
+		if (m_device->type() != GenericDeviceType::Backlight) {
 			base->tabBarWidget->removePage(base->tabBacklight);
 		}
-		if (m_device->type() != TDEGenericDeviceType::Monitor) {
+		if (m_device->type() != GenericDeviceType::Monitor) {
 			base->tabBarWidget->removePage(base->tabMonitor);
 		}
-		if (m_device->type() != TDEGenericDeviceType::RootSystem) {
+		if (m_device->type() != GenericDeviceType::RootSystem) {
 			base->tabBarWidget->removePage(base->tabRootSystem);
 		}
-		if (m_device->type() != TDEGenericDeviceType::Event) {
+		if (m_device->type() != GenericDeviceType::Event) {
 			base->tabBarWidget->removePage(base->tabEvent);
 		}
 
-		if (m_device->type() == TDEGenericDeviceType::CPU) {
+		if (m_device->type() == GenericDeviceType::CPU) {
 			connect(base->comboCPUGovernor, TQT_SIGNAL(activated(const TQString &)), this, TQT_SLOT(setCPUGovernor(const TQString &)));
 		}
-		if (m_device->type() == TDEGenericDeviceType::Disk) {
+		if (m_device->type() == GenericDeviceType::Disk) {
 			connect(base->buttonDiskMount, TQT_SIGNAL(clicked()), this, TQT_SLOT(mountDisk()));
 			connect(base->buttonDiskUnmount, TQT_SIGNAL(clicked()), this, TQT_SLOT(unmountDisk()));
 		}
 
-		if ((m_device->type() == TDEGenericDeviceType::OtherSensor) || (m_device->type() == TDEGenericDeviceType::ThermalSensor)) {
+		if ((m_device->type() == GenericDeviceType::OtherSensor) || (m_device->type() == GenericDeviceType::ThermalSensor)) {
 			base->groupSensors->setColumnLayout(0, TQt::Vertical );
 			base->groupSensors->layout()->setSpacing( KDialog::spacingHint() );
 			base->groupSensors->layout()->setMargin( KDialog::marginHint() );
@@ -314,10 +316,10 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 			m_sensorDataGrid->setAlignment( TQt::AlignTop );
 			m_sensorDataGridWidgets.setAutoDelete(true);
 		}
-		if (m_device->type() == TDEGenericDeviceType::Backlight) {
+		if (m_device->type() == GenericDeviceType::Backlight) {
 			connect(base->sliderBacklightBrightness, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(setBacklightBrightness(int)));
 		}
-		if (m_device->type() == TDEGenericDeviceType::RootSystem) {
+		if (m_device->type() == GenericDeviceType::RootSystem) {
 			connect(base->comboSystemHibernationMethod, TQT_SIGNAL(activated(int)), this, TQT_SLOT(setHibernationMethod(int)));
 		}
 
@@ -326,10 +328,10 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 		mainGrid->addWidget(base, 0, 0);
 	}
 
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
+	HardwareDevices *hwdevices = HardwareDevices::instance();
 
-	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(TDEGenericDevice*)), this, TQT_SLOT(processHardwareRemoved(TDEGenericDevice*)));
-	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(processHardwareUpdated(TDEGenericDevice*)));
+	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(GenericDevice*)), this, TQT_SLOT(processHardwareRemoved(GenericDevice*)));
+	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(GenericDevice*)), this, TQT_SLOT(processHardwareUpdated(GenericDevice*)));
 
 	populateDeviceInformation();
 }
@@ -338,20 +340,20 @@ DevicePropertiesDialog::~DevicePropertiesDialog()
 {
 }
 
-void DevicePropertiesDialog::processHardwareRemoved(TDEGenericDevice* dev) {
+void DevicePropertiesDialog::processHardwareRemoved(GenericDevice* dev) {
 	if (dev == m_device) {
 		close();
 	}
 }
 
-void DevicePropertiesDialog::processHardwareUpdated(TDEGenericDevice* dev) {
+void DevicePropertiesDialog::processHardwareUpdated(GenericDevice* dev) {
 	if (dev == m_device) {
 		populateDeviceInformation();
 	}
 }
 
-TQString assembleSwitchList(TDESwitchType::TDESwitchType switches) {
-	return (TDEEventDevice::friendlySwitchList(switches).join("<br>"));
+TQString assembleSwitchList(SwitchType::SwitchType switches) {
+	return (EventDevice::friendlySwitchList(switches).join("<br>"));
 }
 
 void DevicePropertiesDialog::populateDeviceInformation() {
@@ -388,8 +390,8 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->stocklabelBusID->hide();
 		}
 
-		if (m_device->type() == TDEGenericDeviceType::Disk) {
-			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(m_device);
+		if (m_device->type() == GenericDeviceType::Disk) {
+			StorageDevice* sdevice = static_cast<StorageDevice*>(m_device);
 
 			TQString mountPoint = sdevice->mountPath();
 			if (mountPoint == "") mountPoint = i18n("<none>");
@@ -405,28 +407,28 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 
 			// Show status
 			TQString status_text = "<qt>";
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Mountable)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::Mountable)) {
 				status_text += "Mountable<br>";
 			}
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Removable)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::Removable)) {
 				status_text += "Removable<br>";
 			}
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Inserted)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::Inserted)) {
 				status_text += "Inserted<br>";
 			}
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::Blank)) {
 				status_text += "Blank<br>";
 			}
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::UsedByDevice)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::UsedByDevice)) {
 				status_text += "In use<br>";
 			}
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::UsesDevice)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::UsesDevice)) {
 				status_text += "Uses other device<br>";
 			}
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::ContainsFilesystem)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::ContainsFilesystem)) {
 				status_text += "Contains a filesystem<br>";
 			}
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Hotpluggable)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::Hotpluggable)) {
 				status_text += "Hotpluggable<br>";
 			}
 			if (status_text == "<qt>") {
@@ -436,7 +438,7 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->labelDiskStatus->setText(status_text);
 
 			// Update mount/unmount button status
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Mountable)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::Mountable)) {
 				base->groupDiskActions->show();
 				base->buttonDiskMount->setEnabled((sdevice->mountPath() == ""));
 				base->buttonDiskUnmount->setEnabled((sdevice->mountPath() != ""));
@@ -446,8 +448,8 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			}
 		}
 
-		if (m_device->type() == TDEGenericDeviceType::CPU) {
-			TDECPUDevice* cdevice = static_cast<TDECPUDevice*>(m_device);
+		if (m_device->type() == GenericDeviceType::CPU) {
+			CPUDevice* cdevice = static_cast<CPUDevice*>(m_device);
 
 			// Show information
 			base->labelCPUVendor->setText(cdevice->vendorEncoded());
@@ -494,11 +496,11 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->comboCPUGovernor->setCurrentItem(cdevice->governor(), false);
 		}
 
-		if ((m_device->type() == TDEGenericDeviceType::OtherSensor) || (m_device->type() == TDEGenericDeviceType::ThermalSensor)) {
-			TDESensorDevice* sdevice = static_cast<TDESensorDevice*>(m_device);
+		if ((m_device->type() == GenericDeviceType::OtherSensor) || (m_device->type() == GenericDeviceType::ThermalSensor)) {
+			SensorDevice* sdevice = static_cast<SensorDevice*>(m_device);
 
-			TDESensorClusterMap map = sdevice->values();
-			TDESensorClusterMap::Iterator it;
+			SensorClusterMap map = sdevice->values();
+			SensorClusterMap::Iterator it;
 			unsigned int i;
 
 			if (m_sensorDataGridWidgets.count() != map.count()) {
@@ -514,7 +516,7 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			for ( it = map.begin(); it != map.end(); ++it ) {
 				TQString sensorlabel = it.key();
 				TQString sensordatastring;
-				TDESensorCluster values = it.data();
+				SensorCluster values = it.data();
 
 				if (!values.label.isNull()) {
 					sensorlabel = values.label;
@@ -535,8 +537,8 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			}
 		}
 
-		if (m_device->type() == TDEGenericDeviceType::Battery) {
-			TDEBatteryDevice* bdevice = static_cast<TDEBatteryDevice*>(m_device);
+		if (m_device->type() == GenericDeviceType::Battery) {
+			BatteryDevice* bdevice = static_cast<BatteryDevice*>(m_device);
 
 			base->labelCurrentBatteryEnergy->setText((bdevice->energy()<0)?i18n("<unknown>"):TQString("%1 Wh").arg(bdevice->energy()));
 			base->labelMaximumBatteryEnergy->setText((bdevice->maximumEnergy()<0)?i18n("<unknown>"):TQString("%1 Wh").arg(bdevice->maximumEnergy()));
@@ -545,14 +547,14 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->labelCurrentBatteryVoltage->setText((bdevice->voltage()<0)?i18n("<unknown>"):TQString("%1 V").arg(bdevice->voltage()));
 			base->labelCurrentBatteryDischargeRate->setText((bdevice->dischargeRate()<0)?i18n("<unknown>"):TQString("%1 Wh").arg(bdevice->dischargeRate()));
 			TQString batteryStatusString = i18n("Unknown");
-			TDEBatteryStatus::TDEBatteryStatus batteryStatus = bdevice->status();
-			if (batteryStatus == TDEBatteryStatus::Charging) {
+			BatteryStatus::BatteryStatus batteryStatus = bdevice->status();
+			if (batteryStatus == BatteryStatus::Charging) {
 				batteryStatusString = i18n("Charging");
 			}
-			if (batteryStatus == TDEBatteryStatus::Discharging) {
+			if (batteryStatus == BatteryStatus::Discharging) {
 				batteryStatusString = i18n("Discharging");
 			}
-			if (batteryStatus == TDEBatteryStatus::Full) {
+			if (batteryStatus == BatteryStatus::Full) {
 				batteryStatusString = i18n("Full");
 			}
 			base->labelCurrentBatteryStatus->setText(batteryStatusString);
@@ -562,14 +564,14 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->labelBatteryTimeRemaining->setText((bdevice->timeRemaining()<0)?i18n("<unknown>"):TQString("%1 seconds").arg(bdevice->timeRemaining()));
 		}
 
-		if (m_device->type() == TDEGenericDeviceType::PowerSupply) {
-			TDEMainsPowerDevice* pdevice = static_cast<TDEMainsPowerDevice*>(m_device);
+		if (m_device->type() == GenericDeviceType::PowerSupply) {
+			MainsPowerDevice* pdevice = static_cast<MainsPowerDevice*>(m_device);
 
 			base->labelPowerSupplyOnline->setText((pdevice->online()==0)?i18n("No"):i18n("Yes"));
 		}
 
-		if (m_device->type() == TDEGenericDeviceType::Network) {
-			TDENetworkDevice* ndevice = static_cast<TDENetworkDevice*>(m_device);
+		if (m_device->type() == GenericDeviceType::Network) {
+			NetworkDevice* ndevice = static_cast<NetworkDevice*>(m_device);
 
 			base->labelNetworkMAC->setText((ndevice->macAddress().isNull())?i18n("<unknown>"):ndevice->macAddress());
 			base->labelNetworkState->setText((ndevice->state().isNull())?i18n("<unknown>"):ndevice->state());
@@ -586,16 +588,16 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->labelNetworkIPV6Broadcast->setText((ndevice->ipV6Broadcast().isNull())?i18n("<none>"):ndevice->ipV6Broadcast());
 			base->labelNetworkIPV6Destination->setText((ndevice->ipV6Destination().isNull())?i18n("<none>"):ndevice->ipV6Destination());
 
-			base->labelNetworkRXBytes->setText((ndevice->rxBytes()<0)?i18n("<unknown>"):TDEHardwareDevices::bytesToFriendlySizeString(ndevice->rxBytes()));
-			base->labelNetworkTXBytes->setText((ndevice->txBytes()<0)?i18n("<unknown>"):TDEHardwareDevices::bytesToFriendlySizeString(ndevice->txBytes()));
+			base->labelNetworkRXBytes->setText((ndevice->rxBytes()<0)?i18n("<unknown>"):HardwareDevices::bytesToFriendlySizeString(ndevice->rxBytes()));
+			base->labelNetworkTXBytes->setText((ndevice->txBytes()<0)?i18n("<unknown>"):HardwareDevices::bytesToFriendlySizeString(ndevice->txBytes()));
 			base->labelNetworkRXPackets->setText((ndevice->rxPackets()<0)?i18n("<unknown>"):TQString("%1").arg(ndevice->rxPackets()));
 			base->labelNetworkTXPackets->setText((ndevice->txPackets()<0)?i18n("<unknown>"):TQString("%1").arg(ndevice->txPackets()));
 		}
 
-		if (m_device->type() == TDEGenericDeviceType::Backlight) {
-			TDEBacklightDevice* bdevice = static_cast<TDEBacklightDevice*>(m_device);
+		if (m_device->type() == GenericDeviceType::Backlight) {
+			BacklightDevice* bdevice = static_cast<BacklightDevice*>(m_device);
 
-			base->labelBacklightStatus->setText((bdevice->powerLevel()==TDEDisplayPowerLevel::On)?i18n("On"):i18n("Off"));
+			base->labelBacklightStatus->setText((bdevice->powerLevel()==DisplayPowerLevel::On)?i18n("On"):i18n("Off"));
 			base->labelBacklightBrightness->setText((bdevice->brightnessPercent()<0)?i18n("<unknown>"):TQString("%1 %").arg(bdevice->brightnessPercent()));
 			base->sliderBacklightBrightness->setOrientation(TQt::Horizontal);
 			base->sliderBacklightBrightness->setMinValue(0);
@@ -604,35 +606,35 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->sliderBacklightBrightness->setEnabled(bdevice->canSetBrightness());
 		}
 
-		if (m_device->type() == TDEGenericDeviceType::Monitor) {
-			TDEMonitorDevice* mdevice = static_cast<TDEMonitorDevice*>(m_device);
+		if (m_device->type() == GenericDeviceType::Monitor) {
+			MonitorDevice* mdevice = static_cast<MonitorDevice*>(m_device);
 
 			base->labelDisplayPortType->setText((mdevice->portType().isNull())?i18n("<unknown>"):mdevice->portType());
 			base->labelDisplayConnected->setText((mdevice->connected())?i18n("Yes"):i18n("No"));
 			base->labelDisplayEnabled->setText((mdevice->enabled())?i18n("Yes"):i18n("No"));
 
 			TQString dpmsLevel;
-			TDEDisplayPowerLevel::TDEDisplayPowerLevel dpms = TDEDisplayPowerLevel::On;
-			if (dpms == TDEDisplayPowerLevel::On) {
+			DisplayPowerLevel::DisplayPowerLevel dpms = DisplayPowerLevel::On;
+			if (dpms == DisplayPowerLevel::On) {
 				dpmsLevel = i18n("On");
 			}
-			else if (dpms == TDEDisplayPowerLevel::Standby) {
+			else if (dpms == DisplayPowerLevel::Standby) {
 				dpmsLevel = i18n("Standby");
 			}
-			else if (dpms == TDEDisplayPowerLevel::Suspend) {
+			else if (dpms == DisplayPowerLevel::Suspend) {
 				dpmsLevel = i18n("Suspend");
 			}
-			else if (dpms == TDEDisplayPowerLevel::Off) {
+			else if (dpms == DisplayPowerLevel::Off) {
 				dpmsLevel = i18n("Off");
 			}
 			base->labelDisplayDPMS->setText(dpmsLevel);
 
-			TDEResolutionList resolutionList = mdevice->resolutions();
+			ResolutionList resolutionList = mdevice->resolutions();
 			if (resolutionList.count() > 0) {
 				TQString resolutionsstring = "<qt>";
-				TDEResolutionList::iterator it;
+				ResolutionList::iterator it;
 				for (it = resolutionList.begin(); it != resolutionList.end(); ++it) {
-					TDEResolutionPair res = *it;
+					ResolutionPair res = *it;
 					resolutionsstring += TQString("%1x%2<br>").arg(res.first).arg(res.second);
 				}
 				resolutionsstring += "</qt>";
@@ -646,44 +648,44 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->labelRandrWarning->setText("<qt><b>NOTE: Any further integration of displays into TDE <i>REQUIRES</i> multi GPU support and other features slated for RandR 2.0.</b><p>Development on such features has been sorely lacking for well over a year as of 2012; if you want to see Linux come up to Windows and Macintosh standards in this area <i>please tell the Xorg developers</i> at http://www.x.org/wiki/XorgMailingLists<p>The TDE project badly needs these features before it can proceed with graphical monitor configuration tools:<br> * GPU object support<br> * The ability to query the active driver name for any Xorg output<p><b>To recap, this is <i>not a TDE shortcoming</i>, but rather is the result of a lack of fundamental Linux support for graphics configuration!</b></qt>");
 		}
 
-		if (m_device->type() == TDEGenericDeviceType::RootSystem) {
-			TDERootSystemDevice* rdevice = static_cast<TDERootSystemDevice*>(m_device);
+		if (m_device->type() == GenericDeviceType::RootSystem) {
+			RootSystemDevice* rdevice = static_cast<RootSystemDevice*>(m_device);
 
 			TQString formFactorString;
-			TDESystemFormFactor::TDESystemFormFactor formFactor = rdevice->formFactor();
-			if (formFactor == TDESystemFormFactor::Unclassified) {
+			SystemFormFactor::SystemFormFactor formFactor = rdevice->formFactor();
+			if (formFactor == SystemFormFactor::Unclassified) {
 				formFactorString = i18n("Unknown");
 			}
-			else if (formFactor == TDESystemFormFactor::Desktop) {
+			else if (formFactor == SystemFormFactor::Desktop) {
 				formFactorString = i18n("Desktop");
 			}
-			else if (formFactor == TDESystemFormFactor::Laptop) {
+			else if (formFactor == SystemFormFactor::Laptop) {
 				formFactorString = i18n("Laptop");
 			}
-			else if (formFactor == TDESystemFormFactor::Server) {
+			else if (formFactor == SystemFormFactor::Server) {
 				formFactorString = i18n("Server");
 			}
 			base->labelSystemFormFactor->setText(formFactorString);
 
 			TQString powerStatesString;
-			TDESystemPowerStateList powerStates = rdevice->powerStates();
+			SystemPowerStateList powerStates = rdevice->powerStates();
 			if (powerStates.count() > 0) {
 				powerStatesString = "<qt>";
-				TDESystemPowerStateList::iterator it;
+				SystemPowerStateList::iterator it;
 				for (it = powerStates.begin(); it != powerStates.end(); ++it) {
-					if ((*it) == TDESystemPowerState::Active) {
+					if ((*it) == SystemPowerState::Active) {
 						powerStatesString += i18n("Active<br>");
 					}
-					if ((*it) == TDESystemPowerState::Standby) {
+					if ((*it) == SystemPowerState::Standby) {
 						powerStatesString += i18n("Standby<br>");
 					}
-					if ((*it) == TDESystemPowerState::Suspend) {
+					if ((*it) == SystemPowerState::Suspend) {
 						powerStatesString += i18n("Suspend<br>");
 					}
-					if ((*it) == TDESystemPowerState::Hibernate) {
+					if ((*it) == SystemPowerState::Hibernate) {
 						powerStatesString += i18n("Hibernate<br>");
 					}
-					if ((*it) == TDESystemPowerState::PowerOff) {
+					if ((*it) == SystemPowerState::PowerOff) {
 						powerStatesString += i18n("Power Off<br>");
 					}
 				}
@@ -695,29 +697,29 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->labelSystemPowerStates->setText(powerStatesString);
 
 			base->comboSystemHibernationMethod->setEnabled(rdevice->canSetHibernationMethod());
-			TDESystemHibernationMethodList hibernationMethods = rdevice->hibernationMethods();
+			SystemHibernationMethodList hibernationMethods = rdevice->hibernationMethods();
 			if ((uint)hibernationMethods.count() != (uint)base->comboSystemHibernationMethod->count()) {
 				base->comboSystemHibernationMethod->clear();
 				m_hibernationComboMap.clear();
 				int i=0;
 				TQString label;
-				for (TDESystemHibernationMethodList::Iterator it = hibernationMethods.begin(); it != hibernationMethods.end(); ++it) {
-					if ((*it) == TDESystemHibernationMethod::Unsupported) {
+				for (SystemHibernationMethodList::Iterator it = hibernationMethods.begin(); it != hibernationMethods.end(); ++it) {
+					if ((*it) == SystemHibernationMethod::Unsupported) {
 						label = i18n("<none>");
 					}
-					if ((*it) == TDESystemHibernationMethod::Platform) {
+					if ((*it) == SystemHibernationMethod::Platform) {
 						label = i18n("Platform");
 					}
-					if ((*it) == TDESystemHibernationMethod::Shutdown) {
+					if ((*it) == SystemHibernationMethod::Shutdown) {
 						label = i18n("Shutdown");
 					}
-					if ((*it) == TDESystemHibernationMethod::Reboot) {
+					if ((*it) == SystemHibernationMethod::Reboot) {
 						label = i18n("Reboot");
 					}
-					if ((*it) == TDESystemHibernationMethod::TestProc) {
+					if ((*it) == SystemHibernationMethod::TestProc) {
 						label = i18n("Test Procedure");
 					}
-					if ((*it) == TDESystemHibernationMethod::Test) {
+					if ((*it) == SystemHibernationMethod::Test) {
 						label = i18n("Test");
 					}
 					base->comboSystemHibernationMethod->insertItem(label, i);
@@ -732,14 +734,14 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->labelSystemUserCanHibernate->setText((rdevice->canHibernate())?i18n("Yes"):i18n("No"));
 			base->labelSystemUserCanPowerOff->setText((rdevice->canPowerOff())?i18n("Yes"):i18n("No"));
 
-			base->labelSystemHibernationSpace->setText((rdevice->diskSpaceNeededForHibernation()<0)?i18n("<unknown>"):TDEHardwareDevices::bytesToFriendlySizeString(rdevice->diskSpaceNeededForHibernation()));
+			base->labelSystemHibernationSpace->setText((rdevice->diskSpaceNeededForHibernation()<0)?i18n("<unknown>"):HardwareDevices::bytesToFriendlySizeString(rdevice->diskSpaceNeededForHibernation()));
 		}
 
-		if (m_device->type() == TDEGenericDeviceType::Event) {
-			TDEEventDevice* edevice = static_cast<TDEEventDevice*>(m_device);
+		if (m_device->type() == GenericDeviceType::Event) {
+			EventDevice* edevice = static_cast<EventDevice*>(m_device);
 
 			TQString availableSwitches;
-			if (edevice->providedSwitches() == TDESwitchType::Null) {
+			if (edevice->providedSwitches() == SwitchType::Null) {
 				availableSwitches = i18n("<none>");
 			}
 			else {
@@ -750,7 +752,7 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->labelEventSwitchTypes->setText(availableSwitches);
 
 			TQString activeSwitches;
-			if (edevice->activeSwitches() == TDESwitchType::Null) {
+			if (edevice->activeSwitches() == SwitchType::Null) {
 				activeSwitches = i18n("<none>");
 			}
 			else {
@@ -764,27 +766,27 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 }
 
 void DevicePropertiesDialog::setCPUGovernor(const TQString &governor) {
-	TDECPUDevice* cdevice = static_cast<TDECPUDevice*>(m_device);
+	CPUDevice* cdevice = static_cast<CPUDevice*>(m_device);
 
 	cdevice->setGovernor(governor);
 	populateDeviceInformation();
 }
 
 void DevicePropertiesDialog::setBacklightBrightness(int value) {
-	TDEBacklightDevice* bdevice = static_cast<TDEBacklightDevice*>(m_device);
+	BacklightDevice* bdevice = static_cast<BacklightDevice*>(m_device);
 
 	bdevice->setRawBrightness(value);
 }
 
 void DevicePropertiesDialog::setHibernationMethod(int value) {
-	TDERootSystemDevice* rdevice = static_cast<TDERootSystemDevice*>(m_device);
+	RootSystemDevice* rdevice = static_cast<RootSystemDevice*>(m_device);
 
 	rdevice->setHibernationMethod(m_hibernationComboMap.keys()[value]);
 	populateDeviceInformation();
 }
 
 void DevicePropertiesDialog::mountDisk() {
-	TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(m_device);
+	StorageDevice* sdevice = static_cast<StorageDevice*>(m_device);
 
 	// FIXME
 	// This can only mount normal volumes
@@ -793,7 +795,7 @@ void DevicePropertiesDialog::mountDisk() {
 	if (diskLabel.isNull()) {
 		diskLabel = i18n("%1 Removable Device").arg(sdevice->deviceFriendlySize());
 	}
-	TDEStorageMountOptions mountOptions;
+	StorageMountOptions mountOptions;
 	TQString mountMessages;
 	TQString mountedPath = sdevice->mountDevice(diskLabel, mountOptions, &mountMessages);
 	if (mountedPath.isNull()) {
@@ -813,7 +815,7 @@ void DevicePropertiesDialog::mountDisk() {
 }
 
 void DevicePropertiesDialog::unmountDisk() {
-	TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(m_device);
+	StorageDevice* sdevice = static_cast<StorageDevice*>(m_device);
 
 	TQString qerror;
 	TQString unmountMessages;
