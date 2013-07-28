@@ -42,8 +42,8 @@
 #include "tderandrtray.h"
 #include "tderandrpassivepopup.h"
 #include "tderandrtray.moc"
-#include <tdehw/tdehardwaredevices.h>
-#include <tdehw/tdegenericdevice.h>
+#include <tdehw/hardwaredevices.h>
+#include <tdehw/genericdevice.h>
 
 #define OUTPUT_CONNECTED		(1 << 0)
 #define OUTPUT_UNKNOWN			(1 << 1)
@@ -92,8 +92,8 @@ KRandRSystemTray::KRandRSystemTray(TQWidget* parent, const char *name)
 		applyIccConfiguration(cur_profile, NULL);
 	}
 
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
-	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
+	TDEHW::HardwareDevices *hwdevices = TDEHW::HardwareDevices::instance();
+	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEHW::GenericDevice*)), this, TQT_SLOT(deviceChanged(TDEHW::GenericDevice*)));
 }
 
 /*!
@@ -873,8 +873,8 @@ void KRandRSystemTray::slotOutputChanged(int parameter)
 	}
 }
 
-void KRandRSystemTray::deviceChanged (TDEGenericDevice* device) {
-	if (device->type() == TDEGenericDeviceType::Monitor) {
+void KRandRSystemTray::deviceChanged (TDEHW::GenericDevice* device) {
+	if (device->type() == TDEHW::GenericDeviceType::Monitor) {
 		KRandrPassivePopup::message(
 		i18n("New display output options are available!"),
 		i18n("A screen has been added, removed, or changed"), SmallIcon("window_fullscreen"),

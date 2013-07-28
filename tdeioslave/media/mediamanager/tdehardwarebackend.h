@@ -38,8 +38,11 @@
 namespace TDEIO {
 	class Job;
 }
-class TDEGenericDevice;
-class TDEStorageDevice;
+
+namespace TDEHW {
+	class GenericDevice;
+	class StorageDevice;
+}
 
 class Dialog;
 
@@ -80,29 +83,29 @@ private:
 	* Append a device in the media list. This function will check if the device
 	* is worth listing.
 	*
-	*  @param sdevice             A pointer to a TDEStorageDevice object
+	*  @param sdevice             A pointer to a TDEHW::StorageDevice object
 	*  @param allowNotification   Indicates if this event will be notified to the user
 	*/
-	void AddDevice(TDEStorageDevice * sdevice, bool allowNotification=true);
+	void AddDevice(TDEHW::StorageDevice * sdevice, bool allowNotification=true);
 
 	/**
 	* Remove a device from the device list
 	*
-	*  @param sdevice             A pointer to a TDEStorageDevice object
+	*  @param sdevice             A pointer to a TDEHW::StorageDevice object
 	*/
-	void RemoveDevice(TDEStorageDevice * sdevice);
+	void RemoveDevice(TDEHW::StorageDevice * sdevice);
 
 	/**
 	* A device has changed, update it
 	*
-	*  @param sdevice             A pointer to a TDEStorageDevice object
+	*  @param sdevice             A pointer to a TDEHW::StorageDevice object
 	*/
-	void ModifyDevice(TDEStorageDevice * sdevice);
+	void ModifyDevice(TDEHW::StorageDevice * sdevice);
 
 private slots:
-	void AddDeviceHandler(TDEGenericDevice* device);
-	void RemoveDeviceHandler(TDEGenericDevice* device);
-	void ModifyDeviceHandler(TDEGenericDevice* device);
+	void AddDeviceHandler(TDEHW::GenericDevice* device);
+	void RemoveDeviceHandler(TDEHW::GenericDevice* device);
+	void ModifyDeviceHandler(TDEHW::GenericDevice* device);
 
 	void slotPasswordReady();
 	void slotPasswordCancel();
@@ -115,11 +118,11 @@ private:
 	/**
 	* Reset properties for the given medium
 	*
-	*  @param sdevice             A pointer to a TDEStorageDevice objec
+	*  @param sdevice             A pointer to a TDEHW::StorageDevice objec
 	*  @param allowNotification   Indicates if this event will be notified to the user
 	*  @param overrideIgnoreList  If true, override event ignore requests for the current device node
 	*/
-	void ResetProperties(TDEStorageDevice * sdevice, bool allowNotification=false, bool overrideIgnoreList=false);
+	void ResetProperties(TDEHW::StorageDevice * sdevice, bool allowNotification=false, bool overrideIgnoreList=false);
 
 	/**
 	* Find the medium that is concerned with device udi

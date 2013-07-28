@@ -28,7 +28,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <tdeapplication.h>
 
-class TDEGenericDevice;
+namespace TDEHW {
+	class GenericDevice;
+}
 
 class GreeterApp : public TDEApplication {
 	Q_OBJECT
@@ -48,7 +50,7 @@ class GreeterApp : public TDEApplication {
 	void activity();
 
   private slots:
-	void deviceChanged( TDEGenericDevice * );
+	void deviceChanged( TDEHW::GenericDevice * );
 
   private:
 	void init();

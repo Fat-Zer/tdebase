@@ -42,7 +42,10 @@
 class TDEConfig;
 class TDEPopupMenu;
 class TDEListViewItem;
-class TDEGenericDevice;
+
+namespace TDEHW {
+	class GenericDevice;
+}
 
 typedef TQMap< TQString, TQPtrList< SingleScreenData > > ScreenConfigurationMap;
 
@@ -143,7 +146,7 @@ private slots:
 	void gammaTargetChanged (int slotNumber);
 	void dpmsChanged (void);
 	void processDPMSControls (void);
-	void deviceChanged (TDEGenericDevice*);
+	void deviceChanged (TDEHW::GenericDevice*);
 	void updateStartupProfileLabel (void);
 	void selectDefaultProfile (int index);
 	void addNewProfileRule (void);

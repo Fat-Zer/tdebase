@@ -28,7 +28,10 @@
 
 class KHelpMenu;
 class TDEPopupMenu;
-class TDEGenericDevice;
+
+namespace TDEHW {
+	class GenericDevice;
+}
 
 class KRandRSystemTray :  public KSystemTray, public KRandrSimpleAPI
 {
@@ -88,7 +91,7 @@ private:
 
 private slots:
 	void _quit();
-	void deviceChanged (TDEGenericDevice*);
+	void deviceChanged (TDEHW::GenericDevice*);
 };
 
 #endif

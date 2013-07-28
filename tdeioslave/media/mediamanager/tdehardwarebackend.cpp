@@ -35,21 +35,23 @@
 #include <kprotocolinfo.h>
 #include <kstandarddirs.h>
 
-#include <tdehw/tdehardwaredevices.h>
-#include <tdehw/tdegenericdevice.h>
-#include <tdehw/tdestoragedevice.h>
+#include <tdehw/hardwaredevices.h>
+#include <tdehw/genericdevice.h>
+#include <tdehw/storagedevice.h>
 
 #include <stdlib.h>
 
 #include "dialog.h"
 
+using namespace TDEHW;
+
 #define MOUNT_SUFFIX (																\
 	(medium->isMounted() ? TQString("_mounted") : TQString("_unmounted")) +									\
-	(medium->isEncrypted() ? (sdevice->isDiskOfType(TDEDiskDeviceType::UnlockedCrypt) ? "_decrypted" : "_encrypted") : "" )			\
+	(medium->isEncrypted() ? (sdevice->isDiskOfType(DiskDeviceType::UnlockedCrypt) ? "_decrypted" : "_encrypted") : "" )			\
 	)
 #define MOUNT_ICON_SUFFIX (															\
 	(medium->isMounted() ? TQString("_mount") : TQString("_unmount")) +									\
-	(medium->isEncrypted() ? (sdevice->isDiskOfType(TDEDiskDeviceType::UnlockedCrypt) ? "_decrypt" : "_encrypt") : "" )			\
+	(medium->isEncrypted() ? (sdevice->isDiskOfType(DiskDeviceType::UnlockedCrypt) ? "_decrypt" : "_encrypt") : "" )			\
 	)
 
 #define CHECK_FOR_AND_EXECUTE_AUTOMOUNT(udi, medium, allowNotification) {									\
@@ -70,12 +72,12 @@ TDEBackend::TDEBackend(MediaList &list, TQObject* parent)
     , m_parent(parent)
 {
 	// Initialize the TDE device manager
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
+	HardwareDevices *hwdevices = HardwareDevices::instance();
 
 	// Connect device monitoring signals/slots
-	connect(hwdevices, TQT_SIGNAL(hardwareAdded(TDEGenericDevice*)), this, TQT_SLOT(AddDeviceHandler(TDEGenericDevice*)));
-	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(TDEGenericDevice*)), this, TQT_SLOT(RemoveDeviceHandler(TDEGenericDevice*)));
-	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(ModifyDeviceHandler(TDEGenericDevice*)));
+	connect(hwdevices, TQT_SIGNAL(hardwareAdded(GenericDevice*)), this, TQT_SLOT(AddDeviceHandler(GenericDevice*)));
+	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(GenericDevice*)), this, TQT_SLOT(RemoveDeviceHandler(GenericDevice*)));
+	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(GenericDevice*)), this, TQT_SLOT(ModifyDeviceHandler(GenericDevice*)));
 
 	// List devices at startup
 	ListDevices();
@@ -85,34 +87,34 @@ TDEBackend::TDEBackend(MediaList &list, TQObject* parent)
 TDEBackend::~TDEBackend()
 {
 	// Remove all media from the media list
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
-	TDEGenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
-	TDEGenericDevice *hwdevice;
+	HardwareDevices *hwdevices = HardwareDevices::instance();
+	GenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
+	GenericDevice *hwdevice;
 	for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
-		if (hwdevice->type() == TDEGenericDeviceType::Disk) {
-			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
+		if (hwdevice->type() == GenericDeviceType::Disk) {
+			StorageDevice* sdevice = static_cast<StorageDevice*>(hwdevice);
 			RemoveDevice(sdevice);
 		}
 	}
 }
 
-void TDEBackend::AddDeviceHandler(TDEGenericDevice *device) {
-	if (device->type() == TDEGenericDeviceType::Disk) {
-		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
+void TDEBackend::AddDeviceHandler(GenericDevice *device) {
+	if (device->type() == GenericDeviceType::Disk) {
+		StorageDevice* sdevice = static_cast<StorageDevice*>(device);
 		AddDevice(sdevice);
 	}
 }
 
-void TDEBackend::RemoveDeviceHandler(TDEGenericDevice *device) {
-	if (device->type() == TDEGenericDeviceType::Disk) {
-		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
+void TDEBackend::RemoveDeviceHandler(GenericDevice *device) {
+	if (device->type() == GenericDeviceType::Disk) {
+		StorageDevice* sdevice = static_cast<StorageDevice*>(device);
 		RemoveDevice(sdevice);
 	}
 }
 
-void TDEBackend::ModifyDeviceHandler(TDEGenericDevice *device) {
-	if (device->type() == TDEGenericDeviceType::Disk) {
-		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
+void TDEBackend::ModifyDeviceHandler(GenericDevice *device) {
+	if (device->type() == GenericDeviceType::Disk) {
+		StorageDevice* sdevice = static_cast<StorageDevice*>(device);
 		ModifyDevice(sdevice);
 	}
 }
@@ -120,12 +122,12 @@ void TDEBackend::ModifyDeviceHandler(TDEGenericDevice *device) {
 // List devices (at startup)
 bool TDEBackend::ListDevices()
 {
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
-	TDEGenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
-	TDEGenericDevice *hwdevice;
+	HardwareDevices *hwdevices = HardwareDevices::instance();
+	GenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
+	GenericDevice *hwdevice;
 	for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
-		if (hwdevice->type() == TDEGenericDeviceType::Disk) {
-			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
+		if (hwdevice->type() == GenericDeviceType::Disk) {
+			StorageDevice* sdevice = static_cast<StorageDevice*>(hwdevice);
 			AddDevice(sdevice, false);
 		}
 	}
@@ -134,7 +136,7 @@ bool TDEBackend::ListDevices()
 }
 
 // Create a media instance for a new storage device
-void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
+void TDEBackend::AddDevice(StorageDevice * sdevice, bool allowNotification)
 {
 	kdDebug(1219) << "TDEBackend::AddDevice for " << sdevice->uniqueID() << endl;
 
@@ -147,16 +149,16 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 	}
 
 	// Add volume block devices
-	if (sdevice->isDiskOfType(TDEDiskDeviceType::HDD)) {
+	if (sdevice->isDiskOfType(DiskDeviceType::HDD)) {
 		/* We only list volumes that...
 		*  - are encrypted with LUKS or
 		*  - have a filesystem or
 		*  - have an audio track
 		*/
-		if (!(sdevice->isDiskOfType(TDEDiskDeviceType::LUKS))
-			&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::ContainsFilesystem))
-			&& !(sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
-			&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank))
+		if (!(sdevice->isDiskOfType(DiskDeviceType::LUKS))
+			&& !(sdevice->checkDiskStatus(DiskDeviceStatus::ContainsFilesystem))
+			&& !(sdevice->isDiskOfType(DiskDeviceType::CDAudio))
+			&& !(sdevice->checkDiskStatus(DiskDeviceStatus::Blank))
 			) {
 			// 
 		}
@@ -166,7 +168,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 			setVolumeProperties(medium);
 
 			// Do not list the LUKS backend device if it has been unlocked elsewhere
-			if (sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)) {
+			if (sdevice->isDiskOfType(DiskDeviceType::LUKS)) {
 				if (sdevice->holdingDevices().count() > 0) {
 					medium->setHidden(true);
 				}
@@ -186,17 +188,17 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 	}
 
 	// Add CD drives
-	if ((sdevice->isDiskOfType(TDEDiskDeviceType::CDROM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRAM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDROM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDVideo))
+	if ((sdevice->isDiskOfType(DiskDeviceType::CDROM))
+		|| (sdevice->isDiskOfType(DiskDeviceType::CDRW))
+		|| (sdevice->isDiskOfType(DiskDeviceType::DVDROM))
+		|| (sdevice->isDiskOfType(DiskDeviceType::DVDRAM))
+		|| (sdevice->isDiskOfType(DiskDeviceType::DVDRW))
+		|| (sdevice->isDiskOfType(DiskDeviceType::BDROM))
+		|| (sdevice->isDiskOfType(DiskDeviceType::BDRW))
+		|| (sdevice->isDiskOfType(DiskDeviceType::CDAudio))
+		|| (sdevice->isDiskOfType(DiskDeviceType::CDVideo))
+		|| (sdevice->isDiskOfType(DiskDeviceType::DVDVideo))
+		|| (sdevice->isDiskOfType(DiskDeviceType::BDVideo))
 		) {
 
 		// Create medium
@@ -213,11 +215,11 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 	}
 
 	// Floppy & zip drives
-	if ((sdevice->isDiskOfType(TDEDiskDeviceType::Floppy)) ||
-		(sdevice->isDiskOfType(TDEDiskDeviceType::Zip)) ||
-		(sdevice->isDiskOfType(TDEDiskDeviceType::Jaz))
+	if ((sdevice->isDiskOfType(DiskDeviceType::Floppy)) ||
+		(sdevice->isDiskOfType(DiskDeviceType::Zip)) ||
+		(sdevice->isDiskOfType(DiskDeviceType::Jaz))
 		) {
-		if ((sdevice->checkDiskStatus(TDEDiskDeviceStatus::Removable)) && (!(sdevice->checkDiskStatus(TDEDiskDeviceStatus::Inserted)))) {
+		if ((sdevice->checkDiskStatus(DiskDeviceStatus::Removable)) && (!(sdevice->checkDiskStatus(DiskDeviceStatus::Inserted)))) {
 			allowNotification = false;
 		}
 
@@ -226,10 +228,10 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 		*  - have a filesystem or
 		*  - are a floppy disk
 		*/
-		if (!(sdevice->isDiskOfType(TDEDiskDeviceType::LUKS))
-			&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::ContainsFilesystem))
-			&& !(sdevice->isDiskOfType(TDEDiskDeviceType::Floppy))
-			&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank))
+		if (!(sdevice->isDiskOfType(DiskDeviceType::LUKS))
+			&& !(sdevice->checkDiskStatus(DiskDeviceStatus::ContainsFilesystem))
+			&& !(sdevice->isDiskOfType(DiskDeviceType::Floppy))
+			&& !(sdevice->checkDiskStatus(DiskDeviceStatus::Blank))
 			) {
 			// 
 		}
@@ -240,7 +242,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 			setFloppyProperties(medium);
 
 			// Do not list the LUKS backend device if it has been unlocked elsewhere
-			if (sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)) {
+			if (sdevice->isDiskOfType(DiskDeviceType::LUKS)) {
 				if (sdevice->holdingDevices().count() > 0) {
 					medium->setHidden(true);
 				}
@@ -258,7 +260,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 	}
 
 	// PTP camera
-	if (sdevice->isDiskOfType(TDEDiskDeviceType::Camera)) {
+	if (sdevice->isDiskOfType(DiskDeviceType::Camera)) {
 		// PTP cameras are handled by the "camera" tdeioslave
 		if (KProtocolInfo::isKnownProtocol( TQString("camera") ) )
 		{
@@ -274,7 +276,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 	}
 }
 
-void TDEBackend::RemoveDevice(TDEStorageDevice * sdevice)
+void TDEBackend::RemoveDevice(StorageDevice * sdevice)
 {
 	kdDebug(1219) << "TDEBackend::RemoveDevice for " << sdevice->uniqueID() << endl;
 
@@ -286,7 +288,7 @@ void TDEBackend::RemoveDevice(TDEStorageDevice * sdevice)
 	m_mediaList.removeMedium(sdevice->uniqueID(), true);
 }
 
-void TDEBackend::ModifyDevice(TDEStorageDevice * sdevice)
+void TDEBackend::ModifyDevice(StorageDevice * sdevice)
 {
 	kdDebug(1219) << "TDEBackend::ModifyDevice for " << sdevice->uniqueID() << endl;
 
@@ -294,7 +296,7 @@ void TDEBackend::ModifyDevice(TDEStorageDevice * sdevice)
 	ResetProperties(sdevice, allowNotification);
 }
 
-void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotification, bool overrideIgnoreList)
+void TDEBackend::ResetProperties(StorageDevice * sdevice, bool allowNotification, bool overrideIgnoreList)
 {
 	kdDebug(1219) << "TDEBackend::ResetProperties for " << sdevice->uniqueID() << " allowNotification: " << allowNotification << " overrideIgnoreList: " << overrideIgnoreList << endl;
 
@@ -317,15 +319,15 @@ void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotificat
 	// Keep these conditions in sync with ::AddDevice above, OR ELSE!!!
 	// BEGIN
 
-	if (!(sdevice->isDiskOfType(TDEDiskDeviceType::LUKS))
-		&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::ContainsFilesystem))
-		&& !(sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
-		&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank))
+	if (!(sdevice->isDiskOfType(DiskDeviceType::LUKS))
+		&& !(sdevice->checkDiskStatus(DiskDeviceStatus::ContainsFilesystem))
+		&& !(sdevice->isDiskOfType(DiskDeviceType::CDAudio))
+		&& !(sdevice->checkDiskStatus(DiskDeviceStatus::Blank))
 		) {
 	}
 	else {
 		// Do not list the LUKS backend device if it has been unlocked elsewhere
-		if (sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)) {
+		if (sdevice->isDiskOfType(DiskDeviceType::LUKS)) {
 			if (sdevice->holdingDevices().count() > 0) {
 				m->setHidden(true);
 			}
@@ -336,37 +338,37 @@ void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotificat
 		setVolumeProperties(m);
 	}
 
-	if ((sdevice->isDiskOfType(TDEDiskDeviceType::CDROM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRAM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDROM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDVideo))
+	if ((sdevice->isDiskOfType(DiskDeviceType::CDROM))
+		|| (sdevice->isDiskOfType(DiskDeviceType::CDRW))
+		|| (sdevice->isDiskOfType(DiskDeviceType::DVDROM))
+		|| (sdevice->isDiskOfType(DiskDeviceType::DVDRAM))
+		|| (sdevice->isDiskOfType(DiskDeviceType::DVDRW))
+		|| (sdevice->isDiskOfType(DiskDeviceType::BDROM))
+		|| (sdevice->isDiskOfType(DiskDeviceType::BDRW))
+		|| (sdevice->isDiskOfType(DiskDeviceType::CDAudio))
+		|| (sdevice->isDiskOfType(DiskDeviceType::CDVideo))
+		|| (sdevice->isDiskOfType(DiskDeviceType::DVDVideo))
+		|| (sdevice->isDiskOfType(DiskDeviceType::BDVideo))
 		) {
 		setVolumeProperties(m);
 	}
 
 	// Floppy & zip drives
-	if ((sdevice->isDiskOfType(TDEDiskDeviceType::Floppy)) ||
-		(sdevice->isDiskOfType(TDEDiskDeviceType::Zip)) ||
-		(sdevice->isDiskOfType(TDEDiskDeviceType::Jaz))
+	if ((sdevice->isDiskOfType(DiskDeviceType::Floppy)) ||
+		(sdevice->isDiskOfType(DiskDeviceType::Zip)) ||
+		(sdevice->isDiskOfType(DiskDeviceType::Jaz))
 		) {
 
-		if (!(sdevice->isDiskOfType(TDEDiskDeviceType::LUKS))
-			&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::ContainsFilesystem))
-			&& !(sdevice->isDiskOfType(TDEDiskDeviceType::Floppy))
-			&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank))
+		if (!(sdevice->isDiskOfType(DiskDeviceType::LUKS))
+			&& !(sdevice->checkDiskStatus(DiskDeviceStatus::ContainsFilesystem))
+			&& !(sdevice->isDiskOfType(DiskDeviceType::Floppy))
+			&& !(sdevice->checkDiskStatus(DiskDeviceStatus::Blank))
 			) {
 			// 
 		}
 		else {
 			// Do not list the LUKS backend device if it has been unlocked elsewhere
-			if (sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)) {
+			if (sdevice->isDiskOfType(DiskDeviceType::LUKS)) {
 				if (sdevice->holdingDevices().count() > 0) {
 					m->setHidden(true);
 				}
@@ -379,13 +381,13 @@ void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotificat
 		}
 	}
 
-	if (sdevice->isDiskOfType(TDEDiskDeviceType::Camera)) {
+	if (sdevice->isDiskOfType(DiskDeviceType::Camera)) {
 		setCameraProperties(m);
 	}
 
 	// END
 
-	if ((sdevice->checkDiskStatus(TDEDiskDeviceStatus::Removable)) && (!(sdevice->checkDiskStatus(TDEDiskDeviceStatus::Inserted)))) {
+	if ((sdevice->checkDiskStatus(DiskDeviceStatus::Removable)) && (!(sdevice->checkDiskStatus(DiskDeviceStatus::Inserted)))) {
 		kdDebug(1219) << "TDEBackend::ResetProperties for " << sdevice->uniqueID() << " device was removed from system" << endl;
 		RemoveDevice(sdevice);
 		return;
@@ -398,15 +400,15 @@ void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotificat
 
 void TDEBackend::setVolumeProperties(Medium* medium)
 {
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
+	HardwareDevices *hwdevices = HardwareDevices::instance();
 
-	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
+	StorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
 	if (!sdevice) {
 		return;
 	}
 
 	medium->setName(generateName(sdevice->deviceNode()));
-	if ((sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)) || (sdevice->isDiskOfType(TDEDiskDeviceType::UnlockedCrypt))) {
+	if ((sdevice->isDiskOfType(DiskDeviceType::LUKS)) || (sdevice->isDiskOfType(DiskDeviceType::UnlockedCrypt))) {
 		medium->setEncrypted(true);
 	}
 	else {
@@ -423,98 +425,98 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 
 	TQString mimeType;
 
-	if ((sdevice->isDiskOfType(TDEDiskDeviceType::CDROM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRAM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDROM))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDVideo))
+	if ((sdevice->isDiskOfType(DiskDeviceType::CDROM))
+		|| (sdevice->isDiskOfType(DiskDeviceType::CDRW))
+		|| (sdevice->isDiskOfType(DiskDeviceType::DVDROM))
+		|| (sdevice->isDiskOfType(DiskDeviceType::DVDRAM))
+		|| (sdevice->isDiskOfType(DiskDeviceType::DVDRW))
+		|| (sdevice->isDiskOfType(DiskDeviceType::BDROM))
+		|| (sdevice->isDiskOfType(DiskDeviceType::BDRW))
+		|| (sdevice->isDiskOfType(DiskDeviceType::CDAudio))
+		|| (sdevice->isDiskOfType(DiskDeviceType::CDVideo))
+		|| (sdevice->isDiskOfType(DiskDeviceType::DVDVideo))
+		|| (sdevice->isDiskOfType(DiskDeviceType::BDVideo))
 		) {
 		// This device is a CD drive of some sort
 
 		// Default
 		mimeType = "media/cdrom" + MOUNT_SUFFIX;
 
-		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDROM)) {
+		if (sdevice->isDiskOfType(DiskDeviceType::CDROM)) {
 			mimeType = "media/cdrom" + MOUNT_SUFFIX;
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::Blank)) {
 				mimeType = "media/blankcd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank CDROM");
 			}
 		}
-		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW)) {
+		if (sdevice->isDiskOfType(DiskDeviceType::CDRW)) {
 			mimeType = "media/cdwriter" + MOUNT_SUFFIX;
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::Blank)) {
 				mimeType = "media/blankcd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank CDRW");
 			}
 		}
 	
-		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM)) {
+		if (sdevice->isDiskOfType(DiskDeviceType::DVDROM)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::Blank)) {
 				mimeType = "media/blankdvd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank DVDROM");
 			}
 		}
 	
-		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
+		if (sdevice->isDiskOfType(DiskDeviceType::DVDRAM)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::Blank)) {
 				mimeType = "media/blankdvd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank DVDRAM");
 			}
 		}
 	
-		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW)) {
+		if (sdevice->isDiskOfType(DiskDeviceType::DVDRW)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::Blank)) {
 				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
 				medium->unmountableState("");
 				diskLabel = i18n("Blank DVDRW");
 			}
 		}
 
-		if (sdevice->isDiskOfType(TDEDiskDeviceType::BDROM)) {
+		if (sdevice->isDiskOfType(DiskDeviceType::BDROM)) {
 			mimeType = "media/bluray" + MOUNT_SUFFIX;
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::Blank)) {
 				mimeType = "media/blankbd" + MOUNT_SUFFIX;
 				medium->unmountableState("");
 				diskLabel = i18n("Blank BDROM");
 			}
 		}
 	
-		if (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW)) {
+		if (sdevice->isDiskOfType(DiskDeviceType::BDRW)) {
 			mimeType = "media/bluray" + MOUNT_SUFFIX;
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::Blank)) {
 				mimeType = "media/blankbd" + MOUNT_SUFFIX;
 				medium->unmountableState("");
 				diskLabel = i18n("Blank BDRW");
 			}
 		}
 	
-		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio)) {
+		if (sdevice->isDiskOfType(DiskDeviceType::CDAudio)) {
 			mimeType = "media/audiocd";
 			medium->unmountableState("audiocd:/?device=" + sdevice->deviceNode());
 			diskLabel = i18n("Audio CD");
 		}
 
-		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo)) {
+		if (sdevice->isDiskOfType(DiskDeviceType::CDVideo)) {
 			mimeType = "media/vcd";
 		}
-		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo)) {
+		if (sdevice->isDiskOfType(DiskDeviceType::DVDVideo)) {
 			mimeType = "media/dvdvideo";
 		}
-		if (sdevice->isDiskOfType(TDEDiskDeviceType::BDVideo)) {
+		if (sdevice->isDiskOfType(DiskDeviceType::BDVideo)) {
 			mimeType = "media/bdvideo";
 		}
 	
@@ -526,23 +528,23 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		// Default
 		mimeType = "media/hdd" + MOUNT_SUFFIX;
 
-		if (sdevice->isDiskOfType(TDEDiskDeviceType::USB)) {
+		if (sdevice->isDiskOfType(DiskDeviceType::USB)) {
 			mimeType = "media/removable" + MOUNT_SUFFIX;
 			medium->needMounting();
 
-			if (sdevice->isDiskOfType(TDEDiskDeviceType::CompactFlash)) {
+			if (sdevice->isDiskOfType(DiskDeviceType::CompactFlash)) {
 				medium->setIconName("compact_flash" + MOUNT_ICON_SUFFIX);
 			}
-			if (sdevice->isDiskOfType(TDEDiskDeviceType::MemoryStick)) {
+			if (sdevice->isDiskOfType(DiskDeviceType::MemoryStick)) {
 				medium->setIconName("memory_stick" + MOUNT_ICON_SUFFIX);
 			}
-			if (sdevice->isDiskOfType(TDEDiskDeviceType::SmartMedia)) {
+			if (sdevice->isDiskOfType(DiskDeviceType::SmartMedia)) {
 				medium->setIconName("smart_media" + MOUNT_ICON_SUFFIX);
 			}
-			if (sdevice->isDiskOfType(TDEDiskDeviceType::SDMMC)) {
+			if (sdevice->isDiskOfType(DiskDeviceType::SDMMC)) {
 				medium->setIconName("sd_mmc" + MOUNT_ICON_SUFFIX);
 			}
-			if (sdevice->isDiskOfType(TDEDiskDeviceType::MediaDevice)) {
+			if (sdevice->isDiskOfType(DiskDeviceType::MediaDevice)) {
 				medium->setIconName("ipod" + MOUNT_ICON_SUFFIX);
 
 				if (sdevice->vendorModel().upper().contains("IPOD") && KProtocolInfo::isKnownProtocol( TQString("ipod") ) )
@@ -551,7 +553,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 					medium->mountableState(!sdevice->mountPath().isNull());
 				}
 			}
-			if (sdevice->isDiskOfType(TDEDiskDeviceType::Tape)) {
+			if (sdevice->isDiskOfType(DiskDeviceType::Tape)) {
 				medium->setIconName("magnetic_tape" + MOUNT_ICON_SUFFIX);
 			}
 			if (medium->isMounted() && TQFile::exists(medium->mountPoint() + "/dcim"))
@@ -562,8 +564,8 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 	}
 
 	if (!medium->needMounting()) {
-		if (sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)) {
-			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::UsedByDevice)) {
+		if (sdevice->isDiskOfType(DiskDeviceType::LUKS)) {
+			if (sdevice->checkDiskStatus(DiskDeviceStatus::UsedByDevice)) {
 				// Encrypted base devices must be set to this mimetype or they won't open when the base device node is passed to the tdeioslave
 				mimeType = "media/removable_mounted";
 			}
@@ -577,9 +579,9 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 // Handle floppies and zip drives
 bool TDEBackend::setFloppyProperties(Medium* medium)
 {
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
+	HardwareDevices *hwdevices = HardwareDevices::instance();
 
-	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
+	StorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
 	if (!sdevice) {
 		return false;
 	}
@@ -590,9 +592,9 @@ bool TDEBackend::setFloppyProperties(Medium* medium)
 	// Certain disks have a lot in common with hard drives
 	// FIXME
 	// Any more?
-	if ((sdevice->isDiskOfType(TDEDiskDeviceType::Zip)) || (sdevice->isDiskOfType(TDEDiskDeviceType::Jaz))) {
+	if ((sdevice->isDiskOfType(DiskDeviceType::Zip)) || (sdevice->isDiskOfType(DiskDeviceType::Jaz))) {
 		medium->setName(generateName(sdevice->deviceNode()));
-		if ((sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)) || (sdevice->isDiskOfType(TDEDiskDeviceType::UnlockedCrypt))) {
+		if ((sdevice->isDiskOfType(DiskDeviceType::LUKS)) || (sdevice->isDiskOfType(DiskDeviceType::UnlockedCrypt))) {
 			medium->setEncrypted(true);
 		}
 		else {
@@ -603,7 +605,7 @@ bool TDEBackend::setFloppyProperties(Medium* medium)
 		medium->mountableState(sdevice->deviceNode(), sdevice->mountPath(), sdevice->fileSystemName(), !sdevice->mountPath().isNull());
 	}
 
-	if (sdevice->isDiskOfType(TDEDiskDeviceType::Floppy)) {
+	if (sdevice->isDiskOfType(DiskDeviceType::Floppy)) {
 		setFloppyMountState(medium);
 
 		// We don't use the routine above as floppy disks are extremely slow (we don't want them accessed at all during media listing)
@@ -618,7 +620,7 @@ bool TDEBackend::setFloppyProperties(Medium* medium)
 		medium->setLabel(i18n("Floppy Drive"));
 	}
 
-	if (sdevice->isDiskOfType(TDEDiskDeviceType::Zip)) {
+	if (sdevice->isDiskOfType(DiskDeviceType::Zip)) {
 		if (sdevice->mountPath().isNull()) {
 			medium->setMimeType("media/zip_unmounted");
 		}
@@ -643,9 +645,9 @@ bool TDEBackend::setFloppyProperties(Medium* medium)
 
 void TDEBackend::setCameraProperties(Medium* medium)
 {
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
+	HardwareDevices *hwdevices = HardwareDevices::instance();
 
-	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
+	StorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
 	if (!sdevice) {
 		return;
 	}
@@ -709,9 +711,9 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 		return TQStringList();
 	}
 
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
+	HardwareDevices *hwdevices = HardwareDevices::instance();
 
-	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
+	StorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
 	if (!sdevice) {
 		return TQStringList(); // we can't get the information needed in order to process mount options
 	}
@@ -749,7 +751,7 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 
 	bool removable = false;
 	if (!drive_udi.isNull()) {
-		removable = ((sdevice->checkDiskStatus(TDEDiskDeviceStatus::Removable)) || (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Hotpluggable)));
+		removable = ((sdevice->checkDiskStatus(DiskDeviceStatus::Removable)) || (sdevice->checkDiskStatus(DiskDeviceStatus::Hotpluggable)));
 	}
 
 	TQString tmp;
@@ -764,11 +766,11 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 		config.setGroup(current_group);
 	}
 
-	if ((sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDVideo))
+	if ((sdevice->checkDiskStatus(DiskDeviceStatus::Blank))
+		|| (sdevice->isDiskOfType(DiskDeviceType::CDAudio))
+		|| (sdevice->isDiskOfType(DiskDeviceType::CDVideo))
+		|| (sdevice->isDiskOfType(DiskDeviceType::DVDVideo))
+		|| (sdevice->isDiskOfType(DiskDeviceType::BDVideo))
 		) {
 		value = false;
 	}
@@ -968,9 +970,9 @@ TQString TDEBackend::mount(const Medium *medium)
 		
 	}
 
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
+	HardwareDevices *hwdevices = HardwareDevices::instance();
 
-	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
+	StorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
 	if (!sdevice) {
 		return i18n("Internal error");
 	}
@@ -1172,9 +1174,9 @@ TQString TDEBackend::unmount(const TQString &_udi)
 
 	TQString udi = TQString::null;
 
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
+	HardwareDevices *hwdevices = HardwareDevices::instance();
 
-	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
+	StorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
 	if (!sdevice) {
 		return i18n("Internal error");
 	}
@@ -1347,9 +1349,9 @@ TQString TDEBackend::generateName(const TQString &devNode)
 }
 
 TQString TDEBackend::driveUDIFromDeviceUID(TQString uuid) {
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
+	HardwareDevices *hwdevices = HardwareDevices::instance();
 
-	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(uuid);
+	StorageDevice * sdevice = hwdevices->findDiskByUID(uuid);
 	TQString ret;
 	if (sdevice) {
 		ret = sdevice->diskUUID();

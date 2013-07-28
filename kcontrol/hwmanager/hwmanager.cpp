@@ -47,11 +47,12 @@
 #include <stdio.h>
 #include <tqstring.h>
 
-#include <tdehw/tdehardwaredevices.h>
+#include <tdehw/hardwaredevices.h>
 
 #include "hwmanager.h"
 
 using namespace std;
+using namespace TDEHW;
 
 /**** DLL Interface ****/
 typedef KGenericFactory<TDEHWManager, TQWidget> TDEHWManagerFactory;
@@ -85,15 +86,15 @@ TDEHWManager::TDEHWManager(TQWidget *parent, const char *name, const TQStringLis
 	setRootOnlyMsg(i18n("<b>Hardware settings are system wide, and therefore require administrator access</b><br>To alter the system's hardware settings, click on the \"Administrator Mode\" button below."));
 	setUseRootOnlyMsg(true);
 
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
+	HardwareDevices *hwdevices = HardwareDevices::instance();
 	hwdevices->setTriggerlessHardwareUpdatesEnabled(true);
 
 	connect(base->showByConnection, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
 	connect(base->showByConnection, TQT_SIGNAL(clicked()), TQT_SLOT(populateTreeView()));
 
-	connect(hwdevices, TQT_SIGNAL(hardwareAdded(TDEGenericDevice*)), this, TQT_SLOT(populateTreeView()));
-	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(TDEGenericDevice*)), this, TQT_SLOT(populateTreeView()));
-	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
+	connect(hwdevices, TQT_SIGNAL(hardwareAdded(GenericDevice*)), this, TQT_SLOT(populateTreeView()));
+	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(GenericDevice*)), this, TQT_SLOT(populateTreeView()));
+	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(GenericDevice*)), this, TQT_SLOT(deviceChanged(GenericDevice*)));
 
 	load();
 
@@ -142,9 +143,9 @@ void TDEHWManager::populateTreeView()
 	base->deviceTree->clear();
 
 	if (show_by_connection) {
-		TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
-		TDEGenericHardwareList hwlist = hwdevices->listByDeviceClass(TDEGenericDeviceType::RootSystem);
-		TDEGenericDevice *hwdevice;
+		HardwareDevices *hwdevices = HardwareDevices::instance();
+		GenericHardwareList hwlist = hwdevices->listByDeviceClass(GenericDeviceType::RootSystem);
+		GenericDevice *hwdevice;
 		for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
 			DeviceIconItem* item = new DeviceIconItem(base->deviceTree, hwdevice->friendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
 			if ((!selected_syspath.isNull()) && (hwdevice->systemPath() == selected_syspath)) {
@@ -155,12 +156,12 @@ void TDEHWManager::populateTreeView()
 		}
 	}
 	else {
-		TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
-		for (int i=0;i<=TDEGenericDeviceType::Last;i++) {
-			if (i != TDEGenericDeviceType::Root) {
-				DeviceIconItem* rootitem = new DeviceIconItem(base->deviceTree, hwdevices->getFriendlyDeviceTypeStringFromType((TDEGenericDeviceType::TDEGenericDeviceType)i), hwdevices->getDeviceTypeIconFromType((TDEGenericDeviceType::TDEGenericDeviceType)i, base->deviceTree->iconSize()), 0);
-				TDEGenericDevice *hwdevice;
-				TDEGenericHardwareList hwlist = hwdevices->listByDeviceClass((TDEGenericDeviceType::TDEGenericDeviceType)i);
+		HardwareDevices *hwdevices = HardwareDevices::instance();
+		for (int i=0;i<=GenericDeviceType::Last;i++) {
+			if (i != GenericDeviceType::Root) {
+				DeviceIconItem* rootitem = new DeviceIconItem(base->deviceTree, hwdevices->getFriendlyDeviceTypeStringFromType((GenericDeviceType::GenericDeviceType)i), hwdevices->getDeviceTypeIconFromType((GenericDeviceType::GenericDeviceType)i, base->deviceTree->iconSize()), 0);
+				GenericDevice *hwdevice;
+				GenericHardwareList hwlist = hwdevices->listByDeviceClass((GenericDeviceType::GenericDeviceType)i);
 				for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
 					DeviceIconItem* item = new DeviceIconItem(rootitem, hwdevice->friendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
 					if ((!selected_syspath.isNull()) && (hwdevice->systemPath() == selected_syspath)) {
@@ -175,9 +176,9 @@ void TDEHWManager::populateTreeView()
 
 void TDEHWManager::populateTreeViewLeaf(DeviceIconItem *parent, bool show_by_connection, TQString selected_syspath) {
 	if (show_by_connection) {
-		TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
-		TDEGenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
-		TDEGenericDevice *hwdevice;
+		HardwareDevices *hwdevices = HardwareDevices::instance();
+		GenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
+		GenericDevice *hwdevice;
 		for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
 			if (hwdevice->parentDevice() == parent->device()) {
 				DeviceIconItem* item = new DeviceIconItem(parent, hwdevice->friendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
@@ -191,12 +192,12 @@ void TDEHWManager::populateTreeViewLeaf(DeviceIconItem *parent, bool show_by_con
 	}
 }
 
-void TDEHWManager::deviceChanged(TDEGenericDevice* device) {
+void TDEHWManager::deviceChanged(GenericDevice* device) {
 	TQListViewItemIterator it(base->deviceTree);
 	while (it.current()) {
 		DeviceIconItem* item = dynamic_cast<DeviceIconItem*>(it.current());
 		if (item) {
-			TDEGenericDevice* candidate = item->device();
+			GenericDevice* candidate = item->device();
 			if (candidate) {
 				if (candidate->systemPath() == device->systemPath()) {
 					if (item->text(0) != device->friendlyName()) {

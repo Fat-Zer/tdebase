@@ -34,9 +34,9 @@
 #include <tdestartupinfo.h>
 #include <kmimetype.h>
 
-#include <tdehw/tdehardwaredevices.h>
-#include <tdehw/tdegenericdevice.h>
-#include <tdehw/tdestoragedevice.h>
+#include <tdehw/hardwaredevices.h>
+#include <tdehw/genericdevice.h>
+#include <tdehw/storagedevice.h>
 
 #include "dialog.h"
 #include "tdeio_media_mounthelper.h"
@@ -191,10 +191,10 @@ MountHelper::MountHelper() : TDEApplication()
 void MountHelper::invokeEject(const TQString &device, bool quiet)
 {
 	// Try TDE HW library eject first...
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
-	TDEGenericDevice *hwdevice = hwdevices->findByDeviceNode(device);
-	if (hwdevice->type() == TDEGenericDeviceType::Disk) {
-		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
+	TDEHW::HardwareDevices *hwdevices = TDEHW::HardwareDevices::instance();
+	TDEHW::GenericDevice *hwdevice = hwdevices->findByDeviceNode(device);
+	if (hwdevice->type() == TDEHW::GenericDeviceType::Disk) {
+		TDEHW::StorageDevice* sdevice = static_cast<TDEHW::StorageDevice*>(hwdevice);
 		if (sdevice->ejectDrive()) {
 			// Success!
 			::exit(0);

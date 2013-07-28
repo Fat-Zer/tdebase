@@ -34,9 +34,9 @@
 #include <tdemessagebox.h>
 #include <tdelocale.h>
 #include <tdetempfile.h>
-#include <tdehw/tdehardwaredevices.h>
-#include <tdehw/tdegenericdevice.h>
-#include <tdehw/tdecpudevice.h>
+#include <tdehw/hardwaredevices.h>
+#include <tdehw/genericdevice.h>
+#include <tdehw/cpudevice.h>
 
 #include "krashconf.h"
 #include "backtrace.h"
@@ -282,12 +282,12 @@ void BackTrace::processBacktrace()
 
 	// Append potentially important hardware information
 	m_strBt.append("\n==== (tdehwlib) hardware information ====\n");
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
-	TDEGenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
-	TDEGenericDevice *hwdevice;
+	TDEHW::HardwareDevices *hwdevices = TDEHW::HardwareDevices::instance();
+	TDEHW::GenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
+	TDEHW::GenericDevice *hwdevice;
 	for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
-		if (hwdevice->type() == TDEGenericDeviceType::CPU) {
-			TDECPUDevice* cpudevice = static_cast<TDECPUDevice*>(hwdevice);
+		if (hwdevice->type() == TDEHW::GenericDeviceType::CPU) {
+			TDEHW::CPUDevice* cpudevice = static_cast<TDEHW::CPUDevice*>(hwdevice);
 			m_strBt.append(TQString("CPU core number:\t\t%1\n").arg(cpudevice->coreNumber()));
 			m_strBt.append(TQString("\tVendor:\t\t\t%1\n").arg(cpudevice->vendorName()));
 			m_strBt.append(TQString("\tModel:\t\t\t%1\n").arg(cpudevice->vendorModel()));
