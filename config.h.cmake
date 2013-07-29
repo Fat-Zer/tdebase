@@ -196,9 +196,6 @@
 // Defined when wanting ksmserver shutdown debugging timing markers in .xsession-errors
 #cmakedefine BUILD_PROFILE_SHUTDOWN 1
 
-// Use makewhatis manpage support
-#cmakedefine WITH_MAKEWHATIS "@WITH_MAKEWHATIS@"
-
 // Kickoff menu
 #cmakedefine KICKOFF_DIST_CONFIG_SHORTCUT1 "@KICKOFF_DIST_CONFIG_SHORTCUT1@"
 #cmakedefine KICKOFF_DIST_CONFIG_SHORTCUT2 "@KICKOFF_DIST_CONFIG_SHORTCUT2@"

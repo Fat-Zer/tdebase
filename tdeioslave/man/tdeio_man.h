@@ -66,6 +66,7 @@ private slots:
 private:
     void checkManPaths();
     TQStringList manDirectories();
+    static bool hasManRecode(bool force=0);
     TQMap<TQString, TQString> buildIndexMap(const TQString& section);
     bool addWhatIs(TQMap<TQString, TQString>& i, const TQString& f, const TQString& mark);
     void parseWhatIs( TQMap<TQString, TQString> &i, TQTextStream &t, const TQString &mark );

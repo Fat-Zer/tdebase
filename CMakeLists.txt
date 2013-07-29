@@ -271,15 +271,6 @@ if( BUILD_STARTTDE )
 endif()
 
 
-##### Determine whether older manpage support is used ##########
-
-if( EXISTS "/usr/sbin/makewhatis" )
-  set( WITH_MAKEWHATIS "1" )
-  message( STATUS "Selected makewhatis for tdeio-man on your system" )
-else()
-  message( STATUS "Selected man-db for tdeio-man on your system" )
-endif()
-
 ##### Checks for a distribution-specific 1st menu item, generally a control center
 if(EXISTS "/usr/share/applications/YaST.desktop")
   set( KICKOFF_DIST_CONFIG_SHORTCUT1 "/usr/share/applications/YaST.desktop" )

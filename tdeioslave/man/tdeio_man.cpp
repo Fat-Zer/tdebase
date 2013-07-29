@@ -581,47 +581,62 @@ char *MANProtocol::readManPage(const char *_filename)
         }
         lastdir = filename.left(filename.findRev('/'));
     
-#ifdef WITH_MAKEWHATIS
-        TQIODevice *fd= KFilterDev::deviceForFile(filename);
+        size_t len;
 
-        if ( !fd || !fd->open(IO_ReadOnly))
-        {
-           delete fd;
-           return 0;
+        if( hasManRecode() ) {
+            myStdStream = TQString::null;
+            TDEProcess proc;
+
+            proc << "man" << "--recode" << "UTF-8" << filename;
+
+            TQApplication::connect(&proc, TQT_SIGNAL(receivedStdout (TDEProcess *, char *, int)),
+                                   this, TQT_SLOT(slotGetStdOutputUtf8(TDEProcess *, char *, int)));
+            proc.start(TDEProcess::Block, TDEProcess::All);
+
+            const TQCString cstr=myStdStream.utf8();
+            len = cstr.size() != 0 ? cstr.size() - 1 : 0;
+            buf = new char[len + 4];
+            tqmemmove(buf + 1, cstr.data(), len);
+        } else {
+            TQIODevice *fd= KFilterDev::deviceForFile(filename);
+
+            if ( !fd || !fd->open(IO_ReadOnly))
+            {
+               delete fd;
+               return 0;
+            }
+            TQByteArray array(fd->readAll());
+            kdDebug(7107) << "read " << array.size() << endl;
+            fd->close();
+            delete fd;
+
+            if (array.isEmpty())
+                return 0;
+
+            len = array.size();
+            buf = new char[len + 4];
+            tqmemmove(buf + 1, array.data(), len);
         }
-        TQByteArray array(fd->readAll());
-        kdDebug(7107) << "read " << array.size() << endl;
-        fd->close();
-        delete fd;
-
-        if (array.isEmpty())
-            return 0;
-
-        const int len = array.size();
-        buf = new char[len + 4];
-        tqmemmove(buf + 1, array.data(), len);
-#else
-        myStdStream = TQString::null;
-        TDEProcess proc;
-        /* TODO: detect availability of 'man --recode' so that this can go
-         * upstream */
-        proc << "man" << "--recode" << "UTF-8" << filename;
-
-        TQApplication::connect(&proc, TQT_SIGNAL(receivedStdout (TDEProcess *, char *, int)),
-                              this, TQT_SLOT(slotGetStdOutputUtf8(TDEProcess *, char *, int)));
-        proc.start(TDEProcess::Block, TDEProcess::All);
-
-        const TQCString cstr=myStdStream.utf8();
-        const int len = cstr.size()-1;
-        buf = new char[len + 4];
-        tqmemmove(buf + 1, cstr.data(), len);
-#endif
         buf[0]=buf[len]='\n'; // Start and end with a end of line
         buf[len+1]=buf[len+2]='\0'; // Two NUL characters at end
     }
     return buf;
 }
 
+bool MANProtocol::hasManRecode(bool force) {
+    static bool rv=0, wasChecked=0;
+    if ( !wasChecked || force ) {
+        TDEProcess proc;
+        // lets' try to recode the man page of man. 
+        // that should be enough to be sure that man-db is installed.
+        proc << "man" << "--recode" << "UTF-8" << "man";
+
+        proc.start(TDEProcess::Block, TDEProcess::All);
+        rv = proc.exitStatus() == 0;
+        wasChecked = 1;
+    }
+    return rv;
+}
 
 void MANProtocol::outputError(const TQString& errmsg)
 {
