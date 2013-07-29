@@ -35,11 +35,12 @@ SystemDirNotify::SystemDirNotify()
 
 void SystemDirNotify::init()
 {
-	if( mInited )
+	if( mInited ) {
 		// FIXME Work around a probable race condition by inserting printf delay before following
 		// code is executed -- the root cause of the race needs investigation and resolution.
 		printf("[systemdirnotify] SystemDirNotify::init(mInited)");
 		return;
+  }  
 	mInited = true;
 	TDEGlobal::dirs()->addResourceType("system_entries",
 		TDEStandardDirs::kde_default("data") + "systemview");
