@@ -9,10 +9,8 @@
 #
 #################################################
 
-# FIXME: KSCREENSAVER_PAM_SERVICE should be "kde" or "tdescreensaver"?
-
-if( WITH_PAM AND (NOT DEFINED KSCREENSAVER_PAM_SERVICE) )
-  set( KSCREENSAVER_PAM_SERVICE "kde" CACHE INTERNAL "" )
+if( WITH_PAM AND (NOT DEFINED TDESCREENSAVER_PAM_SERVICE) )
+  set( TDESCREENSAVER_PAM_SERVICE "kde" CACHE INTERNAL "" )
 endif( )
 
 if( WITH_KDESKTOP_LOCK_BACKTRACE )

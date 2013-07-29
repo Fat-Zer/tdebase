@@ -565,7 +565,7 @@ void PasswordDlg::gplugStart()
         sprintf(fdbuf, "%d", sfd[1]);
         execlp("kcheckpass", "kcheckpass",
 #ifdef HAVE_PAM
-               "-c", KSCREENSAVER_PAM_SERVICE,
+               "-c", TDESCREENSAVER_PAM_SERVICE,
 #endif
                "-m", mPlugin->info->method,
                "-S", fdbuf,

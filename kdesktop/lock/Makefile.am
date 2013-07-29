@@ -18,7 +18,7 @@ lockprocess.o: ../kdesktopsettings.h
 
 ####### Build rules
 
-PAM = @KSCREENSAVER_PAM_SERVICE@
+PAM = @TDESCREENSAVER_PAM_SERVICE@
 
 install-data-local:
 	-@test -n "$(DESTDIR)" || test -z "$(PAM)" || $(top_srcdir)/mkpamserv $(PAM)
