@@ -21,6 +21,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tqptrdict.h>
 #include <tdeapplication.h>
 #include <tqtimer.h>
+#include <tqdatetime.h>
 #include <dcopobject.h>
 
 #include "server2.h"
@@ -51,6 +52,8 @@ public:
     int restartStyleHint() const;
     TQString userId() const;
     const char* clientId() { return id ? id : ""; }
+
+    TQDateTime terminationRequestTimeStamp;
 
 private:
     const char* id;

@@ -99,12 +99,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif // PROFILE_SHUTDOWN
 
 // Time to wait after close request for graceful application termination
-// If set too high running applications may be ungracefully terminated on slow machines
+// If set too high running applications may be ungracefully terminated on slow machines or when many X11 applications are running
 #define KSMSERVER_SHUTDOWN_CLIENT_UNRESPONSIVE_TIMEOUT 60000
 
 // Time to wait before showing manual termination options
 // If set too low the user may be confused by buttons briefly flashing up on the screen during an otherwise normal logout process
-#define KSMSERVER_NOTIFICATION_MANUAL_OPTIONS_TIMEOUT 1000
+#define KSMSERVER_NOTIFICATION_MANUAL_OPTIONS_TIMEOUT 3000
 
 void KSMServer::logout( int confirm, int sdtype, int sdmode )
 {
@@ -687,11 +687,18 @@ void KSMServer::completeShutdownOrCheckpoint()
         initialClientCount = clients.count();
         if (shutdownNotifierIPDlg) {
             TQString nextClientToKill;
+            TQDateTime currentDateTime = TQDateTime::currentDateTime();
+            TQDateTime oldestFoundDateTime = currentDateTime;
             for( KSMClient* c = clients.first(); c; c = clients.next()) {
                 if( isWM( c ) || isCM( c ) || isNotifier( c ) ) {
                     continue;
                 }
-                nextClientToKill = c->program();
+                if (c->program() != "") {
+                    if (c->terminationRequestTimeStamp < oldestFoundDateTime) {
+                        nextClientToKill = c->program();
+                        oldestFoundDateTime = c->terminationRequestTimeStamp;
+                    }
+                }
             }
             if (nextClientToKill == "") {
                 static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Closing applications (%1/%2)...").arg(initialClientCount-clients.count()).arg(initialClientCount));
@@ -726,6 +733,7 @@ void KSMServer::startKilling()
         if( isWM( c ) || isCM( c ) || isNotifier( c ) ) // kill the WM and CM as the last one in order to reduce flicker.  Also wait to kill knotify to avoid logout delays
             continue;
         kdDebug( 1218 ) << "completeShutdown: client " << c->program() << "(" << c->clientId() << ")" << endl;
+        c->terminationRequestTimeStamp = TQDateTime::currentDateTime();
         SmsDie( c->connection() );
     }
 
@@ -745,12 +753,19 @@ void KSMServer::completeKilling()
     if( state == Killing ) {
         bool wait = false;
         TQString nextClientToKill;
+        TQDateTime currentDateTime = TQDateTime::currentDateTime();
+        TQDateTime oldestFoundDateTime = currentDateTime;
         for( KSMClient* c = clients.first(); c; c = clients.next()) {
             if( isWM( c ) || isCM( c ) || isNotifier( c ) ) {
                 continue;
             }
-            nextClientToKill = c->program();
-            wait = true; // still waiting for clients to go away
+            if (c->program() != "") {
+                if (c->terminationRequestTimeStamp < oldestFoundDateTime) {
+                    nextClientToKill = c->program();
+                    oldestFoundDateTime = c->terminationRequestTimeStamp;
+                }
+                wait = true; // still waiting for clients to go away
+            }
         }
         if( wait ) {
             if (shutdownNotifierIPDlg) {
@@ -784,15 +799,18 @@ void KSMServer::killWM()
     for ( KSMClient* c = clients.first(); c; c = clients.next() ) {
         if( isNotifier( c )) {
             iswm = true;
+            c->terminationRequestTimeStamp = TQDateTime::currentDateTime();
             SmsDie( c->connection() );
         }
         if( isCM( c )) {
             iswm = true;
+            c->terminationRequestTimeStamp = TQDateTime::currentDateTime();
             SmsDie( c->connection() );
         }
         if( isWM( c )) {
             iswm = true;
             kdDebug( 1218 ) << "killWM: client " << c->program() << "(" << c->clientId() << ")" << endl;
+            c->terminationRequestTimeStamp = TQDateTime::currentDateTime();
             SmsDie( c->connection() );
         }
     }
