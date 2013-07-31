@@ -249,6 +249,7 @@ private:
 
     TDEHardwareDevices* hwDevices;
     int initialClientCount;
+    int phase2ClientCount;
 };
 
 #endif

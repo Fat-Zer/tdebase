@@ -438,6 +438,55 @@ void KSMServer::saveYourselfDone( KSMClient* client, bool success )
                         false );
         }
     }
+
+// RAJA TEST ONLY
+
+    bool inPhase2 = true;
+    for( KSMClient* c = clients.first(); c; c = clients.next()) {
+        if ( !c->saveYourselfDone && !c->waitForPhase2 ) {
+            inPhase2 = false;
+        }
+    }
+
+    if (shutdownNotifierIPDlg) {
+        int waitingClients = 0;
+        TQString nextClientToKill;
+        TQDateTime currentDateTime = TQDateTime::currentDateTime();
+        TQDateTime oldestFoundDateTime = currentDateTime;
+        for( KSMClient* c = clients.first(); c; c = clients.next()) {
+            if (c->saveYourselfDone) {
+                continue;
+            }
+            if( isWM( c ) || isCM( c ) || isNotifier( c ) ) {
+                continue;
+            }
+            waitingClients++;
+            if (c->program() != "") {
+                if (c->terminationRequestTimeStamp < oldestFoundDateTime) {
+                    nextClientToKill = c->program();
+                    oldestFoundDateTime = c->terminationRequestTimeStamp;
+                }
+            }
+        }
+        if (inPhase2) {
+            if (phase2ClientCount > 0) {
+                if (nextClientToKill == "") {
+                    static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying remaining applications of logout request (%1/%2)...").arg(phase2ClientCount-waitingClients).arg(phase2ClientCount));
+                }
+                else {
+                     static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying remaining applications of logout request (%1/%2, %3)...").arg(phase2ClientCount-waitingClients).arg(phase2ClientCount).arg(nextClientToKill));
+                }
+            }
+        }
+        else {
+            if (nextClientToKill == "") {
+                static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying applications of logout request (%1/%2)...").arg(clients.count()-waitingClients).arg(clients.count()));
+            }
+            else {
+                 static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying applications of logout request (%1/%2, %3)...").arg(clients.count()-waitingClients).arg(clients.count()).arg(nextClientToKill));
+            }
+        }
+    }
 }
 
 void KSMServer::interactRequest( KSMClient* client, int /*dialogType*/ )
@@ -612,10 +661,12 @@ void KSMServer::completeShutdownOrCheckpoint()
     }
 
     // do phase 2
+    phase2ClientCount = 0;
     bool waitForPhase2 = false;
     for ( KSMClient* c = clients.first(); c; c = clients.next() ) {
         if ( !c->saveYourselfDone && c->waitForPhase2 ) {
             c->waitForPhase2 = false;
+            phase2ClientCount++;
             SmsSaveYourselfPhase2( c->connection() );
             waitForPhase2 = true;
         }
