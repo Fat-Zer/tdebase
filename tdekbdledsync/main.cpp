@@ -33,6 +33,7 @@ License along with tdekbdledsync. If not, see http://www.gnu.org/licenses/.
 #include <linux/vt.h>
 #include <linux/input.h>
 #include <linux/uinput.h>
+#include <sys/file.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/select.h>
@@ -71,6 +72,9 @@ int keyboard_fds[MAX_KEYBOARDS];
 
 Display* display = NULL;
 
+int lockfd = -1;
+char lockFileName[256];
+
 // --------------------------------------------------------------------------------------
 // Useful function from Stack Overflow
 // http://stackoverflow.com/questions/874134/find-if-string-endswith-another-string-in-c
@@ -90,6 +94,34 @@ int str_ends_with(const char * str, const char * suffix) {
   return 0 == strncmp( str + str_len - suffix_len, suffix, suffix_len );
 }
 // --------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------
+// Useful function from Stack Overflow
+// http://stackoverflow.com/questions/1599459/optimal-lock-file-method
+// --------------------------------------------------------------------------------------
+int tryGetLock(char const *lockName) {
+	mode_t m = umask( 0 );
+	int fd = open( lockName, O_RDWR|O_CREAT, 0666 );
+	umask( m );
+	if( fd >= 0 && flock( fd, LOCK_EX | LOCK_NB ) < 0 ) {
+		close( fd );
+		fd = -1;
+	}
+	return fd;
+}
+
+// --------------------------------------------------------------------------------------
+// Useful function from Stack Overflow
+// http://stackoverflow.com/questions/1599459/optimal-lock-file-method
+// --------------------------------------------------------------------------------------
+void releaseLock(int fd, char const *lockName) {
+	if( fd < 0 ) {
+		return;
+	}
+	remove( lockName );
+	close( fd );
+}
+
 
 // --------------------------------------------------------------------------------------
 // Get the VT number X is running on
@@ -254,6 +286,13 @@ int find_keyboards() {
 	return 0;
 }
 
+void handle_sigterm(int signum) {
+	if (lockfd >= 0) {
+		releaseLock(lockfd, lockFileName);
+	}
+	exit(0);
+}
+
 int main() {
 	int current_keyboard;
 	char name[256] = "Unknown";
@@ -276,11 +315,25 @@ int main() {
 	int evBase;
 	int errBase;
 
+	// Register cleanup handlers
+	struct sigaction action;
+	memset(&action, 0, sizeof(struct sigaction));
+	action.sa_handler = handle_sigterm;
+	sigaction(SIGTERM, &action, NULL);
+
 	// Open X11 display
 	display = XOpenDisplay(NULL);
 	if (!display) {
 		printf ("[tdekbdledsync] Unable to open X11 display!\n");
 		return -1;
+	}
+
+	// Ensure only one process is running on a given display
+	sprintf(lockFileName, "/var/lock/tdekbdledsync-%s.lock", XDisplayString(display));
+	lockfd = tryGetLock(lockFileName);
+	if (lockfd < 0) {
+		printf ("[tdekbdledsync] Another instance of this program is already running on this X11 display!\n[tdekbdledsync] Lockfile detected at '%s'\n", lockFileName);
+		return -2;
 	}
 
 	// Set up Xkb extension
@@ -289,7 +342,8 @@ int main() {
 	mn = XkbMinorVersion;
 	if (!XkbQueryExtension(display, &i1, &evBase, &errBase, &mj, &mn)) {
 		printf("[tdekbdledsync] Server doesn't support a compatible XKB\n");
-		return -2;
+		releaseLock(lockfd, lockFileName);
+		return -3;
 	}
 	XkbSelectEvents(display, XkbUseCoreKbd, XkbStateNotifyMask, XkbStateNotifyMask);
 
@@ -309,7 +363,8 @@ int main() {
 	udev = udev_new();
 	if (!udev) {
 		printf("[tdekbdledsync] Cannot connect to udev interface\n");
-		return -3;
+		releaseLock(lockfd, lockFileName);
+		return -4;
 	}
 
 	// Set up a udev monitor to monitor input devices
@@ -327,7 +382,8 @@ int main() {
 		find_keyboards();
 		if (keyboard_fd_num == 0) {
 			printf ("[tdekbdledsync] Could not find any usable keyboard(s)!\n");
-			return -4;
+			releaseLock(lockfd, lockFileName);
+			return -5;
 		}
 		else {
 			fprintf(stderr, "[tdekbdledsync] Found %d keyboard(s)\n", keyboard_fd_num);
@@ -342,14 +398,16 @@ int main() {
 				// Get current active VT
 				if (ioctl(vt_fd, VT_GETSTATE, &vtstat)) {
 					fprintf(stderr, "[tdekbdledsync] Unable to get current VT!\n");
-					return -5;
+					releaseLock(lockfd, lockFileName);
+					return -6;
 				}
 
 				if (x11_vt_num == vtstat.v_active) {
 					// Get Virtual Core keyboard status
 					if (XkbGetIndicatorState(display, XkbUseCoreKbd, &states) != Success) {
 						fprintf(stderr, "[tdekbdledsync] Unable to query X11 Virtual Core keyboard!\n");
-						return -6;
+						releaseLock(lockfd, lockFileName);
+						return -7;
 					}
 
 					XkbGetState(display, XkbUseCoreKbd, &state);
@@ -440,5 +498,6 @@ int main() {
 		}
 	}
 
+	releaseLock(lockfd, lockFileName);
 	return 0;
 }
