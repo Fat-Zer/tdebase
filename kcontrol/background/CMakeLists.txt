@@ -23,6 +23,7 @@ if( BUILD_KCONTROL OR BUILD_KDESKTOP OR BUILD_TDM )
 
   link_directories(
     ${TQT_LIBRARY_DIRS}
+    ${LIBART_LIBRARY_DIRS}
   )
 
   ##### bgnd (static) #############################
