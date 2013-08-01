@@ -11,6 +11,7 @@
 
 project( libkonq )
 
+check_include_file( "sys/statvfs.h" HAVE_STATVFS )
 
 add_subdirectory( pics )
 add_subdirectory( favicons )
