@@ -128,11 +128,13 @@ void GreeterApp::init()
 }
 
 void GreeterApp::deviceChanged(TDEGenericDevice* device) {
+#ifdef WITH_XRANDR
 	if (device->type() == TDEGenericDeviceType::Monitor) {
 		KRandrSimpleAPI *randrsimple = new KRandrSimpleAPI();
 		randrsimple->applyHotplugRules(KDE_CONFDIR);
 		delete randrsimple;
 	}
+#endif // WITH_XRANDR
 }
 
 void
