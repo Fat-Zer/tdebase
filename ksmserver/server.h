@@ -110,6 +110,7 @@ private slots:
     void restoreSessionDoneInternal();
 
     void notificationTimeout();
+    void protectionTimerTick();
     void protectionTimeout();
     void timeoutQuit();
     void timeoutWMQuit();
@@ -145,6 +146,7 @@ private:
     void startProtection();
     void endProtection();
     void handleProtectionTimeout();
+    void updateLogoutStatusDialog();
 
     void startApplication( TQStringList command,
         const TQString& clientMachine = TQString::null,
@@ -250,6 +252,7 @@ private:
     TDEHardwareDevices* hwDevices;
     int initialClientCount;
     int phase2ClientCount;
+    int protectionTimerCounter;
 };
 
 #endif

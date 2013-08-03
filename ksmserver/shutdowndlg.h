@@ -173,6 +173,7 @@ public:
 
 	void showNotificationActionButtons();
 	void hideNotificationActionButtons();
+	void setNotificationActionButtonsSkipText(TQString text);
 
 signals:
 	void abortLogoutClicked();

@@ -100,7 +100,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // Time to wait after close request for graceful application termination
 // If set too high running applications may be ungracefully terminated on slow machines or when many X11 applications are running
-#define KSMSERVER_SHUTDOWN_CLIENT_UNRESPONSIVE_TIMEOUT 60000
+#define KSMSERVER_SHUTDOWN_CLIENT_UNRESPONSIVE_TIMEOUT 20000
 
 // Time to wait before showing manual termination options
 // If set too low the user may be confused by buttons briefly flashing up on the screen during an otherwise normal logout process
@@ -439,12 +439,19 @@ void KSMServer::saveYourselfDone( KSMClient* client, bool success )
         }
     }
 
-// RAJA TEST ONLY
+    updateLogoutStatusDialog();
+}
 
+void KSMServer::updateLogoutStatusDialog()
+{
     bool inPhase2 = true;
+    bool pendingInteraction = false;
     for( KSMClient* c = clients.first(); c; c = clients.next()) {
         if ( !c->saveYourselfDone && !c->waitForPhase2 ) {
             inPhase2 = false;
+        }
+        if ( c->pendingInteraction ) {
+            pendingInteraction = true;
         }
     }
 
@@ -470,6 +477,7 @@ void KSMServer::saveYourselfDone( KSMClient* client, bool success )
         }
         if (inPhase2) {
             if (phase2ClientCount > 0) {
+                static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setNotificationActionButtonsSkipText(i18n("Skip Notification (%1)").arg(((KSMSERVER_SHUTDOWN_CLIENT_UNRESPONSIVE_TIMEOUT - (protectionTimerCounter*1000))/1000)+1));
                 if (nextClientToKill == "") {
                     static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying remaining applications of logout request (%1/%2)...").arg(phase2ClientCount-waitingClients).arg(phase2ClientCount));
                 }
@@ -479,11 +487,23 @@ void KSMServer::saveYourselfDone( KSMClient* client, bool success )
             }
         }
         else {
-            if (nextClientToKill == "") {
-                static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying applications of logout request (%1/%2)...").arg(clients.count()-waitingClients).arg(clients.count()));
+            if (pendingInteraction) {
+                static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setNotificationActionButtonsSkipText(i18n("Ignore and Resume Logout"));
+                if (nextClientToKill == "") {
+                    static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("An application is requesting attention, logout paused..."));
+                }
+                else {
+                    static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("%3 is requesting attention, logout paused...").arg(nextClientToKill));
+                }
             }
             else {
-                 static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying applications of logout request (%1/%2, %3)...").arg(clients.count()-waitingClients).arg(clients.count()).arg(nextClientToKill));
+                static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setNotificationActionButtonsSkipText(i18n("Skip Notification (%1)").arg(((KSMSERVER_SHUTDOWN_CLIENT_UNRESPONSIVE_TIMEOUT - (protectionTimerCounter*1000))/1000)+1));
+                if (nextClientToKill == "") {
+                    static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying applications of logout request (%1/%2)...").arg(clients.count()-waitingClients).arg(clients.count()));
+                }
+                else {
+                    static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying applications of logout request (%1/%2, %3)...").arg(clients.count()-waitingClients).arg(clients.count()).arg(nextClientToKill));
+                }
             }
         }
     }
@@ -583,12 +603,27 @@ void KSMServer::cancelShutdown()
 
 void KSMServer::startProtection()
 {
-    protectionTimer.start( KSMSERVER_SHUTDOWN_CLIENT_UNRESPONSIVE_TIMEOUT, true );
+    protectionTimerCounter = 0;
+    protectionTimer.start( 1000, true );
 }
 
 void KSMServer::endProtection()
 {
+    protectionTimerCounter = 0;
     protectionTimer.stop();
+}
+
+void KSMServer::protectionTimerTick()
+{
+    protectionTimerCounter++;
+    if ((protectionTimerCounter*1000) > KSMSERVER_SHUTDOWN_CLIENT_UNRESPONSIVE_TIMEOUT) {
+        protectionTimerCounter = 0;
+        protectionTimeout();
+    }
+    else {
+        protectionTimer.start( 1000, true );
+    }
+    updateLogoutStatusDialog();
 }
 
 /*

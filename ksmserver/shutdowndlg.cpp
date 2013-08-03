@@ -1219,13 +1219,18 @@ void KSMShutdownIPDlg::hideNotificationActionButtons()
 	m_gridlayout->invalidate();
 }
 
+void KSMShutdownIPDlg::setNotificationActionButtonsSkipText(TQString text)
+{
+	m_button1->setText(text);
+}
+
 KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
   : KSMModalDialog( parent )
 
 {
 	setStatusMessage(i18n("Saving your settings..."));
 
-	m_button1->setText(i18n("Skip Notification"));
+	setNotificationActionButtonsSkipText(i18n("Skip Notification"));
 	m_button2->setText(i18n("Abort Logout"));
 	connect(m_button1, SIGNAL(clicked()), this, SIGNAL(skipNotificationClicked()));
 	connect(m_button2, SIGNAL(clicked()), this, SIGNAL(abortLogoutClicked()));

@@ -580,7 +580,7 @@ extern "C" int _IceTransNoListen(const char * protocol);
 #endif
 
 KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManagerAddArgs, bool _only_local )
-  : DCOPObject("ksmserver"), startupNotifierIPDlg(0), shutdownNotifierIPDlg(0), sessionGroup( "" )
+  : DCOPObject("ksmserver"), startupNotifierIPDlg(0), shutdownNotifierIPDlg(0), sessionGroup( "" ), protectionTimerCounter(0)
 {
     the_server = this;
     clean = false;
@@ -682,7 +682,7 @@ KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManag
     signal(SIGPIPE, SIG_IGN);
 
     connect( &notificationTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( notificationTimeout() ) );
-    connect( &protectionTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( protectionTimeout() ) );
+    connect( &protectionTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( protectionTimerTick() ) );
     connect( &restoreTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( tryRestoreNext() ) );
     connect( &shutdownTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( timeoutQuit() ) );
     connect( kapp, TQT_SIGNAL( shutDown() ), this, TQT_SLOT( cleanUp() ) );
