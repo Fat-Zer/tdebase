@@ -477,6 +477,7 @@ void KSMServer::updateLogoutStatusDialog()
         }
         if (inPhase2) {
             if (phase2ClientCount > 0) {
+                static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->show();
                 static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setNotificationActionButtonsSkipText(i18n("Skip Notification (%1)").arg(((KSMSERVER_SHUTDOWN_CLIENT_UNRESPONSIVE_TIMEOUT - (protectionTimerCounter*1000))/1000)+1));
                 if (nextClientToKill == "") {
                     static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying remaining applications of logout request (%1/%2)...").arg(phase2ClientCount-waitingClients).arg(phase2ClientCount));
@@ -488,6 +489,7 @@ void KSMServer::updateLogoutStatusDialog()
         }
         else {
             if (pendingInteraction) {
+                static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->hide();
                 static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setNotificationActionButtonsSkipText(i18n("Ignore and Resume Logout"));
                 if (nextClientToKill == "") {
                     static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("An application is requesting attention, logout paused..."));
@@ -497,6 +499,7 @@ void KSMServer::updateLogoutStatusDialog()
                 }
             }
             else {
+                static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->show();
                 static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setNotificationActionButtonsSkipText(i18n("Skip Notification (%1)").arg(((KSMSERVER_SHUTDOWN_CLIENT_UNRESPONSIVE_TIMEOUT - (protectionTimerCounter*1000))/1000)+1));
                 if (nextClientToKill == "") {
                     static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying applications of logout request (%1/%2)...").arg(clients.count()-waitingClients).arg(clients.count()));
