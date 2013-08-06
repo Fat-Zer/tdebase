@@ -258,6 +258,7 @@ conv            *gaussianMap;
 #define TRANS_OPACITY	0.75
 
 #define NDEBUG 1
+#define DEBUG_WINDWS 0
 #define DEBUG_REPAINT 0
 #define DEBUG_WINDOWS 0
 #define DEBUG_EVENTS 0
@@ -1054,8 +1055,9 @@ discard_ignore (Display *dpy, unsigned long sequence)
 set_ignore (Display *dpy, unsigned long sequence)
 {
 	ignore  *i = malloc (sizeof (ignore));
-	if (!i)
+	if (!i) {
 		return;
+	}
 	i->sequence = sequence;
 	i->next = 0;
 	*ignore_tail = i;
@@ -1072,11 +1074,13 @@ should_ignore (Display *dpy, unsigned long sequence)
 	static win *
 find_win (Display *dpy, Window id)
 {
-	win	*w;
+	win *w;
 
-	for (w = list; w; w = w->next)
-		if ((!w->destroyed) && (w->id == id))
+	for (w = list; w; w = w->next) {
+		if ((!w->destroyed) && (w->id == id)) {
 			return w;
+		}
+	}
 	return 0;
 }
 
@@ -1363,12 +1367,20 @@ paint_all (Display *dpy, XserverRegion region)
 #endif
 
 		/* never painted, ignore it */
-		if ((!screen_damaged) && (!w->damaged))
+		if ((!screen_damaged) && (!w->damaged)) {
+#if DEBUG_REPAINT
+			printf(" [not damaged: 0x%x]", w->id);
+#endif
 			continue;
+		}
 
 		/* skip invisible windows */
-		if (w->a.x + w->a.width < 1 || w->a.y + w->a.height < 1 || w->a.x >= root_width || w->a.y >= root_height)
+		if (w->a.x + w->a.width < 1 || w->a.y + w->a.height < 1 || w->a.x >= root_width || w->a.y >= root_height) {
+#if DEBUG_REPAINT
+			printf(" [invisible: 0x%x]", w->id);
+#endif
 			continue;
+		}
 
 		if (!w->picture)
 		{
@@ -1390,7 +1402,7 @@ paint_all (Display *dpy, XserverRegion region)
 					&pa);
 		}
 #if DEBUG_REPAINT
-		printf (" 0x%x", w->id);
+		printf (" [painting 0x%x]", w->id);
 #endif
 		if (clipChanged)
 		{
@@ -1829,6 +1841,10 @@ map_win (Display *dpy, Window id, unsigned long sequence, Bool fade)
 	win		*w = find_win (dpy, id);
 	Drawable	back;
 
+#if DEBUG_WINDOWS
+	printf("map_win: 0x%x 0x%x\n", w, id);
+#endif
+
 	if (!w) {
 		return;
 	}
@@ -1879,6 +1895,9 @@ map_win (Display *dpy, Window id, unsigned long sequence, Bool fade)
 static void
 finish_unmap_win (Display *dpy, win *w)
 {
+#if DEBUG_WINDOWS
+	printf("finish_unmap_win: 0x%x\n", w->id);
+#endif
 	w->damaged = 0;
 #if CAN_DO_USABLE
 	w->usable = False;
@@ -1955,6 +1974,11 @@ static void
 unmap_win (Display *dpy, Window id, Bool fade)
 {
 	win *w = find_win (dpy, id);
+
+#if DEBUG_WINDOWS
+	printf("unmap_win: 0x%x 0x%x\n", w, id);
+#endif
+
 	if (!w)
 		return;
 
@@ -2351,20 +2375,30 @@ add_win (Display *dpy, Window id, Window prev)
 	win				**p;
         unsigned int			tmp;
 
-	if (!new)
+#if DEBUG_WINDOWS
+	printf("add_win: 0x%x\n", id);
+#endif
+
+	if (!new) {
 		return;
-	if (prev)
-	{
-		for (p = &list; *p; p = &(*p)->next)
-			if ((*p)->id == prev && !(*p)->destroyed)
-				break;
 	}
-	else
+	if (prev) {
+		for (p = &list; *p; p = &(*p)->next) {
+			if (((*p)->id == prev) && (!(*p)->destroyed)) {
+				break;
+			}
+		}
+	}
+	else {
 		p = &list;
+	}
 	new->id = id;
 	set_ignore (dpy, NextRequest (dpy));
 	if (!XGetWindowAttributes (dpy, id, &new->a))
 	{
+#if DEBUG_WINDOWS
+		printf("not adding 0x%x: failed to get attributes\n", new->id);
+#endif
 		free (new);
 		return;
 	}
@@ -2432,8 +2466,9 @@ add_win (Display *dpy, Window id, Window prev)
 
 	new->next = *p;
 	*p = new;
-	if (new->a.map_state == IsViewable)
+	if (new->a.map_state == IsViewable) {
 		map_win (dpy, id, new->damage_sequence - 1, True);
+	}
 }
 
 	void
@@ -2441,25 +2476,32 @@ restack_win (Display *dpy, win *w, Window new_above)
 {
 	Window  old_above;
 
-	if (w->next)
+#if DEBUG_WINDOWS
+	printf("restack_win: 0x%x\n", w->id);
+#endif
+
+	if (w->next) {
 		old_above = w->next->id;
-	else
+	}
+	else {
 		old_above = None;
-	if (old_above != new_above)
-	{
+	}
+	if (old_above != new_above) {
 		win **prev;
 
 		/* unhook */
-		for (prev = &list; *prev; prev = &(*prev)->next)
-			if ((*prev) == w)
+		for (prev = &list; *prev; prev = &(*prev)->next) {
+			if ((*prev) == w) {
 				break;
+			}
+		}
 		*prev = w->next;
 
 		/* rehook */
-		for (prev = &list; *prev; prev = &(*prev)->next)
-		{
-			if ((!(*prev)->destroyed) && ((*prev)->id == new_above))
+		for (prev = &list; *prev; prev = &(*prev)->next) {
+			if ((!(*prev)->destroyed) && ((*prev)->id == new_above)) {
 				break;
+			}
 		}
 		w->next = *prev;
 		*prev = w;
@@ -2568,11 +2610,15 @@ finish_destroy_win (Display *dpy, Window id, Bool gone)
 {
 	win	**prev, *w;
 
-	for (prev = &list; (w = *prev); prev = &w->next)
-		if (w->id == id && w->destroyed)
-		{
-			if (gone)
+#if DEBUG_WINDOWS
+	printf("finish_destroy_win: 0x%x\n", id);
+#endif
+
+	for (prev = &list; (w = *prev); prev = &w->next) {
+		if (w->id == id && w->destroyed) {
+			if (gone) {
 				finish_unmap_win (dpy, w);
+			}
 			*prev = w->next;
 			if (w->picture)
 			{
@@ -2605,6 +2651,7 @@ finish_destroy_win (Display *dpy, Window id, Bool gone)
 			free (w);
 			break;
 		}
+	}
 }
 
 #if HAS_NAME_WINDOW_PIXMAP
@@ -2621,15 +2668,21 @@ destroy_win (Display *dpy, Window id, Bool gone, Bool fadeout)
 	fade *f;
 	win *w = find_win (dpy, id);
 
+#if DEBUG_WINDOWS
+	printf("destroy_win: 0x%x 0x%x\n", w, id);
+#endif
+
+	if (w) {
+		w->destroyed = True;
+	}
+
 	if (w && w->destruct_queued == False) {
 		f = find_fade (w);
 		if (f) {
 			w->destruct_queued = True;
 			f->callback = destroy_callback;
-			w->destroyed = True;
 		}
 		else {
-			w->destroyed = True;
 #if HAS_NAME_WINDOW_PIXMAP
 			if (w->pixmap && fadeout && winTypeFade[w->windowType]) {
 				set_fade (dpy, w, w->opacity*1.0/OPAQUE, 0.0, fade_out_step, destroy_callback, gone, False, True, True);
@@ -2650,25 +2703,26 @@ destroy_win (Display *dpy, Window id, Bool gone, Bool fadeout)
 	}
 }
 
-/*
-   static void
-   dump_win (win *w)
-   {
-   printf ("\t%08lx: %d x %d + %d + %d (%d)\n", w->id,
-   w->a.width, w->a.height, w->a.x, w->a.y, w->a.border_width);
-   }
+#if DEBUG_WINDOWS
+	static void
+dump_win (win *w)
+{
+	printf ("\t%08lx: %d x %d + %d + %d (%d)\n", w->id,
+	w->a.width, w->a.height, w->a.x, w->a.y, w->a.border_width);
+}
 
 
-   static void
-   dump_wins (void)
-   {
-   win	*w;
+	static void
+dump_wins (void)
+{
+	win *w;
 
-   printf ("windows:\n");
-   for (w = list; w; w = w->next)
-   dump_win (w);
-   }
-   */
+	printf ("windows:\n");
+	for (w = list; w; w = w->next) {
+		dump_win (w);
+	}
+}
+#endif
 
 	static void
 damage_win (Display *dpy, XDamageNotifyEvent *de)
@@ -3569,8 +3623,9 @@ main (int argc, char **argv)
 
 		XShapeSelectInput (dpy, root, ShapeNotifyMask);
 		XQueryTree (dpy, root, &root_return, &parent_return, &children, &nchildren);
-		for (i = 0; i < nchildren; i++)
+		for (i = 0; i < nchildren; i++) {
 			add_win (dpy, children[i], i ? children[i-1] : None);
+		}
 		XFree (children);
 	}
 	XUngrabServer (dpy);
@@ -3586,7 +3641,9 @@ main (int argc, char **argv)
 
 	for (;;)
 	{
-		/*	dump_wins (); */
+#if DEBUG_WINDOWS
+		dump_wins ();
+#endif
 		do {
 			if (autoRedirect) {
 				XFlush (dpy);
