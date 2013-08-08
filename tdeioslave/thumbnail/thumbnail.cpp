@@ -98,16 +98,17 @@ int kdemain(int argc, char **argv)
 #ifdef USE_KINSTANCE
     TDEInstance instance("tdeio_thumbnail");
 #else
-    // creating TDEApplication in a slave in not a very good idea,
+    // creating TDEApplication in a slave is not a very good idea,
     // as dispatchLoop() doesn't allow it to process its messages,
     // so it for example wouldn't reply to ksmserver - on the other
     // hand, this slave uses QPixmaps for some reason, and they
     // need QApplication
     // and HTML previews need even TDEApplication :(
-    putenv(strdup("SESSION_MANAGER="));
+    // session management is therefore forcibly disabled on creation
+    // to prevent session management hangs and stalls
     TDEApplication::disableAutoDcopRegistration();
 
-    TDEApplication app(argc, argv, "tdeio_thumbnail", false, true);
+    TDEApplication app(argc, argv, "tdeio_thumbnail", false, true, false);
 #endif
 
     if (argc != 4)

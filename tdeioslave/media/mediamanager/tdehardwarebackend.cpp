@@ -91,6 +91,7 @@ TDEBackend::~TDEBackend()
 }
 
 void TDEBackend::AddDeviceHandler(TDEGenericDevice *device) {
+printf("[RAJA DEBUG 100.0] In TDEBackend::AddDeviceHandler for '%s'\n\r", device->uniqueID().ascii()); fflush(stdout);
 	if (device->type() == TDEGenericDeviceType::Disk) {
 		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
 		AddDevice(sdevice);
@@ -98,6 +99,7 @@ void TDEBackend::AddDeviceHandler(TDEGenericDevice *device) {
 }
 
 void TDEBackend::RemoveDeviceHandler(TDEGenericDevice *device) {
+printf("[RAJA DEBUG 100.0] In TDEBackend::RemoveDeviceHandler for '%s'\n\r", device->uniqueID().ascii()); fflush(stdout);
 	if (device->type() == TDEGenericDeviceType::Disk) {
 		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
 		RemoveDevice(sdevice);
@@ -105,6 +107,7 @@ void TDEBackend::RemoveDeviceHandler(TDEGenericDevice *device) {
 }
 
 void TDEBackend::ModifyDeviceHandler(TDEGenericDevice *device) {
+printf("[RAJA DEBUG 100.0] In TDEBackend::ModifyDeviceHandler for '%s'\n\r", device->uniqueID().ascii()); fflush(stdout);
 	if (device->type() == TDEGenericDeviceType::Disk) {
 		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
 		ModifyDevice(sdevice);
@@ -1198,10 +1201,12 @@ TQString TDEBackend::unmount(const TQString &_udi)
 	// There is a possibility that the storage device was unceremoniously removed from the system immediately after it was unmounted
 	// There is no reliable way to know if this happened either!
 	// For now, see if the device node still exists
-	TQFileInfo checkDN(node);
-	if (!checkDN.exists()) {
-		m_mediaList.removeMedium(uid, true);
-	}
+// RAJA FIXME
+// Is this causing/masking the Eject/Unmount race condition?
+// 	TQFileInfo checkDN(node);
+// 	if (!checkDN.exists()) {
+// 		m_mediaList.removeMedium(uid, true);
+// 	}
 
 	return TQString();
 }

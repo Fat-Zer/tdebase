@@ -54,11 +54,10 @@ extern "C" {
     {
         //TDEInstance instance( "tdeio_trash" );
         // TDEApplication is necessary to use tdeio_file
-        putenv(strdup("SESSION_MANAGER="));
         TDEApplication::disableAutoDcopRegistration();
         TDECmdLineArgs::init(argc, argv, "tdeio_trash", 0, 0, 0, 0);
         TDECmdLineArgs::addCmdLineOptions( options );
-        TDEApplication app( false, false );
+        TDEApplication app( false, false, false );
 
         TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
         TrashProtocol slave( args->arg(0), args->arg(1), args->arg(2) );

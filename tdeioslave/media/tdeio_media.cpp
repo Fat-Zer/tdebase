@@ -46,7 +46,7 @@ extern "C" {
 		putenv(strdup("SESSION_MANAGER="));
 		TDECmdLineArgs::init(argc, argv, "tdeio_media", 0, 0, 0, 0);
 		TDECmdLineArgs::addCmdLineOptions( options );
-		TDEApplication app( false, false );
+		TDEApplication app( false, false, false );
 		// We want to be anonymous even if we use DCOP
 		app.dcopClient()->attach();
 
