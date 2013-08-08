@@ -392,8 +392,42 @@ DM::switchVT( int vt )
 void
 DM::lockSwitchVT( int vt )
 {
-	if (switchVT( vt ))
-		kapp->dcopClient()->send( "kdesktop", "KScreensaverIface", "lock()", TQString("") );
+	if (switchVT( vt )) {
+		TQByteArray data;
+		TQCString replyType;
+		TQByteArray replyData;
+		// Block here until lock is complete
+		// If this is not done the desktop of the locked session will be shown after VT switch until the lock fully engages!
+		kapp->dcopClient()->call("kdesktop", "KScreensaverIface", "lock()", data, replyType, replyData);
+	}
+}
+
+int
+DM::activeVT()
+{
+	if (DMType == OldTDM) {
+		return -1;
+	}
+
+	TQCString re;
+
+	if (DMType == GDM) {
+		return -1;
+	}
+	else {
+		if (!exec( "activevt\n", re )) {
+			return -1;
+		}
+		TQString retrunc = TQString( re.data() + 3 );
+		bool ok = false;
+		int activevt = retrunc.toInt(&ok, 10);
+		if (ok) {
+			return activevt;
+		}
+		else {
+			return -1;
+		}
+	}
 }
 
 void

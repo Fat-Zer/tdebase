@@ -38,7 +38,7 @@ endif()
 tde_add_executable( tdm
   SOURCES
     access.c auth.c bootman.c choose.c client.c consolekit.c
-    ctrl.c daemon.c dm.c dpylist.c error.c genauth.c
+    ctrl.c daemon.c dm.c dpylist.c error.c genauth.c getfd.c
     inifile.c krb5auth.c mitauth.c netaddr.c policy.c
     process.c protodpy.c reset.c resource.c rpcauth.c
     server.c session.c sessreg.c socket.c streams.c

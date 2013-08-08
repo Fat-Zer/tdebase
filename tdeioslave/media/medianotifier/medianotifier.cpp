@@ -41,6 +41,8 @@
 #include "notifieraction.h"
 #include "mediamanagersettings.h"
 
+#include "dmctl.h"
+
 MediaNotifier::MediaNotifier(const TQCString &name) : KDEDModule(name)
 {
 	connectDCOPSignal( "kded", "mediamanager", "mediumAdded(TQString, bool)",
@@ -69,13 +71,14 @@ void MediaNotifier::onMediumChange( const TQString &name, bool allowNotification
 	kdDebug() << "MediaNotifier::onMediumChange( " << name << ", "
 	          << allowNotification << ")" << endl;
 
-	if ( !allowNotification )
+	if ( !allowNotification ) {
 	  return;
+	}
 
-// Update user activity timestamp, otherwise the notification dialog will be shown
-// in the background due to focus stealing prevention. Entering a new media can
-// be seen as a kind of user activity after all. It'd be better to update the timestamp
-// as soon as the media is entered, but it apparently takes some time to get here.
+	// Update user activity timestamp, otherwise the notification dialog will be shown
+	// in the background due to focus stealing prevention. Entering a new media can
+	// be seen as a kind of user activity after all. It'd be better to update the timestamp
+	// as soon as the media is entered, but it apparently takes some time to get here.
 	kapp->updateUserTimestamp();
 
 	KURL url(  "system:/media/"+name );
@@ -284,6 +287,19 @@ bool MediaNotifier::execAutoopen( const KFileItem &medium, const TQString &path,
 void MediaNotifier::notify( KFileItem &medium )
 {
 	kdDebug() << "Notification triggered." << endl;
+
+	DM dm;
+	int currentActiveVT = dm.activeVT();
+	int currentX11VT = TDEApplication::currentX11VT();
+
+	if (currentX11VT < 0) {
+		// Do not notify if user is not local
+		return;
+	}
+	if ((currentActiveVT >= 0) && (currentX11VT != currentActiveVT)) {
+		// Do not notify if VT is not active!
+		return;
+	}
 
 	NotifierSettings *settings = new NotifierSettings();
 	

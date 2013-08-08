@@ -969,37 +969,13 @@ TQString TDEBackend::mount(const Medium *medium)
 		return i18n("Internal error");
 	}
 
-	TQString optionString;
 	TQString diskLabel;
 	
 	TQMap<TQString,TQString> valids = MediaManagerUtils::splitOptions(mountoptions(medium->id()));
-	if (valids["ro"] == "true") {
-		optionString.append(" -r");
-	}
-	
-	if (valids["atime"] != "true") {
-		optionString.append(" -A");
-	}
-	
-	if (valids["utf8"] == "true") {
-		optionString.append(" -c utf8");
-	}
-	
-	if (valids["sync"] == "true") {
-		optionString.append(" -s");
-	}
 	
 	TQString mount_point = valids["mountpoint"];
 	if (mount_point.startsWith("/media/")) {
 		diskLabel = mount_point.mid(7);
-	}
-
-	if (valids.contains("filesystem")) {
-		optionString.append(TQString(" -t %1").arg(valids["filesystem"]));
-	}
-
-	if (valids.contains("locale")) {
-		optionString.append(TQString(" -c %1").arg(valids["locale"]));
 	}
 
 	if (diskLabel == "") {
@@ -1015,7 +991,7 @@ TQString TDEBackend::mount(const Medium *medium)
 	if (!medium->isEncrypted()) {
 		// normal volume
 		TQString mountMessages;
-		TQString mountedPath = sdevice->mountDevice(diskLabel, optionString, &mountMessages);
+		TQString mountedPath = sdevice->mountDevice(diskLabel, valids, &mountMessages);
 		if (mountedPath.isNull()) {
 			qerror = i18n("<qt>Unable to mount this device.<p>Potential reasons include:<br>Improper device and/or user privilege level<br>Corrupt data on storage device");
 			if (!mountMessages.isNull()) {
@@ -1068,7 +1044,7 @@ TQString TDEBackend::mount(const Medium *medium)
 				// mount encrypted volume with password
 				int mountRetcode;
 				TQString mountMessages;
-				TQString mountedPath = sdevice->mountEncryptedDevice(m_decryptionPassword, diskLabel, optionString, &mountMessages, &mountRetcode);
+				TQString mountedPath = sdevice->mountEncryptedDevice(m_decryptionPassword, diskLabel, valids, &mountMessages, &mountRetcode);
 				if (mountedPath.isNull()) {
 					if (mountRetcode == 0) {
 						// Mounting was successful

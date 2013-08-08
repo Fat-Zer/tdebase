@@ -54,6 +54,7 @@ public:
 	bool localSessions( SessList &list );
 	bool switchVT( int vt );
 	void lockSwitchVT( int vt );
+	int activeVT();
 
 	bool bootOptions( TQStringList &opts, int &dflt, int &curr );
 
@@ -87,6 +88,7 @@ public:
 	void startReserve() {}
 	bool localSessions( SessList &list ) { return false; }
 	void switchVT( int vt ) {}
+	int activeVT() { return -1; }
 
 	bool bootOptions( TQStringList &opts, int &dflt, int &curr );
 

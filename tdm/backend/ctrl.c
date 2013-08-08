@@ -42,6 +42,9 @@ from the copyright holder.
 #include <signal.h>
 #include <pwd.h>
 
+#include <linux/vt.h>
+#include "getfd.h"
+
 static void
 acceptSock( CtrlRec *cr )
 {
@@ -581,6 +584,21 @@ processCtrl( const char *string, int len, int fd, struct display *d )
 			Reply( "ok" );
 			ListSessions( flags, d, (void *)fd, emitXSessC, emitTTYSessC );
 			Reply( "\n" );
+			goto bust;
+		} else if (fd >= 0 && !strcmp( ar[0], "activevt" )) {
+#ifdef HAVE_VTS
+			Reply( "ok" );
+			int vt_fd = getfd(NULL);
+			if (vt_fd > 0) {
+				struct vt_stat vtstat;
+				if (!ioctl(vt_fd, VT_GETSTATE, &vtstat)) {
+					Writer( fd, cbuf, sprintf( cbuf, "\t%d", vtstat.v_active ) );
+				}
+			}
+			Reply( "\n" );
+#else
+			Reply( "notsup\tvirtual terminal support not available\n" );
+#endif
 			goto bust;
 		} else if (!strcmp( ar[0], "reserve" )) {
 			int lt = 60; /* XXX make default timeout configurable? */

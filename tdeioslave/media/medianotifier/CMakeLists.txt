@@ -13,6 +13,7 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}/tdeioslave/media/libmediacommon
   ${CMAKE_SOURCE_DIR}/tdeioslave/media/libmediacommon
+  ${CMAKE_SOURCE_DIR}/tdmlib
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
@@ -38,6 +39,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK mediacommon-static tdeinit_kded-shared
+  LINK mediacommon-static tdeinit_kded-shared dmctl-static
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

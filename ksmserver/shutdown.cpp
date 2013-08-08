@@ -260,6 +260,8 @@ void KSMServer::shutdownInternal( TDEApplication::ShutdownConfirm confirm,
 	if (showLogoutStatusDlg) {
 		shutdownNotifierIPDlg = KSMShutdownIPDlg::showShutdownIP();
 		if (shutdownNotifierIPDlg) {
+			connect(shutdownNotifierIPDlg, SIGNAL(abortLogoutClicked()), this, SLOT(cancelShutdown()));
+			connect(shutdownNotifierIPDlg, SIGNAL(skipNotificationClicked()), this, SLOT(forceSkipSaveYourself()));
 			static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying applications of logout request..."));
 			notificationTimer.start( KSMSERVER_NOTIFICATION_MANUAL_OPTIONS_TIMEOUT, true );
 		}
@@ -440,6 +442,10 @@ void KSMServer::saveYourselfDone( KSMClient* client, bool success )
     }
 
     notificationTimer.stop();
+    if (shutdownNotifierIPDlg) {
+        static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->hideNotificationActionButtons();
+    }
+
     updateLogoutStatusDialog();
 }
 
@@ -503,8 +509,6 @@ void KSMServer::updateLogoutStatusDialog()
                 static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->hide();
                 notificationTimer.stop();
                 static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->hideNotificationActionButtons();
-                disconnect(shutdownNotifierIPDlg, SIGNAL(abortLogoutClicked()), this, SLOT(cancelShutdown()));
-                disconnect(shutdownNotifierIPDlg, SIGNAL(skipNotificationClicked()), this, SLOT(forceSkipSaveYourself()));
 #endif
                 if (nextClientToKill == "") {
                     static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("An application is requesting attention, logout paused..."));
@@ -677,8 +681,6 @@ void KSMServer::handleProtectionTimeout()
     notificationTimer.stop();
     if (shutdownNotifierIPDlg) {
         static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->hideNotificationActionButtons();
-        disconnect(shutdownNotifierIPDlg, SIGNAL(abortLogoutClicked()), this, SLOT(cancelShutdown()));
-        disconnect(shutdownNotifierIPDlg, SIGNAL(skipNotificationClicked()), this, SLOT(forceSkipSaveYourself()));
         static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Forcing interacting application termination").append("..."));
     }
 
@@ -695,8 +697,6 @@ void KSMServer::notificationTimeout()
 {
 	if (shutdownNotifierIPDlg) {
 		// Display the buttons in the logout dialog
-		connect(shutdownNotifierIPDlg, SIGNAL(abortLogoutClicked()), this, SLOT(cancelShutdown()));
-		connect(shutdownNotifierIPDlg, SIGNAL(skipNotificationClicked()), this, SLOT(forceSkipSaveYourself()));
 		static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->showNotificationActionButtons();
 	}
 }
@@ -742,6 +742,10 @@ void KSMServer::completeShutdownOrCheckpoint()
         KSMShutdownIPFeedback::showit(); // hide the UGLY logout process from the user
         if (!shutdownNotifierIPDlg) {
             shutdownNotifierIPDlg = KSMShutdownIPDlg::showShutdownIP();
+            if (shutdownNotifierIPDlg) {
+                connect(shutdownNotifierIPDlg, SIGNAL(abortLogoutClicked()), this, SLOT(cancelShutdown()));
+                connect(shutdownNotifierIPDlg, SIGNAL(skipNotificationClicked()), this, SLOT(forceSkipSaveYourself()));
+            }
         }
         while (!KSMShutdownIPFeedback::ispainted()) {
             tqApp->processEvents();
@@ -751,8 +755,6 @@ void KSMServer::completeShutdownOrCheckpoint()
     notificationTimer.stop();
     if (shutdownNotifierIPDlg) {
         static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->hideNotificationActionButtons();
-        disconnect(shutdownNotifierIPDlg, SIGNAL(abortLogoutClicked()), this, SLOT(cancelShutdown()));
-        disconnect(shutdownNotifierIPDlg, SIGNAL(skipNotificationClicked()), this, SLOT(forceSkipSaveYourself()));
     }
 
     // synchronize any folders that were requested for shutdown sync
