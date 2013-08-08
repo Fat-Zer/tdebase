@@ -681,6 +681,7 @@ void KSMServer::handleProtectionTimeout()
     notificationTimer.stop();
     if (shutdownNotifierIPDlg) {
         static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->hideNotificationActionButtons();
+        static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->show();
         static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Forcing interacting application termination").append("..."));
     }
 
@@ -730,6 +731,7 @@ void KSMServer::completeShutdownOrCheckpoint()
     if ( waitForPhase2 ) {
         SHUTDOWN_MARKER("completeShutdownOrCheckpoint state still waiting for Phase 2");
         if (shutdownNotifierIPDlg) {
+            static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->show();
             static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Notifying remaining applications of logout request..."));
             notificationTimer.start( KSMSERVER_NOTIFICATION_MANUAL_OPTIONS_TIMEOUT, true );
         }
@@ -759,11 +761,13 @@ void KSMServer::completeShutdownOrCheckpoint()
 
     // synchronize any folders that were requested for shutdown sync
     if (shutdownNotifierIPDlg) {
+        static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->show();
         static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Synchronizing remote folders").append("..."));
     }
     KRsync krs(this, "");
     krs.executeLogoutAutoSync();
     if (shutdownNotifierIPDlg) {
+        static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->show();
         static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Saving your settings..."));
     }
 
@@ -795,6 +799,7 @@ void KSMServer::completeShutdownOrCheckpoint()
         }
         initialClientCount = clients.count();
         if (shutdownNotifierIPDlg) {
+            static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->show();
             TQString nextClientToKill;
             TQDateTime currentDateTime = TQDateTime::currentDateTime();
             TQDateTime oldestFoundDateTime = currentDateTime;
@@ -878,6 +883,7 @@ void KSMServer::completeKilling()
         }
         if( wait ) {
             if (shutdownNotifierIPDlg) {
+                static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->show();
                 if (nextClientToKill == "") {
                     static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Closing applications (%1/%2)...").arg(initialClientCount-clients.count()).arg(initialClientCount));
                 }
@@ -889,6 +895,7 @@ void KSMServer::completeKilling()
         }
         else {
             if (shutdownNotifierIPDlg) {
+                static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->show();
                 static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Terminating services..."));
             }
         }
