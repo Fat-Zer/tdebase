@@ -559,7 +559,7 @@ bool LockProcess::lock()
 	tqApp->processEvents();
 #endif
 
-	if (startSaver()) {
+	if (startSaver(true)) {
 		// In case of a forced lock we don't react to events during
 		// the dead-time to give the screensaver some time to activate.
 		// That way we don't accidentally show the password dialog before
@@ -1322,7 +1322,7 @@ void LockProcess::setTransparentBackgroundARGB()
 //
 // Start the screen saver.
 //
-bool LockProcess::startSaver()
+bool LockProcess::startSaver(bool notify_ready)
 {
 	if (!child_saver && !grabInput())
 	{
@@ -1368,6 +1368,10 @@ bool LockProcess::startSaver()
 		}
 		setGeometry(0, 0, mRootWidth, mRootHeight);
 		erase();
+	}
+
+	if (notify_ready) {
+		saverReady();
 	}
 
 	if (trinity_desktop_lock_in_sec_dlg == FALSE) {
@@ -2775,6 +2779,11 @@ void LockProcess::fullyOnline() {
 			}
 		}
 	}
+}
+
+void LockProcess::saverReady() {
+	DCOPRef ref( "kdesktop", "KScreensaverIface");
+	ref.send( "saverLockReady" );
 }
 
 //===========================================================================

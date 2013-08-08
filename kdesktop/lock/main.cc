@@ -454,10 +454,8 @@ int main( int argc, char **argv )
         }
 
         bool rt;
-        bool sig = false;
         if( (((!child) && (args->isSet( "forcelock" ))) || (signalled_forcelock == TRUE))) {
             rt = process.lock();
-            sig = true;
         }
         else if( child || (args->isSet( "dontlock" ) || (signalled_dontlock == TRUE))) {
             rt = process.dontLock();
@@ -476,12 +474,6 @@ int main( int argc, char **argv )
         }
         if (!rt) {
             return 0;
-        }
-
-        if( sig )
-        {
-            DCOPRef ref( "kdesktop", "KScreensaverIface");
-            ref.send( "saverLockReady" );
         }
 
         if (in_internal_mode == FALSE) {

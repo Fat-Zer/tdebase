@@ -139,7 +139,7 @@ private:
     bool grabInput();
     void ungrabInput();
     void cantLock(const TQString &reason);
-    bool startSaver();
+    bool startSaver(bool notify_ready = false);
     void stopSaver();
     bool startHack();
     void stopHack();
@@ -150,6 +150,7 @@ private:
     void unlockXF86();
     void showVkbd();
     void hideVkbd();
+    void saverReady();
     bool forwardVkbdEvent( XEvent* event );
     void sendVkbdFocusInOut( WId window, Time t );
     void windowAdded( WId window, bool managed );
