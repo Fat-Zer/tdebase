@@ -291,7 +291,7 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 			connect(base->buttonDiskMount, TQT_SIGNAL(clicked()), this, TQT_SLOT(mountDisk()));
 			connect(base->buttonDiskUnmount, TQT_SIGNAL(clicked()), this, TQT_SLOT(unmountDisk()));
 		}
-			
+
 		if ((m_device->type() == TDEGenericDeviceType::OtherSensor) || (m_device->type() == TDEGenericDeviceType::ThermalSensor)) {
 			base->groupSensors->setColumnLayout(0, TQt::Vertical );
 			base->groupSensors->layout()->setSpacing( KDialog::spacingHint() );
@@ -779,9 +779,9 @@ void DevicePropertiesDialog::mountDisk() {
 	if (diskLabel.isNull()) {
 		diskLabel = i18n("%1 Removable Device").arg(sdevice->deviceFriendlySize());
 	}
-	TQString optionString;
+	TDEStorageMountOptions mountOptions;
 	TQString mountMessages;
-	TQString mountedPath = sdevice->mountDevice(diskLabel, optionString, &mountMessages);
+	TQString mountedPath = sdevice->mountDevice(diskLabel, mountOptions, &mountMessages);
 	if (mountedPath.isNull()) {
 		qerror = i18n("<qt>Unable to mount this device.<p>Potential reasons include:<br>Improper device and/or user privilege level<br>Corrupt data on storage device");
 		if (!mountMessages.isNull()) {
