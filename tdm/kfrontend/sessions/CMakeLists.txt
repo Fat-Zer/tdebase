@@ -25,5 +25,5 @@ install( FILES
     ratpoison.desktop sapphire.desktop sawfish.desktop
     twm.desktop ude.desktop vtwm.desktop w9wm.desktop
     waimea.desktop wm2.desktop wmaker.desktop xfce.desktop
-    xfce4.desktop
+    xfce4.desktop kde-plasma-safe.desktop kde-plasma.desktop
   DESTINATION ${DATA_INSTALL_DIR}/tdm/sessions )
