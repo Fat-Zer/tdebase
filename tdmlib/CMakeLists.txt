@@ -62,7 +62,8 @@ endif( BUILD_TDM )
 
 ##### dmctl (static) ############################
 
-if( BUILD_KICKER OR BUILD_KDESKTOP OR BUILD_TDM OR BUILD_KSMSERVER )
+if( BUILD_KICKER OR BUILD_KDESKTOP OR BUILD_TDM OR 
+    BUILD_KSMSERVER OR BUILD_TDEIOSLAVES )
 
   tde_add_library( dmctl STATIC_PIC
     SOURCES dmctl.cpp
