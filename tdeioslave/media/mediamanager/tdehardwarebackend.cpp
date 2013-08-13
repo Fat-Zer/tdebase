@@ -181,12 +181,27 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 
 	// Add CD drives
 	if ((sdevice->isDiskOfType(TDEDiskDeviceType::CDROM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDR))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDMO))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDMRRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDMRRWW))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRAM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDR))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRDL))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRWDL))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSR))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRDL))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRWDL))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDROM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDR))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDROM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDR))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDRW))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo))
@@ -331,12 +346,27 @@ void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotificat
 	}
 
 	if ((sdevice->isDiskOfType(TDEDiskDeviceType::CDROM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDR))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDMO))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDMRRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDMRRWW))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRAM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDR))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRDL))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRWDL))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSR))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRDL))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRWDL))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDROM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDR))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDROM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDR))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDRW))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo))
@@ -418,12 +448,27 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 	TQString mimeType;
 
 	if ((sdevice->isDiskOfType(TDEDiskDeviceType::CDROM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDR))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDMO))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDMRRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDMRRWW))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRAM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDR))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRDL))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRWDL))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSR))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRDL))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRWDL))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDROM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDR))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDROM))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDR))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDRW))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo))
@@ -439,15 +484,52 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
 				mimeType = "media/blankcd";
 				medium->unmountableState("");
-				diskLabel = i18n("Blank CDROM");
+				diskLabel = i18n("Blank CD-ROM");
 			}
 		}
+
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDR)) {
+			mimeType = "media/cdwriter" + MOUNT_SUFFIX;
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				mimeType = "media/blankcd";
+				medium->unmountableState("");
+				diskLabel = i18n("Blank CD-R");
+			}
+		}
+
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW)) {
 			mimeType = "media/cdwriter" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
 				mimeType = "media/blankcd";
 				medium->unmountableState("");
-				diskLabel = i18n("Blank CDRW");
+				diskLabel = i18n("Blank CD-RW");
+			}
+		}
+
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDMO)) {
+			mimeType = "media/cdwriter" + MOUNT_SUFFIX;
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				mimeType = "media/blankcd";
+				medium->unmountableState("");
+				diskLabel = i18n("Blank Magneto-Optical CD");
+			}
+		}
+
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDMRRW)) {
+			mimeType = "media/cdwriter" + MOUNT_SUFFIX;
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				mimeType = "media/blankcd";
+				medium->unmountableState("");
+				diskLabel = i18n("Blank Mount Ranier CD-RW");
+			}
+		}
+
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDMRRWW)) {
+			mimeType = "media/cdwriter" + MOUNT_SUFFIX;
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				mimeType = "media/blankcd";
+				medium->unmountableState("");
+				diskLabel = i18n("Blank Mount Ranier CD-RW-W");
 			}
 		}
 	
@@ -456,7 +538,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
 				mimeType = "media/blankdvd";
 				medium->unmountableState("");
-				diskLabel = i18n("Blank DVDROM");
+				diskLabel = i18n("Blank DVD-ROM");
 			}
 		}
 	
@@ -465,16 +547,79 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
 				mimeType = "media/blankdvd";
 				medium->unmountableState("");
-				diskLabel = i18n("Blank DVDRAM");
+				diskLabel = i18n("Blank DVD-RAM");
 			}
 		}
-	
+
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDR)) {
+			mimeType = "media/dvd" + MOUNT_SUFFIX;
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				medium->unmountableState("");
+				diskLabel = i18n("Blank DVD-R");
+			}
+		}
+
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
 				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
 				medium->unmountableState("");
-				diskLabel = i18n("Blank DVDRW");
+				diskLabel = i18n("Blank DVD-RW");
+			}
+		}
+
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRDL)) {
+			mimeType = "media/dvd" + MOUNT_SUFFIX;
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				medium->unmountableState("");
+				diskLabel = i18n("Blank Dual Layer DVD-R");
+			}
+		}
+
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRWDL)) {
+			mimeType = "media/dvd" + MOUNT_SUFFIX;
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				medium->unmountableState("");
+				diskLabel = i18n("Blank Dual Layer DVD-RW");
+			}
+		}
+
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSR)) {
+			mimeType = "media/dvd" + MOUNT_SUFFIX;
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				medium->unmountableState("");
+				diskLabel = i18n("Blank DVD+R");
+			}
+		}
+
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRW)) {
+			mimeType = "media/dvd" + MOUNT_SUFFIX;
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				medium->unmountableState("");
+				diskLabel = i18n("Blank DVD+RW");
+			}
+		}
+
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRDL)) {
+			mimeType = "media/dvd" + MOUNT_SUFFIX;
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				medium->unmountableState("");
+				diskLabel = i18n("Blank Dual Layer DVD+R");
+			}
+		}
+
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRWDL)) {
+			mimeType = "media/dvd" + MOUNT_SUFFIX;
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				medium->unmountableState("");
+				diskLabel = i18n("Blank Dual Layer DVD+RW");
 			}
 		}
 
@@ -483,16 +628,52 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
 				mimeType = "media/blankbd" + MOUNT_SUFFIX;
 				medium->unmountableState("");
-				diskLabel = i18n("Blank BDROM");
+				diskLabel = i18n("Blank BD-ROM");
 			}
 		}
-	
+
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::BDR)) {
+			mimeType = "media/bluray" + MOUNT_SUFFIX;
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				mimeType = "media/blankbd" + MOUNT_SUFFIX;
+				medium->unmountableState("");
+				diskLabel = i18n("Blank BD-R");
+			}
+		}
+
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW)) {
 			mimeType = "media/bluray" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
 				mimeType = "media/blankbd" + MOUNT_SUFFIX;
 				medium->unmountableState("");
-				diskLabel = i18n("Blank BDRW");
+				diskLabel = i18n("Blank BD-RW");
+			}
+		}
+
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDROM)) {
+			mimeType = "media/bluray" + MOUNT_SUFFIX;
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				mimeType = "media/blankhddvd" + MOUNT_SUFFIX;
+				medium->unmountableState("");
+				diskLabel = i18n("Blank HDDVD-ROM");
+			}
+		}
+
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDR)) {
+			mimeType = "media/bluray" + MOUNT_SUFFIX;
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				mimeType = "media/blankhddvd" + MOUNT_SUFFIX;
+				medium->unmountableState("");
+				diskLabel = i18n("Blank HDDVD-R");
+			}
+		}
+
+		if (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDRW)) {
+			mimeType = "media/bluray" + MOUNT_SUFFIX;
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
+				mimeType = "media/blankhddvd" + MOUNT_SUFFIX;
+				medium->unmountableState("");
+				diskLabel = i18n("Blank HDDVD-RW");
 			}
 		}
 	
