@@ -172,15 +172,23 @@ if( WITH_XSCREENSAVER )
       pkg_search_module( XSS xext )
     endif( )
   endif( )
+
   check_include_file( X11/extensions/scrnsaver.h HAVE_XSCREENSAVER_H )
   if( HAVE_XSSLIB AND HAVE_XSCREENSAVER_H )
     set( HAVE_XSCREENSAVER 1 )
   else( )
     tde_message_fatal( "xscreensaver is requested, but was not found on your system" )
   endif( )
+
+  # We don't really need the xscreensaver package for build, we only must know
+  # there xscreensaver stores its executables. So leave user the posibility
+  # to define XSCREENSAVER_DIR to so let the user.
   include( FindXscreensaver.cmake ) # not really good practise
-  if( NOT XSCREENSAVER_FOUND )
-    message( FATAL_ERROR "\nxscreensaver is requested, but was not found on your system" )
+  if( NOT XSCREENSAVER_DIR )
+    tde_message_fatal(
+      "xscreensaver is requested, but cmake can not determine the location of XSCREENSAVER_DIR
+ You have to either specify it manually with e.g. -DXSCREENSAVER_DIR=/usr/lib/misc/xscreensaver/
+ or make sure that xscreensaver installed properly" )
   endif( )
 endif( )
 
