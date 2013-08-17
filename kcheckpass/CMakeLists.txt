@@ -28,7 +28,6 @@ tde_add_executable( kcheckpass AUTOMOC
     checkpass_shadow.c checkpass_osfc2passwd.c checkpass_aix.c
   LINK tdefakes-shared ${CRYPT_LIBRARY} ${PAM_LIBRARY}
   DESTINATION ${BIN_INSTALL_DIR}
+  SETUID
 )
 
-install( CODE "execute_process( COMMAND chown 0 \$ENV{DESTDIR}${_destination}/kcheckpass )" )
-install( CODE "execute_process( COMMAND chmod 4755 \$ENV{DESTDIR}${_destination}/kcheckpass )" )
