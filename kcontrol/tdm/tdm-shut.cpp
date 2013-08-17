@@ -1,4 +1,4 @@
-/* This file is part of the KDE Display Manager Configuration package
+*/ This file is part of the KDE Display Manager Configuration package
     Copyright (C) 1997-1998 Thomas Tanghus (tanghus@earthling.net)
 
     This program is free software; you can redistribute it and/or
@@ -102,7 +102,7 @@ TDMSessionsWidget::TDMSessionsWidget(TQWidget *parent, const char *name)
 
       tsbox = new TQCheckBox( i18n("Restart X-Server with session exit"), this );
       connect( tsbox, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()) );
-      wtstr = i18n("Whether the login manager should restart the local X-Server after a session exit instead of resetting. Use this when the X-Server leaks memory, crashes the system on reset attempts, or otherwise exhibits display issues.");
+      wtstr = i18n("Whether the login manager should restart the local X-Server after a session exit instead of resetting. Use this option when the X-Server leaks memory, crashes the system on reset attempts, or otherwise exhibits display issues or artifacts.");
       TQWhatsThis::add( tsbox, wtstr );
 
       TQBoxLayout *main = new TQVBoxLayout( this, 10 );

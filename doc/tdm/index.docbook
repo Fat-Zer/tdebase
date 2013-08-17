@@ -703,6 +703,12 @@ feature to work, you will need to supply the correct paths to your
 <command>lilo</command> command and to lilo's map file. Note that this
 option is not available on all operating systems.</para>
 
+<para><emphasis>Restart X-Server with session exit</emphasis></para>
+<para>Whether the login manager should restart the local X-Server after
+a session exit instead of resetting. Use this option when the X-Server
+leaks memory, crashes the system on reset attempts, or otherwise exhibits
+display issues or artifacts.</para>
+
 </sect2>
 
 <sect2 id="tdmconfig-users">
