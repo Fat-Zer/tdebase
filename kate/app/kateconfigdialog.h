@@ -66,6 +66,7 @@ class KateConfigDialog : public KDialogBase
 
     TQCheckBox *cb_fullPath;
     TQCheckBox *cb_syncKonsole;
+    TQCheckBox *cb_useInstance;
     TQCheckBox *cb_sortFiles;
     TQSpinBox *sb_numRecentFiles;
     TQCheckBox *cb_modNotifications;

@@ -138,6 +138,15 @@ KateConfigDialog::KateConfigDialog ( KateMainWindow *parent, Kate::View *view )
   TQWhatsThis::add( sb_numRecentFiles, numRecentFileHelpString );
   connect( sb_numRecentFiles, TQT_SIGNAL( valueChanged ( int ) ), this, TQT_SLOT( slotChanged() ) );
 
+  // Use only one instance of kate (MDI) ?
+  cb_useInstance = new TQCheckBox(bgStartup);
+  cb_useInstance->setText(i18n("Always use the current instance of kate to open new files"));
+  cb_useInstance->setChecked(parent->useInstance);
+  TQWhatsThis::add( cb_useInstance, i18n(
+        "When checked, all files opened from outside of Kate will only use the "
+        "currently opened instance of Kate.") );
+  connect( cb_useInstance, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotChanged() ) );
+
   // sync the konsole ?
   cb_syncKonsole = new TQCheckBox(bgStartup);
   cb_syncKonsole->setText(i18n("Sync &terminal emulator with active document"));
@@ -161,7 +170,7 @@ KateConfigDialog::KateConfigDialog ( KateMainWindow *parent, Kate::View *view )
            this, TQT_SLOT( slotChanged() ) );
 
   // GROUP with the one below: "Meta-informations"
-  bgStartup = new TQButtonGroup( 1, Qt::Horizontal, i18n("Meta-Information"), frGeneral );
+  bgStartup = new TQButtonGroup( 2, Qt::Horizontal, i18n("Meta-Information"), frGeneral );
   lo->addWidget( bgStartup );
 
   // save meta infos
@@ -409,6 +418,7 @@ void KateConfigDialog::slotApply()
     mainWindow->modNotification = cb_modNotifications->isChecked();
 
     mainWindow->syncKonsole = cb_syncKonsole->isChecked();
+    mainWindow->useInstance = cb_useInstance->isChecked();
     mainWindow->filelist->setSortType(cb_sortFiles->isChecked() ? KateFileList::sortByName : KateFileList::sortByID);
 
     config->writeEntry( "Number of recent files", sb_numRecentFiles->value() );

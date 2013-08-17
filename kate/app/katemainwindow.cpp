@@ -406,6 +406,7 @@ void KateMainWindow::readOptions ()
 
   config->setGroup("General");
   syncKonsole =  config->readBoolEntry("Sync Konsole", true);
+  useInstance =  config->readBoolEntry("UseInstance", false);
   modNotification = config->readBoolEntry("Modified Notification", false);
   KateDocManager::self()->setSaveMetaInfos(config->readBoolEntry("Save Meta Infos", true));
   KateDocManager::self()->setDaysMetaInfos(config->readNumEntry("Days Meta Infos", 30));
@@ -436,6 +437,8 @@ void KateMainWindow::saveOptions ()
   config->writeEntry("Show Full Path in Title", m_viewManager->getShowFullPath());
 
   config->writeEntry("Sync Konsole", syncKonsole);
+
+  config->writeEntry("UseInstance", useInstance);
 
   fileOpenRecent->saveEntries(config, "Recent Files");
 

@@ -41,6 +41,8 @@ static TDECmdLineOptions options[] =
     { "start <name>", I18N_NOOP("Start Kate with a given session"), 0 },
     { "u", 0, 0 },
     { "use", I18N_NOOP("Use a already running kate instance (if possible)"), 0 },
+    { "f", 0, 0 },
+    { "force-sdi", I18N_NOOP("Force single document mode if the MDI setting is enabled."), 0 },
     { "p", 0, 0 },
     { "pid <pid>", I18N_NOOP("Only try to reuse kate instance with this pid"), 0 },
     { "e", 0, 0 },
@@ -57,6 +59,8 @@ static TDECmdLineOptions options[] =
 
 extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
 {
+  TDEConfig * config = NULL;
+  bool alwaysUseInstance;
   // here we go, construct the Kate version
   TQString kateVersion = KateApp::kateVersion();
 
@@ -98,6 +102,8 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
 
   aboutData.setTranslator(I18N_NOOP2("NAME OF TRANSLATORS","Your names"), I18N_NOOP2("EMAIL OF TRANSLATORS","Your emails"));
 
+  TDEInstance instance( &aboutData );
+
   // command line args init and co
   TDECmdLineArgs::init (argc, argv, &aboutData);
   TDECmdLineArgs::addCmdLineOptions (options);
@@ -107,8 +113,13 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
   // get our command line args ;)
   TDECmdLineArgs* args = TDECmdLineArgs::parsedArgs();
 
-  // now, first try to contact running kate instance if needed
-  if ( args->isSet("use") || (::getenv("KATE_PID")!=0) )
+  config = TDEGlobal::config();
+  config->setGroup("General");
+  alwaysUseInstance = config->readBoolEntry("UseInstance");
+
+// now, first try to contact running kate instance if needed
+  if ( ((args->isSet("use") || alwaysUseInstance) &&
+       !(args->isSet("force-sdi")))  || (::getenv("KATE_PID")!=0) )
   {
     DCOPClient client;
     client.attach ();

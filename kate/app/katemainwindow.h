@@ -182,6 +182,7 @@ class KateMainWindow : public KateMDI::MainWindow, virtual public KParts::PartBa
     Kate::ToolViewManager *m_toolViewManager;
 
     bool syncKonsole;
+    bool useInstance;
     bool modNotification;
 
     DCOPObject *m_dcop;
