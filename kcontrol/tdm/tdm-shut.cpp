@@ -1,4 +1,4 @@
-*/ This file is part of the KDE Display Manager Configuration package
+/* This file is part of the KDE Display Manager Configuration package
     Copyright (C) 1997-1998 Thomas Tanghus (tanghus@earthling.net)
 
     This program is free software; you can redistribute it and/or
