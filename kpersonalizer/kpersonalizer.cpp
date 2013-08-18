@@ -43,7 +43,7 @@
 #include "kcountrypage.h"
 #include "kospage.h"
 #include "keyecandypage.h"
-#include "kstylepage.h"
+#include "tdestylepage.h"
 #include "krefinepage.h"
 
 #include "kpersonalizer.h"

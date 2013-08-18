@@ -1,13 +1,13 @@
 bin_PROGRAMS = kpersonalizer
 kpersonalizer_SOURCES = stylepreview.ui krefinepage.cpp \
-      kstylepage.cpp keyecandypage.cpp kospage.cpp kcountrypage.cpp kpersonalizer.cpp \
+      tdestylepage.cpp keyecandypage.cpp kospage.cpp kcountrypage.cpp kpersonalizer.cpp \
       main.cpp kfindlanguage.cpp \
-      kcountrypagedlg.ui kospagedlg.ui keyecandypagedlg.ui kstylepagedlg.ui \
+      kcountrypagedlg.ui kospagedlg.ui keyecandypagedlg.ui tdestylepagedlg.ui \
       krefinepagedlg.ui  ksysinfo.cpp
 
 kpersonalizer_LDADD   = $(LIB_KIO) 
 
-EXTRA_DIST = main.cpp kpersonalizer.cpp kpersonalizer.h kpersonalizer.desktop kcountrypage.cpp kcountrypage.h kospage.cpp kospage.h keyecandypage.cpp keyecandypage.h kstylepage.cpp kstylepage.h krefinepage.cpp krefinepage.h cr16-app-kpersonalizer.png cr32-app-kpersonalizer.png README kcountrypagedlg.ui kospage.ui keyecandypagedlg.ui kstylepagedlg.ui krefinepagedlg.ui kfindlanguage.cpp kfindlanguage.h
+EXTRA_DIST = main.cpp kpersonalizer.cpp kpersonalizer.h kpersonalizer.desktop kcountrypage.cpp kcountrypage.h kospage.cpp kospage.h keyecandypage.cpp keyecandypage.h tdestylepage.cpp tdestylepage.h krefinepage.cpp krefinepage.h cr16-app-kpersonalizer.png cr32-app-kpersonalizer.png README kcountrypagedlg.ui kospage.ui keyecandypagedlg.ui tdestylepagedlg.ui krefinepagedlg.ui kfindlanguage.cpp kfindlanguage.h
 
 xdg_apps_DATA = kpersonalizer.desktop
 

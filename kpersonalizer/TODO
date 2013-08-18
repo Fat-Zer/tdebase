@@ -17,7 +17,7 @@ o kospage:
 	- Desktop Icons are arranged after dcop-call, but we just want to align them
 o krefinepage:
 	- quit kpersonalizer, if user starts kcontrol
-o kstylepage:
+o tdestylepage:
 	- don't hardcode the styles
 	- style preview
 o keyecandypage:

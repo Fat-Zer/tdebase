@@ -1,5 +1,5 @@
 /***************************************************************************
-                          kstylepage.h  -  description
+                          tdestylepage.h  -  description
                              -------------------
     begin                : Tue May 22 2001
     copyright            : (C) 2001 by Ralf Nolden
@@ -15,11 +15,11 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef KSTYLEPAGE_H
-#define KSTYLEPAGE_H
+#ifndef TDESTYLEPAGE_H
+#define TDESTYLEPAGE_H
 
 #include <tqcolor.h>
-#include "kstylepagedlg.h"
+#include "tdestylepagedlg.h"
 
 /**Abstract class for the style page
   *@author Ralf Nolden

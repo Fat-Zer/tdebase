@@ -216,7 +216,7 @@ unsigned long Options::updateSettings()
     
     // Read button tooltip animation effect from kdeglobals
     // Since we want to allow users to enable window decoration tooltips
-    // and not kstyle tooltips and vise-versa, we don't read the
+    // and not tdestyle tooltips and vise-versa, we don't read the
     // "EffectNoTooltip" setting from kdeglobals.
     TDEConfig globalConfig("kdeglobals");
     globalConfig.setGroup("KDE");

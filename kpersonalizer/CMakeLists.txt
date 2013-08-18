@@ -35,11 +35,11 @@ install( FILES uninstall.desktop DESTINATION ${APPS_INSTALL_DIR}/System RENAME k
 
 tde_add_executable( kpersonalizer AUTOMOC
   SOURCES
-    stylepreview.ui krefinepage.cpp kstylepage.cpp
+    stylepreview.ui krefinepage.cpp tdestylepage.cpp
     keyecandypage.cpp kospage.cpp kcountrypage.cpp
     kpersonalizer.cpp main.cpp kfindlanguage.cpp
     kcountrypagedlg.ui kospagedlg.ui keyecandypagedlg.ui
-    kstylepagedlg.ui krefinepagedlg.ui ksysinfo.cpp
+    tdestylepagedlg.ui krefinepagedlg.ui ksysinfo.cpp
   LINK tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

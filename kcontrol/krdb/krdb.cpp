@@ -119,7 +119,7 @@ static void applyQtColors( TDEConfig& kglobals, TQSettings& settings, TQPalette&
   settings.writeEntry("/qt/Palette/inactive", inactcg);
   settings.writeEntry("/qt/Palette/disabled", discg);
 
-  // export twin's colors to qtrc for kstyle to use
+  // export twin's colors to qtrc for tdestyle to use
   kglobals.setGroup("WM");
 
   // active colors

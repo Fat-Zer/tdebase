@@ -32,7 +32,7 @@ DEALINGS IN THE SOFTWARE.
 
 extern "C"
 {
-	KDE_EXPORT TQWidget* allocate_kstyle_config(TQWidget* parent)
+	KDE_EXPORT TQWidget* allocate_tdestyle_config(TQWidget* parent)
 	{
 		return new KeramikStyleConfig(parent);
 	}
@@ -42,7 +42,7 @@ KeramikStyleConfig::KeramikStyleConfig(TQWidget* parent): TQWidget(parent)
 {
 	//Should have no margins here, the dialog provides them
 	TQVBoxLayout* layout = new TQVBoxLayout(this, 0, 0);
-	TDEGlobal::locale()->insertCatalogue("kstyle_keramik_config");
+	TDEGlobal::locale()->insertCatalogue("tdestyle_keramik_config");
 
 	//highlightLineEdits = new TQCheckBox(i18n("Highlight active lineedits"), this);
 	highlightScrollBar = new TQCheckBox(i18n("Highlight scroll bar handles"), this);
@@ -70,7 +70,7 @@ KeramikStyleConfig::KeramikStyleConfig(TQWidget* parent): TQWidget(parent)
 
 KeramikStyleConfig::~KeramikStyleConfig()
 {
-	TDEGlobal::locale()->removeCatalogue("kstyle_keramik_config");
+	TDEGlobal::locale()->removeCatalogue("tdestyle_keramik_config");
 }
 
 

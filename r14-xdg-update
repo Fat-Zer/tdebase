@@ -634,7 +634,12 @@ if [ ! -f $HOME/.tderc ] && [ -f $HOME/.kderc ]; then
     mv $HOME/.kderc $HOME/.tderc 2>/dev/null
   fi
 fi
-# Copy the following two rc files rather than move because the older versions are for HAL systems.
+if [ -a $PROFILE_DIR/share/apps/kstyle ]; then
+  Message_Prefix
+  echo "  kstyle->tdestyle"
+  mv $PROFILE_DIR/share/apps/kstyle $PROFILE_DIR/share/apps/tdestyle 2>/dev/null
+fi
+# Copy the following two rc files rather than move because the older versions are needed for HAL systems.
 if [ ! -f $PROFILE_DIR/share/config/tdenetworkmanagerrc ] && [ -f $PROFILE_DIR/share/config/knetworkmanagerrc ]; then
   Message_Prefix
   echo "  knetworkmanager->tdenetworkmanager"

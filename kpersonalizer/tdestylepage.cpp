@@ -1,5 +1,5 @@
 /***************************************************************************
-                          kstylepage.cpp  -  description
+                          tdestylepage.cpp  -  description
                              -------------------
     begin                : Tue May 22 2001
     copyright            : (C) 2001 by Ralf Nolden
@@ -41,7 +41,7 @@
 #include <kiconloader.h>
 
 #include "stylepreview.h"
-#include "kstylepage.h"
+#include "tdestylepage.h"
 
 TDEStylePage::TDEStylePage(TQWidget *parent, const char *name ) : TDEStylePageDlg(parent,name) {
 
@@ -581,4 +581,4 @@ TQPalette TDEStylePage::createPalette() {
 	return TQPalette( colgrp, disabledgrp, colgrp);
 }
 
-#include "kstylepage.moc"
+#include "tdestylepage.moc"

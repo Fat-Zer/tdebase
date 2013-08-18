@@ -20,9 +20,9 @@ link_directories(
 )
 
 
-##### kstyle_keramik_config (module) ############
+##### tdestyle_keramik_config (module) ############
 
-tde_add_kpart( kstyle_keramik_config AUTOMOC
+tde_add_kpart( tdestyle_keramik_config AUTOMOC
   SOURCES keramikconf.cpp
   LINK tdeui-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}

@@ -330,7 +330,7 @@ void TDMAppearanceWidget::loadGuiStyles(KBackedComboBox *combo)
 {
   // XXX: Global + local schemes
   TQStringList list = TDEGlobal::dirs()->
-      findAllResources("data", "kstyle/themes/*.themerc", false, true);
+      findAllResources("data", "tdestyle/themes/*.themerc", false, true);
   for (TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it)
   {
     KSimpleConfig config(*it, true);
