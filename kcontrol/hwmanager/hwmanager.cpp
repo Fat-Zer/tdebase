@@ -92,9 +92,9 @@ TDEHWManager::TDEHWManager(TQWidget *parent, const char *name, const TQStringLis
 	connect(base->showByConnection, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
 	connect(base->showByConnection, TQT_SIGNAL(clicked()), TQT_SLOT(populateTreeView()));
 
-	connect(hwdevices, TQT_SIGNAL(hardwareAdded(GenericDevice*)), this, TQT_SLOT(populateTreeView()));
-	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(GenericDevice*)), this, TQT_SLOT(populateTreeView()));
-	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(GenericDevice*)), this, TQT_SLOT(deviceChanged(GenericDevice*)));
+	connect(hwdevices, TQT_SIGNAL(hardwareAdded(TDEHW::GenericDevice*)), this, TQT_SLOT(populateTreeView()));
+	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(TDEHW::GenericDevice*)), this, TQT_SLOT(populateTreeView()));
+	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEHW::GenericDevice*)), this, TQT_SLOT(deviceChanged(TDEHW::GenericDevice*)));
 
 	load();
 

@@ -330,8 +330,8 @@ DevicePropertiesDialog::DevicePropertiesDialog(GenericDevice* device, TQWidget *
 
 	HardwareDevices *hwdevices = HardwareDevices::instance();
 
-	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(GenericDevice*)), this, TQT_SLOT(processHardwareRemoved(GenericDevice*)));
-	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(GenericDevice*)), this, TQT_SLOT(processHardwareUpdated(GenericDevice*)));
+	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(TDEHW::GenericDevice*)), this, TQT_SLOT(processHardwareRemoved(TDEHW::GenericDevice*)));
+	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEHW::GenericDevice*)), this, TQT_SLOT(processHardwareUpdated(TDEHW::GenericDevice*)));
 
 	populateDeviceInformation();
 }

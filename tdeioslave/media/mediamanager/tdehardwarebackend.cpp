@@ -75,9 +75,9 @@ TDEBackend::TDEBackend(MediaList &list, TQObject* parent)
 	HardwareDevices *hwdevices = HardwareDevices::instance();
 
 	// Connect device monitoring signals/slots
-	connect(hwdevices, TQT_SIGNAL(hardwareAdded(GenericDevice*)), this, TQT_SLOT(AddDeviceHandler(GenericDevice*)));
-	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(GenericDevice*)), this, TQT_SLOT(RemoveDeviceHandler(GenericDevice*)));
-	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(GenericDevice*)), this, TQT_SLOT(ModifyDeviceHandler(GenericDevice*)));
+	connect(hwdevices, TQT_SIGNAL(hardwareAdded(TDEHW::GenericDevice*)), this, TQT_SLOT(AddDeviceHandler(TDEHW::GenericDevice*)));
+	connect(hwdevices, TQT_SIGNAL(hardwareRemoved(TDEHW::GenericDevice*)), this, TQT_SLOT(RemoveDeviceHandler(TDEHW::GenericDevice*)));
+	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEHW::GenericDevice*)), this, TQT_SLOT(ModifyDeviceHandler(TDEHW::GenericDevice*)));
 
 	// List devices at startup
 	ListDevices();
