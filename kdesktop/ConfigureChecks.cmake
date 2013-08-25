@@ -9,6 +9,6 @@
 #
 #################################################
 
-if( WITH_PAM AND (NOT DEFINED TDESCREENSAVER_PAM_SERVICE) )
+if( WITH_PAM )
   set( TDESCREENSAVER_PAM_SERVICE "kde" CACHE INTERNAL "" )
 endif( )
