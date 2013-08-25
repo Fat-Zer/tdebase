@@ -22,8 +22,6 @@
 
 #include <config.h>
 
-#include <execinfo.h>
-
 #include "lockprocess.h"
 #include "lockdlg.h"
 #include "infodlg.h"
@@ -147,31 +145,11 @@ Atom kde_wm_system_modal_notification = 0;
 Atom kde_wm_transparent_to_desktop = 0;
 Atom kde_wm_transparent_to_black = 0;
 
-void print_trace()
-{
-#ifdef WITH_KDESKTOP_LOCK_BACKTRACE
-	void *array[10];
-	size_t size;
-	char **strings;
-	size_t i;
-
-	size = backtrace (array, 10);
-	strings = backtrace_symbols (array, size);
-
-	printf ("[kdesktop_lock] Obtained %zd stack frames.\n", size);
-
-	for (i = 0; i < size; i++) {
-		printf ("[kdesktop_lock] %s\n", strings[i]);
-	}
-
-	free (strings);
-#endif
-}
-
 static void segv_handler(int)
 {
-	printf("[kdesktop_lock] WARNING: A fatal exception was encountered.  Trapping and ignoring it so as not to compromise desktop security...\n");
-	print_trace();
+	kdError(1204) << "A fatal exception was encountered."
+		<< " Trapping and ignoring it so as not to compromise desktop security..."
+		<< kdBacktrace() << endl;
 	sleep(1);
 }
 

@@ -124,7 +124,6 @@
 
 // kdesktop
 #cmakedefine TDESCREENSAVER_PAM_SERVICE "@TDESCREENSAVER_PAM_SERVICE@"
-#cmakedefine WITH_KDESKTOP_LOCK_BACKTRACE 1
 
 // tdm
 #cmakedefine XBINDIR "@XBINDIR@"
