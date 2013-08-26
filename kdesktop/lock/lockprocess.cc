@@ -2127,6 +2127,10 @@ bool LockProcess::x11Event(XEvent *event)
     // XF86AudioMute		Would be nice to be able to shut your computer up in an emergency while it is locked
     // XF86AudioRaiseVolume	Ditto
     // XF86AudioLowerVolume	Ditto
+    // XF86XK_PowerOff		If someone has access to the power button, they can hard power off the machine anyway
+    // XF86XK_Sleep		Ditto
+    // XF86XK_Suspend		Ditto
+    // XF86XK_Hibernate		Ditto
 
     //if ((event->type == KeyPress) || (event->type == KeyRelease)) {
     if (event->type == KeyPress) {
