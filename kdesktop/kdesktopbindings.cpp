@@ -29,6 +29,7 @@
 	{
 #endif
 		DEF2( I18N_NOOP("Lock Session"), ALT+CTRL+Qt::Key_L, WIN+Qt::Key_ScrollLock, KRootWm::self(), TQT_SLOT(slotLock()) );
+		DEF2( I18N_NOOP("Lock Session (Hotkey)"), TDEShortcut(TQString("XF86ScreenSaver")), TDEShortcut(TQString("XF86ScreenSaver")), KRootWm::self(), TQT_SLOT(slotLock()) );
 #ifndef NOSLOTS
 	}
 	if (kapp->authorize("start_screensaver"))
