@@ -125,10 +125,16 @@ Status DPMSInfo ( Display *, CARD16 *, BOOL * );
 // #define KEEP_MOUSE_UNGRABBED 1
 
 // These lines are taken on 10/2009 from X.org (X11/XF86keysym.h), defining some special multimedia keys
-#define XF86XK_AudioMute 0x1008FF12
-#define XF86XK_AudioRaiseVolume 0x1008FF13
-#define XF86XK_AudioLowerVolume 0x1008FF11
-#define XF86XK_Display 0x1008FF59
+#define XF86XK_AudioMute		0x1008FF12
+#define XF86XK_AudioRaiseVolume		0x1008FF13
+#define XF86XK_AudioLowerVolume		0x1008FF11
+#define XF86XK_Display			0x1008FF59
+
+// These lines are taken on 08/2013 from X.org (X11/XF86keysym.h), defining some special ACPI power keys
+#define XF86XK_PowerOff			0x1008FF2A
+#define XF86XK_Sleep			0x1008FF2F
+#define XF86XK_Suspend			0x1008FFA7
+#define XF86XK_Hibernate		0x1008FFA8
 
 #define DPMS_MONITOR_BLANKED(x) ((x == DPMSModeStandby) || (x == DPMSModeSuspend) || (x == DPMSModeOff))
 
@@ -2124,10 +2130,20 @@ bool LockProcess::x11Event(XEvent *event)
 
     //if ((event->type == KeyPress) || (event->type == KeyRelease)) {
     if (event->type == KeyPress) {
+        // Multimedia keys
         if ((event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_Display)) || \
         (event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_AudioMute)) || \
         (event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_AudioRaiseVolume)) || \
         (event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_AudioLowerVolume))) {
+            mkeyCode = event->xkey.keycode;
+            TQTimer::singleShot( 100, this, TQT_SLOT(doFunctionKeyBroadcast()) );
+            return true;
+        }
+        // ACPI power keys
+        if ((event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_PowerOff)) || \
+        (event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_Sleep)) || \
+        (event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_Suspend)) || \
+        (event->xkey.keycode == XKeysymToKeycode(event->xkey.display, XF86XK_Hibernate))) {
             mkeyCode = event->xkey.keycode;
             TQTimer::singleShot( 100, this, TQT_SLOT(doFunctionKeyBroadcast()) );
             return true;
