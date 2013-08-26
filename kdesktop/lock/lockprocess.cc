@@ -16,10 +16,6 @@
 //crashes (e.g. because it's set to multiple wallpapers and
 //some image will be corrupted).
 
-#define protected public
-#include <tqwidget.h>
-#undef protected
-
 #include <config.h>
 
 #include "lockprocess.h"
@@ -1001,13 +997,8 @@ void LockProcess::desktopResized()
         	m_maskWidget->setGeometry(0, 0, mRootWidth, mRootHeight);
         }
         else {
-        	int flags = CWOverrideRedirect;
-        	Visual* visual = CopyFromParent;
-        	XSetWindowAttributes attrs;
-        	attrs.override_redirect = 1;
-        	Window maskWindow = XCreateWindow(x11Display(), RootWindow( x11Display(), x11Screen()), 0, 0, mRootWidth, mRootHeight, 0, x11Depth(), InputOutput, visual, flags, &attrs);
-        	m_maskWidget = new TQWidget();
-        	m_maskWidget->create(maskWindow);
+        	m_maskWidget = new TQWidget(0, 0, TQt::WStyle_StaysOnTop | TQt::WX11BypassWM);
+        	m_maskWidget->setGeometry(0, 0, mRootWidth, mRootHeight);
         	m_maskWidget->setBackgroundColor(TQt::black);
         	m_maskWidget->erase();
         	m_maskWidget->show();
