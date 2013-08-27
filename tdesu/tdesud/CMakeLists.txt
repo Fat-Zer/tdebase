@@ -9,8 +9,6 @@
 #
 #################################################
 
-# FIXME there is used KDE_USE_FPIE
-
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}

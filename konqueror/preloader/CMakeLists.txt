@@ -9,8 +9,6 @@
 #
 #################################################
 
-# FIXME there we have some checks for malloc
-
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}/konqueror
