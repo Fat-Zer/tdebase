@@ -15,6 +15,10 @@ if( WITH_I8K )
   add_definitions( -DHAVE_I8K_SUPPORT )
 endif()
 
+if( WITH_SENSORS )
+  add_definitions( -DHAVE_SENSORS_SENSORS_H )
+endif()
+
 include_directories(
   ${CMAKE_BINARY_DIR}
   ${CMAKE_SOURCE_DIR}/ksysguard/CContLib

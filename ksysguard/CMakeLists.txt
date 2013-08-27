@@ -9,8 +9,6 @@
 #
 #################################################
 
-# FIXME no support for lm_sensors yet
-
 add_subdirectory( CContLib )
 add_subdirectory( ksysguardd )
 add_subdirectory( gui )

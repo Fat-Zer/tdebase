@@ -11,12 +11,13 @@
 
 # FIXME there is only Linux support
 
+include( ConfigureChecks.cmake )
+
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
   set( OS_SPECIFIC_DIR Linux )
 else()
   tde_message_fatal( "Your operating system (${CMAKE_SYSTEM_NAME}) is not supported yet." )
 endif()
-
 
 add_subdirectory( ${OS_SPECIFIC_DIR} )
 
@@ -39,5 +40,6 @@ include_directories(
 tde_add_executable( ksysguardd AUTOMOC
   SOURCES Command.c conf.c ksysguardd.c PWUIDCache.c
   LINK ccont-static ksysguardd-static ${TDE_LIB_DIR}/libtdefakes_nonpic.a
+    ${SENSORS_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )

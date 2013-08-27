@@ -81,6 +81,7 @@ option( WITH_XDMCP "xdmcp support for tdm" ${WITH_ALL_OPTIONS} )
 option( WITH_XINERAMA "Enable xinerama extension support" ${WITH_ALL_OPTIONS} )
 option( WITH_ARTS "Enable aRts support" ${WITH_ALL_OPTIONS} )
 option( WITH_I8K "Enable Dell laptop support (ksysguard)" ${WITH_ALL_OPTIONS} )
+option( WITH_SENSORS "Enable lm_sensors support (ksysguard)" ${WITH_ALL_OPTIONS} )
 option( WITH_HAL "Enable HAL support" ${WITH_ALL_OPTIONS} )
 option( WITH_TDEHWLIB "Enable TDE hardware library support" OFF )
 option( WITH_UPOWER "Enable UPOWER support" ${WITH_ALL_OPTIONS} )
@@ -112,6 +113,7 @@ option( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" 
 # WITH_XINERAMA     affects ksplashml
 # WITH_ARTS         affects libkonq khotkeys
 # WITH_I8K          affects ksysguard
+# WITH_SENSORS      affects ksysguard
 # WITH_HAL          affects tdeioslaves(media) ksmserver
 # WITH_TDEHWLIB     affects tdeioslaves(media), replaces WITH_HAL on systems without HAL
 # WITH_LIBRAW1394   affects kcontrol(view1394)
