@@ -1068,14 +1068,14 @@ someone.</p>
 <tip category="General">
 <html>
 <p>While remembering passwords may be tedious, and writing them down
-on paper or in a text file may be insecure and untidy, KWallet is an
+on paper or in a text file may be insecure and untidy, TDEWallet is an
 application that can save and manage all of your passwords in strongly
 encrypted files, and permit access to them with the use of one master
 password.</p>
 
-<p>KWallet can be accessed from kcontrol, TDE's Control Center; from
+<p>TDEWallet can be accessed from kcontrol, TDE's Control Center; from
 there, simply go to Security &amp; Privacy->TDE Wallet. For more
-information on KWallet and on how to use it, check <a
+information on TDEWallet and on how to use it, check <a
 href="help:/tdewallet" title="tdewallet">the handbook</a>.</p>
 
 </html>
