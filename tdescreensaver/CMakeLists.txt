@@ -30,7 +30,7 @@ install( FILES KRandom.desktop KBlankscreen.desktop DESTINATION ${APPS_INSTALL_D
 
 tde_add_executable( krandom.kss AUTOMOC
   SOURCES random.cpp
-  LINK tdeui-shared ${GL_LIBRARY}
+  LINK tdeui-shared ${GL_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

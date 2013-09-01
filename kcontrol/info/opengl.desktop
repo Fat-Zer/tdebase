@@ -1,5 +1,5 @@
 [Desktop Entry]
-NoDisplay=true
+# NoDisplay=true
 Exec=tdecmshell opengl
 Icon=kcmopengl
 Type=Application
@@ -8,7 +8,7 @@ DocPath=kinfocenter/opengl/index.html
 
 X-TDE-Library=info
 X-TDE-FactoryName=opengl
-X-TDE-ParentApp=kcontrol
+X-TDE-ParentApp=kinfocenter
 
 Name=OpenGL
 Name[bn]=ওপেন-জি-এল

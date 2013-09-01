@@ -32,6 +32,6 @@ tde_add_kpart( kcm_screensaver AUTOMOC
     advanceddialogimpl.ui scrnsave.cpp testwin.cpp
     saverlist.cpp saverconfig.cpp advanceddialog.cpp
     kswidget.cpp
-  LINK tdeio-shared ${GL_LIBRARY}
+  LINK tdeio-shared ${GL_LIBRARIES}
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

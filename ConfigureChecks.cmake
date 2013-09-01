@@ -168,12 +168,29 @@ if( WITH_XSCREENSAVER )
 endif( )
 
 
-# GL
-if( BUILD_KDESKTOP OR BUILD_KCONTROL OR BUILD_TDESCREENSAVER )
-check_library_exists( GL glXChooseVisual "" HAVE_GLXCHOOSEVISUAL )
-  if( HAVE_GLXCHOOSEVISUAL )
-    set( GL_LIBRARY "GL" )
+# openGL (kdesktop or kcontrol or tdescreensaver )
+if( WITH_OPENGL )
+  pkg_search_module( GL gl )
+  if( GL_FOUND )
+    # some extra check, stricktly speaking they are not necessary
+    tde_save( CMAKE_REQUIRED_LIBRARIES )
+    set( CMAKE_REQUIRED_LIBRARIES ${GL_LIBRARIES} )
+    check_symbol_exists( glXChooseVisual "GL/glx.h" HAVE_GLXCHOOSEVISUAL )
+    tde_restore( CMAKE_REQUIRED_LIBRARIES )
+    if( NOT HAVE_GLXCHOOSEVISUAL )
+      tde_message_fatal( "opengl is requested and found, but it doesn't provides glXChooseVisual() or GL/glx.h" )
+    endif( )
+  else( )
+    tde_message_fatal( "opengl is requested, but not found on your system" )
   endif( )
+
+  if( BUILD_KCONTROL )
+    pkg_search_module( GLU glu )
+    if( NOT GLU_FOUND )
+      tde_message_fatal( "glu is required, but not found on your system" )
+    endif( )
+  endif( BUILD_KCONTROL )
+
 endif( )
 
 

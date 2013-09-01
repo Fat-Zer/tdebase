@@ -92,7 +92,7 @@ bool hasDirectRendering () {
         return false;
     }
 #else
-#error no GL?
+    // no GL
     return false;
 #endif
 
