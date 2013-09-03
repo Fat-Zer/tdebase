@@ -59,7 +59,7 @@ static KURL getDest(const KURL &url, bool system)
 {
     return KURL(KFI::Misc::root()
                   ? TQString("fonts:/") + url.fileName()
-                  : TQString("fonts:/") + TQString(system ? i18n(KFI_KIO_FONTS_SYS) : i18n(KFI_KIO_FONTS_USER))
+                  : TQString("fonts:/") + TQString(system ? i18n(KFI_TDEIO_FONTS_SYS) : i18n(KFI_TDEIO_FONTS_USER))
                                        + TQChar('/') + url.fileName());
 }
 
@@ -122,7 +122,7 @@ bool CFontViewPart::openURL(const KURL &url)
     if (!url.isValid() || !closeURL())
         return false;
 
-    if(KFI_KIO_FONTS_PROTOCOL==url.protocol() || url.isLocalFile())
+    if(KFI_TDEIO_FONTS_PROTOCOL==url.protocol() || url.isLocalFile())
     {
         m_url=url;
         emit started(0);
@@ -150,7 +150,7 @@ bool CFontViewPart::openFile()
 void CFontViewPart::timeout()
 {
     bool showFs=false,
-         isFonts=KFI_KIO_FONTS_PROTOCOL==m_url.protocol();
+         isFonts=KFI_TDEIO_FONTS_PROTOCOL==m_url.protocol();
 
     itsShowInstallButton=false;
 
@@ -169,12 +169,12 @@ void CFontViewPart::timeout()
         }
         else
         {
-            destUrl=TQString("fonts:/")+i18n(KFI_KIO_FONTS_SYS)+TQChar('/')+itsPreview->engine().getName(m_url);
+            destUrl=TQString("fonts:/")+i18n(KFI_TDEIO_FONTS_SYS)+TQChar('/')+itsPreview->engine().getName(m_url);
             if(TDEIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget()))
                 itsShowInstallButton=false;
             else
             {
-                destUrl=TQString("fonts:/")+i18n(KFI_KIO_FONTS_USER)+TQChar('/')+itsPreview->engine().getName(m_url);
+                destUrl=TQString("fonts:/")+i18n(KFI_TDEIO_FONTS_USER)+TQChar('/')+itsPreview->engine().getName(m_url);
                 itsShowInstallButton=!TDEIO::NetAccess::exists(destUrl, true, itsFrame->parentWidget());
             }
         }
@@ -198,7 +198,7 @@ void CFontViewPart::previewStatus(bool st)
     itsInstallButton->setShown(st && itsShowInstallButton);
     itsToolsFrame->setShown(itsInstallButton->isShown()||itsFaceSelector->isShown());
     itsChangeTextAction->setEnabled(st);
-    itsPrintAction->setEnabled(st && KFI_KIO_FONTS_PROTOCOL==m_url.protocol());
+    itsPrintAction->setEnabled(st && KFI_TDEIO_FONTS_PROTOCOL==m_url.protocol());
 }
 
 void CFontViewPart::install()
@@ -211,10 +211,10 @@ void CFontViewPart::install()
                                                                    "password)")
                                                                    .arg(itsPreview->engine().getName(m_url))
                                                                    .arg(m_url.fileName())
-                                                                   .arg(i18n(KFI_KIO_FONTS_USER))
-                                                                   .arg(i18n(KFI_KIO_FONTS_SYS)),
-                                                              i18n("Install"), i18n(KFI_KIO_FONTS_USER),
-                                                              i18n(KFI_KIO_FONTS_SYS));
+                                                                   .arg(i18n(KFI_TDEIO_FONTS_USER))
+                                                                   .arg(i18n(KFI_TDEIO_FONTS_SYS)),
+                                                              i18n("Install"), i18n(KFI_TDEIO_FONTS_USER),
+                                                              i18n(KFI_TDEIO_FONTS_SYS));
 
     if(KMessageBox::Cancel!=resp)
     {

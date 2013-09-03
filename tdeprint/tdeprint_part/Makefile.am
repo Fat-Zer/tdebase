@@ -4,7 +4,7 @@ kde_module_LTLIBRARIES = libtdeprint_part.la
 
 libtdeprint_part_la_SOURCES = printpart.cpp
 libtdeprint_part_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
-libtdeprint_part_la_LIBADD = -ltdeprint_management $(LIB_KPARTS)
+libtdeprint_part_la_LIBADD = -ltdeprint_management $(LIB_TDEPARTS)
 
 noinst_HEADERS = printpart.h
 

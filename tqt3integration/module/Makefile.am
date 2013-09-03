@@ -5,7 +5,7 @@ kde_module_LTLIBRARIES = kded_kdeintegration.la
 kded_kdeintegration_la_SOURCES = module.cpp
 kded_kdeintegration_la_METASOURCES = AUTO
 kded_kdeintegration_la_LDFLAGS = $(all_libraries) -module -avoid-version
-kded_kdeintegration_la_LIBADD = $(LIB_KIO)
+kded_kdeintegration_la_LIBADD = $(LIB_TDEIO)
 
 CLEANFILES = module_functions.cpp module_functions.h
 

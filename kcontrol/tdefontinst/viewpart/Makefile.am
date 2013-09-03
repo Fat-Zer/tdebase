@@ -7,7 +7,7 @@ kde_module_LTLIBRARIES = libtdefontviewpart.la
 
 libtdefontviewpart_la_SOURCES = FontViewPart.cpp FontViewPartFactory.cpp FontPreview.cpp
 libtdefontviewpart_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-libtdefontviewpart_la_LIBADD = $(LIB_KPARTS) libtdefontinstprint.la ../lib/libtdefontinst.la
+libtdefontviewpart_la_LIBADD = $(LIB_TDEPARTS) libtdefontinstprint.la ../lib/libtdefontinst.la
 
 noinst_HEADERS  = FontViewPart.h FontViewPartFactory.h FontPreview.h FontViewerApp.h KfiPrint.h
 
@@ -16,8 +16,8 @@ kde_services_DATA = tdefontviewpart.desktop
 AM_CPPFLAGS = -I$(srcdir)/../lib -I$(srcdir)/../../fonts $(all_includes) $(LIBFREETYPE_CFLAGS) $(LIBFONTCONFIG_CFLAGS)
 METASOURCES = AUTO
 
-tdefontview_LDADD = $(LIB_KPARTS)
-tdefontview_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+tdefontview_LDADD = $(LIB_TDEPARTS)
+tdefontview_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 
 bin_PROGRAMS = tdefontview
 xdg_apps_DATA = tdefontview.desktop

@@ -61,10 +61,10 @@ void SMBSlave::auth_smbc_get_data(const char *server,const char *share,
     SMBUrlType t = m_current_url.getType();
     if( t == SMBURLTYPE_ENTIRE_NETWORK )
     {
-        kdDebug(KIO_SMB) << "we don't really need to authenticate for this top level url, returning" << endl;
+        kdDebug(TDEIO_SMB) << "we don't really need to authenticate for this top level url, returning" << endl;
         return;
     }
-    kdDebug(KIO_SMB) << "AAAAAAAAAAAAAA auth_smbc_get_dat: set user=" << username << ", workgroup=" << workgroup
+    kdDebug(TDEIO_SMB) << "AAAAAAAAAAAAAA auth_smbc_get_dat: set user=" << username << ", workgroup=" << workgroup
                      << " server=" << server << ", share=" << share << endl;
 
     TQString s_server = TQString::fromUtf8(server);
@@ -85,7 +85,7 @@ void SMBSlave::auth_smbc_get_data(const char *server,const char *share,
     info.password = s_password;
     info.verifyPath = true;
 
-    kdDebug(KIO_SMB) << "libsmb-auth-callback URL:" << info.url << endl;
+    kdDebug(TDEIO_SMB) << "libsmb-auth-callback URL:" << info.url << endl;
 
     if ( !checkCachedAuthentication( info ) )
     {
@@ -103,7 +103,7 @@ void SMBSlave::auth_smbc_get_data(const char *server,const char *share,
         }
 
     } else
-        kdDebug(KIO_SMB) << "got password through cache" << endl;
+        kdDebug(TDEIO_SMB) << "got password through cache" << endl;
 
     strncpy(username, info.username.utf8(), unmaxlen - 1);
     strncpy(password, info.password.utf8(), pwmaxlen - 1);
@@ -111,7 +111,7 @@ void SMBSlave::auth_smbc_get_data(const char *server,const char *share,
 
 bool SMBSlave::checkPassword(SMBUrl &url)
 {
-    kdDebug(KIO_SMB) << "checkPassword for " << url << endl;
+    kdDebug(TDEIO_SMB) << "checkPassword for " << url << endl;
 
     TDEIO::AuthInfo info;
     info.url = KURL("smb:///");
@@ -139,15 +139,15 @@ bool SMBSlave::checkPassword(SMBUrl &url)
                       .arg( share );
 
     info.username = url.user();
-    kdDebug(KIO_SMB) << "call openPassDlg for " << info.url << endl;
+    kdDebug(TDEIO_SMB) << "call openPassDlg for " << info.url << endl;
 
     if ( openPassDlg(info) ) {
-        kdDebug(KIO_SMB) << "openPassDlg returned " << info.username << endl;
+        kdDebug(TDEIO_SMB) << "openPassDlg returned " << info.username << endl;
         url.setUser(info.username);
         url.setPass(info.password);
         return true;
     }
-    kdDebug(KIO_SMB) << "no value from openPassDlg\n";
+    kdDebug(TDEIO_SMB) << "no value from openPassDlg\n";
     return false;
 }
 
@@ -159,10 +159,10 @@ bool SMBSlave::auth_initialize_smbc()
 {
     SMBCCTX *smb_context = NULL;
 
-    kdDebug(KIO_SMB) << "auth_initialize_smbc " << endl;
+    kdDebug(TDEIO_SMB) << "auth_initialize_smbc " << endl;
     if(m_initialized_smbc == false)
     {
-        kdDebug(KIO_SMB) << "smbc_init call" << endl;
+        kdDebug(TDEIO_SMB) << "smbc_init call" << endl;
         KSimpleConfig cfg( "tdeioslaverc", true );
 
         cfg.setGroup( "SMB" );

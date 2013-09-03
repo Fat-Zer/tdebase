@@ -464,7 +464,7 @@ void KonqUndoManager::undoMovingFiles()
         d->m_uiserver->moving( d->m_uiserverJobId, op.m_dst, op.m_src );
       }
 
-      // The above KIO jobs are lowlevel, they don't trigger KDirNotify notification
+      // The above TDEIO jobs are lowlevel, they don't trigger KDirNotify notification
       // So we need to do it ourselves (but schedule it to the end of the undo, to compress them)
       KURL url( op.m_dst );
       url.setPath( url.directory() );

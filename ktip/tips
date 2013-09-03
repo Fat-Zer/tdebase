@@ -844,7 +844,7 @@ other containers.
 <tip category="General">
 <html>
 <p>
-TDE's 'kio slaves' do not just work in Konqueror: you can use network
+TDE's 'tdeio slaves' do not just work in Konqueror: you can use network
 URLs in any TDE application. For example, you can enter a URL like
 ftp://www.server.com/myfile in the Kate Open dialog, and Kate will
 open the file and save changes back to the FTP server when you click

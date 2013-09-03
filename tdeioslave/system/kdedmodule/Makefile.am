@@ -5,7 +5,7 @@ INCLUDES = $(all_includes)
 
 kded_systemdirnotify_la_SOURCES = systemdirnotify.cpp systemdirnotify.skel systemdirnotifymodule.cpp systemdirnotifymodule.skel
 kded_systemdirnotify_la_LDFLAGS = $(all_libraries) -module -avoid-version
-kded_systemdirnotify_la_LIBADD = $(LIB_KSYCOCA)
+kded_systemdirnotify_la_LIBADD = $(LIB_TDESYCOCA)
 
 
 servicesdir = $(kde_servicesdir)/kded

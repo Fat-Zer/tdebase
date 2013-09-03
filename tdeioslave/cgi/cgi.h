@@ -15,8 +15,8 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-#ifndef KIO_CGI_H
-#define KIO_CGI_H
+#ifndef TDEIO_CGI_H
+#define TDEIO_CGI_H
 
 #include <tqobject.h>
 

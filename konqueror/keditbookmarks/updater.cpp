@@ -147,7 +147,7 @@ FavIconWebGrabber::FavIconWebGrabber(KParts::ReadOnlyPart *part, const KURL &url
 
     // kdDebug() << "FavIconWebGrabber::FavIconWebGrabber starting TDEIO::get() " << url << endl;
 
-//     the use of KIO rather than directly using TDEHTML is to allow silently abort on error
+//     the use of TDEIO rather than directly using TDEHTML is to allow silently abort on error
 
     TDEIO::Job *job = TDEIO::get(m_url, false, false);
     job->addMetaData( TQString("cookies"), TQString("none") );

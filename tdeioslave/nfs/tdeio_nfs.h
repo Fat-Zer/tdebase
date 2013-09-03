@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KIO_NFS_H
-#define KIO_NFS_H
+#ifndef TDEIO_NFS_H
+#define TDEIO_NFS_H
 
 #include <tdeio/slavebase.h>
 #include <tdeio/global.h>

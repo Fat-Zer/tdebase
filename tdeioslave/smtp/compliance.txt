@@ -29,5 +29,5 @@ General:
 
 Known shortcomings:
 - Doesn't enforce the CRLF lineending convention on user-supplied data.
-- Due to the lack of a Mulit_Put_ in the KIO infrastructure, pipelining
+- Due to the lack of a Mulit_Put_ in the TDEIO infrastructure, pipelining
   across messages isn't supported.

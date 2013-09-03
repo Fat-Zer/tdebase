@@ -146,7 +146,7 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
 
     TQString previousPath=itsConfig.readEntry(CFG_PATH);
 
-    itsDirOp = new KDirOperator(Misc::root() ? TQString("fonts:/") : TQString("fonts:/")+i18n(KFI_KIO_FONTS_USER),
+    itsDirOp = new KDirOperator(Misc::root() ? TQString("fonts:/") : TQString("fonts:/")+i18n(KFI_TDEIO_FONTS_USER),
                                 fontsFrame);
     itsDirOp->setViewConfig(&itsConfig, "ListView Settings");
     itsDirOp->setMinimumSize(TQSize(96, 64));
@@ -439,7 +439,7 @@ void CKCmFontInst::removeFonts()
         {
             KURL url((*it)->url());
 
-            url.setQuery(KFI_KIO_NO_CLEAR);
+            url.setQuery(KFI_TDEIO_NO_CLEAR);
             files.append((*it)->text());
             urls.append(url);
         }
@@ -596,7 +596,7 @@ void CKCmFontInst::delResult(TDEIO::Job *job)
 
     stream << KFI::SPECIAL_RESCAN;
 
-    TDEIO::NetAccess::synchronousRun(TDEIO::special(KFI_KIO_FONTS_PROTOCOL ":/", packedArgs), this);
+    TDEIO::NetAccess::synchronousRun(TDEIO::special(KFI_TDEIO_FONTS_PROTOCOL ":/", packedArgs), this);
     jobResult(job);
 }
 

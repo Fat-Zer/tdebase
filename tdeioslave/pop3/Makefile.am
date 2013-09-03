@@ -5,7 +5,7 @@ INCLUDES= -I$(srcdir)/../.. -I$(srcdir)/.. $(SSL_INCLUDES) $(all_includes)
 kde_module_LTLIBRARIES = tdeio_pop3.la
 
 tdeio_pop3_la_SOURCES = pop3.cc
-tdeio_pop3_la_LIBADD  = $(LIB_KIO) $(SASL2_LIBS)
+tdeio_pop3_la_LIBADD  = $(LIB_TDEIO) $(SASL2_LIBS)
 tdeio_pop3_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 noinst_HEADERS = pop3.h

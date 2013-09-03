@@ -23,7 +23,7 @@
 <variablelist>
 <varlistentry>
 <term>&konqueror;</term>
-	<listitem><para>&tde;'s file manager, web browser, <acronym>FTP</acronym> client and much more. &konqueror; is the canvas for all the latest &tde; technology, from KIO slaves (which provide mechanisms for file access) to component embedding, allowing it to be a universal viewing application, capable of displaying various image files as well as documents.</para>
+	<listitem><para>&tde;'s file manager, web browser, <acronym>FTP</acronym> client and much more. &konqueror; is the canvas for all the latest &tde; technology, from TDEIO slaves (which provide mechanisms for file access) to component embedding, allowing it to be a universal viewing application, capable of displaying various image files as well as documents.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://konqueror.org">http://konqueror.org</ulink></para></listitem>
@@ -122,7 +122,7 @@
 <itemizedlist>
 <title>Related Information</title>
 	<listitem><para><ulink url="http://kde-apps.org">http://kde-apps.org</ulink>  -- mdash; The largest directory of third-party &tde; applications.</para></listitem>
-	<listitem><para>As you may have noticed, a wealth of information is accessible from the respective handbooks themselves, which can be accessed either by using the help KIO slave in &konqueror; (that is, type <userinput>help:/<replaceable>application</replaceable></userinput> in the Location toolbar), or by selecting it in the &khelpcenter;.</para></listitem>
+	<listitem><para>As you may have noticed, a wealth of information is accessible from the respective handbooks themselves, which can be accessed either by using the help TDEIO slave in &konqueror; (that is, type <userinput>help:/<replaceable>application</replaceable></userinput> in the Location toolbar), or by selecting it in the &khelpcenter;.</para></listitem>
 	<listitem><para>You can also likely find out quite a bit of information from the &tde; website, itself, at <ulink url="http://kde.org">http://kde.org</ulink>.</para></listitem>
 </itemizedlist>
 

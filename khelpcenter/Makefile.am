@@ -6,7 +6,7 @@ METASOURCES = AUTO
 bin_PROGRAMS = khc_indexbuilder
 lib_LTLIBRARIES = 
 
-khc_indexbuilder_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+khc_indexbuilder_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 khc_indexbuilder_LDADD = $(LIB_TDECORE)
 khc_indexbuilder_SOURCES = khc_indexbuilder.cpp
 
@@ -27,14 +27,14 @@ khelpcenter_la_SOURCES = navigator.cpp \
 
 #kcm_helpcenter_la_LDFLAGS = $(KDE_RPATH) -module -avoid-version \
 #                            $(all_libraries) -no-undefined
-#kcm_helpcenter_la_LIBADD  = $(LIB_KIO)
+#kcm_helpcenter_la_LIBADD  = $(LIB_TDEIO)
 #kcm_helpcenter_la_SOURCES = kcmhelpcenter.cpp docmetainfo.cpp \
 #                            docentrytraverser.cpp docentry.cpp htmlsearch.cpp \
 #                            htmlsearchconfig.cpp
 
 EXTRA_PROGRAMS = testmetainfo
 
-testmetainfo_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+testmetainfo_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 testmetainfo_LDADD = $(LIB_TDECORE) docentry.lo docmetainfo.lo \
                      docentrytraverser.lo htmlsearch.lo
 testmetainfo_SOURCES = testmetainfo.cpp

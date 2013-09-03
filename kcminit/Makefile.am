@@ -22,11 +22,11 @@ bin_PROGRAMS=
 lib_LTLIBRARIES=
 
 kcminit_la_SOURCES = main.cpp main.skel
-kcminit_la_LIBADD = $(LIB_TDEUI) $(LIB_KUTILS)
+kcminit_la_LIBADD = $(LIB_TDEUI) $(LIB_TDEUTILS)
 kcminit_la_LDFLAGS = $(all_libraries) -module -avoid-version
 
 kcminit_startup_la_SOURCES = main.cpp main.skel
-kcminit_startup_la_LIBADD = $(LIB_TDEUI) $(LIB_KUTILS)
+kcminit_startup_la_LIBADD = $(LIB_TDEUI) $(LIB_TDEUTILS)
 kcminit_startup_la_LDFLAGS = $(all_libraries) -module -avoid-version
 
 AM_CPPFLAGS = $(all_includes)

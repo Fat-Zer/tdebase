@@ -3,7 +3,7 @@ FONTINST_TN_SUBDIR=thumbnail
 FONTINST_VP_SUBDIR=viewpart
 endif
 
-SUBDIRS = lib $(FONTINST_TN_SUBDIR) $(FONTINST_VP_SUBDIR) kcmfontinst tdefile-plugin tdefontinst kio
+SUBDIRS = lib $(FONTINST_TN_SUBDIR) $(FONTINST_VP_SUBDIR) kcmfontinst tdefile-plugin tdefontinst tdeio
 
 EXTRA_DIST = TODO
 

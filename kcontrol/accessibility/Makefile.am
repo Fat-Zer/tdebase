@@ -5,7 +5,7 @@ kde_module_LTLIBRARIES = kcm_accessibility.la
 
 kcm_accessibility_la_SOURCES = accessibility.cpp accessibilityconfigwidget.ui
 kcm_accessibility_la_LDFLAGS  = $(all_libraries) -module -avoid-version -no-undefined
-kcm_accessibility_la_LIBADD = $(LIB_KIO)
+kcm_accessibility_la_LIBADD = $(LIB_TDEIO)
 
 noinst_HEADERS = accessibility.h
 

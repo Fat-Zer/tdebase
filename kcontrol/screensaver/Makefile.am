@@ -6,7 +6,7 @@ kde_module_LTLIBRARIES = kcm_screensaver.la
 kcm_screensaver_la_SOURCES = advanceddialogimpl.ui scrnsave.cpp testwin.cpp saverlist.cpp \
         saverconfig.cpp advanceddialog.cpp kswidget.cpp
 kcm_screensaver_la_LDFLAGS = -module -avoid-version $(all_libraries) -no-undefined
-kcm_screensaver_la_LIBADD = $(LIB_KSYCOCA) $(DPMSLIB) $(GLLIB)
+kcm_screensaver_la_LIBADD = $(LIB_TDESYCOCA) $(DPMSLIB) $(GLLIB)
 METASOURCES = AUTO
 
 noinst_HEADERS = scrnsave.h

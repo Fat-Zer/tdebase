@@ -6,7 +6,7 @@ kde_module_LTLIBRARIES = tdefile_trash.la
 
 tdefile_trash_la_SOURCES = tdefile_trash.cpp
 tdefile_trash_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
-tdefile_trash_la_LIBADD = ../libtrashcommon.la $(LIB_KIO)
+tdefile_trash_la_LIBADD = ../libtrashcommon.la $(LIB_TDEIO)
 
 METASOURCES = AUTO
 

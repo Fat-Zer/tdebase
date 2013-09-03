@@ -189,7 +189,7 @@ void KfindDlg::slotResult(int errorCode)
   }
   else
   {
-     kdDebug()<<"KIO error code: "<<errorCode<<endl;
+     kdDebug()<<"TDEIO error code: "<<errorCode<<endl;
      setStatusMsg(i18n("Error."));
   };
 

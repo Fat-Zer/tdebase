@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KLISTDEBUGDIALOG__H
-#define KLISTDEBUGDIALOG__H
+#ifndef TDELISTDEBUGDIALOG__H
+#define TDELISTDEBUGDIALOG__H
 
 #include "kabstractdebugdialog.h"
 #include <tqcheckbox.h>

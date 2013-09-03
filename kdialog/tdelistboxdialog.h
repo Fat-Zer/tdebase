@@ -18,8 +18,8 @@
 //
 
 
-#ifndef _KLISTBOXDIALOG_H_
-#define _KLISTBOXDIALOG_H_
+#ifndef _TDELISTBOXDIALOG_H_
+#define _TDELISTBOXDIALOG_H_
 
 #include <kdialogbase.h>
 

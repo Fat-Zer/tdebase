@@ -69,7 +69,7 @@ KCMCgi::KCMCgi(TQWidget *parent, const char *name)
   updateButton();
   TDEAboutData *about =
     new TDEAboutData( I18N_NOOP("kcmcgi"),
-                    I18N_NOOP("CGI KIO Slave Control Module"),
+                    I18N_NOOP("CGI TDEIO Slave Control Module"),
                     0, 0, TDEAboutData::License_GPL,
                     I18N_NOOP("(c) 2002 Cornelius Schumacher") );
 
@@ -144,7 +144,7 @@ void KCMCgi::removePath()
 
 TQString KCMCgi::quickHelp() const
 {
-  return i18n("<h1>CGI Scripts</h1> The CGI KIO slave lets you execute "
+  return i18n("<h1>CGI Scripts</h1> The CGI TDEIO slave lets you execute "
               "local CGI programs without the need to run a web server. "
               "In this control module you can configure the paths that "
               "are searched for CGI scripts.");

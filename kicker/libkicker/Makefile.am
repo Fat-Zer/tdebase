@@ -11,7 +11,7 @@ libkickermain_la_SOURCES = appletinfo.cpp global.cpp kickertip.cpp \
 libkickermain_la_METASOURCES = AUTO
 
 libkickermain_la_LDFLAGS = $(all_libraries) -version-info 1:0:0 -no-undefined
-libkickermain_la_LIBADD = $(LIB_KIO)
+libkickermain_la_LIBADD = $(LIB_TDEIO)
 
 kde_kcfg_DATA = kickerSettings.kcfg
 

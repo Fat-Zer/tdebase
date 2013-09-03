@@ -153,7 +153,7 @@
    </entry>
 
 <entry name="KickoffSearchAddressBook" type="Bool" >
-      <label>When this option is enabled, kabc is utilized to search for addresses. This may start KMail.</label>
+      <label>When this option is enabled, tdeabc is utilized to search for addresses. This may start KMail.</label>
       <default>false</default>
    </entry>
 

@@ -5,7 +5,7 @@ INCLUDES= -I$(srcdir)/.. -I$(srcdir)/../ksgrd -I../ksgrd $(all_includes)
 noinst_LTLIBRARIES = libsensordisplays.la
 
 libsensordisplays_la_LDFLAGS = $(all_libraries) -no-undefined
-libsensordisplays_la_LIBADD = ../ksgrd/libksgrd.la $(LIB_KIO)
+libsensordisplays_la_LIBADD = ../ksgrd/libksgrd.la $(LIB_TDEIO)
 
 # Which sources should be compiled for the sensor display lib.
 libsensordisplays_la_SOURCES = \

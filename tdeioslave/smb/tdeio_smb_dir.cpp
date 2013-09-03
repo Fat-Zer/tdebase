@@ -51,7 +51,7 @@ void SMBSlave::copy( const KURL& ksrc,
     TDEIO::filesize_t processed_size = 0;
     unsigned char   buf[MAX_XFER_BUF_SIZE];
 
-    kdDebug(KIO_SMB) << "SMBSlave::copy with src = " << ksrc << "and dest = " << kdst << endl;
+    kdDebug(TDEIO_SMB) << "SMBSlave::copy with src = " << ksrc << "and dest = " << kdst << endl;
 
     // setup urls
     src = ksrc;
@@ -152,7 +152,7 @@ void SMBSlave::copy( const KURL& ksrc,
             n = smbc_write(dstfd, buf, n);
             if(n == -1)
             {
-	        kdDebug(KIO_SMB) << "SMBSlave::copy copy now TDEIO::ERR_COULD_NOT_WRITE" << endl;
+	        kdDebug(TDEIO_SMB) << "SMBSlave::copy copy now TDEIO::ERR_COULD_NOT_WRITE" << endl;
                 error( TDEIO::ERR_COULD_NOT_WRITE, dst.prettyURL());
                 break;
             }
@@ -199,13 +199,13 @@ void SMBSlave::copy( const KURL& ksrc,
 //===========================================================================
 void SMBSlave::del( const KURL &kurl, bool isfile)
 {
-    kdDebug(KIO_SMB) << "SMBSlave::del on " << kurl << endl;
+    kdDebug(TDEIO_SMB) << "SMBSlave::del on " << kurl << endl;
     m_current_url = kurl;
 
     if(isfile)
     {
         // Delete file
-        kdDebug(KIO_SMB) << "SMBSlave:: unlink " << kurl << endl;
+        kdDebug(TDEIO_SMB) << "SMBSlave:: unlink " << kurl << endl;
         if(smbc_unlink(m_current_url.toSmbcUrl()) == -1)
         {
             switch(errno)
@@ -220,7 +220,7 @@ void SMBSlave::del( const KURL &kurl, bool isfile)
     }
     else
     {
-        kdDebug(KIO_SMB) << "SMBSlave:: rmdir " << kurl << endl;
+        kdDebug(TDEIO_SMB) << "SMBSlave:: rmdir " << kurl << endl;
         // Delete directory
         if(smbc_rmdir(m_current_url.toSmbcUrl()) == -1)
         {
@@ -234,7 +234,7 @@ void SMBSlave::del( const KURL &kurl, bool isfile)
 //===========================================================================
 void SMBSlave::mkdir( const KURL &kurl, int permissions )
 {
-    kdDebug(KIO_SMB) << "SMBSlave::mkdir on " << kurl << endl;
+    kdDebug(TDEIO_SMB) << "SMBSlave::mkdir on " << kurl << endl;
     m_current_url = kurl;
 
     if(smbc_mkdir(m_current_url.toSmbcUrl(), 0777) != 0)
@@ -253,7 +253,7 @@ void SMBSlave::mkdir( const KURL &kurl, int permissions )
             }
         } else
             reportError(kurl);
-	kdDebug(KIO_SMB) << "SMBSlave::mkdir exit with error " << kurl << endl;
+	kdDebug(TDEIO_SMB) << "SMBSlave::mkdir exit with error " << kurl << endl;
     }
     else
     {
@@ -275,35 +275,35 @@ void SMBSlave::rename( const KURL& ksrc, const KURL& kdest, bool overwrite )
     SMBUrl      src;
     SMBUrl      dst;
 
-    kdDebug(KIO_SMB) << "SMBSlave::rename, old name = " << ksrc << ", new name = " << kdest << endl;
+    kdDebug(TDEIO_SMB) << "SMBSlave::rename, old name = " << ksrc << ", new name = " << kdest << endl;
 
     src = ksrc;
     dst = kdest;
 
     // Check to se if the destination exists
 
-    kdDebug(KIO_SMB) << "SMBSlave::rename stat dst" << endl;
+    kdDebug(TDEIO_SMB) << "SMBSlave::rename stat dst" << endl;
     if(cache_stat(dst, &st) != -1)
     {
         if(S_ISDIR(st.st_mode))
         {
-	    kdDebug(KIO_SMB) << "SMBSlave::rename TDEIO::ERR_DIR_ALREADY_EXIST" << endl;
+	    kdDebug(TDEIO_SMB) << "SMBSlave::rename TDEIO::ERR_DIR_ALREADY_EXIST" << endl;
             error( TDEIO::ERR_DIR_ALREADY_EXIST, dst.prettyURL());
 	    finished();
 	    return;
         }
         if(!overwrite)
         {
-	    kdDebug(KIO_SMB) << "SMBSlave::rename TDEIO::ERR_FILE_ALREADY_EXIST" << endl;
+	    kdDebug(TDEIO_SMB) << "SMBSlave::rename TDEIO::ERR_FILE_ALREADY_EXIST" << endl;
             error( TDEIO::ERR_FILE_ALREADY_EXIST, dst.prettyURL());
 	    finished();
 	    return;
 	}
     }
-    kdDebug(KIO_SMB ) << "smbc_rename " << src.toSmbcUrl() << " " << dst.toSmbcUrl() << endl;
+    kdDebug(TDEIO_SMB ) << "smbc_rename " << src.toSmbcUrl() << " " << dst.toSmbcUrl() << endl;
     if(smbc_rename(src.toSmbcUrl(), dst.toSmbcUrl())!=0)
     {
-        kdDebug(KIO_SMB ) << "failed " << perror << endl;
+        kdDebug(TDEIO_SMB ) << "failed " << perror << endl;
       switch(errno)
       {
         case ENOENT:
@@ -311,12 +311,12 @@ void SMBSlave::rename( const KURL& ksrc, const KURL& kdest, bool overwrite )
           {
               if(errno == EACCES)
 	      {
-	        kdDebug(KIO_SMB) << "SMBSlave::rename TDEIO::ERR_ACCESS_DENIED" << endl;
+	        kdDebug(TDEIO_SMB) << "SMBSlave::rename TDEIO::ERR_ACCESS_DENIED" << endl;
                 error(TDEIO::ERR_ACCESS_DENIED, src.prettyURL());
               }
               else
               {
-		kdDebug(KIO_SMB) << "SMBSlave::rename TDEIO::ERR_DOES_NOT_EXIST" << endl;
+		kdDebug(TDEIO_SMB) << "SMBSlave::rename TDEIO::ERR_DOES_NOT_EXIST" << endl;
                 error(TDEIO::ERR_DOES_NOT_EXIST, src.prettyURL());
               }
           }
@@ -324,21 +324,21 @@ void SMBSlave::rename( const KURL& ksrc, const KURL& kdest, bool overwrite )
 
         case EACCES:
         case EPERM:
-  	  kdDebug(KIO_SMB) << "SMBSlave::rename TDEIO::ERR_ACCESS_DENIED" << endl;
+  	  kdDebug(TDEIO_SMB) << "SMBSlave::rename TDEIO::ERR_ACCESS_DENIED" << endl;
           error( TDEIO::ERR_ACCESS_DENIED, dst.prettyURL() );
           break;
 
         default:
-  	  kdDebug(KIO_SMB) << "SMBSlave::rename TDEIO::ERR_CANNOT_RENAME" << endl;
+  	  kdDebug(TDEIO_SMB) << "SMBSlave::rename TDEIO::ERR_CANNOT_RENAME" << endl;
           error( TDEIO::ERR_CANNOT_RENAME, src.prettyURL() );
 
       }
 
-      kdDebug(KIO_SMB) << "SMBSlave::rename exit with error" << endl;
+      kdDebug(TDEIO_SMB) << "SMBSlave::rename exit with error" << endl;
       return;
     }
 
-    kdDebug(KIO_SMB ) << "everything fine\n";
+    kdDebug(TDEIO_SMB ) << "everything fine\n";
     finished();
 }
 

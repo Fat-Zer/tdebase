@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef KIO_REMOTE_H
-#define KIO_REMOTE_H
+#ifndef TDEIO_REMOTE_H
+#define TDEIO_REMOTE_H
 
 #include <tdeio/slavebase.h>
 #include "remoteimpl.h"

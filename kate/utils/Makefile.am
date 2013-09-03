@@ -8,7 +8,7 @@ libkateutils_la_SOURCES = dockviewbase.cpp messageview.cpp listboxview.cpp
 
 libkateutils_la_LDFLAGS = $(all_libraries) -no-undefined
                       
-libkateutils_la_LIBADD = $(LIB_TDEUI) $(LIB_TDECORE) $(LIB_KIO)
+libkateutils_la_LIBADD = $(LIB_TDEUI) $(LIB_TDECORE) $(LIB_TDEIO)
 
 libkateutils_la_METASOURCES = AUTO
 

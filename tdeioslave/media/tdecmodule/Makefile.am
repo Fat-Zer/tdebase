@@ -9,7 +9,7 @@ kcm_media_la_SOURCES = notifiermodule.cpp notifiermoduleview.ui \
                        main.cpp
 
 kcm_media_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-kcm_media_la_LIBADD = ../libmediacommon/libmediacommon.la $(LIB_KIO)
+kcm_media_la_LIBADD = ../libmediacommon/libmediacommon.la $(LIB_TDEIO)
 
 noinst_HEADERS = notifiermodule.h managermodule.h \
                  serviceconfigdialog.h mimetypelistboxitem.h \

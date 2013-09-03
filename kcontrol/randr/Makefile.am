@@ -30,7 +30,7 @@ bin_PROGRAMS = tderandrtray
 
 tderandrtray_SOURCES = main.cpp tderandrtray.cpp tderandrapp.cpp tderandrpassivepopup.cpp configdialog.cpp
 tderandrtray_LDFLAGS = $(all_libraries) $(KDE_RPATH) -ltderandr
-tderandrtray_LDADD = $(LIB_TDEFILE) $(LIB_KUTILS) $(LIB_XRANDR)
+tderandrtray_LDADD = $(LIB_TDEFILE) $(LIB_TDEUTILS) $(LIB_XRANDR)
 
 messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/tderandr.pot

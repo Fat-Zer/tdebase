@@ -5,7 +5,7 @@ kcm_iccconfig_la_SOURCES = iccconfig.cpp iccconfigbase.ui iccconfig.skel
 
 kcm_iccconfig_la_LDFLAGS  = $(all_libraries) -ltderandr -module -avoid-version -no-undefined
 
-kcm_iccconfig_la_LIBADD = -ltdeui $(LIB_KIO) $(LIB_XRANDR)
+kcm_iccconfig_la_LIBADD = -ltdeui $(LIB_TDEIO) $(LIB_XRANDR)
 
 METASOURCES = AUTO
 

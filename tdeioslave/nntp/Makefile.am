@@ -5,7 +5,7 @@ INCLUDES= -I$(srcdir)/../.. -I$(srcdir)/.. $(all_includes)
 kde_module_LTLIBRARIES = tdeio_nntp.la
 
 tdeio_nntp_la_SOURCES = nntp.cpp
-tdeio_nntp_la_LIBADD  = $(LIB_KIO)
+tdeio_nntp_la_LIBADD  = $(LIB_TDEIO)
 tdeio_nntp_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 METASOURCES = AUTO

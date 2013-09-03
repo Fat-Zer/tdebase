@@ -49,7 +49,7 @@ class KQuery : public TQObject
   /* List of files found using slocate */
   void slotListEntries(TQStringList);
  protected slots:
-  /* List of files found using KIO */
+  /* List of files found using TDEIO */
   void slotListEntries(TDEIO::Job *, const TDEIO::UDSEntryList &);
   void slotResult(TDEIO::Job *);
   void slotCanceled(TDEIO::Job *);

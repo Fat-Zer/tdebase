@@ -1051,7 +1051,7 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
 void KonqKfmIconView::slotDeleteItem( KFileItem * _fileitem )
 {
     // new in 3.5.5
-#ifdef KPARTS_BROWSEREXTENSION_HAS_ITEMS_REMOVED
+#ifdef TDEPARTS_BROWSEREXTENSION_HAS_ITEMS_REMOVED
     KFileItemList list;
     list.append( _fileitem );
     emit m_extension->itemsRemoved( list );

@@ -4,7 +4,7 @@ kde_module_LTLIBRARIES = kickermenu_konsole.la
 
 kickermenu_konsole_la_SOURCES = konsole_mnu.cpp konsolebookmarkhandler.cpp konsolebookmarkmenu.cpp
 kickermenu_konsole_la_LDFLAGS = $(all_libraries) -module -avoid-version
-kickermenu_konsole_la_LIBADD = $(LIB_TDEUI) $(LIB_KIO)
+kickermenu_konsole_la_LIBADD = $(LIB_TDEUI) $(LIB_TDEIO)
 
 kickermenu_konsole_la_METASOURCES = AUTO
 

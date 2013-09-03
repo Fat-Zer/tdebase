@@ -9,10 +9,10 @@ METASOURCES = AUTO
 kde_module_LTLIBRARIES = libkuriikwsfilter.la libkurisearchfilter.la
 
 libkuriikwsfilter_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
-libkuriikwsfilter_la_LIBADD = $(LIB_KSYCOCA) $(LIB_TDEUI)
+libkuriikwsfilter_la_LIBADD = $(LIB_TDESYCOCA) $(LIB_TDEUI)
 
 libkurisearchfilter_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
-libkurisearchfilter_la_LIBADD = $(LIB_KSYCOCA) $(LIB_TDEUI)
+libkurisearchfilter_la_LIBADD = $(LIB_TDESYCOCA) $(LIB_TDEUI)
 
 libkuriikwsfilter_la_SOURCES = kuriikwsfiltereng.cpp kuriikwsfilter.skel \
     kuriikwsfilter.cpp searchprovider.cpp

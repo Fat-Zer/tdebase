@@ -5,7 +5,7 @@ kcm_tdednssd_la_LDFLAGS = -avoid-version -module -no-undefined $(all_libraries)
 kcm_tdednssd_la_SOURCES = configdialog.ui kcmdnssd.cpp kcmdnssd.h
 
 xdg_apps_DATA = kcm_tdednssd.desktop
-kcm_tdednssd_la_LIBADD = $(LIB_KDNSSD) $(LIB_TDEUI)
+kcm_tdednssd_la_LIBADD = $(LIB_TDEDNSSD) $(LIB_TDEUI)
 
 messages: rc.cpp
 	$(EXTRACTRC) *.ui *.rc >> rc.cpp

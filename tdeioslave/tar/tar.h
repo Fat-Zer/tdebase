@@ -42,7 +42,7 @@ protected:
      * \brief find, check and open the archive file
      * \param url The URL of the archive
      * \param path Path where the archive really is (returned value)
-     * \param errNum KIO error number (undefined if the function returns true)
+     * \param errNum TDEIO error number (undefined if the function returns true)
      * \return true if file was found, false if there was an error
      */
     bool checkNewFile( const KURL & url, TQString & path, TDEIO::Error& errorNum );

@@ -7,7 +7,7 @@ INCLUDES= $(all_includes)
 kde_module_LTLIBRARIES = tdeio_print.la
 
 tdeio_print_la_SOURCES = tdeio_print.cpp
-tdeio_print_la_LIBADD = $(LIB_KIO) -ltdeprint
+tdeio_print_la_LIBADD = $(LIB_TDEIO) -ltdeprint
 tdeio_print_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 METASOURCES = AUTO

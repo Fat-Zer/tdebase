@@ -49,7 +49,7 @@ the &tde; desktop. This section was written with version 1.4 of
 &koffice; is a highly integrated office suite that builds directly on the
 TDE technology. This has many advantages in terms of integration, features,
 performance, familiar look and feel and so on. All technologies like &DCOP;,
-KIO, KParts are directly available.
+TDEIO, KParts are directly available.
 </para>
 <para>
 In particular the KParts technology is extended for the &koffice;
@@ -289,7 +289,7 @@ actually use the OASIS OpenDocument file format.
 <para>Each Koffice component comes with its own manual.
 These manuals offer all the latest information about the
 various components &koffice; has to offer and should be
-read to learn more about &koffice;. The application manuals can be accessed by using the documentation KIO Slave in &konqueror; (that is, typing <userinput>help:/<replaceable>application</replaceable></userinput> into the Location toolbar) or by selecting the respective handbook from the &khelpcenter;. The website is
+read to learn more about &koffice;. The application manuals can be accessed by using the documentation TDEIO Slave in &konqueror; (that is, typing <userinput>help:/<replaceable>application</replaceable></userinput> into the Location toolbar) or by selecting the respective handbook from the &khelpcenter;. The website is
 also a good place to find out more; it is at <ulink url="http://www.koffice.org">http://www.koffice.org</ulink>.</para>
 </sect1>
 

@@ -5,7 +5,7 @@ kde_module_LTLIBRARIES = kcm_knotify.la
 kcm_knotify_la_SOURCES = knotify.cpp playersettings.ui
 
 kcm_knotify_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
-kcm_knotify_la_LIBADD = $(LIB_KIO)
+kcm_knotify_la_LIBADD = $(LIB_TDEIO)
 AM_CPPFLAGS = $(all_includes)
  
 METASOURCES = AUTO 

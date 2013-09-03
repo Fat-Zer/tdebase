@@ -19,8 +19,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KIO_MEDIA_MOUNTHELPER_H_
-#define _KIO_MEDIA_MOUNTHELPER_H_
+#ifndef _TDEIO_MEDIA_MOUNTHELPER_H_
+#define _TDEIO_MEDIA_MOUNTHELPER_H_
 
 #include <tdeapplication.h>
 #include <tqstring.h>

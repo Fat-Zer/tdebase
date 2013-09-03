@@ -28,8 +28,8 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#ifndef KIO_SMB_INTERNAL_H_INCLUDED
-#define KIO_SMB_INTERNAL_H_INCLUDED
+#ifndef TDEIO_SMB_INTERNAL_H_INCLUDED
+#define TDEIO_SMB_INTERNAL_H_INCLUDED
 
 #include <tdeio/authinfo.h>
 

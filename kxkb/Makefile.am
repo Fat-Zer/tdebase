@@ -13,7 +13,7 @@ kde_module_LTLIBRARIES = kcm_keyboard.la
 kcm_keyboard_la_SOURCES = extension.cpp x11helper.cpp rules.cpp kxkbconfig.cpp pixmap.cpp \
 	kcmlayout.cpp kcmlayoutwidget.ui kcmmisc.cpp kcmmiscwidget.ui
 kcm_keyboard_la_LDFLAGS  = $(all_libraries) -module -avoid-version -no-undefined
-kcm_keyboard_la_LIBADD = -lxkbfile $(XTESTLIB) $(LIB_KIO)
+kcm_keyboard_la_LIBADD = -lxkbfile $(XTESTLIB) $(LIB_TDEIO)
 
 #kxkb_la_includedir = .
 #kxkb_la_include_HEADERS = kxkb.h

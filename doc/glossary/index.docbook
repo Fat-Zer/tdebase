@@ -24,8 +24,8 @@
 				<glossseealso otherterm="gloss-kde">&tde;</glossseealso>
 			</glossdef>
 		</glossentry>
-		<glossentry id="gloss-kio">
-			<glossterm><acronym>KIO</acronym></glossterm>
+		<glossentry id="gloss-tdeio">
+			<glossterm><acronym>TDEIO</acronym></glossterm>
 			<glossdef><para>The &tde; Input/Output system which makes use of so-called
 				<quote><acronym>IO</acronym> Slaves</quote>.</para>
 				<glossseealso otherterm="gloss-ioslave"><acronym>IO</acronym> 

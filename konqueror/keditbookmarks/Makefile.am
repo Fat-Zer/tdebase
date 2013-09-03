@@ -7,8 +7,8 @@ lib_LTLIBRARIES =
 tdeinit_LTLIBRARIES = keditbookmarks.la
 
 kbookmarkmerger_SOURCES = kbookmarkmerger.cpp
-kbookmarkmerger_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-kbookmarkmerger_LDADD = $(LIB_KIO)
+kbookmarkmerger_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
+kbookmarkmerger_LDADD = $(LIB_TDEIO)
 
 dcop_DCOPIDLNG = true
 keditbookmarks_la_SOURCES = main.cpp listview.cpp toplevel.cpp actionsimpl.cpp commands.cpp importers.cpp dcop.skel dcop.cpp bookmarkiterator.cpp  \

@@ -1895,7 +1895,7 @@ bool NSPluginStream::get( const TQString& url, const TQString& mimeType,
 {
     // create new stream
     if ( create( url, mimeType, notify ) ) {
-        // start the kio job
+        // start the tdeio job
         _job = TDEIO::get(KURL( url ), false, false);
         _job->addMetaData("errorPage", "false");
         _job->addMetaData("AllowCompressedPage", "false");
@@ -1923,7 +1923,7 @@ bool NSPluginStream::post( const TQString& url, const TQByteArray& data,
 {
     // create new stream
     if ( create( url, mimeType, notify ) ) {
-        // start the kio job
+        // start the tdeio job
         _job = TDEIO::http_post(KURL( url ), data, false);
         _job->addMetaData("content-type", args.contentType());
         _job->addMetaData("errorPage", "false");

@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef KIO_HOME_H
-#define KIO_HOME_H
+#ifndef TDEIO_HOME_H
+#define TDEIO_HOME_H
 
 #include <tdeio/forwardingslavebase.h>
 #include "homeimpl.h"

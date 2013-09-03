@@ -7,7 +7,7 @@ METASOURCES = AUTO
 kde_module_LTLIBRARIES = tdeio_home.la
 
 tdeio_home_la_SOURCES = dummy.cpp
-tdeio_home_la_LIBADD  = libtdeiohome.la $(LIB_KIO)
+tdeio_home_la_LIBADD  = libtdeiohome.la $(LIB_TDEIO)
 tdeio_home_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) -no-undefined
 
 dummy.cpp:
@@ -20,7 +20,7 @@ libtdeiohome_la_SOURCES = tdeio_home.cpp homeimpl.cpp
 
 check_PROGRAMS = testhome
 testhome_SOURCES = testhome.cpp
-testhome_LDADD = libtdeiohome.la $(LIB_KIO)
+testhome_LDADD = libtdeiohome.la $(LIB_TDEIO)
 testhome_LDFLAGS = $(all_libraries)
 
 ## TODO in unsermake: TESTS = testhome

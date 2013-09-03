@@ -13,7 +13,7 @@ kaccess_la_LIBADD = $(LIB_TDEUI)
 
 kcm_access_la_SOURCES = kcmaccess.cpp 
 kcm_access_la_LDFLAGS  = $(all_libraries) -module -avoid-version -no-undefined
-kcm_access_la_LIBADD = $(LIB_KIO)
+kcm_access_la_LIBADD = $(LIB_TDEIO)
 
 noinst_HEADERS = kcmaccess.h
 

@@ -37,7 +37,7 @@ void SMBSlave::readStdErr(TDEProcess *, char *buffer, int buflen)
 
 void SMBSlave::special( const TQByteArray & data)
 {
-   kdDebug(KIO_SMB)<<"Smb::special()"<<endl;
+   kdDebug(TDEIO_SMB)<<"Smb::special()"<<endl;
    int tmp;
    TQDataStream stream(data, IO_ReadOnly);
    stream >> tmp;
@@ -56,12 +56,12 @@ void SMBSlave::special( const TQByteArray & data)
          {
             host=(*sl.at(0)).mid(2);
             share=(*sl.at(1));
-            kdDebug(KIO_SMB)<<"special() host -"<< host <<"- share -" << share <<"-"<<endl;
+            kdDebug(TDEIO_SMB)<<"special() host -"<< host <<"- share -" << share <<"-"<<endl;
          }
 
          remotePath.replace('\\', '/');  // smbmounterplugin sends \\host/share
 
-         kdDebug(KIO_SMB) << "mounting: " << remotePath.local8Bit() << " to " << mountPoint.local8Bit() << endl;
+         kdDebug(TDEIO_SMB) << "mounting: " << remotePath.local8Bit() << " to " << mountPoint.local8Bit() << endl;
 
          if (tmp==3) {
              if (!TDEStandardDirs::makeDir(mountPoint)) {
@@ -126,7 +126,7 @@ void SMBSlave::special( const TQByteArray & data)
             return;
          }
 
-         kdDebug(KIO_SMB) << "mount exit " << proc.exitStatus() << endl
+         kdDebug(TDEIO_SMB) << "mount exit " << proc.exitStatus() << endl
                           << "stdout:" << mybuf << endl << "stderr:" << mystderr << endl;
 
          if (proc.exitStatus() != 0)
@@ -167,7 +167,7 @@ void SMBSlave::special( const TQByteArray & data)
            return;
          }
 
-         kdDebug(KIO_SMB) << "smbumount exit " << proc.exitStatus() << endl
+         kdDebug(TDEIO_SMB) << "smbumount exit " << proc.exitStatus() << endl
                           << "stdout:" << mybuf << endl << "stderr:" << mystderr << endl;
 
          if (proc.exitStatus() != 0)

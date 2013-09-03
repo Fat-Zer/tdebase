@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KIO_FLOPPY_H
-#define KIO_FLOPPY_H
+#ifndef TDEIO_FLOPPY_H
+#define TDEIO_FLOPPY_H
 
 #include <tdeio/slavebase.h>
 #include <tdeio/global.h>

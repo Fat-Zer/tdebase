@@ -1188,10 +1188,10 @@ on a multi-head system.</para>
 
 <varlistentry><term>$<envar>TDE_FORK_SLAVES</envar></term>
 <listitem><para>Set this variable to spawn
-<acronym>KIO</acronym>-slaves directly from the application process
-itself. By default <acronym>KIO</acronym>-slaves are spawned using
+<acronym>TDEIO</acronym>-slaves directly from the application process
+itself. By default <acronym>TDEIO</acronym>-slaves are spawned using
 <command>tdelauncher</command>/<command>tdeinit</command>. This option is
-useful if the <acronym>KIO</acronym>-slave should run in the same
+useful if the <acronym>TDEIO</acronym>-slave should run in the same
 environment as the application. This can be the case with
 <application>Clearcase</application>.</para>
 </listitem>

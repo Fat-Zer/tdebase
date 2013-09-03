@@ -20,8 +20,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KACCELACTION_H
-#define _KACCELACTION_H
+#ifndef _TDEACCELACTION_H
+#define _TDEACCELACTION_H
 
 #include <tqmap.h>
 #include <tqptrvector.h>
@@ -202,4 +202,4 @@ class TDEAccelActions
 	friend class TDEAccelBase;
 };
 
-#endif // _KACCELACTION_H
+#endif // _TDEACCELACTION_H

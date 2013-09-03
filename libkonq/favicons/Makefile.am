@@ -3,7 +3,7 @@ kde_module_LTLIBRARIES = kded_favicons.la
 INCLUDES = $(all_includes)
 kded_favicons_la_SOURCES = favicons.cpp favicons.skel
 kded_favicons_la_LDFLAGS = $(all_libraries) -module -avoid-version
-kded_favicons_la_LIBADD = $(LIB_KSYCOCA)
+kded_favicons_la_LIBADD = $(LIB_TDESYCOCA)
 
 METASOURCES = AUTO
 

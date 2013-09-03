@@ -3,7 +3,7 @@ INCLUDES = -I$(srcdir)/../libmediacommon -I../libmediacommon $(all_includes)
 kde_module_LTLIBRARIES = kded_medianotifier.la
 kded_medianotifier_la_LDFLAGS = -module -avoid-version $(all_libraries)
 kded_medianotifier_la_LIBADD = ../libmediacommon/libmediacommon.la $(LIB_TDECORE) \
-                               $(LIB_TDEUI) $(LIB_KIO)
+                               $(LIB_TDEUI) $(LIB_TDEIO)
 kded_medianotifier_la_SOURCES = medianotifier.cpp medianotifier.skel \
                                 notificationdialog.cpp notificationdialogview.ui
 

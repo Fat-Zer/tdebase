@@ -401,7 +401,7 @@ select/deselect --> in order to enable or disable debugging output for
 that part of &tde;.</para>
 
 <para>The list of debugging areas is sorted numerically, not alphabetically,
-so kio (127) comes before artskde (400). The numbers go up to 200000 or so,
+so tdeio (127) comes before artskde (400). The numbers go up to 200000 or so,
 but there are really only 400 areas. You don't have to scroll through the
 entire list to find the area you need, though. There is a line edit <!--
 text-entry ? --> box at the top of the dialog where you can enter a part of

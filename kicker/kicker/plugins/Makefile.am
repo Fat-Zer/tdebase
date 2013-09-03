@@ -8,7 +8,7 @@ kde_module_LTLIBRARIES = kickoffsearch_beagle.la
 kickoffsearch_beagle_la_SOURCES = kickoff-beagle-plugin.cpp beaglesearch.cpp
 
 # Libs needed by the plugin
-kickoffsearch_beagle_la_LIBADD = $(LIB_KPARTS) ../interfaces/libkickoffsearch_interfaces.la \
+kickoffsearch_beagle_la_LIBADD = $(LIB_TDEPARTS) ../interfaces/libkickoffsearch_interfaces.la \
 	$(LIBBEAGLE_LIBADD) $(GLIB_LIBADD)
 
 # LD flags for the plugin

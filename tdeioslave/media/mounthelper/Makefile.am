@@ -5,8 +5,8 @@ AM_LDFLAGS = $(all_libraries)
 
 tdeio_media_mounthelper_SOURCES = tdeio_media_mounthelper.cpp decryptdialog.ui dialog.cpp
 
-tdeio_media_mounthelper_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-tdeio_media_mounthelper_LDADD = ../libmediacommon/libmediacommon.la $(LIB_KIO) $(LIB_TDEUI)
+tdeio_media_mounthelper_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
+tdeio_media_mounthelper_LDADD = ../libmediacommon/libmediacommon.la $(LIB_TDEIO) $(LIB_TDEUI)
 
 METASOURCES = AUTO
 

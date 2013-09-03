@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KIO_MEDIA_H_
-#define _KIO_MEDIA_H_
+#ifndef _TDEIO_MEDIA_H_
+#define _TDEIO_MEDIA_H_
 
 #include <tdeio/forwardingslavebase.h>
 

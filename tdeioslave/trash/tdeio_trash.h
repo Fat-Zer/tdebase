@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef KIO_TRASH_H
-#define KIO_TRASH_H
+#ifndef TDEIO_TRASH_H
+#define TDEIO_TRASH_H
 
 #include <tdeio/slavebase.h>
 #include "trashimpl.h"

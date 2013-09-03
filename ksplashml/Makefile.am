@@ -6,8 +6,8 @@ METASOURCES=AUTO
 
 bin_PROGRAMS = ksplash
 ksplash_SOURCES = wndmain.cpp ksplashiface.skel main.cpp
-ksplash_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-ksplash_LDADD = $(LIB_TDEUI) themeengine/default/libthemedefault.la themeengine/libksplashthemes.la $(LIB_KIO)
+ksplash_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
+ksplash_LDADD = $(LIB_TDEUI) themeengine/default/libthemedefault.la themeengine/libksplashthemes.la $(LIB_TDEIO)
 
 noinst_HEADERS = ksplashiface.h wndmain.h
 

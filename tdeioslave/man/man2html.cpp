@@ -318,7 +318,7 @@ static void InitStringDefinitions( void )
     // Missing characters from man(7):
     // \*S "Change to default font size"
 #ifndef SIMPLE_MAN2HTML
-    // Special KDE KIO man:
+    // Special KDE TDEIO man:
     const TQCString tdeversion(TDE_VERSION_STRING);
     s_stringDefinitionMap.insert( ".TDE_VERSION_STRING", StringDefinition( tdeversion.length(), tdeversion ) );
 #endif
@@ -1428,7 +1428,7 @@ static int read_only_number_register( const TQCString& name )
     else if ( name == ".A" )
         return s_nroff;
 #ifndef SIMPLE_MAN2HTML
-    // Special KDE KIO man:
+    // Special KDE TDEIO man:
     else if ( name == ".TDE_VERSION_MAJOR" )
         return TDE_VERSION_MAJOR;
     else if ( name == ".TDE_VERSION_MINOR" )

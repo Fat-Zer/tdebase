@@ -31,8 +31,8 @@ ksysguard_SOURCES = \
 ksysguard_LDADD = \
 	ksgrd/libksgrd.la \
 	SensorDisplayLib/libsensordisplays.la \
-	$(LIB_TDEUI) $(LIB_KIO) $(LIB_KDNSSD)
-ksysguard_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+	$(LIB_TDEUI) $(LIB_TDEIO) $(LIB_TDEDNSSD)
+ksysguard_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 
 kpm_SOURCES = kpm.c
 
@@ -49,7 +49,7 @@ sysguard_panelapplet_la_SOURCES = \
 sysguard_panelapplet_la_LIBADD = \
 	ksgrd/libksgrd.la \
 	SensorDisplayLib/libsensordisplays.la \
-	$(LIB_TDEUI) $(LIB_KIO)
+	$(LIB_TDEUI) $(LIB_TDEIO)
 sysguard_panelapplet_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 
 EXTRA_DIST = $(lnk_DATA)

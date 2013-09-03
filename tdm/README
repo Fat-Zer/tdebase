@@ -17,7 +17,7 @@ configure options that affect TDM
   if PAM is not used.
 
 --with-krb4[=path]
-  Compile TDM (and the LDAP KIO slave) with KTH Kerberos 4 support. Note
+  Compile TDM (and the LDAP TDEIO slave) with KTH Kerberos 4 support. Note
   that this does not work with the Kerberos 4 compatibility layer found in
   MIT Kerberos 5. This affects TDM only if PAM is not used.
 

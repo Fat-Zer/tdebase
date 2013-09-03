@@ -5,7 +5,7 @@ kpersonalizer_SOURCES = stylepreview.ui krefinepage.cpp \
       kcountrypagedlg.ui kospagedlg.ui keyecandypagedlg.ui tdestylepagedlg.ui \
       krefinepagedlg.ui  ksysinfo.cpp
 
-kpersonalizer_LDADD   = $(LIB_KIO) 
+kpersonalizer_LDADD   = $(LIB_TDEIO) 
 
 EXTRA_DIST = main.cpp kpersonalizer.cpp kpersonalizer.h kpersonalizer.desktop kcountrypage.cpp kcountrypage.h kospage.cpp kospage.h keyecandypage.cpp keyecandypage.h tdestylepage.cpp tdestylepage.h krefinepage.cpp krefinepage.h cr16-app-kpersonalizer.png cr32-app-kpersonalizer.png README kcountrypagedlg.ui kospage.ui keyecandypagedlg.ui tdestylepagedlg.ui krefinepagedlg.ui kfindlanguage.cpp kfindlanguage.h
 
@@ -38,7 +38,7 @@ METASOURCES = AUTO
 
 KDE_ICON= AUTO
 # the library search path. 
-kpersonalizer_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+kpersonalizer_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 
 # Uncomment the following two lines if you add a ui.rc file for your application to make use of
 # KDE´s XML GUI builing

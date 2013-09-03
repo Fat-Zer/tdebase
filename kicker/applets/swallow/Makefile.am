@@ -3,7 +3,7 @@ INCLUDES = $(all_includes)
 kde_module_LTLIBRARIES = swallow_panelapplet.la
 
 swallow_panelapplet_la_LDFLAGS	= -module $(KDE_PLUGIN) $(all_libraries)
-swallow_panelapplet_la_LIBADD = $(LIB_TDEUI) $(LIB_KIO)
+swallow_panelapplet_la_LIBADD = $(LIB_TDEUI) $(LIB_TDEIO)
 
 swallow_panelapplet_la_SOURCES = swallow.cpp prefwidgetbase.ui prefwidget.cpp
 

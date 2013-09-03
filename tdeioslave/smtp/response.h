@@ -56,7 +56,7 @@ namespace KioSMTP {
     /** Return an internationalized error message according to the
 	response's code. */
     TQString errorMessage() const;
-    /** Translate the SMTP error code into a KIO one */
+    /** Translate the SMTP error code into a TDEIO one */
     int errorCode() const;
 
     enum Reply {

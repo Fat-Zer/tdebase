@@ -33,8 +33,8 @@
 /////////////////////////////////////////////////////////////////////////////
 
 
-#ifndef KIO_SMB_H_INCLUDED
-#define KIO_SMB_H_INCLUDED
+#ifndef TDEIO_SMB_H_INCLUDED
+#define TDEIO_SMB_H_INCLUDED
 
 //-------------
 // QT includes
@@ -84,7 +84,7 @@ extern "C"
 #include "tdeio_smb_internal.h"
 
 #define MAX_XFER_BUF_SIZE           16348
-#define KIO_SMB                     7106
+#define TDEIO_SMB                     7106
 
 using namespace TDEIO;
 class TDEProcess;
@@ -298,4 +298,4 @@ int kdemain( int argc, char **argv );
 }
 
 
-#endif  //#endif KIO_SMB_H_INCLUDED
+#endif  //#endif TDEIO_SMB_H_INCLUDED

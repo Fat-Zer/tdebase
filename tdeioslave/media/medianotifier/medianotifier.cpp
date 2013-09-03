@@ -137,7 +137,7 @@ bool MediaNotifier::autostart( const KFileItem &medium )
 	}
 	
 	// From now we're sure the medium is already mounted.
-	// We can use the local path for stating, no need to use KIO here.
+	// We can use the local path for stating, no need to use TDEIO here.
 	bool local;
 	TQString path = medium.mostLocalURL( local ).path(); // local is always true here...
 

@@ -150,19 +150,19 @@ int kdemain(int argc, char **argv)
 	TDECmdLineArgs::init( &about );
 	TDEApplication app;
 
-	KIO_Print	 slave(argv[2], argv[3]);
+	TDEIO_Print	 slave(argv[2], argv[3]);
 	slave.dispatchLoop();
 
 	PRINT_DEBUG << "done" << endl;
 	return 0;
 }
 
-KIO_Print::KIO_Print(const TQCString& pool, const TQCString& app)
+TDEIO_Print::TDEIO_Print(const TQCString& pool, const TQCString& app)
 : TDEIO::SlaveBase("print", pool, app)
 {
 }
 
-void KIO_Print::listDir(const KURL& url)
+void TDEIO_Print::listDir(const KURL& url)
 {
 	if ( url.protocol() == "printdb" )
 	{
@@ -233,7 +233,7 @@ void KIO_Print::listDir(const KURL& url)
 	}
 }
 
-void KIO_Print::listRoot()
+void TDEIO_Print::listRoot()
 {
 	PRINT_DEBUG << "listing root entry" << endl;
 
@@ -266,7 +266,7 @@ void KIO_Print::listRoot()
 	finished();
 }
 
-void KIO_Print::listDirDB( const KURL& url )
+void TDEIO_Print::listDirDB( const KURL& url )
 {
 	PRINT_DEBUG << "listDirDB: " << url << endl;
 
@@ -373,7 +373,7 @@ void KIO_Print::listDirDB( const KURL& url )
 	 */
 }
 
-void KIO_Print::stat(const KURL& url)
+void TDEIO_Print::stat(const KURL& url)
 {
 	if ( url.protocol() == "printdb" )
 	{
@@ -430,7 +430,7 @@ void KIO_Print::stat(const KURL& url)
 		error(TDEIO::ERR_DOES_NOT_EXIST, url.path());
 }
 
-void KIO_Print::statDB( const KURL& url )
+void TDEIO_Print::statDB( const KURL& url )
 {
 	PRINT_DEBUG << "statDB: " << url << endl;
 	TDEIO::UDSEntry entry;
@@ -443,7 +443,7 @@ void KIO_Print::statDB( const KURL& url )
 	finished();
 }
 
-bool KIO_Print::getDBFile( const KURL& src )
+bool TDEIO_Print::getDBFile( const KURL& src )
 {
 	PRINT_DEBUG << "downloading " << src.url() << endl;
 
@@ -468,7 +468,7 @@ bool KIO_Print::getDBFile( const KURL& src )
 	return ( m_httpError == 0 );
 }
 
-void KIO_Print::getDB( const KURL& url )
+void TDEIO_Print::getDB( const KURL& url )
 {
 	PRINT_DEBUG << "downloading PPD file for " << url.url() << endl;
 
@@ -498,7 +498,7 @@ void KIO_Print::getDB( const KURL& url )
 	}
 }
 
-void KIO_Print::slotResult( TDEIO::Job *j )
+void TDEIO_Print::slotResult( TDEIO::Job *j )
 {
 	/*
 	 * store slave results for later user (job gets deleted 
@@ -513,7 +513,7 @@ void KIO_Print::slotResult( TDEIO::Job *j )
 	kapp->exit_loop();
 }
 
-void KIO_Print::slotData( TDEIO::Job *j, const TQByteArray& d )
+void TDEIO_Print::slotData( TDEIO::Job *j, const TQByteArray& d )
 {
 	PRINT_DEBUG << "HTTP data received (size=" << d.size() << ")" << endl;
 	if ( d.size() > 0 )
@@ -528,17 +528,17 @@ void KIO_Print::slotData( TDEIO::Job *j, const TQByteArray& d )
 	}
 }
 
-void KIO_Print::slotTotalSize( TDEIO::Job*, TDEIO::filesize_t sz )
+void TDEIO_Print::slotTotalSize( TDEIO::Job*, TDEIO::filesize_t sz )
 {
 	totalSize( sz );
 }
 
-void KIO_Print::slotProcessedSize( TDEIO::Job*, TDEIO::filesize_t sz )
+void TDEIO_Print::slotProcessedSize( TDEIO::Job*, TDEIO::filesize_t sz )
 {
 	processedSize( sz );
 }
 
-void KIO_Print::get(const KURL& url)
+void TDEIO_Print::get(const KURL& url)
 {
 	if ( url.protocol() == "printdb" )
 	{
@@ -626,7 +626,7 @@ void KIO_Print::get(const KURL& url)
 		error(TDEIO::ERR_INTERNAL, i18n("Unable to determine source type for %1.").arg(printer));
 }
 
-void KIO_Print::showPrinterInfo(KMPrinter *printer)
+void TDEIO_Print::showPrinterInfo(KMPrinter *printer)
 {
 	if (!KMManager::self()->completePrinter(printer))
 		error(TDEIO::ERR_INTERNAL, i18n("Unable to retrieve printer information for %1.").arg(printer->name()));
@@ -667,7 +667,7 @@ void KIO_Print::showPrinterInfo(KMPrinter *printer)
 	}
 }
 
-void KIO_Print::showClassInfo(KMPrinter *printer)
+void TDEIO_Print::showClassInfo(KMPrinter *printer)
 {
 	if (!KMManager::self()->completePrinter(printer))
 		error(TDEIO::ERR_INTERNAL, i18n("Unable to retrieve class information for %1.").arg(printer->name()));
@@ -714,7 +714,7 @@ void KIO_Print::showClassInfo(KMPrinter *printer)
 	}
 }
 
-void KIO_Print::showSpecialInfo(KMPrinter *printer)
+void TDEIO_Print::showSpecialInfo(KMPrinter *printer)
 {
 	mimeType("text/html");
 
@@ -753,7 +753,7 @@ void KIO_Print::showSpecialInfo(KMPrinter *printer)
 	finished();
 }
 
-bool KIO_Print::loadTemplate(const TQString& filename, TQString& buffer)
+bool TDEIO_Print::loadTemplate(const TQString& filename, TQString& buffer)
 {
 	TQFile	f(locate("data", TQString::fromLatin1("tdeprint/template/")+filename));
 	if (f.exists() && f.open(IO_ReadOnly))
@@ -769,7 +769,7 @@ bool KIO_Print::loadTemplate(const TQString& filename, TQString& buffer)
 	}
 }
 
-void KIO_Print::showData(const TQString& pathname)
+void TDEIO_Print::showData(const TQString& pathname)
 {
 	PRINT_DEBUG << "sending data: " << pathname << endl;
 	TQFile	f(pathname);
@@ -792,7 +792,7 @@ void KIO_Print::showData(const TQString& pathname)
  *	- $TDEDIR/share/apps/tdeprint/template/
  *	- as a desktop icon
  */
-TQString KIO_Print::locateData(const TQString& item)
+TQString TDEIO_Print::locateData(const TQString& item)
 {
 	TQString	path = locate("data", "tdeprint/template/"+item);
 	if (path.isEmpty())
@@ -800,7 +800,7 @@ TQString KIO_Print::locateData(const TQString& item)
 	return path;
 }
 
-void KIO_Print::showJobs(KMPrinter *prt, bool completed)
+void TDEIO_Print::showJobs(KMPrinter *prt, bool completed)
 {
 	mimeType("text/html");
 
@@ -886,7 +886,7 @@ void KIO_Print::showJobs(KMPrinter *prt, bool completed)
 	finished();
 }
 
-void KIO_Print::showDriver(KMPrinter *prt)
+void TDEIO_Print::showDriver(KMPrinter *prt)
 {
 	mimeType("text/html");
 

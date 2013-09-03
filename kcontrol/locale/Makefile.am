@@ -10,7 +10,7 @@ METASOURCES = AUTO
 noinst_HEADERS = toplevel.h kcmlocale.h klocalesample.h localenum.h localemon.h localetime.h localeother.h 
 
 kcm_locale_la_LDFLAGS = -module -avoid-version $(all_libraries) -no-undefined
-kcm_locale_la_LIBADD = $(LIB_KIO)
+kcm_locale_la_LIBADD = $(LIB_TDEIO)
 
 # Note: newer glibc (e.g. zonetab version 1.31 (cvs revision 1.22) have more/other data than older ones (e.g. zonetab version 1.28)
 

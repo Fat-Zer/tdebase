@@ -59,7 +59,7 @@ void KonqRun::foundMimeType( const TQString & _type )
 {
   //kdDebug(1202) << "KonqRun::foundMimeType " << _type << " m_req=" << m_req.debug() << endl;
 
-  TQString mimeType = _type; // this ref comes from the job, we lose it when using KIO again
+  TQString mimeType = _type; // this ref comes from the job, we lose it when using TDEIO again
 
   m_bFoundMimeType = true;
 

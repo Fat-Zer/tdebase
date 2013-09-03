@@ -15,7 +15,7 @@ tools</ulink>, so you will need these installed for it to work.</para>
 
 <para>Enter <userinput>mac:/</userinput> into &konqueror; and you
 should see the contents of your &MacOS; partition. If you have not
-used kio-mac before, you will probably get an error message saying you
+used tdeio-mac before, you will probably get an error message saying you
 have not specified the right partition. Enter something like
 <userinput>mac:/<option>?dev=/dev/hda2</option></userinput> to specify
 the partition (if you don't know which partition &MacOS; is on, you

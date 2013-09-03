@@ -86,7 +86,7 @@ KJavaOptions::KJavaOptions( TDEConfig* config, TQString group,
     grid->addWidget( javaSecurityManagerCB, 0, 0 );
     connect( javaSecurityManagerCB, TQT_SIGNAL(toggled( bool )), this, TQT_SLOT(slotChanged()) );
 
-    useKioCB = new TQCheckBox( i18n("Use &KIO"), checkboxes );
+    useKioCB = new TQCheckBox( i18n("Use &TDEIO"), checkboxes );
     grid->addWidget( useKioCB, 0, 1 );
     connect( useKioCB, TQT_SIGNAL(toggled( bool )), this, TQT_SLOT(slotChanged()) );
 
@@ -158,7 +158,7 @@ KJavaOptions::KJavaOptions( TDEConfig* config, TQString group,
                                                   "policytool utility to give code downloaded from certain sites more "
                                                   "permissions." ) );
 
-    TQWhatsThis::add( useKioCB, i18n( "Enabling this will cause the jvm to use KIO for network transport ") );
+    TQWhatsThis::add( useKioCB, i18n( "Enabling this will cause the jvm to use TDEIO for network transport ") );
 
     TQWhatsThis::add( pathED, i18n("Enter the path to the java executable. If you want to use the jre in "
                                   "your path, simply leave it as 'java'. If you need to use a different jre, "

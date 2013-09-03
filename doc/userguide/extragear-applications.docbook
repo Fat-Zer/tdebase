@@ -70,7 +70,7 @@
 
 <varlistentry>
 <term><application>Gwenview</application></term>
-	<listitem><para>Another advanced image viewer which can load and save all image formats supported by &tde;, as well as being able to display the <application>GIMP</application> (*.<acronym>xcf</acronym>) image filetype. <application>Gwenview</application> can perform a few graphical manipulations (rotate, mirroring) and has full support for KIO slaves (allowing you to use it via &FTP;). Other features also include file management operations, such as copy, paste, move and delete.</para>
+	<listitem><para>Another advanced image viewer which can load and save all image formats supported by &tde;, as well as being able to display the <application>GIMP</application> (*.<acronym>xcf</acronym>) image filetype. <application>Gwenview</application> can perform a few graphical manipulations (rotate, mirroring) and has full support for TDEIO slaves (allowing you to use it via &FTP;). Other features also include file management operations, such as copy, paste, move and delete.</para>
 	
 		<itemizedlist>
 			<listitem><para>Website: <ulink url="http://gwenview.sourceforge.net/">http://gwenview.sourceforge.net/</ulink></para></listitem>

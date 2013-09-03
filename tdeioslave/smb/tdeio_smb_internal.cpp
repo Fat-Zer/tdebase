@@ -79,7 +79,7 @@ void SMBUrl::updateCache()
     cleanPath();
 
     // SMB URLs are UTF-8 encoded
-    kdDebug(KIO_SMB) << "updateCache " << KURL::path() << endl;
+    kdDebug(TDEIO_SMB) << "updateCache " << KURL::path() << endl;
     if (KURL::url() == "smb:/")
         m_surl = "smb://";
     else {

@@ -11,11 +11,11 @@ lib_LTLIBRARIES = libhtmlsearch.la libkcm_htmlsearch.la
 
 libhtmlsearch_la_SOURCES = htmlsearch.cpp progressdialog.cpp
 libhtmlsearch_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
-libhtmlsearch_la_LIBADD = $(LIB_KIO)
+libhtmlsearch_la_LIBADD = $(LIB_TDEIO)
 
 libkcm_htmlsearch_la_SOURCES = kcmhtmlsearch.cpp klangcombo.cpp ktagcombobox.cpp
 libkcm_htmlsearch_la_LDFLAGS  = $(all_libraries) -module -avoid-version -no-undefined
-libkcm_htmlsearch_la_LIBADD = $(LIB_KIO)
+libkcm_htmlsearch_la_LIBADD = $(LIB_TDEIO)
 
 noinst_HEADERS = kcmhtmlsearch.h htmlsearch.h
 
@@ -27,7 +27,7 @@ wrapperdir = $(kde_datadir)/khelpcenter/
 wrapper_SCRIPTS = meinproc_wrapper
 
 tdehtmlindex_SOURCES = index.cpp
-tdehtmlindex_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+tdehtmlindex_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 tdehtmlindex_LDADD = libhtmlsearch.la $(LIB_TDEUI)
 
 xpm_DATA = unchecked.xpm checked.xpm

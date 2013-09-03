@@ -24,7 +24,7 @@ noinst_LTLIBRARIES = $(LINUXCDPOLLING_LIB) $(HALBACKEND_LIB)
 
 kded_mediamanager_la_SOURCES = mediamanager.cpp mediamanager.skel medialist.cpp backendbase.cpp fstabbackend.cpp removablebackend.cpp mediadirnotify.cpp mediadirnotify.skel
 kded_mediamanager_la_LDFLAGS = $(all_libraries) -module -avoid-version
-kded_mediamanager_la_LIBADD = $(LIB_KSYCOCA) ../libmediacommon/libmediacommon.la $(HALBACKEND_LIB) $(LINUXCDPOLLING_LIB)
+kded_mediamanager_la_LIBADD = $(LIB_TDESYCOCA) ../libmediacommon/libmediacommon.la $(HALBACKEND_LIB) $(LINUXCDPOLLING_LIB)
 
 
 servicesdir = $(kde_servicesdir)/kded

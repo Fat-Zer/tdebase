@@ -17,7 +17,7 @@ kcm_tdeio_la_SOURCES = policydlg.cpp kcookiesmain.cpp kcookiespolicies.cpp \
       manualproxy_ui.ui envvarproxy_ui.ui cache_ui.ui
 
 kcm_tdeio_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
-kcm_tdeio_la_LIBADD = $(LIB_KIO) $(LIB_KUTILS)
+kcm_tdeio_la_LIBADD = $(LIB_TDEIO) $(LIB_TDEUTILS)
 
 messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kcmtdeio.pot

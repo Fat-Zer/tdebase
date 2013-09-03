@@ -98,7 +98,7 @@ public:
     /// Move data from the old trash system to the new one
     void migrateOldTrash();
 
-    /// KIO error code
+    /// TDEIO error code
     int lastErrorCode() const { return m_lastErrorCode; }
     TQString lastErrorMessage() const { return m_lastErrorMessage; }
 

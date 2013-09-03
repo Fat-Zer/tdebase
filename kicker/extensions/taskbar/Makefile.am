@@ -5,7 +5,7 @@ kde_module_LTLIBRARIES = taskbar_panelextension.la
 taskbar_panelextension_la_SOURCES = taskbarextension.cpp taskbarextension.skel
 taskbar_panelextension_la_METASOURCES = AUTO
 taskbar_panelextension_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-taskbar_panelextension_la_LIBADD = $(LIB_TDEUI) $(LIB_KPARTS) \
+taskbar_panelextension_la_LIBADD = $(LIB_TDEUI) $(LIB_TDEPARTS) \
                                    ../../libkicker/libkickermain.la \
                                    ../../taskmanager/libtaskmanager.la \
                                    ../../taskbar/libtaskbar.la

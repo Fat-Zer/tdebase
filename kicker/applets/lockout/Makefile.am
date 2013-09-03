@@ -5,7 +5,7 @@ kde_module_LTLIBRARIES = lockout_panelapplet.la
 
 lockout_panelapplet_la_SOURCES = lockout.cpp
 lockout_panelapplet_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-lockout_panelapplet_la_LIBADD = ../../libkicker/libkickermain.la $(LIB_KSYCOCA)
+lockout_panelapplet_la_LIBADD = ../../libkicker/libkickermain.la $(LIB_TDESYCOCA)
 
 noinst_HEADERS = lockout.h
 

@@ -25,7 +25,7 @@ libkonsolepart_la_SOURCES = TEPty.cpp BlockArray.cpp konsole_part.cpp \
         sessioniface.skel
 
 libkonsolepart_la_LDFLAGS = $(KDE_PLUGIN) $(all_libraries)
-libkonsolepart_la_LIBADD = $(XTESTLIB) $(LIB_KPARTS)
+libkonsolepart_la_LIBADD = $(XTESTLIB) $(LIB_TDEPARTS)
 
 fontembedder_SOURCES = fontembedder.cpp
 fontembedder_LDFLAGS = $(all_libraries)
@@ -42,11 +42,11 @@ konsole_la_SOURCES = TEPty.cpp BlockArray.cpp main.cpp konsole.cpp schema.cpp se
      konsole_wcwidth.cpp konsolebookmarkhandler.cpp konsolebookmarkmenu.cpp \
      zmodem_dialog.cpp printsettings.cpp
 konsole_la_LDFLAGS = $(all_libraries) -module -avoid-version
-konsole_la_LIBADD = $(LIB_TDEUI) $(LIB_KIO) $(LIB_TDEPRINT) $(LIBUTIL) $(XTESTLIB) $(LIB_XRENDER)
+konsole_la_LIBADD = $(LIB_TDEUI) $(LIB_TDEIO) $(LIB_TDEPRINT) $(LIBUTIL) $(XTESTLIB) $(LIB_XRENDER)
 
 # kcmkonsole_SOURCES = kcmkonsole.cpp schema.cpp
 # kcmkonsole_LDADD   = $(LIB_TDEUI)
-# kcmkonsole_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+# kcmkonsole_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 
 noinst_HEADERS = TEWidget.h TEPty.h TEmulation.h TEmuVt102.h \
 	TECommon.h TEScreen.h konsole.h schema.h session.h konsole_wcwidth.h \

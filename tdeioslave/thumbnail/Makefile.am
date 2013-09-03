@@ -1,7 +1,7 @@
 ## Makefile.am of tdebase/tdeioslave/thumbnail
 
 INCLUDES = $(all_includes) $(EXR_FLAGS)
-AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 METASOURCES = AUTO
 
 if have_xcursor
@@ -20,15 +20,15 @@ kde_module_LTLIBRARIES = tdeio_thumbnail.la imagethumbnail.la \
 	$(EXR_MODULE)
 
 tdeio_thumbnail_la_SOURCES = thumbnail.cpp
-tdeio_thumbnail_la_LIBADD = $(LIB_KIO)
+tdeio_thumbnail_la_LIBADD = $(LIB_TDEIO)
 tdeio_thumbnail_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 imagethumbnail_la_SOURCES = imagecreator.cpp
-imagethumbnail_la_LIBADD = $(LIB_KIO) # for kimageio
+imagethumbnail_la_LIBADD = $(LIB_TDEIO) # for kimageio
 imagethumbnail_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 textthumbnail_la_SOURCES = textcreator.cpp
-textthumbnail_la_LIBADD = $(LIB_KIO) # for kmimetype
+textthumbnail_la_LIBADD = $(LIB_TDEIO) # for kmimetype
 textthumbnail_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 htmlthumbnail_la_SOURCES = htmlcreator.cpp

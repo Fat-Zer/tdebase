@@ -57,7 +57,7 @@ TrashImpl::TrashImpl() :
     m_homeDevice( 0 ),
     m_trashDirectoriesScanned( false ),
     m_mibEnum( TDEGlobal::locale()->fileEncodingMib() ),
-    // not using tdeio_trashrc since KIO uses that one already for tdeio_trash
+    // not using tdeio_trashrc since TDEIO uses that one already for tdeio_trash
     // so better have a separate one, for faster parsing by e.g. kmimetype.cpp
     m_config( "trashrc" )
 {
@@ -325,7 +325,7 @@ bool TrashImpl::moveToTrash( const TQString& origPath, int trashId, const TQStri
     const TQString dest = filesPath( trashId, fileId );
     if ( !move( origPath, dest ) ) {
         // Maybe the move failed due to no permissions to delete source.
-        // In that case, delete dest to keep things consistent, since KIO doesn't do it.
+        // In that case, delete dest to keep things consistent, since TDEIO doesn't do it.
         if ( TQFileInfo( dest ).isFile() )
             TQFile::remove( dest );
         else
@@ -367,7 +367,7 @@ bool TrashImpl::move( const TQString& src, const TQString& dest )
     urlDest.setPath( dest );
     kdDebug() << k_funcinfo << urlSrc << " -> " << urlDest << endl;
     TDEIO::CopyJob* job = TDEIO::moveAs( urlSrc, urlDest, false );
-#ifdef KIO_COPYJOB_HAS_SETINTERACTIVE
+#ifdef TDEIO_COPYJOB_HAS_SETINTERACTIVE
     job->setInteractive( false );
 #endif
     connect( job, TQT_SIGNAL( result(TDEIO::Job *) ),
@@ -414,7 +414,7 @@ bool TrashImpl::copy( const TQString& src, const TQString& dest )
     urlDest.setPath( dest );
     kdDebug() << k_funcinfo << "copying " << src << " to " << dest << endl;
     TDEIO::CopyJob* job = TDEIO::copyAs( urlSrc, urlDest, false );
-#ifdef KIO_COPYJOB_HAS_SETINTERACTIVE
+#ifdef TDEIO_COPYJOB_HAS_SETINTERACTIVE
     job->setInteractive( false );
 #endif
     connect( job, TQT_SIGNAL( result( TDEIO::Job* ) ),

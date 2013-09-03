@@ -225,8 +225,8 @@ which &Java; applications can read and write text. While most &Java;
 applications will not require such a console, it could be helpful in
 diagnosing problems with &Java; applications.</para>
 
-<para><guilabel>Use KIO</guilabel> will cause the
-<acronym>JVM</acronym>to use &tde;'s own <acronym>KIO</acronym>
+<para><guilabel>Use TDEIO</guilabel> will cause the
+<acronym>JVM</acronym>to use &tde;'s own <acronym>TDEIO</acronym>
 transports for network connections.</para>
 
 <para><guilabel>Use security

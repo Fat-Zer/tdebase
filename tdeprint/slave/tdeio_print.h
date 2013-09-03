@@ -17,8 +17,8 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#ifndef KIO_PRINT_H
-#define KIO_PRINT_H
+#ifndef TDEIO_PRINT_H
+#define TDEIO_PRINT_H
 
 #include <tdeio/slavebase.h>
 #include <tdeio/global.h>
@@ -30,11 +30,11 @@ namespace TDEIO {
 	class Job;
 }
 
-class KIO_Print : public TQObject, public TDEIO::SlaveBase
+class TDEIO_Print : public TQObject, public TDEIO::SlaveBase
 {
 	Q_OBJECT
 public:
-	KIO_Print(const TQCString& pool, const TQCString& app);
+	TDEIO_Print(const TQCString& pool, const TQCString& app);
 
 	void listDir(const KURL& url);
 	void get(const KURL& url);

@@ -102,7 +102,7 @@ namespace KioSMTP {
     bool complete() const { return mComplete; }
     void setComplete() { mComplete = true; }
 
-    /** @return an appropriate KIO error code in case the transaction
+    /** @return an appropriate TDEIO error code in case the transaction
 	failed, or 0 otherwise */
     int errorCode() const;
     /** @return an appropriate error message in case the transaction

@@ -366,7 +366,12 @@ void BasicTab::setEntryInfo(MenuEntryInfo *entryInfo)
 
     _pathEdit->lineEdit()->setText(df->readPath());
     _termOptEdit->setText(df->readEntry("TerminalOptions"));
-    _uidEdit->setText(df->readEntry("X-TDE-Username"));
+    if( df->hasKey( "X-TDE-Username" )) {
+        _uidEdit->setText(df->readEntry("X-TDE-Username"));
+    }
+    else {
+        _uidEdit->setText(df->readEntry("X-KDE-Username"));
+    }
 
     if( df->hasKey( "StartupNotify" ))
         _launchCB->setChecked(df->readBoolEntry("StartupNotify", true));

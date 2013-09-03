@@ -4,7 +4,7 @@ INCLUDES =  -I$(top_srcdir)/ksplashml/themeengine $(all_includes)
 
 ksplashredmond_la_SOURCES = previewredmond.cpp themeredmond.cpp
 ksplashredmond_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -module $(KDE_PLUGIN)
-ksplashredmond_la_LIBADD  = $(LIB_TDEUI) $(LIB_KIO) ../libksplashthemes.la
+ksplashredmond_la_LIBADD  = $(LIB_TDEUI) $(LIB_TDEIO) ../libksplashthemes.la
 METASOURCES = AUTO
 
 kde_module_LTLIBRARIES = ksplashredmond.la

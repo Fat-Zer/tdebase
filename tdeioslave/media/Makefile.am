@@ -11,7 +11,7 @@ METASOURCES = AUTO
 kde_module_LTLIBRARIES = tdeio_media.la
 
 tdeio_media_la_SOURCES = dummy.cpp
-tdeio_media_la_LIBADD  = libtdeiomedia.la libmediacommon/libmediacommon.la $(LIB_KIO)
+tdeio_media_la_LIBADD  = libtdeiomedia.la libmediacommon/libmediacommon.la $(LIB_TDEIO)
 tdeio_media_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) -no-undefined
 
 dummy.cpp:
@@ -24,7 +24,7 @@ libtdeiomedia_la_SOURCES = tdeio_media.cpp mediaimpl.cpp mediaimpl.skel
 
 check_PROGRAMS = testmedia
 testmedia_SOURCES = testmedia.cpp
-testmedia_LDADD = libtdeiomedia.la $(LIB_KIO)
+testmedia_LDADD = libtdeiomedia.la $(LIB_TDEIO)
 testmedia_LDFLAGS = $(all_libraries)
 
 ## TODO in unsermake: TESTS = testmedia

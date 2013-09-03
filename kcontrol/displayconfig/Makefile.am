@@ -5,7 +5,7 @@ kcm_displayconfig_la_SOURCES = displayconfig.cpp displayconfigbase.ui displaycon
 
 kcm_displayconfig_la_LDFLAGS  = $(all_libraries) -ltderandr -module -avoid-version -no-undefined
 
-kcm_displayconfig_la_LIBADD = -ltdeui $(LIB_KIO) $(LIB_XRANDR)
+kcm_displayconfig_la_LIBADD = -ltdeui $(LIB_TDEIO) $(LIB_XRANDR)
 
 METASOURCES = AUTO
 

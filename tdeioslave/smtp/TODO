@@ -4,7 +4,7 @@
    SMTP server that supports it).
 3. Better error message (translated standard meanings of the known
    response codes, ENHANCEDSTATUSCODES extension (rfc2034)).
-4. (KIO) MultiPutJob to support pipelining across messages.
+4. (TDEIO) MultiPutJob to support pipelining across messages.
 5. Ged rid of slave's header generation after checking who on earth
    uses that...
 

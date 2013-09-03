@@ -22,7 +22,7 @@ kde_module_LTLIBRARIES = kcm_input.la
 
 kcm_input_la_SOURCES = mouse.cpp kmousedlg.ui main.cpp logitechmouse.cpp logitechmouse_base.ui
 kcm_input_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
-kcm_input_la_LIBADD = $(THEMEPAGE_LIB) $(XTESTLIB) $(LIB_KIO) $(LIB_XCURSOR) $(USB_LIBS)
+kcm_input_la_LIBADD = $(THEMEPAGE_LIB) $(XTESTLIB) $(LIB_TDEIO) $(LIB_XCURSOR) $(USB_LIBS)
 
 METASOURCES = AUTO 
 

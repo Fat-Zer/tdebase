@@ -62,7 +62,7 @@ int KDE_EXPORT kdemain( int argc, char **argv )
     TDEInstance instance( "tdeio_smb" );
     if( argc != 4 )
     {
-        kdDebug(KIO_SMB) << "Usage: tdeio_smb protocol domain-socket1 domain-socket2"
+        kdDebug(TDEIO_SMB) << "Usage: tdeio_smb protocol domain-socket1 domain-socket2"
                   << endl;
         return -1;
     }

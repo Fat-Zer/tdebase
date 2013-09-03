@@ -333,7 +333,7 @@ TQString NodeEditCommand::setNodeText(KBookmark bk, const TQStringList &nodehier
 }
 
 void NodeEditCommand::execute() {
-    // DUPLICATED HEAVILY FROM KIO/BOOKMARKS
+    // DUPLICATED HEAVILY FROM TDEIO/BOOKMARKS
     KBookmark bk = CurrentMgr::bookmarkAt(m_address);
     Q_ASSERT(!bk.isNull());
     m_oldText = setNodeText(bk, TQStringList() << m_nodename, m_newText);

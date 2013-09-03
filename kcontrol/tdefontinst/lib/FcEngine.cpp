@@ -909,7 +909,7 @@ bool CFcEngine::parseUrl(const KURL &url, int faceNo, bool all)
     //    fonts:/System/times.ttf
     //    file:/home/wibble/hmm.ttf
     //
-    if(KFI_KIO_FONTS_PROTOCOL==url.protocol())
+    if(KFI_TDEIO_FONTS_PROTOCOL==url.protocol())
     {
         TDEIO::UDSEntry udsEntry;
         TQString       name;
@@ -948,7 +948,7 @@ bool CFcEngine::parseUrl(const KURL &url, int faceNo, bool all)
             TQTextStream stream(&file);
 
             thumbUrl=stream.readLine();
-            isThumbnailUrl=0==thumbUrl.find(KFI_KIO_FONTS_PROTOCOL) && parseUrl(KURL(thumbUrl), faceNo, all);
+            isThumbnailUrl=0==thumbUrl.find(KFI_TDEIO_FONTS_PROTOCOL) && parseUrl(KURL(thumbUrl), faceNo, all);
             file.close();
         }
 

@@ -219,7 +219,7 @@ regexp' or 'Search case sensitive'.
 # We could show them in a listview on the Search tab, each found search engine
 # being represented by a checkable listview item. So, we just let the user
 # enter a term, replace the \{@} placeholder in the URIs specified in the
-# selected .desktop files with that term, send out a request via KIO and show
+# selected .desktop files with that term, send out a request via TDEIO and show
 # the results in our TDEHTMLPart (after all KHC::View is a TDEHTMLPart already). A
 # problem with this: How to display the multiple HTML pages returned by the
 # selected search engines? Using a QSplitter to split multiple TDEHTMLParts?
@@ -237,7 +237,7 @@ regexp' or 'Search case sensitive'.
 # In additionl there could be a X-KHelpCenter-XSLT key which defines which .xslt
 # stylesheet to use for that particular search engine. We then query that search
 # engine by replacing the placeholder in the URI with whatever the user entered
-# and hand it to KIO. All the HTML returned by the various search engines gets
+# and hand it to TDEIO. All the HTML returned by the various search engines gets
 # then transformed into a custom, intermediate, XML dialect, using the XSLT
 # stylesheets define in the .desktop files. Using that intermediate step we
 # can nicely drop duplicate hits, for example, or create a list of hits in the

@@ -320,7 +320,7 @@ bool KFileFontPlugin::readInfo(KFileMetaInfo& info, uint what)
             slantAll;
     KURL    url(info.url());
     TQString fName;
-    bool    fontsProt  = KFI_KIO_FONTS_PROTOCOL == url.protocol(),
+    bool    fontsProt  = KFI_TDEIO_FONTS_PROTOCOL == url.protocol(),
             fileProt   = "file"             == url.protocol(),
             downloaded = false,
             status     = false;

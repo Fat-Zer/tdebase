@@ -6,10 +6,10 @@
 #define KFI_CATALOGUE                "tdefontinst"
 
 // io-slave
-#define KFI_KIO_FONTS_PROTOCOL       "fonts"
-#define KFI_KIO_FONTS_USER           I18N_NOOP("Personal")
-#define KFI_KIO_FONTS_SYS            I18N_NOOP("System")
-#define KFI_KIO_NO_CLEAR             "?noclear"
+#define KFI_TDEIO_FONTS_PROTOCOL       "fonts"
+#define KFI_TDEIO_FONTS_USER           I18N_NOOP("Personal")
+#define KFI_TDEIO_FONTS_SYS            I18N_NOOP("System")
+#define KFI_TDEIO_NO_CLEAR             "?noclear"
 
 // Config
 #define KFI_UI_CFG_FILE              KFI_CATALOGUE"uirc"

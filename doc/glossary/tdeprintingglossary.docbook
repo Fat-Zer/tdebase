@@ -1128,7 +1128,7 @@ now.
                 </glossentry>
 
                 <glossentry id="gloss-printtdeioslave">
-                        <glossterm>print:/ KIO Slave</glossterm>
+                        <glossterm>print:/ TDEIO Slave</glossterm>
                         <glossdef><para>You can use a syntax of "print:/..." to get quick access
 				to TDEPrint resources. Typing "print:/manager" as a Konqueror URL
 				address gives administrative access to TDEPrint. Konqueror uses &tde;'s

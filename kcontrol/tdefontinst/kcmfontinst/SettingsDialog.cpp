@@ -90,7 +90,7 @@ void CSettingsDialog::slotOk()
 
         stream << KFI::SPECIAL_RECONFIG;
 
-        TDEIO::NetAccess::synchronousRun(TDEIO::special(KFI_KIO_FONTS_PROTOCOL ":/", packedArgs), this);
+        TDEIO::NetAccess::synchronousRun(TDEIO::special(KFI_TDEIO_FONTS_PROTOCOL ":/", packedArgs), this);
     }
 
     hide();

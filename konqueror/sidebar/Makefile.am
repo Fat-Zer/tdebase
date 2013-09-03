@@ -22,11 +22,11 @@ kde_module_LTLIBRARIES = konq_sidebar.la
 # the Part's source, library search path, and link libraries
 konq_sidebar_la_SOURCES = konqsidebar.cpp sidebar_widget.cpp 
 konq_sidebar_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
-konq_sidebar_la_LIBADD  = $(LIB_KPARTS) $(LIB_KIO) ../../libkonq/libkonq.la ./libkonqsidebarplugin.la $(LIB_KUTILS)
+konq_sidebar_la_LIBADD  = $(LIB_TDEPARTS) $(LIB_TDEIO) ../../libkonq/libkonq.la ./libkonqsidebarplugin.la $(LIB_TDEUTILS)
 
 libkonqsidebarplugin_la_SOURCES=konqsidebarplugin.cpp
 libkonqsidebarplugin_la_LDFLAGS = -version-info 3:0:2 $(all_libraries) -no-undefined
-libkonqsidebarplugin_la_LIBADD = $(LIB_KPARTS)
+libkonqsidebarplugin_la_LIBADD = $(LIB_TDEPARTS)
 
 # this is where the desktop file will go 
 partdesktopdir   = $(kde_servicesdir)

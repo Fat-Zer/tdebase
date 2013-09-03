@@ -30,7 +30,7 @@
 #include "sftpfileattr.h"
 #include "ksshprocess.h"
 
-#define KIO_SFTP_DB 7120
+#define TDEIO_SFTP_DB 7120
 
 
 class sftpProtocol : public TDEIO::SlaveBase

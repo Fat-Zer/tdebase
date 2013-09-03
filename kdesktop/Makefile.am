@@ -2,7 +2,7 @@
 
 INCLUDES = -I$(top_srcdir)/kcontrol/background -I$(top_srcdir)/libkonq -I$(top_srcdir)/tdmlib $(all_includes)
 kdesktop_la_LDFLAGS  = $(all_libraries) -module $(KDE_PLUGIN)
-kdesktop_la_LIBADD   = libkdesktopsettings.la $(top_builddir)/libkonq/libkonq.la $(top_builddir)/kcontrol/background/libbgnd.la $(top_builddir)/tdmlib/libdmctl.la $(LIB_XSS) $(LIB_KUTILS) $(LIB_XCURSOR)
+kdesktop_la_LIBADD   = libkdesktopsettings.la $(top_builddir)/libkonq/libkonq.la $(top_builddir)/kcontrol/background/libbgnd.la $(top_builddir)/tdmlib/libdmctl.la $(LIB_XSS) $(LIB_TDEUTILS) $(LIB_XCURSOR)
 
 SUBDIRS = . lock pics patterns programs init kwebdesktop
 
@@ -39,7 +39,7 @@ kcheckrunning_LDADD = $(LIB_X11) $(LIB_QT)
 
 kxdglauncher_SOURCES = kxdglauncher.cpp
 kxdglauncher_LDFLAGS = $(all_libraries)
-kxdglauncher_LDADD = $(LIB_KUTILS)
+kxdglauncher_LDADD = $(LIB_TDEUTILS)
 
 METASOURCES = AUTO
 

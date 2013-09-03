@@ -269,7 +269,7 @@ void ThemePage::removeClicked()
 	//  theme with the same name, we shouldn't remove the theme from the list if it's
 	//  still available elsewhere. This could be solved by calling insertThemes() here,
 	//  but since TDEIO::del() is an asynchronos operation, the theme we're deleting will
-	//  be readded to the list again before KIO has removed it.
+	//  be readded to the list again before TDEIO has removed it.
 }
 
 

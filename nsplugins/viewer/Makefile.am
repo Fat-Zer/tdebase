@@ -6,6 +6,6 @@ bin_PROGRAMS = nspluginviewer
 nspluginviewer_SOURCES = NSPluginCallbackIface.stub NSPluginClassIface.skel \
 	nsplugin.cpp viewer.cpp kxt.cpp qxteventloop.cpp glibevents.cpp
 nspluginviewer_LDFLAGS = $(all_libraries) $(KDE_RPATH) -export-dynamic `pkg-config --libs glib-2.0`
-nspluginviewer_LDADD = $(LIB_KIO) $(LIB_KPARTS) -lXt
+nspluginviewer_LDADD = $(LIB_TDEIO) $(LIB_TDEPARTS) -lXt
 
 NSPluginCallbackIface_DIR = $(srcdir)/..

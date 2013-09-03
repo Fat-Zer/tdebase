@@ -235,7 +235,7 @@ protected:
    // IMO there is really no need for an advanced data structure
    //we have a fixed number of members,
    //it consumes less memory and access should be faster (Alex)
-   // This might not be the case for ever... we should introduce custom fields in kio (David)
+   // This might not be the case for ever... we should introduce custom fields in tdeio (David)
    TQValueVector<ColumnInfo> confColumns;
 
    KonqBaseListViewItem *m_dragOverItem;
