@@ -205,7 +205,7 @@ kg_main( const char *argv0 )
 	static char *argv[] = { (char *)"tdmgreet", 0 };
 	TDECmdLineArgs::init( 1, argv, *argv, 0, 0, 0, true );
 
-	kdDebug() << timestamp() << "start" << endl;
+	kdDebug() << "[tdm-kfrontend] " << timestamp() << "start" << endl;
 	kde_have_kipc = false;
 	TDEApplication::disableAutoDcopRegistration();
 	TDECrash::setSafer( true );
@@ -279,7 +279,7 @@ kg_main( const char *argv0 )
 			if ( format->type == PictTypeDirect && format->direct.alphaMask ) {
 				visual = xvi[i].visual;
 				colormap = XCreateColormap( dpyi, RootWindow( dpyi, screen ), visual, AllocNone );
-				kdDebug() << "found visual with alpha support" << endl;
+				kdDebug() << "[tdm-kfrontend] Found visual with alpha support" << endl;
 				argb_visual_available = true;
 				break;
 			}
@@ -387,7 +387,7 @@ kg_main( const char *argv0 )
 
 	GSendInt( G_Ready );
 
-	kdDebug() << timestamp() << " main1" << endl;
+	kdDebug() << "[tdm-kfrontend] " << timestamp() << " main1" << endl;
 	setCursor( dpy, app->desktop()->winId(), XC_left_ptr );
 
 	for (;;) {
@@ -437,7 +437,7 @@ kg_main( const char *argv0 )
 					twin->kill(SIGKILL);
 				}
 				dialog = tgrt = new KThemedGreeter;
-				kdDebug() << timestamp() << " themed" << endl;
+				kdDebug() << "[tdm-kfrontend] " << timestamp() << " themed" << endl;
 				if (!tgrt->isOK()) {
 					is_themed = false;
 					has_twin = has_twin_bkp;

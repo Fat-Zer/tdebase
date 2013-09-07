@@ -22,10 +22,10 @@ extern "C" KDE_EXPORT int kdemain(int argc, char * argv[] )
   int minor = XkbMinorVersion;
   if (!XkbLibraryVersion(&major, &minor))
     {
-      kdError() << "Xlib XKB extension does not match" << endl;
+      kdError() << "[kcontrol-access] Xlib XKB extension does not match" << endl;
       return 1;
     }
-  kdDebug() << "Xlib XKB extension major=" << major << " minor=" << minor << endl;
+  kdDebug() << "[kcontrol-access] Xlib XKB extension major=" << major << " minor=" << minor << endl;
 
   // we need an application object for tqt_xdisplay()
   KAccessApp app;
@@ -38,10 +38,10 @@ extern "C" KDE_EXPORT int kdemain(int argc, char * argv[] )
   if (!XkbQueryExtension(tqt_xdisplay(), &opcode_rtrn, &xkb_opcode, &error_rtrn,
 			 &major, &minor))
     {
-      kdError() << "X server has not matching XKB extension" << endl;
+      kdError() << "[kcontrol-access] X server has not matching XKB extension" << endl;
       return 1;
     }
-  kdDebug() << "X server XKB extension major=" << major << " minor=" << minor << endl;
+  kdDebug() << "[kcontrol-access] X server XKB extension major=" << major << " minor=" << minor << endl;
 
   app.setXkbOpcode(xkb_opcode);
   app.disableSessionManagement();

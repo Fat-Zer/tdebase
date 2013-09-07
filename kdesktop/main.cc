@@ -231,7 +231,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char **argv )
                         XRenderFindVisualFormat( dpy, xvi[i].visual );
                 if ( format->type == PictTypeDirect && format->direct.alphaMask ) {
                     visual = xvi[i].visual;
-                    kdDebug() << "found visual with alpha support" << endl;
+                    kdDebug() << "[kdesktop] Found visual with alpha support" << endl;
                     argb_visual = true;
                     break;
                 }

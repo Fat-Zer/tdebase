@@ -55,7 +55,7 @@ bool XKBExtension::init()
 	
     if (!XkbLibraryVersion(&major, &minor))
     {
-        kdError() << "Xlib XKB extension " << major << '.' << minor <<
+        kdError() << "[kxkb-extension] Xlib XKB extension " << major << '.' << minor <<
             " != " << XkbMajorVersion << '.' << XkbMinorVersion << endl;
         return false;
     }
@@ -68,7 +68,7 @@ bool XKBExtension::init()
     if (!XkbQueryExtension(m_dpy, &opcode_rtrn, &xkb_opcode, &error_rtrn,
                          &major, &minor))
     {
-        kdError() << "X server XKB extension " << major << '.' << minor <<
+        kdError() << "[kxkb-extension] X server XKB extension " << major << '.' << minor <<
             " != " << XkbMajorVersion << '.' << XkbMinorVersion << endl;
         return false;
     }
@@ -127,14 +127,14 @@ bool XKBExtension::setLayout(const TQString& model,
 	bool res;
 	if( fileCache.contains(layoutKey) ) {
 		res = setCompiledLayout( layoutKey );
-		kdDebug() << "setCompiledLayout " << layoutKey << ": " << res << endl;
+		kdDebug() << "[kxkb-extension] setCompiledLayout " << layoutKey << ": " << res << endl;
 
 		if( res )
 			return res;
 	}
 //	else {
 		res = setLayoutInternal( model, layout, variant, includeGroup );
-		kdDebug() << "setRawLayout " << layoutKey << ": " << res << endl;
+		kdDebug() << "[kxkb-extension] setRawLayout " << layoutKey << ": " << res << endl;
 		if( res )
 			compileCurrentLayout( layoutKey );
 		
@@ -152,7 +152,7 @@ bool XKBExtension::setLayoutInternal(const TQString& model,
 
 	TQString exe = TDEGlobal::dirs()->findExe("setxkbmap");
 	if( exe.isEmpty() ) {
-		kdError() << "Can't find setxkbmap" << endl;
+		kdError() << "[kxkb-extension] Can't find setxkbmap" << endl;
 		return false;
 	}
 
@@ -197,7 +197,7 @@ bool XKBExtension::setLayoutInternal(const TQString& model,
 
 bool XKBExtension::setGroup(unsigned int group)
 {
-	kdDebug() << "Setting group " << group << endl;
+	kdDebug() << "[kxkb-extension] Setting group " << group << endl;
 	return XkbLockGroup( m_dpy, XkbUseCoreKbd, group );
 }
 
@@ -223,9 +223,9 @@ bool XKBExtension::compileCurrentLayout(const TQString &layoutKey)
 	 
 	const TQString fileName = getPrecompiledLayoutFilename(layoutKey);
 
-	kdDebug() << "compiling layout " << this << " cache size: " << fileCache.count() << endl;
+	kdDebug() << "[kxkb-extension] compiling layout " << this << " cache size: " << fileCache.count() << endl;
 	if( fileCache.contains(layoutKey) ) {
-		kdDebug() << "trashing old compiled layout for " << fileName << endl;
+		kdDebug() << "[kxkb-extension] trashing old compiled layout for " << fileName << endl;
 		if( fileCache[ layoutKey ] != NULL )
 			fclose( fileCache[ layoutKey ] );	// recompiling - trash the old file
 		fileCache.remove(fileName);
@@ -235,13 +235,13 @@ bool XKBExtension::compileCurrentLayout(const TQString &layoutKey)
 		
     if ( output == NULL )
     {
-		kdWarning() << "Could not open " << fileName << " to precompile: " << strerror(errno) << endl;
+		kdWarning() << "[kxkb-extension] Could not open " << fileName << " to precompile: " << strerror(errno) << endl;
         XkbFreeKeyboard(result.xkb, XkbAllControlsMask, True);
         return false;
     }
 
 	if( !XkbWriteXKMFile(output, &result) ) {
-		kdWarning() << "Could not write compiled layout to " << fileName << endl;
+		kdWarning() << "[kxkb-extension] Could not write compiled layout to " << fileName << endl;
 		fclose(output);
         return false;
 	}
@@ -268,13 +268,13 @@ bool XKBExtension::setCompiledLayout(const TQString &layoutKey)
 	}
 	
 	if( input == NULL ) {
-		kdWarning() << "setCompiledLayout trying to reopen xkb file" << endl;	// should never happen
+		kdWarning() << "[kxkb-extension] setCompiledLayout trying to reopen xkb file" << endl;	// should never happen
 		const TQString fileName = getPrecompiledLayoutFilename(layoutKey);
 		input = fopen(TQFile::encodeName(fileName), "r");
 		
 		// 	FILE *input = fopen(TQFile::encodeName(fileName), "r");
 		if ( input == NULL ) {
-			kdDebug() << "Unable to open " << fileName << ": " << strerror(errno) << endl;
+			kdDebug() << "[kxkb-extension] Unable to open " << fileName << ": " << strerror(errno) << endl;
 			fileCache.remove(layoutKey);
 			return false;
 		}
@@ -286,7 +286,7 @@ bool XKBExtension::setCompiledLayout(const TQString &layoutKey)
     XkbFileInfo result;
     memset(&result, 0, sizeof(result));
 	if ((result.xkb = XkbAllocKeyboard())==NULL) {
-		kdWarning() << "Unable to allocate memory for keyboard description" << endl;
+		kdWarning() << "[kxkb-extension] Unable to allocate memory for keyboard description" << endl;
 //      fclose(input);
 //		fileCache.remove(layoutKey);
     	return false;
@@ -296,7 +296,7 @@ bool XKBExtension::setCompiledLayout(const TQString &layoutKey)
     if (retVal == XkmKeymapLegal)
     {
         // this means reading the Xkm didn't manage to read any section
-        kdWarning() << "Unable to load map from file" << endl;
+        kdWarning() << "[kxkb-extension] Unable to load map from file" << endl;
         XkbFreeKeyboard(result.xkb, XkbAllControlsMask, True);
         fclose(input);
 		fileCache.remove(layoutKey);
@@ -309,14 +309,14 @@ bool XKBExtension::setCompiledLayout(const TQString &layoutKey)
     {
         if (!XkbWriteToServer(&result))
         {
-            kdWarning() << "Unable to write the keyboard layout to X display" << endl;
+            kdWarning() << "[kxkb-extension] Unable to write the keyboard layout to X display" << endl;
             XkbFreeKeyboard(result.xkb, XkbAllControlsMask, True);
             return false;
         }
     }
     else
     {
-        kdWarning() << "Unable prepare the keyboard layout for X display" << endl;
+        kdWarning() << "[kxkb-extension] Unable prepare the keyboard layout for X display" << endl;
     }
 
     XkbFreeKeyboard(result.xkb, XkbAllControlsMask, True);
