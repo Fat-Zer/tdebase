@@ -280,22 +280,15 @@ export DESKTOP_SESSION=trinity
 
 if [ -d "$tdehome" ]; then
   # Run some R14 updates.
-  R14_UPDATED="`$TDEDIR/bin/kreadconfig --file kdeglobals --group "R14 XDG Updates" --key Updated`"
-  if [ "$R14_UPDATED" = "true" ]; then
-    # There were massive renaming changes long after the original XDG renaming changes.
-    # The r14-xdg-update script needs to be run again to ensure users have many rc
-    # config files renamed. So despite the key Updated=true we run the script again with
-    # to make those changes for the user. Otherwise strange things happen. We select
-    # some rc config files that will be created automatically under the new changes.
-    # If those rc files do not exist then we presume the r14-xdg-update script needs to be
-    # run again. There is no harm in running the script multiple times.
-    if [ ! -f $TDEHOME/share/config/tdeconf_updaterc ] || [ ! -f $TDEHOME/share/config/tdelaunchrc ]; then
-      R14_UPDATED="false"
-    fi
+  R14_UPDATED="`$TDEDIR/bin/kreadconfig --file kdeglobals --group "R14 XDG Updates" --key Updated --default false`"
+  R14_VERSION="`$TDEDIR/bin/kreadconfig --file kdeglobals --group "R14 XDG Updates" --key Version --default 0`"
+  if [ -e $TDEDIR/bin/r14-xdg-update ]; then
+    # Script version index is used to allow automatic rerun
+    R14_SCRIPT="`sed -n "s/SCRIPT_VERSION=\([0-9]*\)/\1/p" $TDEDIR/bin/r14-xdg-update`"
   else
-    R14_UPDATED="false"
+    R14_SCRIPT=0
   fi
-  if [ "$R14_UPDATED" != "true" ]; then
+  if [ "$R14_UPDATED" != "true" ] || [ "$R14_VERSION" -lt "$R14_SCRIPT" ]; then
     if [ -e $TDEDIR/bin/r14-xdg-update ]; then
       sh $TDEDIR/bin/r14-xdg-update
       EXIT_CODE="$?"

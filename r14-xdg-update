@@ -64,6 +64,7 @@ fi
 # Main script:
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
+SCRIPT_VERSION=201309150
 
 # Allow forced execution of this script regardless of the kdeglobals setting
 # and allow passing a user home directory as a positional parameter.
@@ -235,7 +236,8 @@ fi
 unset TDEHOME_LINK
 
 R14_UPDATED="`$TDEDIR/bin/kreadconfig --file "$PROFILE_DIR/share/config/kdeglobals" --group "R14 XDG Updates" --key Updated`"
-if [ "$R14_UPDATED" != "true" ] || [ "$FORCE" = "true" ]; then
+R14_VERSION="`$TDEDIR/bin/kreadconfig --file "$PROFILE_DIR/share/config/kdeglobals" --group "R14 XDG Updates" --key Version --default 0`"
+if [ "$R14_VERSION" -lt "$SCRIPT_VERSION" ] || [ "$R14_UPDATED" != "true" ] || [ "$FORCE" = "true" ]; then
   if [ "$R14_UPDATED" != "true" ] && [ "$R14_UPDATED" != "false" ] && [ "$R14_UPDATED" != "" ]; then
     Message_Prefix
     echo "The r14-xdg-update script has been run at least once."
@@ -389,6 +391,15 @@ if [ -r $PROFILE_DIR/share/config/kickerrc ]; then
     echo "kickerrc does not exist."
   fi
 fi
+if [ -r $PROFILE_DIR/share/config/systemtray_panelappletrc ]; then
+  Message_Prefix
+  echo "Updating system tray icons in systemtray_panelappletrc."
+  sed -i -e "s|Krandr|Tderandr|g" \
+         -e "s|Kwallet|Tdewallet|g" \
+         -e "s|Knetworkmanager|Tdenetworkmanager|g" \
+         -e "s|Kradio|Tderadio|g" \
+      $PROFILE_DIR/share/config/systemtray_panelappletrc
+fi
 
 if [ -r $PROFILE_DIR/share/config/katerc ]; then
   Message_Prefix
@@ -495,9 +506,18 @@ if [ -d $PROFILE_DIR/share/services/kded ]; then
 fi
 
 # Try to update sessions.
-sed -i 's|kwin|twin|g' $PROFILE_DIR/share/config/ksmserverrc
-for i in `/bin/ls -1 $PROFILE_DIR/share/config/session/kwin_* 2>/dev/null`; do
-  mv $i $PROFILE_DIR/share/config/session/`basename $i | sed 's|kwin_|twin_|'`
+sed -i -e 's|kwin|twin|g' \
+       -e 's|krandr|tderandr|g' \
+       -e 's|kwallet|tdewallet|g' \
+       -e 's|kradio|tderadio|g' \
+    $PROFILE_DIR/share/config/ksmserverrc
+find $PROFILE_DIR/share/config/session -name "kwin_*" -o -name "kwallet*" -o -name "kradio*" | \
+while read i; do
+  ir=$PROFILE_DIR/share/config/session/$(basename $i | \
+     sed -e "s|^kwin_|twin_|" \
+         -e "s|^kwallet|tdewallet|"
+         -e "s|^kradio|tderadio|")
+  mv $i $ir
 done
 
 Message_Prefix
@@ -634,7 +654,7 @@ if [ ! -f $HOME/.tderc ] && [ -f $HOME/.kderc ]; then
     mv $HOME/.kderc $HOME/.tderc 2>/dev/null
   fi
 fi
-if [ ! -f $PROFILE_DIR/share/apps/tdestyle] && [ -f $PROFILE_DIR/share/apps/kstyle ]; then
+if [ ! -f $PROFILE_DIR/share/apps/tdestyle ] && [ -f $PROFILE_DIR/share/apps/kstyle ]; then
   Message_Prefix
   echo "  kstyle->tdestyle"
   mv $PROFILE_DIR/share/apps/kstyle $PROFILE_DIR/share/apps/tdestyle 2>/dev/null
@@ -796,6 +816,7 @@ if [ "$R14_UPDATE_TEST1" = "" ] && [ "$R14_UPDATE_TEST2" = "" ] && [ "$R14_UPDAT
   && [ "$R14_UPDATE_TEST4" = "" ] && [ "$R14_UPDATE_TEST5" = "" ] && [ "$R14_UPDATE_TEST6" = "" ] \
   && [ "$R14_UPDATE_TEST7" = "" ] && [ "$R14_UPDATE_TEST8" = "" ] && [ "$R14_UPDATE_TEST9" = "" ]; then
   $TDEDIR/bin/kwriteconfig --file "$PROFILE_DIR/share/config/kdeglobals" --group "R14 XDG Updates" --key Updated --type bool "true"
+  $TDEDIR/bin/kwriteconfig --file "$PROFILE_DIR/share/config/kdeglobals" --group "R14 XDG Updates" --key Version "$SCRIPT_VERSION"
   Message_Prefix
   echo "R14 XDG updates completed successfully."
 else
@@ -814,6 +835,7 @@ fi
 unset USER_DIR
 unset PROFILE_DIR
 unset R14_UPDATED
+unset R14_VERSION
 unset R14_UPDATE_TEST1
 unset R14_UPDATE_TEST2
 unset R14_UPDATE_TEST3
@@ -822,4 +844,6 @@ unset R14_UPDATE_TEST5
 unset R14_UPDATE_TEST6
 unset KDEGLOBALS_KEY_VALUE
 unset TEST_NUM
+unset SCRIPT_NAME
+unset SCRIPT_VERSION
 exit 0
