@@ -634,7 +634,7 @@ if [ ! -f $HOME/.tderc ] && [ -f $HOME/.kderc ]; then
     mv $HOME/.kderc $HOME/.tderc 2>/dev/null
   fi
 fi
-if [ -a $PROFILE_DIR/share/apps/kstyle ]; then
+if [ ! -f $PROFILE_DIR/share/apps/tdestyle] && [ -f $PROFILE_DIR/share/apps/kstyle ]; then
   Message_Prefix
   echo "  kstyle->tdestyle"
   mv $PROFILE_DIR/share/apps/kstyle $PROFILE_DIR/share/apps/tdestyle 2>/dev/null
@@ -652,13 +652,13 @@ if [ ! -f $PROFILE_DIR/share/config/tdepowersaverc ] && [ -f $PROFILE_DIR/share/
 fi
 
 # Disable some features new to R14, otherwise users will see an unfamiliar desktop.
-if [[ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "ShowDeepButtons" --default false) == "false" ]]; then
+if [ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "ShowDeepButtons" --default false) = "false" ]; then
   $TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "ShowDeepButtons" --type bool "false"
 fi
-if [[ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "UseResizeHandle" --default false) == "false" ]]; then
+if [ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "UseResizeHandle" --default false) = "false" ]; then
   $TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "UseResizeHandle" --type bool "false"
 fi
-if [[ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "MenubarPanelBlurred" --default false) == "false" ]]; then
+if [ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "MenubarPanelBlurred" --default false) = "false" ]; then
   $TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "MenubarPanelBlurred" --type bool "false"
 fi
 
