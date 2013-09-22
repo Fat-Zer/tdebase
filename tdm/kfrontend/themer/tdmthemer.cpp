@@ -424,9 +424,7 @@ KdmThemer::slotPaintRoot()
 		back_item->paint( &painter, back_item->rect());
 		painter.end();
 	}
-	else {
-		pm.fill(TQt::black);
-	}
+	else return;
 	
 	TQT_TQWIDGET(TQApplication::desktop()->screen())->setErasePixmap(pm);
 	TQT_TQWIDGET(TQApplication::desktop()->screen())->erase();
