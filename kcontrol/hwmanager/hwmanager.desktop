@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=tdecmshell kwmanager
+Exec=tdecmshell hwmanager
 Icon=background
 Type=Application
 DocPath=kcontrol/hwmanager/index.html

@@ -247,6 +247,9 @@ void KSMServer::shutdownInternal( TDEApplication::ShutdownConfirm confirm,
 			if (selection == 2) {	// Hibernate
 				rootDevice->setPowerState(TDESystemPowerState::Hibernate);
 			}
+			if (selection == 3) {	// Freeze
+				rootDevice->setPowerState(TDESystemPowerState::Freeze);
+			}
 		}
         }
     }

@@ -428,7 +428,7 @@ KMenu::KMenu()
     search_tab_top_left.load( locate("data", "kicker/pics/search-tab-top-left.png" ) );
     search_tab_top_right.load( locate("data", "kicker/pics/search-tab-top-right.png" ) );
     search_tab_top_center.load( locate("data", "kicker/pics/search-tab-top-center.png" ) );
-    
+
 #ifdef COMPILE_HALBACKEND
     m_halCtx = NULL;
     m_halCtx = libhal_ctx_new();
@@ -2674,17 +2674,18 @@ void KMenu::slotStartURL(const TQString& u)
 
         kapp->dcopClient()->send("ksmserver", "default", "logoutTimed(int,int,TQString)", params);
     }
-#ifdef COMPILE_HALBACKEND
     else if ( u == "kicker:/suspend_disk" ) {
         slotSuspend( 1 );
     }
     else if ( u == "kicker:/suspend_ram" ) {
         slotSuspend( 2 );
     }
+    else if ( u == "kicker:/suspend_freeze" ) {
+        slotSuspend( 4 );
+    }
     else if ( u == "kicker:/standby" ) {
         slotSuspend( 3 );
     }
-#endif
     else if ( u == "kicker:/savesession" ) {
         TQByteArray data;
         kapp->dcopClient()->send( "ksmserver", "default",
@@ -3745,41 +3746,48 @@ int KMenu::max_items(int category) const
 void KMenu::insertSuspendOption( int &nId, int &index )
 {
     bool suspend_ram = false;
+    bool suspend_freeze = false;
     bool standby = false;
     bool suspend_disk = false;
 #ifdef COMPILE_HALBACKEND
     suspend_ram = libhal_device_get_property_bool(m_halCtx,
         "/org/freedesktop/Hal/devices/computer",
-        "power_management.can_suspend", 
+        "power_management.can_suspend",
         NULL);
 
     standby = libhal_device_get_property_bool(m_halCtx,
         "/org/freedesktop/Hal/devices/computer",
-        "power_management.can_standby", 
+        "power_management.can_standby",
         NULL);
 
     suspend_disk = libhal_device_get_property_bool(m_halCtx,
         "/org/freedesktop/Hal/devices/computer",
-        "power_management.can_hibernate", 
+        "power_management.can_hibernate",
         NULL);
 #else // COMPILE_HALBACKEND
     TDERootSystemDevice* rootDevice = TDEGlobal::hardwareDevices()->rootSystemDevice();
     if (rootDevice) {
         suspend_ram = rootDevice->canSuspend();
+        suspend_freeze = rootDevice->canFreeze();
         standby = rootDevice->canStandby();
         suspend_disk = rootDevice->canHibernate();
     }
 #endif
 
-    if ( suspend_disk ) {
+    // respect disable suspend/hibernate settings from power-manager
+    TDEConfig config("power-managerrc");
+    bool disableSuspend = config.readBoolEntry("disableSuspend", false);
+    bool disableHibernate = config.readBoolEntry("disableHibernate", false);
+
+    if ( suspend_disk && !disableHibernate ) {
         m_exitView->leftView()->insertItem(
             "suspend2disk",
             i18n( "Suspend to Disk" ),
             i18n( "Pause without logging out" ),
             "kicker:/suspend_disk", nId++, index++ );
     }
-    
-    if ( suspend_ram ) {
+
+    if ( suspend_ram && !disableSuspend ) {
         m_exitView->leftView()->insertItem(
             "suspend2ram",
             i18n( "Suspend to RAM" ),
@@ -3787,7 +3795,15 @@ void KMenu::insertSuspendOption( int &nId, int &index )
             "kicker:/suspend_ram", nId++, index++ );
     }
 
-    if ( standby ) {
+    if ( suspend_freeze && !disableSuspend ) {
+        m_exitView->leftView()->insertItem(
+            "suspend2ram",
+            i18n( "Freeze" ),
+            i18n( "Pause without logging out" ),
+            "kicker:/suspend_freeze", nId++, index++ );
+    }
+
+    if ( standby && !disableSuspend ) {
         m_exitView->leftView()->insertItem(
             "player_pause",
             i18n( "Standby" ),
@@ -3799,6 +3815,16 @@ void KMenu::insertSuspendOption( int &nId, int &index )
 void KMenu::slotSuspend(int id)
 {
     bool error = true;
+
+    // respect lock on resume settings from power-manager
+    TDEConfig config("power-managerrc");
+    bool lockOnResume = config.readBoolEntry("lockOnResume", true);
+    if (lockOnResume) {
+	// Block here until lock is complete
+	// If this is not done the desktop of the locked session will be shown after suspend/hibernate until the lock fully engages!
+        DCOPRef("kdesktop", "KScreensaverIface").call("lock()");
+    }
+
 #ifdef COMPILE_HALBACKEND
     DBusMessage* msg = NULL;
 
@@ -3841,6 +3867,8 @@ void KMenu::slotSuspend(int id)
             error = !rootDevice->setPowerState(TDESystemPowerState::Suspend);
         } else if (id == 3) {
             error = !rootDevice->setPowerState(TDESystemPowerState::Standby);
+        } else if (id == 4) {
+            error = !rootDevice->setPowerState(TDESystemPowerState::Freeze);
         } else {
             return;
         }

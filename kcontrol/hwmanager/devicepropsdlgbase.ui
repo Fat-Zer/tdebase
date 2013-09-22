@@ -1385,12 +1385,12 @@
 							    <cstring>unnamed</cstring>
 						    </property>
 						    <property name="text">
-							    <string>User Can Request Suspend</string>
+							    <string>User Can Request Freeze</string>
 						    </property>
 					    </widget>
 					    <widget class="TQLabel" row="4" column="1" colspan="1">
 						    <property name="name">
-							    <cstring>labelSystemUserCanSuspend</cstring>
+							    <cstring>labelSystemUserCanFreeze</cstring>
 						    </property>
 					    </widget>
 					    <widget class="TQLabel" row="5" column="0" colspan="1">
@@ -1398,12 +1398,12 @@
 							    <cstring>unnamed</cstring>
 						    </property>
 						    <property name="text">
-							    <string>User Can Request Hibernation</string>
+							    <string>User Can Request Suspend</string>
 						    </property>
 					    </widget>
 					    <widget class="TQLabel" row="5" column="1" colspan="1">
 						    <property name="name">
-							    <cstring>labelSystemUserCanHibernate</cstring>
+							    <cstring>labelSystemUserCanSuspend</cstring>
 						    </property>
 					    </widget>
 					    <widget class="TQLabel" row="6" column="0" colspan="1">
@@ -1411,10 +1411,23 @@
 							    <cstring>unnamed</cstring>
 						    </property>
 						    <property name="text">
-							    <string>User Can Request Shutdown</string>
+							    <string>User Can Request Hibernation</string>
 						    </property>
 					    </widget>
 					    <widget class="TQLabel" row="6" column="1" colspan="1">
+						    <property name="name">
+							    <cstring>labelSystemUserCanHibernate</cstring>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="7" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>unnamed</cstring>
+						    </property>
+						    <property name="text">
+							    <string>User Can Request Shutdown</string>
+						    </property>
+					    </widget>
+					    <widget class="TQLabel" row="7" column="1" colspan="1">
 						    <property name="name">
 							    <cstring>labelSystemUserCanPowerOff</cstring>
 						    </property>

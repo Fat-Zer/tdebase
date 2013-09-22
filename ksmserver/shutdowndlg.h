@@ -141,6 +141,7 @@ public slots:
 	void slotReboot(int);
 	void slotSuspend();
 	void slotHibernate();
+	void slotFreeze();
 
 protected:
 	~KSMShutdownDlg();

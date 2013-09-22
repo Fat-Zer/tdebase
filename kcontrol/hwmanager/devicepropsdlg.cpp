@@ -714,6 +714,7 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			base->comboSystemHibernationMethod->setCurrentItem(m_hibernationComboMap[rdevice->hibernationMethod()]);
 
 			base->labelSystemUserCanStandby->setText((rdevice->canStandby())?i18n("Yes"):i18n("No"));
+			base->labelSystemUserCanFreeze->setText((rdevice->canFreeze())?i18n("Yes"):i18n("No"));
 			base->labelSystemUserCanSuspend->setText((rdevice->canSuspend())?i18n("Yes"):i18n("No"));
 			base->labelSystemUserCanHibernate->setText((rdevice->canHibernate())?i18n("Yes"):i18n("No"));
 			base->labelSystemUserCanPowerOff->setText((rdevice->canPowerOff())?i18n("Yes"):i18n("No"));
