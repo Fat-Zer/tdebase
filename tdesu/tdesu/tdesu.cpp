@@ -158,7 +158,7 @@ static int startApp()
 
     TQString icon;
     if ( args->isSet("i"))
-	icon = args->getOption("i");	
+	icon = args->getOption("i");
 
     bool prompt = true;
     if ( args->isSet("d"))
@@ -218,32 +218,23 @@ static int startApp()
     }
 
     // Get command
-    if (args->isSet("c"))
-    {
+    if (args->isSet("c")) {
         command = args->getOption("c");
-        for (int i=0; i<args->count(); i++)
-        {
-            TQString arg = TQFile::decodeName(args->arg(i));
-            KRun::shellQuote(arg);
-            command += " ";
-            command += TQFile::encodeName(arg);
+    }
+    else {
+        if( args->count() ) {
+            command = args->arg(0);
         }
     }
-    else 
-    {
-        if( args->count() == 0 )
-        {
-            TDECmdLineArgs::usage(i18n("No command specified."));
-            exit(1);
-        }
-        command = args->arg(0);
-        for (int i=1; i<args->count(); i++)
-        {
-            TQString arg = TQFile::decodeName(args->arg(i));
-            KRun::shellQuote(arg);
-            command += " ";
-            command += TQFile::encodeName(arg);
-        }
+    if (command.stripWhiteSpace().isEmpty()) {
+        TDECmdLineArgs::usage(i18n("No command specified."));
+        exit(1);
+    }
+    for (int i= args->isSet("c") ? 0 : 1; i<args->count(); i++) {
+        TQString arg = TQFile::decodeName(args->arg(i));
+        KRun::shellQuote(arg);
+        command += " ";
+        command += TQFile::encodeName(arg);
     }
 
     // Don't change uid if we're don't need to.
