@@ -663,6 +663,9 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 					if ((*it) == TDESystemPowerState::Standby) {
 						powerStatesString += i18n("Standby<br>");
 					}
+					if ((*it) == TDESystemPowerState::Freeze) {
+						powerStatesString += i18n("Freeze<br>");
+					}
 					if ((*it) == TDESystemPowerState::Suspend) {
 						powerStatesString += i18n("Suspend<br>");
 					}
