@@ -64,7 +64,7 @@ fi
 # Main script:
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201309150
+SCRIPT_VERSION=201310050
 
 # Allow forced execution of this script regardless of the kdeglobals setting
 # and allow passing a user home directory as a positional parameter.
@@ -515,7 +515,7 @@ find $PROFILE_DIR/share/config/session -name "kwin_*" -o -name "kwallet*" -o -na
 while read i; do
   ir=$PROFILE_DIR/share/config/session/$(basename $i | \
      sed -e "s|^kwin_|twin_|" \
-         -e "s|^kwallet|tdewallet|"
+         -e "s|^kwallet|tdewallet|" \
          -e "s|^kradio|tderadio|")
   mv $i $ir
 done
