@@ -64,7 +64,7 @@ fi
 # Main script:
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201310050
+SCRIPT_VERSION=201310100
 
 # Allow forced execution of this script regardless of the kdeglobals setting
 # and allow passing a user home directory as a positional parameter.
@@ -553,6 +553,7 @@ if [ ! -f $PROFILE_DIR/share/config/twinrc ] && [ -f $PROFILE_DIR/share/config/k
   mv $PROFILE_DIR/share/apps/kwinrulesrc $PROFILE_DIR/share/apps/twinrulesrc 2>/dev/null
   mv $PROFILE_DIR/share/apps/kwin_rules_dialogrc $PROFILE_DIR/share/apps/twin_rules_dialogrc 2>/dev/null
   sed -i 's|PluginLib=kwin_|PluginLib=twin_|' $PROFILE_DIR/share/config/twinrc
+  sed -i 's|PluginLib=kwin3_|PluginLib=twin3_|' $PROFILE_DIR/share/config/twinrc
 fi
 if [ ! -f $PROFILE_DIR/share/config/twin4rc ] && [ -f $PROFILE_DIR/share/config/kwin4rc ]; then
   Message_Prefix
