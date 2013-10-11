@@ -64,7 +64,7 @@ fi
 # Main script:
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201310100
+SCRIPT_VERSION=201310110
 
 # Allow forced execution of this script regardless of the kdeglobals setting
 # and allow passing a user home directory as a positional parameter.
@@ -543,15 +543,15 @@ if [ ! -f $PROFILE_DIR/share/config/tdeveloprc ] && [ -f $PROFILE_DIR/share/conf
   mv $PROFILE_DIR/share/config/kdeveloprc $PROFILE_DIR/share/config/tdeveloprc 2>/dev/null
 fi
 # kwin/twin is the Trinity window manager. kwin4/twin4 is a game.
-if [ ! -f $PROFILE_DIR/share/config/twinrc ] && [ -f $PROFILE_DIR/share/config/kwinrc ] || [ -d $PROFILE_DIR/share/apps/kwinrulesrc ]; then
+if [ ! -f $PROFILE_DIR/share/config/twinrc ] && [ -f $PROFILE_DIR/share/config/kwinrc ] || [ -d $PROFILE_DIR/share/config/kwinrulesrc ]; then
   # Do not include kwinrules_update because that is an auto-generated file.
   Message_Prefix
   echo "  kwin->twin"
   mv $PROFILE_DIR/share/config/kwinrc $PROFILE_DIR/share/config/twinrc 2>/dev/null
   mv $PROFILE_DIR/share/config/kwinrc.eventsrc $PROFILE_DIR/share/config/twinrc.eventsrc 2>/dev/null
   mv $PROFILE_DIR/share/config/kwinrc $PROFILE_DIR/share/config/twinrc 2>/dev/null
-  mv $PROFILE_DIR/share/apps/kwinrulesrc $PROFILE_DIR/share/apps/twinrulesrc 2>/dev/null
-  mv $PROFILE_DIR/share/apps/kwin_rules_dialogrc $PROFILE_DIR/share/apps/twin_rules_dialogrc 2>/dev/null
+  mv $PROFILE_DIR/share/config/kwinrulesrc $PROFILE_DIR/share/config/twinrulesrc 2>/dev/null
+  mv $PROFILE_DIR/share/config/kwin_rules_dialogrc $PROFILE_DIR/share/config/twin_rules_dialogrc 2>/dev/null
   sed -i 's|PluginLib=kwin_|PluginLib=twin_|' $PROFILE_DIR/share/config/twinrc
   sed -i 's|PluginLib=kwin3_|PluginLib=twin3_|' $PROFILE_DIR/share/config/twinrc
 fi
