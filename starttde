@@ -107,9 +107,11 @@ unset DYLD_FORCE_FLAT_NAMESPACE
 if [ "$TDE_IS_PRELINKED" = "" ]; then
   if [ -r /etc/default/prelink ]; then
     . /etc/default/prelink
-    if [ "$PRELINKING" = "yes" ]; then
-      export TDE_IS_PRELINKED=1
-    fi
+  elif [ -r /etc/sysconfig/prelink ]; then
+    . /etc/sysconfig/prelink
+  fi
+  if [ "$PRELINKING" = "yes" ]; then
+    export TDE_IS_PRELINKED=1
   fi
 fi
 
