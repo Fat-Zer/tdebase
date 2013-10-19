@@ -4,6 +4,10 @@
 //
 // (c) Sven Radej 1998
 // (c) David Faure 1998
+//
+// --------------------------------------------------------------
+// - 2013/10/16 Michele Calgaro
+//   Move some options to the 'advancedTabDialog' dialog
 
 #ifndef __KMISCHTML_OPTIONS_H
 #define __KMISCHTML_OPTIONS_H
@@ -60,10 +64,7 @@ private:
     TQCheckBox* m_pAutoRedirectCheckBox;
     TQCheckBox* m_pOpenMiddleClick;
     TQCheckBox* m_pBackRightClick;
-    TQCheckBox* m_pShowMMBInTabs;
     TQCheckBox* m_pFormCompletionCheckBox;
-    TQCheckBox* m_pDynamicTabbarHide;
-    TQCheckBox* m_pDynamicTabbarCycle;
     TQCheckBox* m_pAdvancedAddBookmarkCheckBox;
     TQCheckBox* m_pOnlyMarkedBookmarksCheckBox;
     KIntNumInput* m_pMaxFormCompletionItems;

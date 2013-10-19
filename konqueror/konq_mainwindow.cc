@@ -17,6 +17,12 @@
    along with this program; see the file COPYING.  If not, write to
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
+
+    --------------------------------------------------------------
+    Additional changes:
+    - 2013/10/17 Michele Calgaro
+      * add support for updating tab options at runtime (no need to restart Konqueror
+        or reload the profile
 */
 
 #include "konq_mainwindow.h"
@@ -4234,7 +4240,7 @@ void KonqMainWindow::updateViewActions()
         KonqFrameTabs* tabContainer = static_cast<KonqFrameTabs*>(docContainer);
         bool state = (tabContainer->count()>1);
         m_paRemoveTab->setEnabled( state );
-	m_paRemoveOtherTabs->setEnabled( state );
+        m_paRemoveOtherTabs->setEnabled( state );
         m_paBreakOffTab->setEnabled( state );
         m_paActivateNextTab->setEnabled( state );
         m_paActivatePrevTab->setEnabled( state );
@@ -4772,8 +4778,8 @@ void KonqMainWindow::slotPopupMenu( KXMLGUIClient *client, const TQPoint &_globa
 
 
   // Those actions go into the PopupMenuGUIClient, since that's the one defining them.
-  TDEAction *actNewWindow = 0L, *actNewTab = 0L;
-  if( doTabHandling )
+  TDEAction *actNewWindow = 0L;
+  if (doTabHandling)
   {
       if (_args.forcesNewWindow()) {
         actNewWindow = new TDEAction( i18n( "Open in T&his Window" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupThisWindow() ), konqyMenuClient->actionCollection(), "sameview" );
@@ -4879,7 +4885,6 @@ void KonqMainWindow::slotPopupMenu( KXMLGUIClient *client, const TQPoint &_globa
   popupItems.clear();
 
   // Deleted by konqyMenuClient's actioncollection
-  //delete actNewTab;
   //delete actNewWindow;
 
   delete actPaste;
@@ -4979,6 +4984,9 @@ void KonqMainWindow::reparseConfiguration()
   MapViews::ConstIterator end = m_mapViews.end();
   for (; it != end; ++it )
       (*it)->reparseConfiguration();
+
+  // Push updates to KonqViewManager as well
+  viewManager()->reparseConfiguration();
 }
 
 void KonqMainWindow::saveProperties( TDEConfig *config )

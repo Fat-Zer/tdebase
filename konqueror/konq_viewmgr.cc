@@ -16,6 +16,12 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+    --------------------------------------------------------------
+    Additional changes:
+    - 2013/10/17 Michele Calgaro
+      * add "scroll tabs on mouse wheel event" functionality
+      * add support for updating options at runtime (no need to restart Konqueror
+        or reload the profile
 */
 
 #include "konq_viewmgr.h"
@@ -78,9 +84,9 @@ KonqView* KonqViewManager::Initialize( const TQString &serviceType, const TQStri
   setActivePart( childView->part() );
   m_pDocContainer = childView->frame();
 
-    convertDocContainer();
-  static_cast<KonqFrameTabs*>( m_pDocContainer )->setAlwaysTabbedMode(
-      KonqSettings::alwaysTabbedMode() );
+  convertDocContainer();
+  static_cast<KonqFrameTabs*>( m_pDocContainer )->setAlwaysTabbedMode(KonqSettings::alwaysTabbedMode());
+  static_cast<KonqFrameTabs*>( m_pDocContainer )->setMouseWheelScroll(KonqSettings::tabsCycleWheel());
 
   m_pDocContainer->widget()->show();
   return childView;
@@ -366,13 +372,13 @@ KonqView* KonqViewManager::addTabFromHistory( int steps, bool openAfterCurrentPa
   int oldPos = m_pMainWindow->currentView()->historyPos();
   int newPos = oldPos + steps;
 
-  const HistoryEntry * he = m_pMainWindow->currentView()->historyAt(newPos);  
+  const HistoryEntry * he = m_pMainWindow->currentView()->historyAt(newPos);
   if(!he)
       return 0L;
 
   KonqView* newView = 0L;
   newView  = addTab( he->strServiceType, he->strServiceName, false, openAfterCurrentPage );
-    
+
   if(!newView)
       return 0L;
 
@@ -1200,7 +1206,7 @@ void KonqViewManager::loadViewProfile( TDEConfig &cfg, const TQString & filename
 
   TQString rootItem = cfg.readEntry( "RootItem", "empty" );
 
-  //kdDebug(1202) << "KonqViewManager::loadViewProfile : loading RootItem " << rootItem << 
+  //kdDebug(1202) << "KonqViewManager::loadViewProfile : loading RootItem " << rootItem <<
   //" forcedURL " << forcedURL.url() << endl;
 
   if ( forcedURL.url() != "about:blank" )
@@ -1244,6 +1250,7 @@ void KonqViewManager::loadViewProfile( TDEConfig &cfg, const TQString & filename
     convertDocContainer();
 
   static_cast<KonqFrameTabs*>( m_pDocContainer )->setAlwaysTabbedMode( alwaysTabbedMode );
+  static_cast<KonqFrameTabs*>( m_pDocContainer )->setMouseWheelScroll(KonqSettings::tabsCycleWheel());
 
   // Set an active part first so that we open the URL in the current view
   // (to set the location bar correctly and asap)
@@ -1601,9 +1608,9 @@ void KonqViewManager::loadItem( TDEConfig &cfg, KonqFrameContainerBase *parent,
     {
       KonqFrameContainer *newContainer = new KonqFrameContainer( o, parent->widget(), parent );
       connect(newContainer,TQT_SIGNAL(ctrlTabPressed()),m_pMainWindow,TQT_SLOT(slotCtrlTabPressed()));
-      
+
       int tabindex = -1;
-      if(openAfterCurrentPage && parent->frameType() == "Tabs") // Need to honor it, if possible      
+      if(openAfterCurrentPage && parent->frameType() == "Tabs") // Need to honor it, if possible
 	tabindex = static_cast<KonqFrameTabs*>(parent)->currentPageIndex() + 1;
       parent->insertChildFrame( newContainer, tabindex );
 
@@ -1694,12 +1701,14 @@ void KonqViewManager::profileListDirty( bool broadcast )
   if ( !broadcast )
   {
     m_bProfileListDirty = true;
-#if 0
+
+  // #if 0 causes problems with TDevelop syntax highlighting. Converted to comments
+  // #if 0
   // There's always one profile at least, now...
-  TQStringList profiles = KonqFactory::instance()->dirs()->findAllResources( "data", "konqueror/profiles/*", false, true );
-  if ( m_pamProfiles )
-      m_pamProfiles->setEnabled( profiles.count() > 0 );
-#endif
+  //TQStringList profiles = KonqFactory::instance()->dirs()->findAllResources( "data", "konqueror/profiles/*", false, true );
+  //if ( m_pamProfiles )
+  //    m_pamProfiles->setEnabled( profiles.count() > 0 );
+  // #endif
     return;
   }
 
@@ -1790,6 +1799,16 @@ void KonqViewManager::showHTML(bool b)
             m_pMainWindow->showHTML( it.current()->activeChildView(), b, false );
           }
       }
+  }
+}
+
+void KonqViewManager::reparseConfiguration()
+{
+  KonqFrameTabs *frameTabs=static_cast<KonqFrameTabs*>(m_pDocContainer);
+  if (frameTabs)
+  {
+    frameTabs->setAlwaysTabbedMode(KonqSettings::alwaysTabbedMode());
+    frameTabs->setMouseWheelScroll(KonqSettings::tabsCycleWheel());
   }
 }
 

@@ -88,8 +88,8 @@ public:
 
 
 public slots:
-  void slotCurrentChanged( TQWidget* newPage );
-  void setAlwaysTabbedMode( bool );
+  void slotCurrentChanged(TQWidget* newPage);
+  void setAlwaysTabbedMode(bool enable);
 
 signals:
   void ctrlTabPressed();
@@ -124,7 +124,7 @@ private:
   bool m_permanentCloseButtons;
   bool m_alwaysTabBar;
   bool m_MouseMiddleClickClosesTab;
-  int m_closeOtherTabsId;
+  int  m_closeOtherTabsId;
 };
 
 #endif

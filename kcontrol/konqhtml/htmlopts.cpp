@@ -4,6 +4,10 @@
 // (c) Sven Radej 1998
 // (c) David Faure 1998
 // (c) 2001 Waldo Bastian <bastian@kde.org>
+//
+// --------------------------------------------------------------
+// - 2013/10/16 Michele Calgaro
+//   Move some options to the 'advancedTabDialog' dialog
 
 #include <tqlayout.h>//CT - 12Nov1998
 #include <tqwhatsthis.h>
@@ -82,26 +86,9 @@ KMiscHTMLOptions::KMiscHTMLOptions(TDEConfig *config, TQString group, TQWidget *
     // Tabbed Browsing
 
     TQGroupBox *bgTabbedBrowsing = new TQGroupBox( 0, Qt::Vertical, i18n("Tabbed Browsing"), this );
-    TQVBoxLayout *laygroup = new TQVBoxLayout(bgTabbedBrowsing->layout(), KDialog::spacingHint() );
+    TQHBoxLayout *laytab = new TQHBoxLayout(bgTabbedBrowsing->layout(), KDialog::spacingHint());
 
-    m_pShowMMBInTabs = new TQCheckBox( i18n( "Open &links in new tab instead of in new window" ), bgTabbedBrowsing );
-    TQWhatsThis::add( m_pShowMMBInTabs, i18n("This will open a new tab instead of a new window in various situations, "
-                          "such as choosing a link or a folder with the middle mouse button.") );
-    connect(m_pShowMMBInTabs, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
-    laygroup->addWidget(m_pShowMMBInTabs);
-
-    m_pDynamicTabbarHide = new TQCheckBox( i18n( "Hide the tab bar when only one tab is open" ), bgTabbedBrowsing );
-    TQWhatsThis::add( m_pDynamicTabbarHide, i18n("This will display the tab bar only if there are two or more tabs. Otherwise it will always be displayed.") );
-    connect(m_pDynamicTabbarHide, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
-    laygroup->addWidget(m_pDynamicTabbarHide);
-
-    m_pDynamicTabbarCycle = new TQCheckBox( i18n( "C&ycle tabs with mouse wheel" ), bgTabbedBrowsing );
-    TQWhatsThis::add( m_pDynamicTabbarCycle, i18n("This will cycle through tabs when there are two or more tabs.") );
-    connect(m_pDynamicTabbarCycle, TQT_SIGNAL(clicked()), TQT_SLOT(slotChanged()));
-    laygroup->addWidget(m_pDynamicTabbarCycle);
-
-    TQHBoxLayout *laytab = new TQHBoxLayout(laygroup, KDialog::spacingHint());
-    TQPushButton *advancedTabButton = new TQPushButton( i18n( "Advanced Options"), bgTabbedBrowsing );
+    TQPushButton *advancedTabButton = new TQPushButton( i18n( "Show &tab options"), bgTabbedBrowsing );
     laytab->addWidget(advancedTabButton);
     laytab->addStretch();
     connect(advancedTabButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(launchAdvancedTabDialog()));
@@ -299,14 +286,9 @@ void KMiscHTMLOptions::load( bool useDefaults )
     m_pMaxFormCompletionItems->setValue( m_pConfig->readNumEntry( "MaxFormCompletionItems", 10 ) );
     m_pMaxFormCompletionItems->setEnabled( m_pFormCompletionCheckBox->isChecked() );
 
-    m_pConfig->setGroup("FMSettings");
-    m_pShowMMBInTabs->setChecked( m_pConfig->readBoolEntry( "MMBOpensTab", false ) );
-    m_pDynamicTabbarHide->setChecked( ! (m_pConfig->readBoolEntry( "AlwaysTabbedMode", false )) );
-    m_pDynamicTabbarCycle->setChecked( m_pConfig->readBoolEntry( "TabsCycleWheel", true ) );
-
     TDEConfig config("kbookmarkrc", true, false);
     config.setReadDefaults( useDefaults );
-	 config.setGroup("Bookmarks");
+	  config.setGroup("Bookmarks");
     m_pAdvancedAddBookmarkCheckBox->setChecked( config.readBoolEntry("AdvancedAddBookmarkDialog", false) );
     m_pOnlyMarkedBookmarksCheckBox->setChecked( config.readBoolEntry("FilteredToolbar", false) );
 
@@ -372,11 +354,6 @@ void KMiscHTMLOptions::save()
 
     m_pConfig->writeEntry( "FormCompletion", m_pFormCompletionCheckBox->isChecked() );
     m_pConfig->writeEntry( "MaxFormCompletionItems", m_pMaxFormCompletionItems->value() );
-
-    m_pConfig->setGroup("FMSettings");
-    m_pConfig->writeEntry( "MMBOpensTab", m_pShowMMBInTabs->isChecked() );
-    m_pConfig->writeEntry( "AlwaysTabbedMode", !(m_pDynamicTabbarHide->isChecked()) );
-    m_pConfig->writeEntry( "TabsCycleWheel", m_pDynamicTabbarCycle->isChecked() );
     m_pConfig->sync();
 
     TDEConfig config("kbookmarkrc", false, false);

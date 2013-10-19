@@ -15,6 +15,11 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
+
+    --------------------------------------------------------------
+    Additional changes:
+    - 2013/10/16 Michele Calgaro
+      * centralized "tabbed browsing" options in this dialog
  */
 
 #include <tqbuttongroup.h>
@@ -58,6 +63,9 @@ advancedTabDialog::advancedTabDialog(TQWidget* parent, TDEConfig* config, const 
     layout->addSpacing( 20 );
     layout->addStretch();
 
+    connect(m_advancedWidget->m_pShowMMBInTabs, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
+    connect(m_advancedWidget->m_pDynamicTabbarHide, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
+    connect(m_advancedWidget->m_pDynamicTabbarCycle, TQT_SIGNAL(clicked()), TQT_SLOT(changed()));
     connect(m_advancedWidget->m_pNewTabsInBackground, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
     connect(m_advancedWidget->m_pOpenAfterCurrentPage, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
     connect(m_advancedWidget->m_pTabConfirm, TQT_SIGNAL(clicked()), this, TQT_SLOT(changed()));
@@ -77,6 +85,9 @@ advancedTabDialog::~advancedTabDialog()
 void advancedTabDialog::load()
 {
     m_pConfig->setGroup("FMSettings");
+    m_advancedWidget->m_pShowMMBInTabs->setChecked( m_pConfig->readBoolEntry( "MMBOpensTab", false ) );
+    m_advancedWidget->m_pDynamicTabbarHide->setChecked( !(m_pConfig->readBoolEntry( "AlwaysTabbedMode", false )) );
+    m_advancedWidget->m_pDynamicTabbarCycle->setChecked( m_pConfig->readBoolEntry( "TabsCycleWheel", false ) );
     m_advancedWidget->m_pNewTabsInBackground->setChecked( ! (m_pConfig->readBoolEntry( "NewTabsInFront", false )) );
     m_advancedWidget->m_pOpenAfterCurrentPage->setChecked( m_pConfig->readBoolEntry( "OpenAfterCurrentPage", false ) );
     m_advancedWidget->m_pPermanentCloseButton->setChecked( m_pConfig->readBoolEntry( "PermanentCloseButton", false ) );
@@ -98,6 +109,9 @@ void advancedTabDialog::load()
 void advancedTabDialog::save()
 {
     m_pConfig->setGroup("FMSettings");
+    m_pConfig->writeEntry( "MMBOpensTab", (m_advancedWidget->m_pShowMMBInTabs->isChecked()) );
+    m_pConfig->writeEntry( "AlwaysTabbedMode", ( !(m_advancedWidget->m_pDynamicTabbarHide->isChecked())) );
+    m_pConfig->writeEntry( "TabsCycleWheel", (m_advancedWidget->m_pDynamicTabbarCycle->isChecked()) );
     m_pConfig->writeEntry( "NewTabsInFront", !(m_advancedWidget->m_pNewTabsInBackground->isChecked()) );
     m_pConfig->writeEntry( "OpenAfterCurrentPage", m_advancedWidget->m_pOpenAfterCurrentPage->isChecked() );
     m_pConfig->writeEntry( "PermanentCloseButton", m_advancedWidget->m_pPermanentCloseButton->isChecked() );

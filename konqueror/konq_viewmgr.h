@@ -15,6 +15,11 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+    --------------------------------------------------------------
+    Additional changes:
+    - 2013/10/17 Michele Calgaro
+      * add support for updating options at runtime (no need to restart Konqueror
+        or reload the profile
 */
 
 #ifndef __konq_viewmgr_h__
@@ -285,6 +290,9 @@ public:
   void showHTML(bool b);
 
   TQString profileHomeURL() const { return m_profileHomeURL; }
+
+  //Update options
+  void reparseConfiguration();
 
 protected slots:
   void emitActivePartChanged();

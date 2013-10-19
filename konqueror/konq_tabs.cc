@@ -17,6 +17,11 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
     MA  02110-1301, USA.
+
+    --------------------------------------------------------------
+    Additional changes:
+    - 2013/10/16 Michele Calgaro
+      add "scroll tabs on mouse wheel event" functionality
 */
 
 #include "konq_tabs.h"
@@ -188,6 +193,8 @@ KonqFrameTabs::KonqFrameTabs(TQWidget* parent, KonqFrameContainerBase* parentCon
            TQT_SLOT( slotReceivedDropEvent( TQWidget *, TQDropEvent * ) ) );
   connect( this, TQT_SIGNAL( initiateDrag( TQWidget * )),
            TQT_SLOT( slotInitiateDrag( TQWidget * ) ) );
+
+  setMouseWheelScroll(KonqSettings::tabsCycleWheel());
 }
 
 KonqFrameTabs::~KonqFrameTabs()
