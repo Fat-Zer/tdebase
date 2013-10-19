@@ -167,9 +167,11 @@ void TEWidget::setColorTable(const ColorEntry table[])
   for (int i = 0; i < TABLE_COLORS; i++) color_table[i] = table[i];
   const TQPixmap* pm = backgroundPixmap();
   if (!pm)
+  {
     if (!argb_visual || (tqAlpha(blend_color) == 0xff))
       setBackgroundColor(getDefaultBackColor());
-    else {
+    else
+    {
       float alpha = tqAlpha(blend_color) / 255.;
       int pixel = tqAlpha(blend_color) << 24 |
                   int(tqRed(blend_color) * alpha) << 16 |
@@ -177,6 +179,7 @@ void TEWidget::setColorTable(const ColorEntry table[])
                   int(tqBlue(blend_color) * alpha);
       setBackgroundColor(TQColor(blend_color, pixel));
     }
+  }
   update();
 }
 
@@ -628,10 +631,11 @@ void TEWidget::drawAttrStr(TQPainter &paint, TQRect rect,
     else
     {
       if (pm || clear || (blinking && (attr->r & RE_BLINK)) ||
-          attr->b == cacol(CO_DFT, colorsSwapped ? DEFAULT_FORE_COLOR : DEFAULT_BACK_COLOR) )
-
+          (attr->b == cacol(CO_DFT, colorsSwapped ? DEFAULT_FORE_COLOR : DEFAULT_BACK_COLOR)) )
+      {
         // draw background colors with 75% opacity
-        if ( draw_translucent_background_colors && argb_visual && tqAlpha(blend_color) < 0xff ) {
+        if ( draw_translucent_background_colors && argb_visual && tqAlpha(blend_color) < 0xff )
+        {
           QRgb col = bColor.rgb();
 
           TQ_UINT8 salpha = 192;
@@ -647,8 +651,10 @@ void TEWidget::drawAttrStr(TQPainter &paint, TQRect rect,
           int pixel = a << 24 | (r * a / 255) << 16 | (g * a / 255) << 8 | (b * a / 255);
 
           paint.fillRect(rect, TQColor(col, pixel));
-        } else
+        }
+        else
           paint.fillRect(rect, bColor);
+      }
     }
 
     TQString tmpStr = str.simplifyWhiteSpace();
@@ -844,12 +850,16 @@ void TEWidget::setImage(const ca* const newimg, int lines, int columns)
     // Two extra so that we don't have to have to care about start and end conditions
     for (x = 0; x < cols; x++)
     {
-	if ( ( (m_imPreeditLength > 0) && ( ( m_imStartLine == y )
-	      && ( ( m_imStart < m_imEnd ) && ( ( x > m_imStart ) ) && ( x < m_imEnd ) )
-              || ( ( m_imSelStart < m_imSelEnd ) && ( ( x > m_imSelStart ) ) ) ) )
-            || ext[x] != lcl[x])
+      if ( ( m_imPreeditLength>0 &&
+              ( ( m_imStartLine==y && m_imStart<m_imEnd && x>m_imStart && x<m_imEnd ) ||
+                ( m_imSelStart<m_imSelEnd && x>m_imSelStart )
+              )
+           )
+           ||
+           (ext[x] != lcl[x])
+         )
       {
-         dirtyMask[x] = dirtyMask[x+1] = dirtyMask[x+2] = 1;
+        dirtyMask[x] = dirtyMask[x+1] = dirtyMask[x+2] = 1;
       }
     }
     dirtyMask++; // Position correctly
@@ -1441,9 +1451,9 @@ void TEWidget::extendSelection( TQPoint pos )
     int selClass;
 
     bool left_not_right = ( here.y() < iPntSelCorr.y() ||
-	   here.y() == iPntSelCorr.y() && here.x() < iPntSelCorr.x() );
+	   (here.y() == iPntSelCorr.y() && here.x() < iPntSelCorr.x()) );
     bool old_left_not_right = ( pntSelCorr.y() < iPntSelCorr.y() ||
-	   pntSelCorr.y() == iPntSelCorr.y() && pntSelCorr.x() < iPntSelCorr.x() );
+	   (pntSelCorr.y() == iPntSelCorr.y() && pntSelCorr.x() < iPntSelCorr.x()) );
     swapping = left_not_right != old_left_not_right;
 
     // Find left (left_not_right ? from here : from start)
@@ -1516,9 +1526,9 @@ void TEWidget::extendSelection( TQPoint pos )
     int selClass;
 
     bool left_not_right = ( here.y() < iPntSelCorr.y() ||
-	   here.y() == iPntSelCorr.y() && here.x() < iPntSelCorr.x() );
+	    (here.y() == iPntSelCorr.y() && here.x() < iPntSelCorr.x()) );
     bool old_left_not_right = ( pntSelCorr.y() < iPntSelCorr.y() ||
-	   pntSelCorr.y() == iPntSelCorr.y() && pntSelCorr.x() < iPntSelCorr.x() );
+      (pntSelCorr.y() == iPntSelCorr.y() && pntSelCorr.x() < iPntSelCorr.x()) );
     swapping = left_not_right != old_left_not_right;
 
     // Find left (left_not_right ? from here : from start)
@@ -1559,10 +1569,12 @@ void TEWidget::extendSelection( TQPoint pos )
   if (here == ohere) return; // It's not left, it's not right.
 
   if ( actSel < 2 || swapping )
+  {
     if ( column_selection_mode && !line_selection_mode && !word_selection_mode )
       emit beginSelectionSignal( ohere.x(), ohere.y(), true );
     else
       emit beginSelectionSignal( ohere.x()-1-offset, ohere.y(), false );
+  }
 
   actSel = 2; // within selection
   pntSel = here;

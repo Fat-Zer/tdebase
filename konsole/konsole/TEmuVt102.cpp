@@ -1262,7 +1262,7 @@ static void hexdump(int* s, int len)
 
 void TEmuVt102::scan_buffer_report()
 {
-  if (ppos == 0 || ppos == 1 && (pbuf[0] & 0xff) >= 32) return;
+  if (ppos == 0 || (ppos == 1 && (pbuf[0] & 0xff) >= 32)) return;
   printf("token: "); hexdump(pbuf,ppos); printf("\n");
 }
 
