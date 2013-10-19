@@ -22,6 +22,8 @@
     Additional changes:
     - 2013/10/16 Michele Calgaro
       add "scroll tabs on mouse wheel event" functionality
+    - 2013/10/18 Michele Calgaro
+      correctly enable/disable 'move tab left/right' in the tab popup menu
 */
 
 #include "konq_tabs.h"
@@ -52,12 +54,12 @@
 #include <tqwhatsthis.h>
 #include <tqstyle.h>
 
-#define DUPLICATE_ID 3
-#define RELOAD_ID 4
-#define BREAKOFF_ID 5
-#define CLOSETAB_ID 6
-#define OTHERTABS_ID 7
-#define MOVE_LEFT_ID 8
+#define DUPLICATE_ID  3
+#define RELOAD_ID     4
+#define BREAKOFF_ID   5
+#define CLOSETAB_ID   6
+#define OTHERTABS_ID  7
+#define MOVE_LEFT_ID  8
 #define MOVE_RIGHT_ID 9
 
 //###################################################################
@@ -101,7 +103,7 @@ KonqFrameTabs::KonqFrameTabs(TQWidget* parent, KonqFrameContainerBase* parentCon
                             i18n("&Duplicate Tab"),
                             m_pViewManager->mainWindow(),
                             TQT_SLOT( slotDuplicateTabPopup() ),
-                            m_pViewManager->mainWindow()->action("duplicatecurrenttab")->shortcut(), 
+                            m_pViewManager->mainWindow()->action("duplicatecurrenttab")->shortcut(),
                             DUPLICATE_ID );
   m_pPopupMenu->insertItem( SmallIconSet( "tab_breakoff" ),
                             i18n("D&etach Tab"),
@@ -382,16 +384,36 @@ void KonqFrameTabs::slotMovedTab( int from, int to )
 void KonqFrameTabs::slotContextMenu( const TQPoint &p )
 {
   refreshSubPopupMenuTab();
-  
+
   m_pPopupMenu->setItemEnabled( RELOAD_ID, false );
   m_pPopupMenu->setItemEnabled( DUPLICATE_ID, false );
   m_pPopupMenu->setItemEnabled( BREAKOFF_ID, false );
-  m_pPopupMenu->setItemEnabled( MOVE_LEFT_ID, false );
-  // The following line fails to build. Adapted from konq_mainwindow.cc: 4243. Help!
-  // m_pPopupMenu->setItemEnabled( MOVE_LEFT_ID, m_pViewManager->mainWindow()->currentView() ? m_pViewManager->mainWindow()->currentView()->frame()!=(TQApplication::reverseLayout() ? childFrameList->last() : childFrameList->first()) : false );
-  m_pPopupMenu->setItemEnabled( MOVE_RIGHT_ID, false );
-  // The following line fails to build. Adapted from konq_mainwindow.cc: 4245. Help!
-  // m_pPopupMenu->setItemEnabled( MOVE_RIGHT_ID, m_pViewManager->mainWindow()->currentView() ? m_pViewManager->mainWindow()->currentView()->frame()!=(TQApplication::reverseLayout() ? childFrameList->first() : childFrameList->last()) : false );
+
+  uint tabCount = m_pChildFrameList->count();
+  KonqView *kview = m_pViewManager->mainWindow()->currentView();
+  if (tabCount>1 && kview)
+  {
+    // Move tab left
+    bool left_enable = false, right_enable = false;
+    if (TQApplication::reverseLayout())
+    {
+      left_enable = (kview->frame() != m_pChildFrameList->last());
+      right_enable= (kview->frame() != m_pChildFrameList->first());
+    }
+    else
+    {
+      left_enable = (kview->frame() != m_pChildFrameList->first());
+      right_enable= (kview->frame() != m_pChildFrameList->last());
+    }
+    m_pPopupMenu->setItemEnabled( MOVE_LEFT_ID, left_enable);
+    m_pPopupMenu->setItemEnabled( MOVE_RIGHT_ID, right_enable);
+  }
+  else
+  {
+    m_pPopupMenu->setItemEnabled(MOVE_LEFT_ID, false);
+    m_pPopupMenu->setItemEnabled(MOVE_RIGHT_ID, false);
+  }
+
   m_pPopupMenu->setItemEnabled( CLOSETAB_ID, false );
   m_pPopupMenu->setItemEnabled( OTHERTABS_ID, true );
   m_pSubPopupMenuTab->setItemEnabled( m_closeOtherTabsId, false );
@@ -402,13 +424,36 @@ void KonqFrameTabs::slotContextMenu( const TQPoint &p )
 void KonqFrameTabs::slotContextMenu( TQWidget *w, const TQPoint &p )
 {
   refreshSubPopupMenuTab();
-  
+
   uint tabCount = m_pChildFrameList->count();
   m_pPopupMenu->setItemEnabled( RELOAD_ID, true );
   m_pPopupMenu->setItemEnabled( DUPLICATE_ID, true );
   m_pPopupMenu->setItemEnabled( BREAKOFF_ID, tabCount>1 );
-  m_pPopupMenu->setItemEnabled( MOVE_LEFT_ID, tabCount>1 );
-  m_pPopupMenu->setItemEnabled( MOVE_RIGHT_ID, tabCount>1 );
+
+  KonqView *kview = m_pViewManager->mainWindow()->currentView();
+  if (tabCount>1 && kview)
+  {
+    // Move tab left
+    bool left_enable = false, right_enable = false;
+    if (TQApplication::reverseLayout())
+    {
+      left_enable = (kview->frame() != m_pChildFrameList->last());
+      right_enable= (kview->frame() != m_pChildFrameList->first());
+    }
+    else
+    {
+      left_enable = (kview->frame() != m_pChildFrameList->first());
+      right_enable= (kview->frame() != m_pChildFrameList->last());
+    }
+    m_pPopupMenu->setItemEnabled( MOVE_LEFT_ID, left_enable);
+    m_pPopupMenu->setItemEnabled( MOVE_RIGHT_ID, right_enable);
+  }
+  else
+  {
+    m_pPopupMenu->setItemEnabled(MOVE_LEFT_ID, false);
+    m_pPopupMenu->setItemEnabled(MOVE_RIGHT_ID, false);
+  }
+
   m_pPopupMenu->setItemEnabled( CLOSETAB_ID, tabCount>1 );
   m_pPopupMenu->setItemEnabled( OTHERTABS_ID, tabCount>1 );
   m_pSubPopupMenuTab->setItemEnabled( m_closeOtherTabsId, true );
