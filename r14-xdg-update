@@ -64,7 +64,7 @@ fi
 # Main script:
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201310110
+SCRIPT_VERSION=201310190
 
 # Allow forced execution of this script regardless of the kdeglobals setting
 # and allow passing a user home directory as a positional parameter.
@@ -543,7 +543,7 @@ if [ ! -f $PROFILE_DIR/share/config/tdeveloprc ] && [ -f $PROFILE_DIR/share/conf
   mv $PROFILE_DIR/share/config/kdeveloprc $PROFILE_DIR/share/config/tdeveloprc 2>/dev/null
 fi
 # kwin/twin is the Trinity window manager. kwin4/twin4 is a game.
-if [ ! -f $PROFILE_DIR/share/config/twinrc ] && [ -f $PROFILE_DIR/share/config/kwinrc ] || [ -d $PROFILE_DIR/share/config/kwinrulesrc ]; then
+if [ ! -f $PROFILE_DIR/share/config/twinrc ] && [ -f $PROFILE_DIR/share/config/kwinrc ] || [ -f $PROFILE_DIR/share/config/kwinrulesrc ]; then
   # Do not include kwinrules_update because that is an auto-generated file.
   Message_Prefix
   echo "  kwin->twin"
