@@ -22,6 +22,8 @@
     Additional changes:
     - 2013/10/14 Michele Calgaro
       add "scroll tabs on mouse wheel event" functionality
+    - 2013/10/19 Michele Calgaro
+      add "move session left/right" to tab popup menu
 
 */
 /* The material contained in here more or less directly orginates from    */
@@ -371,7 +373,6 @@ private:
   TDEAction       *m_closeSession;
   TDEAction       *m_print;
   TDEAction       *m_quit;
-  TDEAction       *m_tabDetachSession;
   TDEPopupMenu    *m_openSelection;
 
   TDEActionCollection *m_shortcuts;

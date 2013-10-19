@@ -22,6 +22,8 @@
     Additional changes:
     - 2013/10/14 Michele Calgaro
       add "scroll tabs on mouse wheel event" functionality
+    - 2013/10/19 Michele Calgaro
+      add "move session left/right" to tab popup menu
 
 */
 /* The material contained in here more or less directly orginates from    */
@@ -815,26 +817,46 @@ void Konsole::makeGUI()
    m_tabPopupMenu = new TDEPopupMenu( this );
    TDEAcceleratorManager::manage( m_tabPopupMenu );
 
-   m_tabDetachSession= new TDEAction( i18n("&Detach Session"), SmallIconSet("tab_breakoff"), 0, TQT_TQOBJECT(this), TQT_SLOT(slotTabDetachSession()), TQT_TQOBJECT(this) );
-   m_tabDetachSession->plug(m_tabPopupMenu);
+   if (!m_detachSession)
+   {
+     m_detachSession = new TDEAction(i18n("&Detach Session"), SmallIconSet("tab_breakoff"), 0, TQT_TQOBJECT(this),
+                                     TQT_SLOT(slotDetachSession()), m_shortcuts, "detach_session");
+   }
+   m_detachSession->plug(m_tabPopupMenu);
 
    m_tabPopupMenu->insertItem( i18n("&Rename Session..."), TQT_TQOBJECT(this),
                          TQT_SLOT(slotTabRenameSession()) );
    m_tabPopupMenu->insertSeparator();
 
-  m_tabMonitorActivity = new TDEToggleAction ( i18n( "Monitor for &Activity" ),
+   m_tabMonitorActivity = new TDEToggleAction ( i18n( "Monitor for &Activity" ),
       SmallIconSet("activity"), 0, TQT_TQOBJECT(this), TQT_SLOT( slotTabToggleMonitor() ), TQT_TQOBJECT(this) );
-  m_tabMonitorActivity->setCheckedState( KGuiItem( i18n( "Stop Monitoring for &Activity" ) ) );
+   m_tabMonitorActivity->setCheckedState( KGuiItem( i18n( "Stop Monitoring for &Activity" ) ) );
    m_tabMonitorActivity->plug(m_tabPopupMenu);
 
-  m_tabMonitorSilence = new TDEToggleAction ( i18n( "Monitor for &Silence" ),
+   m_tabMonitorSilence = new TDEToggleAction ( i18n( "Monitor for &Silence" ),
       SmallIconSet("silence"), 0, TQT_TQOBJECT(this), TQT_SLOT( slotTabToggleMonitor() ), TQT_TQOBJECT(this) );
-  m_tabMonitorSilence->setCheckedState( KGuiItem( i18n( "Stop Monitoring for &Silence" ) ) );
+   m_tabMonitorSilence->setCheckedState( KGuiItem( i18n( "Stop Monitoring for &Silence" ) ) );
    m_tabMonitorSilence->plug(m_tabPopupMenu);
 
    m_tabMasterMode = new TDEToggleAction ( i18n( "Send &Input to All Sessions" ), "remote", 0, TQT_TQOBJECT(this),
                                     TQT_SLOT( slotTabToggleMasterMode() ), TQT_TQOBJECT(this));
    m_tabMasterMode->plug(m_tabPopupMenu);
+
+   m_tabPopupMenu->insertSeparator();
+   if (!m_moveSessionLeft)
+   {
+     m_moveSessionLeft = new TDEAction(i18n("&Move Session Left"), TQApplication::reverseLayout() ? "forward" : "back",
+                                       TQApplication::reverseLayout() ? Qt::CTRL+Qt::SHIFT+Qt::Key_Right : Qt::CTRL+Qt::SHIFT+Qt::Key_Left, TQT_TQOBJECT(this),
+                                       TQT_SLOT(moveSessionLeft()), m_shortcuts, "move_session_left");
+   }
+   m_moveSessionLeft->plug(m_tabPopupMenu);
+   if (!m_moveSessionRight)
+   {
+     m_moveSessionRight = new TDEAction(i18n("M&ove Session Right"), TQApplication::reverseLayout() ? "back" : "forward",
+                                        TQApplication::reverseLayout() ? Qt::CTRL+Qt::SHIFT+Qt::Key_Left : Qt::CTRL+Qt::SHIFT+Qt::Key_Right, TQT_TQOBJECT(this),
+                                        TQT_SLOT(moveSessionRight()), m_shortcuts, "move_session_right");
+   }
+   m_moveSessionRight->plug(m_tabPopupMenu);
 
    m_tabPopupMenu->insertSeparator();
    m_tabPopupMenu->insertItem( SmallIconSet("colors"), i18n("Select &Tab Color..."), TQT_TQOBJECT(this), TQT_SLOT(slotTabSelectColor()) );
@@ -1098,8 +1120,11 @@ void Konsole::makeBasicGUI()
   m_clearAllSessionHistories = new TDEAction(i18n("Clear All H&istories"), "history_clear", 0,
     TQT_TQOBJECT(this), TQT_SLOT(slotClearAllSessionHistories()), m_shortcuts, "clear_all_histories");
 
-  m_detachSession = new TDEAction(i18n("&Detach Session"), SmallIconSet("tab_breakoff"), 0, TQT_TQOBJECT(this),
-                                TQT_SLOT(slotDetachSession()), m_shortcuts, "detach_session");
+  if (!m_detachSession)
+  {
+    m_detachSession = new TDEAction(i18n("&Detach Session"), SmallIconSet("tab_breakoff"), 0, TQT_TQOBJECT(this),
+                                    TQT_SLOT(slotDetachSession()), m_shortcuts, "detach_session");
+  }
   m_detachSession->setEnabled(false);
 
   m_renameSession = new TDEAction(i18n("&Rename Session..."), Qt::CTRL+Qt::ALT+Qt::Key_S, TQT_TQOBJECT(this),
@@ -1152,12 +1177,18 @@ void Konsole::makeBasicGUI()
   new TDEAction(i18n("Activate Menu"), Qt::CTRL+Qt::ALT+Qt::Key_M, TQT_TQOBJECT(this), TQT_SLOT(activateMenu()), m_shortcuts, "activate_menu");
   new TDEAction(i18n("List Sessions"), 0, TQT_TQOBJECT(this), TQT_SLOT(listSessions()), m_shortcuts, "list_sessions");
 
-  m_moveSessionLeft = new TDEAction(i18n("&Move Session Left"), TQApplication::reverseLayout() ? "forward" : "back",
-                                        TQApplication::reverseLayout() ? Qt::CTRL+Qt::SHIFT+Qt::Key_Right : Qt::CTRL+Qt::SHIFT+Qt::Key_Left, TQT_TQOBJECT(this),
-                                        TQT_SLOT(moveSessionLeft()), m_shortcuts, "move_session_left");
-  m_moveSessionRight = new TDEAction(i18n("M&ove Session Right"), TQApplication::reverseLayout() ? "back" : "forward",
-                                        TQApplication::reverseLayout() ? Qt::CTRL+Qt::SHIFT+Qt::Key_Left : Qt::CTRL+Qt::SHIFT+Qt::Key_Right, TQT_TQOBJECT(this),
-                                        TQT_SLOT(moveSessionRight()), m_shortcuts, "move_session_right");
+  if (!m_moveSessionLeft)
+  {
+    m_moveSessionLeft = new TDEAction(i18n("&Move Session Left"), TQApplication::reverseLayout() ? "forward" : "back",
+                                      TQApplication::reverseLayout() ? Qt::CTRL+Qt::SHIFT+Qt::Key_Right : Qt::CTRL+Qt::SHIFT+Qt::Key_Left, TQT_TQOBJECT(this),
+                                      TQT_SLOT(moveSessionLeft()), m_shortcuts, "move_session_left");
+  }
+  if (!m_moveSessionRight)
+  {
+    m_moveSessionRight = new TDEAction(i18n("M&ove Session Right"), TQApplication::reverseLayout() ? "back" : "forward",
+                                       TQApplication::reverseLayout() ? Qt::CTRL+Qt::SHIFT+Qt::Key_Left : Qt::CTRL+Qt::SHIFT+Qt::Key_Right, TQT_TQOBJECT(this),
+                                       TQT_SLOT(moveSessionRight()), m_shortcuts, "move_session_right");
+  }
 
   new TDEAction(i18n("Go to Previous Session"), TQApplication::reverseLayout() ? Qt::SHIFT+Qt::Key_Right : Qt::SHIFT+Qt::Key_Left,
               TQT_TQOBJECT(this), TQT_SLOT(prevSession()), m_shortcuts, "previous_session");
@@ -1317,13 +1348,10 @@ void Konsole::configureRequest(TEWidget* _te, int state, int x, int y)
 
 void Konsole::slotTabContextMenu(TQWidget* _te, const TQPoint & pos)
 {
-   if (!m_menuCreated)
+  if (!m_menuCreated)
       makeGUI();
 
   m_contextMenuSession = sessions.at( tabwidget->indexOf( _te ) );
-
-  m_tabDetachSession->setEnabled( tabwidget->count()>1 );
-
   m_tabMonitorActivity->setChecked( m_contextMenuSession->isMonitorActivity() );
   m_tabMonitorSilence->setChecked( m_contextMenuSession->isMonitorSilence() );
   m_tabMasterMode->setChecked( m_contextMenuSession->isMasterMode() );
