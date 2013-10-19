@@ -17,6 +17,12 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  
     02110-1301  USA.
+
+    --------------------------------------------------------------
+    Additional changes:
+    - 2013/10/14 Michele Calgaro
+      add "scroll tabs on mouse wheel event" functionality
+
 */
 /* The material contained in here more or less directly orginates from    */
 /* kvt, which is copyright (c) 1996 by Matthias Ettrich <ettrich@kde.org> */
@@ -910,8 +916,9 @@ void Konsole::makeTabWidget()
 {
   tabwidget = new KTabWidget(this);
   tabwidget->setTabReorderingEnabled(true);
-  tabwidget->setAutomaticResizeTabs( b_autoResizeTabs );
-  tabwidget->setTabCloseActivatePrevious( true );
+  tabwidget->setAutomaticResizeTabs(b_autoResizeTabs);
+  tabwidget->setTabCloseActivatePrevious(true);
+  tabwidget->setMouseWheelScroll(b_mouseWheelScroll);
 
   if (n_tabbar==TabTop)
     tabwidget->setTabPosition(TQTabWidget::Top);
@@ -923,10 +930,10 @@ void Konsole::makeTabWidget()
   connect(tabwidget, TQT_SIGNAL(movedTab(int,int)), TQT_SLOT(slotMovedTab(int,int)));
   connect(tabwidget, TQT_SIGNAL(mouseDoubleClick(TQWidget*)), TQT_SLOT(slotRenameSession()));
   connect(tabwidget, TQT_SIGNAL(currentChanged(TQWidget*)), TQT_SLOT(activateSession(TQWidget*)));
-  connect( tabwidget, TQT_SIGNAL(contextMenu(TQWidget*, const TQPoint &)),
-           TQT_SLOT(slotTabContextMenu(TQWidget*, const TQPoint &)));
-  connect( tabwidget, TQT_SIGNAL(contextMenu(const TQPoint &)),
-           TQT_SLOT(slotTabbarContextMenu(const TQPoint &)));
+  connect(tabwidget, TQT_SIGNAL(contextMenu(TQWidget*, const TQPoint &)),
+                     TQT_SLOT(slotTabContextMenu(TQWidget*, const TQPoint &)));
+  connect(tabwidget, TQT_SIGNAL(contextMenu(const TQPoint &)),
+                     TQT_SLOT(slotTabbarContextMenu(const TQPoint &)));
 
   if (kapp->authorize("shell_access")) {
     connect(tabwidget, TQT_SIGNAL(mouseDoubleClick()), TQT_SLOT(newSession()));
@@ -1566,7 +1573,6 @@ void Konsole::readProperties(TDEConfig* config)
 // konsoles are being read.
 void Konsole::readProperties(TDEConfig* config, const TQString &schema, bool globalConfigOnly)
 {
-
    if (config==TDEGlobal::config())
    {
      config->setDesktopGroup();
@@ -1593,6 +1599,7 @@ void Konsole::readProperties(TDEConfig* config, const TQString &schema, bool glo
 
      b_xonXoff = config->readBoolEntry("XonXoff",false);
      b_matchTabWinTitle = config->readBoolEntry("MatchTabWinTitle",false);
+     b_mouseWheelScroll = config->readBoolEntry("TabsCycleWheel",false);
      config->setGroup("UTMP");
      b_addToUtmp = config->readBoolEntry("AddToUtmp",true);
      config->setDesktopGroup();
@@ -2146,6 +2153,8 @@ void Konsole::reparseConfiguration()
        setSchema(s,_se->widget());
      }
   }
+
+  tabwidget->setMouseWheelScroll(b_mouseWheelScroll);
 }
 
 // Called via emulation via session

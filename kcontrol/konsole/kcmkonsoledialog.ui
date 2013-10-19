@@ -174,7 +174,7 @@
                                     <string>Use Ctrl+S/Ctrl+Q flow control</string>
                                 </property>
                             </widget>
-                            <spacer row="11" column="3">
+                            <spacer row="12" column="3">
                                 <property name="name">
                                     <cstring>Spacer3</cstring>
                                 </property>
@@ -199,7 +199,7 @@
                                     <string>Enable bidirectional text rendering</string>
                                 </property>
                             </widget>
-                            <widget class="TQLabel" row="11" column="0">
+                            <widget class="TQLabel" row="12" column="0">
                                 <property name="name">
                                     <cstring>SilenceLabel</cstring>
                                 </property>
@@ -218,7 +218,7 @@
                                     <cstring>silence_secondsSB</cstring>
                                 </property>
                             </widget>
-                            <widget class="KIntNumInput" row="11" column="1" rowspan="1" colspan="2">
+                            <widget class="KIntNumInput" row="12" column="1" rowspan="1" colspan="2">
                                 <property name="name">
                                     <cstring>silence_secondsSB</cstring>
                                 </property>
@@ -234,7 +234,7 @@
                                     <number>1</number>
                                 </property>
                             </widget>
-                            <widget class="KIntNumInput" row="10" column="2">
+                            <widget class="KIntNumInput" row="11" column="2">
                                 <property name="name">
                                     <cstring>line_spacingSB</cstring>
                                 </property>
@@ -253,7 +253,7 @@
                                     <number>8</number>
                                 </property>
                             </widget>
-                            <widget class="TQLabel" row="10" column="0" rowspan="1" colspan="2">
+                            <widget class="TQLabel" row="11" column="0" rowspan="1" colspan="2">
                                 <property name="name">
                                     <cstring>TextLabel1_4</cstring>
                                 </property>
@@ -272,7 +272,7 @@
                                     <cstring>line_spacingSB</cstring>
                                 </property>
                             </widget>
-                            <spacer row="10" column="3">
+                            <spacer row="11" column="3">
                                 <property name="name">
                                     <cstring>Spacer2</cstring>
                                 </property>
@@ -297,7 +297,7 @@
                                     <string>Set tab title to match window title</string>
                                 </property>
                             </widget>
-                            <widget class="TQCheckBox" row="12" column="0" rowspan="1" colspan="3">
+                            <widget class="TQCheckBox" row="10" column="0" rowspan="1" colspan="3">
                                 <property name="name">
                                     <cstring>tabsCycleWheel</cstring>
                                 </property>
