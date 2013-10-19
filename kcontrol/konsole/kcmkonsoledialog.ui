@@ -62,43 +62,6 @@
                             </size>
                         </property>
                     </spacer>
-                    <widget class="TQGroupBox" row="1" column="0">
-                        <property name="name">
-                            <cstring>GroupBox3</cstring>
-                        </property>
-                        <property name="title">
-                            <string>Double Click</string>
-                        </property>
-                        <grid>
-                            <property name="name">
-                                <cstring>unnamed</cstring>
-                            </property>
-                            <widget class="TQLabel" row="0" column="0">
-                                <property name="name">
-                                    <cstring>TextLabel1_3</cstring>
-                                </property>
-                                <property name="text">
-                                    <string>Consider the following characters &amp;part of a word when double clicking:</string>
-                                </property>
-                                <property name="buddy" stdset="0">
-                                    <cstring>word_connectorLE</cstring>
-                                </property>
-                            </widget>
-                            <widget class="TQLineEdit" row="1" column="0">
-                                <property name="name">
-                                    <cstring>word_connectorLE</cstring>
-                                </property>
-                                <property name="sizePolicy">
-                                    <sizepolicy>
-                                        <hsizetype>1</hsizetype>
-                                        <vsizetype>5</vsizetype>
-                                        <horstretch>0</horstretch>
-                                        <verstretch>0</verstretch>
-                                    </sizepolicy>
-                                </property>
-                            </widget>
-                        </grid>
-                    </widget>
                     <widget class="TQGroupBox" row="0" column="0">
                         <property name="name">
                             <cstring>GroupBox2</cstring>
@@ -199,39 +162,20 @@
                                     <string>Enable bidirectional text rendering</string>
                                 </property>
                             </widget>
-                            <widget class="TQLabel" row="12" column="0">
+                            <widget class="TQCheckBox" row="9" column="0" rowspan="1" colspan="4">
                                 <property name="name">
-                                    <cstring>SilenceLabel</cstring>
-                                </property>
-                                <property name="sizePolicy">
-                                    <sizepolicy>
-                                        <hsizetype>1</hsizetype>
-                                        <vsizetype>5</vsizetype>
-                                        <horstretch>0</horstretch>
-                                        <verstretch>0</verstretch>
-                                    </sizepolicy>
+                                    <cstring>matchTabWinTitleCB</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Seconds to detect s&amp;ilence:</string>
-                                </property>
-                                <property name="buddy" stdset="0">
-                                    <cstring>silence_secondsSB</cstring>
+                                    <string>Set tab title to match window title</string>
                                 </property>
                             </widget>
-                            <widget class="KIntNumInput" row="12" column="1" rowspan="1" colspan="2">
+                            <widget class="TQCheckBox" row="10" column="0" rowspan="1" colspan="3">
                                 <property name="name">
-                                    <cstring>silence_secondsSB</cstring>
+                                    <cstring>tabsCycleWheel</cstring>
                                 </property>
-                                <property name="sizePolicy">
-                                    <sizepolicy>
-                                        <hsizetype>1</hsizetype>
-                                        <vsizetype>0</vsizetype>
-                                        <horstretch>0</horstretch>
-                                        <verstretch>0</verstretch>
-                                    </sizepolicy>
-                                </property>
-                                <property name="minValue">
-                                    <number>1</number>
+                                <property name="text">
+                                    <string>Cycle tabs with mouse wheel</string>
                                 </property>
                             </widget>
                             <widget class="KIntNumInput" row="11" column="2">
@@ -289,20 +233,76 @@
                                     </size>
                                 </property>
                             </spacer>
-                            <widget class="TQCheckBox" row="9" column="0" rowspan="1" colspan="4">
+                            <widget class="TQLabel" row="12" column="0">
                                 <property name="name">
-                                    <cstring>matchTabWinTitleCB</cstring>
+                                    <cstring>SilenceLabel</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>1</hsizetype>
+                                        <vsizetype>5</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
                                 </property>
                                 <property name="text">
-                                    <string>Set tab title to match window title</string>
+                                    <string>Seconds to detect s&amp;ilence:</string>
+                                </property>
+                                <property name="buddy" stdset="0">
+                                    <cstring>silence_secondsSB</cstring>
                                 </property>
                             </widget>
-                            <widget class="TQCheckBox" row="10" column="0" rowspan="1" colspan="3">
+                            <widget class="KIntNumInput" row="12" column="1" rowspan="1" colspan="2">
                                 <property name="name">
-                                    <cstring>tabsCycleWheel</cstring>
+                                    <cstring>silence_secondsSB</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>1</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="minValue">
+                                    <number>1</number>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <widget class="TQGroupBox" row="1" column="0">
+                        <property name="name">
+                            <cstring>GroupBox3</cstring>
+                        </property>
+                        <property name="title">
+                            <string>Double Click</string>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="TQLabel" row="0" column="0">
+                                <property name="name">
+                                    <cstring>TextLabel1_3</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Cycle tabs with mouse wheel</string>
+                                    <string>Consider the following characters &amp;part of a word when double clicking:</string>
+                                </property>
+                                <property name="buddy" stdset="0">
+                                    <cstring>word_connectorLE</cstring>
+                                </property>
+                            </widget>
+                            <widget class="TQLineEdit" row="1" column="0">
+                                <property name="name">
+                                    <cstring>word_connectorLE</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>1</hsizetype>
+                                        <vsizetype>5</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
                                 </property>
                             </widget>
                         </grid>
