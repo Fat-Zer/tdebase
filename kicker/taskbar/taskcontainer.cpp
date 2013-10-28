@@ -21,7 +21,13 @@ AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
 AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-******************************************************************/
+*****************************************************************
+
+    Additional changes:
+    - 2013/10/22 Michele Calgaro
+      * added support for display mode (Icons and Text, Text only, Icons only)
+        and removed "Show application icons"
+*/
 
 #include <assert.h>
 
@@ -216,7 +222,7 @@ TaskContainer::~TaskContainer()
 
 void TaskContainer::showMe()
 {
-    if(!frames.isEmpty() && taskBar->showIcon())
+    if(!frames.isEmpty() && taskBar->showIcons())
         animationTimer.start(100);
 
     emit showMe(this);
@@ -307,28 +313,30 @@ void TaskContainer::setLastActivated()
 
 void TaskContainer::animationTimerFired()
 {
-    if (!frames.isEmpty() && taskBar->showIcon() && frames.at(currentFrame) != frames.end())
+    if (!frames.isEmpty() && taskBar->showIcons() && frames.at(currentFrame) != frames.end())
     {
-        TQPixmap *pm = *frames.at(currentFrame);
+      TQPixmap *pm = *frames.at(currentFrame);
 
-        // draw pixmap
-        if ( pm && !pm->isNull() ) {
+      // draw pixmap
+      if ( pm && !pm->isNull() )
+      {
 	    // we only have to redraw the background for frames 0, 8 and 9
-	    if ( currentFrame == 0 || currentFrame > 7 ) {
-		// double buffered painting
-		TQPixmap composite( animBg );
-		bitBlt( &composite, 0, 0, pm );
-		bitBlt( this, iconRect.x(), iconRect.y(), &composite );
-    	    }
-	    else
-		bitBlt( this, iconRect.x(), iconRect.y(), pm );
-	}
+	      if ( currentFrame == 0 || currentFrame > 7 )
+        {
+          // double buffered painting
+          TQPixmap composite( animBg );
+          bitBlt( &composite, 0, 0, pm );
+          bitBlt( this, iconRect.x(), iconRect.y(), &composite );
+    	  }
+	      else
+		      bitBlt( this, iconRect.x(), iconRect.y(), pm );
+	    }
 
-        // increment frame counter
-        if ( currentFrame >= 9)
-	    currentFrame = 0;
-        else
-	    currentFrame++;
+      // increment frame counter
+      if ( currentFrame >= 9)
+	      currentFrame = 0;
+      else
+	      currentFrame++;
     }
 }
 
@@ -686,151 +694,147 @@ void TaskContainer::drawButton(TQPainter *p)
         p->translate(shift.x(), shift.y());
     }
 
-    if (taskBar->showIcon())
+    TQString text = name();  // find text
+    int textPos = ( taskBar->showIcons() && (!pixmap.isNull() || m_startup)) ? 2 + 16 + 2 : 0;
+
+    // show icons
+    if (taskBar->showIcons())
     {
-        if (pixmap.isNull() && m_startup)
-        {
-            pixmap = SmallIcon(m_startup->icon());
-        }
+      if (pixmap.isNull() && m_startup)
+          pixmap = SmallIcon(m_startup->icon());
 
-        if ( !pixmap.isNull() )
-        {
-            // make sure it is no larger than 16x16
-            if ( pixmap.width() > 16 || pixmap.height() > 16 )
-            {
-                TQImage tmp = pixmap.convertToImage();
-                pixmap.convertFromImage( tmp.smoothScale( 16, 16 ) );
-            }
+      if ( !pixmap.isNull() )
+      {
+          // make sure it is no larger than 16x16
+          if ( pixmap.width() > 16 || pixmap.height() > 16 )
+          {
+              TQImage tmp = pixmap.convertToImage();
+              pixmap.convertFromImage( tmp.smoothScale( 16, 16 ) );
+          }
 
-            // fade out the icon when minimized
+          // fade out the icon when minimized
+          if (iconified)
+              TDEIconEffect::semiTransparent( pixmap );
+
+          // draw icon
+          TQRect pmr(0, 0, pixmap.width(), pixmap.height());
+          pmr.moveCenter(iconRect.center());
+          p->drawPixmap(pmr, pixmap);
+      }
+
+      // modified overlay icon
+      if (taskBar->showText())
+      {
+        static TQString modStr = "[" + i18n( "modified" ) + "]";
+        int modStrPos = text.find( modStr );
+        if (modStrPos >= 0)
+        {
+          // +1 because we include a space after the closing brace.
+          text.remove(modStrPos, modStr.length() + 1);
+          TQPixmap modPixmap = SmallIcon("modified");
+
+          // draw modified overlay
+          if (!modPixmap.isNull())
+          {
+            TQRect r = TQStyle::visualRect(TQRect(br.x() + textPos,(height() - 16) / 2, 16, 16), this);
             if (iconified)
             {
-                TDEIconEffect::semiTransparent( pixmap );
+              TDEIconEffect::semiTransparent(modPixmap);
             }
-
-            // draw icon
-            TQRect pmr(0, 0, pixmap.width(), pixmap.height());
-            pmr.moveCenter(iconRect.center());
-            p->drawPixmap(pmr, pixmap);
-        }
-    }
-
-    // find text
-    TQString text = name();
-
-    // modified overlay
-    static TQString modStr = "[" + i18n( "modified" ) + "]";
-    int modStrPos = text.find( modStr );
-    int textPos = ( taskBar->showIcon() && (!pixmap.isNull() || m_startup)) ? 2 + 16 + 2 : 0;
-
-    if (modStrPos >= 0)
-    {
-        // +1 because we include a space after the closing brace.
-        text.remove(modStrPos, modStr.length() + 1);
-        TQPixmap modPixmap = SmallIcon("modified");
-
-        // draw modified overlay
-        if (!modPixmap.isNull())
-        {
-            TQRect r = TQStyle::visualRect(TQRect(br.x() + textPos,
-                                               (height() - 16) / 2, 16, 16),
-                                         this);
-
-            if (iconified)
-            {
-                TDEIconEffect::semiTransparent(modPixmap);
-            }
-
             p->drawPixmap(r, modPixmap);
             textPos += 16 + 2;
+          }
         }
+      }
     }
 
     // draw text
-    if (!text.isEmpty())
+    if (taskBar->showText())
     {
-        TQRect tr = TQStyle::visualRect(TQRect(br.x() + textPos + 1, 0,
-                                            width() - textPos, height()),
-                                      this);
-        int textFlags = AlignVCenter | SingleLine;
-        textFlags |= reverse ? AlignRight : AlignLeft;
-        TQPen textPen;
+      if (!text.isEmpty())
+      {
+          TQRect tr = TQStyle::visualRect(TQRect(br.x() + textPos + 1, 0,
+                                          width() - textPos, height()), this);
+          int textFlags = AlignVCenter | SingleLine;
+          textFlags |= reverse ? AlignRight : AlignLeft;
+          TQPen textPen;
 
-        // get the color for the text label
-        if (iconified)
-        {
-            textPen = TQPen(KickerLib::blendColors(colors.button(), colors.buttonText()));
-        }
-        else if (!active)
-        {
-            textPen = TQPen(colors.buttonText());
-        }
-        else // hack for the dotNET style and others
-        {
-            if (READ_MERGED_TASBKAR_SETTING(useCustomColors))
-            {
-                textPen = TQPen(READ_MERGED_TASBKAR_SETTING(activeTaskTextColor));
-            }
-            else
-            {
-                textPen = TQPen(colors.buttonText()); // textPen = p->pen();
-            }
-        }
+          // get the color for the text label
+          if (iconified)
+          {
+              textPen = TQPen(KickerLib::blendColors(colors.button(), colors.buttonText()));
+          }
+          else if (!active)
+          {
+              textPen = TQPen(colors.buttonText());
+          }
+          else // hack for the dotNET style and others
+          {
+              if (READ_MERGED_TASBKAR_SETTING(useCustomColors))
+              {
+                  textPen = TQPen(READ_MERGED_TASBKAR_SETTING(activeTaskTextColor));
+              }
+              else
+              {
+                  textPen = TQPen(colors.buttonText()); // textPen = p->pen();
+              }
+          }
 
-        int availableWidth = width() - (br.x() * 2) - textPos - 2 - (READ_MERGED_TASBKAR_SETTING(drawButtons) && KickerSettings::showDeepButtons())?2:0;
-        if (m_filteredTasks.count() > 1)
-        {
-            availableWidth -= 8;
-        }
+          int availableWidth = width() - (br.x() * 2) - textPos - 2 - (READ_MERGED_TASBKAR_SETTING(drawButtons) && KickerSettings::showDeepButtons())?2:0;
+          if (m_filteredTasks.count() > 1)
+          {
+              availableWidth -= 8;
+          }
 
-        if (TQFontMetrics(font).width(text) > availableWidth)
-        {
-            // draw text into overlay pixmap
-            TQPixmap tpm(*pm);
-            TQPainter tp(&tpm);
+          if (TQFontMetrics(font).width(text) > availableWidth)
+          {
+              // draw text into overlay pixmap
+              TQPixmap tpm(*pm);
+              TQPainter tp(&tpm);
 
-            if (sunken)
-            {
-                tp.translate(shift.x(), shift.y());
-            }
+              if (sunken)
+              {
+                  tp.translate(shift.x(), shift.y());
+              }
 
-            tp.setFont(font);
-            tp.setPen(textPen);
+              tp.setFont(font);
+              tp.setPen(textPen);
 
-            if (halo)
-            {
-                taskBar->textShadowEngine()->drawText(tp, tr, textFlags, text, size());
-            }
-            else
-            {
-                tp.drawText(tr, textFlags, text);
-            }
+              if (halo)
+              {
+                  taskBar->textShadowEngine()->drawText(tp, tr, textFlags, text, size());
+              }
+              else
+              {
+                  tp.drawText(tr, textFlags, text);
+              }
 
-            // blend text into background image
-            TQImage img = pm->convertToImage();
-            TQImage timg = tpm.convertToImage();
-            KImageEffect::blend(img, timg, *taskBar->blendGradient(size()), KImageEffect::Red);
+              // blend text into background image
+              TQImage img = pm->convertToImage();
+              TQImage timg = tpm.convertToImage();
+              KImageEffect::blend(img, timg, *taskBar->blendGradient(size()), KImageEffect::Red);
 
-            // End painting before assigning the pixmap
-            TQPaintDevice* opd = p->device();
-            p->end();
-            pm->convertFromImage(img);
-            p->begin(opd ,this);
-        }
-        else
-        {
-            p->setFont(font);
-            p->setPen(textPen);
+              // End painting before assigning the pixmap
+              TQPaintDevice* opd = p->device();
+              p->end();
+              pm->convertFromImage(img);
+              p->begin(opd ,this);
+          }
+          else
+          {
+              p->setFont(font);
+              p->setPen(textPen);
 
-            if (halo)
-            {
-                taskBar->textShadowEngine()->drawText(*p, tr, textFlags, text, size());
-            }
-            else
-            {
-                p->drawText(tr, textFlags, text);
-            }
-        }
+              if (halo)
+              {
+                  taskBar->textShadowEngine()->drawText(*p, tr, textFlags, text, size());
+              }
+              else
+              {
+                  p->drawText(tr, textFlags, text);
+              }
+          }
+      }
     }
 
     if (!frames.isEmpty() && m_startup && frames.at(currentFrame) != frames.end())

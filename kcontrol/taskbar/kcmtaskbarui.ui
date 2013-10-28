@@ -144,7 +144,7 @@ By default, this option is selected and all windows are shown.</string>
                         <string>Turning this option on will allow tasks on the taskbar to be manually rearranged using drag and drop.</string>
                     </property>
                 </widget>
-                <widget class="TQCheckBox" row="8" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="7" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>kcfg_ShowWindowListBtn</cstring>
                     </property>
@@ -180,13 +180,13 @@ By default the taskbar groups windows when it is full.</string>
                 </widget>
                 <widget class="TQLabel" row="9" column="0" rowspan="1" colspan="2">
                     <property name="name">
-			    <cstring>groupTasksLabel</cstring>
+			                  <cstring>groupTasksLabel</cstring>
                     </property>
                     <property name="text">
                         <string>&amp;Group similar tasks:</string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_ShowTaskStates</cstring>
+                        <cstring>kcfg_GroupTasks</cstring>
                     </property>
                 </widget>
                 <widget class="TQComboBox" row="10" column="2">
@@ -202,7 +202,7 @@ By default the taskbar groups windows when it is full.</string>
                         </sizepolicy>
                     </property>
                     <property name="whatsThis" stdset="0">
-			    <string>The taskbar can show and/or hide tasks based on their current process state.  Select &lt;em&gt;Any&lt;/em&gt; to show all tasks regardless of current state.</string>
+			                  <string>The taskbar can show and/or hide tasks based on their current process state.  Select &lt;em&gt;Any&lt;/em&gt; to show all tasks regardless of current state.</string>
                     </property>
                 </widget>
                 <widget class="TQLabel" row="10" column="0" rowspan="1" colspan="2">
@@ -210,7 +210,7 @@ By default the taskbar groups windows when it is full.</string>
                         <cstring>showTaskStatesLabel</cstring>
                     </property>
                     <property name="text">
-			    <string>&amp;Show tasks with state:</string>
+			                  <string>&amp;Show tasks with state:</string>
                     </property>
                     <property name="buddy" stdset="0">
                         <cstring>kcfg_ShowTaskStates</cstring>
@@ -229,20 +229,31 @@ By default the taskbar groups windows when it is full.</string>
 By default, this option is not selected and the taskbar will show all windows.</string>
                     </property>
                 </widget>
-                <widget class="TQCheckBox" row="7" column="0" rowspan="1" colspan="3">
+                <widget class="TQLabel" row="8" column="0" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>kcfg_ShowIcon</cstring>
+                        <cstring>displayIconsNText</cstring>
                     </property>
                     <property name="text">
-                        <string>Sho&amp;w application icons</string>
+                        <string>Dis&amp;play:</string>
                     </property>
-                    <property name="checked">
-                        <bool>true</bool>
+                    <property name="buddy" stdset="0">
+                        <cstring>kcfg_DisplayIconsNText</cstring>
+                    </property>
+                </widget>
+                <widget class="TQComboBox" row="8" column="2">
+                    <property name="name">
+                        <cstring>kcfg_DisplayIconsNText</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>7</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>Select this option if you want window icons to appear along with their titles in the taskbar.
-
-By default this option is selected.</string>
+                        <string>Choose taskbar display mode among &lt;strong&gt;Icons and text&lt;/strong&gt;, &lt;strong&gt;Text only&lt;/strong&gt; and &lt;strong&gt;Icons only&lt;/strong&gt;.</string>
                     </property>
                 </widget>
                 <widget class="TQCheckBox" row="2" column="0" rowspan="1" colspan="3">
@@ -568,8 +579,8 @@ By default, this option is selected and all windows are shown.</string>
     <tabstop>showAllScreens</tabstop>
     <tabstop>kcfg_SortByApp</tabstop>
     <tabstop>kcfg_ShowOnlyIconified</tabstop>
-    <tabstop>kcfg_ShowIcon</tabstop>
     <tabstop>kcfg_ShowWindowListBtn</tabstop>
+    <tabstop>kcfg_DisplayIconsNText</tabstop>
     <tabstop>kcfg_GroupTasks</tabstop>
     <tabstop>kcfg_ShowTaskStates</tabstop>
     <tabstop>appearance</tabstop>

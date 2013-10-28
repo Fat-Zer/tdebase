@@ -19,7 +19,13 @@ AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
 AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-******************************************************************/
+*****************************************************************
+
+    Additional changes:
+    - 2013/10/22 Michele Calgaro
+      * added support for display mode (Icons and Text, Text only, Icons only)
+        and removed "Show application icons"
+*/
 
 #ifndef __taskbar_h__
 #define __taskbar_h__
@@ -31,9 +37,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "panner.h"
 #include "kshadowengine.h"
 
-#define WINDOWLISTBUTTON_SIZE 15
-#define BUTTON_MAX_WIDTH 200
-#define BUTTON_MIN_WIDTH 20
+const int WINDOWLISTBUTTON_SIZE = 15;
+const int BUTTON_MAX_WIDTH      = 200;
+const int BUTTON_MIN_WIDTH      = 24;    // 24 = 4+2+16+2 -> Space for borders, application icon and gaps
 
 class Startup;
 class Task;
@@ -85,7 +91,8 @@ public:
     int taskCount() const;
     int showScreen() const;
 
-    bool showIcon() const { return m_showIcon; }
+    bool showIcons() const;
+    bool showText() const;
     bool sortByDesktop() const { return m_sortByDesktop; }
     bool showAllWindows() const { return m_showAllWindows; }
 
@@ -140,31 +147,30 @@ private:
     void sortContainersByDesktop(TaskContainer::List& list);
     void setViewportBackground();
 
-    bool			blocklayout;
-    bool			m_showAllWindows;
-    bool			m_cycleWheel;
-    // The screen to show, -1 for all screens
-    int 			m_currentScreen;
-    bool			m_showOnlyCurrentScreen;
-    bool			m_sortByDesktop;
-    bool			m_showIcon;
-    bool			m_showOnlyIconified;
-    int				m_showTaskStates;
-    ArrowType 			arrowType;
-    TaskContainer::List		containers;
-    TaskContainer::List		m_hiddenContainers;
-    TaskContainer::List		m_deletableContainers;
-    PixmapList			frames;
-    int                         maximumButtonsWithoutShrinking() const;
-    bool                        shouldGroup() const;
-    bool                        isGrouping;
-    void                        reGroup();
-    TDEGlobalAccel*               keys;
-    KTextShadowEngine*		m_textShadowEngine;
-    bool			m_ignoreUpdates;
-    bool			m_sortByAppPrev;
-    TQTimer			m_relayoutTimer;
-    TQImage			m_blendGradient;
+    bool			          blocklayout;
+    bool			          m_showAllWindows;
+    bool			          m_cycleWheel;
+    int 			          m_currentScreen;    // The screen to show, -1 for all screens
+    bool			          m_showOnlyCurrentScreen;
+    bool			          m_sortByDesktop;
+    int                 m_displayIconsNText;
+    bool			          m_showOnlyIconified;
+    int				          m_showTaskStates;
+    ArrowType 			    arrowType;
+    TaskContainer::List	containers;
+    TaskContainer::List	m_hiddenContainers;
+    TaskContainer::List	m_deletableContainers;
+    PixmapList			    frames;
+    int                 maximumButtonsWithoutShrinking() const;
+    bool                shouldGroup() const;
+    bool                isGrouping;
+    void                reGroup();
+    TDEGlobalAccel*     keys;
+    KTextShadowEngine*	m_textShadowEngine;
+    bool			          m_ignoreUpdates;
+    bool			          m_sortByAppPrev;
+    TQTimer			        m_relayoutTimer;
+    TQImage			        m_blendGradient;
     TaskBarSettings*		m_settingsObject;
     TaskBarSettings*		m_globalSettingsObject;
 };

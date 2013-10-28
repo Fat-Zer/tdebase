@@ -20,8 +20,13 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
 AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
 AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*****************************************************************
 
-******************************************************************/
+    Additional changes:
+    - 2013/10/22 Michele Calgaro
+      * added support for display mode (Icons and Text, Text only, Icons only)
+        and removed "Show application icons"
+*/
 
 #include <math.h>
 
@@ -58,7 +63,7 @@ TaskBar::TaskBar( TaskBarSettings* settingsObject, TaskBarSettings* globalSettin
       m_currentScreen(-1),
       m_showOnlyCurrentScreen(false),
       m_sortByDesktop(false),
-      m_showIcon(false),
+      m_displayIconsNText(settingsObject->DisplayIconsAndText),
       m_showOnlyIconified(false),
       m_showTaskStates(0),
       m_textShadowEngine(0),
@@ -196,52 +201,33 @@ TQSize TaskBar::sizeHint( KPanelExtension::Position p, TQSize maxSize) const
 
     if ( p == KPanelExtension::Left || p == KPanelExtension::Right )
     {
-        int actualMax = minButtonHeight * containerCount();
-
-        if (containerCount() == 0)
-        {
-            actualMax = minButtonHeight;
-        }
-
-        if (actualMax > maxSize.height())
-        {
+        // Vertical layout
+        // Minimum space allows for one icon, the window list button and the up/down scrollers
+        int minHeight = minButtonHeight*3;
+        if (minHeight > maxSize.height())
             return maxSize;
-        }
-        return TQSize( maxSize.width(), actualMax );
+        return TQSize(maxSize.width(), minHeight);
     }
     else
     {
-        int rows = KickerSettings::conserveSpace() ?
-                   contentsRect().height() / minButtonHeight :
-                   1;
-        if ( rows < 1 )
-        {
-            rows = 1;
-        }
-
-        int maxWidth = READ_MERGED_TASBKAR_SETTING(maximumButtonWidth);
-        if (maxWidth == 0)
-        {
-            maxWidth = BUTTON_MAX_WIDTH;
-        }
-
-        int actualMax = maxWidth * (containerCount() / rows);
-
-        if (containerCount() % rows > 0)
-        {
-            actualMax += maxWidth;
-        }
-        if (containerCount() == 0)
-        {
-            actualMax = maxWidth;
-        }
-
-        if (actualMax > maxSize.width())
-        {
-           return maxSize;
-        }
-        return TQSize( actualMax, maxSize.height() );
+        // Horizontal layout
+        // Minimum space allows for one column of icons, the window list button and the left/right scrollers
+        int min_width=BUTTON_MIN_WIDTH*3;
+        if (min_width > maxSize.width())
+            return maxSize;
+        return TQSize(min_width, maxSize.height());
     }
+}
+
+bool TaskBar::showIcons() const
+{
+  return (m_displayIconsNText==m_settingsObject->DisplayIconsAndText ||
+          m_displayIconsNText==m_settingsObject->DisplayIconsOnly);
+}
+bool TaskBar::showText() const
+{
+  return (m_displayIconsNText==m_settingsObject->DisplayIconsAndText ||
+          m_displayIconsNText==m_settingsObject->DisplayTextOnly);
 }
 
 void TaskBar::configure()
@@ -249,13 +235,13 @@ void TaskBar::configure()
     bool wasShowWindows = m_showAllWindows;
     bool wasSortByDesktop = m_sortByDesktop;
     bool wasCycleWheel = m_cycleWheel;
-    bool wasShowIcon = m_showIcon;
+    bool wasDisplayIconsNText = m_displayIconsNText;
     bool wasShowOnlyIconified = m_showOnlyIconified;
     int  wasShowTaskStates = m_showTaskStates;
 
     m_showAllWindows = READ_MERGED_TASBKAR_SETTING(showAllWindows);
     m_sortByDesktop = m_showAllWindows && READ_MERGED_TASBKAR_SETTING(sortByDesktop);
-    m_showIcon = READ_MERGED_TASBKAR_SETTING(showIcon);
+    m_displayIconsNText = READ_MERGED_TASBKAR_SETTING(displayIconsNText);
     m_showOnlyIconified = READ_MERGED_TASBKAR_SETTING(showOnlyIconified);
     m_cycleWheel = READ_MERGED_TASBKAR_SETTING(cycleWheel);
     m_showTaskStates = READ_MERGED_TASBKAR_SETTING(showTaskStates);
@@ -280,7 +266,7 @@ void TaskBar::configure()
 
     if (wasShowWindows != m_showAllWindows ||
         wasSortByDesktop != m_sortByDesktop ||
-        wasShowIcon != m_showIcon ||
+        wasDisplayIconsNText != m_displayIconsNText ||
         wasCycleWheel != m_cycleWheel ||
         wasShowOnlyIconified != m_showOnlyIconified ||
         wasShowTaskStates != m_showTaskStates)
@@ -757,25 +743,18 @@ void TaskBar::reLayout()
     // horizontal layout
     if (orientation() == Qt::Horizontal)
     {
-        int bwidth = BUTTON_MIN_WIDTH;
+        int bwidth=BUTTON_MIN_WIDTH;
         int rows = contentsRect().height() / minButtonHeight;
-
-        if ( rows < 1 )
-        {
-            rows = 1;
-        }
+        if (rows<1)
+          rows=1;
 
         // actual button height
         int bheight = contentsRect().height() / rows;
-
-        // avoid zero devision later
-        if (bheight < 1)
-        {
-            bheight = 1;
-        }
+        if (bheight<1)  // avoid zero devision later
+          bheight=1;
 
         // buttons per row
-        int bpr = (int)ceil( (double)list.count() / rows);
+        int bpr = static_cast<int>(ceil(static_cast<double>(list.count()) / rows));
 
         // adjust content size
         if ( contentsRect().width() < bpr * BUTTON_MIN_WIDTH )
@@ -786,10 +765,11 @@ void TaskBar::reLayout()
         // maximum number of buttons per row
         int mbpr = contentsRect().width() / BUTTON_MIN_WIDTH;
 
-        // expand button width if space permits
+        // expand button width if space permits and the taskbar is not in 'icons only' mode
         if (mbpr > bpr)
         {
-            bwidth = contentsRect().width() / bpr;
+            if (!showIcons() || showText())
+              bwidth = contentsRect().width() / bpr;
             int maxWidth = READ_MERGED_TASBKAR_SETTING(maximumButtonWidth);
             if (maxWidth > 0 && bwidth > maxWidth)
             {
@@ -840,10 +820,12 @@ void TaskBar::reLayout()
     }
     else // vertical layout
     {
+        // Adjust min button height to keep gaps into account
+        int minButtonHeightAdjusted=minButtonHeight+4;
         // adjust content size
-        if (contentsRect().height() < (int)list.count() * minButtonHeight)
+        if (contentsRect().height() < (int)list.count() * minButtonHeightAdjusted)
         {
-            resizeContents(contentsRect().width(), list.count() * minButtonHeight);
+            resizeContents(contentsRect().width(), list.count() * minButtonHeightAdjusted);
         }
 
         // layout containers
@@ -856,11 +838,11 @@ void TaskBar::reLayout()
 
             c->setArrowType(arrowType);
             
-            if (c->width() != contentsRect().width() || c->height() != minButtonHeight)
-                c->resize(contentsRect().width(), minButtonHeight);
+            if (c->width() != contentsRect().width() || c->height() != minButtonHeightAdjusted)
+                c->resize(contentsRect().width(), minButtonHeightAdjusted);
 
-            if (childX(c) != 0 || childY(c) != (i * minButtonHeight))
-                moveChild(c, 0, i * minButtonHeight);
+            if (childX(c) != 0 || childY(c) != (i * minButtonHeightAdjusted))
+                moveChild(c, 0, i * minButtonHeightAdjusted);
             
             c->setBackground();
             i++;
@@ -1041,8 +1023,8 @@ int TaskBar::maximumButtonsWithoutShrinking() const
 bool TaskBar::shouldGroup() const
 {
     return READ_MERGED_TASBKAR_SETTING(groupTasks) == m_settingsObject->GroupAlways ||
-           (READ_MERGED_TASBKAR_SETTING(groupTasks) == m_settingsObject->GroupWhenFull &&
-            taskCount() > maximumButtonsWithoutShrinking());
+           ((READ_MERGED_TASBKAR_SETTING(groupTasks) == m_settingsObject->GroupWhenFull &&
+             taskCount() > maximumButtonsWithoutShrinking()));
 }
 
 void TaskBar::reGroup()

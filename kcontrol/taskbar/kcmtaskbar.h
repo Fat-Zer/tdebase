@@ -14,6 +14,12 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
+
+    --------------------------------------------------------------
+    Additional changes:
+    - 2013/10/22 Michele Calgaro
+      * added support for display mode (Icons and Text, Text only, Icons only)
+        and removed "Show application icons"
  */
 
 #ifndef __kcmtaskbar_h__
@@ -84,6 +90,8 @@ private:
     static TQStringList i18nGroupModeList();
     static const TQStringList& showTaskStatesList();
     static TQStringList i18nShowTaskStatesList();
+    static const TQStringList& displayIconsNText();
+    static TQStringList i18ndisplayIconsNText();
     TaskbarConfigUI *m_widget;
     TQString m_configFileName;
     TaskBarSettings* m_settingsObject;
