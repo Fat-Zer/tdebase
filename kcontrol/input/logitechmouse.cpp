@@ -115,7 +115,9 @@ LogitechMouse::LogitechMouse( struct usb_device *usbDev, int mouseCapabilityFlag
 
 LogitechMouse::~LogitechMouse()
 {
-    usb_close( m_usbDeviceHandle );
+    if (m_usbDeviceHandle != 0) {
+        usb_close( m_usbDeviceHandle );
+    }
 }
 
 void LogitechMouse::initCordlessStatusReporting()

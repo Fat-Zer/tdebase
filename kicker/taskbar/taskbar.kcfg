@@ -31,6 +31,22 @@
             <label>Show only minimized windows</label>
             <whatsthis>Select this option if you want the taskbar to display <b>only</b> minimized windows. By default, this option is not selected and the taskbar will show all windows.</whatsthis>
         </entry>
+        <entry key="DisplayIconsNText" type="Enum" >
+            <choices>
+                <choice name="DisplayIconsAndText">
+                    <label>Never</label>
+                </choice>
+                <choice name="DisplayTextOnly">
+                    <label>When Taskbar Full</label>
+                </choice>
+                <choice name="DisplayIconsOnly">
+                    <label>Always</label>
+                </choice>
+            </choices>
+            <default>DisplayIconsAndText</default>
+            <label>Display:</label>
+            <whatsthis>Choose taskbar display mode among <strong>Icons and text</strong>, <strong>Text only</strong> and <strong>Icons only</strong></whatsthis>
+        </entry>
         <entry key="GroupTasks" type="Enum" >
             <choices>
                 <choice name="GroupNever">
@@ -72,11 +88,6 @@
             <default>true</default>
             <label>Sort windows by application</label>
             <whatsthis>Selecting this option causes the taskbar to show windows ordered by application. By default this option is selected.</whatsthis>
-        </entry>
-        <entry key="ShowIcon" type="Bool" >
-            <default>true</default>
-            <label>Show application icons</label>
-            <whatsthis>Select this option if you want window icons to appear along with their titles in the taskbar. By default this option is selected.</whatsthis>
         </entry>
         <entry key="MaximumButtonWidth" type="Int" >
             <default>200</default>

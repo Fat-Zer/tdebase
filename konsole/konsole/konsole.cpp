@@ -1627,7 +1627,7 @@ void Konsole::readProperties(TDEConfig* config, const TQString &schema, bool glo
 
      b_xonXoff = config->readBoolEntry("XonXoff",false);
      b_matchTabWinTitle = config->readBoolEntry("MatchTabWinTitle",false);
-     b_mouseWheelScroll = config->readBoolEntry("TabsCycleWheel",false);
+     b_mouseWheelScroll = config->readBoolEntry("TabsCycleWheel",true);
      config->setGroup("UTMP");
      b_addToUtmp = config->readBoolEntry("AddToUtmp",true);
      config->setDesktopGroup();

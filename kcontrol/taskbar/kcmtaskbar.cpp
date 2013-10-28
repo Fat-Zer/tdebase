@@ -14,6 +14,12 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
+
+    --------------------------------------------------------------
+    Additional changes:
+    - 2013/10/22 Michele Calgaro
+      * added support for display mode (Icons and Text, Text only, Icons only)
+        and removed "Show application icons"
  */
 
 #include <tqcheckbox.h>
@@ -151,6 +157,27 @@ TQStringList TaskbarConfig::i18nShowTaskStatesList()
    return i18nList;
 }
 
+// These are the strings that are actually stored in the config file.
+const TQStringList& TaskbarConfig::displayIconsNText()
+{
+    static TQStringList list(TQStringList()
+                << I18N_NOOP("Icons and Text")
+                << I18N_NOOP("Text only")
+                << I18N_NOOP("Icons only"));
+    return list;
+}
+
+// Get a translated version of the above string list.
+TQStringList TaskbarConfig::i18ndisplayIconsNText()
+{
+   TQStringList i18nList;
+   for (TQStringList::ConstIterator it = displayIconsNText().begin(); it != displayIconsNText().end(); ++it)
+   {
+     i18nList << i18n((*it).latin1());
+   }
+   return i18nList;
+}
+
 TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringList& args)
   : TDECModule(TaskBarFactory::instance(), parent, name),
     m_settingsObject(NULL)
@@ -211,6 +238,7 @@ TaskbarConfig::TaskbarConfig(TQWidget *parent, const char* name, const TQStringL
     m_widget->kcfg_LeftButtonAction->insertStringList(list);
     m_widget->kcfg_MiddleButtonAction->insertStringList(list);
     m_widget->kcfg_RightButtonAction->insertStringList(list);
+    m_widget->kcfg_DisplayIconsNText->insertStringList(i18ndisplayIconsNText());
     m_widget->kcfg_GroupTasks->insertStringList(i18nGroupModeList());
     m_widget->kcfg_ShowTaskStates->insertStringList(i18nShowTaskStatesList());
 

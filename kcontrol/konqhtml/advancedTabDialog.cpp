@@ -87,7 +87,7 @@ void advancedTabDialog::load()
     m_pConfig->setGroup("FMSettings");
     m_advancedWidget->m_pShowMMBInTabs->setChecked( m_pConfig->readBoolEntry( "MMBOpensTab", false ) );
     m_advancedWidget->m_pDynamicTabbarHide->setChecked( !(m_pConfig->readBoolEntry( "AlwaysTabbedMode", false )) );
-    m_advancedWidget->m_pDynamicTabbarCycle->setChecked( m_pConfig->readBoolEntry( "TabsCycleWheel", false ) );
+    m_advancedWidget->m_pDynamicTabbarCycle->setChecked( m_pConfig->readBoolEntry( "TabsCycleWheel", true ) );
     m_advancedWidget->m_pNewTabsInBackground->setChecked( ! (m_pConfig->readBoolEntry( "NewTabsInFront", false )) );
     m_advancedWidget->m_pOpenAfterCurrentPage->setChecked( m_pConfig->readBoolEntry( "OpenAfterCurrentPage", false ) );
     m_advancedWidget->m_pPermanentCloseButton->setChecked( m_pConfig->readBoolEntry( "PermanentCloseButton", false ) );

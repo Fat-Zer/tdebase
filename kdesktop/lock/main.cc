@@ -370,6 +370,7 @@ int main( int argc, char **argv )
         app.processEvents();
 
         if (args->isSet( "internal" )) {
+            kdesktop_pid = atoi(args->getOption( "internal" ));
             while (signalled_run == FALSE) {
                 sigset_t new_mask;
                 struct sigaction act;
@@ -483,7 +484,6 @@ int main( int argc, char **argv )
             return ret;
         }
         else {
-            kdesktop_pid = atoi(args->getOption( "internal" ));
             if (kill(kdesktop_pid, 0) < 0) {
                 // The controlling kdesktop process probably died.  Commit suicide...
                 return 12;
