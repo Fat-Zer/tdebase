@@ -98,22 +98,6 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="TQCheckBox" row="1" column="1" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>kcfg_SortByDesktop</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Sort windows by desk&amp;top</string>
-                    </property>
-                    <property name="checked">
-                        <bool>true</bool>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>Selecting this option causes the taskbar to show windows in order of the desktop they appear on.
-
-By default this option is selected.</string>
-                    </property>
-                </widget>
                 <widget class="TQCheckBox" row="0" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>kcfg_ShowAllWindows</cstring>
@@ -130,6 +114,49 @@ By default this option is selected.</string>
 By default, this option is selected and all windows are shown.</string>
                     </property>
                 </widget>
+                <widget class="TQCheckBox" row="1" column="1" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_SortByDesktop</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Sort windows by desk&amp;top</string>
+                    </property>
+                    <property name="checked">
+                        <bool>true</bool>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Selecting this option causes the taskbar to show windows in order of the desktop they appear on.
+
+By default this option is selected.</string>
+                    </property>
+                </widget>
+                <widget class="TQCheckBox" row="2" column="0" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>showAllScreens</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show windows from all sc&amp;reens</string>
+                    </property>
+                    <property name="checked">
+                        <bool>true</bool>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Turning this option off will cause the taskbar to display &lt;b&gt;only&lt;/b&gt; windows which are on the same Xinerama screen as the taskbar.
+
+By default, this option is selected and all windows are shown.</string>
+                    </property>
+                </widget>
+                <widget class="TQCheckBox" row="3" column="0" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>kcfg_SortByApp</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Sort alphabeticall&amp;y by application name</string>
+                    </property>
+                    <property name="checked">
+                        <bool>true</bool>
+                    </property>
+                </widget>
                 <widget class="TQCheckBox" row="4" column="1" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_AllowDragAndDropReArrange</cstring>
@@ -144,6 +171,30 @@ By default, this option is selected and all windows are shown.</string>
                         <string>Turning this option on will allow tasks on the taskbar to be manually rearranged using drag and drop.</string>
                     </property>
                 </widget>
+                <widget class="TQCheckBox" row="5" column="0" rowspan="1" colspan="3">
+                  <property name="name">
+                    <cstring>kcfg_CycleWheel</cstring>
+                  </property>
+                  <property name="text">
+                    <string>Cycle through windows with mouse wheel</string>
+                  </property>
+                  <property name="checked">
+                    <bool>true</bool>
+                  </property>
+                </widget>
+                <widget class="TQCheckBox" row="6" column="0" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>kcfg_ShowOnlyIconified</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show o&amp;nly minimized windows</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Select this option if you want the taskbar to display &lt;b&gt;only&lt;/b&gt; minimized windows. 
+
+By default, this option is not selected and the taskbar will show all windows.</string>
+                    </property>
+                </widget>
                 <widget class="TQCheckBox" row="7" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>kcfg_ShowWindowListBtn</cstring>
@@ -156,6 +207,33 @@ By default, this option is selected and all windows are shown.</string>
                     </property>
                     <property name="whatsThis" stdset="0">
                         <string>Selecting this option causes the taskbar to display a button that, when clicked, shows a list of all windows in a popup menu.</string>
+                    </property>
+                </widget>
+                <widget class="TQLabel" row="8" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>displayIconsNText</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Dis&amp;play:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kcfg_DisplayIconsNText</cstring>
+                    </property>
+                </widget>
+                <widget class="TQComboBox" row="8" column="2">
+                    <property name="name">
+                        <cstring>kcfg_DisplayIconsNText</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>7</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Choose taskbar display mode among &lt;strong&gt;Icons and text&lt;/strong&gt;, &lt;strong&gt;Text only&lt;/strong&gt; and &lt;strong&gt;Icons only&lt;/strong&gt;.</string>
                     </property>
                 </widget>
                 <widget class="TQComboBox" row="9" column="2">
@@ -214,62 +292,6 @@ By default the taskbar groups windows when it is full.</string>
                     </property>
                     <property name="buddy" stdset="0">
                         <cstring>kcfg_ShowTaskStates</cstring>
-                    </property>
-                </widget>
-                <widget class="TQCheckBox" row="6" column="0" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>kcfg_ShowOnlyIconified</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Show o&amp;nly minimized windows</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>Select this option if you want the taskbar to display &lt;b&gt;only&lt;/b&gt; minimized windows. 
-
-By default, this option is not selected and the taskbar will show all windows.</string>
-                    </property>
-                </widget>
-                <widget class="TQLabel" row="8" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>displayIconsNText</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Dis&amp;play:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>kcfg_DisplayIconsNText</cstring>
-                    </property>
-                </widget>
-                <widget class="TQComboBox" row="8" column="2">
-                    <property name="name">
-                        <cstring>kcfg_DisplayIconsNText</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>7</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>Choose taskbar display mode among &lt;strong&gt;Icons and text&lt;/strong&gt;, &lt;strong&gt;Text only&lt;/strong&gt; and &lt;strong&gt;Icons only&lt;/strong&gt;.</string>
-                    </property>
-                </widget>
-                <widget class="TQCheckBox" row="2" column="0" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>showAllScreens</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Show windows from all sc&amp;reens</string>
-                    </property>
-                    <property name="checked">
-                        <bool>true</bool>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>Turning this option off will cause the taskbar to display &lt;b&gt;only&lt;/b&gt; windows which are on the same Xinerama screen as the taskbar.
-
-By default, this option is selected and all windows are shown.</string>
                     </property>
                 </widget>
                 <widget class="TQComboBox" row="11" column="2">
@@ -437,28 +459,6 @@ By default, this option is selected and all windows are shown.</string>
                         </size>
                     </property>
                 </spacer>
-                <widget class="TQCheckBox" row="3" column="0" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>kcfg_SortByApp</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Sort alphabeticall&amp;y by application name</string>
-                    </property>
-                    <property name="checked">
-                        <bool>true</bool>
-                    </property>
-                </widget>
-                <widget class="TQCheckBox" row="5" column="0" rowspan="1" colspan="3">
-                  <property name="name">
-                    <cstring>kcfg_CycleWheel</cstring>
-                  </property>
-                  <property name="text">
-                    <string>Cycle through windows with mouse wheel</string>
-                  </property>
-                  <property name="checked">
-                    <bool>true</bool>
-                  </property>
-                </widget>
             </grid>
         </widget>
         <widget class="TQGroupBox">
@@ -578,6 +578,8 @@ By default, this option is selected and all windows are shown.</string>
     <tabstop>kcfg_SortByDesktop</tabstop>
     <tabstop>showAllScreens</tabstop>
     <tabstop>kcfg_SortByApp</tabstop>
+    <tabstop>kcfg_AllowDragAndDropReArrange</tabstop>
+    <tabstop>kcfg_CycleWheel</tabstop>
     <tabstop>kcfg_ShowOnlyIconified</tabstop>
     <tabstop>kcfg_ShowWindowListBtn</tabstop>
     <tabstop>kcfg_DisplayIconsNText</tabstop>
