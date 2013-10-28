@@ -49,6 +49,7 @@
 Version 2.x of xcompmgr, kompmgr changes by Thomas L�bking and Heiko Przybyl
 check baghira.sf.net for more infos
 */
+
 #define _VERSION_ 2.02
 #include <stdlib.h>
 #include <stdio.h>
@@ -258,7 +259,6 @@ conv            *gaussianMap;
 #define TRANS_OPACITY	0.75
 
 #define NDEBUG 1
-#define DEBUG_WINDWS 0
 #define DEBUG_REPAINT 0
 #define DEBUG_WINDOWS 0
 #define DEBUG_EVENTS 0
@@ -1619,12 +1619,6 @@ paint_all (Display *dpy, XserverRegion region)
 			   background pixmap entirely here is the place to do it; simply
 			   draw the new background onto rootBuffer before continuing! */
 			if (w->isInFade == False) {
-				// HACK
-				// For an unknown reason the PropertyNotify event handler is not
-				// fired when either the show_black_background or show_root_tile
-				// control atoms are changed.  This works around the problem but
-				// causes an unquantified, likely relatively low, performance loss.
-				w->show_black_background = determine_window_transparent_to_black(dpy, w->id);
 				if (w->show_black_background == True) {
 					XRenderComposite (dpy, PictOpSrc, blackPicture, None, rootBuffer,
 							x, y, x, y, 
@@ -2340,6 +2334,7 @@ determine_window_transparent_to_black (Display *dpy, Window w)
 	Window      *children = NULL;
 	unsigned int nchildren, i;
 	Bool         type;
+	Bool         ret = False;
 
 	type = get_window_transparent_to_black (dpy, w);
 	if (type == True) {
@@ -2350,22 +2345,26 @@ determine_window_transparent_to_black (Display *dpy, Window w)
 				&nchildren))
 	{
 		/* XQueryTree failed. */
-		if (children)
+		if (children) {
 			XFree ((void *)children);
+		}
 		return False;
 	}
 
 	for (i = 0;i < nchildren;i++)
 	{
 		type = determine_window_transparent_to_black (dpy, children[i]);
-		if (type == True)
-			return True;
+		if (type == True) {
+			ret = True;
+			break;
+		}
 	}
 
-	if (children)
+	if (children) {
 		XFree ((void *)children);
+	}
 
-	return False;
+	return ret;
 }
 
 	static void
@@ -2380,6 +2379,9 @@ add_win (Display *dpy, Window id, Window prev)
 #endif
 
 	if (!new) {
+#if DEBUG_WINDOWS
+	printf("add_win: malloc() failed!\n", id);
+#endif
 		return;
 	}
 	if (prev) {
@@ -2466,8 +2468,14 @@ add_win (Display *dpy, Window id, Window prev)
 
 	new->next = *p;
 	*p = new;
+#if DEBUG_WINDOWS
+		printf("adding 0x%x\n", new->id);
+#endif
 	if (new->a.map_state == IsViewable) {
 		map_win (dpy, id, new->damage_sequence - 1, True);
+#if DEBUG_WINDOWS
+			printf("mapped 0x%x\n", new->id);
+#endif
 	}
 }
 
