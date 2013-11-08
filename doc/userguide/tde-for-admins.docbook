@@ -1452,7 +1452,7 @@ TerminalOptions=<co id="co-terminaloptions"/>
 Path=<co id="co-path"/>
 Type=Application<co id="co-type"/>
 Terminal=0<co id="co-terminal"/>
-X-TDE-StartupNotify=true<co id="co-x-kde-startupnotify"/>
+X-TDE-StartupNotify=true<co id="co-x-tde-startupnotify"/>
 X-DCOP-ServiceType=Multi<co id="co-x-dcop-servicetype"/>
 Categories=Qt;TDE;Network<co id="co-categories"/>
 </programlisting>
@@ -1475,7 +1475,7 @@ needed</para>
 <callout arearefs="co-terminal"><para>Use true if terminal is needed,
 text application</para>
 </callout>
-<callout arearefs="co-x-kde-startupnotify"><para>Show bouncy cursor,
+<callout arearefs="co-x-tde-startupnotify"><para>Show bouncy cursor,
 disable if it doesn't work.</para>
 </callout>
 <callout arearefs="co-x-dcop-servicetype"><para>Has app started ok?

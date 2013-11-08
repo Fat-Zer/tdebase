@@ -41,7 +41,7 @@ TQMimeSource* HistoryURLItem::mimeSource() const {
     KMultipleDrag* drag = new KMultipleDrag;
     drag->addDragObject( new KURLDrag( urls, metaData ));
     // from KonqDrag (libkonq)
-    TQStoredDrag* cutdrag = new TQStoredDrag( "application/x-kde-cutselection" );
+    TQStoredDrag* cutdrag = new TQStoredDrag( "application/x-tde-cutselection" );
     TQByteArray a;
     TQCString s ( cut ? "1" : "0" );
     a.resize( s.length() + 1 ); // trailing zero

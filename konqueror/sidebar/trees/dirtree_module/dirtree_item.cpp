@@ -199,7 +199,7 @@ void KonqSidebarDirTreeItem::paste()
     // move or not move ?
     bool move = false;
     TQMimeSource *data = TQApplication::clipboard()->data();
-    if ( data->provides( "application/x-kde-cutselection" ) ) {
+    if ( data->provides( "application/x-tde-cutselection" ) ) {
         move = KonqDrag::decodeIsCutSelection( data );
         kdDebug(1201) << "move (from clipboard data) = " << move << endl;
     }

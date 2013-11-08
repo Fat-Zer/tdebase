@@ -34,7 +34,7 @@ const char* KonqIconDrag::format( int i ) const
     else if ( i == 1 )
 	return "text/uri-list";
     else if ( i == 2 )
-        return "application/x-kde-cutselection";
+        return "application/x-tde-cutselection";
     else if ( i == 3 )
         return "text/plain";
     else if ( i == 4 ) //These two are imporant because they may end up being format 0,
@@ -60,7 +60,7 @@ TQByteArray KonqIconDrag::encodedData( const char* mime ) const
         a.resize( s.length() + 1 ); // trailing zero
         memcpy( a.data(), s.data(), s.length() + 1 );
     }
-    else if ( mimetype == "application/x-kde-cutselection" ) {
+    else if ( mimetype == "application/x-tde-cutselection" ) {
         TQCString s ( m_bCutSelection ? "1" : "0" );
         a.resize( s.length() + 1 ); // trailing zero
         memcpy( a.data(), s.data(), s.length() + 1 );
@@ -115,7 +115,7 @@ bool KonqIconDrag::canDecode( const TQMimeSource* e )
 {
     return  e->provides( "application/x-qiconlist" ) ||
       e->provides( "text/uri-list" ) ||
-      e->provides( "application/x-kde-cutselection" );
+      e->provides( "application/x-tde-cutselection" );
 }
 
 void KonqIconDrag::append( const TQIconDragItem &item, const TQRect &pr,
@@ -141,14 +141,14 @@ void KonqIconDrag2::append( const TQIconDragItem &item, const TQRect &pr,
 const char* KonqIconDrag2::format( int i ) const
 {
     if ( i == 6 )
-        return "application/x-kde-urilist";
+        return "application/x-tde-urilist";
     return KonqIconDrag::format( i );
 }
 
 TQByteArray KonqIconDrag2::encodedData( const char* mime ) const
 {
     TQCString mimetype( mime );
-    if ( mimetype == "application/x-kde-urilist" )
+    if ( mimetype == "application/x-tde-urilist" )
     {
         TQByteArray a;
         int c=0;
@@ -215,11 +215,11 @@ const char* KonqDrag::format( int i ) const
     if ( i == 0 )
 	return "text/uri-list";
     else if ( i == 1 )
-        return "application/x-kde-cutselection";
+        return "application/x-tde-cutselection";
     else if ( i == 2 )
         return "text/plain";
     else if ( i == 3 )
-        return "application/x-kde-urilist";
+        return "application/x-tde-urilist";
     else return 0;
 }
 
@@ -241,11 +241,11 @@ TQByteArray KonqDrag::encodedData( const char* mime ) const
         a.resize(c+1);
         a[c] = 0;
     }
-    else if ( mimetype == "application/x-kde-urilist" )
+    else if ( mimetype == "application/x-tde-urilist" )
     {
         return TQUriDrag::encodedData( "text/uri-list" );
     }
-    else if ( mimetype == "application/x-kde-cutselection" )
+    else if ( mimetype == "application/x-tde-cutselection" )
     {
         TQCString s ( m_bCutSelection ? "1" : "0" );
 	a.resize( s.length() + 1 ); // trailing zero
@@ -271,7 +271,7 @@ TQByteArray KonqDrag::encodedData( const char* mime ) const
 
 bool KonqDrag::decodeIsCutSelection( const TQMimeSource *e )
 {
-  TQByteArray a = e->encodedData( "application/x-kde-cutselection" );
+  TQByteArray a = e->encodedData( "application/x-tde-cutselection" );
   if ( a.isEmpty() )
     return false;
   else

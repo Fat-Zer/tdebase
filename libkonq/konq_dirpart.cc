@@ -419,7 +419,7 @@ void KonqDirPart::slotClipboardDataChanged()
 
     KURL::List lst;
     TQMimeSource *data = TQApplication::clipboard()->data();
-    if ( data->provides( "application/x-kde-cutselection" ) && data->provides( "text/uri-list" ) )
+    if ( data->provides( "application/x-tde-cutselection" ) && data->provides( "text/uri-list" ) )
         if ( KonqDrag::decodeIsCutSelection( data ) )
             (void) KURLDrag::decode( data, lst );
 
