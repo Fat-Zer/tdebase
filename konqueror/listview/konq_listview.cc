@@ -138,7 +138,7 @@ void ListViewBrowserExtension::updateActions()
   emit enableAction( "del", canDel > 0 );
   emit enableAction( "properties", lstItems.count() > 0 && KPropertiesDialog::canDisplay( lstItems ) );
   emit enableAction( "editMimeType", ( lstItems.count() == 1 ) );
-  emit enableAction( "rename", ( m_listView->listViewWidget()->currentItem() != 0 )&& !bInTrash );
+  emit enableAction( "rename", ( m_listView->listViewWidget()->currentItem() != 0 ) && !bInTrash );
 }
 
 void ListViewBrowserExtension::copySelection( bool move )
@@ -161,6 +161,14 @@ void ListViewBrowserExtension::rename()
 {
   TQListViewItem* item = m_listView->listViewWidget()->currentItem();
   Q_ASSERT ( item );
+
+  // Update shurtcuts for the 'rename and move' actions. Must be done every time since the
+  // shortcuts may have been changed by the user in the meanwhile
+  const TDEShortcut moveNextSC=m_listView->m_paRenameMoveNext->shortcut();
+  const TDEShortcut movePrevSC=m_listView->m_paRenameMovePrev->shortcut();
+  m_listView->listViewWidget()->setRenameSettings(TDEListViewRenameSettings(
+                                !(moveNextSC.isNull() && movePrevSC.isNull()), moveNextSC, movePrevSC));
+  
   m_listView->listViewWidget()->rename( item, 0 );
 
   // Enhanced rename: Don't highlight the file extension.
@@ -670,6 +678,22 @@ void KonqListView::setupActions()
   m_paSelectAll = KStdAction::selectAll( this, TQT_SLOT( slotSelectAll() ), actionCollection(), "selectall" );
   m_paUnselectAll = new TDEAction( i18n( "Unselect All" ), CTRL+Key_U, this, TQT_SLOT( slotUnselectAll() ), actionCollection(), "unselectall" );
   m_paInvertSelection = new TDEAction( i18n( "&Invert Selection" ), CTRL+Key_Asterisk, this, TQT_SLOT( slotInvertSelection() ), actionCollection(), "invertselection" );
+
+  // These 2 actions are 'fake' actions. They are defined so that the keyboard shortcuts
+  // can be set from the 'Configure Shortcuts..." dialog.
+  // The real actions are performed in the TDEListViewLineEdit::keyPressEvent() in tdeui
+  m_paRenameMoveNext = new TDEAction(i18n( "&Rename and move to next item" ), Key_Tab,
+                              NULL, NULL, actionCollection(), "renameMoveNext" );
+  m_paRenameMoveNext->setWhatsThis(i18n("Pressing this button completes the current rename operation,"
+                                  "moves to the next item and starts a new rename operation."));
+  m_paRenameMoveNext->setToolTip( i18n("Complete rename operation and move the next item"));
+  m_paRenameMoveNext->setEnabled(false);
+  m_paRenameMovePrev = new TDEAction( i18n( "&Rename and move to previous item" ), SHIFT+Key_BackTab,
+                              NULL, NULL, actionCollection(), "renameMovePrev" );
+  m_paRenameMovePrev->setWhatsThis(i18n("Pressing this button completes the current rename operation,"
+                                  "moves to the previous item and starts a new rename operation."));
+  m_paRenameMovePrev->setToolTip( i18n("Complete rename operation and move the previous item"));
+  m_paRenameMovePrev->setEnabled(false);
 
   m_paShowDot = new TDEToggleAction( i18n( "Show &Hidden Files" ), 0, this, TQT_SLOT( slotShowDot() ), actionCollection(), "show_dot" );
 //  m_paShowDot->setCheckedState(i18n("Hide &Hidden Files"));

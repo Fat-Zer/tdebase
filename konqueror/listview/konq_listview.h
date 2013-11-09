@@ -62,6 +62,7 @@ private:
 class KonqListView : public KonqDirPart
 {
   friend class KonqBaseListViewWidget;
+  friend class ListViewBrowserExtension;
   Q_OBJECT
   TQ_PROPERTY( bool supportsUndo READ supportsUndo )
 public:
@@ -152,6 +153,12 @@ private:
   TDEAction *m_paSelectAll;
   TDEAction *m_paUnselectAll;
   TDEAction *m_paInvertSelection;
+
+  // These 2 actions are 'fake' actions. They are defined so that the keyboard shortcuts
+  // can be set from the 'Configure Shortcuts..." dialog.
+  // The real actions are performed in the TDEListViewLineEdit::keyPressEvent() in tdeui
+  TDEAction *m_paRenameMoveNext;
+  TDEAction *m_paRenameMovePrev;
 
   TDEToggleAction *m_paCaseInsensitive;
 

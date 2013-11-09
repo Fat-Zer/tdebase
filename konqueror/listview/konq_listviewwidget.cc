@@ -125,17 +125,20 @@ KonqBaseListViewWidget::KonqBaseListViewWidget( KonqListView *parent, TQWidget *
 #endif
    connect( this, TQT_SIGNAL(returnPressed( TQListViewItem * )),
             this, TQT_SLOT(slotReturnPressed( TQListViewItem * )) );
-   connect( this, TQT_SIGNAL( mouseButtonClicked( int, TQListViewItem *, const TQPoint&, int )),
-            this, TQT_SLOT( slotMouseButtonClicked2( int, TQListViewItem *, const TQPoint&, int )) );
+   connect( this, TQT_SIGNAL(mouseButtonClicked( int, TQListViewItem *, const TQPoint&, int )),
+            this, TQT_SLOT(slotMouseButtonClicked2( int, TQListViewItem *, const TQPoint&, int )) );
    connect( this, TQT_SIGNAL(executed( TQListViewItem * )),
             this, TQT_SLOT(slotExecuted( TQListViewItem * )) );
-
    connect( this, TQT_SIGNAL(currentChanged( TQListViewItem * )),
             this, TQT_SLOT(slotCurrentChanged( TQListViewItem * )) );
    connect( this, TQT_SIGNAL(itemRenamed( TQListViewItem *, const TQString &, int )),
             this, TQT_SLOT(slotItemRenamed( TQListViewItem *, const TQString &, int )) );
    connect( this, TQT_SIGNAL(contextMenuRequested( TQListViewItem *, const TQPoint&, int )),
             this, TQT_SLOT(slotPopupMenu( TQListViewItem *, const TQPoint&, int )) );
+   connect( this, TQT_SIGNAL(renameNext( TQListViewItem *, int )),
+            this, TQT_SLOT(slotRenameNextItem( TQListViewItem*, int)) );
+   connect( this, TQT_SIGNAL(renamePrev( TQListViewItem *, int )),
+            this, TQT_SLOT(slotRenamePrevItem( TQListViewItem*, int)) );
    connect( this, TQT_SIGNAL(selectionChanged()), this, TQT_SLOT(slotSelectionChanged()) );
 
    connect( horizontalScrollBar(), TQT_SIGNAL(valueChanged( int )),
@@ -878,6 +881,38 @@ void KonqBaseListViewWidget::slotItemRenamed( TQListViewItem *item, const TQStri
    setFocus();
 }
 
+void KonqBaseListViewWidget::slotRenameNextItem(TQListViewItem *item, int)
+{
+  TQListViewItem *nextItem = item->itemBelow();
+  if (!nextItem)
+  {
+    nextItem=this->firstChild();
+    if (!nextItem)
+      return;   
+  }
+
+  setCurrentItem(nextItem);
+  ListViewBrowserExtension *lvbe = dynamic_cast<ListViewBrowserExtension*>(m_pBrowserView->m_extension);
+  if (lvbe)
+    lvbe->rename();
+}
+
+void KonqBaseListViewWidget::slotRenamePrevItem(TQListViewItem *item, int)
+{
+  TQListViewItem *prevItem = item->itemAbove();
+  if (!prevItem)
+  {
+    prevItem=this->lastItem();
+    if (!prevItem)
+      return;
+  }
+
+  setCurrentItem(prevItem);
+  ListViewBrowserExtension *lvbe = dynamic_cast<ListViewBrowserExtension*>(m_pBrowserView->m_extension);
+  if (lvbe)
+    lvbe->rename();
+}
+
 void KonqBaseListViewWidget::reportItemCounts()
 {
    KFileItemList lst = selectedFileItems();
@@ -1025,8 +1060,8 @@ void KonqBaseListViewWidget::slotReturnPressed( TQListViewItem *_item )
 
 void KonqBaseListViewWidget::slotPopupMenu( TQListViewItem *i, const TQPoint &point, int c )
 {
-   kdDebug(1202) << "KonqBaseListViewWidget::slotPopupMenu" << endl;
-   popupMenu( point, ( i != 0 && c == -1 ) ); // i != 0 && c == -1 when activated by keyboard
+  kdDebug(1202) << "KonqBaseListViewWidget::slotPopupMenu" << endl;
+  popupMenu( point, ( i != 0 && c == -1 ) ); // i != 0 && c == -1 when activated by keyboard
 }
 
 void KonqBaseListViewWidget::popupMenu( const TQPoint& _global, bool alwaysForSelectedFiles )

@@ -158,6 +158,8 @@ public slots:
    void slotMouseButtonClicked2( int _button, TQListViewItem *_item, const TQPoint& pos, int );
    virtual void slotExecuted( TQListViewItem *_item );
    void slotItemRenamed( TQListViewItem *, const TQString &, int );
+   void slotRenameNextItem(TQListViewItem *item, int col);
+   void slotRenamePrevItem(TQListViewItem *item, int col);
 
 protected slots:
    void slotAutoScroll();
