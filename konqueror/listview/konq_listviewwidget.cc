@@ -891,6 +891,7 @@ void KonqBaseListViewWidget::slotRenameNextItem(TQListViewItem *item, int)
       return;   
   }
 
+  deactivateAutomaticSelection();
   setCurrentItem(nextItem);
   ListViewBrowserExtension *lvbe = dynamic_cast<ListViewBrowserExtension*>(m_pBrowserView->m_extension);
   if (lvbe)
@@ -907,6 +908,7 @@ void KonqBaseListViewWidget::slotRenamePrevItem(TQListViewItem *item, int)
       return;
   }
 
+  deactivateAutomaticSelection();
   setCurrentItem(prevItem);
   ListViewBrowserExtension *lvbe = dynamic_cast<ListViewBrowserExtension*>(m_pBrowserView->m_extension);
   if (lvbe)
