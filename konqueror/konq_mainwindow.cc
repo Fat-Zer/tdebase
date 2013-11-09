@@ -187,10 +187,7 @@ KonqMainWindow::KonqMainWindow( const KURL &initialURL, bool openInitialURL, con
   m_viewModeActions.setAutoDelete( true );
   m_toolBarViewModeActions.setAutoDelete( true );
   m_viewModeMenu = 0;
-  m_paCopyFiles = 0;
-  m_paMoveFiles = 0;
   m_paDelete = 0;
-  m_paNewDir = 0;
   m_bookmarkBarActionCollection = 0L;
   KonqExtendedBookmarkOwner *extOwner = new KonqExtendedBookmarkOwner( this );
   m_pBookmarksOwner = extOwner;
@@ -2254,12 +2251,9 @@ void KonqMainWindow::slotPartActivated( KParts::Part *part )
         act->setEnabled( false );
     }
 
-    if ( m_paCopyFiles )
-      m_paCopyFiles->setEnabled( false );
-    if ( m_paMoveFiles )
-      m_paMoveFiles->setEnabled( false );
-    if ( m_paNewDir )
-      m_paNewDir->setEnabled( false );
+    m_paCopyFiles->setEnabled( false );
+    m_paMoveFiles->setEnabled( false );
+    m_paNewDir->setEnabled( false );
   }
   createGUI( part );
 
@@ -3940,7 +3934,7 @@ void KonqMainWindow::initActions()
   reloadShortcut.append(KKey(CTRL + Key_R));
   m_paReload = new TDEAction( i18n( "&Reload" ), "reload", reloadShortcut, TQT_TQOBJECT(this), TQT_SLOT( slotReload() ), actionCollection(), "reload" );
   m_paReloadAllTabs = new TDEAction( i18n( "&Reload All Tabs" ), "reload_all_tabs", SHIFT+Key_F5, TQT_TQOBJECT(this), TQT_SLOT( slotReloadAllTabs() ), actionCollection(), "reload_all_tabs" );
-  
+
   m_paReloadStop = new TDEAction( i18n( "&Reload/Stop" ), "reload", 0, TQT_TQOBJECT(this), TQT_SLOT( slotReloadStop() ), actionCollection(), "reload_stop" );
 
   m_paUndo = KStdAction::undo( KonqUndoManager::self(), TQT_SLOT( undo() ), actionCollection(), "undo" );
@@ -3964,7 +3958,11 @@ void KonqMainWindow::initActions()
            TQT_TQOBJECT(this), TQT_SLOT( slotTrashActivated( TDEAction::ActivationReason, TQt::ButtonState ) ) );
 
   m_paDelete = new TDEAction( i18n( "&Delete" ), "editdelete", SHIFT+Key_Delete, actionCollection(), "del" );
-
+  // F5 is the default key binding for Reload.... a la Windows. mc users want F5 for Copy and F6 for move, but I can't make that default.
+  m_paCopyFiles = new TDEAction( i18n("Copy &Files..."), "copyfiles", Key_F7, TQT_TQOBJECT(this), TQT_SLOT( slotCopyFiles() ), actionCollection(), "copyfiles" );
+  m_paMoveFiles = new TDEAction( i18n("M&ove Files..."), "movefiles", Key_F8, TQT_TQOBJECT(this), TQT_SLOT( slotMoveFiles() ), actionCollection(), "movefiles" );
+  // This action doesn't appear in the GUI, it's for the shortcut only. KNewMenu takes care of the GUI stuff.
+  m_paNewDir = new TDEAction( i18n("Create Folder..." ), "konq_create_dir", Key_F10, TQT_TQOBJECT(this), TQT_SLOT( slotNewDir() ), actionCollection(), "konq_create_dir" );
   m_paAnimatedLogo = new KonqLogoAction( i18n("Animated Logo"), 0, TQT_TQOBJECT(this), TQT_SLOT( slotDuplicateWindow() ), actionCollection(), "animated_logo" );
 
   // Location bar
@@ -4277,41 +4275,20 @@ void KonqMainWindow::updateViewActions()
     KonqDirPart * dirPart = static_cast<KonqDirPart *>(m_currentView->part());
     m_paFindFiles->setEnabled( dirPart->findPart() == 0 );
 
-    // Create the copy/move options if not already done
-    if ( !m_paCopyFiles )
-    {
-      // F5 is the default key binding for Reload.... a la Windows.
-      // mc users want F5 for Copy and F6 for move, but I can't make that default.
-      m_paCopyFiles = new TDEAction( i18n("Copy &Files..."), Key_F7, TQT_TQOBJECT(this), TQT_SLOT( slotCopyFiles() ), actionCollection(), "copyfiles" );
-      m_paMoveFiles = new TDEAction( i18n("M&ove Files..."), Key_F8, TQT_TQOBJECT(this), TQT_SLOT( slotMoveFiles() ), actionCollection(), "movefiles" );
-
-      // This action doesn't appear in the GUI, it's for the shortcut only.
-      // KNewMenu takes care of the GUI stuff.
-      m_paNewDir = new TDEAction( i18n("Create Folder..." ), Key_F10, TQT_TQOBJECT(this), TQT_SLOT( slotNewDir() ),
-                                actionCollection(), "konq_create_dir" );
-
-      TQPtrList<TDEAction> lst;
+    TQPtrList<TDEAction> lst;
+    if (!m_paCopyFiles->isPlugged())
       lst.append( m_paCopyFiles );
+    if (!m_paMoveFiles->isPlugged())
       lst.append( m_paMoveFiles );
-      m_paCopyFiles->setEnabled( false );
-      m_paMoveFiles->setEnabled( false );
+    m_paCopyFiles->setEnabled( false );
+    m_paMoveFiles->setEnabled( false );
+    if (!lst.isEmpty())
       plugActionList( "operations", lst );
-    }
   }
   else
   {
-      m_paFindFiles->setEnabled( false );
-
-      if (m_paCopyFiles)
-      {
-          unplugActionList( "operations" );
-          delete m_paCopyFiles;
-          m_paCopyFiles = 0;
-          delete m_paMoveFiles;
-          m_paMoveFiles = 0;
-          delete m_paNewDir;
-          m_paNewDir = 0;
-      }
+    m_paFindFiles->setEnabled( false );
+    unplugActionList( "operations" );
   }
 }
 
