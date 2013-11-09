@@ -132,13 +132,15 @@ void LogitechMouse::updateCordlessStatus()
 {
     TQByteArray status(8);
 
-    int result =  usb_control_msg(  m_usbDeviceHandle,
+    int result = (m_usbDeviceHandle != 0
+                  ? usb_control_msg(  m_usbDeviceHandle,
                                     USB_TYPE_VENDOR | USB_ENDPOINT_IN,0x09,
                                     (0x0003 | m_useSecondChannel),
                                     (0x0000 | m_useSecondChannel),
                                     status.data(),
                                     0x0008,
-                                    1000);
+                                    1000)
+                  : -1);
 
     if (0 > result) {
         // We probably have a permission problem
@@ -253,14 +255,16 @@ void LogitechMouse::updateResolution()
 {
     char resolution;
 
-    int result =  usb_control_msg( m_usbDeviceHandle,
+    int result = (m_usbDeviceHandle != 0
+                  ? usb_control_msg( m_usbDeviceHandle,
                                    USB_TYPE_VENDOR | USB_ENDPOINT_IN,
                                    0x01,
                                    0x000E,
                                    0x0000,
                                    &resolution,
                                    0x0001,
-                                   100);
+                                   100)
+                  : -1);
 
     // kdDebug() << "resolution is: " << resolution << endl;
     if (0 > result) {
@@ -273,14 +277,16 @@ void LogitechMouse::updateResolution()
 
 void LogitechMouse::setLogitechTo800()
 {
-    int result = usb_control_msg( m_usbDeviceHandle,
+    int result = (m_usbDeviceHandle != 0
+                  ? usb_control_msg( m_usbDeviceHandle,
                                   USB_TYPE_VENDOR,
                                   0x02,
                                   0x000E,
                                   4,
                                   NULL,
                                   0x0000,
-                                  100);
+                                  100)
+                  : -1);
     if (0 > result) {
         kdWarning() << "Error setting resolution on device: " << usb_strerror() << endl;
     }
@@ -288,14 +294,16 @@ void LogitechMouse::setLogitechTo800()
 
 void LogitechMouse::setLogitechTo400()
 {
-    int result = usb_control_msg( m_usbDeviceHandle,
+    int result = (m_usbDeviceHandle != 0
+                  ? usb_control_msg( m_usbDeviceHandle,
                                   USB_TYPE_VENDOR,
                                   0x02,
                                   0x000E,
                                   3,
                                   NULL,
                                   0x0000,
-                                  100);
+                                  100)
+                  : -1);
     if (0 > result) {
         kdWarning() << "Error setting resolution on device: " << usb_strerror() << endl;
     }
@@ -319,14 +327,16 @@ bool LogitechMouse::isDualChannelCapable()
 
 void LogitechMouse::setChannel1()
 {
-    int result =  usb_control_msg( m_usbDeviceHandle,
+    int result = (m_usbDeviceHandle != 0
+                  ? usb_control_msg( m_usbDeviceHandle,
                                    USB_TYPE_VENDOR,
                                    0x02,
                                    (0x0008 | m_useSecondChannel),
                                    (0x0000 | m_useSecondChannel),
                                    NULL,
                                    0x0000,
-                                   1000);
+                                   1000)
+                  : -1);
 
     if (0 > result) {
         kdWarning() << "Error setting mouse to channel 1 : " << usb_strerror() << endl;
@@ -336,14 +346,16 @@ void LogitechMouse::setChannel1()
 
 void LogitechMouse::setChannel2()
 {
-    int result =  usb_control_msg( m_usbDeviceHandle,
+    int result = (m_usbDeviceHandle != 0
+                  ? usb_control_msg( m_usbDeviceHandle,
                                    USB_TYPE_VENDOR,
                                    0x02,
                                    (0x0008 | m_useSecondChannel),
                                    (0x0001 | m_useSecondChannel),
                                    NULL,
                                    0x0000,
-                                   1000);
+                                   1000)
+                  : -1);
 
     if (0 > result) {
         kdWarning() << "Error setting mouse to channel 2 : " << usb_strerror() << endl;
