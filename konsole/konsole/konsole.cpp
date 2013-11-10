@@ -1074,15 +1074,15 @@ void Konsole::makeBasicGUI()
   if (m_bookmarksSession)
      connect(m_bookmarksSession,TQT_SIGNAL(aboutToShow()),this,TQT_SLOT(makeGUI()));
 
-  menubar->insertItem(i18n("&Session") , m_session);
-  menubar->insertItem(i18n("&Edit"), m_edit);
-  menubar->insertItem(i18n("&View"), m_view);
+  menubar->insertItem(i18n("Session") , m_session);
+  menubar->insertItem(i18n("Edit"), m_edit);
+  menubar->insertItem(i18n("View"), m_view);
   if (m_bookmarks)
-     menubar->insertItem(i18n("&Bookmarks"), m_bookmarks);
+     menubar->insertItem(i18n("Bookmarks"), m_bookmarks);
   if (m_options)
-     menubar->insertItem(i18n("Se&ttings"), m_options);
+     menubar->insertItem(i18n("Settings"), m_options);
   if (m_help)
-     menubar->insertItem(i18n("&Help"), m_help);
+     menubar->insertItem(i18n("Help"), m_help);
 
   m_shortcuts = new TDEActionCollection(this);
 
