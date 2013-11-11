@@ -1441,7 +1441,7 @@ Please note that on slow machines this may cause a "lag" between the event causi
     </connection>
     <connection>
         <sender>flashScreenColor</sender>
-        <signal>changed(const QColor&amp;)</signal>
+        <signal>changed(const TQColor&amp;)</signal>
         <receiver>AccessibilityConfigWidget</receiver>
         <slot>changed(bool)</slot>
     </connection>

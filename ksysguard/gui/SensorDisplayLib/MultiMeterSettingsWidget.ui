@@ -319,13 +319,13 @@
         <signal>clicked()</signal>
         <signal>toggled(bool)</signal>
         <signal>stateChanged(int)</signal>
-        <signal>changed(const QColor&amp;)</signal>
+        <signal>changed(const TQColor&amp;)</signal>
         <slot access="public" specifier="">deleteLater()</slot>
         <slot access="private" specifier="">cleanupEventFilter(TQObject*)</slot>
         <slot access="public" specifier="">setEnabled(bool)</slot>
         <slot access="public" specifier="">setDisabled(bool)</slot>
         <slot access="public" specifier="">setCaption(const TQString&amp;)</slot>
-        <slot access="public" specifier="">setIcon(const QPixmap&amp;)</slot>
+        <slot access="public" specifier="">setIcon(const TQPixmap&amp;)</slot>
         <slot access="public" specifier="">setIconText(const TQString&amp;)</slot>
         <slot access="public" specifier="">setMouseTracking(bool)</slot>
         <slot access="public" specifier="">setFocus()</slot>
@@ -333,15 +333,15 @@
         <slot access="public" specifier="">setUpdatesEnabled(bool)</slot>
         <slot access="public" specifier="">update()</slot>
         <slot access="public" specifier="">update(int,int,int,int)</slot>
-        <slot access="public" specifier="">update(const QRect&amp;)</slot>
+        <slot access="public" specifier="">update(const TQRect&amp;)</slot>
         <slot access="public" specifier="">repaint()</slot>
         <slot access="public" specifier="">repaint(bool)</slot>
         <slot access="public" specifier="">repaint(int,int,int,int)</slot>
         <slot access="public" specifier="">repaint(int,int,int,int,bool)</slot>
-        <slot access="public" specifier="">repaint(const QRect&amp;)</slot>
-        <slot access="public" specifier="">repaint(const QRect&amp;,bool)</slot>
-        <slot access="public" specifier="">repaint(const QRegion&amp;)</slot>
-        <slot access="public" specifier="">repaint(const QRegion&amp;,bool)</slot>
+        <slot access="public" specifier="">repaint(const TQRect&amp;)</slot>
+        <slot access="public" specifier="">repaint(const TQRect&amp;,bool)</slot>
+        <slot access="public" specifier="">repaint(const TQRegion&amp;)</slot>
+        <slot access="public" specifier="">repaint(const TQRegion&amp;,bool)</slot>
         <slot access="public" specifier="">show()</slot>
         <slot access="public" specifier="">hide()</slot>
         <slot access="public" specifier="">setShown(bool)</slot>
@@ -358,11 +358,11 @@
         <slot access="public" specifier="">lower()</slot>
         <slot access="public" specifier="">stackUnder(TQWidget*)</slot>
         <slot access="public" specifier="">move(int,int)</slot>
-        <slot access="public" specifier="">move(const QPoint&amp;)</slot>
+        <slot access="public" specifier="">move(const TQPoint&amp;)</slot>
         <slot access="public" specifier="">resize(int,int)</slot>
-        <slot access="public" specifier="">resize(const QSize&amp;)</slot>
+        <slot access="public" specifier="">resize(const TQSize&amp;)</slot>
         <slot access="public" specifier="">setGeometry(int,int,int,int)</slot>
-        <slot access="public" specifier="">setGeometry(const QRect&amp;)</slot>
+        <slot access="public" specifier="">setGeometry(const TQRect&amp;)</slot>
         <slot access="public" specifier="">adjustSize()</slot>
         <slot access="private" specifier="">focusProxyDestroyed()</slot>
         <slot access="public" specifier="">animateClick()</slot>
