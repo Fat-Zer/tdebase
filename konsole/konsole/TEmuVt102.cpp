@@ -1272,7 +1272,7 @@ void TEmuVt102::scan_buffer_report()
 void TEmuVt102::ReportErrorToken()
 {
 #ifndef NDEBUG
-  printf("undecodable "); scan_buffer_report();
+  printf("[konsole TEmuVt102] Undecodable/unrecognized "); scan_buffer_report();
 #endif
 }
 
