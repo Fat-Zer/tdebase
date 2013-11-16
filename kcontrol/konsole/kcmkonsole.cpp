@@ -72,6 +72,7 @@ KCMKonsole::KCMKonsole(TQWidget * parent, const char *name, const TQStringList&)
     connect(dialog->line_spacingSB,TQT_SIGNAL(valueChanged(int)), TQT_SLOT( changed() ));
     connect(dialog->matchTabWinTitleCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
     connect(dialog->tabsCycleWheel,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
+    connect(dialog->menuAccelerators,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
     connect(dialog->silence_secondsSB,TQT_SIGNAL(valueChanged(int)), TQT_SLOT( changed() ));
     connect(dialog->word_connectorLE,TQT_SIGNAL(textChanged(const TQString &)), TQT_SLOT( changed() ));
     connect(dialog->SchemaEditor1, TQT_SIGNAL(changed()), TQT_SLOT( changed() ));
@@ -97,6 +98,7 @@ void KCMKonsole::load(bool useDefaults)
     dialog->bidiCB->setChecked(bidiOrig);
     dialog->matchTabWinTitleCB->setChecked(config.readBoolEntry("MatchTabWinTitle",false));
     dialog->tabsCycleWheel->setChecked(config.readBoolEntry("TabsCycleWheel",true));
+    dialog->menuAccelerators->setChecked(config.readBoolEntry("MenuAccelerators",false));
     dialog->warnCB->setChecked(config.readBoolEntry("WarnQuit",true));
     dialog->ctrldragCB->setChecked(config.readBoolEntry("CtrlDrag",true));
     dialog->cutToBeginningOfLineCB->setChecked(config.readBoolEntry("CutToBeginningOfLine",false));
@@ -136,6 +138,7 @@ void KCMKonsole::save()
     config.writeEntry("EnableBidi", bidiNew);
     config.writeEntry("MatchTabWinTitle", dialog->matchTabWinTitleCB->isChecked());
     config.writeEntry("TabsCycleWheel", dialog->tabsCycleWheel->isChecked());
+    config.writeEntry("MenuAccelerators", dialog->menuAccelerators->isChecked());
     config.writeEntry("WarnQuit", dialog->warnCB->isChecked());
     config.writeEntry("CtrlDrag", dialog->ctrldragCB->isChecked());
     config.writeEntry("CutToBeginningOfLine", dialog->cutToBeginningOfLineCB->isChecked());

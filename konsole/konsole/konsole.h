@@ -297,6 +297,8 @@ private:
 
   bool eventFilter( TQObject *o, TQEvent *e );
 
+  void setMenuAcceleratos();
+
   TQPtrList<TEWidget> activeTEs();
 
   TQPtrDict<TESession> action2session;
@@ -322,6 +324,22 @@ private:
   KMenuBar*   menubar;
   KStatusBar* statusbar;
 
+  // Text strings for main menu entries
+  TQString       m_session_string;
+  TQString       m_edit_string;
+  TQString       m_view_string;
+  TQString       m_bookmarks_string;
+  TQString       m_options_string;
+  TQString       m_help_string;
+
+  // Main menu entry ids
+  int           m_session_id;
+  int           m_edit_id;
+  int           m_view_id;
+  int           m_bookmarks_id;
+  int           m_options_id;
+  int           m_help_id;
+  
   TDEPopupMenu* m_session;
   TDEPopupMenu* m_edit;
   TDEPopupMenu* m_view;
@@ -338,6 +356,7 @@ private:
   TDEPopupMenu* m_tabPopupMenu;
   TDEPopupMenu* m_tabPopupTabsMenu;
   TDEPopupMenu* m_tabbarPopupMenu;
+  TDEPopupMenu* m_openSelection;
 
   TDEAction *m_zmodemUpload;
   TDEToggleAction *monitorActivity, *m_tabMonitorActivity;
@@ -373,7 +392,6 @@ private:
   TDEAction       *m_closeSession;
   TDEAction       *m_print;
   TDEAction       *m_quit;
-  TDEPopupMenu    *m_openSelection;
 
   TDEActionCollection *m_shortcuts;
 
@@ -434,6 +452,7 @@ private:
   bool        b_sessionShortcutsMapped:1;
   bool        b_matchTabWinTitle:1;
   bool        b_mouseWheelScroll:1;
+  bool        b_menuAccelerators:1;
 
   unsigned int m_histSize;
   int m_separator_id;

@@ -212,6 +212,18 @@ Konsole::Konsole(const char* name, int histon, bool menubaron, bool tabbaron, bo
 ,kWinModule(0)
 ,menubar(0)
 ,statusbar(0)
+,m_session_string(i18n("&Session"))
+,m_edit_string(i18n("&Edit"))
+,m_view_string(i18n("&View"))
+,m_bookmarks_string(i18n("&Bookmarks"))
+,m_options_string(i18n("Se&ttings"))
+,m_help_string(i18n("&Help"))
+,m_session_id(-1)
+,m_edit_id(-1)
+,m_view_id(-1)
+,m_bookmarks_id(-1)
+,m_options_id(-1)
+,m_help_id(-1)
 ,m_session(0)
 ,m_edit(0)
 ,m_view(0)
@@ -321,6 +333,7 @@ Konsole::Konsole(const char* name, int histon, bool menubaron, bool tabbaron, bo
   readProperties(config, schema, false);
 
   makeBasicGUI();
+  setMenuAcceleratos();
 
   if (isRestored) {
     n_tabbar = wanted_tabbar;
@@ -1074,15 +1087,15 @@ void Konsole::makeBasicGUI()
   if (m_bookmarksSession)
      connect(m_bookmarksSession,TQT_SIGNAL(aboutToShow()),this,TQT_SLOT(makeGUI()));
 
-  menubar->insertItem(i18n("Session") , m_session);
-  menubar->insertItem(i18n("Edit"), m_edit);
-  menubar->insertItem(i18n("View"), m_view);
+  m_session_id=menubar->insertItem(m_session_string , m_session);
+  m_edit_id=menubar->insertItem(m_edit_string, m_edit);
+  m_view_id=menubar->insertItem(m_view_string, m_view);
   if (m_bookmarks)
-     menubar->insertItem(i18n("Bookmarks"), m_bookmarks);
+     m_bookmarks_id=menubar->insertItem(m_bookmarks_string, m_bookmarks);
   if (m_options)
-     menubar->insertItem(i18n("Settings"), m_options);
+     m_options_id=menubar->insertItem(m_options_string, m_options);
   if (m_help)
-     menubar->insertItem(i18n("Help"), m_help);
+     m_help_id=menubar->insertItem(m_help_string, m_help);
 
   m_shortcuts = new TDEActionCollection(this);
 
@@ -1149,7 +1162,7 @@ void Konsole::makeBasicGUI()
   masterMode = new TDEToggleAction ( i18n( "Send &Input to All Sessions" ), "remote", 0, TQT_TQOBJECT(this),
                                    TQT_SLOT( slotToggleMasterMode() ), m_shortcuts, "send_input_to_all_sessions" );
 
-  showMenubar = new TDEToggleAction ( i18n( "Show &Menubar" ), "showmenu", 0, TQT_TQOBJECT(this),
+  showMenubar = new TDEToggleAction ( i18n( "Show &Menubar" ), "showmenu", Qt::CTRL+Qt::SHIFT+Qt::ALT+Qt::Key_M, TQT_TQOBJECT(this),
                                     TQT_SLOT( slotToggleMenubar() ), m_shortcuts, "show_menubar" );
   showMenubar->setCheckedState( KGuiItem( i18n("Hide &Menubar"), "showmenu", TQString::null, TQString::null ) );
 
@@ -1628,6 +1641,7 @@ void Konsole::readProperties(TDEConfig* config, const TQString &schema, bool glo
      b_xonXoff = config->readBoolEntry("XonXoff",false);
      b_matchTabWinTitle = config->readBoolEntry("MatchTabWinTitle",false);
      b_mouseWheelScroll = config->readBoolEntry("TabsCycleWheel",true);
+     b_menuAccelerators = config->readBoolEntry("MenuAccelerators",false);
      config->setGroup("UTMP");
      b_addToUtmp = config->readBoolEntry("AddToUtmp",true);
      config->setDesktopGroup();
@@ -2183,6 +2197,7 @@ void Konsole::reparseConfiguration()
   }
 
   tabwidget->setMouseWheelScroll(b_mouseWheelScroll);
+  setMenuAcceleratos();
 }
 
 // Called via emulation via session
@@ -4427,4 +4442,32 @@ TQPtrList<TEWidget> Konsole::activeTEs()
    return ret;
 }
 
+void Konsole::setMenuAcceleratos()
+{
+  if (b_menuAccelerators)
+  {
+    menubar->changeItem(m_session_id, m_session_string);
+    menubar->changeItem(m_edit_id, m_edit_string);
+    menubar->changeItem(m_view_id, m_view_string);
+    if (m_bookmarks)
+      menubar->changeItem(m_bookmarks_id, m_bookmarks_string);
+    if (m_options)
+      menubar->changeItem(m_options_id, m_options_string);
+    if (m_help)
+      menubar->changeItem(m_help_id, m_help_string);
+  }
+  else  
+  {
+    menubar->changeItem(m_session_id, TQString(m_session_string).replace(TQRegExp("&([^&])"), "\\1"));
+    menubar->changeItem(m_edit_id, TQString(m_edit_string).replace(TQRegExp("&([^&])"), "\\1"));
+    menubar->changeItem(m_view_id, TQString(m_view_string).replace(TQRegExp("&([^&])"), "\\1"));
+    if (m_bookmarks)
+      menubar->changeItem(m_bookmarks_id, TQString(m_bookmarks_string).replace(TQRegExp("&([^&])"), "\\1"));
+    if (m_options)
+      menubar->changeItem(m_options_id, TQString(m_options_string).replace(TQRegExp("&([^&])"), "\\1"));
+    if (m_help)
+      menubar->changeItem(m_help_id, TQString(m_help_string).replace(TQRegExp("&([^&])"), "\\1"));
+  }
+}
+  
 #include "konsole.moc"
