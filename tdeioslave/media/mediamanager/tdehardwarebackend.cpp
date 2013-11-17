@@ -894,8 +894,7 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 	TQStringList result;
 
 	// Allow only those options which are valid for the given device
-	// pmount only allows a subset of options, and those are given in the map below
-	// FIXME
+	// FIXME: Is there a better way to determine options by the file system?
 	TQMap<TQString,bool> valids;
 	valids["ro"] = true;
 	//valids["quiet"] = false;
@@ -903,10 +902,33 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 	//valids["uid"] = false;
 	valids["utf8"] = true;
 	//valids["shortname"] = false;
-	valids["locale"] = true;
+	//valids["locale"] = false;
 	valids["sync"] = true;
 	valids["noatime"] = true;
 	//valids["data"] = false;
+
+	if ((sdevice->fileSystemName().endsWith("fat"))
+	 || (sdevice->fileSystemName().endsWith("dos"))
+	) {
+		valids["shortname"] = true;
+	}
+	if ((sdevice->fileSystemName() == "ext3")
+	 || (sdevice->fileSystemName() == "ext4")
+	) {
+		valids["data"] = true;
+	}
+	if (sdevice->fileSystemName().startsWith("ext")) {
+		valids.remove("utf8");
+	}
+	if (sdevice->fileSystemName() == "ntfs-3g") {
+		valids["locale"] = true;
+	}
+	if (sdevice->fileSystemName() == "iso9660") {
+		valids.remove("ro");
+		valids.remove("quiet");
+		valids.remove("sync");
+		valids.remove("noatime");
+	}
 
 	TQString drive_udi = driveUDIFromDeviceUID(medium->id());
 
@@ -953,17 +975,13 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 	if (valids.contains("ro")) {
 		value = config.readBoolEntry("ro", false);
 		tmp = TQString("ro=%1").arg(value ? "true" : "false");
-		if (sdevice->fileSystemName() != "iso9660") {
-			result << tmp;
-		}
+		result << tmp;
 	}
 
 	if (valids.contains("quiet")) {
 		value = config.readBoolEntry("quiet", false);
 		tmp = TQString("quiet=%1").arg(value ? "true" : "false");
-		if (sdevice->fileSystemName() != "iso9660") {
-			result << tmp;
-		}
+		result << tmp;
 	}
 
 	if (valids.contains("flush")) {
@@ -1001,7 +1019,7 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 	}
 
 	// pass our locale to the ntfs-3g driver so it can translate local characters
-	if (valids.contains("locale") && (sdevice->fileSystemName() == "ntfs-3g")) {
+	if (valids.contains("locale")) {
 		// have to obtain LC_CTYPE as returned by the `locale` command
 		// check in the same order as `locale` does
 		char *cType;
@@ -1013,17 +1031,13 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 	if (valids.contains("sync")) {
 		value = config.readBoolEntry("sync", ( valids.contains("flush") && !sdevice->fileSystemName().endsWith("fat") ) && removable);
 		tmp = TQString("sync=%1").arg(value ? "true" : "false");
-		if (sdevice->fileSystemName() != "iso9660") {
-			result << tmp;
-		}
+		result << tmp;
 	}
 
 	if (valids.contains("noatime")) {
 		value = config.readBoolEntry("atime", !sdevice->fileSystemName().endsWith("fat"));
 		tmp = TQString("atime=%1").arg(value ? "true" : "false");
-		if (sdevice->fileSystemName() != "iso9660") {
-			result << tmp;
-		}
+		result << tmp;
 	}
 
 	TQString mount_point;
