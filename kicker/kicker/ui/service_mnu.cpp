@@ -1020,7 +1020,9 @@ void PanelServiceMenu::slotSetTooltip(int id)
         if (text.isEmpty() && !s->comment().isEmpty()) {
           text = s->comment();
         }
-        TQToolTip::add(this, i18n(text.utf8()));
+        if (!text.isEmpty()) {
+          TQToolTip::add(this, i18n(text.utf8()));
+        }
     }
 }
 
