@@ -64,7 +64,7 @@ static TDECmdLineOptions options[] = {
     { "r", I18N_NOOP("Use realtime scheduling"), 0 },
     { "nonewdcop", I18N_NOOP("Let command use existing dcopserver"), 0 },
     { "comment <comment>", I18N_NOOP("Ignored"), "" },
-    { "noignorebutton", I18N_NOOP("Do not display ignore button"), 0 },
+    { "ignorebutton", I18N_NOOP("Display the ignore button"), 0 },
     { "i <icon name>", I18N_NOOP("Specify icon to use in the password dialog"), 0},
     { "d", I18N_NOOP("Do not show the command to be run in the dialog"), 0},
     TDECmdLineLastOption
