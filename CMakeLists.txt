@@ -77,6 +77,7 @@ option( WITH_LIBART "Enable libart support (for SVG icons and wallpapers)" ${WIT
 option( WITH_LIBUSB "Enable control of some mouse models through libusb" ${WITH_ALL_OPTIONS} )
 option( WITH_LIBRAW1394 "Enable visualization of ieee1394 devices through libraw1394" ${WITH_ALL_OPTIONS} )
 option( WITH_SUDO_TDESU_BACKEND "Use sudo as backend for tdesu (default is su)" OFF )
+option( WITH_SUDO_KONSOLE_SUPER_USER_COMMAND "Use sudo when launching Konsole super user sessions (default is su)" OFF )
 option( WITH_PAM "tdm should use PAM" ${WITH_ALL_OPTIONS} )
 option( WITH_SHADOW "tdm should use shadow passwords" ${WITH_ALL_OPTIONS} )
 option( WITH_XDMCP "xdmcp support for tdm" ${WITH_ALL_OPTIONS} )
@@ -123,6 +124,7 @@ option( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" 
 # WITH_SHADOW       affects tdm kcheckpass
 # WITH_UPOWER       affects ksmserver
 # WITH_SUDO_TDESU_BACKEND affects tdesu
+# WITH_SUDO_KONSOLE_SUPER_USER_COMMAND affects launching Konsole super user sessions
 
 # NOTE: WITH_SHADOW and WITH_PAM shouldn't be set concurrently
 #       WITH_PAM will override WITH_SHADOW

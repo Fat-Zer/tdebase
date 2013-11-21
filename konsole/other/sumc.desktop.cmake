@@ -139,7 +139,7 @@ Comment[wa]=Novea «Midnight Commander» e môde root
 Comment[zh_CN]=新建 Root Midnight Commander
 Comment[zh_TW]=新增 Root Midnight Commander
 Comment[zu]=Umyaleli Waphakathi nobusuku Wempande Entsha
-Exec=sudo su -c 'mc -c'
+Exec=@KONSOLE_SUPER_USER_COMMAND@ - -c 'mc -c'
 Schema=BlackOnLightYellow.schema
 #VGA
 #Font=6
