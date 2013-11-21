@@ -1250,10 +1250,26 @@ void KSMShutdownIPDlg::setNotificationActionButtonsSkipText(TQString text)
 	m_button1->setText(text);
 }
 
+void KSMShutdownIPDlg::setProgressBarTotalSteps(int total_steps)
+{
+  m_progressbar->setTotalSteps(total_steps);
+}
+
+void KSMShutdownIPDlg::setProgressBarProgress(int step)
+{
+  m_progressbar->setProgress(step);
+}
+
 KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
   : KSMModalDialog( parent )
 
 {
+	m_progressbar = new TQProgressBar(this);
+	m_progressbar->show();
+	m_gridlayout->expand(4,3);
+	m_gridlayout->addMultiCellWidget( m_progressbar, 3, 3, 0, 2);
+	setFixedSize(sizeHint());
+
 	setStatusMessage(i18n("Saving your settings..."));
 
 	setNotificationActionButtonsSkipText(i18n("Skip Notification"));

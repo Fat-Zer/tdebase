@@ -817,11 +817,14 @@ void KSMServer::completeShutdownOrCheckpoint()
                     }
                 }
             }
+            KSMShutdownIPDlg *shutdownNotifierDlg=static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg);
+            shutdownNotifierDlg->setProgressBarTotalSteps(initialClientCount);
+            shutdownNotifierDlg->setProgressBarProgress(initialClientCount-clients.count());
             if (nextClientToKill == "") {
-                static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Closing applications (%1/%2)...").arg(initialClientCount-clients.count()).arg(initialClientCount));
+                shutdownNotifierDlg->setStatusMessage(i18n("Closing applications (%1/%2)...").arg(initialClientCount-clients.count()).arg(initialClientCount));
             }
             else {
-                static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Closing applications (%1/%2, %3)...").arg(initialClientCount-clients.count()).arg(initialClientCount).arg(nextClientToKill));
+                shutdownNotifierDlg->setStatusMessage(i18n("Closing applications (%1/%2, %3)...").arg(initialClientCount-clients.count()).arg(initialClientCount).arg(nextClientToKill));
             }
         }
         if( waitForKNotify ) {
@@ -886,12 +889,15 @@ void KSMServer::completeKilling()
         }
         if( wait ) {
             if (shutdownNotifierIPDlg) {
-                static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->show();
+                KSMShutdownIPDlg *shutdownNotifierDlg=static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg);
+                shutdownNotifierDlg->setProgressBarTotalSteps(initialClientCount);
+                shutdownNotifierDlg->setProgressBarProgress(initialClientCount-clients.count());
+                shutdownNotifierDlg->show();
                 if (nextClientToKill == "") {
-                    static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Closing applications (%1/%2)...").arg(initialClientCount-clients.count()).arg(initialClientCount));
+                    shutdownNotifierDlg->setStatusMessage(i18n("Closing applications (%1/%2)...").arg(initialClientCount-clients.count()).arg(initialClientCount));
                 }
                 else {
-                    static_cast<KSMShutdownIPDlg*>(shutdownNotifierIPDlg)->setStatusMessage(i18n("Closing applications (%1/%2, %3)...").arg(initialClientCount-clients.count()).arg(initialClientCount).arg(nextClientToKill));
+                    shutdownNotifierDlg->setStatusMessage(i18n("Closing applications (%1/%2, %3)...").arg(initialClientCount-clients.count()).arg(initialClientCount).arg(nextClientToKill));
                 }
             }
             return;

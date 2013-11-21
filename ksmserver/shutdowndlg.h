@@ -18,6 +18,7 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <kguiitem.h>
 #include <tqtoolbutton.h>
 #include <krootpixmap.h>
+#include <ntqprogressbar.h>
 
 class TQPushButton;
 class TQVButtonGroup;
@@ -175,6 +176,8 @@ public:
 	void showNotificationActionButtons();
 	void hideNotificationActionButtons();
 	void setNotificationActionButtonsSkipText(TQString text);
+	void setProgressBarTotalSteps(int total_steps);
+	void setProgressBarProgress(int step);
 
 signals:
 	void abortLogoutClicked();
@@ -185,6 +188,8 @@ protected:
 
 private:
 	KSMShutdownIPDlg( TQWidget* parent );
+
+	TQProgressBar *m_progressbar;
 };
 
 class KSMDelayedPushButton : public KPushButton
