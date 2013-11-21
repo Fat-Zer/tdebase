@@ -256,6 +256,7 @@ MouseConfig::MouseConfig (TQWidget * parent, const char *name)
          " The goal is to select a comfortable interval that you find"
          " is not too fast or slow.");
     TQWhatsThis::add( doubleClickLabel, wtstr );
+    doubleClickStatus = false;  // First image will be displayed
     doubleClickButton = new TQPushButton( tab2 );
     doubleClickButton->setAcceptDrops( false );
     // The images are 32x32.
@@ -266,6 +267,9 @@ MouseConfig::MouseConfig (TQWidget * parent, const char *name)
     lay->addWidget(doubleClickButton);
     // Use the same What's This help for the pushbutton.
     TQWhatsThis::add( doubleClickButton, wtstr );
+    connect(doubleClickButton, TQT_SIGNAL(pressed()), this, TQT_SLOT(slotDoubleClickButtonPressed()));
+    doubleClickTimer=new TQTimer();
+    connect(doubleClickTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotDoubleClickTimerDone()) );
 
     lay->addSpacing(10);
 
@@ -639,6 +643,31 @@ void MouseConfig::slotClick()
    tab1->lb_short->setEnabled( bDelay );
    tab1->lb_long->setEnabled( bDelay );
 
+}
+
+void MouseConfig::slotDoubleClickButtonPressed()
+{
+  if (!doubleClickTimer->isActive())
+  {
+    // First click or click after the timer has expired -> start the timer
+    doubleClickTimer->start(doubleClickInterval->value(), true);
+  }
+  else
+  {
+    // Double click event: stop the timer and change the picture
+    doubleClickTimer->stop();
+    if (!doubleClickStatus)
+      doubleClickButton->setPixmap(locate("data", "kcminput/pics/doubleclick_2.png"));
+    else
+      doubleClickButton->setPixmap(locate("data", "kcminput/pics/doubleclick_1.png"));
+    doubleClickStatus= !doubleClickStatus;
+  }
+}
+
+void MouseConfig::slotDoubleClickTimerDone()
+{
+  // Stop the timer, even though not strictly needed since it is a single shot timer
+  doubleClickTimer->stop();
 }
 
 /** No descriptions */

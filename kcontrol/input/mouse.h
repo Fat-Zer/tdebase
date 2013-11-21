@@ -37,6 +37,7 @@
 #include <tqlcdnumber.h>
 #include <tqpushbutton.h>
 #include <tqradiobutton.h>
+#include <tqtimer.h>
 
 #include <tdeapplication.h>
 
@@ -104,6 +105,8 @@ public:
 private slots:
 
   void slotClick();
+  void slotDoubleClickButtonPressed();
+  void slotDoubleClickTimerDone();
   /** No descriptions */
   void slotHandedChanged(int val);
   void slotScrollPolarityChanged();
@@ -149,9 +152,10 @@ private:
   KIntNumInput *mk_delay, *mk_interval, *mk_time_to_max, *mk_max_speed,
     *mk_curve;
 
-  TQLabel *doubleClickLabel;
+  TQLabel      *doubleClickLabel;
   TQPushButton *doubleClickButton;
-
+  TQTimer      *doubleClickTimer;
+  bool         doubleClickStatus;
 };
 
 #endif
