@@ -900,7 +900,7 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 	//valids["quiet"] = false;
 	//valids["flush"] = false;
 	//valids["uid"] = false;
-	valids["utf8"] = true;
+	//valids["utf8"] = false;
 	//valids["shortname"] = false;
 	//valids["locale"] = false;
 	valids["sync"] = true;
@@ -910,6 +910,7 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 	if ((sdevice->fileSystemName().endsWith("fat"))
 	 || (sdevice->fileSystemName().endsWith("dos"))
 	) {
+		valids["utf8"] = true;
 		valids["shortname"] = true;
 	}
 	if ((sdevice->fileSystemName() == "ext3")
@@ -917,17 +918,21 @@ TQStringList TDEBackend::mountoptions(const TQString &name)
 	) {
 		valids["data"] = true;
 	}
-	if (sdevice->fileSystemName().startsWith("ext")) {
-		valids.remove("utf8");
+	if (sdevice->fileSystemName() == "ntfs") {
+		valids["utf8"] = true;
 	}
 	if (sdevice->fileSystemName() == "ntfs-3g") {
 		valids["locale"] = true;
 	}
 	if (sdevice->fileSystemName() == "iso9660") {
+		valids["utf8"] = true;
 		valids.remove("ro");
 		valids.remove("quiet");
 		valids.remove("sync");
 		valids.remove("noatime");
+	}
+	if (sdevice->fileSystemName() == "jfs") {
+		valids["utf8"] = true;
 	}
 
 	TQString drive_udi = driveUDIFromDeviceUID(medium->id());
