@@ -141,7 +141,7 @@ static int startApp()
     // Stop daemon and exit?
     if (args->isSet("s"))
     {
-        KDEsuClient client;
+        TDEsuClient client;
         if (client.ping() == -1)
         {
             kdError(1206) << "Daemon not running -- nothing to stop\n";
@@ -248,7 +248,7 @@ static int startApp()
     // Check for daemon and start if necessary
     bool just_started = false;
     bool have_daemon = true;
-    KDEsuClient client;
+    TDEsuClient client;
     if (!client.isServerSGID())
     {
         kdWarning(1206) << "Daemon not safe (not sgid), not using it.\n";
@@ -352,7 +352,7 @@ static int startApp()
         TDEStartupInfoData data;
         data.setSilent( TDEStartupInfoData::Yes );
         TDEStartupInfo::sendChange( id, data );
-        KDEsuDialog dlg(user, auth_user, keep && !terminal,icon, withIgnoreButton, timeout);
+        TDEsuDialog dlg(user, auth_user, keep && !terminal,icon, withIgnoreButton, timeout);
 	if (prompt)
 	    dlg.addLine(i18n("Command:"), command);
         if ((priority != 50) || (scheduler != SuProcess::SchedNormal))
@@ -365,12 +365,12 @@ static int startApp()
 		dlg.addLine(i18n("Priority:"), prio);
         }
         int ret = dlg.exec();
-        if (ret == KDEsuDialog::Rejected)
+        if (ret == TDEsuDialog::Rejected)
         {
             TDEStartupInfo::sendFinish( id );
             exit(0);
         }
-        if (ret == KDEsuDialog::AsUser)
+        if (ret == TDEsuDialog::AsUser)
             change_uid = false;
         password = dlg.password();
         keep = dlg.keep();

@@ -69,7 +69,7 @@ protected slots:
 
 protected:
   void loadConfig();
-  bool needsKDEsu();
+  bool needsTDEsu();
   virtual void keyPressEvent( TQKeyEvent* );
   virtual void fontChange( const TQFont & );
 

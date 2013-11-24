@@ -439,7 +439,7 @@ int Minicli::runCommand()
   if (!kapp->authorize("shell_access"))
     useTerminal = false;
 
-  if( needsKDEsu() )
+  if( needsTDEsu() )
   {
     TQCString user;
     struct passwd *pw;
@@ -983,7 +983,7 @@ void Minicli::slotChangeScheduler(bool enable)
   updateAuthLabel();
 }
 
-bool Minicli::needsKDEsu()
+bool Minicli::needsTDEsu()
 {
   return ((m_dlg->cbPriority->isChecked() && ((m_iPriority > 50) ||
           (m_iScheduler != StubProcess::SchedNormal))) ||

@@ -180,7 +180,7 @@ int create_socket()
 
     if (!access(sock, R_OK|W_OK)) 
     {
-        KDEsuClient client;
+        TDEsuClient client;
         if (client.ping() == -1) 
         {
             kdWarning(1205) << "stale socket exists\n";

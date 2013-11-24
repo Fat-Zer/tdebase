@@ -14,7 +14,7 @@
 #include <tdesu/su.h>
 #include "sudlg.h"
 
-KDEsuDialog::KDEsuDialog(TQCString user, TQCString auth_user, bool enableKeep,const TQString& icon, bool withIgnoreButton, int timeout)
+TDEsuDialog::TDEsuDialog(TQCString user, TQCString auth_user, bool enableKeep,const TQString& icon, bool withIgnoreButton, int timeout)
      : KPasswordDialog(Password, enableKeep, (withIgnoreButton ? User1:NoDefault), icon)
 {
     TDEConfig* config = TDEGlobal::config();
@@ -63,11 +63,11 @@ KDEsuDialog::KDEsuDialog(TQCString user, TQCString auth_user, bool enableKeep,co
 }
 
 
-KDEsuDialog::~KDEsuDialog()
+TDEsuDialog::~TDEsuDialog()
 {
 }
 
-bool KDEsuDialog::checkPassword(const char *password)
+bool TDEsuDialog::checkPassword(const char *password)
 {
     SuProcess proc;
     proc.setUser(m_User);
@@ -109,7 +109,7 @@ bool KDEsuDialog::checkPassword(const char *password)
     }
 }
 
-void KDEsuDialog::slotUser1()
+void TDEsuDialog::slotUser1()
 {
     done(AsUser);
 }

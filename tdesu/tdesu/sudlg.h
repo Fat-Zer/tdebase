@@ -9,14 +9,14 @@
 
 #include <kpassdlg.h>
 
-class KDEsuDialog
+class TDEsuDialog
     : public KPasswordDialog
 {
     Q_OBJECT
 
 public:
-    KDEsuDialog(TQCString user, TQCString auth_user, bool enableKeep, const TQString& icon , bool withIgnoreButton=false, int timeout=-1);
-    ~KDEsuDialog();
+    TDEsuDialog(TQCString user, TQCString auth_user, bool enableKeep, const TQString& icon , bool withIgnoreButton=false, int timeout=-1);
+    ~TDEsuDialog();
 
     enum ResultCodes { AsUser = 10 };
     
