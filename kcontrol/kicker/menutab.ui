@@ -314,7 +314,7 @@
 								</sizepolicy>
 							</property>
 							<property name="text">
-								<string>Menu button icon:</string>
+								<string>Change TDE Menu icon:</string>
 							</property>
 						</widget>
 						<widget class="KPushButton" row="3" column="3" colspan="1">
