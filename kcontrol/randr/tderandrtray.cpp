@@ -291,7 +291,7 @@ void KRandRSystemTray::contextMenuAboutToShow(TDEPopupMenu* menu)
 		}
 	}
 
-	menu->insertTitle(SmallIcon("randr"), i18n("Global Configuation"));
+	menu->insertTitle(SmallIcon("randr"), i18n("Global Configuration"));
 
 	TDEAction *actColors = new TDEAction( i18n( "Configure Displays..." ),
 		SmallIconSet( "configure" ), TDEShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotDisplayConfig() ),
