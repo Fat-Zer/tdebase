@@ -171,10 +171,10 @@ TQSize KickoffTabBar::minimumSizeHint() const
         }
 
         // Final width for this tab
-        int w = QMAX(iw, fw) + hframe;
+        int w = TQMAX(iw, fw) + hframe;
 
-        mw = QMAX(mw, w);
-        mh = QMAX(mh, h);
+        mw = TQMAX(mw, w);
+        mh = TQMAX(mh, h);
     }
 
     s.setWidth(mw * count());
@@ -196,7 +196,7 @@ void KickoffTabBar::layoutTabs()
     for (int t = 0; t < count(); ++t) {
         TQTab* tab = tabAt(TQApplication::reverseLayout() ? count() - t - 1 : t);
 
-        int w = QMAX(st.width() / count(), parentWidget()->width() / count());
+        int w = TQMAX(st.width() / count(), parentWidget()->width() / count());
 
         TQRect r = tab->rect();
         tab->setRect(TQRect(TQPoint(x, 0), style().tqsizeFromContents(TQStyle::CT_TabBarTab, this,

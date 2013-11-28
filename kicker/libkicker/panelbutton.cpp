@@ -292,7 +292,7 @@ int PanelButton::preferredDimension(int panelDim) const
         int newSize = preferredIconSize(panelDim);
         if (newSize > 0)
         {
-            return QMIN(panelDim, newSize + (KDialog::spacingHint() * 2));
+            return TQMIN(panelDim, newSize + (KDialog::spacingHint() * 2));
         }
     }
 

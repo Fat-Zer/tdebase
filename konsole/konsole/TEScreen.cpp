@@ -141,8 +141,8 @@ void TEScreen::cursorUp(int n)
 {
   if (n == 0) n = 1; // Default
   int stop = cuY < tmargin ? 0 : tmargin;
-  cuX = QMIN(columns-1,cuX); // nowrap!
-  cuY = QMAX(stop,cuY-n);
+  cuX = TQMIN(columns-1,cuX); // nowrap!
+  cuY = TQMAX(stop,cuY-n);
 }
 
 /*!
@@ -156,8 +156,8 @@ void TEScreen::cursorDown(int n)
 {
   if (n == 0) n = 1; // Default
   int stop = cuY > bmargin ? lines-1 : bmargin;
-  cuX = QMIN(columns-1,cuX); // nowrap!
-  cuY = QMIN(stop,cuY+n);
+  cuX = TQMIN(columns-1,cuX); // nowrap!
+  cuY = TQMIN(stop,cuY+n);
 }
 
 /*!
@@ -170,8 +170,8 @@ void TEScreen::cursorLeft(int n)
 //=CUB
 {
   if (n == 0) n = 1; // Default
-  cuX = QMIN(columns-1,cuX); // nowrap!
-  cuX = QMAX(0,cuX-n);
+  cuX = TQMIN(columns-1,cuX); // nowrap!
+  cuX = TQMAX(0,cuX-n);
 }
 
 /*!
@@ -184,7 +184,7 @@ void TEScreen::cursorRight(int n)
 //=CUF
 {
   if (n == 0) n = 1; // Default
-  cuX = QMIN(columns-1,cuX+n);
+  cuX = TQMIN(columns-1,cuX+n);
 }
 
 /*!
@@ -268,7 +268,7 @@ void TEScreen::NextLine()
 void TEScreen::eraseChars(int n)
 {
   if (n == 0) n = 1; // Default
-  int p = QMAX(0,QMIN(cuX+n-1,columns-1));
+  int p = TQMAX(0,TQMIN(cuX+n-1,columns-1));
   clearImage(loc(cuX,cuY),loc(p,cuY),' ');
 }
 
@@ -281,7 +281,7 @@ void TEScreen::deleteChars(int n)
 {
   if (n == 0) n = 1; // Default
   if (n > columns) n = columns - 1;
-  int p = QMAX(0,QMIN(cuX+n,columns-1));
+  int p = TQMAX(0,TQMIN(cuX+n,columns-1));
   moveImage(loc(cuX,cuY),loc(p,cuY),loc(columns-1,cuY));
   clearImage(loc(columns-n,cuY),loc(columns-1,cuY),' ');
 }
@@ -294,8 +294,8 @@ void TEScreen::deleteChars(int n)
 void TEScreen::insertChars(int n)
 {
   if (n == 0) n = 1; // Default
-  int p = QMAX(0,QMIN(columns-1-n,columns-1));
-  int q = QMAX(0,QMIN(cuX+n,columns-1));
+  int p = TQMAX(0,TQMIN(columns-1-n,columns-1));
+  int q = TQMAX(0,TQMIN(cuX+n,columns-1));
   moveImage(loc(q,cuY),loc(cuX,cuY),loc(p,cuY));
   clearImage(loc(cuX,cuY),loc(q-1,cuY),' ');
 }
@@ -382,8 +382,8 @@ void TEScreen::saveCursor()
 
 void TEScreen::restoreCursor()
 {
-  cuX     = QMIN(sa_cuX,columns-1);
-  cuY     = QMIN(sa_cuY,lines-1);
+  cuX     = TQMIN(sa_cuX,columns-1);
+  cuY     = TQMIN(sa_cuY,lines-1);
   cu_re   = sa_cu_re;
   cu_fg   = sa_cu_fg;
   cu_bg   = sa_cu_bg;
@@ -436,8 +436,8 @@ void TEScreen::resizeImage(int new_lines, int new_columns)
     }
     newwrapped[y]=false;
   }
-  int cpy_lines   = QMIN(new_lines,  lines);
-  int cpy_columns = QMIN(new_columns,columns);
+  int cpy_lines   = TQMIN(new_lines,  lines);
+  int cpy_columns = TQMIN(new_columns,columns);
   // copy to new image
   for (int y = 0; y < cpy_lines; y++) {
     for (int x = 0; x < cpy_columns; x++)
@@ -454,8 +454,8 @@ void TEScreen::resizeImage(int new_lines, int new_columns)
   line_wrapped = newwrapped;
   lines = new_lines;
   columns = new_columns;
-  cuX = QMIN(cuX,columns-1);
-  cuY = QMIN(cuY,lines-1);
+  cuX = TQMIN(cuX,columns-1);
+  cuY = TQMIN(cuY,lines-1);
 
   // FIXME: try to keep values, evtl.
   tmargin=0;
@@ -546,7 +546,7 @@ ca* TEScreen::getCookedImage()
 //  kdDebug(1211) << "InGetCookedImage" << endl;
   for (y = 0; (y < lines) && (y < (hist->getLines()-histCursor)); y++)
   {
-    int len = QMIN(columns,hist->getLineLen(y+histCursor));
+    int len = TQMIN(columns,hist->getLineLen(y+histCursor));
     int yp  = y*columns;
 
 //    kdDebug(1211) << "InGetCookedImage - In first For.  Y =" << y << "histCursor = " << histCursor << endl;
@@ -648,7 +648,7 @@ void TEScreen::clear()
 
 void TEScreen::BackSpace()
 {
-  cuX = QMAX(0,cuX-1);
+  cuX = TQMAX(0,cuX-1);
   if (BS_CLEARS) image[loc(cuX,cuY)].c = ' ';
 }
 
@@ -841,7 +841,7 @@ void TEScreen::setCursorX(int x)
 {
   if (x == 0) x = 1; // Default
   x -= 1; // Adjust
-  cuX = QMAX(0,QMIN(columns-1, x));
+  cuX = TQMAX(0,TQMIN(columns-1, x));
 }
 
 /*! Set the cursor to y-th line. */
@@ -850,7 +850,7 @@ void TEScreen::setCursorY(int y)
 {
   if (y == 0) y = 1; // Default
   y -= 1; // Adjust
-  cuY = QMAX(0,QMIN(lines  -1, y + (getMode(MODE_Origin) ? tmargin : 0) ));
+  cuY = TQMAX(0,TQMIN(lines  -1, y + (getMode(MODE_Origin) ? tmargin : 0) ));
 }
 
 /*! set cursor to the `left upper' corner of the screen (1,1).

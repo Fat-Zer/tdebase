@@ -175,7 +175,7 @@ static int used_size( TQLabel *label, int oldsize )
 {
     TQSimpleRichText st( label->text(), TDEGlobalSettings::toolBarFont() );
     st.setWidth( oldsize );
-    return QMAX( st.widthUsed(), oldsize );
+    return TQMAX( st.widthUsed(), oldsize );
 }
 
 KMenu::KMenu()
@@ -3206,14 +3206,14 @@ void KMenu::mouseMoveEvent ( TQMouseEvent * e )
     if ( hasMouseTracking() && m_isresizing ) {
         m_stacker->setMinimumSize( TQSize(0, 0) );
         m_stacker->setMaximumSize( TQSize(32000, 32000) );
-        int newWidth = QMAX( e->x() - x(), minimumSizeHint().width() );
+        int newWidth = TQMAX( e->x() - x(), minimumSizeHint().width() );
         if ( m_orientation == BottomUp ) {
-          int newHeight = QMAX( height() - e->y(), minimumSizeHint().height() + 10 );
+          int newHeight = TQMAX( height() - e->y(), minimumSizeHint().height() + 10 );
           int newY = y() + height() - newHeight;
           setGeometry( x(), newY, newWidth, newHeight);
         }
         else {
-          setGeometry( x(), y(), newWidth, QMAX( e->y(), minimumSizeHint().height() + 10 ));
+          setGeometry( x(), y(), newWidth, TQMAX( e->y(), minimumSizeHint().height() + 10 ));
         }
     }
 }
@@ -3392,9 +3392,9 @@ TQSize KMenu::minimumSizeHint() const
 {
     TQSize minsize;
     minsize.setWidth( minsize.width() + m_tabBar->minimumSizeHint().width()  );
-    minsize.setWidth( QMAX( minsize.width(),
+    minsize.setWidth( TQMAX( minsize.width(),
                             m_search->minimumSize().width() ) );
-    minsize.setWidth( QMAX( minsize.width(),
+    minsize.setWidth( TQMAX( minsize.width(),
                             m_search->minimumSize().width() ) );
 
     minsize.setHeight( minsize.height() +

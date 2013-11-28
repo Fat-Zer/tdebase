@@ -733,22 +733,22 @@ void ExtensionManager::reduceArea(TQRect &area, const ExtensionContainer *extens
     {
         case KPanelExtension::Left:
         {
-            area.setLeft(QMAX(area.left(), geom.right()));
+            area.setLeft(TQMAX(area.left(), geom.right()));
             break;
         }
         case KPanelExtension::Right:
         {
-            area.setRight(QMIN(area.right(), geom.left()));
+            area.setRight(TQMIN(area.right(), geom.left()));
             break;
         }
         case KPanelExtension::Top:
         {
-            area.setTop(QMAX(area.top(), geom.bottom()));
+            area.setTop(TQMAX(area.top(), geom.bottom()));
             break;
         }
         case KPanelExtension::Bottom:
         {
-            area.setBottom(QMIN(area.bottom(), geom.top()));
+            area.setBottom(TQMIN(area.bottom(), geom.top()));
             break;
         }
         default: ;  // ignore KPanelExtension::Floating ... at least for now

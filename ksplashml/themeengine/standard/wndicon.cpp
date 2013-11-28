@@ -122,7 +122,7 @@ TQPoint WndIcon::determinePosition()
     nSlot = ( DW / wid );
     while( x > nSlot )
     {
-      x = QMAX(0,x-nSlot);
+      x = TQMAX(0,x-nSlot);
       y++;
     }
     X = (3) + ((x - 1) * wid);
@@ -134,7 +134,7 @@ TQPoint WndIcon::determinePosition()
     nSlot = ( DW / wid );
     while( x > nSlot )
     {
-      x = QMAX(0,x-nSlot);
+      x = TQMAX(0,x-nSlot);
       y++;
     }
     X = (3) + ((x - 1) * wid);
@@ -146,7 +146,7 @@ TQPoint WndIcon::determinePosition()
     nSlot = ( DW / wid );
     while( x > nSlot )
     {
-      x = QMAX(0,x-nSlot);
+      x = TQMAX(0,x-nSlot);
       y++;
     }
     X = (DW - 3) - (( x ) * wid );
@@ -158,7 +158,7 @@ TQPoint WndIcon::determinePosition()
     nSlot = ( DW / wid );
     while( x > nSlot )
     {
-      x = QMAX(0,x-nSlot);
+      x = TQMAX(0,x-nSlot);
       y++;
     }
     X = (DW - 3) - (( x ) * wid );
@@ -170,7 +170,7 @@ TQPoint WndIcon::determinePosition()
     nSlot = ( DH / wid );
     while( x > nSlot )
     {
-      x = QMAX(0,x-nSlot);
+      x = TQMAX(0,x-nSlot);
       y++;
     }
     X = (3) + (( y - 1 ) * wid );
@@ -182,7 +182,7 @@ TQPoint WndIcon::determinePosition()
     nSlot = ( DH / wid );
     while( x > nSlot )
     {
-      x = QMAX(0,x-nSlot);
+      x = TQMAX(0,x-nSlot);
       y++;
     }
     X = (DW - 3) - (( y ) * wid );
@@ -194,7 +194,7 @@ TQPoint WndIcon::determinePosition()
     nSlot = ( DH / wid );
     while( x > nSlot )
     {
-      x = QMAX(0,x-nSlot);
+      x = TQMAX(0,x-nSlot);
       y++;
     }
     X = (3) + (( y - 1 ) * wid );
@@ -206,7 +206,7 @@ TQPoint WndIcon::determinePosition()
     nSlot = ( DH / wid );
     while( x > nSlot )
     {
-      x = QMAX(0,x-nSlot);
+      x = TQMAX(0,x-nSlot);
       y++;
     }
     X = (DW - 3) - (( y ) * wid );

@@ -588,7 +588,7 @@ void KateFileListItem::paintCell( TQPainter *painter, const TQColorGroup & cg, i
         int v = hc-m_viewhistpos;
         int e = ec-m_edithistpos+1;
         e = e*e;
-        int n = QMAX(v + e, 1);
+        int n = TQMAX(v + e, 1);
         shade.setRgb(
             ((shade.red()*v) + (eshade.red()*e))/n,
             ((shade.green()*v) + (eshade.green()*e))/n,

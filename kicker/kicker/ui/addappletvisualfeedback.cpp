@@ -132,7 +132,7 @@ void AddAppletVisualFeedback::displayInternal()
     }
 
     int margin = KDialog::marginHint();
-    int height = QMAX(m_icon.height(), textRect.height()) + 2 * margin;
+    int height = TQMAX(m_icon.height(), textRect.height()) + 2 * margin;
     int textX = m_icon.isNull() ? margin : 2 + m_icon.width() + 2 * margin;
     int width = textX;
 

@@ -1611,8 +1611,8 @@ void ContainerArea::moveDragIndicator(int pos)
         {
             int newX = pos;
             _dragIndicator->resize(_dragIndicator->preferredSize());
-            newX = QMAX(newX, availableSpace.left());
-            newX = QMIN(newX,
+            newX = TQMAX(newX, availableSpace.left());
+            newX = TQMIN(newX,
                 availableSpace.right() + 1 - _dragIndicator->width() );
             _dragIndicator->move(newX, availableSpace.top());
         }
@@ -1629,8 +1629,8 @@ void ContainerArea::moveDragIndicator(int pos)
         {
             int newY = pos;
             _dragIndicator->resize(_dragIndicator->preferredSize());
-            newY = QMAX(newY, availableSpace.top());
-            newY = QMIN(newY,
+            newY = TQMAX(newY, availableSpace.top());
+            newY = TQMIN(newY,
                 availableSpace.bottom() + 1 - _dragIndicator->height() );
             _dragIndicator->move(availableSpace.left(), newY);
         }

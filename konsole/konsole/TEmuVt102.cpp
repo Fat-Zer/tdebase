@@ -242,14 +242,14 @@ void TEmuVt102::addDigit(int dig)
 
 void TEmuVt102::addArgument()
 {
-  argc = QMIN(argc+1,MAXARGS-1);
+  argc = TQMIN(argc+1,MAXARGS-1);
   argv[argc] = 0;
 }
 
 void TEmuVt102::pushToToken(int cc)
 {
   pbuf[ppos] = cc;
-  ppos = QMIN(ppos+1,MAXPBUF-1);
+  ppos = TQMIN(ppos+1,MAXPBUF-1);
 }
 
 // Character Classes used while decoding

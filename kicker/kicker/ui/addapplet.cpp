@@ -292,7 +292,7 @@ void AddAppletDialog::resizeAppletView()
         m_appletBox->layout()->activate();
         w = v->visibleWidth();
         h = m_appletBox->layout()->minimumSize().height();
-        v->resizeContents(w, QMAX(h, v->visibleHeight()));
+        v->resizeContents(w, TQMAX(h, v->visibleHeight()));
         if (w == m_appletBox->width() && h == m_appletBox->height())
         break;
         m_appletBox->resize(w, h);

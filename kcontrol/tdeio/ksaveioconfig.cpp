@@ -83,7 +83,7 @@ void KSaveIOConfig::setReadTimeout( int _timeout )
 {
   TDEConfig* cfg = config ();
   cfg->setGroup( TQString() );
-  cfg->writeEntry("ReadTimeout", QMAX(MIN_TIMEOUT_VALUE,_timeout));
+  cfg->writeEntry("ReadTimeout", TQMAX(MIN_TIMEOUT_VALUE,_timeout));
   cfg->sync();
 }
 
@@ -91,7 +91,7 @@ void KSaveIOConfig::setConnectTimeout( int _timeout )
 {
   TDEConfig* cfg = config ();
   cfg->setGroup( TQString() );
-  cfg->writeEntry("ConnectTimeout", QMAX(MIN_TIMEOUT_VALUE,_timeout));
+  cfg->writeEntry("ConnectTimeout", TQMAX(MIN_TIMEOUT_VALUE,_timeout));
   cfg->sync();
 }
 
@@ -99,7 +99,7 @@ void KSaveIOConfig::setProxyConnectTimeout( int _timeout )
 {
   TDEConfig* cfg = config ();
   cfg->setGroup( TQString() );
-  cfg->writeEntry("ProxyConnectTimeout", QMAX(MIN_TIMEOUT_VALUE,_timeout));
+  cfg->writeEntry("ProxyConnectTimeout", TQMAX(MIN_TIMEOUT_VALUE,_timeout));
   cfg->sync();
 }
 
@@ -107,7 +107,7 @@ void KSaveIOConfig::setResponseTimeout( int _timeout )
 {
   TDEConfig* cfg = config ();
   cfg->setGroup( TQString() );
-  cfg->writeEntry("ResponseTimeout", QMAX(MIN_TIMEOUT_VALUE,_timeout));
+  cfg->writeEntry("ResponseTimeout", TQMAX(MIN_TIMEOUT_VALUE,_timeout));
   cfg->sync();
 }
 

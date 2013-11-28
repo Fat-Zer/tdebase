@@ -70,7 +70,7 @@ void KasLoadItem::paint( TQPainter *p )
 {
     double val = valuesOne.last();
     double maxValue = 1.0;
-    double scaleVal = QMAX( val, valuesFive.last() );
+    double scaleVal = TQMAX( val, valuesFive.last() );
 
     if ( scaleVal >= maxValue )
 	maxValue = 2.0;

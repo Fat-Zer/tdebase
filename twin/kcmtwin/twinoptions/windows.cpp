@@ -192,7 +192,7 @@ KFocusConfig::KFocusConfig (bool _standAlone, TDEConfig *_config, TQWidget * par
     connect(clickRaiseOn,TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(clickRaiseOnTog(bool)));
     fLay->addWidget(clickRaiseOn);
 
-//     fLay->addColSpacing(0,QMAX(autoRaiseOn->sizeHint().width(),
+//     fLay->addColSpacing(0,TQMAX(autoRaiseOn->sizeHint().width(),
 //                                clickRaiseOn->sizeHint().width()) + 15);
 
     TQHBoxLayout* focusStealingLayout = new TQHBoxLayout(lay,KDialog::spacingHint());

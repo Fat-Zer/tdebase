@@ -524,8 +524,8 @@ void KCommonDecoration::resize( const TQSize& s )
 
 TQSize KCommonDecoration::minimumSize() const
 {
-    const int minWidth = QMAX(layoutMetric(LM_TitleEdgeLeft), layoutMetric(LM_BorderLeft))
-            +QMAX(layoutMetric(LM_TitleEdgeRight), layoutMetric(LM_BorderRight))
+    const int minWidth = TQMAX(layoutMetric(LM_TitleEdgeLeft), layoutMetric(LM_BorderLeft))
+            +TQMAX(layoutMetric(LM_TitleEdgeRight), layoutMetric(LM_BorderRight))
             +layoutMetric(LM_TitleBorderLeft)+layoutMetric(LM_TitleBorderRight);
     return TQSize(minWidth,
                  layoutMetric(LM_TitleEdgeTop)+layoutMetric(LM_TitleHeight)

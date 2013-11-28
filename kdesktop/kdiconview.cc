@@ -494,7 +494,7 @@ void KDIconView::setAutoAlign( bool b )
     if ( b ) {
         // set maxItemWidth to ensure sane initial icon layout before the auto align code is fully activated
         int sz = iconSize() ? iconSize() : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
-        setMaxItemWidth( QMAX( QMAX( sz, previewIconSize( iconSize() ) ), KonqFMSettings::settings()->iconTextWidth() ) );
+        setMaxItemWidth( TQMAX( TQMAX( sz, previewIconSize( iconSize() ) ), KonqFMSettings::settings()->iconTextWidth() ) );
         setFont( font() );  // Force calcRect()
 
         if (!KRootWm::self()->startup) {
@@ -509,7 +509,7 @@ void KDIconView::setAutoAlign( bool b )
     else {
         // change maxItemWidth, because when grid-align was active, it changed this for the grid
         int sz = iconSize() ? iconSize() : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
-        setMaxItemWidth( QMAX( QMAX( sz, previewIconSize( iconSize() ) ), KonqFMSettings::settings()->iconTextWidth() ) );
+        setMaxItemWidth( TQMAX( TQMAX( sz, previewIconSize( iconSize() ) ), KonqFMSettings::settings()->iconTextWidth() ) );
         setFont( font() );  // Force calcRect()
 
         disconnect( this, TQT_SIGNAL( iconMoved() ),
@@ -2001,8 +2001,8 @@ TQPoint KDIconView::findPlaceForIcon( int column, int row, const TQRect &current
     int dx = gridXValue(), dy = 0;
     TQIconViewItem *item = firstItem();
     for ( ; item; item = item->nextItem() ) {
-        dx = QMAX( dx, item->width() );
-        dy = QMAX( dy, item->height() );
+        dx = TQMAX( dx, item->width() );
+        dy = TQMAX( dy, item->height() );
     }
 
     dx += spacing();
@@ -2016,7 +2016,7 @@ TQPoint KDIconView::findPlaceForIcon( int column, int row, const TQRect &current
             delta++;
             res = findPlaceForIconCol(column + (delta / 2) * (-2 * (delta % 2) + 1),
                                       dx, dy, currentIconArea);
-            if (delta / 2 > QMAX(max_cols - column, column))
+            if (delta / 2 > TQMAX(max_cols - column, column))
                 return res;
         } while (res.isNull());
         return res;
@@ -2030,7 +2030,7 @@ TQPoint KDIconView::findPlaceForIcon( int column, int row, const TQRect &current
             delta++;
             res = findPlaceForIconRow(row + (delta / 2) * (-2 * (delta % 2) + 1),
                                       dx, dy, currentIconArea);
-            if (delta / 2 > QMAX(max_rows - row, row))
+            if (delta / 2 > TQMAX(max_rows - row, row))
                 return res;
         } while (res.isNull());
         return res;

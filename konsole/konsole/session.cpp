@@ -283,8 +283,8 @@ void TESession::notifySessionState(int state)
 void TESession::onContentSizeChange(int height, int width)
 {
   // ensure that image is at least one line high by one column wide
-  const int columns = QMAX( width/font_w , 1 );
-  const int lines = QMAX( height/font_h , 1 );
+  const int columns = TQMAX( width/font_w , 1 );
+  const int lines = TQMAX( height/font_h , 1 );
 
   em->onImageSizeChange( lines , columns );
   sh->setSize( lines , columns );

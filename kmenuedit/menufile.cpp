@@ -399,7 +399,7 @@ void MenuFile::moveMenu(const TQString &oldMenu, const TQString &newMenu)
    TQStringList oldMenuParts = TQStringList::split('/', oldMenu);
    TQStringList newMenuParts = TQStringList::split('/', newMenu);
    TQString commonMenuName;
-   uint max = QMIN(oldMenuParts.count(), newMenuParts.count());
+   uint max = TQMIN(oldMenuParts.count(), newMenuParts.count());
    uint i = 0;
    for(; i < max; i++)
    {

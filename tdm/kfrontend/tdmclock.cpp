@@ -115,7 +115,7 @@ void KdmClock::paintEvent( TQPaintEvent * )
 			             time.second() );
 		else
 			buf.sprintf( "%02d:%02d", time.hour(), time.minute() );
-		mFont.setPointSize( QMIN( (int)(width()/buf.length()*1.5),height() ) );
+		mFont.setPointSize( TQMIN( (int)(width()/buf.length()*1.5),height() ) );
 		paint.setFont( mFont );
 		paint.setPen( backgroundColor() );
 		paint.drawText( contentsRect(),AlignHCenter|AlignVCenter, buf,-1,0,0 );
@@ -123,7 +123,7 @@ void KdmClock::paintEvent( TQPaintEvent * )
 */
 		TQPointArray pts;
 		TQPoint cp = contentsRect().center() - TQPoint( 2,2 );
-		int d = QMIN( contentsRect().width()-15,contentsRect().height()-15 );
+		int d = TQMIN( contentsRect().width()-15,contentsRect().height()-15 );
 		paint.setPen( foregroundColor() );
 		paint.setBrush( foregroundColor() );
 

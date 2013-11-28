@@ -381,7 +381,7 @@ void Kclock::paintEvent( TQPaintEvent * )
 
   TQPointArray pts;
   TQPoint cp = rect().center();
-  int d = QMIN(width(),height());
+  int d = TQMIN(width(),height());
   TQColor hands =  colorGroup().dark();
   TQColor shadow =  colorGroup().text();
   paint.setPen( shadow );

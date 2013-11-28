@@ -1279,7 +1279,7 @@ void KeramikClient::updateCaptionBuffer()
 	int tw = p.fontMetrics().width( caption() ) +
 		( clientHandler->showAppIcons() ? 16 + iconSpacing : 0 );
 
-	int xpos = QMAX( (captionRect.width() - tw) / 3, 8 );
+	int xpos = TQMAX( (captionRect.width() - tw) / 3, 8 );
 	TQRect tr = TQStyle::visualRect( TQRect(xpos, 1, captionRect.width() - xpos - 10,
 				captionRect.height() - 4), captionBuffer.rect() );
 
@@ -1348,7 +1348,7 @@ void KeramikClient::calculateCaptionRect()
 	if ( clientHandler->showAppIcons() )
 		cw += 16 + 4; // icon width + space
 
-	cw = QMIN( cw, titlebar->geometry().width() );
+	cw = TQMIN( cw, titlebar->geometry().width() );
 	captionRect = TQStyle::visualRect( TQRect(titlebar->geometry().x(), (largeCaption ? 0 : titleBaseY),
 				cw, clientHandler->titleBarHeight(largeCaption) ),
 				titlebar->geometry() );
@@ -1554,8 +1554,8 @@ void KeramikClient::paintEvent( TQPaintEvent *e )
 
 		// Space between the top left corner and the caption bubble
 		if ( updateRect.x() < captionRect.left() && updateRect.right() >= 15 ) {
-			int x1 = QMAX( 15, updateRect.x() );
-			int x2 = QMIN( captionRect.left(), updateRect.right() );
+			int x1 = TQMAX( 15, updateRect.x() );
+			int x2 = TQMIN( captionRect.left(), updateRect.right() );
 
 			p.drawTiledPixmap( x1, titleBaseY, x2 - x1 + 1, titleBarBaseHeight,
 					*clientHandler->tile( TitleCenter, active ) );
@@ -1572,8 +1572,8 @@ void KeramikClient::paintEvent( TQPaintEvent *e )
 
 		// Space between the caption bubble and the top right corner
 		if ( updateRect.right() > captionRect.right() && updateRect.x() < width() - 15 ) { // FRAME
-			int x1 = QMAX( captionRect.right() + 1, updateRect.x() );
-			int x2 = QMIN( width() - 15, updateRect.right() );
+			int x1 = TQMAX( captionRect.right() + 1, updateRect.x() );
+			int x2 = TQMIN( width() - 15, updateRect.right() );
 
 			p.drawTiledPixmap( x1, titleBaseY, x2 - x1 + 1, titleBarBaseHeight,
 					*clientHandler->tile( TitleCenter, active ) );
@@ -1590,8 +1590,8 @@ void KeramikClient::paintEvent( TQPaintEvent *e )
 	if ( updateRect.bottom() >= titleBarHeight &&
 			updateRect.top() < height() - grabBarHeight )
 	{
-		int top    = QMAX( titleBarHeight, updateRect.top() );
-		int bottom = QMIN( updateRect.bottom(), height() - grabBarHeight );
+		int top    = TQMAX( titleBarHeight, updateRect.top() );
+		int bottom = TQMIN( updateRect.bottom(), height() - grabBarHeight );
 
 		// Left border
 		if ( updateRect.x() < leftBorderWidth )
@@ -1614,8 +1614,8 @@ void KeramikClient::paintEvent( TQPaintEvent *e )
 
 		// Space between the left corner and the right corner
 		if ( updateRect.x() < width() - 9 ) {
-			int x1 = QMAX( 9, updateRect.x() );
-			int x2 = QMIN( width() - 9, updateRect.right() );
+			int x1 = TQMAX( 9, updateRect.x() );
+			int x2 = TQMIN( width() - 9, updateRect.right() );
 
 			p.drawTiledPixmap( x1, height() - grabBarHeight, x2 - x1 + 1,
 					grabBarHeight, *clientHandler->tile( GrabBarCenter, active ) );

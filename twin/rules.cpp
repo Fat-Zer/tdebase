@@ -113,7 +113,7 @@ Rules::Rules( TDEConfig& cfg )
     readFromCfg( cfg );
     }
 
-static int limit0to4( int i ) { return QMAX( 0, QMIN( 4, i )); }
+static int limit0to4( int i ) { return TQMAX( 0, TQMIN( 4, i )); }
 
 void Rules::readFromCfg( TDEConfig& cfg )
     {

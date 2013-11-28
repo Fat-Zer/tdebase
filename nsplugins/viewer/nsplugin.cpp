@@ -1700,7 +1700,7 @@ int NSPluginStreamBase::process( const TQByteArray &data, int start )
 
       max = _instance->NPWriteReady(_stream);
       //kdDebug(1431) << "to_sent == " << to_sent << " and max = " << max << endl;
-      len = QMIN(max, to_sent);
+      len = TQMIN(max, to_sent);
 
       //kdDebug(1431) << "-> Feeding stream to plugin: offset=" << _pos << ", len=" << len << endl;
       sent = _instance->NPWrite( _stream, _pos, len, d );

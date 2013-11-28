@@ -87,7 +87,7 @@ JoyWidget::JoyWidget(TQWidget *parent, const char *name)
 
   // calculate the column width we need
   TQFontMetrics fm(font());
-  int colWidth = QMAX(fm.width(PRESSED), fm.width("-32767")) + 10;  // -32767 largest string
+  int colWidth = TQMAX(fm.width(PRESSED), fm.width("-32767")) + 10;  // -32767 largest string
 
   new TQLabel(i18n("Buttons:"), vboxMid);
   buttonTbl = new TQTable(0, 1, vboxMid);
@@ -282,7 +282,7 @@ void JoyWidget::showDeviceProps(JoyDevice *joy)
   idle->start(0);
 
   // make both tables use the same space for header; this looks nicer
-  buttonTbl->setLeftMargin(QMAX(buttonTbl->verticalHeader()->width(),
+  buttonTbl->setLeftMargin(TQMAX(buttonTbl->verticalHeader()->width(),
                                   axesTbl->verticalHeader()->width()));
   axesTbl->setLeftMargin(buttonTbl->verticalHeader()->width());
 }

@@ -166,7 +166,7 @@ void ModuleTreeView::expandItem(TQListViewItem *item, TQPtrList<TQListViewItem> 
 {
   while (item)
     {
-      setOpen(item, parentList-.contains(item));
+      setOpen(item, parentList->contains(item));
 
           if (item->childCount() != 0)
                 expandItem(item->firstChild(), parentList);

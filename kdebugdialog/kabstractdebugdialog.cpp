@@ -55,9 +55,9 @@ void KAbstractDebugDialog::buildButtons( TQVBoxLayout * topLayout )
   int w1 = pHelpButton->sizeHint().width();
   int w2 = pOKButton->sizeHint().width();
   int w3 = pCancelButton->sizeHint().width();
-  int w4 = QMAX( w1, QMAX( w2, w3 ) );
+  int w4 = TQMAX( w1, TQMAX( w2, w3 ) );
   int w5 = pApplyButton->sizeHint().width();
-  w4 = QMAX(w4, w5);
+  w4 = TQMAX(w4, w5);
 
   pHelpButton->setFixedWidth( w4 );
   pOKButton->setFixedWidth( w4 );

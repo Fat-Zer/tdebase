@@ -188,8 +188,8 @@ void Placement::placeSmart(Client* c, const TQRect& area, Policy /*next*/ )
                     if((cxl < xr) && (cxr > xl) &&
                        (cyt < yb) && (cyb > yt)) 
                         {
-                        xl = QMAX(cxl, xl); xr = QMIN(cxr, xr);
-                        yt = QMAX(cyt, yt); yb = QMIN(cyb, yb);
+                        xl = TQMAX(cxl, xl); xr = TQMIN(cxr, xr);
+                        yt = TQMAX(cyt, yt); yb = TQMIN(cyb, yb);
                         if((*l)->keepAbove())
                             overlap += 16 * (xr - xl) * (yb - yt);
                         else if((*l)->keepBelow() && !(*l)->isDock()) // ignore KeepBelow windows

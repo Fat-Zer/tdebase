@@ -48,7 +48,7 @@ void GeometryTip::setGeometry( const TQRect& geom )
             }
         }
 
-    h = QMAX( h, 0 ); // in case of isShade() and PBaseSize
+    h = TQMAX( h, 0 ); // in case of isShade() and PBaseSize
     TQString pos;
     pos.sprintf( "%+d,%+d<br>(<b>%d&nbsp;x&nbsp;%d</b>)",
                      geom.x(), geom.y(), w, h );

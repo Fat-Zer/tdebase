@@ -294,14 +294,14 @@ int main(int argc, char *argv[])
 
     // Make sure we exit when the display gets closed.
     int x11Fd = initXconnection();
-    maxfd = QMAX(maxfd, x11Fd);
+    maxfd = TQMAX(maxfd, x11Fd);
 
     repo = new Repository;
     TQPtrVector<ConnectionHandler> handler;
     handler.setAutoDelete(true);
 
     pipe(pipeOfDeath);
-    maxfd = QMAX(maxfd, pipeOfDeath[0]);
+    maxfd = TQMAX(maxfd, pipeOfDeath[0]);
 
     // Signal handlers 
     struct sigaction sa;

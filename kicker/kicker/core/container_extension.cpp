@@ -1797,7 +1797,7 @@ TQSize ExtensionContainer::initialSize(KPanelExtension::Position p, TQRect workA
 
         if (m_settings.expandSize())
         {
-            height = QMAX(height, hint.height());
+            height = TQMAX(height, hint.height());
         }
     }
     else
@@ -1807,7 +1807,7 @@ TQSize ExtensionContainer::initialSize(KPanelExtension::Position p, TQRect workA
 
         if (m_settings.expandSize())
         {
-            width = QMAX( width, hint.width() );
+            width = TQMAX( width, hint.width() );
         }
     }
 

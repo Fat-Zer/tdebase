@@ -100,7 +100,7 @@ void BGMonitorArrangement::updateArrangement()
     
     TQRect expandedOverallGeometry = expandToPreview(overallGeometry);
     
-    double scale = QMIN(
+    double scale = TQMIN(
                 double(width()) / double(expandedOverallGeometry.width()),
                 double(height()) / double(expandedOverallGeometry.height())
                        );

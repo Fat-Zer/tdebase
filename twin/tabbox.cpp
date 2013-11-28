@@ -183,7 +183,7 @@ void TabBox::reset()
 
     // calculate height of 1 line
     // fontheight + 1 pixel above + 1 pixel below, or 32x32 icon + 2 pixel above + below
-    lineHeight = QMAX(fontMetrics().height() + 2, 32 + 4);
+    lineHeight = TQMAX(fontMetrics().height() + 2, 32 + 4);
 
     if ( mode() == WindowsMode )
         {
@@ -218,7 +218,7 @@ void TabBox::reset()
             {
             showMiniIcon = true;
             // fontheight + 1 pixel above + 1 pixel below, or 16x16 icon + 1 pixel above + below
-            lineHeight = QMAX(fontMetrics().height() + 2, 16 + 2);
+            lineHeight = TQMAX(fontMetrics().height() + 2, 16 + 2);
 
             h = clients.count() * lineHeight;
 
@@ -496,11 +496,11 @@ void TabBox::drawContents( TQPainter * )
         int wmax = 0;
         for ( int i = 1; i <= workspace()->numberOfDesktops(); i++ )
             {
-            wmax = QMAX(wmax, fontMetrics().width(workspace()->desktopName(i)));
+            wmax = TQMAX(wmax, fontMetrics().width(workspace()->desktopName(i)));
 
             // calculate max width of desktop-number text
             TQString num = TQString::number(i);
-            iconWidth = QMAX(iconWidth - 4, fm.boundingRect(num).width()) + 4;
+            iconWidth = TQMAX(iconWidth - 4, fm.boundingRect(num).width()) + 4;
             }
 
         // In DesktopMode, start at the current desktop

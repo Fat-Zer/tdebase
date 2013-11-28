@@ -749,15 +749,15 @@ int KonqComboListBoxPixmap::height( const TQListBox* lb ) const
     if ( text().isEmpty() )
         h = pm.height();
     else
-        h = QMAX( pm.height(), lb->fontMetrics().lineSpacing() + 2 );
-    return QMAX( h, TQApplication::globalStrut().height() );
+        h = TQMAX( pm.height(), lb->fontMetrics().lineSpacing() + 2 );
+    return TQMAX( h, TQApplication::globalStrut().height() );
 }
 
 int KonqComboListBoxPixmap::width( const TQListBox* lb ) const
 {
     if ( text().isEmpty() )
-        return QMAX( pm.width() + 6, TQApplication::globalStrut().width() );
-    return QMAX( pm.width() + lb->fontMetrics().width( text() ) + 6,
+        return TQMAX( pm.width() + 6, TQApplication::globalStrut().width() );
+    return TQMAX( pm.width() + lb->fontMetrics().width( text() ) + 6,
                  TQApplication::globalStrut().width() );
 }
 

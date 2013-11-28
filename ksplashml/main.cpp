@@ -64,7 +64,7 @@ int main( int argc, char **argv )
   KSplash wndMain("ksplash");
   if ( arg->isSet( "steps" ) )
   {
-    int steps = QMAX( arg->getOption( "steps" ).toInt(), 0 );
+    int steps = TQMAX( arg->getOption( "steps" ).toInt(), 0 );
     if ( steps )
       wndMain.setStartupItemCount( steps );
   }

@@ -171,7 +171,7 @@ void PlastikHandler::readConfig()
     TQFontMetrics fm(m_titleFont);  // active font = inactive font
     int titleHeightMin = config.readNumEntry("MinTitleHeight", 16);
     // The title should strech with bigger font sizes!
-    m_titleHeight = QMAX(titleHeightMin, fm.height() + 4); // 4 px for the shadow etc.
+    m_titleHeight = TQMAX(titleHeightMin, fm.height() + 4); // 4 px for the shadow etc.
     // have an even title/button size so the button icons are fully centered...
     if ( m_titleHeight%2 == 0)
         m_titleHeight++;
@@ -179,7 +179,7 @@ void PlastikHandler::readConfig()
     fm = TQFontMetrics(m_titleFontTool);  // active font = inactive font
     int titleHeightToolMin = config.readNumEntry("MinTitleHeightTool", 13);
     // The title should strech with bigger font sizes!
-    m_titleHeightTool = QMAX(titleHeightToolMin, fm.height() ); // don't care about the shadow etc.
+    m_titleHeightTool = TQMAX(titleHeightToolMin, fm.height() ); // don't care about the shadow etc.
     // have an even title/button size so the button icons are fully centered...
     if ( m_titleHeightTool%2 == 0)
         m_titleHeightTool++;
@@ -560,7 +560,7 @@ const TQBitmap &PlastikHandler::buttonBitmap(ButtonIcon type, const TQSize &size
     delete m_bitmaps[toolWindow][typeIndex];
     m_bitmaps[toolWindow][typeIndex] = 0;
 
-    TQBitmap bmp = IconEngine::icon(type /*icon*/, QMIN(w,h) );
+    TQBitmap bmp = IconEngine::icon(type /*icon*/, TQMIN(w,h) );
     TQBitmap *bitmap = new TQBitmap(bmp);
     m_bitmaps[toolWindow][typeIndex] = bitmap;
     return *bitmap;

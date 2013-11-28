@@ -642,10 +642,10 @@ void TEWidget::drawAttrStr(TQPainter &paint, TQRect rect,
           TQ_UINT8 dalpha = 255 - salpha;
 
           int a, r, g, b;
-          a = QMIN( (tqAlpha (col) * salpha) / 255 + (tqAlpha (blend_color) * dalpha) / 255, 255 );
-          r = QMIN( (tqRed   (col) * salpha) / 255 + (tqRed   (blend_color) * dalpha) / 255, 255 );
-          g = QMIN( (tqGreen (col) * salpha) / 255 + (tqGreen (blend_color) * dalpha) / 255, 255 );
-          b = QMIN( (tqBlue  (col) * salpha) / 255 + (tqBlue  (blend_color) * dalpha) / 255, 255 );
+          a = TQMIN( (tqAlpha (col) * salpha) / 255 + (tqAlpha (blend_color) * dalpha) / 255, 255 );
+          r = TQMIN( (tqRed   (col) * salpha) / 255 + (tqRed   (blend_color) * dalpha) / 255, 255 );
+          g = TQMIN( (tqGreen (col) * salpha) / 255 + (tqGreen (blend_color) * dalpha) / 255, 255 );
+          b = TQMIN( (tqBlue  (col) * salpha) / 255 + (tqBlue  (blend_color) * dalpha) / 255, 255 );
 
           col = a << 24 | r << 16 | g << 8 | b;
           int pixel = a << 24 | (r * a / 255) << 16 | (g * a / 255) << 8 | (b * a / 255);
@@ -1211,8 +1211,8 @@ void TEWidget::updateImageSize()
   int oldcol = columns;
   makeImage();
   // we copy the old image to reduce flicker
-  int lins = QMIN(oldlin,lines);
-  int cols = QMIN(oldcol,columns);
+  int lins = TQMIN(oldlin,lines);
+  int cols = TQMIN(oldcol,columns);
   if (oldimg)
   {
     for (int lin = 0; lin < lins; lin++)

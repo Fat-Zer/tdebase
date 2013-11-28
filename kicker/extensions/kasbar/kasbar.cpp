@@ -299,7 +299,7 @@ void KasBar::setMaxBoxes( int count )
 
 void KasBar::setBoxesPerLine( int count )
 {
-   boxesPerLine_ = QMIN( count, maxBoxes_ );
+   boxesPerLine_ = TQMIN( count, maxBoxes_ );
    updateLayout();
 }
 

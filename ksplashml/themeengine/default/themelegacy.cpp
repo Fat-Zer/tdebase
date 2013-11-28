@@ -163,7 +163,7 @@ void ThemeDefault::_initUi()
       mProgressBar->setBackgroundOrigin( TQWidget::ParentOrigin );
       mProgressBar->setPaletteBackgroundPixmap( blimage );
 
-      bottom_label->setFixedWidth( QMAX(blimage.width(),tlimage.width()) );
+      bottom_label->setFixedWidth( TQMAX(blimage.width(),tlimage.width()) );
       bottom_label->setFixedHeight( mLabel->sizeHint().height()+4 );
 
       // 3 pixels of whitespace between the label and the progressbar.

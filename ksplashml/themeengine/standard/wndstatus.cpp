@@ -72,7 +72,7 @@ WndStatus::WndStatus( TQPalette /*pal*/,
   TQWidget *widg = new TQWidget( this );
   setStretchFactor(widg,50);
 
-  setFixedSize( rect.width(), QMAX(m_progress->height(),m_label->height()) );
+  setFixedSize( rect.width(), TQMAX(m_progress->height(),m_label->height()) );
 
   if ( atTop )
     move( rect.topLeft() );

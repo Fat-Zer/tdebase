@@ -639,7 +639,7 @@ void KonqIconViewWidget::setIcons( int size, const TQStringList& stopImagePrevie
         int realSize = size ? size : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
         // choose spacing depending on font, but min 5 (due to KFileIVI  move limit)
         setSpacing( ( m_bDesktop || ( realSize > TDEIcon::SizeSmall ) ) ?
-                    QMAX( 5, TQFontMetrics(font()).width('n') ) : 0 );
+                    TQMAX( 5, TQFontMetrics(font()).width('n') ) : 0 );
     }
 
     if ( sizeChanged || previewSizeChanged || !stopImagePreviewFor.isEmpty() )
@@ -711,10 +711,10 @@ void KonqIconViewWidget::setItemTextPos( ItemTextPos pos )
 
     if ( m_bSetGridX )
         if ( pos == TQIconView::Bottom )
-            setGridX( QMAX( sz + 50, previewIconSize( sz ) + 13 ) );
+            setGridX( TQMAX( sz + 50, previewIconSize( sz ) + 13 ) );
         else
         {
-            setMaxItemWidth( QMAX( sz, previewIconSize( sz ) ) + m_pSettings->iconTextWidth() );
+            setMaxItemWidth( TQMAX( sz, previewIconSize( sz ) ) + m_pSettings->iconTextWidth() );
             setGridX( -1 );
         }
 
@@ -734,9 +734,9 @@ void KonqIconViewWidget::gridValues( int* x, int* y, int* dx, int* dy,
     // vertical  : top spacing(), <height>, bottom spacing()
     // The doubled space in y-direction gives a better visual separation and makes it clearer
     // to which item the text belongs
-    *dx = spacing() + QMAX( QMAX( iconSize, previewSize ), m_pSettings->iconTextWidth() );
+    *dx = spacing() + TQMAX( TQMAX( iconSize, previewSize ), m_pSettings->iconTextWidth() );
     int textHeight = iconTextHeight() * fontMetrics().height();
-    *dy = spacing() + QMAX( iconSize, previewSize ) + 2 + textHeight + spacing();
+    *dy = spacing() + TQMAX( iconSize, previewSize ) + 2 + textHeight + spacing();
 
     // Icon Area
     int w, h;
@@ -790,9 +790,9 @@ int KonqIconViewWidget::gridXValue() const
     int newGridX;
 
     if ( itemTextPos() == TQIconView::Bottom )
-        newGridX = QMAX( sz + 50, previewIconSize( sz ) + 13 );
+        newGridX = TQMAX( sz + 50, previewIconSize( sz ) + 13 );
     else
-        newGridX = QMAX( sz, previewIconSize( sz ) ) + m_pSettings->iconTextWidth();
+        newGridX = TQMAX( sz, previewIconSize( sz ) ) + m_pSettings->iconTextWidth();
 
     //kdDebug(1203) << "gridXValue: " << newGridX << " sz=" << sz << endl;
     return newGridX;
@@ -1488,7 +1488,7 @@ void KonqIconViewWidget::insertInGrid(TQIconViewItem *item)
     for (; i; i = i->nextItem() )
     {
         r = r.subtract(i->rect());
-        y = QMAX(y, i->y() + i->height());
+        y = TQMAX(y, i->y() + i->height());
     }
 
     TQMemArray<TQRect> rects = r.rects();
@@ -1586,8 +1586,8 @@ void KonqIconViewWidget::lineupIcons()
         int x = item->x() + item->width() / 2 - x0;
         int y = item->pixmapRect( false ).bottom() - iconSize / 2
                 - ( dy - ( iconSize + textHeight ) ) / 2 - y0;
-        int posX = QMIN( nx-1, QMAX( 0, x / dx ) );
-        int posY = QMIN( ny-1, QMAX( 0, y / dy ) );
+        int posX = TQMIN( nx-1, TQMAX( 0, x / dx ) );
+        int posY = TQMIN( ny-1, TQMAX( 0, y / dy ) );
 
         if ( !bins[posX][posY] )
             bins[posX][posY] = new Bin;
@@ -1646,7 +1646,7 @@ void KonqIconViewWidget::lineupIcons()
                 TQIconViewItem* movedItem;
                 Bin* items = bins[i][j];
 
-                int mini = QMIN( QMIN( tf, bf ), QMIN( lf, rf ) );
+                int mini = TQMIN( TQMIN( tf, bf ), TQMIN( lf, rf ) );
                 if ( tf == mini ) {
                     // move top item in (i,j) to (i,j-1)
                     Bin::iterator it = items->begin();
@@ -1717,7 +1717,7 @@ void KonqIconViewWidget::lineupIcons()
             if ( !bin->isEmpty() ) {
                 TQIconViewItem* item = bin->first();
                 int newX = x0 + i*dx + spacing() +
-                           QMAX(0, ( (dx-spacing()) - item->width() ) / 2);  // pixmap can be larger as iconsize
+                           TQMAX(0, ( (dx-spacing()) - item->width() ) / 2);  // pixmap can be larger as iconsize
                 // align all icons vertically to their text
                 int newY = y0 + j*dy + dy - spacing() - ( item->pixmapRect().bottom() + 2 + textHeight );
                 if ( item->x() != newX || item->y() != newY ) {
@@ -1770,7 +1770,7 @@ void KonqIconViewWidget::lineupIcons( TQIconView::Arrangement arrangement )
     TQIconViewItem* item;
     for ( item = firstItem(); item; item = item->nextItem() ) {
         int newX = x0 + nx*dx + spacing() +
-                   QMAX(0, ( (dx-spacing()) - item->width() ) / 2);  // icon can be larger as defined
+                   TQMAX(0, ( (dx-spacing()) - item->width() ) / 2);  // icon can be larger as defined
         // align all icons vertically to their text
         int newY = y0 + ny*dy + dy - spacing() - ( item->pixmapRect().bottom() + 2 + textHeight );
         if ( item->x() != newX || item->y() != newY ) {
