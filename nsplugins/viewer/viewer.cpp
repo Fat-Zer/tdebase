@@ -46,14 +46,8 @@
 #endif
 #include <tdeconfig.h>
 
-#if TQT_VERSION < 0x030100
-#include "kxt.h"
-#include <X11/Intrinsic.h>
-#include <X11/Shell.h>
-#else
 #include "qxteventloop.h"
 #include "glibevents.h"
-#endif
 
 /**
  *  Use RLIMIT_DATA on systems that don't define RLIMIT_AS,
@@ -227,31 +221,14 @@ int main(int argc, char** argv)
    kdDebug(1430) << "2 - parseCommandLine" << endl;
    parseCommandLine(argc, argv);
 
-#if TQT_VERSION < 0x030100
-   // Create application
-   kdDebug(1430) << "3 - XtToolkitInitialize" << endl;
-   XtToolkitInitialize();
-   g_appcon = XtCreateApplicationContext();
-   Display *dpy = XtOpenDisplay(g_appcon, NULL, "nspluginviewer", "nspluginviewer",
-                                0, 0, &argc, argv);
-
-   _notifiers[0].setAutoDelete( TRUE );
-   _notifiers[1].setAutoDelete( TRUE );
-   _notifiers[2].setAutoDelete( TRUE );
-
-   kdDebug(1430) << "4 - KXtApplication app" << endl;
-   TDELocale::setMainCatalogue("nsplugin");
-   KXtApplication app(dpy, argc, argv, "nspluginviewer");
-#else
    kdDebug(1430) << "3 - create QXtEventLoop" << endl;
    QXtEventLoop integrator( "nspluginviewer" );
    parseCommandLine(argc, argv);
    TDELocale::setMainCatalogue("nsplugin");
 
    kdDebug(1430) << "4 - create TDEApplication" << endl;
-   TDEApplication app( argc,  argv, "nspluginviewer" );
+   TDEApplication app( argc,  argv, "nspluginviewer", true, true, true );
    GlibEvents glibevents;
-#endif
 
    {
       TDEConfig cfg("kcmnspluginrc", true);

@@ -35,7 +35,6 @@
 #include <tqfile.h>
 #include <tqtimer.h>
 
-#include "kxt.h"
 #include "nsplugin.h"
 #include "resolve.h"
 

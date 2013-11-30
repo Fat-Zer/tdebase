@@ -28,7 +28,7 @@ link_directories(
 tde_add_executable( nspluginviewer AUTOMOC
   SOURCES
     ../NSPluginCallbackIface.stub NSPluginClassIface.skel
-    nsplugin.cpp viewer.cpp kxt.cpp qxteventloop.cpp
+    nsplugin.cpp viewer.cpp qxteventloop.cpp
     glibevents.cpp
   LINK tdeparts-shared tdeio-shared ${GLIB2_LIBRARIES} Xt dl
   DESTINATION ${BIN_INSTALL_DIR}
