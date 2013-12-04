@@ -1267,7 +1267,10 @@ KSMShutdownIPDlg::KSMShutdownIPDlg(TQWidget* parent)
 	m_progressbar = new TQProgressBar(this);
 	m_progressbar->show();
 	m_gridlayout->expand(4,3);
+	m_gridlayout->remove(m_buttonframe);
 	m_gridlayout->addMultiCellWidget( m_progressbar, 3, 3, 0, 2);
+	m_gridlayout->addMultiCellWidget( m_buttonframe, 4, 4, 0, 2, 0 );
+	m_gridlayout->invalidate();
 	setFixedSize(sizeHint());
 
 	setStatusMessage(i18n("Saving your settings..."));
