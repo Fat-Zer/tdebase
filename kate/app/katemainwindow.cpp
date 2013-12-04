@@ -791,10 +791,17 @@ bool KateMainWindow::showModOnDiskPrompt()
 void KateMainWindow::slotDocumentCreated (Kate::Document *doc)
 {
   connect(doc,TQT_SIGNAL(modStateChanged(Kate::Document *)),this,TQT_SLOT(updateCaption(Kate::Document *)));
-  connect(doc,TQT_SIGNAL(nameChanged(Kate::Document *)),this,TQT_SLOT(updateCaption(Kate::Document *)));
+  connect(doc,TQT_SIGNAL(nameChanged(Kate::Document *)),this,TQT_SLOT(slotNameChanged(Kate::Document *)));
   connect(doc,TQT_SIGNAL(nameChanged(Kate::Document *)),this,TQT_SLOT(slotUpdateOpenWith()));
 
   updateCaption (doc);
+}
+
+void KateMainWindow::slotNameChanged(Kate::Document *doc)
+{
+  updateCaption(doc);
+  if (!doc->url().isEmpty())
+    fileOpenRecent->addURL(doc->url());
 }
 
 void KateMainWindow::updateCaption (Kate::Document *doc)

@@ -156,10 +156,11 @@ class KateMainWindow : public KateMDI::MainWindow, virtual public KParts::PartBa
     void tipOfTheDay();
 
     /* to update the caption */
-    void slotDocumentCreated (Kate::Document *doc);
-    void updateCaption (Kate::Document *doc);
+    void slotDocumentCreated(Kate::Document *doc);
+    void slotNameChanged(Kate::Document *doc);
+    void updateCaption(Kate::Document *doc);
 
-    void pluginHelp ();
+    void pluginHelp();
     void slotFullScreen(bool);
 
   public:
