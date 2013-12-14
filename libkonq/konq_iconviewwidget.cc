@@ -1099,12 +1099,15 @@ void KonqIconViewWidget::slotSelectionChanged()
             KURL url = item->url();
             TQString local_path = item->localPath();
 
-            if ( url.directory(false) == TDEGlobalSettings::trashPath() )
+            if ( url.directory(false) == TDEGlobalSettings::trashPath() ) {
                 bInTrash = true;
-            if ( KProtocolInfo::supportsDeleting( url ) )
+            }
+            if ( KProtocolInfo::supportsDeleting( url ) ) {
                 canDel++;
-            if ( !local_path.isEmpty() )
+            }
+            if ( !local_path.isEmpty() ) {
                 canTrash++;
+            }
         }
     }
 

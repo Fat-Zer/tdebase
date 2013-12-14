@@ -177,9 +177,11 @@ void KonqOperations::copy( TQWidget * parent, int method, const KURL::List & sel
 void KonqOperations::_del( int method, const KURL::List & _selectedURLs, ConfirmationType confirmation )
 {
     KURL::List selectedURLs;
-    for (KURL::List::ConstIterator it = _selectedURLs.begin(); it != _selectedURLs.end(); ++it)
-        if (KProtocolInfo::supportsDeleting(*it))
+    for (KURL::List::ConstIterator it = _selectedURLs.begin(); it != _selectedURLs.end(); ++it) {
+        if (KProtocolInfo::supportsDeleting(*it)) {
             selectedURLs.append(*it);
+        }
+    }
     if (selectedURLs.isEmpty()) {
         delete this;
         return;
