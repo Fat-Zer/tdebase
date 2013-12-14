@@ -409,7 +409,7 @@ void PanelKMenu::initialize()
 #endif
 
     if (displayRepaired == FALSE) {
-        displayRepairTimer->start(0, FALSE);
+        displayRepairTimer->start(5, FALSE);
         displayRepaired = TRUE;
     }
 
