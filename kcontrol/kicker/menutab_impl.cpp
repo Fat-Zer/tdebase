@@ -229,10 +229,13 @@ void MenuTab::save()
         }
     }
     c->writeEntry("Extensions", ext);
-    c->setGroup("General");
 
+    c->setGroup("General");
     bool kmenusetting = m_comboMenuStyle->currentItem()==1;
     bool oldkmenusetting = c->readBoolEntry("LegacyKMenu", true);
+    c->writeEntry("LegacyKMenu", kmenusetting);
+    c->writeEntry("OpenOnHover", m_openOnHover->isChecked());
+    c->sync();
 
     c->setGroup("KMenu");
     bool oldmenutextenabledsetting = c->readBoolEntry("ShowText", true);
@@ -240,10 +243,6 @@ void MenuTab::save()
 
     c->setGroup("buttons");
     TQFont oldmenufontsetting = c->readFontEntry("Font");
-
-    c->writeEntry("LegacyKMenu", kmenusetting);
-    c->writeEntry("OpenOnHover", m_openOnHover->isChecked());
-    c->sync();
 
     if (kmenusetting != oldkmenusetting) {
         forceRestart = true;

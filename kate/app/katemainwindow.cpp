@@ -422,7 +422,6 @@ void KateMainWindow::readOptions ()
 void KateMainWindow::saveOptions ()
 {
   TDEConfig *config = KateApp::self()->config ();
-
   config->setGroup("General");
 
   if (console)
@@ -431,20 +430,16 @@ void KateMainWindow::saveOptions ()
     config->writeEntry("Show Console", false);
 
   config->writeEntry("Save Meta Infos", KateDocManager::self()->getSaveMetaInfos());
-
   config->writeEntry("Days Meta Infos", KateDocManager::self()->getDaysMetaInfos());
-
   config->writeEntry("Show Full Path in Title", m_viewManager->getShowFullPath());
-
   config->writeEntry("Sync Konsole", syncKonsole);
-
   config->writeEntry("UseInstance", useInstance);
-
+  
   fileOpenRecent->saveEntries(config, "Recent Files");
-
   fileselector->writeConfig(config, "fileselector");
-
   filelist->writeConfig(config, "Filelist");
+
+  config->sync();
 }
 
 void KateMainWindow::slotWindowActivated ()
