@@ -65,7 +65,6 @@ void KatePluginManager::setupPluginList ()
 
     TQString pVersion = ptr->property("X-Kate-Version").toString();
 
-//    if ((pVersion >= "2.5") && (pVersion <= KateApp::kateVersion(false)))
     if (pVersion == "2.5")
     {
       KatePluginInfo info;
