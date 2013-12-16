@@ -64,7 +64,7 @@ fi
 # Main script:
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201310190
+SCRIPT_VERSION=201312160
 
 # Allow forced execution of this script regardless of the kdeglobals setting
 # and allow passing a user home directory as a positional parameter.
@@ -345,6 +345,11 @@ find "$PROFILE_DIR" \
      -type f -print0 2>/dev/null | \
   xargs -r0 grep -ZIFl "$TDEDIR/share/applications/kde" | \
   xargs -r0 sed -i "s|$TDEDIR/share/applications/kde|$TDEDIR/share/applications/tde|g"
+Message_Prefix
+echo "Updating references of kconf to tdeconf."
+find "$PROFILE_DIR"/share/config -type f -print0 2>/dev/null | \
+  xargs -r0 grep -ZIEl "([^a-zA-Z0-9]|^)kconf" | \
+  xargs -r0 sed -ri "s|([^a-zA-Z0-9]\|^)kconf|\1tdeconf|g"
 
 # Preserve keyboard shortcuts and input actions.
 if [ -r "$PROFILE_DIR/share/config/khotkeysrc" ]; then
