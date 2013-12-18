@@ -138,7 +138,7 @@ KFocusConfig::KFocusConfig (bool _standAlone, TDEConfig *_config, TQWidget * par
     cLay->addWidget(focusCombo,1 ,Qt::AlignLeft);
     fLabel->setBuddy(focusCombo);
 
-    // FIXME, when more policies have been added to KWin
+    // FIXME, when more policies have been added to TWin
     wtstr = i18n("The focus policy is used to determine the active window, i.e."
                                       " the window you can work in. <ul>"
                                       " <li><em>Click to focus:</em> A window becomes active when you click into it."
@@ -195,7 +195,6 @@ KFocusConfig::KFocusConfig (bool _standAlone, TDEConfig *_config, TQWidget * par
 //     fLay->addColSpacing(0,TQMAX(autoRaiseOn->sizeHint().width(),
 //                                clickRaiseOn->sizeHint().width()) + 15);
 
-    TQHBoxLayout* focusStealingLayout = new TQHBoxLayout(lay,KDialog::spacingHint());
     TQLabel* focusStealingLabel = new TQLabel( i18n( "Focus stealing prevention &level:" ), fcsBox);
     cLay->addWidget(focusStealingLabel, 0);
     focusStealing = new TQComboBox(false, fcsBox);
@@ -205,16 +204,15 @@ KFocusConfig::KFocusConfig (bool _standAlone, TDEConfig *_config, TQWidget * par
     focusStealing->insertItem( i18n( "Focus Stealing Prevention Level", "High" ));
     focusStealing->insertItem( i18n( "Focus Stealing Prevention Level", "Extreme" ));
     focusStealingLabel->setBuddy( focusStealing );
-    focusStealingLayout->addWidget( focusStealingLabel );
     cLay->addWidget(focusStealing,2 ,Qt::AlignLeft);
-    wtstr = i18n( "<p>This option specifies how much KWin will try to prevent unwanted focus stealing "
+    wtstr = i18n( "<p>This option specifies how much TWin will try to prevent unwanted focus stealing "
                   "caused by unexpected activation of new windows. (Note: This feature does not "
                   "work with the Focus Under Mouse or Focus Strictly Under Mouse focus policies.)"
                   "<ul>"
                   "<li><em>None:</em> Prevention is turned off "
                   "and new windows always become activated.</li>"
                   "<li><em>Low:</em> Prevention is enabled; when some window does not have support "
-                  "for the underlying mechanism and KWin cannot reliably decide whether to "
+                  "for the underlying mechanism and TWin cannot reliably decide whether to "
                   "activate the window or not, it will be activated. This setting may have both "
                   "worse and better results than normal level, depending on the applications.</li>"
                   "<li><em>Normal:</em> Prevention is enabled.</li>"
@@ -916,7 +914,7 @@ KMovingConfig::KMovingConfig (bool _standAlone, TDEConfig *_config, TQWidget *pa
     //placementCombo->insertItem(i18n("Manual"), MANUAL_PLACEMENT);
     placementCombo->setCurrentItem(SMART_PLACEMENT);
 
-    // FIXME, when more policies have been added to KWin
+    // FIXME, when more policies have been added to TWin
     wtstr = i18n("The placement policy determines where a new window"
                  " will appear on the desktop."
                  " <ul>"
