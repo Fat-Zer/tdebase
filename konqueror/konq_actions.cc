@@ -261,7 +261,7 @@ int KonqLogoAction::plug( TQWidget *widget, int index )
 
     int id_ = getToolButtonID();
 
-    bar->insertAnimatedWidget( id_, this, TQT_SIGNAL(activated()), TQString("kde"), index );
+    bar->insertAnimatedWidget( id_, this, TQT_SIGNAL(activated()), TQString("trinity"), index );
     bar->alignItemRight( id_ );
 
     addContainer( bar, id_ );

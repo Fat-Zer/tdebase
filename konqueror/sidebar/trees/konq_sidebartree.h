@@ -87,7 +87,7 @@ public:
      */
     KonqSidebarTreeItem * currentItem() const;
 
-    void startAnimation( KonqSidebarTreeItem * item, const char * iconBaseName = "kde", uint iconCount = 6, const TQPixmap * originalPixmap = 0L );
+    void startAnimation( KonqSidebarTreeItem * item, const char * iconBaseName = "trinity", uint iconCount = 6, const TQPixmap * originalPixmap = 0L );
     void stopAnimation( KonqSidebarTreeItem * item );
 
     // Reimplemented from KDirNotify

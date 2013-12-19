@@ -124,7 +124,7 @@ void KonqListViewItem::updateContents()
                 setText(tmpColumn->displayInColumn,TDEIO::convertSize(m_fileitem->size())+" ");
             break;
          case TDEIO::UDS_ACCESS:
-            setText(tmpColumn->displayInColumn,m_fileitem->permissionsString());	    
+            setText(tmpColumn->displayInColumn,m_fileitem->permissionsString());
             break;
          case TDEIO::UDS_MODIFICATION_TIME:
          case TDEIO::UDS_ACCESS_TIME:
