@@ -78,7 +78,7 @@ Recommended is \{@}, since it removes all query variables (name=value) from the 
             </property>
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;
-The shortcuts entered here can be used as a pseudo-URI scheme in KDE. For example, the shortcut &lt;b&gt;av&lt;/b&gt; can be used as in &lt;b&gt;av&lt;/b&gt;:&lt;b&gt;my search&lt;/b&gt;
+The shortcuts entered here can be used as a pseudo-URI scheme in TDE. For example, the shortcut &lt;b&gt;av&lt;/b&gt; can be used as in &lt;b&gt;av&lt;/b&gt;:&lt;b&gt;my search&lt;/b&gt;
 &lt;/qt&gt;</string>
             </property>
         </widget>
@@ -94,7 +94,7 @@ The shortcuts entered here can be used as a pseudo-URI scheme in KDE. For exampl
             </property>
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;
-The shortcuts entered here can be used as a pseudo-URI scheme in KDE. For example, the shortcut &lt;b&gt;av&lt;/b&gt; can be used as in &lt;b&gt;av&lt;/b&gt;:&lt;b&gt;my search&lt;/b&gt;
+The shortcuts entered here can be used as a pseudo-URI scheme in TDE. For example, the shortcut &lt;b&gt;av&lt;/b&gt; can be used as in &lt;b&gt;av&lt;/b&gt;:&lt;b&gt;my search&lt;/b&gt;
 &lt;/qt&gt;</string>
             </property>
         </widget>

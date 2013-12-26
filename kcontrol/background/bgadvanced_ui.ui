@@ -352,7 +352,7 @@ You can also remove programs from this list clicking on the &lt;b&gt;Remove&lt;/
                         <string>Size of background cache:</string>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>In this box you can enter how much memory KDE should use for caching the background(s). If you have different backgrounds for the different desktops caching can make switching desktops smoother at the expense of higher memory use.</string>
+                        <string>In this box you can enter how much memory TDE should use for caching the background(s). If you have different backgrounds for the different desktops caching can make switching desktops smoother at the expense of higher memory use.</string>
                     </property>
                 </widget>
                 <widget class="TQSpinBox">
@@ -363,7 +363,7 @@ You can also remove programs from this list clicking on the &lt;b&gt;Remove&lt;/
                         <string> k</string>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>In this box you can enter how much memory KDE should use for caching the background(s). If you have different backgrounds for the different desktops caching can make switching desktops smoother at the expense of higher memory use.</string>
+                        <string>In this box you can enter how much memory TDE should use for caching the background(s). If you have different backgrounds for the different desktops caching can make switching desktops smoother at the expense of higher memory use.</string>
                     </property>
                 </widget>
                 <spacer>

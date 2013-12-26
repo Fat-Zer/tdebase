@@ -324,7 +324,7 @@
                                     <bool>true</bool>
                                 </property>
                                 <property name="whatsThis" stdset="0">
-                                    <string>This is the command which is executed when switching to the selected layout. It may help you if you want to debug layout switching, or if you want to switch layouts without the help of KDE.</string>
+                                    <string>This is the command which is executed when switching to the selected layout. It may help you if you want to debug layout switching, or if you want to switch layouts without the help of TDE.</string>
                                 </property>
                             </widget>
                             <widget class="TQCheckBox" row="7" column="2" rowspan="1" colspan="3">

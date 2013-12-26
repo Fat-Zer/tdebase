@@ -155,7 +155,7 @@ KFocusConfig::KFocusConfig (bool _standAlone, TDEConfig *_config, TQWidget * par
                                       " active. If the mouse points nowhere, nothing has focus."
                                       " </ul>"
                                       "Note that 'Focus under mouse' and 'Focus strictly under mouse' prevent certain"
-                                      " features such as the Alt+Tab walk through windows dialog in the KDE mode"
+                                      " features such as the Alt+Tab walk through windows dialog in the TDE mode"
                                       " from working properly."
                          );
     TQWhatsThis::add( focusCombo, wtstr);

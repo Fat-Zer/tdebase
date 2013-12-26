@@ -28,7 +28,7 @@
             </property>
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;
-Enable shortcuts that allow you to quickly search for information on the web. For example, entering the shortcut &lt;b&gt;gg:KDE&lt;/b&gt; will result in a search of the word &lt;b&gt;KDE&lt;/b&gt; on the Google(TM) search engine.
+Enable shortcuts that allow you to quickly search for information on the web. For example, entering the shortcut &lt;b&gt;gg:TDE&lt;/b&gt; will result in a search of the word &lt;b&gt;TDE&lt;/b&gt; on the Google(TM) search engine.
 &lt;/qt&gt;</string>
             </property>
         </widget>
