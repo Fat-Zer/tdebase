@@ -151,7 +151,7 @@ KDIconView::KDIconView( TQWidget *parent, const char* name )
       m_enableMedia(false),
       m_gotIconsArea(false),
       m_needDesktopAlign(true),
-      m_paOutstandingOverlaysTimer( 0L )
+      m_paOutstandingFreeSpaceOverlaysTimer( 0L )
 {
     setResizeMode( Fixed );
     setIconArea( desktopRect() );  // the default is the whole desktop
@@ -1223,8 +1223,14 @@ void KDIconView::slotNewItems( const KFileItemList & entries )
     }
 
     KFileItem* fileItem = fileIVI->item();
-    if ( fileItem->mimetype().startsWith("media/") && fileItem->mimetype().contains("_mounted") && KDesktopSettings::mediaFreeSpaceDisplayEnabled() ) {
-        showFreeSpaceOverlay(fileIVI);
+    if ( fileItem->mimetype().startsWith("media/") && KDesktopSettings::mediaFreeSpaceDisplayEnabled() ) {
+        if (fileItem->mimetype().contains("_mounted")) {
+            showFreeSpaceOverlay(fileIVI);
+        }
+        else {
+            // If not mounted, hide free space overlay
+            fileIVI->setShowFreeSpaceOverlay(false);
+        }
     }
   }
 
@@ -1281,8 +1287,14 @@ void KDIconView::slotRefreshItems( const KFileItemList & entries )
                 if ( rit.current()->isMimeTypeKnown() ) {
                     fileIVI->setMouseOverAnimation( rit.current()->iconName() );
                 }
-                if ( rit.current()->mimetype().startsWith("media/") && rit.current()->mimetype().contains("_mounted") && KDesktopSettings::mediaFreeSpaceDisplayEnabled() ) {
-                    showFreeSpaceOverlay(fileIVI);
+                if ( rit.current()->mimetype().startsWith("media/") && KDesktopSettings::mediaFreeSpaceDisplayEnabled() ) {
+                    if (rit.current()->mimetype().contains("_mounted")) {
+                        showFreeSpaceOverlay(fileIVI);
+                    }
+                    else {
+                        // If not mounted, hide free space overlay
+                        fileIVI->setShowFreeSpaceOverlay(false);
+                    }
                 }
                 break;
             }
@@ -1381,15 +1393,15 @@ void KDIconView::showFreeSpaceOverlay(KFileIVI* item)
     KFileItem* fileItem = item->item();
 
     if ( TDEGlobalSettings::showFilePreview( fileItem->url() ) ) {
-        m_paOutstandingOverlays.append(item);
-        if (m_paOutstandingOverlays.count() == 1)
+        m_paOutstandingFreeSpaceOverlays.append(item);
+        if (m_paOutstandingFreeSpaceOverlays.count() == 1)
         {
-           if (!m_paOutstandingOverlaysTimer)
+           if (!m_paOutstandingFreeSpaceOverlaysTimer)
            {
-              m_paOutstandingOverlaysTimer = new TQTimer(this);
-              connect(m_paOutstandingOverlaysTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotFreeSpaceOverlayStart()));
+              m_paOutstandingFreeSpaceOverlaysTimer = new TQTimer(this);
+              connect(m_paOutstandingFreeSpaceOverlaysTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotFreeSpaceOverlayStart()));
            }
-           m_paOutstandingOverlaysTimer->start(20, true);
+           m_paOutstandingFreeSpaceOverlaysTimer->start(20, true);
         }
     }
 }
@@ -1398,7 +1410,7 @@ void KDIconView::slotFreeSpaceOverlayStart()
 {
     do
     {
-       KFileIVI* item = m_paOutstandingOverlays.first();
+       KFileIVI* item = m_paOutstandingFreeSpaceOverlays.first();
        if (!item) {
           return; // Nothing to do
        }
@@ -1411,16 +1423,16 @@ void KDIconView::slotFreeSpaceOverlayStart()
           overlay->start(); // Watch out, may emit finished() immediately!!
           return; // Let it run....
        }
-       m_paOutstandingOverlays.removeFirst();
+       m_paOutstandingFreeSpaceOverlays.removeFirst();
     } while (true);
 }
 
 void KDIconView::slotFreeSpaceOverlayFinished()
 {
-    m_paOutstandingOverlays.removeFirst();
+    m_paOutstandingFreeSpaceOverlays.removeFirst();
 
-    if (m_paOutstandingOverlays.count() > 0) {
-        m_paOutstandingOverlaysTimer->start(0, true); // Don't call directly to prevent deep recursion.
+    if (m_paOutstandingFreeSpaceOverlays.count() > 0) {
+        m_paOutstandingFreeSpaceOverlaysTimer->start(0, true); // Don't call directly to prevent deep recursion.
     }
 }
 

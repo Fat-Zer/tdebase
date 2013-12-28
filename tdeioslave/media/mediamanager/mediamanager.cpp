@@ -44,7 +44,6 @@
 #include "linuxcdpolling.h"
 #endif //COMPILE_LINUXCDPOLLING
 
-
 MediaManager::MediaManager(const TQCString &obj)
     : KDEDModule(obj), m_dirNotify(m_mediaList)
 {
@@ -401,10 +400,6 @@ void MediaManager::slotMediumChanged(const TQString &/*id*/, const TQString &nam
     kdDebug(1219) << "MediaManager::slotMediumChanged: " << name << endl;
 
     KDirNotify_stub notifier("*", "*");
-    if (!mounted)
-    {
-        notifier.FilesRemoved( KURL("media:/"+name) );
-    }
     notifier.FilesChanged( KURL("media:/"+name) );
 
     emit mediumChanged(name, allowNotification);

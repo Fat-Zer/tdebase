@@ -170,6 +170,7 @@ KonqKfmIconView::KonqKfmIconView( TQWidget *parentWidget, TQObject *parent, cons
     , m_bNeedSetCurrentItem( false )
     , m_pEnsureVisible( 0 )
     , m_paOutstandingOverlaysTimer( 0 )
+    , m_paOutstandingFreeSpaceOverlaysTimer( 0 )
     , m_pTimeoutRefreshTimer( 0 )
     , m_itemDict( 43 )
 {
@@ -1083,8 +1084,11 @@ void KonqKfmIconView::slotDeleteItem( KFileItem * _fileitem )
         m_itemDict.remove( _fileitem );
         if (m_paOutstandingOverlays.first() == ivi) // Being processed?
            m_paOutstandingOverlaysTimer->start(20, true); // Restart processing...
-
         m_paOutstandingOverlays.remove(ivi);
+        if (m_paOutstandingFreeSpaceOverlays.first() == ivi) // Being processed?
+           m_paOutstandingFreeSpaceOverlaysTimer->start(20, true); // Restart processing...
+        m_paOutstandingFreeSpaceOverlays.remove(ivi);
+
         delete ivi;
     }
 }
@@ -1112,18 +1116,16 @@ void KonqKfmIconView::showFreeSpaceOverlay(KFileIVI* item)
 {
     KFileItem* fileItem = item->item();
 
-    if ( TDEGlobalSettings::showFilePreview( fileItem->url() ) ) {
-        m_paOutstandingOverlays.append(item);
-        if (m_paOutstandingOverlays.count() == 1)
-        {
-           if (!m_paOutstandingOverlaysTimer)
-           {
-              m_paOutstandingOverlaysTimer = new TQTimer(this);
-              connect(m_paOutstandingOverlaysTimer, TQT_SIGNAL(timeout()),
-                      TQT_SLOT(slotFreeSpaceOverlayStart()));
-           }
-           m_paOutstandingOverlaysTimer->start(20, true);
-        }
+    m_paOutstandingFreeSpaceOverlays.append(item);
+    if (m_paOutstandingFreeSpaceOverlays.count() == 1)
+    {
+       if (!m_paOutstandingFreeSpaceOverlaysTimer)
+       {
+          m_paOutstandingFreeSpaceOverlaysTimer = new TQTimer(this);
+          connect(m_paOutstandingFreeSpaceOverlaysTimer, TQT_SIGNAL(timeout()),
+                  TQT_SLOT(slotFreeSpaceOverlayStart()));
+       }
+       m_paOutstandingFreeSpaceOverlaysTimer->start(20, true);
     }
 }
 
@@ -1151,7 +1153,7 @@ void KonqKfmIconView::slotFreeSpaceOverlayStart()
 {
     do
     {
-       KFileIVI* item = m_paOutstandingOverlays.first();
+       KFileIVI* item = m_paOutstandingFreeSpaceOverlays.first();
        if (!item)
           return; // Nothing to do
 
@@ -1163,7 +1165,7 @@ void KonqKfmIconView::slotFreeSpaceOverlayStart()
           overlay->start(); // Watch out, may emit finished() immediately!!
           return; // Let it run....
        }
-       m_paOutstandingOverlays.removeFirst();
+       m_paOutstandingFreeSpaceOverlays.removeFirst();
     } while (true);
 }
 
@@ -1177,10 +1179,10 @@ void KonqKfmIconView::slotDirectoryOverlayFinished()
 
 void KonqKfmIconView::slotFreeSpaceOverlayFinished()
 {
-    m_paOutstandingOverlays.removeFirst();
+    m_paOutstandingFreeSpaceOverlays.removeFirst();
 
-    if (m_paOutstandingOverlays.count() > 0)
-        m_paOutstandingOverlaysTimer->start(0, true); // Don't call directly to prevent deep recursion.
+    if (m_paOutstandingFreeSpaceOverlays.count() > 0)
+        m_paOutstandingFreeSpaceOverlaysTimer->start(0, true); // Don't call directly to prevent deep recursion.
 }
 
 // see also KDesktop::slotRefreshItems
@@ -1211,8 +1213,14 @@ void KonqKfmIconView::slotRefreshItems( const KFileItemList& entries )
             if ( !bNeedRepaint && oldSize != ivi->pixmap()->size() ) {
                 bNeedRepaint = true;
             }
-            if ( (*rit)->mimetype().startsWith("media/") && (*rit)->mimetype().contains("_mounted") && m_pProps->isShowingFreeSpaceOverlays() ) {
-                showFreeSpaceOverlay(ivi);
+            if ( (*rit)->mimetype().startsWith("media/") && m_pProps->isShowingFreeSpaceOverlays() ) {
+                if ((*rit)->mimetype().contains("_mounted")) {
+                    showFreeSpaceOverlay(ivi);
+                }
+                else {
+                    // If not mounted, hide free space overlay
+                    ivi->setShowFreeSpaceOverlay(false);
+                }
             }
         }
     }
@@ -1380,6 +1388,7 @@ bool KonqKfmIconView::doOpenURL( const KURL & url )
     m_bUpdateContentsPosAfterListing = true;
 
     m_paOutstandingOverlays.clear();
+    m_paOutstandingFreeSpaceOverlays.clear();
 
     // Start the directory lister !
     m_dirLister->openURL( url, false, args.reload );

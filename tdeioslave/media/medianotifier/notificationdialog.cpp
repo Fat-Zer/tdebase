@@ -28,6 +28,7 @@
 #include <tqlabel.h>
 #include <tqcheckbox.h>
 #include <tqpushbutton.h>
+#include <tdehardwaredevices.h>
 
 #include "actionlistboxitem.h"
 #include "notificationdialogview.h"
@@ -84,6 +85,11 @@ NotificationDialog::~NotificationDialog()
 {
 	delete m_actionWatcher;
 	delete m_settings;
+}
+
+KFileItem NotificationDialog::medium()
+{
+	return m_medium;
 }
 
 void NotificationDialog::updateActionsListBox()

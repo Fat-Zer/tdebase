@@ -278,8 +278,8 @@ private:
 
     TQListView *mMediaListView;
 
-    TQPtrList<KFileIVI> m_paOutstandingOverlays;
-    TQTimer *m_paOutstandingOverlaysTimer;
+    TQPtrList<KFileIVI> m_paOutstandingFreeSpaceOverlays;
+    TQTimer *m_paOutstandingFreeSpaceOverlaysTimer;
 
     TDEConfig *g_pConfig;
 };

@@ -38,6 +38,8 @@ public:
 	                    TQWidget* parent = 0, const char* name = 0 );
 	~NotificationDialog();
 
+	KFileItem medium();
+
 private slots:
 	void slotOk();
 	void slotConfigure();

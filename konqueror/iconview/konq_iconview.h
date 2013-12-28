@@ -202,7 +202,9 @@ protected:
   TDEToggleAction *m_paFreeSpaceOverlays;
   TDEToggleAction *m_paEnablePreviews;
   TQPtrList<KFileIVI> m_paOutstandingOverlays;
+  TQPtrList<KFileIVI> m_paOutstandingFreeSpaceOverlays;
   TQTimer *m_paOutstandingOverlaysTimer;
+  TQTimer *m_paOutstandingFreeSpaceOverlaysTimer;
 /*  TDEToggleAction *m_paImagePreview;
   TDEToggleAction *m_paTextPreview;
   TDEToggleAction *m_paHTMLPreview;*/

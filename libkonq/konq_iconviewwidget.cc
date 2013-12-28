@@ -1422,6 +1422,8 @@ void KonqIconViewWidget::slotSaveIconPositions()
   // in tdebase/kdesktop/kdiconview.cc
   // WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
 
+  printf("WARNING: Strongly deprecated method KonqIconViewWidget::slotSaveIconPositions() called!\n"); fflush(stdout);
+
   if ( m_dotDirectoryPath.isEmpty() )
     return;
   if ( !m_bDesktop )

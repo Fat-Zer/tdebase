@@ -51,10 +51,14 @@ MediaNotifier::MediaNotifier(const TQCString &name) : KDEDModule(name)
 	connectDCOPSignal( "kded", "mediamanager", "mediumChanged(TQString, bool)",
 	                   "onMediumChange(TQString, bool)", true );
 
-    m_freeTimer = new TQTimer( this );
-    connect( m_freeTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( checkFreeDiskSpace() ) );
-    m_freeTimer->start( 1000*6*2 /* 20 minutes */ );
-    m_freeDialog = 0;
+	connectDCOPSignal( "kded", "mediamanager", "mediumRemoved(TQString, bool)",
+	                   "onMediumRemove(TQString, bool)", true );
+
+	m_notificationDialogList.setAutoDelete(FALSE);
+	m_freeTimer = new TQTimer( this );
+	connect( m_freeTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( checkFreeDiskSpace() ) );
+	m_freeTimer->start( 1000*6*2 /* 20 minutes */ );
+	m_freeDialog = 0;
 }
 
 MediaNotifier::~MediaNotifier()
@@ -64,6 +68,24 @@ MediaNotifier::~MediaNotifier()
 	
 	disconnectDCOPSignal( "kded", "mediamanager", "mediumChanged(TQString, bool)",
 	                      "onMediumChange(TQString, bool)" );
+
+	disconnectDCOPSignal( "kded", "mediamanager", "mediumRemoved(TQString, bool)",
+	                      "onMediumRemove(TQString, bool)" );
+}
+
+void MediaNotifier::onMediumRemove( const TQString &name, bool allowNotification )
+{
+	kdDebug() << "MediaNotifier::onMediumRemove( " << name << ", "
+	          << allowNotification << ")" << endl;
+
+	KURL url(  "system:/media/"+name );
+
+	NotificationDialog* dialog;
+	for (dialog = m_notificationDialogList.first(); dialog; dialog = m_notificationDialogList.next()) {
+		if (dialog->medium().url() == url) {
+			dialog->close();
+		}
+	}
 }
 
 void MediaNotifier::onMediumChange( const TQString &name, bool allowNotification )
@@ -305,16 +327,16 @@ void MediaNotifier::notify( KFileItem &medium )
 	
 	if ( settings->autoActionForMimetype( medium.mimetype() )==0L )
 	{
-		TQValueList<NotifierAction*> actions
-			= settings->actionsForMimetype( medium.mimetype() );
+		TQValueList<NotifierAction*> actions = settings->actionsForMimetype( medium.mimetype() );
 		
 		// If only one action remains, it's the "do nothing" action
 		// no need to popup in this case.
 		if ( actions.size()>1 )
 		{
-			NotificationDialog *dialog
-				= new NotificationDialog( medium, settings );
-			dialog->show();
+			NotificationDialog*  notifier = new NotificationDialog( medium, settings );
+			connect(notifier, TQT_SIGNAL(destroyed(TQObject*)), this, TQT_SLOT(notificationDialogDestroyed(TQObject*)));
+			m_notificationDialogList.append(notifier);
+			notifier->show();
 		}
 	}
 	else
@@ -323,6 +345,11 @@ void MediaNotifier::notify( KFileItem &medium )
 		action->execute( medium );
 		delete settings;
 	}
+}
+
+void MediaNotifier::notificationDialogDestroyed(TQObject* object)
+{
+	m_notificationDialogList.remove(static_cast<NotificationDialog*>(object));
 }
 
 extern "C"

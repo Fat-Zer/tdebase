@@ -29,6 +29,8 @@
 #include <tqmap.h>
 
 class KDialogBase;
+class NotificationDialog;
+typedef TQPtrList<NotificationDialog> NotificationDialogList;
 
 class MediaNotifier:  public KDEDModule
 {
@@ -41,6 +43,7 @@ public:
 
 k_dcop:
 	void onMediumChange( const TQString &name, bool allowNotification );
+	void onMediumRemove( const TQString &name, bool allowNotification );
 
 private slots:
 	void slotStatResult( TDEIO::Job *job );
@@ -48,6 +51,7 @@ private slots:
 	void slotFreeFinished( KMessageBox::ButtonCode );
 	void slotFreeContinue();
 	void slotFreeCancel();
+	void notificationDialogDestroyed( TQObject* );
 	
 private:
 	bool autostart( const KFileItem &medium );
@@ -61,6 +65,7 @@ private:
 	TQMap<TDEIO::Job*,bool> m_allowNotificationMap;
 	TQTimer * m_freeTimer;
 	KDialogBase * m_freeDialog;
+	NotificationDialogList m_notificationDialogList;
 };
 #endif
 
