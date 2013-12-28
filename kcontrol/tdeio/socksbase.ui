@@ -62,7 +62,7 @@
                         <number>1</number>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>If you select Autodetect, then KDE will automatically search for an implementation of SOCKS on your computer.</string>
+                        <string>If you select Autodetect, then TDE will automatically search for an implementation of SOCKS on your computer.</string>
                     </property>
                 </widget>
                 <widget class="TQRadioButton" row="0" column="1">
@@ -76,7 +76,7 @@
                         <number>2</number>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>This will force KDE to use NEC SOCKS if it can be found.</string>
+                        <string>This will force TDE to use NEC SOCKS if it can be found.</string>
                     </property>
                 </widget>
                 <widget class="TQRadioButton" row="1" column="0" rowspan="1" colspan="3">
@@ -150,7 +150,7 @@
                         <number>3</number>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>This will force KDE to use Dante if it can be found.</string>
+                        <string>This will force TDE to use Dante if it can be found.</string>
                     </property>
                 </widget>
             </grid>

@@ -61,7 +61,7 @@
                                     <string>Enable &amp;polling to autodetect card events</string>
                                 </property>
                                 <property name="whatsThis" stdset="0">
-                                    <string>In most cases you should have this enabled. It allows KDE to automatically detect card insertion and reader hotplug events.</string>
+                                    <string>In most cases you should have this enabled. It allows TDE to automatically detect card insertion and reader hotplug events.</string>
                                 </property>
                             </widget>
                             <spacer row="0" column="0" rowspan="3" colspan="1">
@@ -92,7 +92,7 @@
                                     <string>Automatically &amp;launch card manager if inserted card is unclaimed</string>
                                 </property>
                                 <property name="whatsThis" stdset="0">
-                                    <string>When you insert a smartcard, KDE can automatically launch a management tool if no other application attempts to use the card.</string>
+                                    <string>When you insert a smartcard, TDE can automatically launch a management tool if no other application attempts to use the card.</string>
                                 </property>
                             </widget>
                             <widget class="QCheckBox" row="1" column="1">
