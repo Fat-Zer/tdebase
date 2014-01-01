@@ -38,14 +38,6 @@ else
 fi
 }
 
-Display_Message () {
-if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
-  printf "%b" "$MESSAGE" | xmessage -center -file - > /dev/null 2>/dev/null
-else
-  printf "%b" "$MESSAGE"
-fi
-}
-
 Message_Prefix () {
 if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
   printf "%s" "[r14-xdg-update] "
@@ -53,7 +45,11 @@ fi
 }
 
 Validation_Failure () {
-Display_Message "$MESSAGE"
+if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
+  printf "%b" "$MESSAGE" | xmessage -center -file - > /dev/null 2>/dev/null
+else
+  printf "%b" "$MESSAGE"
+fi
 if [ "$KDEGLOBALS_KEY_VALUE" = "" ]; then
   KDEGLOBALS_KEY_VALUE="$TEST_NUM"
 else
@@ -61,10 +57,18 @@ else
 fi
 }
 
+Log () {
+  echo "$@" | \
+  while read l; do
+    Message_Prefix
+    echo "$l"
+  done
+}
+
 # Main script:
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201312160
+SCRIPT_VERSION=201401010
 
 # Allow forced execution of this script regardless of the kdeglobals setting
 # and allow passing a user home directory as a positional parameter.
@@ -143,29 +147,18 @@ else
 fi
 unset BIN_DIR
 
-Message_Prefix
-echo "Performing a profile update for Trinity release R14 XDG compliance."
-Message_Prefix
-echo "To run this script against a different user directory, or automated"
-Message_Prefix
-echo "from within another script, pass the directory path as a parameter."
-Message_Prefix
-echo "For example: r14-xdg-update /home/user_dir"
-Message_Prefix
-echo "Use the user home directory and not the profile directory."
-Message_Prefix
-echo "User directory: $USER_DIR"
-Message_Prefix
-echo "Profile directory: $PROFILE_DIR"
+Log "Performing a profile update for Trinity release R14 XDG compliance."
+Log "To run this script against a different user directory, or automated"
+Log "from within another script, pass the directory path as a parameter."
+Log "For example: r14-xdg-update /home/user_dir"
+Log "Use the user home directory and not the profile directory."
+Log "User directory: $USER_DIR"
+Log "Profile directory: $PROFILE_DIR"
 if [ "$USER_DIR" != "$HOME" ]; then
-  Message_Prefix
-  echo "Root (admin) privileges might be required to run this script"
-  Message_Prefix
-  echo "against other user directories."
-  Message_Prefix
-  echo "This script is being run against $USER_DIR."
-  Message_Prefix
-  echo "Your normal user directory is $HOME."
+  Log "Root (admin) privileges might be required to run this script"
+  Log "against other user directories."
+  Log "This script is being run against $USER_DIR."
+  Log "Your normal user directory is $HOME."
 fi
 
 # Do not update when $TDEHOME is a sym link to another profile directory. Trinity should have
@@ -194,13 +187,11 @@ if [ "$TDEHOME_LINK" != "" ]; then
     if [ "$EXIT_CODE" = "102" ]; then
       # User selected the Quit button: quit this script and exit X.
       unset PROFILE_DIR
-      Message_Prefix
-      echo "The user chose to quit."
+      Log "The user chose to quit."
       exit 1
     else
       # User selected the Continue button: continue this script and start TDE.
-      Message_Prefix
-      echo "The user chose to continue, which will break the sym link."
+      Log "The user chose to continue, which will break the sym link."
       BREAK_SYMLINK="true"
     fi
   else
@@ -215,16 +206,12 @@ if [ "$TDEHOME_LINK" != "" ]; then
     unlink "$USER_DIR/.trinity" 2>/dev/null
     if [ "`readlink \"$USER_DIR/.trinity\"`" = "" ]; then
       MESSAGE="Sym link broken. With the sym link broken, run the migratekde3\nscript before restarting Trinity to migrate a KDE3 profile or\nallow Trinity to create a fresh profile."
-      if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
-        Message_Prefix
-      fi
+      Message_Prefix
       printf "%b" "$MESSAGE"
       echo
     else
       MESSAGE="Unable to break the sym link. Check file and directory privileges. Quitting."
-      if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
-        Message_Prefix
-      fi
+      Message_Prefix
       echo "$MESSAGE"
       echo
     fi
@@ -239,10 +226,8 @@ R14_UPDATED="`$TDEDIR/bin/kreadconfig --file "$PROFILE_DIR/share/config/kdegloba
 R14_VERSION="`$TDEDIR/bin/kreadconfig --file "$PROFILE_DIR/share/config/kdeglobals" --group "R14 XDG Updates" --key Version --default 0`"
 if [ "$R14_VERSION" -lt "$SCRIPT_VERSION" ] || [ "$R14_UPDATED" != "true" ] || [ "$FORCE" = "true" ]; then
   if [ "$R14_UPDATED" != "true" ] && [ "$R14_UPDATED" != "false" ] && [ "$R14_UPDATED" != "" ]; then
-    Message_Prefix
-    echo "The r14-xdg-update script has been run at least once."
-    Message_Prefix
-    echo "The error code is $R14_UPDATED."
+    Log "The r14-xdg-update script has been run at least once."
+    Log "The error code is $R14_UPDATED."
     echo
     MESSAGE="The r14-xdg-update script has been run at least once.\n\nThe script is not successfully updating.\n\nThe script will run with each login until corrected.\n\nPlease contact an administrator or take appropriate\nadmininstrative action to correct the problem.\n\nThe error code is $R14_UPDATED."
     # Are we in X? Display an X dialog explaining breakage.
@@ -260,6 +245,9 @@ else
   echo "This script has been run at least once previously. To run manually pass the 'force' parameter."
   exit 0
 fi
+if [ "$FORCE" = "true" ]; then
+  R14_VERSION=0
+fi
 
 # Trap when the user runs this script while in a Trinity session.
 # Most files can be updated "live" but some can't, such as kdeglobals.
@@ -273,419 +261,409 @@ if [ "$USER_DIR" = "$HOME" ]; then
   fi
 fi
 
-Message_Prefix
-echo "Updating temp file locations."
-# All three directories are for temporary files. The cache directory is
-# intended for persistent temporary data (is expected to remain across reboots
-# and shutdowns). The other two directories are for non-persistent data and
-# can be deleted across reboots and shutdowns.
-CACHE_DIR="`readlink $PROFILE_DIR/cache-\`uname -n\``"
-SOCKET_DIR="`readlink $PROFILE_DIR/socket-\`uname -n\``"
-TMP_DIR="`readlink $PROFILE_DIR/tmp-\`uname -n\``"
-# Delete the non-persistent temporary directories. This is safe at any time.
-unlink $PROFILE_DIR/socket-`uname -n` 2>/dev/null
-unlink $PROFILE_DIR/tmp-`uname -n` 2>/dev/null
-if [ "$SOCKET_DIR" != "" ]; then
-  rm -fr $SOCKET_DIR 2>/dev/null
-fi
-if [ "$TMP_DIR" != "" ]; then
-  rm -fr $TMP_DIR 2>/dev/null
-fi
-# Remember that this script may be run more than once. The new directory
-# might already exist.
-if [ -n "$CACHE_DIR" ] && [ -d "$CACHE_DIR" ]; then
-  # Flush the obsolete ksycoca cache files.
-  rm -f ${CACHE_DIR}/ksycoca* 2>/dev/null
-  # Flush the tdesycoca cache files. This is safe at any time.
-  rm -f ${CACHE_DIR}/tdesycoca* 2>/dev/null
-  # Old cache directory: /var/tmp/kde*cache-$USER
-  # New cache directory: /var/tmp/tdecache-$USER
-  # Rename/move the directory name but only when the new name does not exist.
-  if [ "`echo $CACHEDIR | grep tdecache`" = "" ]; then
-    Message_Prefix
-    echo "Renaming the temporary cache directory."
-    unlink $PROFILE_DIR/cache-`uname -n` 2>/dev/null
-    mv -f $CACHE_DIR `dirname $CACHE_DIR`/tdecache-$USER 2>/dev/null
-    Message_Prefix
-    echo "Creating a sym link for the temporary cache directory."
-    ln -s `dirname $CACHE_DIR`/tdecache-$USER $PROFILE_DIR/cache-`uname -n`
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  Log "Updating temp file locations."
+  # All three directories are for temporary files. The cache directory is
+  # intended for persistent temporary data (is expected to remain across reboots
+  # and shutdowns). The other two directories are for non-persistent data and
+  # can be deleted across reboots and shutdowns.
+  CACHE_DIR="`readlink $PROFILE_DIR/cache-\`uname -n\``"
+  SOCKET_DIR="`readlink $PROFILE_DIR/socket-\`uname -n\``"
+  TMP_DIR="`readlink $PROFILE_DIR/tmp-\`uname -n\``"
+  # Delete the non-persistent temporary directories. This is safe at any time.
+  unlink $PROFILE_DIR/socket-`uname -n` 2>/dev/null
+  unlink $PROFILE_DIR/tmp-`uname -n` 2>/dev/null
+  if [ "$SOCKET_DIR" != "" ]; then
+    rm -fr $SOCKET_DIR 2>/dev/null
+  fi
+  if [ "$TMP_DIR" != "" ]; then
+    rm -fr $TMP_DIR 2>/dev/null
+  fi
+  # Remember that this script may be run more than once. The new directory
+  # might already exist.
+  if [ -n "$CACHE_DIR" ] && [ -d "$CACHE_DIR" ]; then
+    # Flush the obsolete ksycoca cache files.
+    rm -f ${CACHE_DIR}/ksycoca* 2>/dev/null
+    # Flush the tdesycoca cache files. This is safe at any time.
+    rm -f ${CACHE_DIR}/tdesycoca* 2>/dev/null
+    # Old cache directory: /var/tmp/kde*cache-$USER
+    # New cache directory: /var/tmp/tdecache-$USER
+    # Rename/move the directory name but only when the new name does not exist.
+    if [ "`echo $CACHEDIR | grep tdecache`" = "" ]; then
+      Log "Renaming the temporary cache directory."
+      unlink $PROFILE_DIR/cache-`uname -n` 2>/dev/null
+      mv -f $CACHE_DIR `dirname $CACHE_DIR`/tdecache-$USER 2>/dev/null
+      Log "Creating a sym link for the temporary cache directory."
+      ln -s `dirname $CACHE_DIR`/tdecache-$USER $PROFILE_DIR/cache-`uname -n`
+    fi
+  fi
+  # Housekeeping: the old locations are no longer needed.
+  if [ "$CACHE_DIR" != "" ]; then
+    rm -fr `dirname 2>/dev/null $CACHE_DIR`/kde*cache-$USER
+  fi
+  if [ "$SOCKET_DIR" != "" ]; then
+    rm -fr `dirname 2>/dev/null $SOCKET_DIR`/ksocket-$USER
+  fi
+  if [ "$TMP_DIR" != "" ]; then
+    rm -fr `dirname 2>/dev/null $TMP_DIR`/kde-$USER
   fi
 fi
-# Housekeeping: the old locations are no longer needed.
-if [ "$CACHE_DIR" != "" ]; then
-  rm -fr `dirname 2>/dev/null $CACHE_DIR`/kde*cache-$USER
-fi
-if [ "$SOCKET_DIR" != "" ]; then
-  rm -fr `dirname 2>/dev/null $SOCKET_DIR`/ksocket-$USER
-fi
-if [ "$TMP_DIR" != "" ]; then
-  rm -fr `dirname 2>/dev/null $TMP_DIR`/kde-$USER
-fi
 
-Message_Prefix
-echo "Updating *.desktop files."
-find "$PROFILE_DIR" "$USER_DIR/.local" -name "*.desktop" -print0 2>/dev/null | \
-  xargs -r0 grep -ZIl "\(X-KDE-\|KDE;\)" | \
-  xargs -r0 sed -i -e "s|X-KDE-|X-TDE-|g" -e "s|KDE;|TDE;|g"
-Message_Prefix
-echo "Updating references of $TDEDIR/share/applications/kde to share/applications/tde."
-# Exclude KMail mail files --- we don't want to touch those files.
-find "$PROFILE_DIR" \
-     -path $PROFILE_DIR/share/apps/amarok/albumcovers -prune -o \
-     -path $PROFILE_DIR/share/apps/basket/baskets -prune -o \
-     -path $PROFILE_DIR/share/apps/juk/covers -prune -o \
-     -path $PROFILE_DIR/share/apps/kget/logs -prune -o \
-     -path $PROFILE_DIR/share/apps/kmail/autosave -prune -o \
-     -path $PROFILE_DIR/share/apps/kmail/dimap -prune -o \
-     -path $PROFILE_DIR/share/apps/kmail/imap -prune -o \
-     -path $PROFILE_DIR/share/apps/kmail/mail -prune -o \
-     -path $PROFILE_DIR/share/apps/kmail/search -prune -o \
-     -path $PROFILE_DIR/share/apps/knotes -prune -o \
-     -path $PROFILE_DIR/share/apps/kopete/logs -prune -o \
-     -type f -print0 2>/dev/null | \
-  xargs -r0 grep -ZIFl "$TDEDIR/share/applications/kde" | \
-  xargs -r0 sed -i "s|$TDEDIR/share/applications/kde|$TDEDIR/share/applications/tde|g"
-Message_Prefix
-echo "Updating references of kconf to tdeconf."
-find "$PROFILE_DIR"/share/config -type f -print0 2>/dev/null | \
-  xargs -r0 grep -ZIEl "([^a-zA-Z0-9]|^)kconf" | \
-  xargs -r0 sed -ri "s|([^a-zA-Z0-9]\|^)kconf|\1tdeconf|g"
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  Log "Updating *.desktop files."
+  find "$PROFILE_DIR" "$USER_DIR/.local" -name "*.desktop" -print0 2>/dev/null | \
+    xargs -r0 grep -ZIl "\(X-KDE-\|KDE;\)" | \
+    xargs -r0 sed -i -e "s|X-KDE-|X-TDE-|g" -e "s|KDE;|TDE;|g"
+fi
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  Log "Updating references of $TDEDIR/share/applications/kde to share/applications/tde."
+  # Exclude KMail mail files --- we don't want to touch those files.
+  find "$PROFILE_DIR" \
+       -path $PROFILE_DIR/share/apps/amarok/albumcovers -prune -o \
+       -path $PROFILE_DIR/share/apps/basket/baskets -prune -o \
+       -path $PROFILE_DIR/share/apps/juk/covers -prune -o \
+       -path $PROFILE_DIR/share/apps/kget/logs -prune -o \
+       -path $PROFILE_DIR/share/apps/kmail/autosave -prune -o \
+       -path $PROFILE_DIR/share/apps/kmail/dimap -prune -o \
+       -path $PROFILE_DIR/share/apps/kmail/imap -prune -o \
+       -path $PROFILE_DIR/share/apps/kmail/mail -prune -o \
+       -path $PROFILE_DIR/share/apps/kmail/search -prune -o \
+       -path $PROFILE_DIR/share/apps/knotes -prune -o \
+       -path $PROFILE_DIR/share/apps/kopete/logs -prune -o \
+       -type f -print0 2>/dev/null | \
+    xargs -r0 grep -ZIFl "$TDEDIR/share/applications/kde" | \
+    xargs -r0 sed -i "s|$TDEDIR/share/applications/kde|$TDEDIR/share/applications/tde|g"
+fi
+if [ "$R14_VERSION" -lt "201312160" ]; then
+  Log "Updating references of kconf to tdeconf."
+  find "$PROFILE_DIR"/share/config -type f -print0 2>/dev/null | \
+    xargs -r0 grep -ZIEl "([^a-zA-Z0-9]|^)kconf" | \
+    xargs -r0 sed -ri "s|([^a-zA-Z0-9]\|^)kconf|\1tdeconf|g"
+fi
 
 # Preserve keyboard shortcuts and input actions.
-if [ -r "$PROFILE_DIR/share/config/khotkeysrc" ]; then
-  Message_Prefix
-  echo "Updating user-defined keyboard shortcuts in khotkeysrc."
-  sed -i 's|CommandURL=kde-|CommandURL=tde-|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's|K Menu - kde-|TDE Menu - tde-|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's|Name=K Menu|Name=TDE Menu|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's|in KDE stands|in TDE stands|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's| use KDE| use TDE|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  Message_Prefix
-  echo "Updating some text strings in khotkeysrc."
-  sed -i 's|Go to KDE Website|Go to TDE Website|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's|www\.kde\.org|www\.trinitydesktop\.org|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's|KDE3\.1|TDE|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's|kde32b1|trinity2b1|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
-  sed -i 's|kde321|trinity21|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  if [ -r "$PROFILE_DIR/share/config/khotkeysrc" ]; then
+    Log "Updating user-defined keyboard shortcuts in khotkeysrc."
+    sed -i 's|CommandURL=kde-|CommandURL=tde-|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+    sed -i 's|K Menu - kde-|TDE Menu - tde-|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+    sed -i 's|Name=K Menu|Name=TDE Menu|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+    sed -i 's|in KDE stands|in TDE stands|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+    sed -i 's| use KDE| use TDE|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+    Log "Updating some text strings in khotkeysrc."
+    sed -i 's|Go to KDE Website|Go to TDE Website|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+    sed -i 's|www\.kde\.org|www\.trinitydesktop\.org|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+    sed -i 's|KDE3\.1|TDE|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+    sed -i 's|kde32b1|trinity2b1|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+    sed -i 's|kde321|trinity21|g' "$PROFILE_DIR/share/config/khotkeysrc" 2>/dev/null
+  fi
 fi
 # Fix the some of the same text strings in kglobalshortcutsrc.
-Message_Prefix
-echo "Updating some text strings in kglobalshortcutsrc."
-sed -i 's|Go to KDE Website|Go to TDE Website|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
-sed -i 's|www\.kde\.org|www\.trinitydesktop\.org|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
-sed -i 's|KDE3\.1|TDE|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  Log "Updating some text strings in kglobalshortcutsrc."
+  sed -i 's|Go to KDE Website|Go to TDE Website|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
+  sed -i 's|www\.kde\.org|www\.trinitydesktop\.org|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
+  sed -i 's|KDE3\.1|TDE|g' "$PROFILE_DIR/share/config/kglobalshortcutsrc" 2>/dev/null
+fi
 
 # Preserve app preferences.
-if [ -r $PROFILE_DIR/share/config/profilerc ]; then
-  Message_Prefix
-  echo "Updating user-defined app preferences in profilerc."
-  sed -i 's|Application=kde-|Application=tde-|g' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
-  sed -i 's|khtml|tdehtml|' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
-  sed -i 's|kfile_|tdefile_|' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
-  sed -i 's|kfilereplace|tdefilereplace|' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  if [ -r $PROFILE_DIR/share/config/profilerc ]; then
+    Log "Updating user-defined app preferences in profilerc."
+    sed -i 's|Application=kde-|Application=tde-|g' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
+    sed -i 's|khtml|tdehtml|' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
+    sed -i 's|kfile_|tdefile_|' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
+    sed -i 's|kfilereplace|tdefilereplace|' "$PROFILE_DIR/share/config/profilerc" 2>/dev/null
+  fi
 fi
 
 # Preserve kicker/panel icons.
-if [ -r $PROFILE_DIR/share/config/kickerrc ]; then
-  Message_Prefix
-  echo "Updating kicker/panel customizations in kickerrc."
-  if [ -r "$PROFILE_DIR/share/config/kickerrc" ]; then
-    sed -i 's|StorageId\[\$e\]=kde-|StorageId\[\$e\]=tde-|g' "$PROFILE_DIR/share/config/kickerrc" 2>/dev/null
-  else
-    Message_Prefix
-    echo "kickerrc does not exist."
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  if [ -r $PROFILE_DIR/share/config/kickerrc ]; then
+    Log "Updating kicker/panel customizations in kickerrc."
+    if [ -r "$PROFILE_DIR/share/config/kickerrc" ]; then
+      sed -i 's|StorageId\[\$e\]=kde-|StorageId\[\$e\]=tde-|g' "$PROFILE_DIR/share/config/kickerrc" 2>/dev/null
+    else
+      Log "kickerrc does not exist."
+    fi
   fi
 fi
-if [ -r $PROFILE_DIR/share/config/systemtray_panelappletrc ]; then
-  Message_Prefix
-  echo "Updating system tray icons in systemtray_panelappletrc."
-  sed -i -e "s|Krandr|Tderandr|g" \
-         -e "s|Kwallet|Tdewallet|g" \
-         -e "s|Knetworkmanager|Tdenetworkmanager|g" \
-         -e "s|Kradio|Tderadio|g" \
-      $PROFILE_DIR/share/config/systemtray_panelappletrc
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  if [ -r $PROFILE_DIR/share/config/systemtray_panelappletrc ]; then
+    Log "Updating system tray icons in systemtray_panelappletrc."
+    sed -i -e "s|Krandr|Tderandr|g" \
+           -e "s|Kwallet|Tdewallet|g" \
+           -e "s|Knetworkmanager|Tdenetworkmanager|g" \
+           -e "s|Kradio|Tderadio|g" \
+        $PROFILE_DIR/share/config/systemtray_panelappletrc
+  fi
 fi
 
-if [ -r $PROFILE_DIR/share/config/katerc ]; then
-  Message_Prefix
-  echo "Updating katerc."
-  sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/config/katerc" 2>/dev/null
-else
-  Message_Prefix
-  echo "$PROFILE_DIR/share/config/katerc does not exist."
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  if [ -r $PROFILE_DIR/share/config/katerc ]; then
+    Log "Updating katerc."
+    sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/config/katerc" 2>/dev/null
+  else
+    Log "$PROFILE_DIR/share/config/katerc does not exist."
+  fi
 fi
 
-if [ -r $PROFILE_DIR/share/config/kwriterc ]; then
-  Message_Prefix
-  echo "Updating kwriterc."
-  sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/config/kwriterc" 2>/dev/null
-else
-  Message_Prefix
-  echo "$PROFILE_DIR/share/config/kwriterc does not exist."
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  if [ -r $PROFILE_DIR/share/config/kwriterc ]; then
+    Log "Updating kwriterc."
+    sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/config/kwriterc" 2>/dev/null
+  else
+    Log "$PROFILE_DIR/share/config/kwriterc does not exist."
+  fi
 fi
 
-if [ -r $PROFILE_DIR/share/apps/ark/ark_part.rc ]; then
-  Message_Prefix
-  echo "Updating ark_part.rc."
-  sed -i 's|ark_kparts|ark_tdeparts|g' "$PROFILE_DIR/share/apps/ark/ark_part.rc" 2>/dev/null
-else
-  Message_Prefix
-  echo "$PROFILE_DIR/share/apps/ark/ark_part.rc does not exist."
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  if [ -r $PROFILE_DIR/share/apps/ark/ark_part.rc ]; then
+    Log "Updating ark_part.rc."
+    sed -i 's|ark_kparts|ark_tdeparts|g' "$PROFILE_DIR/share/apps/ark/ark_part.rc" 2>/dev/null
+  else
+    Log "$PROFILE_DIR/share/apps/ark/ark_part.rc does not exist."
+  fi
 fi
 
 # Preserve Quick Launch icons.
 # There should only be one configuration file, but old KDE3 remnant files might exist from users who
 # migrated from KDE3.
-Message_Prefix
-echo "Updating Quick Launch applet."
-if [ -r "$PROFILE_DIR/share/config/kickerrc" ]; then
-  QUICK_LAUNCH_CONFIG="`grep launcher_panelapplet $PROFILE_DIR/share/config/kickerrc | awk -F = '{print $2}'`"
-  if [ "$QUICK_LAUNCH_CONFIG" != "" ]; then
-    sed -i 's|,kde-|,tde-|g' "$PROFILE_DIR/share/config/$QUICK_LAUNCH_CONFIG" 2>/dev/null
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  Log "Updating Quick Launch applet."
+  if [ -r "$PROFILE_DIR/share/config/kickerrc" ]; then
+    QUICK_LAUNCH_CONFIG="`grep launcher_panelapplet $PROFILE_DIR/share/config/kickerrc | awk -F = '{print $2}'`"
+    if [ "$QUICK_LAUNCH_CONFIG" != "" ]; then
+      sed -i 's|,kde-|,tde-|g' "$PROFILE_DIR/share/config/$QUICK_LAUNCH_CONFIG" 2>/dev/null
+    else
+      Log "Quick Launch is not installed."
+    fi
   else
-    Message_Prefix
-    echo "Quick Launch is not installed."
+    Log "Quick Launch is not installed."
   fi
-else
-  Message_Prefix
-  echo "Quick Launch is not installed."
 fi
 
-Message_Prefix
-echo "Updating Quanta Plus plugins.rc."
-if [ -r $PROFILE_DIR/share/apps/quanta/plugins.rc ]; then
-  sed -i 's|FileName=kde3|FileName=trinity|g' "$PROFILE_DIR/share/apps/quanta/plugins.rc" 2>/dev/null
-else
-  Message_Prefix
-  echo "$PROFILE_DIR/share/apps/quanta/plugins.rc does not exist."
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  Log "Updating Quanta Plus plugins.rc."
+  if [ -r $PROFILE_DIR/share/apps/quanta/plugins.rc ]; then
+    sed -i 's|FileName=kde3|FileName=trinity|g' "$PROFILE_DIR/share/apps/quanta/plugins.rc" 2>/dev/null
+  else
+    Log "$PROFILE_DIR/share/apps/quanta/plugins.rc does not exist."
+  fi
 fi
 
 # Update sym link files in $USER_DIR/.trinity/Autostart.
-if [ -d "$PROFILE_DIR/Autostart" ]; then
-  ( cd "$PROFILE_DIR/Autostart"
-    Message_Prefix
-    echo "Updating Autostart files."
-    for i in `find . -type l`; do
-      LINK="`readlink $i`"
-      LINK_PATH="`dirname $LINK`"
-      LINK_NAME="`basename $LINK`"
-      if [ -n "`echo $LINK_PATH | grep \"$TDEDIR/share/applications/kde\"`" ]; then
-        NEW_LINK_PATH="`echo \"$LINK_PATH\" | sed 's|/share/applications/kde|/share/applications/tde|'`"
-      fi
-      if [ "$NEW_LINK_PATH" != "" ]; then
-        unlink $i
-        ln -sf "$NEW_LINK_PATH/$LINK_NAME" "$LINK_NAME"
-      fi
-      if [ "$?" != "0" ]; then
-        Message_Prefix
-        echo "There was an error with creating a new sym link for $LINK." 1>&2
-        KDEGLOBALS_KEY_VALUE="autostart"
-      fi
-    done
-  )
-else
-  Message_Prefix
-  echo "Autostart directory not found."
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  if [ -d "$PROFILE_DIR/Autostart" ]; then
+    ( cd "$PROFILE_DIR/Autostart"
+      Log "Updating Autostart files."
+      for i in `find . -type l`; do
+        LINK="`readlink $i`"
+        LINK_PATH="`dirname $LINK`"
+        LINK_NAME="`basename $LINK`"
+        if [ -n "`echo $LINK_PATH | grep \"$TDEDIR/share/applications/kde\"`" ]; then
+          NEW_LINK_PATH="`echo \"$LINK_PATH\" | sed 's|/share/applications/kde|/share/applications/tde|'`"
+        fi
+        if [ "$NEW_LINK_PATH" != "" ]; then
+          unlink $i
+          ln -sf "$NEW_LINK_PATH/$LINK_NAME" "$LINK_NAME"
+        fi
+        if [ "$?" != "0" ]; then
+          Log "There was an error with creating a new sym link for $LINK." 1>&2
+          KDEGLOBALS_KEY_VALUE="autostart"
+        fi
+      done
+    )
+  else
+    Log "Autostart directory not found."
+  fi
 fi
 
 # Update the user's customized menu.
-if [ -r $USER_DIR/.config/menus/applications-kmenuedit.menu ]; then
-  sed -i 's|<Filename>kde-|<Filename>tde-|g' $USER_DIR/.config/menus/applications-kmenuedit.menu
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  if [ -r $USER_DIR/.config/menus/applications-kmenuedit.menu ]; then
+    sed -i 's|<Filename>kde-|<Filename>tde-|g' $USER_DIR/.config/menus/applications-kmenuedit.menu
+  fi
 fi
 
 # Ensure all KDED services are accounted for in the user's profile. Any that are missing
 # are defaulted to not auto-loading (false). Refer to bug report 1210. This same test is
 # performed in the migratekde3 script, but notice the migratekde3 script uses the key of
 # X-KDE-Kded-autoload whereas X-TDE-Kded-autoload is used here.
-if [ -d $PROFILE_DIR/share/services/kded ]; then
-  if [ "`find $PROFILE_DIR/share/services/kded -name \"*.desktop\"`" != "" ]; then
-    Message_Prefix
-    echo "Validating KDED services."
-    for i in `/bin/ls -1 $PROFILE_DIR/share/services/kded/*.desktop`; do
-      SERVICE_NAME=`basename $i`
-      if [ ! -f $TDEDIR/share/services/kded/$SERVICE_NAME ]; then
-        $TDEDIR/bin/kwriteconfig --file $i --group "Desktop Entry" --key "X-TDE-Kded-autoload" --type bool "false"
-      fi
-    done
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  if [ -d $PROFILE_DIR/share/services/kded ]; then
+    if [ "`find $PROFILE_DIR/share/services/kded -name \"*.desktop\"`" != "" ]; then
+      Log "Validating KDED services."
+      for i in `/bin/ls -1 $PROFILE_DIR/share/services/kded/*.desktop`; do
+        SERVICE_NAME=`basename $i`
+        if [ ! -f $TDEDIR/share/services/kded/$SERVICE_NAME ]; then
+          $TDEDIR/bin/kwriteconfig --file $i --group "Desktop Entry" --key "X-TDE-Kded-autoload" --type bool "false"
+        fi
+      done
+    fi
   fi
 fi
 
 # Try to update sessions.
-sed -i -e 's|kwin|twin|g' \
-       -e 's|krandr|tderandr|g' \
-       -e 's|kwallet|tdewallet|g' \
-       -e 's|kradio|tderadio|g' \
-    $PROFILE_DIR/share/config/ksmserverrc
-find $PROFILE_DIR/share/config/session -name "kwin_*" -o -name "kwallet*" -o -name "kradio*" | \
-while read i; do
-  ir=$PROFILE_DIR/share/config/session/$(basename $i | \
-     sed -e "s|^kwin_|twin_|" \
-         -e "s|^kwallet|tdewallet|" \
-         -e "s|^kradio|tderadio|")
-  mv $i $ir
-done
+if [ "$R14_VERSION" -lt "201310050" ]; then
+  sed -i -e 's|kwin|twin|g' \
+         -e 's|krandr|tderandr|g' \
+         -e 's|kwallet|tdewallet|g' \
+         -e 's|kradio|tderadio|g' \
+      $PROFILE_DIR/share/config/ksmserverrc
+  find $PROFILE_DIR/share/config/session -name "kwin_*" -o -name "kwallet*" -o -name "kradio*" | \
+  while read i; do
+    ir=$PROFILE_DIR/share/config/session/$(basename $i | \
+       sed -e "s|^kwin_|twin_|" \
+           -e "s|^kwallet|tdewallet|" \
+           -e "s|^kradio|tderadio|")
+    mv $i $ir
+  done
+fi
 
-Message_Prefix
-echo "Renaming some configuration files and directories."
+Log "Renaming some configuration files and directories."
 # Note: The only rebranding that occured before starting the R14 branch was krita. All other
 # rebranding updates belong in this script.
 # Don't force renaming in case this script is used to update an existing Trinity profile. That is,
 # always check whether the new config file already exists.
-if [ ! -f $PROFILE_DIR/share/config/tdeprintrc ] && [ -f $PROFILE_DIR/share/config/kdeprintrc ] || [ -d $PROFILE_DIR/share/apps/kdeprint ]; then
-  Message_Prefix
-  echo "  kdeprint->tdeprint"
-  mv $PROFILE_DIR/share/config/kdeprintrc $PROFILE_DIR/share/config/tdeprintrc 2>/dev/null
-  mv $PROFILE_DIR/share/apps/kdeprint $PROFILE_DIR/share/apps/tdeprint 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tdesurc ] && [ -f $PROFILE_DIR/share/config/kdesurc ]; then
-  Message_Prefix
-  echo "  kdesu->tdesu"
-  mv $PROFILE_DIR/share/config/kdesurc $PROFILE_DIR/share/config/tdesurc 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tdeveloprc ] && [ -f $PROFILE_DIR/share/config/kdeveloprc ]; then
-  Message_Prefix
-  echo "  kdevelop->tdevelop"
-  mv $PROFILE_DIR/share/config/kdeveloprc $PROFILE_DIR/share/config/tdeveloprc 2>/dev/null
-fi
-# kwin/twin is the Trinity window manager. kwin4/twin4 is a game.
-if [ ! -f $PROFILE_DIR/share/config/twinrc ] && [ -f $PROFILE_DIR/share/config/kwinrc ] || [ -f $PROFILE_DIR/share/config/kwinrulesrc ]; then
-  # Do not include kwinrules_update because that is an auto-generated file.
-  Message_Prefix
-  echo "  kwin->twin"
-  mv $PROFILE_DIR/share/config/kwinrc $PROFILE_DIR/share/config/twinrc 2>/dev/null
-  mv $PROFILE_DIR/share/config/kwinrc.eventsrc $PROFILE_DIR/share/config/twinrc.eventsrc 2>/dev/null
-  mv $PROFILE_DIR/share/config/kwinrc $PROFILE_DIR/share/config/twinrc 2>/dev/null
-  mv $PROFILE_DIR/share/config/kwinrulesrc $PROFILE_DIR/share/config/twinrulesrc 2>/dev/null
-  mv $PROFILE_DIR/share/config/kwin_rules_dialogrc $PROFILE_DIR/share/config/twin_rules_dialogrc 2>/dev/null
-  sed -i 's|PluginLib=kwin_|PluginLib=twin_|' $PROFILE_DIR/share/config/twinrc
-  sed -i 's|PluginLib=kwin3_|PluginLib=twin3_|' $PROFILE_DIR/share/config/twinrc
-fi
-if [ ! -f $PROFILE_DIR/share/config/twin4rc ] && [ -f $PROFILE_DIR/share/config/kwin4rc ]; then
-  Message_Prefix
-  echo "  kwin4->twin4"
-  mv $PROFILE_DIR/share/config/kwin4rc $PROFILE_DIR/share/config/twin4rc 2>/dev/null
-fi
-if [ ! -d $PROFILE_DIR/share/config/tderesources ] && [ -d $PROFILE_DIR/share/config/kresources ]; then
-  Message_Prefix
-  echo "  kresources->tderesources"
-  mv $PROFILE_DIR/share/config/kresources $PROFILE_DIR/share/config/tderesources 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tdeab2tdeabcrc ] && [ -f $PROFILE_DIR/share/config/kab2kabcrc ]; then
-  Message_Prefix
-  echo "  kab2kabc->tdeab2tdeabc"
-  mv $PROFILE_DIR/share/config/kab2kabcrc $PROFILE_DIR/share/config/tdeab2tdeabcrc 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tdeconf_updaterc ] && [ -f $PROFILE_DIR/share/config/kconf_updaterc ]; then
-  Message_Prefix
-  echo "  kconf_update->tdeconf_update"
-  mv $PROFILE_DIR/share/config/kconf_updaterc $PROFILE_DIR/share/config/tdeconf_updaterc 2>/dev/null
-  mv $PROFILE_DIR/share/apps/kconf_update $PROFILE_DIR/share/apps/tdeconf_update 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tdeio_httprc ] && [ -f $PROFILE_DIR/share/config/kio_httprc ]; then
-  Message_Prefix
-  echo "  kio_http->tdeio_http"
-  mv $PROFILE_DIR/share/config/kio_httprc $PROFILE_DIR/share/config/tdeio_httprc 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tdeio_ftprc ] && [ -f $PROFILE_DIR/share/config/kio_ftprc ]; then
-  Message_Prefix
-  echo "  kio_ftp->tdeio_ftp"
-  mv $PROFILE_DIR/share/config/kio_ftprc $PROFILE_DIR/share/config/tdeio_ftprc 2>/dev/null
-  mv $PROFILE_DIR/share/apps/kio_ftp $PROFILE_DIR/share/apps/tdeio_ftp 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tdeioslaverc ] && [ -f $PROFILE_DIR/share/config/kioslaverc ]; then
-  Message_Prefix
-  echo "  kioslave->tdeioslave"
-  mv $PROFILE_DIR/share/config/kioslaverc $PROFILE_DIR/share/config/tdeioslaverc 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tdelaunchrc ] && [ -f $PROFILE_DIR/share/config/klaunchrc ]; then
-  Message_Prefix
-  echo "  klaunch->tdelaunch"
-  mv $PROFILE_DIR/share/config/klaunchrc $PROFILE_DIR/share/config/tdelaunchrc 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tderandrtrayrc ] && [ -f $PROFILE_DIR/share/config/krandrtrayrc ]; then
-  Message_Prefix
-  echo "  krandrtray->tderandrtray"
-  mv $PROFILE_DIR/share/config/krandrtrayrc $PROFILE_DIR/share/config/tderandrtrayrc 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tdewalletrc ] && [ -f $PROFILE_DIR/share/config/kwalletrc ]; then
-  Message_Prefix
-  echo "  kwallet->tdewallet"
-  mv $PROFILE_DIR/share/config/kwalletrc $PROFILE_DIR/share/config/tdewalletrc 2>/dev/null
-  mv $PROFILE_DIR/share/apps/kwallet $PROFILE_DIR/share/apps/tdewallet 2>/dev/null
-fi
-if [ ! -d $PROFILE_DIR/share/apps/tdefile ] && [ -d $PROFILE_DIR/share/apps/kfile ]; then
-  Message_Prefix
-  echo "  kfile->tdefile"
-  mv $PROFILE_DIR/share/apps/kfile $PROFILE_DIR/share/apps/tdefile 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tdehtmlrc ] && [ -f $PROFILE_DIR/share/config/khtmlrc ]; then
-  Message_Prefix
-  echo "  khtml->tdehtml"
-  mv $PROFILE_DIR/share/config/khtmlrc $PROFILE_DIR/share/config/tdehtmlrc 2>/dev/null
-  mv $PROFILE_DIR/share/apps/khtml $PROFILE_DIR/share/apps/tdehtml 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tdeio_camerarc ] && [ -f $PROFILE_DIR/share/config/kio_camerarc ]; then
-  Message_Prefix
-  echo "  kio_camera->tdeio_camera"
-  mv $PROFILE_DIR/share/config/kio_camerarc $PROFILE_DIR/share/config/tdeio_camerarc 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tdeio_thumbnailrc ] && [ -f $PROFILE_DIR/share/config/kio_thumbnailrc ]; then
-  Message_Prefix
-  echo "  kio_thumbnail->tdeio_thumbnail"
-  mv $PROFILE_DIR/share/config/kio_thumbnailrc $PROFILE_DIR/share/config/tdeio_thumbnailrc 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tdeio_locaterc ] && [ -f $PROFILE_DIR/share/config/kio_locaterc ]; then
-  Message_Prefix
-  echo "  kio_locate->tdeio_locate"
-  mv $PROFILE_DIR/share/config/kio_locaterc $PROFILE_DIR/share/config/tdeio_locaterc 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tdeio_aptrc ] && [ -f $PROFILE_DIR/share/config/kio_aptrc ]; then
-  Message_Prefix
-  echo "  kio_apt->tdeio_apt"
-  mv $PROFILE_DIR/share/config/kio_aptrc $PROFILE_DIR/share/config/tdeio_aptrc 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tderadiorc ] && [ -f $PROFILE_DIR/share/config/kradiorc ]; then
-  Message_Prefix
-  echo "  kradio->tderadio"
-  mv $PROFILE_DIR/share/config/kradiorc $PROFILE_DIR/share/config/tderadiorc 2>/dev/null
-  mv $PROFILE_DIR/share/apps/kradio $PROFILE_DIR/share/apps/tderadio 2>/dev/null
-fi
-if [ ! -f $HOME/.tderc ] && [ -f $HOME/.kderc ]; then
-  # Do not blindly move $HOME/.kderc because that file might be from KDE4.
-  # The first test is from a Trinity .kderc and the second test is from a KDE4 .kderc.
-  if [ "`grep selectBackground $HOME/.kderc`" != "" ] && [ "`grep smallestReadableFont $HOME/.kderc`" = "" ]; then
-    # Both tests pass. Probably a Trinity .kderc.
-    Message_Prefix
-    echo "  .kderc->.tderc"
-    mv $HOME/.kderc $HOME/.tderc 2>/dev/null
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  if [ ! -f $PROFILE_DIR/share/config/tdeprintrc ] && [ -f $PROFILE_DIR/share/config/kdeprintrc ] || [ -d $PROFILE_DIR/share/apps/kdeprint ]; then
+    Log "  kdeprint->tdeprint"
+    mv $PROFILE_DIR/share/config/kdeprintrc $PROFILE_DIR/share/config/tdeprintrc 2>/dev/null
+    mv $PROFILE_DIR/share/apps/kdeprint $PROFILE_DIR/share/apps/tdeprint 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdesurc ] && [ -f $PROFILE_DIR/share/config/kdesurc ]; then
+    Log "  kdesu->tdesu"
+    mv $PROFILE_DIR/share/config/kdesurc $PROFILE_DIR/share/config/tdesurc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdeveloprc ] && [ -f $PROFILE_DIR/share/config/kdeveloprc ]; then
+    Log "  kdevelop->tdevelop"
+    mv $PROFILE_DIR/share/config/kdeveloprc $PROFILE_DIR/share/config/tdeveloprc 2>/dev/null
   fi
 fi
-if [ ! -f $PROFILE_DIR/share/apps/tdestyle ] && [ -f $PROFILE_DIR/share/apps/kstyle ]; then
-  Message_Prefix
-  echo "  kstyle->tdestyle"
-  mv $PROFILE_DIR/share/apps/kstyle $PROFILE_DIR/share/apps/tdestyle 2>/dev/null
+# kwin/twin is the Trinity window manager. kwin4/twin4 is a game.
+if [ "$R14_VERSION" -lt "201310190" ]; then
+  if [ ! -f $PROFILE_DIR/share/config/twinrc ] && [ -f $PROFILE_DIR/share/config/kwinrc ] || [ -f $PROFILE_DIR/share/config/kwinrulesrc ]; then
+    # Do not include kwinrules_update because that is an auto-generated file.
+    Log "  kwin->twin"
+    mv $PROFILE_DIR/share/config/kwinrc $PROFILE_DIR/share/config/twinrc 2>/dev/null
+    mv $PROFILE_DIR/share/config/kwinrc.eventsrc $PROFILE_DIR/share/config/twinrc.eventsrc 2>/dev/null
+    mv $PROFILE_DIR/share/config/kwinrc $PROFILE_DIR/share/config/twinrc 2>/dev/null
+    mv $PROFILE_DIR/share/config/kwinrulesrc $PROFILE_DIR/share/config/twinrulesrc 2>/dev/null
+    mv $PROFILE_DIR/share/config/kwin_rules_dialogrc $PROFILE_DIR/share/config/twin_rules_dialogrc 2>/dev/null
+    sed -i 's|PluginLib=kwin_|PluginLib=twin_|' $PROFILE_DIR/share/config/twinrc
+    sed -i 's|PluginLib=kwin3_|PluginLib=twin3_|' $PROFILE_DIR/share/config/twinrc
+  fi
 fi
-# Copy the following two rc files rather than move because the older versions are needed for HAL systems.
-if [ ! -f $PROFILE_DIR/share/config/tdenetworkmanagerrc ] && [ -f $PROFILE_DIR/share/config/knetworkmanagerrc ]; then
-  Message_Prefix
-  echo "  knetworkmanager->tdenetworkmanager"
-  cp -a $PROFILE_DIR/share/config/knetworkmanagerrc $PROFILE_DIR/share/config/tdenetworkmanagerrc 2>/dev/null
-fi
-if [ ! -f $PROFILE_DIR/share/config/tdepowersaverc ] && [ -f $PROFILE_DIR/share/config/kpowersaverc ]; then
-  Message_Prefix
-  echo "  kpowersave->tdepowersave"
-  cp -a $PROFILE_DIR/share/config/kpowersaverc $PROFILE_DIR/share/config/tdepowersaverc 2>/dev/null
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  if [ ! -f $PROFILE_DIR/share/config/twin4rc ] && [ -f $PROFILE_DIR/share/config/kwin4rc ]; then
+    Log "  kwin4->twin4"
+    mv $PROFILE_DIR/share/config/kwin4rc $PROFILE_DIR/share/config/twin4rc 2>/dev/null
+  fi
+  if [ ! -d $PROFILE_DIR/share/config/tderesources ] && [ -d $PROFILE_DIR/share/config/kresources ]; then
+    Log "  kresources->tderesources"
+    mv $PROFILE_DIR/share/config/kresources $PROFILE_DIR/share/config/tderesources 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdeab2tdeabcrc ] && [ -f $PROFILE_DIR/share/config/kab2kabcrc ]; then
+    Log "  kab2kabc->tdeab2tdeabc"
+    mv $PROFILE_DIR/share/config/kab2kabcrc $PROFILE_DIR/share/config/tdeab2tdeabcrc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdeconf_updaterc ] && [ -f $PROFILE_DIR/share/config/kconf_updaterc ]; then
+    Log "  kconf_update->tdeconf_update"
+    mv $PROFILE_DIR/share/config/kconf_updaterc $PROFILE_DIR/share/config/tdeconf_updaterc 2>/dev/null
+    mv $PROFILE_DIR/share/apps/kconf_update $PROFILE_DIR/share/apps/tdeconf_update 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdeio_httprc ] && [ -f $PROFILE_DIR/share/config/kio_httprc ]; then
+    Log "  kio_http->tdeio_http"
+    mv $PROFILE_DIR/share/config/kio_httprc $PROFILE_DIR/share/config/tdeio_httprc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdeio_ftprc ] && [ -f $PROFILE_DIR/share/config/kio_ftprc ]; then
+    Log "  kio_ftp->tdeio_ftp"
+    mv $PROFILE_DIR/share/config/kio_ftprc $PROFILE_DIR/share/config/tdeio_ftprc 2>/dev/null
+    mv $PROFILE_DIR/share/apps/kio_ftp $PROFILE_DIR/share/apps/tdeio_ftp 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdeioslaverc ] && [ -f $PROFILE_DIR/share/config/kioslaverc ]; then
+    Log "  kioslave->tdeioslave"
+    mv $PROFILE_DIR/share/config/kioslaverc $PROFILE_DIR/share/config/tdeioslaverc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdelaunchrc ] && [ -f $PROFILE_DIR/share/config/klaunchrc ]; then
+    Log "  klaunch->tdelaunch"
+    mv $PROFILE_DIR/share/config/klaunchrc $PROFILE_DIR/share/config/tdelaunchrc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tderandrtrayrc ] && [ -f $PROFILE_DIR/share/config/krandrtrayrc ]; then
+    Log "  krandrtray->tderandrtray"
+    mv $PROFILE_DIR/share/config/krandrtrayrc $PROFILE_DIR/share/config/tderandrtrayrc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdewalletrc ] && [ -f $PROFILE_DIR/share/config/kwalletrc ]; then
+    Log "  kwallet->tdewallet"
+    mv $PROFILE_DIR/share/config/kwalletrc $PROFILE_DIR/share/config/tdewalletrc 2>/dev/null
+    mv $PROFILE_DIR/share/apps/kwallet $PROFILE_DIR/share/apps/tdewallet 2>/dev/null
+  fi
+  if [ ! -d $PROFILE_DIR/share/apps/tdefile ] && [ -d $PROFILE_DIR/share/apps/kfile ]; then
+    Log "  kfile->tdefile"
+    mv $PROFILE_DIR/share/apps/kfile $PROFILE_DIR/share/apps/tdefile 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdehtmlrc ] && [ -f $PROFILE_DIR/share/config/khtmlrc ]; then
+    Log "  khtml->tdehtml"
+    mv $PROFILE_DIR/share/config/khtmlrc $PROFILE_DIR/share/config/tdehtmlrc 2>/dev/null
+    mv $PROFILE_DIR/share/apps/khtml $PROFILE_DIR/share/apps/tdehtml 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdeio_camerarc ] && [ -f $PROFILE_DIR/share/config/kio_camerarc ]; then
+    Log "  kio_camera->tdeio_camera"
+    mv $PROFILE_DIR/share/config/kio_camerarc $PROFILE_DIR/share/config/tdeio_camerarc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdeio_thumbnailrc ] && [ -f $PROFILE_DIR/share/config/kio_thumbnailrc ]; then
+    Log "  kio_thumbnail->tdeio_thumbnail"
+    mv $PROFILE_DIR/share/config/kio_thumbnailrc $PROFILE_DIR/share/config/tdeio_thumbnailrc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdeio_locaterc ] && [ -f $PROFILE_DIR/share/config/kio_locaterc ]; then
+    Log "  kio_locate->tdeio_locate"
+    mv $PROFILE_DIR/share/config/kio_locaterc $PROFILE_DIR/share/config/tdeio_locaterc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdeio_aptrc ] && [ -f $PROFILE_DIR/share/config/kio_aptrc ]; then
+    Log "  kio_apt->tdeio_apt"
+    mv $PROFILE_DIR/share/config/kio_aptrc $PROFILE_DIR/share/config/tdeio_aptrc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tderadiorc ] && [ -f $PROFILE_DIR/share/config/kradiorc ]; then
+    Log "  kradio->tderadio"
+    mv $PROFILE_DIR/share/config/kradiorc $PROFILE_DIR/share/config/tderadiorc 2>/dev/null
+    mv $PROFILE_DIR/share/apps/kradio $PROFILE_DIR/share/apps/tderadio 2>/dev/null
+  fi
+  if [ ! -f $HOME/.tderc ] && [ -f $HOME/.kderc ]; then
+    # Do not blindly move $HOME/.kderc because that file might be from KDE4.
+    # The first test is from a Trinity .kderc and the second test is from a KDE4 .kderc.
+    if [ "`grep selectBackground $HOME/.kderc`" != "" ] && [ "`grep smallestReadableFont $HOME/.kderc`" = "" ]; then
+      # Both tests pass. Probably a Trinity .kderc.
+      Log "  .kderc->.tderc"
+      mv $HOME/.kderc $HOME/.tderc 2>/dev/null
+    fi
+  fi
+  if [ ! -f $PROFILE_DIR/share/apps/tdestyle ] && [ -f $PROFILE_DIR/share/apps/kstyle ]; then
+    Log "  kstyle->tdestyle"
+    mv $PROFILE_DIR/share/apps/kstyle $PROFILE_DIR/share/apps/tdestyle 2>/dev/null
+  fi
+  # Copy the following two rc files rather than move because the older versions are needed for HAL systems.
+  if [ ! -f $PROFILE_DIR/share/config/tdenetworkmanagerrc ] && [ -f $PROFILE_DIR/share/config/knetworkmanagerrc ]; then
+    Log "  knetworkmanager->tdenetworkmanager"
+    cp -a $PROFILE_DIR/share/config/knetworkmanagerrc $PROFILE_DIR/share/config/tdenetworkmanagerrc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdepowersaverc ] && [ -f $PROFILE_DIR/share/config/kpowersaverc ]; then
+    Log "  kpowersave->tdepowersave"
+    cp -a $PROFILE_DIR/share/config/kpowersaverc $PROFILE_DIR/share/config/tdepowersaverc 2>/dev/null
+  fi
 fi
 
 # Disable some features new to R14, otherwise users will see an unfamiliar desktop.
-if [ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "ShowDeepButtons" --default false) = "false" ]; then
-  $TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "ShowDeepButtons" --type bool "false"
-fi
-if [ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "UseResizeHandle" --default false) = "false" ]; then
-  $TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "UseResizeHandle" --type bool "false"
-fi
-if [ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "MenubarPanelBlurred" --default false) = "false" ]; then
-  $TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "MenubarPanelBlurred" --type bool "false"
+if [ "$R14_VERSION" -lt "201309150" ]; then
+  if [ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "ShowDeepButtons" --default false) = "false" ]; then
+    $TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "ShowDeepButtons" --type bool "false"
+  fi
+  if [ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "UseResizeHandle" --default false) = "false" ]; then
+    $TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "UseResizeHandle" --type bool "false"
+  fi
+  if [ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "MenubarPanelBlurred" --default false) = "false" ]; then
+    $TDEDIR/bin/kwriteconfig --file kickerrc --group "General" --key "MenubarPanelBlurred" --type bool "false"
+  fi
 fi
 
 # Perform some nominal update validations.
@@ -823,8 +801,7 @@ if [ "$R14_UPDATE_TEST1" = "" ] && [ "$R14_UPDATE_TEST2" = "" ] && [ "$R14_UPDAT
   && [ "$R14_UPDATE_TEST7" = "" ] && [ "$R14_UPDATE_TEST8" = "" ] && [ "$R14_UPDATE_TEST9" = "" ]; then
   $TDEDIR/bin/kwriteconfig --file "$PROFILE_DIR/share/config/kdeglobals" --group "R14 XDG Updates" --key Updated --type bool "true"
   $TDEDIR/bin/kwriteconfig --file "$PROFILE_DIR/share/config/kdeglobals" --group "R14 XDG Updates" --key Version "$SCRIPT_VERSION"
-  Message_Prefix
-  echo "R14 XDG updates completed successfully."
+  Log "R14 XDG updates completed successfully."
 else
   # Don't use the --type parameter here because the value no longer is boolean.
   $TDEDIR/bin/kwriteconfig --file "$PROFILE_DIR/share/config/kdeglobals" --group "R14 XDG Updates" --key Updated "$KDEGLOBALS_KEY_VALUE"
