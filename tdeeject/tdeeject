@@ -37,7 +37,7 @@ if test -n "$udi"; then
 fi
 
 # Checking for stuff in the PATH is ugly with sh.
-# I guess this is the reason for making this a kde app...
+# I guess this is the reason for making this a TDE app...
 OS=`uname -s`
 case "$OS" in
   OpenBSD)
@@ -58,6 +58,6 @@ if test $? -eq 0; then
   #dcop kdesktop default refreshIcons
   exit 0
 elif test $quiet -eq 0; then
-  kdialog --title "KDE Eject" --error "Eject $device failed!"
+  kdialog --title "TDE Eject" --error "Eject $device failed!"
 fi
 exit 1

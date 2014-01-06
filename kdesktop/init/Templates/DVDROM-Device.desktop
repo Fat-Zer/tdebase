@@ -89,4 +89,4 @@ Name[xh]=Khuphela ngaphandle
 Name[zh_CN]=弹出
 Name[zh_TW]=退出
 Name[zu]=Khipha
-Exec=kdeeject %v
+Exec=tdeeject %v

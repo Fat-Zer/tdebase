@@ -9,4 +9,4 @@
 #
 #################################################
 
-install( PROGRAMS kdeeject DESTINATION ${BIN_INSTALL_DIR} )
+install( PROGRAMS tdeeject DESTINATION ${BIN_INSTALL_DIR} )

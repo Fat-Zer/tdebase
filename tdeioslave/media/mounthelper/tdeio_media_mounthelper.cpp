@@ -198,9 +198,9 @@ void MountHelper::invokeEject(const TQString &device, bool quiet)
 		}
 	}
 
-	// Then fall back to kdeeject if needed
+	// Then fall back to tdeeject if needed
 	TDEProcess *proc = new TDEProcess(TQT_TQOBJECT(this));
-	*proc << "kdeeject";
+	*proc << "tdeeject";
 	if (quiet)
 	{
 		*proc << "-q";
@@ -271,7 +271,7 @@ static TDECmdLineOptions options[] =
 	{ "d", I18N_NOOP("Decrypt given URL"), 0 },
 	{ "u", I18N_NOOP("Unmount given URL"), 0 },
 	{ "m", I18N_NOOP("Mount given URL (default)"), 0 },
-	{ "e", I18N_NOOP("Eject given URL via kdeeject"), 0},
+	{ "e", I18N_NOOP("Eject given URL via tdeeject"), 0},
 	{ "s", I18N_NOOP("Unmount and Eject given URL (necessary for some USB devices)"), 0},
 	{"!+URL",   I18N_NOOP("media:/ URL to mount/unmount/eject/remove"), 0 },
 	TDECmdLineLastOption
