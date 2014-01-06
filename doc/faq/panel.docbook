@@ -43,7 +43,7 @@ select Menus, then inside the TDE Menu grouping, select the TDE Menu button icon
 <answer>
 <para>
 User modifications to the &kmenu; are stored in
-<filename>$<envar>HOME</envar>/.config/menus/applications-kmenuedit.menu</filename>.
+<filename>$<envar>HOME</envar>/.config/menus/applications-tdemenuedit.menu</filename>.
 Try moving this file out of the way and then issuing the
 command <userinput><command>tdebuildsycoca</command>
 <option>--noincremental</option></userinput>. This should restore you to the

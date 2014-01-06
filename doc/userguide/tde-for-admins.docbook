@@ -1848,7 +1848,7 @@ CheckSycoca=false
 
 <para>&kmenuedit; is aimed at a single user setup. Changes to menu
 structure are saved to
-<filename>~/.config/menus/applications-kmenuedit.menu</filename>,
+<filename>~/.config/menus/applications-tdemenuedit.menu</filename>,
 changes to applications are saved in <filename
 class="directory">~/.local/share/applications/</filename> and changes
 to sub-menus (icon, name) are saved in <filename

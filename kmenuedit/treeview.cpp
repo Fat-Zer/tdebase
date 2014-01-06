@@ -181,7 +181,7 @@ TreeView::TreeView( bool controlCenter, TDEActionCollection *ac, TQWidget *paren
     if (m_ac->action("newsep"))
         connect(m_ac->action("newsep"), TQT_SIGNAL(activated()), TQT_SLOT(newsep()));
 
-    m_menuFile = new MenuFile( locateLocal("xdgconf-menu", "applications-kmenuedit.menu"));
+    m_menuFile = new MenuFile( locateLocal("xdgconf-menu", "applications-tdemenuedit.menu"));
     m_rootFolder = new MenuFolderInfo;
     m_separator = new MenuSeparatorInfo;
     m_drag = 0;

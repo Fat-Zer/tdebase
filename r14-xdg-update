@@ -68,7 +68,7 @@ Log () {
 # Main script:
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201401050
+SCRIPT_VERSION=201401051
 
 # Allow forced execution of this script regardless of the kdeglobals setting
 # and allow passing a user home directory as a positional parameter.
@@ -281,7 +281,7 @@ if [ "$R14_VERSION" -lt "201309150" ]; then
   fi
   # Remember that this script may be run more than once. The new directory
   # might already exist.
-  if [ -n "$CACHE_DIR" ] && [ -d "$CACHE_DIR" ]; then
+  if [ "$CACHE_DIR" != "" ] && [ -d "$CACHE_DIR" ]; then
     # Flush the obsolete ksycoca cache files.
     rm -f ${CACHE_DIR}/ksycoca* 2>/dev/null
     # Flush the tdesycoca cache files. This is safe at any time.
@@ -309,12 +309,6 @@ if [ "$R14_VERSION" -lt "201309150" ]; then
   fi
 fi
 
-if [ "$R14_VERSION" -lt "201309150" ]; then
-  Log "Updating *.desktop files."
-  find "$PROFILE_DIR" "$USER_DIR/.local" -name "*.desktop" -print0 2>/dev/null | \
-    xargs -r0 grep -ZIl "\(X-KDE-\|KDE;\)" | \
-    xargs -r0 sed -i -e "s|X-KDE-|X-TDE-|g" -e "s|KDE;|TDE;|g"
-fi
 if [ "$R14_VERSION" -lt "201309150" ]; then
   Log "Updating references of $TDEDIR/share/applications/kde to share/applications/tde."
   # Exclude KMail mail files --- we don't want to touch those files.
@@ -461,7 +455,7 @@ if [ "$R14_VERSION" -lt "201309150" ]; then
         LINK="`readlink $i`"
         LINK_PATH="`dirname $LINK`"
         LINK_NAME="`basename $LINK`"
-        if [ -n "`echo $LINK_PATH | grep \"$TDEDIR/share/applications/kde\"`" ]; then
+        if [ "`echo $LINK_PATH | grep \"$TDEDIR/share/applications/kde\"`" != "" ]; then
           NEW_LINK_PATH="`echo \"$LINK_PATH\" | sed 's|/share/applications/kde|/share/applications/tde|'`"
         fi
         if [ "$NEW_LINK_PATH" != "" ]; then
@@ -476,13 +470,6 @@ if [ "$R14_VERSION" -lt "201309150" ]; then
     )
   else
     Log "Autostart directory not found."
-  fi
-fi
-
-# Update the user's customized menu.
-if [ "$R14_VERSION" -lt "201309150" ]; then
-  if [ -r $USER_DIR/.config/menus/applications-kmenuedit.menu ]; then
-    sed -i 's|<Filename>kde-|<Filename>tde-|g' $USER_DIR/.config/menus/applications-kmenuedit.menu
   fi
 fi
 
@@ -506,19 +493,24 @@ fi
 
 # Try to update sessions.
 if [ "$R14_VERSION" -lt "201310050" ]; then
-  sed -i -e 's|kwin|twin|g' \
-         -e 's|krandr|tderandr|g' \
-         -e 's|kwallet|tdewallet|g' \
-         -e 's|kradio|tderadio|g' \
-      $PROFILE_DIR/share/config/ksmserverrc
-  find $PROFILE_DIR/share/config/session -name "kwin_*" -o -name "kwallet*" -o -name "kradio*" | \
-  while read i; do
-    ir=$PROFILE_DIR/share/config/session/$(basename $i | \
-       sed -e "s|^kwin_|twin_|" \
-           -e "s|^kwallet|tdewallet|" \
-           -e "s|^kradio|tderadio|")
-    mv $i $ir
-  done
+  Log "Update sessions."
+  if [ -f $PROFILE_DIR/share/config/ksmserverrc ]; then
+    sed -i -e 's|kwin|twin|g' \
+           -e 's|krandr|tderandr|g' \
+           -e 's|kwallet|tdewallet|g' \
+           -e 's|kradio|tderadio|g' \
+        $PROFILE_DIR/share/config/ksmserverrc
+  fi
+  if [ -d $PROFILE_DIR/share/config/session ]; then
+    find $PROFILE_DIR/share/config/session -name "kwin_*" -o -name "kwallet*" -o -name "kradio*" | \
+    while read i; do
+      ir=$PROFILE_DIR/share/config/session/$(basename $i | \
+         sed -e "s|^kwin_|twin_|" \
+             -e "s|^kwallet|tdewallet|" \
+             -e "s|^kradio|tderadio|")
+      mv $i $ir
+    done
+  fi
 fi
 
 Log "Renaming some configuration files and directories."
@@ -659,6 +651,87 @@ if [ "$R14_VERSION" -lt "201401050" ]; then
   fi
 fi
 
+if [ "$R14_VERSION" -lt "201401040" ]; then
+  # Rename the user's custom launcher menu.
+  # Before the release of R14.0.0, custom user menus had the same file name as KDE4:
+  # applications-kmenuedit.menu. Under that condition, there is a possibility the user
+  # was using the same custom menu for both Trinity and KDE4. To distinguish whether a
+  # custom menu is TDE or KDE4, search the menu for TDE-specific and KDE4-specific menu
+  # items. There is a possibility the user has customized a common menu to include or
+  # exclude all of these items. Later we will copy any existing custom menu.
+  # There are three environments to inherit:
+  # KDE4
+  # KDE/TDE 3.5.x
+  # TDE pre R14
+  if [ -f $USER_DIR/.config/menus/applications-tdemenuedit.menu ]; then
+    CUSTOM_MENU="TDE"
+  elif [ -f $USER_DIR/.config/menus/applications-kmenuedit.menu ]; then
+    if [ "`grep \"kde4-kfind.desktop\" $USER_DIR/.config/menus/applications-kmenuedit.menu`" ] || \
+       [ "`grep \"kde4-Help.desktop\" $USER_DIR/.config/menus/applications-kmenuedit.menu`" ]; then
+       CUSTOM_MENU="KDE4"
+    elif [ "`grep \"kde-kfind.desktop\" $USER_DIR/.config/menus/applications-kmenuedit.menu`" ] || \
+       [ "`grep \"kde-Help.desktop\" $USER_DIR/.config/menus/applications-kmenuedit.menu`" ]; then
+       # KDE/TDE 3.5.x
+       CUSTOM_MENU="KDE"
+    elif [ "`grep \"tde-Kfind.desktop\" $USER_DIR/.config/menus/applications-kmenuedit.menu`" ] || \
+       [ "`grep \"tde-Help.desktop\" $USER_DIR/.config/menus/applications-kmenuedit.menu`" ] || \
+       [ "`grep \"tde-Home.desktop\" $USER_DIR/.config/menus/applications-kmenuedit.menu`" ]; then
+       CUSTOM_MENU="TDE"
+    fi
+
+    # Now we know which type of environment. Copy the existing menu.
+    Log "  kmenuedit.menu($CUSTOM_MENU)->tdemenuedit.menu"
+    # Note: at this point the layout of a renamed KDE4 custom menu will not be the same as Trinity.
+    # We'll fix that later.
+    cp $USER_DIR/.config/menus/applications-kmenuedit.menu $USER_DIR/.config/menus/applications-tdemenuedit.menu 2>/dev/null
+  fi
+fi
+
+if [ "$R14_VERSION" -lt "201401040" ]; then
+  # Update the user's custom menu. Any custom menu should have been renamed a few lines above.
+  if [ -r $USER_DIR/.config/menus/applications-tdemenuedit.menu ] && [ "$CUSTOM_MENU" != "TDE" ]; then
+    # KDE/TDE 3.5.x or converted KDE4. No need to update a pre R14 menu.
+    sed -i 's|<Filename>kde-|<Filename>tde-|g' $USER_DIR/.config/menus/applications-tdemenuedit.menu
+  fi
+fi
+
+if [ "$R14_VERSION" -lt "201401040" ]; then
+  Log "Updating profile *.desktop files."
+  # First update *.desktop files in the Trinity profile folder. Updating these files is safe.
+  find "$PROFILE_DIR" -name "*.desktop" -print0 2>/dev/null | \
+    xargs -r0 grep -ZIl "\(X-KDE-\|KDE;\)" | \
+    xargs -r0 sed -i -e "s|X-KDE-|X-TDE-|g" -e "s|KDE;|TDE;|g" -e "s|kdesu|tdesu|g"
+  # Next update *.desktop files in $USER_DIR/.local.
+  # Any existing applications-kmenuedit.menu has been copied to applications-tdemenuedit.menu.
+  if [ -f "$USER_DIR/.config/menus/applications-tdemenuedit.menu" ] && [ "$CUSTOM_MENU" != "TDE" ]; then
+    # KDE/TDE 3.5.x or converted KDE4. No need to update a pre R14 menu.
+    Log "Updating ~/.local *.desktop files."
+    find "$USER_DIR/.local" -name "*.desktop" -print0 2>/dev/null | \
+      xargs -r0 grep -ZIl "\(X-KDE-\|KDE;\)" | \
+      xargs -r0 sed -i -e "s|X-KDE-|X-TDE-|g" -e "s|KDE;|TDE;|g" -e "s|kdesu|tdesu|g"
+    # When the custom menu is from KDE/TDE 3.5.x or pre R14, then we are done.
+    # When the custom menu is from KDE4, we have additional work to perform because the KDE4
+    # layout structure is different from the Trinity layout.
+    # In limited tests the following menu items are out of place when migrating a KDE4 menu:
+    # Edutainment (because KDE4 uses 'Education' rather than 'Edutainment'
+    # Find Files/Folders (because of kde4- prefix rather than tde- prefix)
+    # Help (because of kde4- prefix rather than tde- prefix)
+    # Home - Personal Files (because of kde4- prefix rather than tde- prefix)
+    # All four items are placed at the top of the migrated menu.
+    # The following should fix the layout to conform to Trinity.
+    if [ "$CUSTOM_MENU" = "KDE4" ]; then
+      Log "Repairing menu layout structure."
+      sed -i -e "s|Education|Edutainment|" -e "s|kde4-|tde-|g" $USER_DIR/.config/menus/applications-tdemenuedit.menu
+      # The following must be performed in this order.
+      sed -i "s|tde-Help.desktop|tde-Home.desktop|" $USER_DIR/.config/menus/applications-tdemenuedit.menu
+      sed -i "s|tde-kfind.desktop|tde-Help.desktop|" $USER_DIR/.config/menus/applications-tdemenuedit.menu
+      sed -i "s|<Menuname>Applications</Menuname>|<Filename>tde-Kfind.desktop</Filename>|" $USER_DIR/.config/menus/applications-tdemenuedit.menu
+      # Also need to fix Lost+Found? Lost+Found is not in alphabetical order
+      # when opening the menu editor against the converted menu.
+    fi
+  fi
+fi
+
 # Disable some features new to R14, otherwise users will see an unfamiliar desktop.
 if [ "$R14_VERSION" -lt "201309150" ]; then
   if [ $($TDEDIR/bin/kreadconfig --file kickerrc --group "General" --key "ShowDeepButtons" --default false) = "false" ]; then
@@ -674,7 +747,7 @@ fi
 
 # Perform some nominal update validations.
 # First clean house from any previous failures.
-if [ -z "$CACHE_DIR" ]; then
+if [ "$CACHE_DIR" = "" ]; then
   CACHE_DIR=$PROFILE_DIR
 fi
 if [ -d "$CACHE_DIR" ]; then
@@ -792,11 +865,11 @@ if [ "$QUICK_LAUNCH_CONFIG" != "" ]; then
 fi
 TEST_NUM="9"
 R14_UPDATE_TEST9=""
-if [ -r $USER_DIR/.config/menus/applications-kmenuedit.menu ]; then
-  grep "<Filename>kde-" "$USER_DIR/.config/menus/applications-kmenuedit.menu" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+if [ -r $USER_DIR/.config/menus/applications-tdemenuedit.menu ]; then
+  grep "<Filename>kde-" "$USER_DIR/.config/menus/applications-tdemenuedit.menu" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
   if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
     R14_UPDATE_TEST9="failed"
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check applications-kmenuedit.menu for '<Filename>kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check applications-tdemenuedit.menu for '<Filename>kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
     Validation_Failure
   else
     rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
@@ -835,4 +908,5 @@ unset KDEGLOBALS_KEY_VALUE
 unset TEST_NUM
 unset SCRIPT_NAME
 unset SCRIPT_VERSION
+unset CUSTOM_MENU
 exit 0

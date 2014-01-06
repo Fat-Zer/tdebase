@@ -280,6 +280,11 @@ test -n "$TDEHOME" && tdehome=`echo "$TDEHOME" | sed "s,^~/,$HOME/,"`
 # to know that this is a Trinity desktop and not a KDE one.
 export DESKTOP_SESSION=trinity
 
+# Create profile directory.
+if [ ! -d "$tdehome" ]; then
+  echo "[starttde] Creating $tdehome" 1>&2
+  mkdir -m 700 -p "$tdehome"
+fi
 if [ -d "$tdehome" ]; then
   # Run some R14 updates.
   R14_UPDATED="`$TDEDIR/bin/kreadconfig --file kdeglobals --group "R14 XDG Updates" --key Updated --default false`"
@@ -302,11 +307,9 @@ if [ -d "$tdehome" ]; then
       exit 1
     fi
   fi
-else
-  echo "[starttde] Creating $tdehome" 1>&2
 fi
+
 # Please see tdestartupconfig source for usage.
-mkdir -m 700 -p "$tdehome"
 mkdir -m 700 -p "$tdehome/share"
 mkdir -m 700 -p "$tdehome/share/config"
 cat >"$tdehome/share/config/startupconfigkeys" <<EOF
