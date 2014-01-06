@@ -1344,10 +1344,10 @@ destruction!</para>
 
 <para>There are two simple solutions to this:</para>
 
-<screen><prompt>%</prompt> <userinput><command>kdekillall kdesktop</command></userinput>
+<screen><prompt>%</prompt> <userinput><command>tdekillall kdesktop</command></userinput>
 or good old
 <prompt>%</prompt> <userinput><command>kill 26195</command></userinput></screen>
-<para><command>kdekillall</command> is part of the &tde; <acronym>SDK</acronym>
+<para><command>tdekillall</command> is part of the &tde; <acronym>SDK</acronym>
 package.</para>
 
 </sect1>
