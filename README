@@ -47,7 +47,7 @@ libraries. Here is an overview of the directories:
 * kdcop
     GUI app to browse for DCOP interfaces, can also execute them.
 
-* kdebugdialog
+* tdedebugdialog
     Allows you to specify which debug messages you want to see.
 
 * tdeprint

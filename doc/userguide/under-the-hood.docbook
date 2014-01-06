@@ -385,17 +385,17 @@ window.</para></listitem>
 
 </sect1>
 
-<sect1 id="kdebugdialog">
+<sect1 id="tdedebugdialog">
 
-<title>&kdebugdialog;  - Controlling &tde;'s Debugging Output</title>
+<title>&tdedebugdialog;  - Controlling &tde;'s Debugging Output</title>
 
-<sect2 id="kdebugdialog-basic-usage">
+<sect2 id="tdedebugdialog-basic-usage">
 <title>Basic Usage</title>
 
-<para>&kdebugdialog; is not in the &kmenu; by default. You will need to run
+<para>&tdedebugdialog; is not in the &kmenu; by default. You will need to run
 it from the shell or from the mini-CLI <!-- link to CLI, for sure --> with
-the command <userinput><command>kdebugdialog</command></userinput>.
-&kdebugdialog; pops up a window with a long list of debugging areas. Each
+the command <userinput><command>tdedebugdialog</command></userinput>.
+&tdedebugdialog; pops up a window with a long list of debugging areas. Each
 area has a checkbox that you can check or uncheck <!-- perhaps
 select/deselect --> in order to enable or disable debugging output for
 that part of &tde;.</para>
@@ -416,13 +416,13 @@ buttons which will cause &tde; to produce a mountain of debugging output, or
 very little.</para>
 </sect2>
 
-<sect2 id="kdebugdialog-fullmode">
-<title>KDebugDialog in full mode</title>
+<sect2 id="tdedebugdialog-fullmode">
+<title>TDEDebugDialog in full mode</title>
 
-<!-- this text partly taken from the kdebugdialog handbook -->
+<!-- this text partly taken from the tdedebugdialog handbook -->
 
-<para>In full mode, which is what you get when you start kdebugdialog as
-<userinput><command>kdebugdialog</command>
+<para>In full mode, which is what you get when you start tdedebugdialog as
+<userinput><command>tdedebugdialog</command>
 <option>--fullmode</option></userinput>, the same list of debugging areas
 as in plain mode is available, but you can select only one at a time from a
 drop-down <!-- combo? --> box. You may then  independently set the output

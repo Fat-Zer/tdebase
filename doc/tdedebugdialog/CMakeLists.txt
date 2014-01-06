@@ -9,4 +9,4 @@
 #
 #################################################
 
-tde_create_handbook( DESTINATION kdebugdialog )
+tde_create_handbook( DESTINATION tdedebugdialog )

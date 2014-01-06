@@ -38,9 +38,9 @@
 #include <tdeapplication.h>
 #include <dcopclient.h>
 
-#include "kdebugdialog.h"
+#include "tdedebugdialog.h"
 
-KDebugDialog::KDebugDialog( TQStringList areaList, TQWidget *parent, const char *name, bool modal )
+TDEDebugDialog::TDEDebugDialog( TQStringList areaList, TQWidget *parent, const char *name, bool modal )
   : KAbstractDebugDialog( parent, name, modal )
 {
   setCaption(i18n("Debug Settings"));
@@ -189,11 +189,11 @@ KDebugDialog::KDebugDialog( TQStringList areaList, TQWidget *parent, const char 
   resize( 300, height() );
 }
 
-KDebugDialog::~KDebugDialog()
+TDEDebugDialog::~TDEDebugDialog()
 {
 }
 
-void KDebugDialog::slotDebugAreaChanged( const TQString & text )
+void TDEDebugDialog::slotDebugAreaChanged( const TQString & text )
 {
   // Save settings from previous page
   if ( text != "0 initial" ) // except on first call
@@ -227,7 +227,7 @@ void KDebugDialog::slotDebugAreaChanged( const TQString & text )
   slotDestinationChanged(0);
 }
 
-void KDebugDialog::save()
+void TDEDebugDialog::save()
 {
   pConfig->writeEntry( "InfoOutput", pInfoCombo->currentItem() );
   pConfig->writePathEntry( "InfoFilename", pInfoFile->text() );
@@ -250,11 +250,11 @@ void KDebugDialog::save()
   }
 }
 
-void KDebugDialog::slotDestinationChanged(int) {
+void TDEDebugDialog::slotDestinationChanged(int) {
     pInfoFile->setEnabled(pInfoCombo->currentItem() == 0);
     pWarnFile->setEnabled(pWarnCombo->currentItem() == 0);
     pErrorFile->setEnabled(pErrorCombo->currentItem() == 0);
     pFatalFile->setEnabled(pFatalCombo->currentItem() == 0);
 }
 
-#include "kdebugdialog.moc"
+#include "tdedebugdialog.moc"

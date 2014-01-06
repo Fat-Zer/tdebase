@@ -68,7 +68,7 @@ Log () {
 # Main script:
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201401010
+SCRIPT_VERSION=201401050
 
 # Allow forced execution of this script regardless of the kdeglobals setting
 # and allow passing a user home directory as a positional parameter.
@@ -650,6 +650,12 @@ if [ "$R14_VERSION" -lt "201309150" ]; then
   if [ ! -f $PROFILE_DIR/share/config/tdepowersaverc ] && [ -f $PROFILE_DIR/share/config/kpowersaverc ]; then
     Log "  kpowersave->tdepowersave"
     cp -a $PROFILE_DIR/share/config/kpowersaverc $PROFILE_DIR/share/config/tdepowersaverc 2>/dev/null
+  fi
+fi
+if [ "$R14_VERSION" -lt "201401050" ]; then
+  if [ ! -f $PROFILE_DIR/share/config/tdedebugdialogrc ] && [ -f $PROFILE_DIR/share/config/kdebugdialogrc ]; then
+    Log "  kdebugdialog->tdedebugdialog"
+    cp -a $PROFILE_DIR/share/config/kdebugdialogrc $PROFILE_DIR/share/config/tdedebugdialogrc 2>/dev/null
   fi
 fi
 

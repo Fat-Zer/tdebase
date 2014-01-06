@@ -1,4 +1,4 @@
-kdebugdialog
+tdedebugdialog
 ------------
 
 In --fullmode, you can choose to dump debug output to a file.

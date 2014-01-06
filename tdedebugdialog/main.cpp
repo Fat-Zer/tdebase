@@ -17,7 +17,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "kdebugdialog.h"
+#include "tdedebugdialog.h"
 #include "tdelistdebugdialog.h"
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
@@ -77,7 +77,7 @@ static TDECmdLineOptions options[] =
 
 int main(int argc, char ** argv)
 {
-  TDEAboutData data( "kdebugdialog", I18N_NOOP( "KDebugDialog"),
+  TDEAboutData data( "tdedebugdialog", I18N_NOOP( "TDEDebugDialog"),
     "1.0", I18N_NOOP("A dialog box for setting preferences for debug output"),
     TDEAboutData::License_GPL, "(c) 2009,2010, Timothy Pearson <kb9vqf@pearsoncomputing.net>");
   data.addAuthor("Timothy Pearson", I18N_NOOP("Maintainer"), "kb9vqf@pearsoncomputing.net");
@@ -91,7 +91,7 @@ int main(int argc, char ** argv)
   TQStringList areaList ( readAreaList() );
   KAbstractDebugDialog * dialog;
   if (args->isSet("fullmode"))
-      dialog = new KDebugDialog(areaList, 0L);
+      dialog = new TDEDebugDialog(areaList, 0L);
   else
   {
       TDEListDebugDialog * listdialog = new TDEListDebugDialog(areaList, 0L);

@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
 "dtd/kdex.dtd" [
-  <!ENTITY kdebugdialog "<application>KDebugDialog</application>">
-  <!ENTITY kappname "&kdebugdialog;">
+  <!ENTITY tdedebugdialog "<application>TDEDebugDialog</application>">
+  <!ENTITY kappname "&tdedebugdialog;">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
   
@@ -11,7 +11,7 @@
 
 <book lang="&language;">
 <bookinfo>
-<title>The &kdebugdialog; Handbook</title>
+<title>The &tdedebugdialog; Handbook</title>
 
 <authorgroup>
 <author>&David.Faure; &David.Faure.mail;</author>
@@ -22,22 +22,22 @@
 <releaseinfo>0.03.00</releaseinfo>
 
 <abstract>
-<para>This document describes &kdebugdialog;.</para>
+<para>This document describes &tdedebugdialog;.</para>
 </abstract>
 
 <keywordset>
 <keyword>KDE</keyword>
-<keyword>KDebugdialog</keyword>
+<keyword>TDEDebugdialog</keyword>
 </keywordset>
 </bookinfo>
 
 <chapter id="Introduction">
-<title>What is KDebugDialog?</title>
+<title>What is TDEDebugDialog?</title>
 
 <para>It is a dialog box for managing diagnostic messages at runtime.
 </para>
 
-<para>If you simply start <command>kdebugdialog</command>, you will
+<para>If you simply start <command>tdedebugdialog</command>, you will
 see a list of <quote>areas</quote>, that can be disabled or enabled. A
 <function>kdDebug(area)</function> call in the code will show
 something in the debug output only if the area is enabled.</para>
@@ -60,7 +60,7 @@ the syntax start-end. Thus a valid entry could be:
 </varlistentry>
 </variablelist>
 
-<para>If you start <command>kdebugdialog</command>
+<para>If you start <command>tdedebugdialog</command>
 <option>--fullmode</option>, then for every severity level you can
 define separately what should be done with the diagnostic messages of
 that level, and the same for each debug area.</para>
@@ -116,7 +116,7 @@ your entries apply immediately and are saved in
 ones are restored.</para>
 
 <para>Credits to Kalle Dalheimer for the original version of
-&kdebugdialog;</para>
+&tdedebugdialog;</para>
 
 </chapter>
 

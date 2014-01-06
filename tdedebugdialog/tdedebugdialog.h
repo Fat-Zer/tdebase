@@ -16,8 +16,8 @@
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
 */
-#ifndef _KDEBUGDIALOG
-#define _KDEBUGDIALOG
+#ifndef _TDEDEBUGDIALOG
+#define _TDEDEBUGDIALOG
 
 #include "kabstractdebugdialog.h"
 
@@ -37,13 +37,13 @@ class TDEConfig;
  *
  * @author Kalle Dalheimer (kalle@kde.org)
  */
-class KDebugDialog : public KAbstractDebugDialog
+class TDEDebugDialog : public KAbstractDebugDialog
 {
   Q_OBJECT
 
 public:
-  KDebugDialog( TQStringList areaList, TQWidget *parent=0, const char *name=0, bool modal=true );
-  virtual ~KDebugDialog();
+  TDEDebugDialog( TQStringList areaList, TQWidget *parent=0, const char *name=0, bool modal=true );
+  virtual ~TDEDebugDialog();
 
   void save();
 
@@ -86,8 +86,8 @@ private:
 
 private:
   // Disallow assignment and copy-construction
-  KDebugDialog( const KDebugDialog& );
-  KDebugDialog& operator= ( const KDebugDialog& );
+  TDEDebugDialog( const TDEDebugDialog& );
+  TDEDebugDialog& operator= ( const TDEDebugDialog& );
 };
 
 #endif
