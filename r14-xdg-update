@@ -68,7 +68,7 @@ Log () {
 # Main script:
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201401051
+SCRIPT_VERSION=201401052
 
 # Allow forced execution of this script regardless of the kdeglobals setting
 # and allow passing a user home directory as a positional parameter.
@@ -651,7 +651,7 @@ if [ "$R14_VERSION" -lt "201401050" ]; then
   fi
 fi
 
-if [ "$R14_VERSION" -lt "201401040" ]; then
+if [ "$R14_VERSION" -lt "201401052" ]; then
   # Rename the user's custom launcher menu.
   # Before the release of R14.0.0, custom user menus had the same file name as KDE4:
   # applications-kmenuedit.menu. Under that condition, there is a possibility the user
@@ -687,7 +687,7 @@ if [ "$R14_VERSION" -lt "201401040" ]; then
   fi
 fi
 
-if [ "$R14_VERSION" -lt "201401040" ]; then
+if [ "$R14_VERSION" -lt "201401052" ]; then
   # Update the user's custom menu. Any custom menu should have been renamed a few lines above.
   if [ -r $USER_DIR/.config/menus/applications-tdemenuedit.menu ] && [ "$CUSTOM_MENU" != "TDE" ]; then
     # KDE/TDE 3.5.x or converted KDE4. No need to update a pre R14 menu.
@@ -695,7 +695,7 @@ if [ "$R14_VERSION" -lt "201401040" ]; then
   fi
 fi
 
-if [ "$R14_VERSION" -lt "201401040" ]; then
+if [ "$R14_VERSION" -lt "201401052" ]; then
   Log "Updating profile *.desktop files."
   # First update *.desktop files in the Trinity profile folder. Updating these files is safe.
   find "$PROFILE_DIR" -name "*.desktop" -print0 2>/dev/null | \
