@@ -416,6 +416,12 @@ int main( int argc, char **argv )
                 sigdelset(&new_mask,SIGTTIN);
                 sigdelset(&new_mask,SIGTTOU);
 
+                // let kdesktop know the saver process is ready
+                if (kill(kdesktop_pid, SIGTTIN) < 0) {
+                    // The controlling kdesktop process probably died.  Commit suicide...
+                    return 12;
+                }
+
                 // wait for SIGUSR1, SIGUSR2, SIGWINCH, SIGTTIN, or SIGTTOU
                 sigsuspend(&new_mask);
             }

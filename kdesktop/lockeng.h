@@ -81,6 +81,7 @@ public:
 public slots:
     void slotLockProcessWaiting();
     void slotLockProcessFullyActivated();
+    void slotLockProcessReady();
 
 protected slots:
     void idleTimeout();
@@ -95,6 +96,10 @@ private slots:
      * Enable wallpaper exports
      */
     void enableExports();
+    void recoverFromHackingAttempt();
+
+private:
+    bool restartDesktopLockProcess();
 
 protected:
     enum LockType { DontLock, DefaultLock, ForceLock, SecureDialog };
@@ -125,6 +130,7 @@ protected:
 private:
     TDEProcess*   mSAKProcess;
     bool        mTerminationRequested;
+    bool        mSaverProcessReady;
 };
 
 #endif

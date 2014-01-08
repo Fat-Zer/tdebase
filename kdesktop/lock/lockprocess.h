@@ -151,6 +151,7 @@ private:
     void showVkbd();
     void hideVkbd();
     void saverReady();
+    void saverReadyIfNeeded();
     bool forwardVkbdEvent( XEvent* event );
     void sendVkbdFocusInOut( WId window, Time t );
     void windowAdded( WId window, bool managed );
@@ -237,6 +238,8 @@ private:
     int m_mousePrevY;
     int m_dialogPrevX;
     int m_dialogPrevY;
+
+    bool m_notifyReadyRequested;
 
     TQWidget* m_maskWidget;
     Window m_saverRootWindow;

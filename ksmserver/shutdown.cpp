@@ -237,7 +237,7 @@ void KSMServer::shutdownInternal( TDEApplication::ShutdownConfirm confirm,
 			TQByteArray replyData;
 			// Block here until lock is complete
 			// If this is not done the desktop of the locked session will be shown after suspend/hibernate until the lock fully engages!
-			DCOPRef("kdesktop", "KScreensaverIface").call("lock()");
+			kapp->dcopClient()->call("kdesktop", "KScreensaverIface", "lock()", TQCString(""), replyType, replyData);
 		}
 		TDERootSystemDevice* rootDevice = hwDevices->rootSystemDevice();
 		if (rootDevice) {

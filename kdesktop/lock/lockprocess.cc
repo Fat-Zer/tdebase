@@ -218,6 +218,7 @@ LockProcess::LockProcess()
       m_mousePrevY(0),
       m_dialogPrevX(0),
       m_dialogPrevY(0),
+      m_notifyReadyRequested(false),
       m_maskWidget(NULL),
       m_saverRootWindow(0)
 {
@@ -604,6 +605,7 @@ void LockProcess::startSecureDialog()
 	}
 
 	setGeometry(0, 0, mRootWidth, mRootHeight);
+	saverReadyIfNeeded();
 
 	int ret;
 	SecureDlg inDlg( this );
@@ -941,6 +943,7 @@ void LockProcess::createSaverWindow()
     // setBackgroundMode(TQWidget::NoBackground);
 
     setGeometry(0, 0, mRootWidth, mRootHeight);
+    saverReadyIfNeeded();
 
     // HACK
     // Hide all tooltips and notification windows
@@ -1004,6 +1007,7 @@ void LockProcess::desktopResized()
         	m_maskWidget->show();
         }
 	XSync(tqt_xdisplay(), False);
+	saverReadyIfNeeded();
 
 	if (mEnsureScreenHiddenTimer) {
 		mEnsureScreenHiddenTimer->stop();
@@ -1018,6 +1022,7 @@ void LockProcess::desktopResized()
     // Resize the background widget
     setGeometry(0, 0, mRootWidth, mRootHeight);
     XSync(tqt_xdisplay(), False);
+    saverReadyIfNeeded();
 
     // Black out the background widget to hide ugly resize tiling artifacts
     if (argb_visual) {
@@ -1293,6 +1298,15 @@ void LockProcess::setTransparentBackgroundARGB()
 	setBackgroundPixmap( m_root );
 }
 
+void LockProcess::saverReadyIfNeeded()
+{
+	if (m_notifyReadyRequested) {
+		// Make sure the desktop is hidden before notifying the desktop that the saver is running
+		m_notifyReadyRequested = false;
+		saverReady();
+	}
+}
+
 //---------------------------------------------------------------------------
 //
 // Start the screen saver.
@@ -1343,10 +1357,16 @@ bool LockProcess::startSaver(bool notify_ready)
 		}
 		setGeometry(0, 0, mRootWidth, mRootHeight);
 		erase();
-	}
 
-	if (notify_ready) {
-		saverReady();
+		if (notify_ready) {
+			m_notifyReadyRequested = false;
+			saverReady();
+		}
+	}
+	else {
+		if (notify_ready) {
+			m_notifyReadyRequested = true;
+		}
 	}
 
 	if (trinity_desktop_lock_in_sec_dlg == FALSE) {
@@ -1520,6 +1540,7 @@ void LockProcess::repaintRootWindowIfNeeded()
 		if (currentDialog == NULL) {
 			raise();
 		}
+		saverReadyIfNeeded();
 	}
 }
 
@@ -1545,6 +1566,7 @@ bool LockProcess::startHack()
 	}
 	setGeometry(0, 0, mRootWidth, mRootHeight);
 	erase();
+	saverReadyIfNeeded();
         return false;
     }
 
@@ -1606,6 +1628,7 @@ bool LockProcess::startHack()
 			}
 			setGeometry(0, 0, mRootWidth, mRootHeight);
 			erase();
+			saverReadyIfNeeded();
 			mSuspended = false;
 		}
 
@@ -1662,6 +1685,7 @@ bool LockProcess::startHack()
 			ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
 			if (mHackStartupEnabled) mHackDelayStartupTimer->start(mHackDelayStartupTimeout, TRUE);
 		}
+		saverReadyIfNeeded();
 	}
     }
     if (m_startupStatusDialog) { m_startupStatusDialog->closeSMDialog(); m_startupStatusDialog=NULL; }
@@ -1729,12 +1753,14 @@ void LockProcess::hackExited(TDEProcess *)
 			if (mHackStartupEnabled) mHackDelayStartupTimer->start(mHackDelayStartupTimeout, TRUE);
 		}
 	}
+	saverReadyIfNeeded();
 }
 
 void LockProcess::displayLockDialogIfNeeded()
 {
 	if (m_startupStatusDialog) {
-		m_startupStatusDialog->closeSMDialog(); m_startupStatusDialog=NULL;
+		m_startupStatusDialog->closeSMDialog();
+		m_startupStatusDialog = NULL;
 	}
 	if (!trinity_desktop_lock_in_sec_dlg) {
 		if (trinity_desktop_lock_use_system_modal_dialogs) {
@@ -1816,6 +1842,7 @@ void LockProcess::resume( bool force )
 	else {
 		setGeometry(0, 0, mRootWidth, mRootHeight);
 	}
+	saverReadyIfNeeded();
         return;
     }
     if ((mSuspended) && (mHackProc.isRunning()))
@@ -1949,6 +1976,7 @@ int LockProcess::execDialog( TQDialog *dlg )
             bitBlt(this, 0, 0, &backingPixmap);
         }
     }
+    saverReadyIfNeeded();
     // dlg->exec may generate BadMatch errors, so make sure they are silently ignored
     int (*oldHandler)(Display *, XErrorEvent *);
     oldHandler = XSetErrorHandler(ignoreXError);
@@ -2048,6 +2076,7 @@ void LockProcess::slotPaintBackground(const TQPixmap &rpm)
 		setGeometry(0, 0, mRootWidth, mRootHeight);
 		erase();
 	}
+	saverReadyIfNeeded();
 }
 
 void LockProcess::preparePopup()

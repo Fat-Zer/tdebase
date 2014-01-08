@@ -43,6 +43,12 @@ static void sigusr2_handler(int)
         m_masterSaverEngine->slotLockProcessFullyActivated();
     }
 }
+static void sigttin_handler(int)
+{
+    if (m_masterSaverEngine) {
+        m_masterSaverEngine->slotLockProcessReady();
+    }
+}
 
 //===========================================================================
 //
@@ -55,7 +61,8 @@ SaverEngine::SaverEngine()
       KScreensaverIface(),
       mBlankOnly(false),
       mSAKProcess(NULL),
-      mTerminationRequested(false)
+      mTerminationRequested(false),
+      mSaverProcessReady(false)
 {
     struct sigaction act;
 
@@ -74,6 +81,14 @@ SaverEngine::SaverEngine()
     sigaddset(&(act.sa_mask), SIGUSR2);
     act.sa_flags = 0;
     sigaction(SIGUSR2, &act, 0L);
+
+    // handle SIGTTIN
+    m_masterSaverEngine = this;
+    act.sa_handler= sigttin_handler;
+    sigemptyset(&(act.sa_mask));
+    sigaddset(&(act.sa_mask), SIGTTIN);
+    act.sa_flags = 0;
+    sigaction(SIGTTIN, &act, 0L);
 
     // Save X screensaver parameters
     XGetScreenSaver(tqt_xdisplay(), &mXTimeout, &mXInterval,
@@ -341,25 +356,14 @@ void SaverEngine::configure()
 void SaverEngine::setBlankOnly( bool blankOnly )
 {
 	mBlankOnly = blankOnly;
-	// FIXME: if running, stop  and restart?  What about security
+	// FIXME: if running, stop and restart?  What about security
 	// implications of this?
 }
 
-//---------------------------------------------------------------------------
-//
-// Start the screen saver.
-//
-bool SaverEngine::startLockProcess( LockType lock_type )
+bool SaverEngine::restartDesktopLockProcess()
 {
-    if (mState == Saving)
-        return true;
-
-    enableExports();
-
-    kdDebug(1204) << "SaverEngine: starting saver" << endl;
-    emitDCOPSignal("KDE_start_screensaver()", TQByteArray());
-
     if (!mLockProcess.isRunning()) {
+        mSaverProcessReady = false;
 	mLockProcess.clearArguments();
 	TQString path = TDEStandardDirs::findExe( "kdesktop_lock" );
 	if( path.isEmpty())
@@ -374,6 +378,36 @@ bool SaverEngine::startLockProcess( LockType lock_type )
 	    kdDebug( 1204 ) << "Failed to start kdesktop_lock!" << endl;
 	    return false;
 	}
+        // Wait for the saver process to signal ready...
+        int count = 0;
+        while (!mSaverProcessReady) {
+            count++;
+            usleep(100);
+            if (count > 100) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------
+//
+// Start the screen saver.
+//
+bool SaverEngine::startLockProcess( LockType lock_type )
+{
+    if (mState == Saving) {
+        return true;
+    }
+
+    enableExports();
+
+    kdDebug(1204) << "SaverEngine: starting saver" << endl;
+    emitDCOPSignal("KDE_start_screensaver()", TQByteArray());
+
+    if (!restartDesktopLockProcess()) {
+        return false;
     }
 
     switch( lock_type )
@@ -435,6 +469,23 @@ void SaverEngine::stopLockProcess()
     mState = Waiting;
 }
 
+void SaverEngine::recoverFromHackingAttempt()
+{
+    // Try to relaunch saver with forcelock
+    if (!startLockProcess( ForceLock )) {
+        // Terminate the TDE session ASAP!
+        // Values are explained at http://lists.kde.org/?l=kde-linux&m=115770988603387
+        TQByteArray data;
+        TQDataStream arg(data, IO_WriteOnly);
+        arg << (int)0 << (int)0 << (int)2;
+        if ( ! kapp->dcopClient()->send("ksmserver", "default", "logout(int,int,int)", data) ) {
+            // Someone got to DCOP before we did
+            // Try an emergency system logout
+            system("logout");
+        }
+    }
+}
+
 void SaverEngine::lockProcessExited()
 {
     bool abnormalExit = false;
@@ -452,33 +503,13 @@ void SaverEngine::lockProcessExited()
     }
     if (abnormalExit == true) {
         // PROBABLE HACKING ATTEMPT DETECTED
-        // Terminate the TDE session ASAP!
-        // Values are explained at http://lists.kde.org/?l=kde-linux&m=115770988603387
-        TQByteArray data;
-        TQDataStream arg(data, IO_WriteOnly);
-        arg << (int)0 << (int)0 << (int)2;
-        if ( ! kapp->dcopClient()->send("ksmserver", "default", "logout(int,int,int)", data) ) {
-            // Someone got to DCOP before we did
-            // Try an emergency system logout
-            system("logout");
-        }
+        restartDesktopLockProcess();
+        mState = Waiting;
+        TQTimer::singleShot( 100, this, SLOT(recoverFromHackingAttempt()) );
     }
     else {
         // Restart the lock process
-        if (!mLockProcess.isRunning()) {
-            mLockProcess.clearArguments();
-            TQString path = TDEStandardDirs::findExe( "kdesktop_lock" );
-            if( path.isEmpty())
-            {
-                kdDebug( 1204 ) << "Can't find kdesktop_lock!" << endl;
-            }
-            mLockProcess << path;
-            mLockProcess << TQString( "--internal" ) << TQString( "%1" ).arg(getpid());
-            if (mLockProcess.start() == false )
-            {
-                kdDebug( 1204 ) << "Failed to start kdesktop_lock!" << endl;
-            }
-        }
+        restartDesktopLockProcess();
     }
 }
 
@@ -492,6 +523,11 @@ void SaverEngine::slotLockProcessWaiting()
 void SaverEngine::slotLockProcessFullyActivated()
 {
     mState = Saving;
+}
+
+void SaverEngine::slotLockProcessReady()
+{
+    mSaverProcessReady = true;
 }
 
 void SaverEngine::lockProcessWaiting()
