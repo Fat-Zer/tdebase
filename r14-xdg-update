@@ -68,7 +68,7 @@ Log () {
 # Main script:
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201401052
+SCRIPT_VERSION=201401070
 
 # Allow forced execution of this script regardless of the kdeglobals setting
 # and allow passing a user home directory as a positional parameter.
@@ -411,6 +411,83 @@ if [ "$R14_VERSION" -lt "201309150" ]; then
   fi
 fi
 
+if [ "$R14_VERSION" -lt "201401070" ]; then
+  if [ -r $PROFILE_DIR/share/config/keditrc ]; then
+    Log "Updating keditrc."
+    sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/config/keditrc" 2>/dev/null
+  else
+    Log "$PROFILE_DIR/share/config/keditrc does not exist."
+  fi
+fi
+
+if [ "$R14_VERSION" -lt "201401070" ]; then
+  if [ -r $PROFILE_DIR/share/config/quantarc ]; then
+    Log "Updating quantarc."
+    sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/config/quantarc" 2>/dev/null
+  else
+    Log "$PROFILE_DIR/share/config/quantarc does not exist."
+  fi
+fi
+
+if [ "$R14_VERSION" -lt "201401070" ]; then
+  # kdeveloprc is renamed to tdeveloprc later in this script. As we don't know whether
+  # this script is being run the first time or any subsequent time, we look for both rc files.
+  if [ -r $PROFILE_DIR/share/config/tdeveloprc ]; then
+    DEVELOP_RC_FILE="$PROFILE_DIR/share/config/tdeveloprc"
+  elif [ -r $PROFILE_DIR/share/config/kdeveloprc ]; then
+    DEVELOP_RC_FILE="$PROFILE_DIR/share/config/kdeveloprc"
+  fi
+  if [ "$DEVELOP_RC_FILE" != "" ]; then
+    Log "Updating `basename $DEVELOP_RC_FILE`."
+    sed -i 's|ktexteditor_|tdetexteditor_|g' "$DEVELOP_RC_FILE" 2>/dev/null
+    unset DEVELOP_RC_FILE
+  else
+    Log "$PROFILE_DIR/share/config/[tk]developrc does not exist."
+  fi
+fi
+
+if [ "$R14_VERSION" -lt "201401070" ]; then
+  if [ -r $PROFILE_DIR/share/apps/kate/kateui.rc ]; then
+    Log "Updating kateui.rc."
+    sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/apps/kate/kateui.rc" 2>/dev/null
+  else
+    Log "$PROFILE_DIR/share/apps/kate/kateui.rc does not exist."
+  fi
+fi
+
+if [ "$R14_VERSION" -lt "201401070" ]; then
+  if [ -r $PROFILE_DIR/share/apps/katepart/katepartui.rc ]; then
+    Log "Updating katepartui.rc."
+    sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/apps/katepart/katepartui.rc" 2>/dev/null
+  else
+    Log "$PROFILE_DIR/share/apps/katepart/katepartui.rc does not exist."
+  fi
+fi
+
+if [ "$R14_VERSION" -lt "201401070" ]; then
+  if [ -r $PROFILE_DIR/share/apps/kwrite/kwriteui.rc ]; then
+    Log "Updating kwriteui.rc."
+    sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/apps/kwrite/kwriteui.rc" 2>/dev/null
+  else
+    Log "$PROFILE_DIR/share/apps/kwrite/kwriteui.rc does not exist."
+  fi
+fi
+
+if [ "$R14_VERSION" -lt "201401070" ]; then
+  if [ -d $PROFILE_DIR/share/apps/ktexteditor_kdatatool ]; then
+    Log "Updating ktexteditor_kdatatool."
+    # First rename any existing file inside the directory.
+    if [ -r $PROFILE_DIR/share/apps/ktexteditor_kdatatool/ktexteditor_kdatatoolui.rc ]; then
+      mv $PROFILE_DIR/share/apps/ktexteditor_kdatatool/ktexteditor_kdatatoolui.rc $PROFILE_DIR/share/apps/ktexteditor_kdatatool/tdetexteditor_kdatatoolui.rc
+      sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/apps/ktexteditor_kdatatool/tdetexteditor_kdatatoolui.rc" 2>/dev/null
+    fi
+    # Now rename the directory.
+    mv $PROFILE_DIR/share/apps/ktexteditor_kdatatool $PROFILE_DIR/share/apps/tdetexteditor_kdatatool
+  else
+    Log "$PROFILE_DIR/share/apps/ktexteditor_kdatatool does not exist."
+  fi
+fi
+
 if [ "$R14_VERSION" -lt "201309150" ]; then
   if [ -r $PROFILE_DIR/share/apps/ark/ark_part.rc ]; then
     Log "Updating ark_part.rc."
@@ -630,10 +707,14 @@ if [ "$R14_VERSION" -lt "201309150" ]; then
       mv $HOME/.kderc $HOME/.tderc 2>/dev/null
     fi
   fi
-  if [ ! -f $PROFILE_DIR/share/apps/tdestyle ] && [ -f $PROFILE_DIR/share/apps/kstyle ]; then
+fi
+if [ "$R14_VERSION" -lt "201401070" ]; then
+  if [ ! -d $PROFILE_DIR/share/apps/tdestyle ] && [ -d $PROFILE_DIR/share/apps/kstyle ]; then
     Log "  kstyle->tdestyle"
     mv $PROFILE_DIR/share/apps/kstyle $PROFILE_DIR/share/apps/tdestyle 2>/dev/null
   fi
+fi
+if [ "$R14_VERSION" -lt "201309150" ]; then
   # Copy the following two rc files rather than move because the older versions are needed for HAL systems.
   if [ ! -f $PROFILE_DIR/share/config/tdenetworkmanagerrc ] && [ -f $PROFILE_DIR/share/config/knetworkmanagerrc ]; then
     Log "  knetworkmanager->tdenetworkmanager"
