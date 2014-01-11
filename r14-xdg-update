@@ -845,19 +845,18 @@ find "$PROFILE_DIR" -name "*.desktop" -print0 2>/dev/null | \
   xargs -r0 grep -IFl "X-KDE-" >${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
 if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
   R14_UPDATE_TEST1="failed"
-  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check *.desktop files for 'X-KDE' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck *.desktop files for 'X-KDE' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.\n\n"
   Validation_Failure
 else
   rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
 fi
-
 TEST_NUM="2"
 R14_UPDATE_TEST2=""
 find "$PROFILE_DIR" -name "*.desktop" -print0 2>/dev/null | \
   xargs -r0 grep -IFl "KDE;" >${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
 if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
   R14_UPDATE_TEST2="failed"
-  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check *.desktop files for 'KDE;' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck *.desktop files for 'KDE;' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.\n\n"
   Validation_Failure
 else
   rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
@@ -880,7 +879,7 @@ find "$PROFILE_DIR" \
   xargs -r0 grep -IFl "$TDEDIR/share/applications/kde" >${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
 if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
   R14_UPDATE_TEST3="failed"
-  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check files for '$TDEDIR/share/applications/kde' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck files for '$TDEDIR/share/applications/kde' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
   Validation_Failure
 else
   rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
@@ -891,7 +890,7 @@ if [ -r "$PROFILE_DIR/share/config/khotkeysrc" ]; then
   grep "CommandURL=kde-" "$PROFILE_DIR/share/config/khotkeysrc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
   if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
     R14_UPDATE_TEST4="failed"
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check khotkeysrc for 'CommandURL=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck khotkeysrc for 'CommandURL=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
   else
     rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
   fi
@@ -902,7 +901,7 @@ if [ -r "$PROFILE_DIR/share/config/khotkeysrc" ]; then
   grep "K Menu - kde-" "$PROFILE_DIR/share/config/khotkeysrc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
   if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
     R14_UPDATE_TEST5="failed"
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check khotkeysrc for 'K Menu - kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck khotkeysrc for 'K Menu - kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
     Validation_Failure
   else
     rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
@@ -914,7 +913,7 @@ if [ -r $PROFILE_DIR/share/config/profilerc ]; then
   grep "Application=kde-" "$PROFILE_DIR/share/config/profilerc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
   if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
     R14_UPDATE_TEST6="failed"
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check profilerc for 'Application=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck profilerc for 'Application=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
     Validation_Failure
   else
     rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
@@ -926,7 +925,7 @@ if [ -r $PROFILE_DIR/share/config/kickerrc ]; then
   grep "StorageId\[\$e\]=kde-" "$PROFILE_DIR/share/config/kickerrc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
   if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
     R14_UPDATE_TEST7="failed"
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check kickerrc for 'StorageId[$e]=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck kickerrc for 'StorageId[$e]=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
     Validation_Failure
   else
     rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
@@ -938,7 +937,7 @@ if [ "$QUICK_LAUNCH_CONFIG" != "" ]; then
   grep "kde-" "$PROFILE_DIR/share/config/$QUICK_LAUNCH_CONFIG" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
   if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
     R14_UPDATE_TEST8="failed"
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check $QUICK_LAUNCH_CONFIG for 'kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck $QUICK_LAUNCH_CONFIG for 'kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
     Validation_Failure
   else
     rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
@@ -950,22 +949,34 @@ if [ -r $USER_DIR/.config/menus/applications-tdemenuedit.menu ]; then
   grep "<Filename>kde-" "$USER_DIR/.config/menus/applications-tdemenuedit.menu" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
   if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
     R14_UPDATE_TEST9="failed"
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\n\n(Check applications-tdemenuedit.menu for '<Filename>kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.)"
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck applications-tdemenuedit.menu for '<Filename>kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
     Validation_Failure
   else
     rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
   fi
 fi
+TEST_NUM="10"
+R14_UPDATE_TEST10=""
+find "$PROFILE_DIR" -name "*.desktop" -print0 2>/dev/null | \
+  xargs -r0 grep -IFl "kdesu" >${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
+if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
+  R14_UPDATE_TEST10="failed"
+  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck *.desktop files for 'kdesu' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
+  Validation_Failure
+else
+  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+fi
 if [ "$R14_UPDATE_TEST1" = "" ] && [ "$R14_UPDATE_TEST2" = "" ] && [ "$R14_UPDATE_TEST3" = "" ] \
   && [ "$R14_UPDATE_TEST4" = "" ] && [ "$R14_UPDATE_TEST5" = "" ] && [ "$R14_UPDATE_TEST6" = "" ] \
-  && [ "$R14_UPDATE_TEST7" = "" ] && [ "$R14_UPDATE_TEST8" = "" ] && [ "$R14_UPDATE_TEST9" = "" ]; then
+  && [ "$R14_UPDATE_TEST7" = "" ] && [ "$R14_UPDATE_TEST8" = "" ] && [ "$R14_UPDATE_TEST9" = "" ] \
+  && [ "$R14_UPDATE_TEST10" = "" ]; then
   $TDEDIR/bin/kwriteconfig --file "$PROFILE_DIR/share/config/kdeglobals" --group "R14 XDG Updates" --key Updated --type bool "true"
   $TDEDIR/bin/kwriteconfig --file "$PROFILE_DIR/share/config/kdeglobals" --group "R14 XDG Updates" --key Version "$SCRIPT_VERSION"
   Log "R14 XDG updates completed successfully."
 else
   # Don't use the --type parameter here because the value no longer is boolean.
   $TDEDIR/bin/kwriteconfig --file "$PROFILE_DIR/share/config/kdeglobals" --group "R14 XDG Updates" --key Updated "$KDEGLOBALS_KEY_VALUE"
-  MESSAGE="The r14-xdg-update script did not complete successfully.\n\nThe script will run with each login until corrected.\n\nPlease contact an administrator or take appropriate\nadmininstrative action to correct the problem.\n\nThe error code is $KDEGLOBALS_KEY_VALUE.\n\nBe sure to check file and directory permissions."
+  MESSAGE="\n\nThe r14-xdg-update script did not complete successfully.\n\nThe script will run with each login until corrected.\n\nPlease contact an administrator or take appropriate\nadmininstrative action to correct the problem.\n\nThe error code is $KDEGLOBALS_KEY_VALUE.\n\nCommon failures include file and directory permissions.\n\n"
   # Are we in X? Display an X dialog explaining breakage.
   if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
     printf "%b" "$MESSAGE" | xmessage -center -file - -buttons OK > /dev/null 2>/dev/null
