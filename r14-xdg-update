@@ -2,6 +2,9 @@
 #
 # A script to perform R14.0.0 XDG compliance updates.
 
+SCRIPT_NAME="`basename \`readlink -f $0\``"
+SCRIPT_VERSION=201401130
+
 # This script should be needed to run only once, but corner cases
 # and file/directory permissions could cause incomplete updates.
 
@@ -66,9 +69,6 @@ Log () {
 }
 
 # Main script:
-
-SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201401120
 
 # Allow forced execution of this script regardless of the kdeglobals setting
 # and allow passing a user home directory as a positional parameter.
@@ -783,7 +783,7 @@ if [ "$R14_VERSION" -lt "201401052" ]; then
   fi
 fi
 
-if [ "$R14_VERSION" -lt "201401052" ]; then
+if [ "$R14_VERSION" -lt "201401130" ]; then
   Log "Updating profile *.desktop files."
   # First update *.desktop files in the Trinity profile folder. Updating these files is safe.
   find "$PROFILE_DIR" -name "*.desktop" -print0 2>/dev/null | \
