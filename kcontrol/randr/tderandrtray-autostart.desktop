@@ -1,11 +1,11 @@
 [Desktop Entry]
-Name=KRandRTray
+Name=TDERandRTray
 Name[be]=Змена параметраў манітора
-Name[hu]=Képernyőfelbontás
-Name[ne]=KRandR ट्रे
-Name[pt_BR]=Ícone do KRandR
-Name[sv]=Krandrtray
-Name[vi]=Khay KRandR
+Name[hu]=TDEépernyőfelbontás
+Name[ne]=TDERandR ट्रे
+Name[pt_BR]=Ícone do TDERandR
+Name[sv]=TDErandrtray
+Name[vi]=TDE KRandR
 GenericName=Screen Resize & Rotate
 GenericName[af]=Skerm Hervergroot & Roteer
 GenericName[be]=Змена памераў экрана і перагортванне
