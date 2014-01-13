@@ -453,6 +453,15 @@ if [ "$R14_VERSION" -lt "201401070" ]; then
   fi
 fi
 
+if [ "$R14_VERSION" -lt "201401130" ]; then
+  if [ -r $PROFILE_DIR/share/config/khelpcenterrc ]; then
+    Log "Updating khelpcenterrc."
+    sed -i 's|kde_application_manuals|tde_application_manuals|g' "$PROFILE_DIR/share/config/khelpcenterrc" 2>/dev/null
+  else
+    Log "khelpcenterrc does not exist."
+  fi
+fi
+
 if [ "$R14_VERSION" -lt "201401070" ]; then
   if [ -r $PROFILE_DIR/share/apps/kate/kateui.rc ]; then
     Log "Updating kateui.rc."
