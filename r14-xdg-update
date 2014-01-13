@@ -68,7 +68,7 @@ Log () {
 # Main script:
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201401070
+SCRIPT_VERSION=201401120
 
 # Allow forced execution of this script regardless of the kdeglobals setting
 # and allow passing a user home directory as a positional parameter.
@@ -148,12 +148,14 @@ fi
 unset BIN_DIR
 
 Log "Performing a profile update for Trinity release R14 XDG compliance."
+Log ""
 Log "To run this script against a different user directory, or automated"
 Log "from within another script, pass the directory path as a parameter."
 Log "For example: r14-xdg-update /home/user_dir"
 Log "Use the user home directory and not the profile directory."
 Log "User directory: $USER_DIR"
 Log "Profile directory: $PROFILE_DIR"
+Log ""
 if [ "$USER_DIR" != "$HOME" ]; then
   Log "Root (admin) privileges might be required to run this script"
   Log "against other user directories."
@@ -229,6 +231,11 @@ if [ "$R14_VERSION" -lt "$SCRIPT_VERSION" ] || [ "$R14_UPDATED" != "true" ] || [
     Log "The r14-xdg-update script has been run at least once."
     Log "The error code is $R14_UPDATED."
     echo
+    if [ "$FORCE" != "true" ]; then
+      # There is an error code.
+      # As a previous attempt failed, try again to perform a full update.
+      FORCE="true"
+    fi
     MESSAGE="The r14-xdg-update script has been run at least once.\n\nThe script is not successfully updating.\n\nThe script will run with each login until corrected.\n\nPlease contact an administrator or take appropriate\nadmininstrative action to correct the problem.\n\nThe error code is $R14_UPDATED."
     # Are we in X? Display an X dialog explaining breakage.
     if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
@@ -398,7 +405,7 @@ if [ "$R14_VERSION" -lt "201309150" ]; then
     Log "Updating katerc."
     sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/config/katerc" 2>/dev/null
   else
-    Log "$PROFILE_DIR/share/config/katerc does not exist."
+    Log "katerc does not exist."
   fi
 fi
 
@@ -407,7 +414,7 @@ if [ "$R14_VERSION" -lt "201309150" ]; then
     Log "Updating kwriterc."
     sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/config/kwriterc" 2>/dev/null
   else
-    Log "$PROFILE_DIR/share/config/kwriterc does not exist."
+    Log "kwriterc does not exist."
   fi
 fi
 
@@ -416,7 +423,7 @@ if [ "$R14_VERSION" -lt "201401070" ]; then
     Log "Updating keditrc."
     sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/config/keditrc" 2>/dev/null
   else
-    Log "$PROFILE_DIR/share/config/keditrc does not exist."
+    Log "keditrc does not exist."
   fi
 fi
 
@@ -425,7 +432,7 @@ if [ "$R14_VERSION" -lt "201401070" ]; then
     Log "Updating quantarc."
     sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/config/quantarc" 2>/dev/null
   else
-    Log "$PROFILE_DIR/share/config/quantarc does not exist."
+    Log "quantarc does not exist."
   fi
 fi
 
@@ -442,7 +449,7 @@ if [ "$R14_VERSION" -lt "201401070" ]; then
     sed -i 's|ktexteditor_|tdetexteditor_|g' "$DEVELOP_RC_FILE" 2>/dev/null
     unset DEVELOP_RC_FILE
   else
-    Log "$PROFILE_DIR/share/config/[tk]developrc does not exist."
+    Log "[tk]developrc does not exist."
   fi
 fi
 
@@ -451,7 +458,7 @@ if [ "$R14_VERSION" -lt "201401070" ]; then
     Log "Updating kateui.rc."
     sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/apps/kate/kateui.rc" 2>/dev/null
   else
-    Log "$PROFILE_DIR/share/apps/kate/kateui.rc does not exist."
+    Log "kateui.rc does not exist."
   fi
 fi
 
@@ -460,7 +467,7 @@ if [ "$R14_VERSION" -lt "201401070" ]; then
     Log "Updating katepartui.rc."
     sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/apps/katepart/katepartui.rc" 2>/dev/null
   else
-    Log "$PROFILE_DIR/share/apps/katepart/katepartui.rc does not exist."
+    Log "katepartui.rc does not exist."
   fi
 fi
 
@@ -469,7 +476,7 @@ if [ "$R14_VERSION" -lt "201401070" ]; then
     Log "Updating kwriteui.rc."
     sed -i 's|ktexteditor_|tdetexteditor_|g' "$PROFILE_DIR/share/apps/kwrite/kwriteui.rc" 2>/dev/null
   else
-    Log "$PROFILE_DIR/share/apps/kwrite/kwriteui.rc does not exist."
+    Log "kwriteui.rc does not exist."
   fi
 fi
 
@@ -484,7 +491,7 @@ if [ "$R14_VERSION" -lt "201401070" ]; then
     # Now rename the directory.
     mv $PROFILE_DIR/share/apps/ktexteditor_kdatatool $PROFILE_DIR/share/apps/tdetexteditor_kdatatool
   else
-    Log "$PROFILE_DIR/share/apps/ktexteditor_kdatatool does not exist."
+    Log "ktexteditor_kdatatool does not exist."
   fi
 fi
 
@@ -493,7 +500,7 @@ if [ "$R14_VERSION" -lt "201309150" ]; then
     Log "Updating ark_part.rc."
     sed -i 's|ark_kparts|ark_tdeparts|g' "$PROFILE_DIR/share/apps/ark/ark_part.rc" 2>/dev/null
   else
-    Log "$PROFILE_DIR/share/apps/ark/ark_part.rc does not exist."
+    Log "ark_part.rc does not exist."
   fi
 fi
 
@@ -519,7 +526,7 @@ if [ "$R14_VERSION" -lt "201309150" ]; then
   if [ -r $PROFILE_DIR/share/apps/quanta/plugins.rc ]; then
     sed -i 's|FileName=kde3|FileName=trinity|g' "$PROFILE_DIR/share/apps/quanta/plugins.rc" 2>/dev/null
   else
-    Log "$PROFILE_DIR/share/apps/quanta/plugins.rc does not exist."
+    Log "Quanta Plus plugins.rc does not exist."
   fi
 fi
 
@@ -780,7 +787,7 @@ if [ "$R14_VERSION" -lt "201401052" ]; then
   Log "Updating profile *.desktop files."
   # First update *.desktop files in the Trinity profile folder. Updating these files is safe.
   find "$PROFILE_DIR" -name "*.desktop" -print0 2>/dev/null | \
-    xargs -r0 grep -ZIl "\(X-KDE-\|KDE;\)" | \
+    xargs -r0 grep -ZIl "\(X-KDE-\|KDE;\|kdesu\)" | \
     xargs -r0 sed -i -e "s|X-KDE-|X-TDE-|g" -e "s|KDE;|TDE;|g" -e "s|kdesu|tdesu|g"
   # Next update *.desktop files in $USER_DIR/.local.
   # Any existing applications-kmenuedit.menu has been copied to applications-tdemenuedit.menu.
@@ -788,7 +795,7 @@ if [ "$R14_VERSION" -lt "201401052" ]; then
     # KDE/TDE 3.5.x or converted KDE4. No need to update a pre R14 menu.
     Log "Updating ~/.local *.desktop files."
     find "$USER_DIR/.local" -name "*.desktop" -print0 2>/dev/null | \
-      xargs -r0 grep -ZIl "\(X-KDE-\|KDE;\)" | \
+      xargs -r0 grep -ZIl "\(X-KDE-\|KDE;\|kdesu\)" | \
       xargs -r0 sed -i -e "s|X-KDE-|X-TDE-|g" -e "s|KDE;|TDE;|g" -e "s|kdesu|tdesu|g"
     # When the custom menu is from KDE/TDE 3.5.x or pre R14, then we are done.
     # When the custom menu is from KDE4, we have additional work to perform because the KDE4
@@ -832,7 +839,7 @@ if [ "$CACHE_DIR" = "" ]; then
   CACHE_DIR=$PROFILE_DIR
 fi
 if [ -d "$CACHE_DIR" ]; then
-  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test*.txt 2>/dev/null
+  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-*test*.txt 2>/dev/null
 else
   # Create this directory in case the migratekde3 script was run immediately
   # before this script, which means the cache directory will not yet exist.
@@ -842,24 +849,24 @@ fi
 TEST_NUM="1"
 R14_UPDATE_TEST1=""
 find "$PROFILE_DIR" -name "*.desktop" -print0 2>/dev/null | \
-  xargs -r0 grep -IFl "X-KDE-" >${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
+  xargs -r0 grep -IFl "X-KDE-" >${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt
+if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt ]; then
   R14_UPDATE_TEST1="failed"
-  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck *.desktop files for 'X-KDE' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.\n\n"
+  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck *.desktop files for 'X-KDE' in\n${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt.\n\n"
   Validation_Failure
 else
-  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt 2>/dev/null
 fi
 TEST_NUM="2"
 R14_UPDATE_TEST2=""
 find "$PROFILE_DIR" -name "*.desktop" -print0 2>/dev/null | \
-  xargs -r0 grep -IFl "KDE;" >${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
+  xargs -r0 grep -IFl "KDE;" >${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt
+if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt ]; then
   R14_UPDATE_TEST2="failed"
-  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck *.desktop files for 'KDE;' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt.\n\n"
+  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck *.desktop files for 'KDE;' in\n${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt.\n\n"
   Validation_Failure
 else
-  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt 2>/dev/null
 fi
 TEST_NUM="3"
 R14_UPDATE_TEST3=""
@@ -876,95 +883,95 @@ find "$PROFILE_DIR" \
      -path $PROFILE_DIR/share/apps/knotes -prune -o \
      -path $PROFILE_DIR/share/apps/kopete/logs -prune -o \
      -type f -print0 2>/dev/null | \
-  xargs -r0 grep -IFl "$TDEDIR/share/applications/kde" >${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
+  xargs -r0 grep -IFl "$TDEDIR/share/applications/kde" >${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt
+if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt ]; then
   R14_UPDATE_TEST3="failed"
-  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck files for '$TDEDIR/share/applications/kde' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
+  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck files for '$TDEDIR/share/applications/kde' in\n${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt. "
   Validation_Failure
 else
-  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt 2>/dev/null
 fi
 TEST_NUM="4"
 R14_UPDATE_TEST4=""
 if [ -r "$PROFILE_DIR/share/config/khotkeysrc" ]; then
-  grep "CommandURL=kde-" "$PROFILE_DIR/share/config/khotkeysrc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
+  grep "CommandURL=kde-" "$PROFILE_DIR/share/config/khotkeysrc" &>${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt
+  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt ]; then
     R14_UPDATE_TEST4="failed"
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck khotkeysrc for 'CommandURL=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck khotkeysrc for 'CommandURL=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt. "
   else
-    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt 2>/dev/null
   fi
 fi
 TEST_NUM="5"
 R14_UPDATE_TEST5=""
 if [ -r "$PROFILE_DIR/share/config/khotkeysrc" ]; then
-  grep "K Menu - kde-" "$PROFILE_DIR/share/config/khotkeysrc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
+  grep "K Menu - kde-" "$PROFILE_DIR/share/config/khotkeysrc" &>${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt
+  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt ]; then
     R14_UPDATE_TEST5="failed"
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck khotkeysrc for 'K Menu - kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck khotkeysrc for 'K Menu - kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt. "
     Validation_Failure
   else
-    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt 2>/dev/null
   fi
 fi
 TEST_NUM="6"
 R14_UPDATE_TEST6=""
 if [ -r $PROFILE_DIR/share/config/profilerc ]; then
-  grep "Application=kde-" "$PROFILE_DIR/share/config/profilerc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
+  grep "Application=kde-" "$PROFILE_DIR/share/config/profilerc" &>${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt
+  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt ]; then
     R14_UPDATE_TEST6="failed"
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck profilerc for 'Application=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck profilerc for 'Application=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt. "
     Validation_Failure
   else
-    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt 2>/dev/null
   fi
 fi
 TEST_NUM="7"
 R14_UPDATE_TEST7=""
 if [ -r $PROFILE_DIR/share/config/kickerrc ]; then
-  grep "StorageId\[\$e\]=kde-" "$PROFILE_DIR/share/config/kickerrc" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
+  grep "StorageId\[\$e\]=kde-" "$PROFILE_DIR/share/config/kickerrc" &>${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt
+  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt ]; then
     R14_UPDATE_TEST7="failed"
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck kickerrc for 'StorageId[$e]=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck kickerrc for 'StorageId[$e]=kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt. "
     Validation_Failure
   else
-    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt 2>/dev/null
   fi
 fi
 TEST_NUM="8"
 R14_UPDATE_TEST8=""
 if [ "$QUICK_LAUNCH_CONFIG" != "" ]; then
-  grep "kde-" "$PROFILE_DIR/share/config/$QUICK_LAUNCH_CONFIG" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
+  grep "kde-" "$PROFILE_DIR/share/config/$QUICK_LAUNCH_CONFIG" &>${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt
+  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt ]; then
     R14_UPDATE_TEST8="failed"
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck $QUICK_LAUNCH_CONFIG for 'kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck $QUICK_LAUNCH_CONFIG for 'kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt. "
     Validation_Failure
   else
-    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt 2>/dev/null
   fi
 fi
 TEST_NUM="9"
 R14_UPDATE_TEST9=""
 if [ -r $USER_DIR/.config/menus/applications-tdemenuedit.menu ]; then
-  grep "<Filename>kde-" "$USER_DIR/.config/menus/applications-tdemenuedit.menu" &>${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
+  grep "<Filename>kde-" "$USER_DIR/.config/menus/applications-tdemenuedit.menu" &>${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt
+  if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt ]; then
     R14_UPDATE_TEST9="failed"
-    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck applications-tdemenuedit.menu for '<Filename>kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
+    MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck applications-tdemenuedit.menu for '<Filename>kde-' in\n${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt. "
     Validation_Failure
   else
-    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+    rm -f ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt 2>/dev/null
   fi
 fi
 TEST_NUM="10"
 R14_UPDATE_TEST10=""
 find "$PROFILE_DIR" -name "*.desktop" -print0 2>/dev/null | \
-  xargs -r0 grep -IFl "kdesu" >${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt
-if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt ]; then
+  xargs -r0 grep -IFl "kdesu" >${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt
+if [ -s ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt ]; then
   R14_UPDATE_TEST10="failed"
-  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck *.desktop files for 'kdesu' in\n${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt. "
+  MESSAGE="Some Trinity profile R14 XDG compliance updates failed.\nCheck *.desktop files for 'kdesu' in\n${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt. "
   Validation_Failure
 else
-  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-test${TEST_NUM}.txt 2>/dev/null
+  rm -f ${CACHE_DIR}/${SCRIPT_NAME}-validation-test${TEST_NUM}.txt 2>/dev/null
 fi
 if [ "$R14_UPDATE_TEST1" = "" ] && [ "$R14_UPDATE_TEST2" = "" ] && [ "$R14_UPDATE_TEST3" = "" ] \
   && [ "$R14_UPDATE_TEST4" = "" ] && [ "$R14_UPDATE_TEST5" = "" ] && [ "$R14_UPDATE_TEST6" = "" ] \
