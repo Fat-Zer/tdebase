@@ -3,7 +3,7 @@
 # A script to perform R14.0.0 XDG compliance updates.
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201401130
+SCRIPT_VERSION=201401131
 
 # This script should be needed to run only once, but corner cases
 # and file/directory permissions could cause incomplete updates.
@@ -453,7 +453,7 @@ if [ "$R14_VERSION" -lt "201401070" ]; then
   fi
 fi
 
-if [ "$R14_VERSION" -lt "201401130" ]; then
+if [ "$R14_VERSION" -lt "201401131" ]; then
   if [ -r $PROFILE_DIR/share/config/khelpcenterrc ]; then
     Log "Updating khelpcenterrc."
     sed -i 's|kde_application_manuals|tde_application_manuals|g' "$PROFILE_DIR/share/config/khelpcenterrc" 2>/dev/null
