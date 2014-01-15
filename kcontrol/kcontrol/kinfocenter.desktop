@@ -2,7 +2,13 @@
 Exec=kinfocenter -caption "%c" %i %m
 Icon=hwinfo
 Type=Application
-DocPath=kinfocenter/index.html
+# Restore the following key and remove this comment when a help handbook
+# is written. Disabling this key prevents populating the main handbook
+# table of contents with a non-existent document, which results in a
+# main handbook error message of
+# 'There is no documentation available for /xyz/index.html.'
+# Also disable this key when there exists only a useless template handbook.
+# DocPath=kinfocenter/index.html
 X-TDE-StartupNotify=true
 OnlyShowIn=TDE;
 

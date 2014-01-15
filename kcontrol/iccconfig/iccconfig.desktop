@@ -2,7 +2,13 @@
 Exec=tdecmshell iccconfig
 Icon=background
 Type=Application
-DocPath=kcontrol/iccconfig/index.html
+# Restore the following key and remove this comment when a help handbook
+# is written. Disabling this key prevents populating the main handbook
+# table of contents with a non-existent document, which results in a
+# main handbook error message of
+# 'There is no documentation available for /xyz/index.html.'
+# Also disable this key when there exists only a useless template handbook.
+# DocPath=kcontrol/iccconfig/index.html
 
 X-TDE-Library=iccconfig
 X-TDE-ParentApp=kcontrol
@@ -12,7 +18,6 @@ X-TDE-SubstituteUID=true
 Categories=Qt;TDE;X-TDE-settings-hardware;
 Comment=Configure display ICC profile
 Comment[en_US]=Configure display ICC profile
-DocPath=kcontrol/iccconfig.html
 GenericName=
 GenericName[en_US]=
 Keywords=ICC,display,color,profile
