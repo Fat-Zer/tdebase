@@ -116,7 +116,28 @@ incurred.</para>
 <answer>
 <para>The "KDE" name, various logos, and related efforts are trademarked by the KDE
 Foundation. Since the Trinity project is not affiliated with the KDE Foundation,
-we can't legally use their trademarks.</para>
+legally we can't use their trademarks.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para>Why the change in version numbers?</para>
+</question>
+<answer>
+<para>Trinity evolved from the last KDE 3.5 release, 3.5.10. Subsequent Trinity releases
+followed that numbering scheme. Release R14.0.0 marks a turning point in Trinity history
+because a great deal of the code infrastructure was changed. While those changes do not
+effect the usability or look-and-feel of the desktop that users enjoy, Trinity developers
+believe a change in the version scheme distinguishes when those changes occurred. An
+original project goal by users was to retain the flavor of the original KDE 3.5 desktop.
+That goal remains intact. To reflect that original goal, the last number in the original
+version scheme is retained in the new version scheme but is now the primary version number.
+While the infrastructure has changed, the desktop itself remains the same as the original
+KDE 3.5. This new version scheme indicates a modest divergence from the original KDE 3.5
+series and that Trinity is now its own desktop environment. The new version scheme reminds
+users that Trinity retains the original KDE 3.5 design, but is moving forward as a separate
+desktop project.</para>
 </answer>
 </qandaentry>
 
