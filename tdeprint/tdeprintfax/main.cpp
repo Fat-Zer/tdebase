@@ -47,7 +47,7 @@ static TDECmdLineOptions options[] =
 int main(int argc, char *argv[])
 {
 
-  TDEAboutData aboutData( "tdeprintfax", I18N_NOOP("KdeprintFax"),
+  TDEAboutData aboutData( "tdeprintfax", I18N_NOOP("TDEPrintFax"),
     "1.0", description, TDEAboutData::License_GPL,
     "(c), 2001 Michael Goffioul", 0, "http://printing.kde.org");
   aboutData.addAuthor("Michael Goffioul",0, "tdeprint@swing.be");
