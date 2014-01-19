@@ -150,7 +150,6 @@ Shows license information.
 </para>
 </listitem>
 </varlistentry>
-</variablelist>
 
 <varlistentry>
 <term><userinput><command>kate</command>
@@ -241,6 +240,7 @@ When used, the specified files are treated as temporary files and
 deleted (if they are local files and you have sufficient permissions) when
 closed, unless they are modified since they were opened.</para></listitem>
 </varlistentry>
+</variablelist>
 
 </sect3>
 </sect2>
