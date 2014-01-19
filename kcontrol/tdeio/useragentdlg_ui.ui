@@ -14,7 +14,7 @@
     </property>
     <property name="whatsThis" stdset="0">
         <string>&lt;qt&gt;
-Here you can modify the default browser-identification text or set a site &lt;code&gt;(eg. www.kde.org)&lt;/code&gt; or a domain &lt;code&gt;(eg. kde.org)&lt;/code&gt; specific identification text.&lt;p&gt;
+Here you can modify the default browser-identification text or set a site &lt;code&gt;(eg. www.trinitydesktop.org)&lt;/code&gt; or a domain &lt;code&gt;(eg. trinitydesktop.org)&lt;/code&gt; specific identification text.&lt;p&gt;
 To add a new site specific identification text, click the &lt;code&gt;New&lt;/code&gt; button and supply the necessary information. To change an existing site specific entry, click on the &lt;code&gt;Change&lt;/code&gt; button. The &lt;code&gt;Delete&lt;/code&gt; button will remove the selected site specific identification text, causing the setting to be used for that site or domain.
 &lt;/qt&gt;</string>
     </property>

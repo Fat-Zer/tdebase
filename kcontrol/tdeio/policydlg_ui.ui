@@ -31,7 +31,7 @@
             </property>
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;
-Enter the host or domain to which this policy applies, e.g. &lt;b&gt;www.kde.org&lt;/b&gt; or &lt;b&gt;.kde.org&lt;/b&gt;.
+Enter the host or domain to which this policy applies, e.g. &lt;b&gt;www.trinitydesktop.org&lt;/b&gt; or &lt;b&gt;.trinitydesktop.org&lt;/b&gt;.
 &lt;/qt&gt;</string>
             </property>
         </widget>
@@ -41,7 +41,7 @@ Enter the host or domain to which this policy applies, e.g. &lt;b&gt;www.kde.org
             </property>
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;
-Enter the host or domain to which this policy applies, e.g. &lt;b&gt;www.kde.org&lt;/b&gt; or &lt;b&gt;.kde.org&lt;/b&gt;.
+Enter the host or domain to which this policy applies, e.g. &lt;b&gt;www.trinitydesktop.org&lt;/b&gt; or &lt;b&gt;.trinitydesktop.org&lt;/b&gt;.
 &lt;/qt&gt;</string>
             </property>
         </widget>

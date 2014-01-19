@@ -138,8 +138,7 @@ GeneralWidget::GeneralWidget( TQWidget *parent, const char *name )
         i18n("Sy&nchronize contents of the clipboard and the selection"),
         group );
     TQWhatsThis::add( cbSynchronize,
-      i18n("Selecting this option synchronizes these two buffers, so they "
-           "work the same way as in KDE 1.x and 2.x.") );
+      i18n("Selecting this option synchronizes these two buffers.") );
 
     cbSeparate = new TQRadioButton(
         i18n("Separate clipboard and selection"), group );

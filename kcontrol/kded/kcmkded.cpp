@@ -56,8 +56,8 @@ KDEDConfig::KDEDConfig(TQWidget* parent, const char* name, const TQStringList &)
 	about->addAuthor("Daniel Molkentin",0,"molkentin@kde.org");
 	setAboutData( about );
 
-	setQuickHelp( i18n("<h1>Service Manager</h1><p>This module allows you to have an overview of all plugins of the "
-			"KDE Daemon (KDED), also referred to as TDE Services. Generally, there are two types of service:</p>"
+	setQuickHelp( i18n("<h1>Service Manager</h1><p>This module allows you to have an overview of all plugins "
+			"running as TDE Services. Generally, there are two types of service:</p>"
 			"<ul><li>Services invoked at startup</li><li>Services called on demand</li></ul>"
 			"<p>The latter are only listed for convenience. The startup services can be started and stopped. "
 			"In Administrator mode, you can also define whether services should be loaded at startup.</p>"
