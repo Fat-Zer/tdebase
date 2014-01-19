@@ -272,7 +272,7 @@ tde_conditional_add_subdirectory( BUILD_TQT3INTEGRATION tqt3integration )
 
 if( BUILD_STARTTDE )
   install( PROGRAMS starttde DESTINATION ${BIN_INSTALL_DIR} )
-  install( PROGRAMS migratekde3 r14-xdg-update DESTINATION ${BIN_INSTALL_DIR} )
+  install( PROGRAMS migratekde3 r14-xdg-update release_notes DESTINATION ${BIN_INSTALL_DIR} )
 endif()
 
 

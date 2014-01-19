@@ -13,9 +13,9 @@
   <!ENTITY kcontrolcenter SYSTEM "../kcontrol/index.html" NDATA SGML>
   <!ENTITY kfm SYSTEM "../konqueror/index.html" NDATA SGML>
   <!ENTITY kwm SYSTEM "../kwm/index.html" NDATA SGML>
-  <!ENTITY kde-quickstart-doc SYSTEM "quickstart/index.docbook" NDATA SGML>
-  <!ENTITY kde-userguide-doc SYSTEM "userguide/index.docbook" NDATA SGML>
-  <!ENTITY kde-faq-doc SYSTEM "faq/index.docbook" NDATA SGML>
+  <!ENTITY tde-quickstart-doc SYSTEM "quickstart/index.docbook" NDATA SGML>
+  <!ENTITY tde-userguide-doc SYSTEM "userguide/index.docbook" NDATA SGML>
+  <!ENTITY tde-faq-doc SYSTEM "faq/index.docbook" NDATA SGML>
   <!-- HTML files will probably only work when they have an olink equivalent
 available, unless only references to the top page are needed, which is doubtful.
 
