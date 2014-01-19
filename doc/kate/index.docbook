@@ -24,6 +24,7 @@
 <author>&Anders.Lund; &Anders.Lund.mail;</author>
 <author>&Seth.Rothberg; &Seth.Rothberg.mail;</author>
 <author>&Dominik.Haumann; &Dominik.Haumann.mail;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
@@ -42,7 +43,7 @@
 </copyright>
 <copyright>
 <year>&tde-copyright-date;</year>
-<holder>The &tde; Team</holder>
+<holder>&tde-team;</holder>
 </copyright>
 
 <legalnotice>&FDLNotice;</legalnotice>
@@ -123,7 +124,7 @@ configuration files.  This document was written in &kate;.
 &kate;. Program copyright 2000, 2001, 2002 - 2005 by the &kate; developer team.
 </para>
 <para>
-&kate;. Program copyright &tde-copyright-date; by the &tde; Team.
+&kate;. Program copyright &tde-copyright-date; by &tde-team;.
 </para>
 
 <variablelist>
@@ -245,7 +246,7 @@ documentation</para></listitem>
 <para>Documentation copyright 2002, 2003, 2005 &Anders.Lund;
 &Anders.Lund.mail;</para>
 
-<para>Documentation copyright &tde-copyright-date; The &tde; Team.</para>
+<para>Documentation copyright &tde-copyright-date; &tde-team;.</para>
 <!-- TRANS:CREDIT_FOR_TRANSLATORS -->
 
 &underFDL;               <!-- FDL: do not remove -->

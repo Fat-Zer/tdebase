@@ -10,8 +10,8 @@
 <para>
 If you have ever used a text editor, you will have no problem using
 &kate;. In the next two sections, <link linkend="starting-kate">Starting
-&kate; </link> and in <link linkend="working-with-kate">Working with
-&kate;</link>, we'll show you everything you need to get up and running
+&kate; </link> and <link linkend="working-with-kate">Working with
+&kate;</link>, you will find everything you need to get up and running
 quickly.
 </para>
 
@@ -27,7 +27,7 @@ command line.
 <title>From the Menu</title>
 <para>
 Open the &tde; program menu by clicking on the
-<guiicon>big K</guiicon> icon on the toolbar at the bottom left of your
+<guiicon>big T</guiicon> icon on the toolbar at the bottom left of your
 screen. This will raise the <guimenu>program menu</guimenu>. Move your
 cursor up the menu to the <menuchoice><guimenu>Utilities</guimenu>
 <guimenuitem>Editors</guimenuitem></menuchoice> menu item. A list
@@ -59,19 +59,19 @@ file.
 </informalexample>
 
 <para>
-If you have an active connection, and permission, you can take advantage
+If you have an active connection and permission, you can take advantage
 of &tde;'s network transparency to open files on the internet.
 </para>
 
 <informalexample>
 <screen>
-<prompt>%</prompt><userinput><command>kate</command> <option><replaceable>ftp://ftp.kde.org/pub/kde/README_FIRST</replaceable></option></userinput>
+<prompt>%</prompt><userinput><command>kate</command> <option><replaceable>http://git.trinitydesktop.org/cgit/tdebase/plain/doc/kate/index.docbook</replaceable></option></userinput>
 </screen>
 </informalexample>
 
 <sect3 id="command-line-options">
 <title>Command Line Options</title>
-<para>&kate; accepts following command line options:</para>
+<para>&kate; accepts the following command line options:</para>
 
 <variablelist>
 <varlistentry>
@@ -88,99 +88,27 @@ This lists the most basic options available at the command line.
 <option>--help-qt</option></userinput></term>
 <listitem>
 <para>
-This lists the options available for changing the way &kate; interacts
-with &Qt;.
+This lists the options available for changing the way &kate; interacts with &Qt;.
 </para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term><userinput><command>kate</command> <option>--help-kde</option></userinput></term>
+<term><userinput><command>kate</command> <option>--help-tde</option></userinput></term>
 <listitem>
 <para>
-This lists the options available for changing the way &kate; interacts
-with &tde;.
+This lists the options available for changing the way &kate; interacts with &tde;.
 </para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term><userinput><command>kate</command>
-<option>-s</option> <option>--start</option> <parameter>name</parameter></userinput></term>
+<term><userinput><command>kate</command> <option>--help-tde-tempfile</option></userinput></term>
 <listitem>
 <para>
-Starts kate with the session <parameter>name</parameter>. The session is created
-if it does not exist already. If a &kate; instance running the specified session
-exists, the specified files are loaded in that instance. When used with the
-<option>--use</option> option, an instance running this session will be used as
-well.
+This lists the available &tde;-tempfile specific options.
 </para>
 </listitem>
-</varlistentry>
-
-<varlistentry>
-<term><userinput><command>kate</command>
-<option>-u</option> <option>--use</option> <parameter>URL</parameter></userinput></term>
-<listitem>
-<para>
-Causes &kate; to use and existing instance if there is one. If you want all
-documents to open in one kate instance, you can add this option to the default
-command in your kde application configuration, as well as create a shell alias
-in your command intepreter if it supports that.
-</para>
-</listitem>
-</varlistentry>
-
-<varlistentry>
-<term><userinput><command>kate</command>
-<option>-p</option> <option>--pid</option> <parameter>PID</parameter></userinput></term>
-<listitem>
-<para>
-Only reuses an instance with the specified PID (Process ID). Used with the
-<option>--use</option> option.
-</para>
-</listitem>
-</varlistentry>
-
-<varlistentry>
-<term><userinput><command>kate</command>
-<option>--encoding</option> <parameter>encoding</parameter>
-<parameter>URL</parameter></userinput></term>
-<listitem><para>Uses the specified encoding for the document.
-</para></listitem>
-</varlistentry>
-
-<varlistentry>
-<term><userinput><command>kate</command>
-<option>--line</option> <parameter>line</parameter>
-<parameter>URL</parameter></userinput></term>
-<listitem><para>Navigates to the specified line after opening the document.
-</para></listitem>
-</varlistentry>
-
-<varlistentry>
-<term><userinput><command>kate</command>
-<option>--column</option> <parameter>column</parameter>
-<parameter>URL</parameter></userinput></term>
-<listitem><para>Navigates to the specified column after opening the document.
-</para></listitem>
-</varlistentry>
-
-<varlistentry>
-<term><userinput><command>kate</command>
-<option>--stdin</option></userinput></term>
-<listitem><para>Reads the document content from STDIN. This
-is similar to the common option <option>-</option> used in many command line
-programs, and allows you to pipe command output into &kate;.</para></listitem>
-</varlistentry>
-
-<varlistentry>
-<term><userinput><command>kate</command>
-<option>--tempfile</option></userinput></term>
-<listitem><para>Since &kate; 2.5.1 this standard &tde; option is supported.
-When used, the specified files are treated as temporary files and
-deleted (if they are local files and you have sufficient permissions) when
-closed, unless they are modified since they were opened.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -223,6 +151,97 @@ Shows license information.
 </listitem>
 </varlistentry>
 </variablelist>
+
+<varlistentry>
+<term><userinput><command>kate</command>
+<option>-s</option> <option>--start</option> <parameter>name</parameter></userinput></term>
+<listitem>
+<para>
+Starts kate with the session <parameter>name</parameter>. The session is created
+if it does not exist already. If a &kate; instance running the specified session
+exists, the specified files are loaded in that instance. When used with the
+<option>--use</option> option, an instance running this session will be used as
+well.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>kate</command>
+<option>-u</option> <option>--use</option> <parameter>URL</parameter></userinput></term>
+<listitem>
+<para>
+Causes &kate; to use and existing instance if there is one. If you want all
+documents to open in one kate instance, you can add this option to the default
+command in your &tde; application configuration, as well as create a shell alias
+in your command intepreter if it supports that.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>kate</command>
+<option>-f</option> <option>--force-sdi</option> </userinput></term>
+<listitem>
+<para>
+If the multiple document interface (MDI) setting is enabled, forces &kate; to
+use the single document interface (SDI) mode.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>kate</command>
+<option>-p</option> <option>--pid</option> <parameter>PID</parameter></userinput></term>
+<listitem>
+<para>
+Only reuses an instance with the specified PID (Process ID). Used with the
+<option>--use</option> option.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>kate</command>
+<option>-e</option> <option>--encoding</option> <parameter>encoding</parameter>
+<parameter>URL</parameter></userinput></term>
+<listitem><para>Uses the specified encoding for the document.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>kate</command>
+<option>-l</option> <option>--line</option> <parameter>line</parameter>
+<parameter>URL</parameter></userinput></term>
+<listitem><para>Navigates to the specified line after opening the document.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>kate</command>
+<option>-c</option> <option>--column</option> <parameter>column</parameter>
+<parameter>URL</parameter></userinput></term>
+<listitem><para>Navigates to the specified column after opening the document.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>kate</command>
+<option>-i</option> <option>--stdin</option></userinput></term>
+<listitem><para>Reads the document content from STDIN. This
+is similar to the common option <option>-</option> used in many command line
+programs, and allows you to pipe command output into &kate;.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>kate</command>
+<option>--tempfile</option></userinput></term>
+<listitem><para>Since &kate; 2.5.1 this standard &tde; option is supported.
+When used, the specified files are treated as temporary files and
+deleted (if they are local files and you have sufficient permissions) when
+closed, unless they are modified since they were opened.</para></listitem>
+</varlistentry>
+
 </sect3>
 </sect2>
 
@@ -288,21 +307,8 @@ flexibility.  In this section we'll look at three items:
 </term>
 <listitem>
 <para>
-Toggles the Documents on and off. If the Documents/Filesystem Browser window is
-not open, &kate; launches the side bar as a separate, undocked,
-window. To dock the window grab the two thin parallel lines above the
-tabs by clicking on them with your &LMB; and holding the button
-down. Drag the the window into &kate;'s editing window and release the
-&LMB; when you have positioned the Documents/Filesystem Browser window as you
-prefer.
-</para>
-
-<tip>
-<para>
-If you have grabbed the two parallel lines successfully your mouse
-pointer will turn into two crossed arrows as you drag.
-</para>
-</tip>
+Toggles the Documents on and off. If the Documents/Filesystem Browser side bar 
+window is not open, &kate; will open the side bar window.</para>
 
 </listitem>
 </varlistentry>
@@ -411,11 +417,11 @@ text)</para></entry>
 </row>
 <row>
 <entry><para><keycombo action="simul">&Ctrl;<keycap>F</keycap></keycombo></para></entry>
-<entry><para><link linkend="find"> Find</link></para></entry>
+<entry><para><link linkend="kate-part-find-replace">Find</link></para></entry>
 </row>
 <row>
 <entry><para><keycombo action="simul"><keycap>F3</keycap></keycombo></para></entry>
-<entry><para><link linkend="find-again"> Find again</link></para></entry>
+<entry><para>Find again</para></entry>
 </row>
 <row>
 <entry><para><keycombo action="simul">&Ctrl;<keycap>B</keycap></keycombo></para></entry>
@@ -441,7 +447,7 @@ text)</para></entry>
 </row>
 <row>
 <entry><para><keycombo action="simul">&Ctrl;<keycap>R</keycap></keycombo></para></entry>
-<entry><para><link linkend="replace"> Replace</link></para></entry>
+<entry><para><link linkend="kate-part-find-replace">Replace</link></para></entry>
 </row>
 <row>
 <entry><para><keycombo action="simul">&Ctrl;<keycap>S</keycap></keycombo></para></entry>
@@ -458,11 +464,11 @@ text)</para></entry>
 </row>
 <row>
 <entry><para><keycombo action="simul">&Ctrl;<keycap>Z</keycap></keycombo></para></entry>
-<entry><para><link linkend="undo">Undo</link></para></entry>
+<entry><para><link linkend="edit-undo">Undo</link></para></entry>
 </row>
 <row>
 <entry><para><keycombo action="simul">&Ctrl;&Shift;<keycap>Z</keycap></keycombo></para></entry>
-<entry><para><link linkend="redo">Redo</link></para></entry>
+<entry><para><link linkend="edit-redo">Redo</link></para></entry>
 </row>
 </tbody>
 </tgroup>
@@ -514,14 +520,14 @@ the start of the window title, which then have the form
 <para>When opening files on the command line with <option>--start
 <replaceable>name</replaceable></option> or if a session is selected using the
 session chooser, the specified session is loaded prior to the files specified
-on the command line. To open files from the commandline in a new, unnamed
-session, configure kate to start a new session pr default in the session page of
+on the command line. To open files from the command line in a new, unnamed
+session, configure kate to start a new session per default in the session page of
 the configuration dialog or use <option>--start</option> with an empty string:
 <replaceable>''</replaceable>.</para>
 
 <para>Since &kate; 2.5.1 the <acronym>PID</acronym> of the current instance is
 exported to the environment variable <envar>KATE_PID</envar>. When opening files
-from the built in terminal Kate will automatically select the current instance
+from the built in terminal, Kate will automatically select the current instance
 if nothing else is indicated on the command line.</para>
 
 <sect2 id="old-behavior">
@@ -533,7 +539,7 @@ However, if you prefer the old &kate; behavior (one instance opens all files),
 you can easily achieve that by following this simple strategy:
 
 <itemizedlist>
-<listitem><para>Make kate allways start with the <option>--use</option>
+<listitem><para>Make &kate; always start with the <option>--use</option>
 parameter by adding that to the command in the application preferences,
 and additionally using a shell alias.</para></listitem>
 <listitem><para>Configure &kate; to load the last used session at startup.</para>
@@ -552,9 +558,6 @@ and additionally using a shell alias.</para></listitem>
 
 <title>Getting Help</title>
 
-<sect2>
-
-<title>With &kate;</title>
 <variablelist>
 
 <varlistentry>
@@ -562,13 +565,13 @@ and additionally using a shell alias.</para></listitem>
 
 <listitem>
 <para>Offers detailed documentation on all menu commands,
-configuration options, tools, dialogs, plugins &etc; as well as
-descriptions of of the &kate; window, the editor and various concepts
+configuration options, tools, dialogs, plugins &etc; as well as a
+description of the &kate; window, the editor and various concepts
 used in the application.</para>
 
 <para>Press <keycap>F1</keycap> or use the
-<menuchoice><guimenu>Help</guimenu></menuchoice>
-<guisubmenu>Contents</guisubmenu> menu topic to view this
+<menuchoice><guimenu>Help</guimenu>
+<guimenuitem>Kate handbook</guimenuitem></menuchoice> menu topic to view this
 manual.</para></listitem>
 
 </varlistentry>
@@ -576,19 +579,19 @@ manual.</para></listitem>
 <varlistentry id="whats-this">
 <term>What's This Help</term>
 <listitem>
-<para>What's This help offers immediate help with single elements of
+<para>What's This Help offers immediate help with single elements of
 graphical windows, such as buttons or other window areas.</para>
 
-<para>We strive to provide What's This help for any elements for which
+<para>We strive to provide What's This Help for any element for which
 it makes sense. It is available throughout the configuration dialog,
 and in many other dialogs as well.</para>
 
-<para>To employ What's This help, press
+<para>To employ What's This Help, press
 <keycombo>&Shift;<keycap>F1</keycap></keycombo> or use the
 <menuchoice><guimenu>Help</guimenu><guimenuitem>What's
 This</guimenuitem></menuchoice> menu item to enable What's This
 mode. The cursor will turn into an arrow with a question mark, and you
-can now click any element in the window to read the What's This help
+can now click any element in the window to read the What's This Help
 for that element, if it is available.</para>
 </listitem>
 </varlistentry>
@@ -602,19 +605,6 @@ documentation.</para>
 </listitem>
 </varlistentry>
 </variablelist>
-
-</sect2>
-
-<sect2>
-<title>With Your Text Files</title>
-
-<para>&kate; does not (yet!) provide any means for reading document
-related documentation. Depending on the file you are editing, you may
-find the <link linkend="kate-mdi-tools-konsole">Built in
-&konsole;</link> helpful for viewing related &UNIX; manual pages or
-info documentation, or you can use &konqueror;.</para>
-
-</sect2>
 
 </sect1>
 
