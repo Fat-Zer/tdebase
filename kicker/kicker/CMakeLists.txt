@@ -23,7 +23,10 @@ include_directories(
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS} )
 
-link_directories( ${TQT_LIBRARY_DIRS} )
+link_directories(
+  ${TQT_LIBRARY_DIRS}
+  ${DBUS_TQT_LIBRARY_DIRS}
+)
 
 
 ##### other data ################################
