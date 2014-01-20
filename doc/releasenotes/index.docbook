@@ -12,10 +12,7 @@
 <title>&tde-release-version; Release Notes</title>
 
 <authorgroup>
-
-<author>
-<surname>The &tde; Team</surname>
-</author>
+<corpauthor>&tde-team;</corpauthor>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
@@ -24,7 +21,7 @@
 
 <copyright>
 <year>&tde-copyright-date;</year>
-<holder>The &tde; Team</holder>
+<holder>&tde-team;</holder>
 </copyright>
 
 <!-- <legalnotice>&FDLNotice;</legalnotice> -->

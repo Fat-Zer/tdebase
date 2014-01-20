@@ -55,30 +55,29 @@
 ]>
 
 <book lang="&language;">
+
 <bookinfo>
+
 <title>The &tde; (Trinity Desktop Environment) User Guide</title>
 
 <authorgroup>
-<corpauthor>
-The &tde; Documentation Team
-</corpauthor>
-
+<corpauthor>&tde-team;</corpauthor>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
 <copyright>
 <year>2004-2005</year>
-<holder>The &kde; Documentation Team</holder>
+<holder>The &kde; Team</holder>
 </copyright>
 <copyright>
 <year>&tde-copyright-date;</year>
-<holder>The &tde; Documentation Team</holder>
+<holder>&tde-team;</holder>
 </copyright>
 
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>&tde-release-version;</date>
-<releaseinfo>&tde-release-date;</releaseinfo>
+<date>&tde-release-date;</date>
+<releaseinfo>&tde-release-version;</releaseinfo>
 
 <abstract>
 <para>A general user guide to the Trinity Desktop Environment.

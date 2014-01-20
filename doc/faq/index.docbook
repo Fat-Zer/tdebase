@@ -1,6 +1,5 @@
 <?xml version="1.0" ?>
-<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
- "dtd/kdex.dtd" [
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
   <!ENTITY kappname "&tde; Frequently Asked Questions">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
@@ -34,11 +33,8 @@
 <title>&tde; Frequently Asked Questions</title>
 
 <authorgroup>
-<author>
-<surname>The &tde; Team</surname>
-</author>
+<corpauthor>&tde-team;</corpauthor>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
-
 </authorgroup>
 
 <copyright>
@@ -47,7 +43,7 @@
 </copyright>
 <copyright>
 <year>&tde-copyright-date;</year>
-<holder>The &tde; Team</holder>
+<holder>&tde-team;</holder>
 </copyright>
 
 <legalnotice>&FDLNotice;</legalnotice>

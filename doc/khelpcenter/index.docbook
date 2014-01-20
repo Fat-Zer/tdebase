@@ -1,6 +1,5 @@
 <?xml version="1.0" ?>
-<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
-"customization/dtd/kdex.dtd" [
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
   <!ENTITY contact SYSTEM "contact.docbook">
   <!ENTITY help SYSTEM "help.docbook">
   <!ENTITY support SYSTEM "support.docbook">
@@ -37,7 +36,7 @@ a way round it. (FF) -->
 <bookinfo>
 <title>The Trinity Help Center</title>
 <authorgroup>
-<corpauthor>The &tde; Team</corpauthor>
+<corpauthor>&tde-team;</corpauthor>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 <date>&tde-release-date;</date>

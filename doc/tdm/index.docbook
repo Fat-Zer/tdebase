@@ -18,9 +18,9 @@
 <title>The &tdm; Handbook</title>
 
 <authorgroup>
-<corpauthor>
-The &tde; Documentation Team
-</corpauthor><!-- 
+<corpauthor>&tde-team;</corpauthor>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+<!--
 <othercredit role="developer">
 &Oswald.Buddenhagen; &Oswald.Buddenhagen.mail;
 <contrib>Developer</contrib>
