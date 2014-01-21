@@ -2,6 +2,7 @@
 <chapterinfo>
 <authorgroup>
 <author>&Anders.Lund; &Anders.Lund.mail;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 </chapterinfo>
@@ -32,7 +33,7 @@ work with your documents.</para>
 windows:</para>
 
 <itemizedlist>
-<listitem><para><link linkend="kate-mdi-tools-file-list">The File List</link></para></listitem>
+<listitem><para><link linkend="kate-mdi-tools-document-list">The Document List</link></para></listitem>
 <listitem><para><link linkend="kate-mdi-tools-file-selector">The Filesystem
 Browser</link></para></listitem>
 <listitem><para><link linkend="kate-mdi-tools-konsole">The Built in Terminal Emulator</link></para></listitem>
@@ -41,13 +42,16 @@ Browser</link></para></listitem>
 <para>And possibly other tool views, for example provided by
 plugins.</para>
 
-<para>Tool views can be positioned in any sidebar, to move a tool right click
-its sidebar button and select from the &RMB; menu</para>
+<para>Tool views can be positioned in any sidebar. To move a tool, right click its
+sidebar button and select the destination sidebar from the <guimenu>Move to</guimenu> menu that appears.</para>
 
-<para>A tool view can be marked as <emphasis>persistent</emphasis> in the &RMB;
-menu for its sidebar button. The sidebar can contain
-more tools at one time so that when a tool is persistant other tools can be
-shown simultaneously.</para>
+<para>A tool view can be marked as <emphasis>persistent</emphasis>. Selecting another
+tool view in the same sidebar will not hide any of the persistent tool views.
+To make a tool view persistent, right click its sidebar button and select the
+"Make persistent" entry from the <guimenu>Behavior</guimenu> menu that appears.</para>
+ 
+<para>Each sidebar can contain more than one tool, so when a tool is persistant
+other tools can be shown simultaneously.</para>
 
 </sect2>
 
@@ -82,23 +86,25 @@ other will not.</para>
 <para>When splitting an editor into two frames, it is divided into two
 equally sized frames, both displaying the current document of that
 editor. The new frame will be at the bottom (in the case of a
-horizontal split) or at the right (for a vertical split). The new
-frame gets the focus, which is visualized by a small green led in the
-focused frame.</para>
+horizontal split) or at the right (for a vertical split) and will
+get the focus.</para>
+
+<para>Refer to this <link linkend="window-split-vertical">section</link>
+for instructions on how to split the current editor.</para>
 
 </sect1>
 
-<sect1 id="kate-mdi-tools-file-list">
+<sect1 id="kate-mdi-tools-document-list">
 <title>The Document List</title>
 
-<para><indexterm><primary>File list</primary></indexterm>
-The file list displays a list of all documents currently open in
+<para><indexterm><primary>Document list</primary></indexterm>
+The document list displays a list of all documents currently open in
 &kate;. Modified files will have a small <guiicon>floppy
 disk</guiicon> icon on their left to indicate that state.</para>
 
 <para>If two or more files with the same name (located in different
-folders) are open, the names of the second will be prepended
-<quote>&lt;2&gt;</quote> and so on. The tool-tip for the file will
+folders) are open, the name of the second will be appended with
+<quote>(2)</quote> and so on. The tool-tip for the file will
 display its full name including the path, allowing you to choose the
 desired one.</para> <para>To display a document in the currently
 active frame, click the document name in the list.</para>
@@ -106,12 +112,12 @@ active frame, click the document name in the list.</para>
 <para>You can sort the list in a few different ways by rightclicking the
 list and selecting from the <guisubmenu>Sort By</guisubmenu> menu.
 
-The options are
+The options are:
 <variablelist>
 
 <varlistentry>
 <term><guimenuitem>Opening Order</guimenuitem></term>
-<listitem><para>Lists the documents in the order of opening</para></listitem>
+<listitem><para>Lists the documents in the order of opening.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -124,11 +130,16 @@ The options are
 <listitem><para>Lists the documents alphabetically by URL.</para></listitem>
 </varlistentry>
 
+<varlistentry>
+<term><guimenuitem>Manual Placement</guimenuitem></term>
+<listitem><para>Allows you to specify the order of the documents. You can change the order by dragging files up/down the list.</para></listitem>
+</varlistentry>
+
 </variablelist>
 
 </para>
 
-<para>The document list will pr default visualize your history by shading the
+<para>The document list will per default visualize your history by shading the
 entries for the most recent documents with a background color. If the document
 was edited, an extra color is blended in. The most recent document has the
 strongest color, so that you can easily find the documents you are working on.
@@ -136,8 +147,9 @@ This feature can be disabled in
 <link linkend="config-dialog-documentlist">The Document List Page</link>
 of the configuration dialog.</para>
 
-<para>The default location in the &kate; window is to the left of the
+<para>The default location of the Document List in &kate; is to the left of the
 editing area.</para>
+
 </sect1>
 
 <sect1 id="kate-mdi-tools-file-selector">
@@ -154,7 +166,8 @@ elements:</para>
 <varlistentry>
 <term>A Toolbar</term>
 <listitem>
-<para>This contains standard navigations tool buttons:</para>
+<para>This contains standard navigations tool buttons (refer to this <link linkend="config-dialog-fileselector">section</link>
+for instructions on how to show/hide individual toolbar buttons):</para>
 <variablelist>
 <varlistentry>
 <term><guibutton>Home</guibutton></term>
@@ -162,29 +175,49 @@ elements:</para>
 </varlistentry>
 <varlistentry>
 <term><guibutton>Up</guibutton></term>
-<listitem><para>This will cause the folder view to <command>cd</command> to the immediate parent of the currently displayed
-folder if possible.</para></listitem>
+<listitem><para>This will cause the folder view to <command>cd</command> to the immediate parent of the currently displayed folder if possible.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><guibutton>Back</guibutton></term>
-<listitem><para>Causes the folder view to <command>cd</command> to the previously displayed folder in the history.
-This button is disabled, if there is no previous item.</para></listitem>
+<listitem><para>Causes the folder view to <command>cd</command> to the previously displayed folder in the history. This button is disabled if there is no previous item.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><guibutton>Forward</guibutton></term>
-<listitem><para>Causes the folder view to <command>cd</command> to the next folder in the history.
-This button is disabled, if there is no next folder.</para></listitem>
+<listitem><para>Causes the folder view to <command>cd</command> to the next folder in the history. This button is disabled if there is no next folder.</para></listitem>
 </varlistentry>
 <varlistentry>
-<term><guibutton>Sync</guibutton></term>
+<term><guibutton>Reload</guibutton></term>
+<listitem><para>Causes the folder view to refresh the current view.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><guibutton>Short View</guibutton></term>
+<listitem><para>The folder view will display only the file and folder names, without further details.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><guibutton>Detailed view</guibutton></term>
+<listitem><para>The folder view will display additional file and folder details (for example size, permission, modification date).</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><guibutton>Bookmarks menu</guibutton></term>
+<listitem><para>A menu displaying your favourite folders for quick access to them.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><guibutton>Current document folder</guibutton></term>
 <listitem><para>This button will cause the folder view to
 <command>cd</command> to the folder of the currently active
-document if possible. This button is disabled, if the active document
-is a new, unsaved file, or the folder in which it resides can not
+document if possible. This button is disabled if the active document
+is a new unsaved file or the folder in which it resides can not
 be decided.</para></listitem>
 </varlistentry>
+<varlistentry>
+<term><guibutton>New folder...</guibutton></term>
+<listitem><para>Pressing this button will create a new subfolder in the current folder.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><guibutton>Delete</guibutton></term>
+<listitem><para>Pressing this button will delete the selected files/folders.</para></listitem>
+</varlistentry>
 </variablelist>
-
 </listitem>
 </varlistentry>
 
@@ -193,10 +226,11 @@ be decided.</para></listitem>
 <listitem>
 <para>Here you can type the path of a folder to browse. The &URL;
 entry maintains a list of previously typed paths. To choose one use
-the arrow button to the right of the entry.</para>
-<tip><para>The &URL; entry has folder auto-completion. The completion
-method can be set using the &RMB; menu of the text
-entry.</para></tip>
+the arrow button to the right of the entry. Refer to this <link linkend="config-dialog-fileselector-urls">section</link>
+to change the number of URLs to remember.</para>
+<tip><para>The &URL; entry has folder auto-completion capability. The completion
+method can be set by right clicking of the &URL; text and selecting the preferred method 
+from the <guimenuitem>Text Completion</guimenuitem> menu.</para></tip>
 </listitem>
 </varlistentry>
 
@@ -209,18 +243,22 @@ entry.</para></tip>
 <term>A Filter Entry</term>
 <listitem>
 <para>The Filter entry allows you to enter a filter for the files
-displayed in the folder view. The filter uses standard globs; patterns
+displayed in the folder view. The filter patterns
 must be separated by white space. Example: <userinput>*.cpp *.h
 *.moc</userinput></para>
 <para>To display all files, enter a single asterisk
-<userinput>*</userinput>.</para>
+<userinput>*</userinput> or no filter at all.</para>
 <para>The filter entry saves the last 10 filters entered between
-sessions, to use one, press the arrow button on the right of the entry
-and select the desired filter string.</para>
+sessions. To use one of them, press the arrow button on the right of the entry
+and select the desired filter string. Refer to this <link linkend="config-dialog-fileselector-filters">section</link>
+to change the number of filter entries to remember.</para>
 </listitem>
 </varlistentry>
 
 </variablelist>
+
+<para>The default location of the Filesystem Browser in &kate; is to the left of the
+editing area.</para>
 
 </sect1>
 
@@ -231,20 +269,19 @@ and select the desired filter string.</para>
 <para><indexterm><primary>Terminal emulator</primary></indexterm>
 The built in Terminal Emulator is a copy of the &tde; &konsole;
 terminal application, for your convenience. It is available from the
-<menuchoice><guimenu>Settings</guimenu><guimenuitem>Show Terminal
-Emulator</guimenuitem></menuchoice> menu item or by pressing the <keycombo
-action="simul"><keycap>F7</keycap></keycombo> key, and will get the focus
-whenever displayed. Additionally, if the <link
-linkend="config-dialog-general-sync-konsole">Sync &konsole; with
-active document</link> option is enabled, it will
-change into the directory of the current document if
-possible when it is displayed, or when the current document
-changes.</para>
+<menuchoice><guimenu>Window</guimenu><guimenuitem>Tool Views</guimenuitem><guimenuitem>Show Terminal</guimenuitem></menuchoice> menu item or by pressing the <guimenu>Terminal</guimenu>
+button in the sidebar where the Terminal Emulator is located, and will receive focus
+when displayed.</para>
+<para>Additionally, if the <link
+linkend="config-dialog-general-sync-konsole">Sync terminal emulator with
+active document</link> option is enabled, if possible it will
+<command>cd</command> into the directory of the current document when it is displayed 
+or when another document is selected.</para>
 
-<para>The default location in the &kate; window is at the bottom,
+<para>The default location of the Terminal Emulator in &kate; is at the bottom,
 below the editing area.</para>
 
-<para>You can configure the &konsole; using its &RMB; menu, for more
+<para>You can configure the Terminal Emulator using its &RMB; menu. For more
 information, see the &konsole; manual.</para>
 
 </sect1>
