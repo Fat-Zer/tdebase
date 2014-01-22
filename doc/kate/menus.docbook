@@ -1016,7 +1016,7 @@ all your selected text follows the indentation mode you choose.</para>
 </menuchoice></term>
 <listitem>
 <para>Causes a realign of the current line or selected lines using the
-indentation mode and indentation settings in the doucment.</para>
+indentation mode and indentation settings in the document.</para>
 </listitem>
 </varlistentry>
 

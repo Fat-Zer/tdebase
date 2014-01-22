@@ -102,7 +102,7 @@ current document in the window title, rather than just the file name.</para>
 <varlistentry>
 <term>
 <anchor id="config-dialog-general-sync-konsole"/>
-<guibutton>Sync Konsole with Active Document</guibutton></term>
+<guibutton>Sync terminal emulator with active document</guibutton></term>
 <listitem><para>This will cause the built-in &konsole; to
 <command>cd</command> into the directory of the active document when
 launched and when a new document gets the focus. If not enabled, you
@@ -266,13 +266,13 @@ browser with the current document by pressing the
 </para></listitem>
 </varlistentry>
 
-<varlistentry>
+<varlistentry id="config-dialog-fileselector-urls">
 <term><guilabel>Remember locations</guilabel></term>
 <listitem><para>Select how long a browsing history you want. The browser does
 only remember individual locations, duplicates are removed.</para></listitem>
 </varlistentry>
 
-<varlistentry>
+<varlistentry id="config-dialog-fileselector-filters">
 <term><guilabel>Remember filters</guilabel></term>
 <listitem><para>Select how many filters you want remembered. Only individually
 distinct filters are remembered, duplicates are removed.</para></listitem>
@@ -291,7 +291,7 @@ filter over sessions.</para>
 </sect2>
 
 <sect2 id="config-dialog-documentlist">
-<title>The <guilabel>Doucment List</guilabel> Page</title>
+<title>The <guilabel>Document List</guilabel> Page</title>
 
 <variablelist>
 <varlistentry>
@@ -299,7 +299,7 @@ filter over sessions.</para>
 <listitem><para>This section allows you to enable or disable the background
 shading visualization of your recent activity, and chose which colors to use if
 enabled. See the section about <link
-linkend="kate-mdi-tools-file-list">The Document List</link> for more about
+linkend="kate-mdi-tools-document-list">The Document List</link> for more about
 this feature.</para></listitem>
 </varlistentry>
 <varlistentry>
