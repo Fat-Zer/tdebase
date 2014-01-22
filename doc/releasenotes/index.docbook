@@ -1,16 +1,13 @@
 <?xml version="1.0" ?>
-<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
-  <!ENTITY kappname "&tde; Release Notes">
-  <!ENTITY package "tdebase">
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
 ]>
 
-<book lang="&language;">
-<bookinfo>
-
+<article id="release-notes" lang="&language;">
 <title>&tde-release-version; Release Notes</title>
 
+<articleinfo>
 <authorgroup>
 <corpauthor>&tde-team;</corpauthor>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
@@ -34,9 +31,10 @@
 <keyword>TDE</keyword>
 <keyword>release notes</keyword>
 </keywordset>
-</bookinfo>
 
-<chapter id="current-release-notes-introduction">
+</articleinfo>
+
+<sect1 id="release-notes-introduction">
 <title>Summary</title>
 
 <para>This  document contains important information for users, developers, and  packagers. This document is
@@ -100,9 +98,7 @@ Application names
 
 <para>An exhaustive list of renaming changes is available at the end of this document.</para>
 
-</chapter>
-
-<chapter id="current-release-notes-project-changes">
+<sect2 id="release-notes-project-changes">
 <title>Project Changes</title>
 
 <itemizedlist>
@@ -128,9 +124,9 @@ Continuing efforts to update locale and translation files.
 
 </itemizedlist>
 
-</chapter>
+</sect2>
 
-<chapter id="current-release-notes-usability-changes">
+<sect2 id="release-notes-usability-changes">
 <title>Usability Changes</title>
 
 <para>Because of the wide-scale renaming efforts, existing KDE3 and 3.5.13.x user profile directories will not
@@ -165,9 +161,9 @@ a package rebuild to change. A second method includes a global menu replacement,
 that explicitly excludes KDE4 apps from the menu. Using that special menu requires administrative privileges to
 update.</para>
 
-</chapter>
+</sect2>
 
-<chapter id="current-release-notes-new-or-improved-features">
+<sect2 id="release-notes-new-or-improved-features">
 <title>New or Improved Features</title>
 
 <itemizedlist>
@@ -232,9 +228,9 @@ Kate syntax highlighting files have been updated and the lookup moved to the TDE
 
 </itemizedlist>
 
-</chapter>
+</sect2>
 
-<chapter id="current-release-notes-new-packages">
+<sect2 id="release-notes-new-packages">
 <title>New Packages</title>
 
 <itemizedlist>
@@ -305,9 +301,9 @@ TorK
 
 </itemizedlist>
 
-</chapter>
+</sect2>
 
-<chapter id="current-release-notes-package-renaming">
+<sect2 id="release-notes-package-renaming">
 <title>Package Renaming</title>
 
 <itemizedlist>
@@ -423,9 +419,9 @@ qca-tls -> tqca-tls
 
 </itemizedlist>
 
-</chapter>
+</sect2>
 
-<chapter id="current-release-notes-application-and-file-renaming">
+<sect2 id="release-notes-application-and-file-renaming">
 <title>Application and File Renaming</title>
 
 <itemizedlist>
@@ -541,9 +537,9 @@ startkde -> starttde
 
 </itemizedlist>
 
-</chapter>
+</sect2>
 
-<chapter id="current-release-notes-environment-variable-renaming">
+<sect2 id="release-notes-environment-variable-renaming">
 <title>Environment Variable Renaming</title>
 
 <itemizedlist>
@@ -620,9 +616,9 @@ KDE_VERSION -> TDE_VERSION
 
 </itemizedlist>
 
-</chapter>
+</sect2>
 
-<chapter id="current-release-notes-class-and-library-renaming">
+<sect2 id="release-notes-class-and-library-renaming">
 <title>Class and Library Renaming</title>
 
 <itemizedlist>
@@ -810,22 +806,15 @@ makekdewidgets -> maketdewidgets
 
 </itemizedlist>
 
-</chapter>
+</sect2>
 
-<chapter id="current-release-notes-thank-you">
+<sect2 id="release-notes-thank-you">
 <title>Thank You!</title>
 
 <para>Thank you for using and supporting &tde;.</para>
 
-</chapter>
+</sect2>
 
-</book>
+</sect1>
 
-<!--
-Local Variables:
-mode: sgml
-sgml-omittag: nil
-sgml-shorttag: t
-End:
--->
-
+</article>
