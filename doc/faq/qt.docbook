@@ -87,10 +87,16 @@ used as an emotional wedge more than a factual observation.</para>
 
 <qandaentry>
 <question>
-<para>Are there plans to migrate &tde; to Qt4?</para>
+<para>Are there plans to migrate &tde; to Qt4 or Qt5?</para>
 </question>
 <answer>
-<para>Not at this time.</para>
+<para>There are no such plans. Porting Trinity to Qt4 is 5 to 10 years of solid work with current project manpower. Indeed, the KDE4 team of developers needed several years to port KDE and they have many more developers.</para>
+
+<para>A fundamental project goal for maintaining Trinity is to keep alive the spirit and functionality of the original KDE3 concepts. Porting to Qt4 does not support that goal. Qt4 functionality is different from Qt3 (now TQt). Those differences conflict with how users want Trinity to function. The Qt4 environment is too different in focus and functionality to be used as the base toolkit of Trinity.</para>
+
+<para>The idea of integrating certain portions of the Qt4 code has not been abandoned. One of the original reasons for the TQt interface layer was to keep open the possibility of adapting portions of Trinity to Qt4. That has already been done. For example, with the qt4-tqt-theme-engine package for Trinity.</para>
+
+<para>More information about the philosophical and design differences between Trinity and KDE4 are available in <xref linkend="trinity-vs-kde4"/> of the FAQ introduction.</para>
 </answer>
 </qandaentry>
 

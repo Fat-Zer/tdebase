@@ -14,10 +14,9 @@
 </question>
 <answer>
 <para>&tde; is the Trinity Desktop Environment. The project was initiated
-by <ulink url="mailto:ettrich@kde.org">Matthias Ettrich</ulink> in
-1996 and originally called the K Desktop Environment. The aim of the &tde; project is to connect the
-power of the &UNIX; operating systems with the comfort of a modern user
-interface.</para>
+by Matthias Ettrich in 1996 and originally called the K Desktop Environment.
+The aim of the &tde; project is to connect the power of the &UNIX; operating
+systems with the comfort of a modern user interface.</para>
 <para>For additional information about &tde;, check the Trinity web site at
 <ulink url="http://www.trinitydesktop.org/about.php">About Trinity</ulink></para>
 </answer>
@@ -142,7 +141,7 @@ desktop project.</para>
 </qandaentry>
 
 <qandaentry>
-<question>
+<question id="trinity-vs-kde4">
 <para>How is Trinity different from KDE4?</para>
 </question>
 <answer>
