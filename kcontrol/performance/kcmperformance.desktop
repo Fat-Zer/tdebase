@@ -2,7 +2,7 @@
 Icon=launch
 Type=Application
 Exec=tdecmshell kcmperformance
-
+DocPath=kcontrol/performance/index.html
 
 X-TDE-Library=performance
 X-TDE-FactoryName=performance
@@ -144,7 +144,7 @@ Comment[ta]=TDE செயல்திறனை அதிகப்படுத்
 Comment[tg]= Танзимоте ки метавонанд амалкарди TDE-ро беҳбуд бахшанд, танзим кунед
 Comment[th]=ปรับแต่งตั้งค่าที่จะช่วยปรับประสิทธิภาพของ TDE
 Comment[tr]=TDE'nin performansını artıracak ayarlamaları yap
-Comment[tt]=TDE citezlegen arttıra ala torğan köyläwlär 
+Comment[tt]=TDE citezlegen arttıra ala torğan köyläwlär
 Comment[uk]=Налаштування параметрів для покращання швидкодії TDE
 Comment[uz]=TDE unumdorligini oshirishi mumkin boʻlgan moslamalarni moslash
 Comment[uz@cyrillic]=TDE унумдорлигини ошириши мумкин бўлган мосламаларни мослаш
