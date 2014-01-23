@@ -2,7 +2,7 @@
 Icon=launch
 Type=Application
 Exec=tdecmshell kcmkonqyperformance
-
+DocPath=kcontrol/performance/index.html#konqueror-performance
 
 X-TDE-Library=performance
 X-TDE-FactoryName=konqueror

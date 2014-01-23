@@ -35,7 +35,7 @@ installed on feel more responsive.</para>
 <para>This module is divided into two tabs.</para>
 
 
-<sect2><title>&konqueror; performance options</title>
+<sect2 id="konqueror-performance"><title>&konqueror; performance options</title>
 <sect3><title>&konqueror; instances</title>
 <para>The first section of this dialog is labeled <guilabel>Minimize Memory Usage</guilabel> and has three options which determine maximum number of instances of &konqueror; that can be open on one machine at any one time.</para>
 
@@ -75,7 +75,7 @@ This means that the next time a user wants &konqueror; loaded, it is nearly inst
 <para>The final checkbox labeled <guilabel>Always try to have at least one preloaded instance</guilabel> signals to &tde; that you always want &tde; to have one preloaded, but not used, instance of &konqueror; available.  This option will actually decrease performance on some machines (especially those with limited physical memory).</para>
 </sect3>
 </sect2>
-<sect2><title>&tde; system performance options</title>
+<sect2 id="system-performance"><title>&tde; system performance options</title>
 <para>Click on the tab labeled <guilabel>System</guilabel>.</para>
 <para>Currently there is only one option labeled <guilabel>Disable system configuration startup check</guilabel>.
 </para>
