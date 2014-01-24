@@ -753,7 +753,7 @@ when possible.</para>
 </listitem>
 </varlistentry>
 
-<varlistentry>
+<varlistentry id="config-dialog-editor-selection-mode">
 <term><guilabel>Selection Mode</guilabel></term>
 <listitem>
 <variablelist>
@@ -823,7 +823,7 @@ will automatically start a new line of text when  the current line reaches the
 length specified by the <link linkend="config-dialog-editor-wrap-words-at">Wrap Words
 At:</link> option.</para>
 <variablelist>
-<varlistentry>
+<varlistentry id="config-dialog-editor-enable-static-word-wrap">
 <term><guilabel>Enable static word wrap</guilabel></term>
 <listitem>
 <para>Turns static word wrap on or off.</para>
@@ -841,7 +841,7 @@ font.</para>
 </listitem>
 </varlistentry>
 <varlistentry id="config-dialog-editor-wrap-words-at">
-<term><guilabel>Wrap words at:</guilabel></term>
+<term><guilabel>Wrap words at</guilabel></term>
 <listitem>
 <para>If the <link linkend="config-dialog-editor-word-wrap">Word Wrap</link> option is selected
 this entry  determines the length (in characters) at which the editor will
