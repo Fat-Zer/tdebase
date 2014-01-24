@@ -270,12 +270,7 @@ actionCollection());
   about_module = new TDEAction(i18n("About Current Module"), 0, TQT_TQOBJECT(this), TQT_SLOT(aboutModule()), actionCollection(), "help_about_module");
   about_module->setEnabled(false);
 
-  // I need to add this so that each module can get a bug reported,
-  // and not just KControl
-  if (KCGlobal::isInfoCenter())
-    createGUI("kinfocenterui.rc");
-  else
-    createGUI("kcontrolui.rc");
+  createGUI("kcontrolui.rc");
 
   report_bug = actionCollection()->action("help_report_bug");
   report_bug->setText(i18n("&Report Bug..."));

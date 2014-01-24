@@ -2,12 +2,12 @@
 Exec=tdecmshell xserver
 Icon=kcmx
 Type=Application
-DocPath=kinfocenter/xserver/index.html
+DocPath=kcontrol/xserver/index.html
 
 
 X-TDE-Library=info
 X-TDE-FactoryName=xserver
-X-TDE-ParentApp=kinfocenter
+X-TDE-ParentApp=kcontrol
 
 Name=X-Server
 Name[af]=X-bediener

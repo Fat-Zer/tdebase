@@ -105,29 +105,15 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
     KCONTROL_VERSION, I18N_NOOP("The Trinity Control Center"), TDEAboutData::License_GPL,
     I18N_NOOP("(c) 1998-2004, The TDE Control Center Developers"));
 
-  TDEAboutData aboutKInfoCenter( "kinfocenter", I18N_NOOP("Trinity Info Center"),
-    KCONTROL_VERSION, I18N_NOOP("The Trinity Info Center"), TDEAboutData::License_GPL,
-    I18N_NOOP("(c) 1998-2004, The TDE Control Center Developers"));
-
   TQCString argv_0 = argv[0];
   TDEAboutData *aboutData;
-  if (argv_0.right(11) == "kinfocenter")
-  {
-     aboutData = &aboutKInfoCenter;
-     KCGlobal::setIsInfoCenter(true);
-     kdDebug(1208) << "Running as KInfoCenter!\n" << endl;
-  }
-  else
   {
      aboutData = &aboutKControl;
      KCGlobal::setIsInfoCenter(false);
   }
 
   aboutData->addAuthor("Timothy Pearson", I18N_NOOP("Current Maintainer"), "kb9vqf@pearsoncomputing.net");
-  if (argv_0.right(11) == "kinfocenter")
-    aboutData->addAuthor("Helge Deller", I18N_NOOP("Previous Maintainer"), "deller@kde.org");
-  else
-    aboutData->addAuthor("Daniel Molkentin", I18N_NOOP("Previous Maintainer"), "molkentin@kde.org");
+  aboutData->addAuthor("Daniel Molkentin", I18N_NOOP("Previous Maintainer"), "molkentin@kde.org");
 
   aboutData->addAuthor("Matthias Hoelzer-Kluepfel",0, "hoelzer@kde.org");
   aboutData->addAuthor("Matthias Elter",0, "elter@kde.org");

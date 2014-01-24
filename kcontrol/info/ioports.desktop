@@ -2,13 +2,13 @@
 Exec=tdecmshell ioports
 Icon=kcmmemory
 Type=Application
-DocPath=kinfocenter/ioports/index.html
+DocPath=kcontrol/ioports/index.html
 Categories=Qt;TDE;X-TDE-settings-information;
 
 
 X-TDE-Library=info
 X-TDE-FactoryName=ioports
-X-TDE-ParentApp=kinfocenter
+X-TDE-ParentApp=kcontrol
 
 Name=IO-Ports
 Name[af]=Io-poorte

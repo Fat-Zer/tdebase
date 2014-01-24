@@ -2,12 +2,12 @@
 Exec=tdecmshell partitions
 Icon=kcmpartitions
 Type=Application
-DocPath=kinfocenter/partitions/index.html
+DocPath=kcontrol/partitions/index.html
 
 
 X-TDE-Library=info
 X-TDE-FactoryName=partitions
-X-TDE-ParentApp=kinfocenter
+X-TDE-ParentApp=kcontrol
 
 
 Name=Partitions

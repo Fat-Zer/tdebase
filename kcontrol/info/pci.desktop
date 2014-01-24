@@ -2,12 +2,12 @@
 Exec=tdecmshell pci
 Icon=kcmpci
 Type=Application
-DocPath=kinfocenter/pci/index.html
+DocPath=kcontrol/pci/index.html
 
 
 X-TDE-Library=info
 X-TDE-FactoryName=pci
-X-TDE-ParentApp=kinfocenter
+X-TDE-ParentApp=kcontrol
 
 Name=PCI
 Name[bn]=পি-সি-আই

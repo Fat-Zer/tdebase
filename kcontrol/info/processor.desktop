@@ -2,12 +2,12 @@
 Exec=tdecmshell processor
 Icon=kcmprocessor
 Type=Application
-DocPath=kinfocenter/processor/index.html
+DocPath=kcontrol/processor/index.html
 
 
 X-TDE-Library=info
 X-TDE-FactoryName=cpu
-X-TDE-ParentApp=kinfocenter
+X-TDE-ParentApp=kcontrol
 
 Name=Processor
 Name[af]=Verwerker

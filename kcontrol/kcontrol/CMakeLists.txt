@@ -26,8 +26,7 @@ link_directories(
 
 tde_install_icons()
 install( FILES kcontrolui.rc DESTINATION ${DATA_INSTALL_DIR}/kcontrol )
-install( FILES kinfocenterui.rc DESTINATION ${DATA_INSTALL_DIR}/kinfocenter )
-install( FILES  KControl.desktop kinfocenter.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+install( FILES  KControl.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 
 ##### kcontrol (tdeinit) ########################
@@ -46,5 +45,3 @@ tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK tdehtml-shared
 )
-
-tde_install_symlink( kcontrol ${BIN_INSTALL_DIR}/kinfocenter )

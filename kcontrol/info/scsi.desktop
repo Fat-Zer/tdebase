@@ -2,12 +2,12 @@
 Exec=tdecmshell scsi
 Icon=kcmscsi
 Type=Application
-DocPath=kinfocenter/scsi/index.html
+DocPath=kcontrol/scsi/index.html
 
 
 X-TDE-Library=info
 X-TDE-FactoryName=scsi
-X-TDE-ParentApp=kinfocenter
+X-TDE-ParentApp=kcontrol
 
 Name=SCSI
 Name[af]=Scsi

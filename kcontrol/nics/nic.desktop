@@ -1,13 +1,13 @@
 [Desktop Entry]
 Exec=tdecmshell nic
 Type=Application
-DocPath=kinfocenter/nics/index.html
+DocPath=kcontrol/nics/index.html
 Icon=network
 
 
 X-TDE-Library=nic
 X-TDE-FactoryName=nic
-X-TDE-ParentApp=kinfocenter
+X-TDE-ParentApp=kcontrol
 
 Name=Network Interfaces
 Name[af]=Netwerk Koppelvlakke

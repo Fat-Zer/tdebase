@@ -7,11 +7,11 @@ Type=Application
 # main handbook error message of
 # 'There is no documentation available for /xyz/index.html.'
 # Also disable this key when there exists only a useless template handbook.
-# DocPath=kinfocenter/view1394/index.html
+# DocPath=kcontrol/view1394/index.html
 Exec=tdecmshell kcmview1394
 
 X-TDE-Library=view1394
-X-TDE-ParentApp=kinfocenter
+X-TDE-ParentApp=kcontrol
 
 Name=IEEE 1394 Devices
 Name[af]=IEEE 1394 Toestelle

@@ -2,12 +2,12 @@
 Exec=tdecmshell sound
 Icon=kcmsound
 Type=Application
-DocPath=kinfocenter/sound/index.html
+DocPath=kcontrol/sound/index.html
 
 
 X-TDE-Library=info
 X-TDE-FactoryName=sound
-X-TDE-ParentApp=kinfocenter
+X-TDE-ParentApp=kcontrol
 
 Name=Sound
 Name[af]=Klank

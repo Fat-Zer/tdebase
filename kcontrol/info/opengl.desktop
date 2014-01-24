@@ -3,12 +3,12 @@
 Exec=tdecmshell opengl
 Icon=kcmopengl
 Type=Application
-DocPath=kinfocenter/opengl/index.html
+DocPath=kcontrol/opengl/index.html
 
 
 X-TDE-Library=info
 X-TDE-FactoryName=opengl
-X-TDE-ParentApp=kinfocenter
+X-TDE-ParentApp=kcontrol
 
 Name=OpenGL
 Name[bn]=ওপেন-জি-এল

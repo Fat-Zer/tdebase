@@ -2,13 +2,13 @@
 Exec=tdecmshell devices
 Icon=kcmdevices
 Type=Application
-DocPath=kinfocenter/devices/index.html
+DocPath=kcontrol/devices/index.html
 Categories=Qt;TDE;X-TDE-settings-information;
 
 
 X-TDE-Library=info
 X-TDE-FactoryName=devices
-X-TDE-ParentApp=kinfocenter
+X-TDE-ParentApp=kcontrol
 
 Name=Devices
 Name[af]=Toestelle

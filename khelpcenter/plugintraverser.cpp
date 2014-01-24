@@ -90,8 +90,7 @@ void PluginTraverser::process( DocEntry *entry )
 
     if (entry->khelpcenterSpecial() == "applets" ) {
       mNavigator->insertAppletDocs( mCurrentItem );
-    } else if ( entry->khelpcenterSpecial() == "kinfocenter" ||
-                entry->khelpcenterSpecial() == "kcontrol" ||
+    } else if ( entry->khelpcenterSpecial() == "kcontrol" ||
                 entry->khelpcenterSpecial() == "konqueror" ) {
       mNavigator->insertParentAppDocs( entry->khelpcenterSpecial(), mCurrentItem );
     } else if ( entry->khelpcenterSpecial() == "tdeioslave" ) {

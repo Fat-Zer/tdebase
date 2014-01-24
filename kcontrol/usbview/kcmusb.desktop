@@ -1,11 +1,11 @@
 [Desktop Entry]
 Icon=usb
 Type=Application
-DocPath=kinfocenter/usb/index.html
+DocPath=kcontrol/usb/index.html
 Exec=tdecmshell kcmusb
 
 X-TDE-Library=usb
-X-TDE-ParentApp=kinfocenter
+X-TDE-ParentApp=kcontrol
 
 Name=USB Devices
 Name[af]=USB Toestelle

@@ -37,15 +37,8 @@ kcontrol_la_LDFLAGS = $(all_libraries) -module -avoid-version
 
 rccontroldir = $(kde_datadir)/kcontrol
 rccontrol_DATA = kcontrolui.rc
-rcinfodir = $(kde_datadir)/kinfocenter
-rcinfo_DATA = kinfocenterui.rc
 
-xdg_apps_DATA = KControl.desktop kinfocenter.desktop
-
-install-data-local:
-	@-rm -f $(DESTDIR)$(kde_bindir)/kinfocenter
-	$(mkinstalldirs) $(DESTDIR)$(kde_bindir)
-	@$(LN_S) kcontrol $(DESTDIR)$(kde_bindir)/kinfocenter
+xdg_apps_DATA = KControl.desktop
 
 KDE_ICON=AUTO
 

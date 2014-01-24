@@ -2,13 +2,13 @@
 Exec=tdecmshell dma
 Icon=kcmmemory
 Type=Application
-DocPath=kinfocenter/dma/index.html
+DocPath=kcontrol/dma/index.html
 Categories=Qt;TDE;X-TDE-settings-information;
 
 
 X-TDE-Library=info
 X-TDE-FactoryName=dma
-X-TDE-ParentApp=kinfocenter
+X-TDE-ParentApp=kcontrol
 
 Name=DMA-Channels
 Name[af]=Dma-kanale

@@ -77,7 +77,7 @@ Comment[xh]=Ulwazi malunga nemithetho elandelwayo ekhoyo
 Comment[zh_CN]=可用协议的信息
 Comment[zh_TW]=可用協定的資訊
 Comment[zu]=Ulwazi mayelana nemithetho elandelwayo ekhona
-DocPath=kinfocenter/protocols/index.html
+DocPath=kcontrol/protocols/index.html
 Exec=tdecmshell ioslaveinfo
 Icon=history
 Keywords=Protocol,IO slaves,Slaves,Network,Information,Timeout
@@ -232,6 +232,6 @@ Type=Application
 X-TDE-FactoryName=ioslaveinfo
 X-TDE-Library=ioslaveinfo
 
-X-TDE-ParentApp=kinfocenter
+X-TDE-ParentApp=kcontrol
 
 Categories=Qt;TDE;X-TDE-settings-network;

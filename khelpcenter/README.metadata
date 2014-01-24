@@ -88,7 +88,6 @@ X-TDE-KHelpcenter           string    If this entry is set to one of the
                                                      from the start menu
                                       'scrollkeeper' scrollkeeper docs
                                       'applets'      panel applet docs
-                                      'kinfocenter'  kinfocenter docs
                                       'kcontrol'     kcontrol module docs
                                       'konqueror'    konqueror plugin docs
                                       'tdeioslave'     tdeioslave docs
