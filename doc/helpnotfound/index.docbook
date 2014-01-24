@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE" > <!-- change language only here -->
+]>
+
+<article id="helpnotfound" lang="&language;">
+<title>Help Documentation Not Found</title>
+
+<articleinfo>
+<authorgroup>
+<corpauthor>&tde-team;</corpauthor>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<date>&tde-release-date;</date>
+<releaseinfo>&tde-release-version;</releaseinfo>
+
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+</articleinfo>
+
+<para>The requested help file was not found. &tde; looks for files
+in a location that depends upon how &tde; was installed on your
+computer. There are several possible reasons why no help file
+was found. The document might not exist or might not have
+been installed.</para>
+
+<para>To resolve the problem, first contact the upstream packager.</para>
+
+<para>If no help file exists, then please report this bug using the
+<ulink url="http://bugs.trinitydesktop.org/">TDE Bug Tracker</ulink>.
+</para>
+
+<para>If no help file exists and you are interested in helping further,
+please consider writing the help file. Submitting a basic text file is acceptable.</para>
+
+<para>If no help file exists for your native language, please consider helping with a translation.</para>
+
+<para>Thank you for helping and thank you for your patience.</para>
+
+</article>
