@@ -1,6 +1,5 @@
 <?xml version="1.0" ?>
 <!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
-  <!ENTITY kappname "&kdcop;">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE">
 ]>
@@ -10,10 +9,9 @@
 <!-- remains really short. -->
 
 <article lang="&language;">
-<title>The &kappname; Handbook</title>
+<title>Display Settings</title>
 
 <articleinfo>
-<title>The &kappname; Handbook</title>
 
 <authorgroup>
 <corpauthor>&tde-team;</corpauthor>
@@ -28,11 +26,9 @@
 <holder>&tde-team;</holder>
 </copyright>
 
-<!-- <legalnotice>&FDLNotice;</legalnotice> -->
-
 <abstract>
 <para>
-&kappname; is a graphical DCOP browser/client.
+This handbook describes user-specific display settings.
 </para>
 </abstract>
 
@@ -44,7 +40,7 @@
 
 <sect1 id="apologies">
 <title>We Apologize</title>
-<para>No documentation has yet been written for &kappname;.</para>
+<para>No documentation has yet been written for this module.</para>
 
 <para>If you need help, please check <ulink url="http://www.trinitydesktop.org">The &tde;
 web site</ulink>, submit questions to the <ulink url="http://www.trinitydesktop.org/mailinglist.php">

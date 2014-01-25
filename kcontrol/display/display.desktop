@@ -2,13 +2,7 @@
 Icon=tdescreensaver
 Type=Application
 Exec=tdecmshell display
-# Restore the following key and remove this comment when a help handbook
-# is written. Disabling this key prevents populating the main handbook
-# table of contents with a non-existent document, which results in a
-# main handbook error message of
-# 'There is no documentation available for /xyz/index.html.'
-# Also disable this key when there exists only a useless template handbook.
-# DocPath=kcontrol/kcmdisplay/index.html
+DocPath=kcontrol/display/index.html
 
 X-TDE-Library=display
 X-TDE-FactoryName=display

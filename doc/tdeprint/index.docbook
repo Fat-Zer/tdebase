@@ -73,9 +73,8 @@
 
 <abstract>
 <para>This handbook describes &tdeprint;. &tdeprint; is not a standalone
-program. It is the new printing framework for &tde; 2.2. &tdeprint;
-is an intermediate layer between &tde; (or other) applications and the selected
-(and installed) print subsystem of your OS (&OS;).</para>
+program. &tdeprint; is an intermediate layer between &tde; (or other)
+applications and the selected (and installed) print subsystem of your OS (&OS;).</para>
 </abstract>
 
 <keywordset>
@@ -94,9 +93,8 @@ is an intermediate layer between &tde; (or other) applications and the selected
 <title>Introduction</title>
 
 <para>This handbook describes &tdeprint;. &tdeprint; is not a standalone
-program. It is the new printing framework for &tde; 2.2. &tdeprint;
-is an intermediate layer between &tde; (or other) applications and the selected
-(and installed) print subsystem of your OS (&OS;).</para>
+program. &tdeprint; is an intermediate layer between &tde; (or other)
+applications and the selected (and installed) print subsystem of your OS (&OS;).</para>
 
 <para>It should be noted that both the developer of this application,
 and the author of this document are most familiar with &CUPS; as a

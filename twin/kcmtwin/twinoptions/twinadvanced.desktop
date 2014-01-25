@@ -2,7 +2,7 @@
 Icon=kcmkwm
 Type=Application
 Exec=tdecmshell twinadvanced
-DocPath=kcontrol/windowmanagement/index.html#action-advanced
+DocPath=kcontrol/windowbehavior/index.html#action-advanced
 
 X-TDE-ModuleType=Library
 X-TDE-Library=twinoptions

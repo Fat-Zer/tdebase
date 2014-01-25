@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
-  <!ENTITY kappname "&kdcop;">
+  <!ENTITY kappname "&tdeprintfax;">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE">
 ]>
@@ -32,7 +32,7 @@
 
 <abstract>
 <para>
-&kappname; is a graphical DCOP browser/client.
+&kappname; is a small fax utility to be used with TDEPrint.
 </para>
 </abstract>
 

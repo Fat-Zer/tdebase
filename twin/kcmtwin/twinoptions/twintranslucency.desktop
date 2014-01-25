@@ -2,7 +2,7 @@
 Icon=kcmkwm
 Type=Application
 Exec=tdecmshell twintranslucency
-DocPath=kcontrol/windowmanagement/index.html#action-translucency
+DocPath=kompmgr/index.html
 
 X-TDE-ModuleType=Library
 X-TDE-Library=twinoptions

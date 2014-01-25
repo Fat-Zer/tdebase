@@ -2,7 +2,7 @@
 Icon=kcmkwm
 Type=Application
 Exec=tdecmshell twinfocus
-DocPath=kcontrol/windowmanagement/index.html#action-focus
+DocPath=kcontrol/windowbehavior/index.html#action-focus
 
 X-TDE-ModuleType=Library
 X-TDE-Library=twinoptions
