@@ -33,7 +33,7 @@ SystemWidget::SystemWidget( TQWidget* parent_P )
     TQString tmp =
         i18n( "<p>During startup TDE needs to perform a check of its system configuration"
               " (mimetypes, installed applications, etc.), and in case the configuration"
-              " has changed since the last time, the system configuration cache (KSyCoCa)"
+              " has changed since the last time, the system configuration cache (TDESyCoCa)"
               " needs to be updated.</p>"
               "<p>This option delays the check, which avoid scanning all directories containing"
               " files describing the system during TDE startup, thus"
