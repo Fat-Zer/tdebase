@@ -1,60 +1,128 @@
 <?xml version="1.0" ?>
-<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
+"dtd/kdex.dtd" [
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE">
 ]>
 
-<!-- Note: When updating this empty handbook, remember that usually most handbooks -->
-<!-- use the book model rather than article. Feel free to use article if the new handbook -->
-<!-- remains really short. -->
-
 <article lang="&language;">
-<title>Theme Manager</title>
 
 <articleinfo>
+<title>Theme Manager</title>
 
 <authorgroup>
-<corpauthor>&tde-team;</corpauthor>
+<author>
+<firstname>Andrew</firstname>
+<surname>Lake</surname></author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
-<releaseinfo>&tde-release-version;</releaseinfo>
-<date>Reviewed: &tde-release-date;</date>
-
+<copyright>
+<year>2010</year>
+<holder>Andrew Lake</holder>
+</copyright>
 <copyright>
 <year>&tde-copyright-date;</year>
 <holder>&tde-team;</holder>
 </copyright>
 
-<abstract>
-<para>
-This handbook describes the Theme Manager.
-</para>
-</abstract>
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
 
 <keywordset>
 <keyword>TDE</keyword>
+<keyword>System Settings</keyword>
+<keyword>desktop</keyword>
+<keyword>theme</keyword>
 </keywordset>
 
 </articleinfo>
 
-<sect1 id="apologies">
-<title>We Apologize</title>
-<para>No documentation has yet been written for this module.</para>
+<sect1 id="thememanager">
+<title>Theme Manager</title>
 
-<para>If you need help, please check <ulink url="http://www.trinitydesktop.org">The &tde;
-web site</ulink>, submit questions to the <ulink url="http://www.trinitydesktop.org/mailinglist.php">
-&tde; mail lists</ulink>, or file a bug report at the <ulink url="http://bugs.trinitydesktop.org/">
-&tde; bug tracker</ulink>.</para>
+<sect2 id="thememanager-introduction">
+<title>Introduction</title>
 
-<para>If you are interested in helping, please consider writing the help file.
-Submitting a basic text file is acceptable as the &tde-team; will convert the text.</para>
+<para>Use this module to customize your desktop theme and to replace theme items
+with items from other themes or from files.</para>
 
-<para>Thank you for helping and thank you for your patience.</para>
+<para>A &tde; desktop theme uses several components or items. Desktop theme components
+include the background, colors, widget style, icons, fonts, and the screen saver.</para>
 
-&underFDL;
+<para>This module supports four basic functions: 1) applying themes, 2) installing themes,
+3) creating new themes, and 4) removing themes.</para>
+
+</sect2>
+
+<sect2 id="thememanager-applytheme">
+<title>Apply A Theme</title>
+
+<para>In the <guibutton>Themes</guibutton> list box on the left is a list of premade
+themes currently available on your computer. Use different themes by selecting themes
+in the list and then selecting the <guibutton>Apply</guibutton> button.</para>
+
+<para>When selecting a theme, a preview image will appear to the right of the list.</para>
+
+<warning><para>Testing and creating new themes is fun but do know that themes are comprehensive
+changes to the desktop. When applying a new theme, many related options are not restored
+when reverting to the previous theme. Generally this is not important to many users who
+accept all components of a theme, but to those who like to customize the desktop using
+individual features, installing new themes will override many desktop customizations.
+To avoid this result requires 1) saving the existing settings as a new theme, 2) manually
+configuring and testing each setting one at a time, or 3) using a backup copy of your Trinity
+profile directory ($TDEHOME, normally $HOME/.trinity).</para></warning>
+
+<para>Select the <guibutton>Apply</guibutton> button to make the selection permanent.</para>
+
+</sect2>
+
+<sect2 id="thememanager-installnewtheme">
+<title>Install A Theme</title>
+
+<para>Use the <guilabel>Get new themes...</guilabel> link in the top right corner to download
+additional themes from the Internet.</para>
+
+<para>Use the <guibutton>Install New Theme...</guibutton> button to install new themes
+downloaded or copied to your computer but not yet seen in the Themes list box. Using this
+option installs themes to your user profile directory. After installing the theme then will
+be listed in the <guibutton>Themes</guibutton> list box.</para>
+
+<note><para>Using the link only downloads the themes to your computer. Use the <guibutton>Install New Theme...</guibutton> button to install the themes to your user profile directory ($TDEHOME).</para></note>
+
+<para>When the new themes are in the <guibutton>Themes</guibutton> list box, select the theme and
+then select the <guibutton>Apply</guibutton> button to make the selection permanent.</para>
+
+</sect2>
+
+<sect2 id="thememanager-createnewtheme">
+<title>Create A New Theme</title>
+
+<para>From the <guibutton>Themes</guibutton> list box, select a theme to be used as a base theme.</para>
+
+<para>Next use the <guibutton>Create New Theme...</guibutton> button to provide the new theme a name.</para>
+
+<para>Then use the big buttons at the bottom of the module to customize the items you want to change.
+You can change the background, colors, widget style, icons, fonts, and the screen saver.</para>
+
+<para>After creating your new masterpiece, select the <guibutton>Apply</guibutton>
+button to make the selection permanent.</para>
+
+</sect2>
+
+<sect2 id="thememanager-removetheme">
+<title>Remove A Theme</title>
+
+<para>From the <guibutton>Themes</guibutton> list box, select a custom theme to remove.</para>
+
+<note><para>The default system themes installed with &tde; cannot be removed.</para></note>
+
+<para>When the theme is selected the <guibutton>Remove Theme</guibutton>
+button will be enabled. Select the <guibutton>Remove Theme</guibutton> button. A confirmation dialog appears. Select the <guibutton>OK</guibutton> button.</para>
+
+</sect2>
 
 </sect1>
 
-&documentation.index; 
 </article>
