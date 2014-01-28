@@ -4,17 +4,17 @@
   <!ENTITY % English "INCLUDE">
 ]>
 
-<!-- Note: When updating this empty handbook, remember that usually most handbooks -->
-<!-- use the book model rather than article. Feel free to use article if the new handbook -->
-<!-- remains really short. -->
-
 <article lang="&language;">
 <title><acronym>IEEE 1394</acronym> Devices</title>
 
 <articleinfo>
 
 <authorgroup>
-<corpauthor>&tde-team;</corpauthor>
+<author>
+<firstname>Michael</firstname>
+<surname>McBride</surname>
+</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
@@ -22,33 +22,48 @@
 <date>Reviewed: &tde-release-date;</date>
 
 <copyright>
+<year>2010</year>
+<holder>&Mike.McBride;</holder>
+</copyright>
+<copyright>
 <year>&tde-copyright-date;</year>
 <holder>&tde-team;</holder>
 </copyright>
 
 <keywordset>
 <keyword>TDE</keyword>
+<keyword>IEEE</keyword>
+<keyword>1394</keyword>
 </keywordset>
 
 </articleinfo>
 
-<sect1 id="apologies">
-<title>We Apologize</title>
-<para>No documentation has yet been written for this module.</para>
+<sect1 id="kcmview1394">
+<title>IEEE 1394 Device Information Module</title>
 
-<para>If you need help, please check <ulink url="http://www.trinitydesktop.org">The &tde;
-web site</ulink>, submit questions to the <ulink url="http://www.trinitydesktop.org/mailinglist.php">
-&tde; mail lists</ulink>, or file a bug report at the <ulink url="http://bugs.trinitydesktop.org/">
-&tde; bug tracker</ulink>.</para>
+<para>The IEEE 1394 interface, also known as <trademark>FireWire</trademark>,
+is a serial bus interface standard for high-speed
+communications and isochronous real-time data transfer.</para>
 
-<para>If you are interested in helping, please consider writing the help file.
-Submitting a basic text file is acceptable as the &tde-team; will convert the text.</para>
+<para>The list in this module displays all devices attached to IEEE 1394 bus and
+allows you to reset the bus by selecting the <guibutton>Generate 1394 Bus Reset</guibutton>
+button.</para>
 
-<para>Thank you for helping and thank you for your patience.</para>
-
-&underFDL;
+<para>The meaning of the columns in this list:</para>
+<itemizedlist>
+<listitem><para><guilabel>Name</guilabel>: port or node name, the number can change with each bus reset</para></listitem>
+<listitem><para><guilabel>GUID</guilabel>: the 64 bit GUID of the node</para></listitem>
+<listitem><para><guilabel>Local</guilabel>: checked if the node is an IEEE 1394 port of your computer</para></listitem>
+<listitem><para><guilabel>IRM</guilabel>: checked if the node is isochronous resource manager capable</para></listitem>
+<listitem><para><guilabel>CRM</guilabel>: checked if the node is cycle master capable</para></listitem>
+<listitem><para><guilabel>ISO</guilabel>: checked if the node supports isochronous transfers</para></listitem>
+<listitem><para><guilabel>BM</guilabel>: checked if the node is bus manager capable</para></listitem>
+<listitem><para><guilabel>PM</guilabel>: checked if the node is power management capable</para></listitem>
+<listitem><para><guilabel>Acc</guilabel>: the cycle clock accuracy of the node, valid from 0 to 100</para></listitem>
+<listitem><para><guilabel>Speed</guilabel>: the speed of the node</para></listitem>
+<listitem><para><guilabel>Vendor</guilabel>: the vendor of the device</para></listitem>
+</itemizedlist>
 
 </sect1>
 
-&documentation.index; 
 </article>
