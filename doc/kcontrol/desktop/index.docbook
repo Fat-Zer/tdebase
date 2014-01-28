@@ -1,81 +1,101 @@
 <?xml version="1.0" ?>
-<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
-"dtd/kdex.dtd" [
-<!ENTITY % addindex "IGNORE">
-<!ENTITY % English "INCLUDE" > <!-- change language only here -->
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE" > <!-- change language only here -->
 ]>
 
 <article lang="&language;">
+
 <articleinfo>
 
 <authorgroup>
-<author>&Mike.McBride; &Mike.McBride.mail;</author>
-<author>&Jost.Schenck; &Jost.Schenck.mail;</author>
+<author>&Mike.McBride;</author>
+<author>&Jost.Schenck;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
-<date>2005-02-20</date>
-<releaseinfo>3.4</releaseinfo>
+<copyright>
+<year>2010</year>
+<holder>&Mike.McBride;</holder>
+<holder>&Jost.Schenck;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
 
 <keywordset>
-<keyword>KDE</keyword>
+<keyword>TDE</keyword>
 <keyword>KControl</keyword>
+<keyword>System Settings</keyword>
 <keyword>desktop</keyword>
 </keywordset>
 </articleinfo>
 
-<sect1 id="desktop">
+<sect1 id="multiple-desktops">
+<title>Multiple Desktops</title>
 
-<title>Desktop</title>
+<sect2 id="multiple-desktops-introduction">
+<title>Introduction</title>
 
-<sect2 id="desktop-appearance">
-<title><guilabel>Appearance Tab</guilabel></title>
+<para>&tde; supports multiple desktops, widely known as virtual desktops.</para>
 
-<para>Here you can configure how icons on your desktop appear.</para>
+<para>Virtual desktops are like having multiple computers. In older operating systems, users
+had access only to one desktop. Virtual desktops work much the same way as having multiple
+computers. Many users configure their virtual desktops by grouping similar tasks.</para>
 
-<variablelist>
-<varlistentry>
-<term><guilabel>Standard font:</guilabel></term>
-<listitem><para>This option can be used to change the typeface used on the
-desktop.  Simply select your typeface from the dropdown box.</para></listitem>
-</varlistentry>
-<varlistentry>
-<term><guilabel>Font size:</guilabel></term>
-<listitem><para>You can change the relative size of the text on the Desktop.
-</para></listitem>
-</varlistentry>
-<varlistentry>
-<term><guilabel>Normal text color:</guilabel></term>
-<listitem><para>This option lets you select the color of normal (or
-unhighlighted) text.</para></listitem>
-</varlistentry>
-<varlistentry><term><guilabel>Text background color:</guilabel></term>
-<listitem><para>This option lets you select the background color of
-normal text.  If left unchecked, the text has a transparent
-background.  If selected, you can choose the color by pressing the button.
-</para></listitem>
-</varlistentry>
-<varlistentry>
-<term><guilabel>Underline filenames:</guilabel></term>
-<listitem><para>Determines if file names are underlined on the
-Desktop.</para></listitem>
-</varlistentry>
-</variablelist>
+<para>Virtual desktops apply only to each user's session. Other users logged in also can define
+virtual desktops.</para>
+
 </sect2>
 
-<sect2 id="desktop-number">
-<title><guilabel>Multiple Desktops</guilabel></title>
+<sect2 id="multiple-desktops-number">
+<title>Number of Desktops</title>
 
-<para>&tde; offers you the possibility to have several virtual
-desktops. In this tab you can configure the number of desktops as well
-as their names. Just use the slider to adjust the number of
-desktops. You can assign names to the desktops by entering text into the
-text fields below.</para> 
+<para>&tde; offers the possibility to define up to 20 virtual
+desktops. In this module you can configure the number of desktops as well
+as names. Use the slider or spinner widgets to adjust the number of
+desktops. Assign names to the desktops by entering text into the respective
+text fields.</para>
 
-<para>If you enable <guilabel>Mouse wheel over desktop switches
-desktop</guilabel> then scrolling the wheel over an empty space on the
-desktop will change the the next virtual desktop numerically, in the
-direction you scrolled (either up or down).</para>
+</sect2>
+
+<sect2 id="multiple-desktops-switching">
+<title>Desktop Switching</title>
+
+<para>There are several ways to switch to the different desktops.</para>
+
+<para>When you enable <guilabel>Mouse wheel over desktop switches
+desktop</guilabel>, then scrolling the wheel over an empty space on the
+desktop will change to the next virtual desktop numerically, in the
+direction scrolled. Scrolling forward (up) will select the desktop in the
+next numerical order. Scrolling backwards (down) will do the opposite.</para>
+
+<para>Another way to switch desktops is using the default keyboard shortcuts. For virtual
+desktops 1 through 12, use <keycombo action="simul">&Ctrl;<keycap>F1</keycap></keycombo>,
+<keycombo action="simul">&Ctrl;<keycap>F2</keycap></keycombo>,
+<keycombo action="simul">&Ctrl;<keycap>F3</keycap></keycombo>, etc. For virtual desktops
+13 through 20, use <keycombo action="simul">&Ctrl;&Shift;<keycap>F1</keycap></keycombo>,
+<keycombo action="simul">&Ctrl;&Shift;<keycap>F2</keycap></keycombo>,
+<keycombo action="simul">&Ctrl;&Shift;<keycap>F3</keycap></keycombo>, etc.</para>
+
+<para>Another method is to install the Desktop Preview &amp; and Pager Menu panel applet. The
+default &tde; desktop has this applet already installed with a default number of virtual desktops
+set to four. When this applet is installed in the panel, miniature desktops can be viewed and
+selected with the mouse pointer.</para>
+
+<para>Like the desktop mouse wheel scrolling support, the scroll wheel can be used with the pager
+applet too.</para>
+
+<para>The Desktop Preview &amp; and Pager Menu panel applet has its own set of configuration
+options. Like many panel applets, the Desktop Preview &amp; and Pager Menu panel applet has a handle,
+from which a popup menu appears when using the &RMB;. When the popup menu appears, select the
+<guimenuitem>Desktop Preview &amp; Pager Menu</guimenuitem> option, then
+select the <guisubmenu>Pager Options</guisubmenu> submenu option.</para>
 
 </sect2>
 
