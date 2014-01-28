@@ -1,0 +1,131 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE" > <!-- change language only here -->
+]>
+
+<article lang="&language;">
+<title>Paths</title>
+
+<articleinfo>
+
+<authorgroup>
+<author>
+<firstname>Michael</firstname>
+<surname>Anderson</surname>
+</author>
+<author>
+<firstname>Anne-Marie</firstname>
+<surname>Mahfouf</surname>
+</author>
+<author>&tde-authors;</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<copyright>
+<year>2009</year>
+<holder>Michael Anderson</holder>
+<holder>Anne-Marie Mahfouf</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>KControl</keyword>
+<keyword>System Settings</keyword>
+<keyword>paths</keyword>
+</keywordset>
+</articleinfo>
+
+<sect1 id="paths">
+<title>Paths</title>
+
+<para>Use this module to configure essential paths for the &tde; desktop. These paths help &tde;
+find specific types of files.</para>
+
+<para>
+<screenshot>
+<screeninfo>Configure some &tde; paths</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="paths.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>Configure some &tde; paths</phrase>
+    </textobject>
+  </mediaobject>
+</screenshot>
+</para>
+
+<variablelist>
+
+<varlistentry>
+<term><guilabel>Desktop path:</guilabel></term>
+<listitem><para>The Desktop folder contains all the files that you see on your desktop. The default
+path usually is <filename class="directory">~/Desktop</filename> but you can change here the location
+of this folder.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Autostart path:</guilabel></term>
+<listitem><para>
+The Autostart folder contains applications or links to applications or scripts you want to start whenever
+&tde; starts. You can change the location of this folder. There might exist other autostart directories
+in your $HOME user directory, which &tde; supports, but this path affects &tde; apps only.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Documents path:</guilabel></term>
+<listitem><para>This folder will be used by default to load or save documents from or to.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Download path:</guilabel></term>
+<listitem><para>This folder will be used by default to save your downloaded items.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Music path:</guilabel></term>
+<listitem><para>This folder will be used by default to load or save music from or to.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Pictures path:</guilabel></term>
+<listitem><para>This folder will be used by default to load or save pictures from or to.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Public Share path:</guilabel></term>
+<listitem><para>This folder will be used by default to load or save public shared files from or to.
+Typically this is a directory that you have provided access permissions to other users to
+ view.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Templates path:</guilabel></term>
+<listitem><para>This folder will be used by default to load or save templates from or to. Template
+files are used when creating new files and you want the new files to be just like the content and
+format used in the template. Mostly this location is used by office suite applications.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Videos path:</guilabel></term>
+<listitem><para>This folder will be used by default to load or save videos from or to.</para></listitem>
+</varlistentry>
+
+</variablelist>
+
+<!--<para>When you change a path and select <guibutton>Apply</guibutton> a dialog appears where you can choose
+to move the content to the new folder or use the new folder without moving the files.</para>-->
+
+</sect1>
+
+</article>

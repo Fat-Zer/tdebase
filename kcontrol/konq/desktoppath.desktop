@@ -1,9 +1,8 @@
 [Desktop Entry]
 Type=Application
-DocPath=kcontrol/desktop/index.html#desktop-desktop-path
+DocPath=kcontrol/paths/index.html
 Icon=kfm
 Exec=tdecmshell desktoppath
-
 
 X-TDE-Library=konq
 X-TDE-FactoryName=dpath
