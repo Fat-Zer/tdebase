@@ -75,13 +75,20 @@ desktop will change to the next virtual desktop numerically, in the
 direction scrolled. Scrolling forward (up) will select the desktop in the
 next numerical order. Scrolling backwards (down) will do the opposite.</para>
 
-<para>Another way to switch desktops is using the default keyboard shortcuts. For virtual
+<para>Keyboard shortcuts provide a way to switch desktops. For virtual
 desktops 1 through 12, use <keycombo action="simul">&Ctrl;<keycap>F1</keycap></keycombo>,
 <keycombo action="simul">&Ctrl;<keycap>F2</keycap></keycombo>,
 <keycombo action="simul">&Ctrl;<keycap>F3</keycap></keycombo>, etc. For virtual desktops
 13 through 20, use <keycombo action="simul">&Ctrl;&Shift;<keycap>F1</keycap></keycombo>,
 <keycombo action="simul">&Ctrl;&Shift;<keycap>F2</keycap></keycombo>,
 <keycombo action="simul">&Ctrl;&Shift;<keycap>F3</keycap></keycombo>, etc.</para>
+
+<para>Another keyboard shortcut includes <keycombo action="simul"> &Ctrl;&Tab;</keycombo>.</para>
+
+<para>A feature called <guilabel>Active Desktop Borders</guilabel> can be used with the mouse pointer
+to switch desktops. This feature is configured in the
+<ulink url="help:/kcontrol/windowbehavior/index.html#advanced">Window Behavior Advanced</ulink>
+module.</para>
 
 <para>Another method is to install the Desktop Preview &amp; and Pager Menu panel applet. The
 default &tde; desktop has this applet already installed with a default number of virtual desktops
