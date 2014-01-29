@@ -1,0 +1,103 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE" > <!-- change language only here -->
+]>
+
+<article lang="&language;">
+<title>&tde; Resources</title>
+
+<articleinfo>
+
+<authorgroup>
+<author>
+<firstname>Burkhard</firstname><surname>Lück</surname>
+</author>
+<author>&tde-authors;</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<copyright>
+<year>2010</year>
+<holder>Burkhard Lück</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>KControl</keyword>
+<keyword>System Settings</keyword>
+<keyword>resources</keyword>
+<keyword>address</keyword>
+<keyword>alarm</keyword>
+<keyword>calendar</keyword>
+<keyword>notes</keyword>
+</keywordset>
+</articleinfo>
+
+<sect1 id="paths">
+<title>&tde; Resources</title>
+
+<para>This module is a configuration tool for managing the resources used by different &tde; applications.
+The module allows adding, deleting or modifying the resources for <guilabel>Calendar</guilabel>,
+<guilabel>Notes</guilabel> and <guilabel>Contacts</guilabel>.</para>
+
+<para>Select a resource type from the drop down box at the top of the <guilabel>Resources</guilabel> section.
+The list box now displays names and types of available resources of this type. 
+One of these resources is marked as the standard resource.</para>
+
+<para>Use the buttons on the right side of the list box to add, remove, or edit resources.</para>
+
+<para>Detailed information about resource types and options you find in the links provided in the following
+table:</para>
+
+<para>
+<table>
+<title>Available Resources</title>
+<tgroup cols="3">
+<tbody>
+<row>
+<entry>Resource Type</entry>
+<entry>Used by</entry>
+<entry>Additional information</entry>
+</row>
+<row>
+<entry>Calendar</entry>
+<entry><simplelist type="inline"><member>&korganizer;</member> 
+<member>iCal invitation plugin in &kmail;</member></simplelist></entry>
+<entry><ulink url="help:/korganizer/managing-data.html#managing-resources">&korganizer; resources</ulink></entry>
+</row>
+<row>
+<entry>Notes</entry>
+<entry><simplelist type="inline"><member>&knotes;</member></simplelist></entry>
+</row>
+<row>
+<entry>Contacts</entry>
+<entry><simplelist type="inline">
+<member>&kaddressbook;</member> 
+<member>address completion in &kmail;, &knode; and &korganizer;</member>
+<member>address book integration in &kopete;</member>
+<member>&konversation;</member>
+<member>KonsoleKalendar</member></simplelist> </entry>
+<entry></entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</para>
+
+<para>Every resource type needs a standard resource, where all data should be
+saved if no other resource is specified. Use the <guibutton>Use as Standard</guibutton> button
+when you want to change the standard resource. You must have
+both read and write permissions to the new standard resource to be able select the resource.
+</para>
+
+</sect1>
+
+</article>
