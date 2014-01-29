@@ -46,7 +46,7 @@
 viewing which functions on your joystick are mapped to which logical button or
 axis.</para>
 
-<para>
+<!--<para>
 <screenshot>
 <screeninfo>Here's a screenshot of the joystick module</screeninfo>
   <mediaobject>
@@ -58,7 +58,7 @@ axis.</para>
     </textobject>
   </mediaobject>
 </screenshot>
-</para>
+</para>-->
 
 <variablelist>
 <varlistentry><term><guilabel>Device</guilabel></term>
@@ -105,10 +105,10 @@ maximum and minimum values depend on the joystick and the particular axis.
 <varlistentry><term><guilabel>Calibrate</guilabel></term>
 <listitem>
 <para>
-Clicking on <guibutton>Calibrate</guibutton> will open a dialog to calibrate every axis on your joystick. 
+Selecting the <guibutton>Calibrate</guibutton> button will open a dialog to calibrate every axis on your joystick. 
 </para>
 
-<para>
+<!--<para>
 <screenshot>
 <screeninfo>Calibrating your joystick</screeninfo>
   <mediaobject>
@@ -120,7 +120,7 @@ Clicking on <guibutton>Calibrate</guibutton> will open a dialog to calibrate eve
     </textobject>
   </mediaobject>
 </screenshot>
-</para>
+</para>-->
 
 <para>
 Each axis will have to be moved to the minimum position, then the center, and finally the
