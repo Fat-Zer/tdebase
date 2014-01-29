@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE" > <!-- change language only here -->
+]>
+
+<article lang="&language;">
+<title>Service Manager</title>
+
+<articleinfo>
+
+<authorgroup>
+<author>
+<firstname>Burkhard</firstname><surname>Lück</surname>
+</author>
+<author>&tde-authors;</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<copyright>
+<year>2009</year>
+<holder>Burkhard Lück</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>KControl</keyword>
+<keyword>System Settings</keyword>
+<keyword>services</keyword>
+</keywordset>
+</articleinfo>
+
+<sect1 id="service-manager">
+<title>Service Manager</title>
+
+<para>
+The <guilabel>Service Manager</guilabel> module allows you view all
+plugins of the &tde; Daemon, also referred to as &tde; Services. Generally,
+there are two types of services:</para>
+
+<variablelist>
+
+<varlistentry>
+<term><guilabel>Load-on-Demand Services</guilabel></term>
+<listitem><para>
+This is a list of available &tde; services that will be started on demand.
+They are only listed for convenience, as you cannot manipulate these
+services.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Startup Services</guilabel></term>
+<listitem><para>
+This shows all &tde; services that can be loaded on &tde; startup.
+Services checked in the <guilabel>Use</guilabel> column will be launched the next &tde; startup.</para>
+<para>Be careful with deactivating unknown services as some services are vital for &tde;. Basically,
+do not deactivate services when you do not know what you are doing.
+</para>
+<para>Change the <guilabel>Status</guilabel> of a service by selecting the service in the list.
+Use the <guibutton>Start</guibutton> and <guibutton>Stop</guibutton>
+to change the status of a service from <guilabel>Not running</guilabel> to <guilabel>Running</guilabel>
+and vice versa.
+</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect1>
+
+</article>

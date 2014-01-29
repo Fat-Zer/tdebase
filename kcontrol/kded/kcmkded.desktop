@@ -2,11 +2,11 @@
 Exec=tdecmshell kcmkded
 Icon=services
 Type=Application
-
-
+DocPath=kcontrol/kcmkded/index.html
 X-TDE-Library=kded
 X-TDE-Factoryname=kded
 X-TDE-ParentApp=kcontrol
+Categories=Qt;TDE;X-TDE-settings-components;
 
 Name=Service Manager
 Name[af]=Diens Bestuurder
@@ -232,5 +232,3 @@ Keywords[xh]=KDED,Daemon,Iinkonzo
 Keywords[zh_CN]=KDED,Daemon,Services,守护程序,服务
 Keywords[zh_TW]=KDED,Daemon,Services,伺服程式,服務
 Keywords[zu]=KDED,Daemon,Imisebenzi
-
-Categories=Qt;TDE;X-TDE-settings-components;
