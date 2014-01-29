@@ -29,8 +29,8 @@ PluginMgr::PluginMgr()
 
 void PluginMgr::error( const TQString &error_msg )
     {
-    tqWarning( "%s", (i18n("KWin: ") + error_msg +
-                    i18n("\nKWin will now exit...")).local8Bit().data() );
+    tqWarning( "%s", (i18n("TWin: ") + error_msg +
+                    i18n("\nTWin will now exit...")).local8Bit().data() );
     exit(1);
     }
 

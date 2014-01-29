@@ -92,32 +92,32 @@ KWinOptions::KWinOptions(TQWidget *parent, const char *name)
   tab = new TQTabWidget(this);
   layout->addWidget(tab);
 
-  mFocus = new KFocusConfig(false, mConfig, this, "KWin Focus Config");
+  mFocus = new KFocusConfig(false, mConfig, this, "TWin Focus Config");
   mFocus->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mFocus, i18n("&Focus"));
   connect(mFocus, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
-  mTitleBarActions = new KTitleBarActionsConfig(false, mConfig, this, "KWin TitleBar Actions");
+  mTitleBarActions = new KTitleBarActionsConfig(false, mConfig, this, "TWin TitleBar Actions");
   mTitleBarActions->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mTitleBarActions, i18n("&Titlebar Actions"));
   connect(mTitleBarActions, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
-  mWindowActions = new KWindowActionsConfig(false, mConfig, this, "KWin Window Actions");
+  mWindowActions = new KWindowActionsConfig(false, mConfig, this, "TWin Window Actions");
   mWindowActions->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mWindowActions, i18n("Window Actio&ns"));
   connect(mWindowActions, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
-  mMoving = new KMovingConfig(false, mConfig, this, "KWin Moving");
+  mMoving = new KMovingConfig(false, mConfig, this, "TWin Moving");
   mMoving->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mMoving, i18n("&Moving"));
   connect(mMoving, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
-  mAdvanced = new KAdvancedConfig(false, mConfig, this, "KWin Advanced");
+  mAdvanced = new KAdvancedConfig(false, mConfig, this, "TWin Advanced");
   mAdvanced->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mAdvanced, i18n("Ad&vanced"));
   connect(mAdvanced, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
-  mTranslucency = new KTranslucencyConfig(false, mConfig, this, "KWin Translucency");
+  mTranslucency = new KTranslucencyConfig(false, mConfig, this, "TWin Translucency");
   mTranslucency->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mTranslucency, i18n("&Translucency"));
   connect(mTranslucency, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
@@ -191,7 +191,7 @@ TQString KWinOptions::quickHelp() const
     " moved, resized or clicked on. You can also specify a focus policy as well as a placement"
     " policy for new windows."
     " <p>Please note that this configuration will not take effect if you do not use"
-    " KWin as your window manager. If you do use a different window manager, please refer to its documentation"
+    " TWin as your window manager. If you do use a different window manager, please refer to its documentation"
     " for how to customize window behavior.");
 }
 
@@ -210,12 +210,12 @@ TDEActionsOptions::TDEActionsOptions(TQWidget *parent, const char *name)
   tab = new TQTabWidget(this);
   layout->addWidget(tab);
 
-  mTitleBarActions = new KTitleBarActionsConfig(false, mConfig, this, "KWin TitleBar Actions");
+  mTitleBarActions = new KTitleBarActionsConfig(false, mConfig, this, "TWin TitleBar Actions");
   mTitleBarActions->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mTitleBarActions, i18n("&Titlebar Actions"));
   connect(mTitleBarActions, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));
 
-  mWindowActions = new KWindowActionsConfig(false, mConfig, this, "KWin Window Actions");
+  mWindowActions = new KWindowActionsConfig(false, mConfig, this, "TWin Window Actions");
   mWindowActions->layout()->setMargin( KDialog::marginHint() );
   tab->addTab(mWindowActions, i18n("Window Actio&ns"));
   connect(mWindowActions, TQT_SIGNAL(changed(bool)), this, TQT_SLOT(moduleChanged(bool)));

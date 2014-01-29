@@ -81,7 +81,7 @@ TQString KCMRules::quickHelp() const
     return i18n("<h1>Window-specific Settings</h1> Here you can customize window settings specifically only"
         " for some windows."
         " <p>Please note that this configuration will not take effect if you do not use"
-        " KWin as your window manager. If you do use a different window manager, please refer to its documentation"
+        " TWin as your window manager. If you do use a different window manager, please refer to its documentation"
         " for how to customize window behavior.");
     }
 

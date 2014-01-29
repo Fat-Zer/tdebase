@@ -156,7 +156,7 @@ bool KDecorationPlugins::loadPlugin( TQString nameStr )
         }
     if(!create_ptr)
         {
-        error( i18n( "The library %1 is not a KWin plugin." ).arg( path ));
+        error( i18n( "The library %1 is not a TWin plugin." ).arg( path ));
         library->unload();
         return false;
         }
