@@ -24,8 +24,6 @@ Of course, nothing in this file is set in stone, or is "correct" or "true" for t
 
 * Rename password & User Account - "User Account"
 
-* Rename "Component Chooser" to "Default Applications"  Users want to set the default application handlers, not Choose a component (which they wouldn't have a clue what it was anyway)?
-
 ---------- Reorganization/Moving
 
 * Move Background, Splash Screen, And Screen Saver to Desktop 
@@ -65,7 +63,7 @@ Of course, nothing in this file is set in stone, or is "correct" or "true" for t
 * Make a new "User Account" group with
  - Session Manager
  - System Administration/Paths
- - Component Chooser (after renamed to "Default Applications")
+ - Default Applications
 
 * The following container:
 KCMODULECONTAINER("kcmfontinst, fonts", fonts )

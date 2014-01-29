@@ -443,9 +443,9 @@ file associations and default applications.</para>
 
 <variablelist>
 
-<varlistentry><term><guilabel>Component Chooser</guilabel></term>
+<varlistentry><term><guilabel>Default Applications</guilabel></term>
 
-<listitem><para>The component chooser allows you to select the default
+<listitem><para>This module allows you to select the default
 applications you would like to use for various services. Here you can define
 what Email Client, Embedded Text Editor, Instant Messenger, Terminal
 Emulator and Web Browser to use. If you prefer to use

@@ -1,0 +1,83 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE" > <!-- change language only here -->
+]>
+
+<article lang="&language;">
+<title>Default Applications</title>
+
+<articleinfo>
+
+<authorgroup>
+<author>
+<firstname>Burkhard</firstname><surname>Lück</surname>
+</author>
+<author>&tde-authors;</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<copyright>
+<year>2009</year>
+<holder>Burkhard Lück</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>KControl</keyword>
+<keyword>System Settings</keyword>
+<keyword>components</keyword>
+<keyword>default applications</keyword>
+</keywordset>
+</articleinfo>
+
+<sect1 id="default-applications">
+<title>Default Applications</title>
+
+<para>In this module you can change &tde; default applications, sometimes referred to as components.</para>
+
+<para>Components are programs that handle basic tasks, like the terminal emulator, the text
+editor and the email client. Different &tde; applications sometimes need to
+invoke a console emulator, send a mail or display some text.</para>
+
+<para>To do so consistently, these applications always call the same components. Here you
+can select which programs these components are.</para>
+
+<para>The list on the left shows the configurable component types:</para>
+<itemizedlist>
+<listitem>
+<para>Email Client</para>
+</listitem>
+<listitem>
+<para>Embedded Text Editor</para>
+</listitem>
+<!--<listitem>
+<para>File Manager</para>
+</listitem>-->
+<listitem>
+<para>Instant Messenger</para>
+</listitem>
+<listitem>
+<para>Terminal Emulator</para>
+</listitem>
+<listitem>
+<para>Web Browser</para>
+</listitem>
+<!--<listitem>
+<para>Window Manager</para>
+</listitem>-->
+</itemizedlist>
+
+<para> Select the component you want to configure. In the right part of the dialog you are
+able to select your favorite application.</para>
+
+</sect1>
+
+</article>
