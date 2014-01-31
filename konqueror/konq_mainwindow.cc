@@ -3880,7 +3880,7 @@ void KonqMainWindow::initActions()
       "tde-tdehtml_fonts.desktop" << "tde-ebrowsing.desktop" <<
       "tde-kcmhistory.desktop" << "tde-cookies.desktop" <<
       "tde-cache.desktop" << "tde-proxy.desktop" << "tde-kcmcss.desktop" <<
-      "tde-crypto.desktop" << "tde-useragent.desktop" <<
+      "tde-kcmcgi.desktop" << "tde-crypto.desktop" << "tde-useragent.desktop" <<
       "tde-tdehtml_plugins.desktop" << "kde-kcmkonqyperformance.desktop";
 
 
