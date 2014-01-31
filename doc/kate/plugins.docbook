@@ -3,21 +3,22 @@
 <chapterinfo>
 <authorgroup>
 <author>&Anders.Lund; &Anders.Lund.mail;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 </chapterinfo>
 
-<title>Working with Plug-ins</title>
+<title>Working with Plugins</title>
 
-<para>Kate is using two different forms of plug-ins, namely plug-ins for the
-&kate; application and plug-ins for the &kate; editor component. The latter are
+<para>Kate is using two different forms of plugins, namely plugins for the
+&kate; application and plugins for the &kate; editor component. The latter are
 available to any application using the editor component, such as KDevelop,
-Quanta, Kile, Kwrite and many others, while application plug-ins are specific
+Quanta, Kile, KWrite and many others, while application plugins are specific
 to the &kate; application.</para>
 
-<para>You can enable both types of plug-ins in the <link
+<para>You can enable both types of plugins in the <link
 linkend="configuring-kate-configdialog">configuration dialog</link>, which also
-provides access to additional configuration options for plug-ins that requires
+provides access to additional configuration options for plugins that requires
 that.</para>
 
 <para>There are many plugins for various purposes available in the tdeaddons
