@@ -16,7 +16,6 @@
 #include <tqpushbutton.h>
 
 #include "htmlopts.h"
-#include "advancedTabDialog.h"
 
 #include <konq_defaults.h> // include default values directly from konqueror
 #include <tdeglobalsettings.h> // get default for DEFAULT_CHANGECURSOR
@@ -81,19 +80,6 @@ KMiscHTMLOptions::KMiscHTMLOptions(TDEConfig *config, TQString group, TQWidget *
     connect(m_pMaxFormCompletionItems, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotChanged()));
 
     lay->addMultiCellWidget( bgForm, row, row, 0, 1 );
-    row++;
-
-    // Tabbed Browsing
-
-    TQGroupBox *bgTabbedBrowsing = new TQGroupBox( 0, Qt::Vertical, i18n("Tabbed Browsing"), this );
-    TQHBoxLayout *laytab = new TQHBoxLayout(bgTabbedBrowsing->layout(), KDialog::spacingHint());
-
-    TQPushButton *advancedTabButton = new TQPushButton( i18n( "Show &tab options"), bgTabbedBrowsing );
-    laytab->addWidget(advancedTabButton);
-    laytab->addStretch();
-    connect(advancedTabButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(launchAdvancedTabDialog()));
-
-    lay->addMultiCellWidget( bgTabbedBrowsing, row, row, 0, 1 );
     row++;
 
     // Mouse behavior
@@ -386,18 +372,10 @@ void KMiscHTMLOptions::save()
     emit changed(false);
 }
 
-
 void KMiscHTMLOptions::slotChanged()
 {
     m_pMaxFormCompletionItems->setEnabled( m_pFormCompletionCheckBox->isChecked() );
     emit changed(true);
-}
-
-
-void KMiscHTMLOptions::launchAdvancedTabDialog()
-{
-    advancedTabDialog* dialog = new advancedTabDialog(this, m_pConfig, "advancedTabDialog");
-    dialog->exec();
 }
 
 

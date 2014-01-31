@@ -1,5 +1,5 @@
 /*
- *  advancedTabDialog.h
+ *  userInterOpts_impl.h
  *
  *  Copyright (c) 2002 Aaron J. Seigo <aseigo@olympusproject.org>
  *
@@ -17,29 +17,33 @@
  *  along with this program; if not, write to the Free Software
  */
 
-#ifndef __ADVANCEDTABDIALOG_H
-#define __ADVANCEDTABDIALOG_H
+#ifndef __USERINTERFACE_OPTIONS_IMPL_H
+#define __USERINTERFACE_OPTIONS_IMPL_H
 
-#include <kdialogbase.h>
-
-class advancedTabOptions;
-
-class advancedTabDialog : public KDialogBase
+#include "userInterOpts.h"
+      
+class userInterOpts : public userInterOptsBase
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    public:
-        advancedTabDialog(TQWidget* parent, TDEConfig *config, const char* name);
-        ~advancedTabDialog();
+  public:
+    userInterOpts(TDEConfig *config, TQString groupName,
+                  TQWidget* parent =0, const char* name =0);
 
-    protected slots:
-        void load();
-        void save();
-        void changed();
+    void load();
+    void load(bool useDefaults);
+    void save();
+    void defaults();
+        
+  signals:
+    void changed();
 
-    private:
-        TDEConfig* m_pConfig;
-        advancedTabOptions* m_advancedWidget;
+  protected:
+    TDEConfig *m_pConfig;
+    TQString   m_groupName;
+
+  private slots:
+    void slotChanged();
 };
 
 #endif

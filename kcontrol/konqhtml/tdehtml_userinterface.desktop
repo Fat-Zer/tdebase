@@ -1,0 +1,18 @@
+[Desktop Entry]
+Type=Application
+DocPath=kcontrol/tdehtml/index.html#userinterface
+Icon=konqueror
+Exec=tdecmshell tdehtml_userinterface
+
+
+X-TDE-Library=konqhtml
+X-TDE-FactoryName=tdehtml_userinterface
+
+Name=User Interface
+Name[it]=Interfaccia utente
+Comment=Configure user interface options
+Comment[it]=Configura opzioni dell'interfaccia utente
+Keywords=konqueror,kfm,user,interface,tabbed,browsing
+Keywords[it]=konqueror,kfm,utente,interfaccia,linguette,navigazione
+
+Categories=Qt;TDE;X-TDE-settings-webbrowsing;

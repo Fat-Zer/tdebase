@@ -34,12 +34,18 @@ integrated web browser of &tde;.</para>
 
 <sect2 id="kbrowse-html">
 
-<title>Behavior</title>
+<title>Web Behavior</title>
 
-<para>The first option you can enable on this page is <guilabel>Enable
-completion of forms</guilabel>.  If you check this box, &konqueror; will
-try to remember what you answer to form questions, and will try to fill
-in forms for you with the answers you previously used.</para>
+<para>The first group of options control bookmarks. With <guilabel>Ask for
+name and folder when adding bookmarks</guilabel>, you can change the title
+of the bookmark and select a folder to store the bookmark. With
+<guilabel>Show only marked bookmarks in bookmark folder</guilabel> you
+can change the way &konqueror; shows bookmarks in the bookmark toolbar.</para>
+
+<para>The next group of options control form completion. The first option
+is <guilabel>Enable completion of forms</guilabel>. If you check this box,
+&konqueror; will try to remember what you answer to form questions, and will
+try to fill in forms for you with the answers you previously used.</para>
 
 <para>You can configure the number of form items &konqueror; remembers
 with the slider below labelled <guilabel>Maximum
@@ -53,28 +59,6 @@ links</guilabel>. If this option is selected, the shape of the cursor
 will change (usually to a hand) whenever it moves over a
 hyperlink. This makes it easy to identify links, especially when they
 are in the form of images.</para>
-
-<para>&konqueror; defaults to a single window per page, but has the
-capability to open multiple <firstterm>tabs</firstterm> inside a
-single window. &konqueror; also, by default, has a &MMB; shortcut to
-open any link in a new window.  If you enable <guilabel>Open links in
-new tab instead of in new window</guilabel> you can &MMB; click on a
-link to have it open in a new tab.</para>
-
-<para>If you are using tabbed browsing, you can choose if a newly
-opened tab becomes the active (<quote>front</quote>) tab, or goes to
-the back.  On a slow internet connection, or while browsing a page
-that has a list of headlines or other links in a list, you may like to
-have the new tabs load in the background while you continue reading.
-In this case, leave this setting disabled.  If you prefer to go
-straight to the new page, leaving the old one in the background to
-return to later, enable it.</para>
-
-<para>If you close a window in &konqueror; that has multiple tabs
-open, &konqueror; will ask you if you're sure that you meant to close
-it.  You can toggle on and off this behavior with the
-<guilabel>Confirm when closing windows with multiple tabs</guilabel>
-checkbox.</para>
 
 <para>As a convenience feature, if you enable <guilabel>Right click
 goes back in history</guilabel>, then clicking an empty area (&ie; not
@@ -91,23 +75,23 @@ and then load the images if you need them.</para>
 
 <para>Enabling <guilabel>Allow automatic delayed
 reloading/redirecting</guilabel> allows websites to send you to
-another page without your interaction.  In many cases, this is a
-convenience.  For example, the website has moved to a new
-<acronym>URL</acronym>.  Many webmasters in this situation will put up
+another page without your interaction. In many cases, this is a
+convenience. For example, the website has moved to a new
+<acronym>URL</acronym>. Many webmasters in this situation will put up
 a page on the old site, telling you that it has moved and you may like
 to change your bookmark, and then automatically move you along to the
-new website.  However, such features can be confusing, or annoying,
+new website. However, such features can be confusing, or annoying,
 when misused, and so you may wish to disable it.</para>
 
 <para>The next setting is <guilabel>Underline links:</guilabel>. You can
-choose to underline links <guilabel>Always</guilabel>.  If this option
+choose to underline links <guilabel>Always</guilabel>. If this option
 is selected, any text on web pages that acts as a link will be shown in
 an underlined font. While many web pages do use color to distinguish
 text that acts as a link, underlining makes it very easy to spot
 links.</para>
 
 <para>If you don't like underlined links, you can choose
-<guilabel>Never</guilabel>, so that no links are underlined.  Or you
+<guilabel>Never</guilabel>, so that no links are underlined. Or you
 can choose a middle ground, <guilabel>Hover</guilabel>, so that links
 are underlined when the mouse cursor is resting over them, and not
 underlined the rest of the time.</para>
@@ -115,10 +99,38 @@ underlined the rest of the time.</para>
 <para>Many web pages use animated gif images, and these can be very
 annoying, and in some cases, quite a drain on your system resources.
 The <guilabel>Animations</guilabel> option lets you choose when
-animations are enabled.  The default is enabled, but you can set this
+animations are enabled. The default is enabled, but you can set this
 to disabled, or to run the animation only once, even if the file
 itself contains instructions that the animation should run more times,
 or continuously.</para>
+
+</sect2>
+
+<sect2 id="userinterface">
+
+<title>User Interface</title>
+
+<para>&konqueror; defaults to a single window per page, but has the
+ability to open multiple <firstterm>tabs</firstterm> inside a
+single window. By default, &konqueror; has a &MMB; shortcut to
+open any link in a new window. If you enable <guilabel>Open links in
+new tab instead of in new window</guilabel> you can &MMB; click on a
+link to have it open in a new tab.</para>
+
+<para>If you are using tabbed browsing, you can choose if a newly
+opened tab becomes the active (<quote>front</quote>) tab, or goes to
+the back. On a slow internet connection, or while browsing a page
+that has a list of headlines or other links in a list, you may like to
+have the new tabs load in the background while you continue reading.
+In this case, leave this setting disabled. If you prefer to go
+straight to the new page, leaving the old one in the background to
+return to later, enable it.</para>
+
+<para>If you close a window in &konqueror; that has multiple tabs
+open, &konqueror; will ask you if you're sure that you meant to close
+it. You can toggle on and off this behavior with the
+<guilabel>Confirm when closing windows with multiple tabs</guilabel>
+checkbox.</para>
 
 </sect2>
 
@@ -131,7 +143,7 @@ of fonts. Although the shapes and sizes of fonts are often part of the
 design of a web page, you can select some default settings for
 &konqueror; to use.</para>
 
-<para>The first thing you can set here is the font size.  There are two
+<para>The first thing you can set here is the font size. There are two
 settings which work together to allow you a comfortable browsing
 experience.</para>
 
@@ -140,10 +152,10 @@ This means, even if the font size is set specifically in the page you
 are viewing, &konqueror; will ignore that instruction and never show
 smaller fonts than you set here.</para>
 
-<para>Next you can set a <guilabel>Medium Font Size</guilabel>.  This is
+<para>Next you can set a <guilabel>Medium Font Size</guilabel>. This is
 not only the default size of text, used when the page doesn't specify
 sizes, but it is also used as the base size that relative font sizes are
-calculated against.  That is, the <acronym>HTML</acronym> instruction
+calculated against. That is, the <acronym>HTML</acronym> instruction
 <quote>smaller</quote>, it means smaller than the size you set for this
 option.</para>
 
@@ -151,11 +163,11 @@ option.</para>
 using the up/down spin control (or just typing) next to the option
 label.</para>
 
-<para>These options are independent of each other.  Pages that do not
+<para>These options are independent of each other. Pages that do not
 set a font size, or ask for the default, will display with the size
 you set from <guilabel>Medium Font Size</guilabel>, while any pages
 that ask for a size smaller than your <guilabel>Minimum Font
-Size</guilabel> setting will instead show that size.  The one does not
+Size</guilabel> setting will instead show that size. The one does not
 affect the other.</para>
 
 <para>The remaining options are for the fonts to be associated with
@@ -170,16 +182,16 @@ through all of the fonts.)</para>
 each <guilabel>Charset</guilabel>, by changing the character set in the
 first drop down box, and then selecting a font for each category below.
 This would take quite some time, so you may just want to set up the
-fonts for your default character set.  Most English speaking users will
+fonts for your default character set. Most English speaking users will
 use iso8859-1</para>
 -->
 <para>Below this, you can set a <guilabel>Font size adjustment for this
-encoding</guilabel>.  Sometimes the fonts you want to use for a
+encoding</guilabel>. Sometimes the fonts you want to use for a
 particular encoding or language are much larger or smaller than average,
 so you can use this setting to bring them into line.</para>
 
 <para>You can set a default encoding that &konqueror; should assume
-pages are when rendering them.  The default setting is <guilabel>Use
+pages are when rendering them. The default setting is <guilabel>Use
 language encoding</guilabel>, but you can change it to any encoding
 available in the list.</para>
 
@@ -230,7 +242,7 @@ diagnosing problems with &Java; applications.</para>
 transports for network connections.</para>
 
 <para><guilabel>Use security
-manager</guilabel> is normally enabled by default.  This setting will
+manager</guilabel> is normally enabled by default. This setting will
 cause the <acronym>JVM</acronym> to run with a Security Manager in place. This will keep
 applets from being able to read and write to your file system, creating
 arbitrary sockets, and other actions which could be used to compromise
@@ -241,9 +253,9 @@ more permissions.</para>
 <para>The <guilabel>Shutdown Applet Server when inactive</guilabel>
 checkbox allows you to save resources by closing the &Java; Applet
 Server when it is not in use, rather than leaving it running in the
-background.  Leaving this disabled may make &Java; applets start up
+background. Leaving this disabled may make &Java; applets start up
 faster, but it will use system resources when you are not using a
-&Java; applet.  If you enable this, you can set a timeout.</para>
+&Java; applet. If you enable this, you can set a timeout.</para>
 
 <para>You can either opt to have &konqueror; automatically detect the
 &Java; installation on your system, or specify the path to the
@@ -288,13 +300,13 @@ current list to a compressed archive file, click the
 when a page uses JavaScript for specific actions.</para>
 
 <para>You can individually enable or disable the ability of JavaScript
-to manipulate your windows by moving, resizing or changing focus.  You
+to manipulate your windows by moving, resizing or changing focus. You
 can also disable JavaScript from changing the status bar text, so that
 for instance, you can always see where links will take you when
 clicked.The choices for these options are <guilabel>Allow</guilabel> and
 <guilabel>Ignore</guilabel>.</para>
 
-<para>For opening a new window, there is even more control.  You can
+<para>For opening a new window, there is even more control. You can
 set &konqueror; to <guilabel>Allow</guilabel> all such requests,
 <guilabel>Ask</guilabel> each time a request is made, or
 <guilabel>Deny</guilabel> all popup requests.</para>
@@ -336,8 +348,8 @@ as comments and can be used to clarify or label a set of filters.</para>
 <title>Plugins</title>
 
 <para>The first setting here is <guilabel>Enable Plugins
-globally</guilabel>.  If you disable this checkbox, then &konqueror;
-will not use any plugins.  If you enable it, then any installed and
+globally</guilabel>. If you disable this checkbox, then &konqueror;
+will not use any plugins. If you enable it, then any installed and
 configured plugins that it can find will be used by &konqueror;</para>
 
 <para>You can also restrict &konqueror; to <guilabel>Only allow HTTP

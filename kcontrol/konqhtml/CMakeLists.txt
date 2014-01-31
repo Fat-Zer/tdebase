@@ -26,6 +26,7 @@ link_directories(
 install( FILES
     tdehtml_behavior.desktop tdehtml_java_js.desktop
     tdehtml_fonts.desktop tdehtml_filter.desktop
+    tdehtml_userinterface.desktop
   DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 install(
@@ -42,12 +43,11 @@ install(
 
 tde_add_kpart( kcm_konqhtml AUTOMOC
   SOURCES
-    advancedTabDialog.cpp htmlopts.cpp jsopts.cpp
-    javaopts.cpp pluginopts.cpp appearance.cpp
-    khttpoptdlg.cpp policydlg.cpp main.cpp
+    userInterOpts.ui userInterOpts_impl.cpp userInterConfig.cpp
+    htmlopts.cpp jsopts.cpp javaopts.cpp pluginopts.cpp
+    appearance.cpp khttpoptdlg.cpp policydlg.cpp main.cpp
     jspolicies.cpp nsconfigwidget.ui policies.cpp
-    domainlistview.cpp advancedTabOptions.ui
-    filteropts.cpp
+    domainlistview.cpp filteropts.cpp
   LINK tdehtml-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

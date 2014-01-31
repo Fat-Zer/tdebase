@@ -36,6 +36,7 @@
 #include "appearance.h"
 #include "htmlopts.h"
 #include "filteropts.h"
+#include "userInterConfig.h"
 
 #include "main.h"
 #include <tdeaboutdata.h>
@@ -67,11 +68,17 @@ extern "C"
 		return new KPluginOptions(c, "Java/JavaScript Settings", parent, name);
 	}
 
-        KDE_EXPORT TDECModule *create_tdehtml_filter(TQWidget *parent, const char *name )
-        {
-	    TDEConfig *c = new TDEConfig( "tdehtmlrc", false, false );
-            return new KCMFilter(c, "Filter Settings", parent, name);
-        }
+  KDE_EXPORT TDECModule *create_tdehtml_filter(TQWidget *parent, const char *name )
+  {
+    TDEConfig *c = new TDEConfig( "tdehtmlrc", false, false );
+    return new KCMFilter(c, "Filter Settings", parent, name);
+  }
+
+  KDE_EXPORT TDECModule *create_tdehtml_userinterface(TQWidget *parent, const char *name )
+  {
+    TDEConfig *c = new TDEConfig( "konquerorrc", false, false );
+    return new userInterConfig(c, "FMSettings", parent, name);
+  }
 }
 
 

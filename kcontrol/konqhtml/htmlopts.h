@@ -48,7 +48,6 @@ public:
 
 private slots:
     void slotChanged();
-    void launchAdvancedTabDialog();
 
 private:
     TDEConfig* m_pConfig;
