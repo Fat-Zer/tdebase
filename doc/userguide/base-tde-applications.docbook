@@ -83,7 +83,7 @@
 	<listitem><para>A <acronym>GUI</acronym> front-end to the powerful &DCOP; (Desktop COmmunications Protocol). &DCOP; provides a comprehensive protocol for interprocess communication between &tde; applications. While this is increasingly useful to &tde; programmers, it is also beneficial to the ordinary user who would want to create a script, or, say, a <application>SuperKaramba</application> theme.</para>
 	
 		<itemizedlist>
-			<listitem><para>In the User Guide <xref linkend="scripting-the-desktop"/> and <xref linkend="kdialog"/></para></listitem>
+			<listitem><para>In the User Guide <xref linkend="scripting-the-desktop"/> and <ulink url="help:/khelpcenter/adminguide#kdialog">The &tde; Administrator Guide</ulink></para></listitem>
 			<listitem><para>Other Documentation: <ulink
 	url="http://developer.kde.org/documentation/library/kdeqt/dcop.html">http://developer.kde.org/documentation/library/kdeqt/dcop.html</ulink></para></listitem>
 		

@@ -24,7 +24,8 @@
 <listitem>
 
 <itemizedlist>
-<listitem><para>Wrote the notes which became <xref linkend="tde-for-administrators"/>.</para>
+<listitem><para>Wrote the notes which became <ulink url="help:/khelpcenter/adminguide">The &tde;
+Administrator Guide</ulink>.</para>
 </listitem>
 </itemizedlist>
 
@@ -207,7 +208,8 @@ linkend="file-manager"/> and <xref linkend="accessibility"/>.</para>
 </listitem>
 <listitem><para>Wrote <xref linkend="menus"/>.</para>
 </listitem>
-<listitem><para>Marked up parts of <xref linkend="tde-for-administrators"/>.</para>
+<listitem><para>Marked up parts of <ulink url="help:/khelpcenter/adminguide">The &tde;
+Administrator Guide</ulink>.</para>
 </listitem>
 </itemizedlist>
 
@@ -270,8 +272,8 @@ linkend="file-manager"/> and <xref linkend="accessibility"/>.</para>
 </listitem>
 <listitem><para>Wrote <xref linkend="getting-help"/>.</para>
 </listitem>
-<listitem><para>Marked up parts of <xref
-linkend="tde-for-administrators"/>.</para>
+<listitem><para>Marked up parts of <ulink url="help:/khelpcenter/adminguide">The &tde;
+Administrator Guide</ulink>.</para>
 </listitem>
 </itemizedlist>
 

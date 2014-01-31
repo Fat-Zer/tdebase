@@ -84,16 +84,17 @@ is as <acronym>UTF-8</acronym> again).</para>
 correctly anymore, close the application and restore the backup of the
 configuration file.</para>
 
-<itemizedlist>
+<!--<itemizedlist>
 <title>Related Information</title>
 
 
-<listitem><para><xref linkend="tde-for-administrators"/> has more
-information about &tde;'s directory structure, to help you find the
+<listitem><para><ulink url="help:/khelpcenter/adminguide">The &tde;
+Administrator Guide</ulink> has more
+information about the &tde; directory structure, to help you find the
 file you need to edit.</para>
 </listitem>
 
-</itemizedlist>
+</itemizedlist>-->
 
 </sect2>
 

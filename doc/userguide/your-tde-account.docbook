@@ -52,7 +52,8 @@ TDEDIR=/usr/local/kde,/home/phil/kde</userinput> if you use sh.
 <!-- Add links to "further reading" here -->
 <itemizedlist>
 <title>Related Information</title>
-<listitem><para><xref linkend="tde-for-administrators" /> contains
+<listitem><para><ulink url="help:/khelpcenter/adminguide">The &tde;
+Administrator Guide</ulink> contains
 more information about the directories that &tde; uses.</para>
 </listitem>
 </itemizedlist>

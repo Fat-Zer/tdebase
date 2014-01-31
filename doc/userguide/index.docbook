@@ -42,13 +42,11 @@
   <!ENTITY usenet SYSTEM "usenet.docbook">
   <!ENTITY messaging-intro SYSTEM "messaging-intro.docbook">
   <!ENTITY tde-office SYSTEM "tde-office.docbook">
-  <!ENTITY tde-for-admins SYSTEM "tde-for-admins.docbook">
   <!ENTITY migrator-dictionary SYSTEM "migrator-dictionary.docbook">
   <!ENTITY glossary SYSTEM "glossary.docbook">
   <!ENTITY standard-menu-entries SYSTEM "standard-menu-entries.docbook">
   <!ENTITY where-next SYSTEM "where-next.docbook">
   <!ENTITY credits-and-license SYSTEM "credits-and-license.docbook">
-  <!ENTITY groupware-with-kontact SYSTEM "groupware-kontact.docbook">
   <!ENTITY extragear-applications SYSTEM "extragear-applications.docbook">
   <!ENTITY migrator-applications SYSTEM "migrator-applications.docbook">
   <!ENTITY % English "INCLUDE">
@@ -269,16 +267,6 @@ Internet applications. &tde; includes a powerful web browser,
 &knode;, and many more applications to use the Internet.
 This part of the User Guide contains
 information about configuring these applications.</para>
-
-<para><xref linkend="tde-for-administrators"/> is a reference guide to
-some &tde; features that are useful to administrators configuring
-multi-user systems. This part also has information that might be useful
-to &tde; users with single-user systems: where configuration files are
-stored, what environment variables affect &tde;, and so on. The KIOSK
-framework is the &tde; system which allows administrators to limit
-what users can do in &tde;. That framework is potentially useful in many
-situations, but especially for running single-function kiosks with,
-for example, only a web browser, hence the name.</para>
 
 </sect1>
 </chapter>
@@ -530,8 +518,6 @@ by entering <userinput>help:/tdm</userinput> in &konqueror;'s
 
 &tde-office;
 
-&tde-for-admins;
-
 <part id="more">
 <title>More Tools</title>
 
@@ -592,7 +578,6 @@ started.</para>
 </appendix>
 
 &documentation.index;
-
 
 </book>
 
