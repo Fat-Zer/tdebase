@@ -1,0 +1,87 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE">
+]>
+
+<article id="history" lang="&language;">
+<title>History Sidebar</title>
+
+<articleinfo>
+
+<authorgroup>
+<author>
+<firstname>Burkhard</firstname>
+<surname>
+Lück
+</surname>
+</author>
+<author>&tde-authors;</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2009</year>
+<holder>Burkhard Lück</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>KControl</keyword>
+<keyword>system settings</keyword>
+<keyword>history</keyword>
+</keywordset>
+
+</articleinfo>
+
+<sect1 id="history-sidebard">
+<title>HIstory Sidebar</title>
+
+<para>
+This dialog allows you to configure the history sidebar.
+</para>
+
+<variablelist>
+<varlistentry><term><guilabel>Limits</guilabel></term>
+<listitem><para>
+The options in this section can be used to set the maximum size of your history and set a time after which
+items are automatically removed. 
+<!-- URLs expire after
+Maximum number of URLs-->
+</para></listitem>
+</varlistentry>
+
+<varlistentry><term><guilabel>Custom Fonts</guilabel></term>
+<listitem><para>
+Here you can also set different fonts for new and
+old &URL;s by selecting the <guibutton>Choose Font</guibutton> button.
+<!--URLs older than
+URLs newer than-->
+</para></listitem>
+</varlistentry>
+
+<varlistentry><term><guilabel>Details</guilabel></term>
+<listitem><para>
+The <guilabel>Detailed tooltips</guilabel> check box controls how much
+information is displayed when you hover the mouse pointer over an item in the
+history page.</para>
+<para>If checked the number of times visited and the dates of the first and last 
+visits are shown, in addition to the URL.</para></listitem>
+</varlistentry>
+
+</variablelist>
+
+<para>Selecting <guibutton>Clear History</guibutton> will
+clear out the entire history.
+</para>
+
+</sect1>
+
+</article>
