@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE">
+]>
+
+<article lang="&language;">
+<title>Privacy</title>
+
+<articleinfo>
+
+<authorgroup>
+<corpauthor>&tde-team;</corpauthor>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the Privacy module.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>privacy</keyword>
+</keywordset>
+
+</articleinfo>
+
+<sect1 id="privacy-settings">
+<title>Privacy Settings</title>
+
+<para>This module provides a quick way to delete files in your &tde; profile directory to
+protect your privacy.</para>
+
+<para>Various file locations are listed that contain data related to your privacy. Each item
+can be selected individually. All items can be selected using the <guilabel>Select All</guilabel>
+button or none with the <guilabel>Select None</guilabel> button.</para>
+
+<para>After selecting the desired file locations, select the <guilabel>Clean Up</guilabel> button
+To clean or scrub the contents of the affected files.</para>
+
+<para>The selection preferences can be saved by selecting the <guilabel>Apply</guilabel> button.</para>
+
+&underFDL;
+
+</sect1>
+
+</article>

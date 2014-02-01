@@ -9,7 +9,7 @@
 <!-- remains really short. -->
 
 <article lang="&language;">
-<title>ICC Color Profile</title>
+<title>Zeroconf Service Discovery</title>
 
 <articleinfo>
 
@@ -28,12 +28,14 @@
 
 <abstract>
 <para>
-This handbook describes the International Color Consortium (ICC) color profile configuration.
+This handbook describes the Zeroconf Service Discovery module.
 </para>
 </abstract>
 
 <keywordset>
 <keyword>TDE</keyword>
+<keyword>Zeroconf</keyword>
+<keyword>dnssd</keyword>
 </keywordset>
 
 </articleinfo>
@@ -56,4 +58,5 @@ Submitting a basic text file is acceptable as the &tde-team; will convert the te
 
 </sect1>
 
+&documentation.index; 
 </article>

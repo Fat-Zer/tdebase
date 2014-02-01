@@ -2,7 +2,7 @@
 Type=Application
 Exec=tdecmshell kcm_useraccount
 Icon=tdmconfig
-DocPath=kcontrol/userinfo/index.html
+DocPath=kcontrol/useraccount/index.html
 
 X-TDE-ModuleType=Library
 X-TDE-Library=useraccount

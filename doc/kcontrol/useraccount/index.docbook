@@ -1,0 +1,180 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE">
+]>
+
+<article lang="&language;">
+<title>Password &amp; User Account</title>
+
+<articleinfo>
+<authorgroup>
+<author>
+<firstname>Michael</firstname>
+<surname>Anderson</surname>
+</author>
+<author>
+<firstname>Anne-Marie</firstname>
+<surname>Mahfouf</surname>
+</author>
+<author>&tde-authors;</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>Michael Anderson</holder>
+<holder>Anne-Marie Mahfouf</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the Password &amp; User Account module.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>System Settings</keyword>
+<keyword>kcontrol</keyword>
+<keyword>user</keyword>
+<keyword>account</keyword>
+<keyword>password</keyword>
+</keywordset>
+
+</articleinfo>
+
+<sect1 id="useraccount">
+<title>User Information</title>
+<sect2 id="intro">
+<title>Introduction</title>
+
+<para>
+<screenshot>
+<screeninfo>Screenshot of the User Account Manager</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="useraccount.png" format="PNG"/>
+    </imageobject>
+     <textobject>
+      <phrase>The User Account Manager</phrase>
+    </textobject>
+  </mediaobject>
+</screenshot>
+</para>
+
+<para>This is a module to enter user information and configure basic user settings such as
+the password and icon. This information and these settings will be used by various &tde;
+applications (mail programs and word processors for example) when they are completed. You can:</para>
+
+<itemizedlist>
+<listitem><para>change your user icon</para></listitem>
+<listitem><para>change your user login password</para></listitem>
+<listitem><para>add personal information</para></listitem>
+<listitem><para>configure the password prompt</para></listitem>
+</itemizedlist>
+
+</sect2>
+
+<sect2 id="icons">
+<title>User Icon and Password</title>
+
+<variablelist>
+<varlistentry><term>User Icon</term>
+<listitem>
+<para>
+This icon is used when the user logs in using a login manager. When your administrator
+has configured the login manager to allow this option, selecting the button allows you
+to change the image, either by using a pre-installed icons or selecting one of your own images.
+Select the <guibutton>Apply</guibutton> to make the changes permanent.
+</para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="user-info">
+<title>User Information</title>
+
+<variablelist>
+<varlistentry><term><guilabel>Name:</guilabel></term>
+<listitem>
+<para>
+Enter here the name of the user.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term><guilabel>Organization</guilabel></term>
+<listitem>
+<para>
+Add a business or group name the user would like to be associated with.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry><term><guilabel>Email address:</guilabel></term>
+<listitem>
+<para>
+Enter here an email address that will be associated with this user. 
+</para>
+</listitem>
+</varlistentry>
+<varlistentry><term><guilabel>SMTP server:</guilabel></term>
+<listitem>
+<para>
+Indicate here a local smtp server for sending mail within a network.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry><term><guilabel>User ID</guilabel></term>
+<listitem>
+<para>
+This is an information only, providing you the User ID assigned to you. This number is
+defined in <filename>/etc/passwd</filename> and was defined when your user account was created.
+</para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="password">
+<title>At Password Prompt</title>
+
+<para>
+This section allows you to choose how you want to input your password when prompted.
+The default is to have one bullet appear for each letter typed. That can be changed
+to three bullets for each letter, which making guessing the length of the password
+more difficult letters when somebody else is watching. Even more secure is to display
+nothing while typing the password.
+</para>
+
+</sect2>
+
+<sect2 id="change-password">
+<title>Change Password</title>
+
+<variablelist>
+<varlistentry><term><guibutton>Change password...</guibutton></term>
+<listitem>
+<para>
+Selecting this button displays a dialog to change your user password. Your user password
+is the one you log in your system. You will be asked for your current password then twice
+for your new password.
+</para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+</sect1>
+</article>

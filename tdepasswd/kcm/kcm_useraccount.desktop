@@ -5,6 +5,8 @@ X-TDE-ParentApp=kcontrol
 X-TDE-Library=useraccount
 Type=Application
 Exec=tdecmshell kcm_useraccount
+DocPath=kcontrol/useraccount/index.html
+
 Name=Password & User Account
 Name[af]=Gebruiker rekening en Wagwoord
 Name[ar]=كلمة المرور و حساب المستخدم
