@@ -439,6 +439,9 @@ kab2kabc -> tdeab2tdeabc
 kcache -> tdecache
 </para></listitem>
 <listitem><para>
+kcmshell -> tdecmshell
+</para></listitem>
+<listitem><para>
 kconf_update -> tdeconf_update
 </para></listitem>
 <listitem><para>
