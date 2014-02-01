@@ -14,5 +14,5 @@ install( FILES
   DESTINATION ${DATA_INSTALL_DIR}/tdm/pics )
 
 install( FILES
-    default1.png default2.png default3.png root1.png
+    default1.png default2.png default3.png default4.png root1.png
   DESTINATION ${DATA_INSTALL_DIR}/tdm/pics/users )
