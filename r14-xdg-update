@@ -3,7 +3,7 @@
 # A script to perform R14.0.0 XDG compliance updates.
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201401150
+SCRIPT_VERSION=201402020
 
 # This script should be needed to run only once, but corner cases
 # and file/directory permissions could cause incomplete updates.
@@ -530,12 +530,13 @@ if [ "$R14_VERSION" -lt "201309150" ]; then
   fi
 fi
 
-if [ "$R14_VERSION" -lt "201401150" ]; then
+if [ "$R14_VERSION" -lt "201402020" ]; then
   Log "Updating Quanta Plus plugins.rc."
   if [ -r $PROFILE_DIR/share/apps/quanta/plugins.rc ]; then
     sed -i 's|FileName=kde3|FileName=trinity|g' "$PROFILE_DIR/share/apps/quanta/plugins.rc" 2>/dev/null
+    sed -i 's|FileName=kdemod3|FileName=trinity|g' "$PROFILE_DIR/share/apps/quanta/plugins.rc" 2>/dev/null
     sed -i 's|KFileReplace|TDEFileReplace|g' "$PROFILE_DIR/share/apps/quanta/plugins.rc" 2>/dev/null
-    sed -i 's|libkfilereplace|libtdefilereplace|g' "$PROFILE_DIR/share/apps/quanta/plugins.rc" 2>/dev/null
+    sed -i 's|kfilereplace|tdefilereplace|g' "$PROFILE_DIR/share/apps/quanta/plugins.rc" 2>/dev/null
   else
     Log "Quanta Plus plugins.rc does not exist."
   fi
