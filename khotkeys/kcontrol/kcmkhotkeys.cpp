@@ -148,7 +148,7 @@ void Module::save()
 
 TQString Module::quickHelp() const
     {
-    return i18n( "" ); // TODO CHECKME
+    return ""; // TODO CHECKME
     }
 
 void Module::action_name_changed( const TQString& name_P )
