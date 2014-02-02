@@ -8,8 +8,7 @@ use Getopt::Long;
 use open IO => ':utf8';
 use open ':std';
 
-my $htsearchpath="/usr/lib/cgi-bin/htsearch";
-
+my $htsearchpath="/srv/www/cgi-bin/htsearch";
 my $config;
 my $format;
 my $method;
@@ -20,6 +19,7 @@ my $indexdir;
 my $maxnum;
 
 GetOptions (
+  'binary=s' => \$htsearchpath,
   'config=s' => \$config,
   'format=s' => \$format,
   'method=s' => \$method,
