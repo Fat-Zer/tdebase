@@ -1,2 +1,2 @@
-KDE_LANG = en
-KDE_DOCS = kcontrol/helpindex.html
+# KDE_LANG = en
+# KDE_DOCS = kcontrol/helpindex.html

@@ -9,4 +9,4 @@
 #
 #################################################
 
-tde_create_handbook( DESTINATION kcontrol/helpindex.html )
+# tde_create_handbook( DESTINATION kcontrol/helpindex )

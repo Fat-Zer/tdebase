@@ -189,11 +189,11 @@ contents of either pane.
 </para>
 
 <para>
-The <guilabel>Contents</guilabel> pane is further divided into two
-tabs, one containing a <link linkend="contents-menu">menu</link>
-showing all the help information &khelpcenter; is aware of, and the
-other contains the &tde; <link linkend="kde-glossary">glossary</link>
-of terms.
+The <guilabel>Contents</guilabel> pane includes three tabs, the
+<guilabel>Contents</guilabel> tab selects the <guilabel>Contents</guilabel> pane,
+the <guilabel>Glossary</guilabel> tab opens the &tde;
+<link linkend="tde-glossary">glossary</link> of terms, and the <guilabel>Search Options</guilabel>
+tab allows searching all help handbooks.
 </para>
 
 <sect3 id="contents-menu">
@@ -234,7 +234,16 @@ installation, configuration and customization, and use.
 </varlistentry>
 
 <varlistentry>
-<term><guilabel>Application manuals</guilabel></term>
+<term><guilabel>&tde; Administrator Guide</guilabel></term>
+<listitem><para>A reference guide to &tde; features, structure, framework
+and configurations useful to administrators. The information also is useful
+to single-user systems.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Application Manuals</guilabel></term>
 <listitem>
 <para>
 Native &tde; application documentation. &tde; applications have
@@ -247,6 +256,15 @@ application documentation.
 The applications are displayed in a tree structure that echoes the default
 structure of the <guimenu>TDE</guimenu> menu, making it easy to find the
 application you are looking for.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Applet Manuals</guilabel></term>
+<listitem>
+<para>
+Similar to Application Manuals but for applets that run in the &tde; panel.
 </para>
 </listitem>
 </varlistentry>
@@ -422,6 +440,57 @@ some time.</para></listitem>
 
 </sect2>
 
+<sect2 id="tde-glossary">
+<title>The Glossary</title>
+
+<para>
+The glossary provides a quick reference point, where you can look up
+the definitions of words that may be unfamiliar to you. These range
+from &tde; specific applications and technologies, through to general
+&UNIX; computing terms.
+</para>
+
+<para>
+In the left hand pane you will see a tree view, with two choices:
+<guilabel>Alphabetically</guilabel> or <guilabel>By topic</guilabel>.
+Both contain the same entries, sorted differently, to allow you to
+quickly find the item of interest.
+</para>
+
+<para>
+Navigate down the tree views to the left, and items you select will be
+displayed on the right.
+</para>
+
+</sect2>
+
+<sect2 id="tde-search-options">
+<title>Search Options</title>
+
+<para>&tde; comes with a lot of documentation for applications and
+components. While possible to just browse the manuals until you
+find that piece of information you're looking for, this may be a very
+time-consuming task. To make this easier for you, &tde; offers
+full text search using a program called
+<application>ht://dig</application>. It works quite similar to search
+engines on the web and some search engines might even use
+<application>ht://dig</application>.</para>
+
+<para>To use <application>ht://dig</application>, select the <guilabel>Search
+Options</guilabel> tab in the &khelpcenter; <guilabel>Contents</guilabel> pane,
+enter the word you are looking for, then select the <guibutton>Search</guibutton>.</para>
+
+<para>However, to use this feature, <application>ht://dig</application>
+must be installed on your system. If you haven't installed
+<application>ht://dig</application> and the package wasn't shipped with your
+operating system you have to get ht://dig yourself. Use your package manager
+to search for the package.</para>
+
+<para>To build the search index, at the bottom of the <guilabel>Contents</guilabel> pane,
+select the <guilabel>Build Search Index button</guilabel>.</para>
+
+</sect2>
+
 <sect2 id="man-and-info">
 <title>The <application>Man</application> and <application>Info</application>
 sections</title>
@@ -476,30 +545,6 @@ the Top node and each man page on the level below. Man entries are
 one page long.</para>
 
 </sect3>
-</sect2>
-
-<sect2 id="kde-glossary">
-<title>The &tde; glossary</title>
-
-<para>
-The glossary provides a quick reference point, where you can look up
-the definitions of words that may be unfamiliar to you. These range
-from &tde; specific applications and technologies, through to general
-&UNIX; computing terms.
-</para>
-
-<para>
-In the left hand pane you will see a tree view, with two choices:
-<guilabel>Alphabetically</guilabel> or <guilabel>By topic</guilabel>.
-Both contain the same entries, sorted differently, to allow you to
-quickly find the item of interest.
-</para>
-
-<para>
-Navigate down the tree views to the left, and items you select will be
-displayed on the right.
-</para>
-
 </sect2>
 
 <sect2 id="menu-and-toolbar-ref">
