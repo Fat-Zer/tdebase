@@ -44,7 +44,7 @@ static const char kcc_text[] = I18N_NOOP("Trinity Control Center");
 
 static const char title_text[] = I18N_NOOP("Configure your desktop environment.");
 
-static const char intro_text[] = I18N_NOOP("Welcome to the \"Trinity Control Center\", "
+static const char intro_text[] = I18N_NOOP("Welcome to the Trinity Control Center, "
                                 "a central place to configure your "
                                 "desktop environment. "
                                 "Select an item from the index on the left "
@@ -54,7 +54,7 @@ static const char kcc_infotext[] = I18N_NOOP("Trinity Info Center");
 
 static const char title_infotext[] = I18N_NOOP("Get system and desktop environment information");
 
-static const char intro_infotext[] = I18N_NOOP("Welcome to the \"Trinity Info Center\", "
+static const char intro_infotext[] = I18N_NOOP("Welcome to the Trinity Info Center, "
                                 "a central place to find information about your "
                                 "computer system.");
 
