@@ -117,7 +117,7 @@ option( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" 
 # WITH_ARTS         affects libkonq khotkeys
 # WITH_I8K          affects ksysguard
 # WITH_SENSORS      affects ksysguard
-# WITH_HAL          affects tdeioslaves(media) ksmserver
+# WITH_HAL          affects tdeioslaves(media) ksmserver kicker
 # WITH_TDEHWLIB     affects tdeioslaves(media), replaces WITH_HAL on systems without HAL
 # WITH_LIBRAW1394   affects kcontrol(view1394)
 # WITH_PAM          affects tdm kdesktop kcheckpass

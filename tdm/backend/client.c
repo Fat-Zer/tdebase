@@ -95,10 +95,6 @@ extern int loginsuccess( const char *User, const char *Host, const char *Tty, ch
 #define log_to_audit_system(l,h,d,s)	do { ; } while (0)
 #endif
 
-#ifdef WITH_CONSOLE_KIT
-#include "consolekit.h"
-#endif
-
 /*
  * Session data, mostly what struct verify_info was for
  */
@@ -1309,11 +1305,6 @@ StartClient()
 #if !defined(USE_PAM) && !defined(_AIX) && defined(KERBEROS)
 	if (krbtkfile[0] != '\0')
 		env = setEnv( env, "KRBTKFILE", krbtkfile );
-#endif
-#ifdef WITH_CONSOLE_KIT
-	if (ck_session_cookie != NULL) {
-		env = setEnv ( env, "XDG_SESSION_COOKIE", ck_session_cookie );
-	}
 #endif
 #ifdef WITH_CONSOLE_KIT
 	if (ck_session_cookie != NULL) {

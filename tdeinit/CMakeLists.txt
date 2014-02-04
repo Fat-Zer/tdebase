@@ -17,7 +17,6 @@ include_directories(
 
 link_directories(
   ${TQT_LIBRARY_DIRS}
-  ${DBUS_TQT_LIBRARY_DIRS}
 )
 
 

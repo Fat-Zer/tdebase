@@ -34,20 +34,15 @@ class TDEAction;
 
 #include <config.h>
 
-#ifdef WITH_UPOWER
-	#include <tqdbusconnection.h>
-#else
-	#warning test
+#ifdef COMPILE_HALBACKEND
 	#ifndef NO_QT3_DBUS_SUPPORT
 	/* We acknowledge the the dbus API is unstable */
 	#define DBUS_API_SUBJECT_TO_CHANGE
 	#include <dbus/connection.h>
 	#endif // NO_QT3_DBUS_SUPPORT
 
-	#ifdef COMPILE_HALBACKEND
 	#include <hal/libhal.h>
-	#endif
-#endif // WITH_UPOWER
+#endif // COMPILE_HALBACKEND
 
 // The (singleton) widget that makes/fades the desktop gray.
 class KSMShutdownFeedback : public TQWidget
@@ -153,14 +148,10 @@ private:
 	TQString m_bootOption;
 	TQPopupMenu *targets;
 	TQStringList rebootOptions;
-#ifdef WITH_UPOWER
-	TQT_DBusConnection m_dbusConn;
-#else
 #ifdef COMPILE_HALBACKEND
 	LibHalContext* m_halCtx;
 	DBusConnection *m_dbusConn;
 #endif
-#endif // WITH_UPOWER
 	bool m_lockOnResume;
 	int* m_selection;
 };

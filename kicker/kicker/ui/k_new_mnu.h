@@ -45,15 +45,15 @@
 
 #include <config.h>
 
+#ifdef COMPILE_HALBACKEND
 #ifndef NO_QT3_DBUS_SUPPORT
 /* We acknowledge the the dbus API is unstable */
 #define DBUS_API_SUBJECT_TO_CHANGE
 #include <dbus/connection.h>
 #endif // NO_QT3_DBUS_SUPPORT
 
-#ifdef COMPILE_HALBACKEND
 #include <hal/libhal.h>
-#endif
+#endif // COMPILE_HALBACKEND
 
 class KickerClientMenu;
 class KickoffTabBar;

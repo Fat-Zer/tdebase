@@ -269,8 +269,8 @@ find_package( TDE )
 
 
 
-# dbus (tdm, ksmserver)
-if( BUILD_TDM OR BUILD_KSMSERVER )
+# dbus (tdm)
+if( BUILD_TDM )
 
   pkg_search_module( DBUS dbus-1 )
   if( NOT DBUS_FOUND )
@@ -280,15 +280,9 @@ if( BUILD_TDM OR BUILD_KSMSERVER )
 endif( )
 
 
-# dbus-tqt (tdm, ksmserver, tdeioslaves(media))
-if( BUILD_TDM OR BUILD_KSMSERVER OR BUILD_KICKER OR (BUILD_TDEIOSLAVES AND WITH_HAL) )
+# dbus-tqt (ksmserver, kicker, tdeioslaves(media))
+if( WITH_HAL AND (BUILD_KSMSERVER OR BUILD_KICKER OR BUILD_TDEIOSLAVES) )
 
-  if( BUILD_KSMSERVER AND WITH_UPOWER )
-    pkg_check_modules( DBUS_1_TQT dbus-1-tqt )
-    if( NOT DBUS_1_TQT_FOUND )
-      tde_message_fatal( "dbus-tqt-1 is required, but was not found on your system" )
-    endif( )
-  endif( )
   # check for dbus-tqt
   # dbus-tqt need Qt flags
   pkg_check_modules( DBUS_TQT REQUIRED dbus-tqt )
