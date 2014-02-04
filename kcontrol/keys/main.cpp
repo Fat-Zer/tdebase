@@ -37,13 +37,13 @@
 | Shortcut Schemes | Modifier Keys |
 
 o Current scheme  o New scheme  o Pre-set scheme
-| KDE Traditional |v|| <Save Scheme...> <Remove Scheme>
+| TDE Traditional |v|| <Save Scheme...> <Remove Scheme>
 [] Prefer 4-modifier defaults
 
 o Current scheme
 o New scheme       <Save Scheme>
 o Pre-set scheme   <Remove Scheme>
-  | KDE Traditional |v||
+  | TDE Traditional |v||
 [] Prefer 4-modifier defaults
 
 Global Shortcuts
@@ -53,9 +53,9 @@ KeyModule::KeyModule( TQWidget *parent, const char *name )
 {
     setQuickHelp( i18n("<h1>Keyboard Shortcuts</h1> Using shortcuts you can configure certain actions to be"
     " triggered when you press a key or a combination of keys, e.g. Ctrl+C is normally bound to"
-    " 'Copy'. KDE allows you to store more than one 'scheme' of shortcuts, so you might want"
+    " 'Copy'. TDE allows you to store more than one 'scheme' of shortcuts, so you might want"
     " to experiment a little setting up your own scheme, although you can still change back to the"
-    " KDE defaults.<p> In the 'Global Shortcuts' tab you can configure non-application-specific"
+    " TDE defaults.<p> In the 'Global Shortcuts' tab you can configure non-application-specific"
     " bindings, like how to switch desktops or maximize a window; in the 'Application Shortcuts' tab"
     " you will find bindings typically used in applications, such as copy and paste."));
 
