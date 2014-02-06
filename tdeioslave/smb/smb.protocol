@@ -8,5 +8,5 @@ reading=true
 writing=true
 makedir=true
 deleting=true
-DocPath=tdeioslave/smb.html
+DocPath=tdeioslave/smb/index.html
 Icon=samba

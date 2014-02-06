@@ -7,6 +7,6 @@ reading=true
 listing=Name
 defaultMimetype=text/html
 determineMimetypeFromExtension=false
-DocPath=tdeioslave/man.html
+DocPath=tdeioslave/man/index.html
 Icon=man
 Class=:local

@@ -118,7 +118,7 @@ void KCMIOSlaveInfo::slotResult(TDEIO::Job *)
 
 void KCMIOSlaveInfo::showInfo(const TQString& protocol)
 {
-   TQString file = TQString("tdeioslave/%1.docbook").arg( protocol );
+   TQString file = TQString("tdeioslave/%1/index.docbook").arg( protocol );
    file = TDEGlobal::locale()->langLookup( file );
    if (m_tfj)
    {
@@ -129,12 +129,23 @@ void KCMIOSlaveInfo::showInfo(const TQString& protocol)
    if (!file.isEmpty())
    {
        helpData.truncate( 0 );
-       m_tfj = TDEIO::get( KURL( TQString("help:/tdeioslave/%1.html").arg( protocol ) ), true, false );
+       m_tfj = TDEIO::get( KURL( TQString("help:/tdeioslave/%1/index.html").arg( protocol ) ), true, false );
        connect( m_tfj, TQT_SIGNAL( data( TDEIO::Job *, const TQByteArray &) ), TQT_SLOT( slaveHelp( TDEIO::Job *, const TQByteArray &) ) );
        connect( m_tfj, TQT_SIGNAL( result( TDEIO::Job * ) ), TQT_SLOT( slotResult( TDEIO::Job * ) ) );
        return;
    }
-   m_info->setText(i18n("Some info about protocol %1:/ ...").arg(protocol));
+   else if (file.isEmpty())
+   {
+       helpData.truncate( 0 );
+       m_tfj = TDEIO::get( KURL( TQString("help:/khelpcenter/helpnotfound/index.html").arg( protocol ) ), true, false );
+       connect( m_tfj, TQT_SIGNAL( data( TDEIO::Job *, const TQByteArray &) ), TQT_SLOT( slaveHelp( TDEIO::Job *, const TQByteArray &) ) );
+       connect( m_tfj, TQT_SIGNAL( result( TDEIO::Job * ) ), TQT_SLOT( slotResult( TDEIO::Job * ) ) );
+       return;
+   }
+   else
+   {
+       m_info->setText(i18n("There is no documentation available for %1:/ ...").arg(protocol));
+   }
 }
 
 void KCMIOSlaveInfo::showInfo(TQListBoxItem *item)

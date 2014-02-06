@@ -4,5 +4,5 @@ protocol=cgi
 input=none
 output=filesystem
 reading=true
-DocPath=tdeioslave/cgi.html
+DocPath=tdeioslave/cgi/index.html
 Icon=html

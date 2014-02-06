@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE" > <!-- change language only here -->
+]>
+
+<article lang="&language;" id="xz">
+<title>xz / lzma</title>
+
+<articleinfo>
+<authorgroup>
+<author><firstname>Per Øyvind</firstname><surname> Karlsen</surname></author>
+<author>&tde-authors;</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+</articleinfo>
+
+<para>Xz is a compression program</para>
+
+<para>The xz slave is not directly usable and is intended for use
+as a filter. For example, the tar slave can filter a file through
+the xz slave, in order to display the contents of a <literal
+role="extension">tar.lzma</literal> or <literal role="extension">tar.xz</literal>
+file directly in a &konqueror; window.</para>
+
+<para>If you click on a file compressed with a <literal
+role="extension">.lzma</literal> or <literal role="extension">tar.xz</literal>
+in &konqueror;, this slave is used to
+uncompress it and display it as a normal (uncompressed) file.</para>
+
+<para>Read the man page: <ulink url="man:/xz">xz</ulink>.</para>
+
+</article>
