@@ -1140,7 +1140,7 @@ void Konsole::makeBasicGUI()
   }
   m_detachSession->setEnabled(false);
 
-  m_renameSession = new TDEAction(i18n("&Rename Session..."), Qt::CTRL+Qt::ALT+Qt::Key_S, TQT_TQOBJECT(this),
+  m_renameSession = new TDEAction(i18n("&Rename Session..."), Qt::CTRL+Qt::SHIFT+Qt::Key_R, TQT_TQOBJECT(this),
                                 TQT_SLOT(slotRenameSession()), m_shortcuts, "rename_session");
 
   if (kapp->authorizeTDEAction("zmodem_upload"))
