@@ -36,7 +36,7 @@ a way round it. (FF) -->
 <bookinfo>
 <title>The Trinity Help Center</title>
 <authorgroup>
-<corpauthor>&tde-team;</corpauthor>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 <date>&tde-release-date;</date>

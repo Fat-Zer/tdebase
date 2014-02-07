@@ -9,7 +9,7 @@
 <!-- remains really short. -->
 
 <article lang="&language;">
-<title>ICC Color Profile</title>
+<title>System Base URL Notifier</title>
 
 <articleinfo>
 
@@ -28,19 +28,22 @@
 
 <abstract>
 <para>
-This handbook describes the International Color Consortium (ICC) color profile configuration.
+This handbook describes the System Base URL Notifier service.
 </para>
 </abstract>
 
 <keywordset>
 <keyword>TDE</keyword>
+<keyword>KDED</keyword>
+<keyword>system</keyword>
+<keyword>service</keyword>
 </keywordset>
 
 </articleinfo>
 
 <sect1 id="apologies">
 <title>We Apologize</title>
-<para>No documentation has yet been written for this module.</para>
+<para>No documentation has yet been written for this service.</para>
 
 <para>If you need help, please check <ulink url="http://www.trinitydesktop.org">The &tde;
 web site</ulink>, submit questions to the <ulink url="http://www.trinitydesktop.org/mailinglist.php">
