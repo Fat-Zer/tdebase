@@ -10,5 +10,5 @@
 #################################################
 
 install( FILES
-    default.png deck_plate.png green_line.png rail.png
+    default.png deck_plate.png green_line.png rail.png blue_glass.png
   DESTINATION ${DATA_INSTALL_DIR}/kicker/wallpapers )

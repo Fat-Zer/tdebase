@@ -1,5 +1,6 @@
 
-kicker_wallpaper_data_DATA = default.png deck_plate.png green_line.png rail.png 
+
+kicker_wallpaper_data_DATA = default.png deck_plate.png green_line.png rail.png blue_glass.png
 
 kicker_wallpaper_datadir = $(kde_datadir)/kicker/wallpapers
 
