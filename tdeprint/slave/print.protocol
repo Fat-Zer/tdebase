@@ -11,5 +11,5 @@ deleting=false
 moving=false
 linking=false
 Icon=postscript
-DocPath=tdeioslave/print.html
+DocPath=tdeioslave/print/index.html
 defaultMimetype=application/octet-stream

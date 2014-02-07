@@ -8,7 +8,8 @@
 <title>print</title>
 <articleinfo>
 <authorgroup>
-<author>&Kurt.Pfeifle; &Kurt.Pfeifle.mail;</author>
+<author>&Kurt.Pfeifle;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 
 </authorgroup>
@@ -18,13 +19,13 @@
 
 </articleinfo>
 
-<para>The <acronym>print</acronym> KIOSlave gives quick access to browse
+<para>The <acronym>print</acronym> TDEIOSlave gives quick access to browse
 different &tdeprint; sections via <quote>virtual folders</quote>.
 These folders provide some information about and quick access to your print 
 subsystem.</para>
 
 <para><command>print:/</command> represents one more of those useful 
-KIOSlaves implemented by &tde;. To access it, just type  <userinput>print:/
+TDEIOSlaves implemented by &tde;. To access it, just type  <userinput>print:/
  </userinput> into the address field of &konqueror;. <userinput>print:/
  </userinput>  doesn't purely provide <quote>read-only</quote> access to
  your print subsystem, but it also allows you to change settings
@@ -43,7 +44,7 @@ not allowed a view or an operation as a normal user.</para>
 
 <para>Note, that some of the views and actions offered do heavily
  depend on the print subsystem that is installed on your box and presently
-activated for  &tde;. Pages showing printer information display only
+activated for &tde;. Pages showing printer information display only
 those parts that are valid for the &tde; selected print subsystem.
 (So if you normally run <acronym>CUPS</acronym>, but switched temporarily to 
 
@@ -164,13 +165,7 @@ or <userinput>print:printers/printer_name </userinput> </term>
 <keycombo action="simul">&Alt;<keycap>F2</keycap></keycombo>)</para></tip>
 
 <para>You can learn more about printing and &tdeprint;'s powerful abilities
-by reading the <ulink url="help:/tdeprint/index.html">&tdeprint; Handbook
-locally</ulink> or at the <ulink url="http://printing.kde.org/">&tdeprint;
-Website</ulink> where there are documents online (<acronym>HTML</acronym> and 
-<acronym>PDF</acronym>),containing
-<ulink 
-url="http://printing.kde.org/documentation/tutorials/">Tutorials</ulink>,
- as well as <ulink url="http://printing.kde.org/faq/">FAQs</ulink> and
- Tips and Tricks related to printing in general.</para>
+by reading the <ulink url="help:/tdeprint/index.html">&tdeprint; Handbook</ulink>.
+</para>
 
 </article>
