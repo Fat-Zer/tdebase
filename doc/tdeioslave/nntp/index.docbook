@@ -5,10 +5,11 @@
 ]>
 
 <article lang="&language;" id="nntp">
-<title>nntp</title>
+<title>nntp / nntps</title>
 <articleinfo>
 <authorgroup>
-<author>&Lauri.Watts; &Lauri.Watts.mail;</author>
+<author>&Lauri.Watts;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 </articleinfo>
@@ -43,5 +44,7 @@ will see a list of available groups.</para>
 will cause a lot of network traffic.  Some commercial usenet servers
 have 60,000 or more groups available, and doing such a thing may
 cause your desktop to freeze.</para>  
+
+<para>NNTPS is the NNTP protocol encrypted via SSL.</para>
 
 </article>
