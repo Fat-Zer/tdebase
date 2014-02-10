@@ -6,16 +6,43 @@
 
 <article lang="&language;" id="news">
 <title>news</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Lauri.Watts; &Lauri.Watts.mail;</author>
+<author>&Lauri.Watts;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Lauri.Watts;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the news protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>news</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
 
-
 <para>The news tdeioslave is used when you click on a news link on a web
-page.  It will open &knode;, and if the group referred to in the news
+page. It will open &knode;, and if the group referred to in the news
 link is available from your server, it will subscribe you to the group, in
 the first available account you have configured in &knode;</para>
 

@@ -6,11 +6,38 @@
 
 <article lang="&language;" id="gopher">
 <title>gopher</title>
+
 <articleinfo>
 <authorgroup>
-<author>&Lauri.Watts; &Lauri.Watts.mail;</author>
+<author>&Lauri.Watts;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Lauri.Watts;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the gopher protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>gopher</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
 
 <para>
@@ -38,7 +65,7 @@ each Gopher server is individually determined.
 </para>
 
 <para>
-Source:
+Original source:
 <ulink 
 url="http://tlc.nlm.nih.gov/resources/tutorials/internetdistlrn/gophrdef.htm"> http://tlc.nlm.nih.gov/resources/tutorials/internetdistlrn/gophrdef.htm</ulink>
 </para>

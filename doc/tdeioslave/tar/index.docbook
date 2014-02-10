@@ -7,19 +7,48 @@
 
 <article lang="&language;" id="tar">
 <title>tar</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Ferdinand.Gassauer; &Ferdinand.Gassauer.mail;</author>
+<author>&Ferdinand.Gassauer;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Ferdinand.Gassauer;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the tar protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>tar</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
+
 <para>
 An archiving program designed to store and extract files from an archive 
 file known as a tarfile. A tarfile may be made on a tape drive, however, it 
 is also common to write a tarfile to a normal file.
 </para>
 
-<para> See the manual: <ulink url="man:/tar">tar</ulink>.
+<para>Read the man page: <ulink url="man:/tar">tar</ulink>.
 </para>
 
 </article>

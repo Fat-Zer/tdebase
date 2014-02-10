@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE" > <!-- change language only here -->
+]>
+
+<article lang="&language;" id="about">
+<title>mms / mmst / mmsu</title>
+
+<articleinfo>
+
+<authorgroup>
+<author>&tde-authors;</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the mms (Microsoft Media Server) protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>mms</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
+</articleinfo>
+
+<para>The mms/mmst/mmsu protocols are Microsoft proprietary network-streaming protocols,
+previously called NetShow Services. The protocols have been deprecated in favor of the
+<ulink url="help:/tdeioslave/rtsp">rtsp (Real Time Streaming Protocol)</ulink> protocol.</para>
+
+<para>mmst uses tcp and mmsu uses udp.</para>
+
+<para>Source: <ulink url="https://en.wikipedia.org/wiki/Microsoft_Media_Server">Wikipedia</ulink></para>
+
+&underFDL;
+
+</article>

@@ -5,25 +5,53 @@
 ]>
 
 <article lang="&language;" id="info">
-<title>Info</title>
+<title>info</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Lauri.Watts; &Lauri.Watts.mail;</author>
+<author>&Lauri.Watts;</author>
 <author>
   <firstname>Nicolas</firstname>
   <surname>Goutte</surname>
-  <email>goutte@kde.org</email>
 </author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Lauri.Watts;</holder>
+<holder>Nicolas Goutte</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the info protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>info</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
 
-<para>Info is a type of documentation.  The documents are in a file
+<para>Info is a type of documentation. The documents are in a file
 format called texinfo, and can be read on the command line with the
 <command>info</command> program.</para>
 
 <para>The Info ioslave allows you to read the info pages installed on
-your system, from within &konqueror;.  You can use it very easily:</para>
+your system, from within &konqueror;. You can use it very easily:</para>
 
 <screen><userinput><command>info:</command><replaceable>gcc</replaceable></userinput></screen>
 

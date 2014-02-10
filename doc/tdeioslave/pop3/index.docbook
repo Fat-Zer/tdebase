@@ -7,12 +7,39 @@
 
 <article lang="&language;" id="pop3">
 <title>pop3 / pop3s</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Ferdinand.Gassauer; &Ferdinand.Gassauer.mail;</author>
+<author>&Ferdinand.Gassauer;</author>
 <author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Ferdinand.Gassauer;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the pop3 protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>pop3</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
 
 <para>

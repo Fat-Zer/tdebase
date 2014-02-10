@@ -6,26 +6,47 @@
 
 <article lang="&language;" id="print">
 <title>print</title>
+
 <articleinfo>
 <authorgroup>
 <author>&Kurt.Pfeifle;</author>
 <author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
-
 </authorgroup>
 
-<date>2002-06-23</date>
-<releaseinfo>1.00.00</releaseinfo>
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2002</year>
+<holder>&Kurt.Pfeifle;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the print protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>print</keyword>
+<keyword>protocol</keyword>
+</keywordset>
 
 </articleinfo>
 
-<para>The <acronym>print</acronym> TDEIOSlave gives quick access to browse
+<para>The <acronym>print</acronym> tdeio slave gives quick access to browse
 different &tdeprint; sections via <quote>virtual folders</quote>.
 These folders provide some information about and quick access to your print 
 subsystem.</para>
 
 <para><command>print:/</command> represents one more of those useful 
-TDEIOSlaves implemented by &tde;. To access it, just type  <userinput>print:/
+tdeio slaves implemented by &tde;. To access it, just type  <userinput>print:/
  </userinput> into the address field of &konqueror;. <userinput>print:/
  </userinput>  doesn't purely provide <quote>read-only</quote> access to
  your print subsystem, but it also allows you to change settings
@@ -42,14 +63,12 @@ not allowed a view or an operation as a normal user.</para>
 <userinput>print:/[path-to-virtual-folder]</userinput> or
 <userinput>print:[path-to-virtual-folder]</userinput></para>
 
-<para>Note, that some of the views and actions offered do heavily
+<para>Note that some of the views and actions offered do heavily
  depend on the print subsystem that is installed on your box and presently
 activated for &tde;. Pages showing printer information display only
 those parts that are valid for the &tde; selected print subsystem.
 (So if you normally run <acronym>CUPS</acronym>, but switched temporarily to 
-
-
- <quote>Generic UNIX LPD Printing</quote>, which is possible, you will see  
+<quote>Generic UNIX LPD Printing</quote>, which is possible, you will see  
 less printer info, because LPD is not capable of using the same amount of  
 print settings as are possible in CUPS).</para>
 
@@ -165,7 +184,7 @@ or <userinput>print:printers/printer_name </userinput> </term>
 <keycombo action="simul">&Alt;<keycap>F2</keycap></keycombo>)</para></tip>
 
 <para>You can learn more about printing and &tdeprint;'s powerful abilities
-by reading the <ulink url="help:/tdeprint/index.html">&tdeprint; Handbook</ulink>.
+by reading the <ulink url="help:/tdeprint">&tdeprint; Handbook</ulink>.
 </para>
 
 </article>

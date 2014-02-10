@@ -1,15 +1,11 @@
 <?xml version="1.0" ?>
-<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN"
+"dtd/kdex.dtd" [
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE">
 ]>
-
-<!-- Note: When updating this empty handbook, remember that usually most handbooks -->
-<!-- use the book model rather than article. Feel free to use article if the new handbook -->
-<!-- remains really short. -->
-
-<article lang="&language;">
-<title>Trash Service</title>
+<article id="trash" lang="&language;">
+<title>trash</title>
 
 <articleinfo>
 
@@ -28,22 +24,21 @@
 
 <abstract>
 <para>
-This handbook describes the Trash Service.
+This handbook describes the trash protocol.
 </para>
 </abstract>
 
 <keywordset>
 <keyword>TDE</keyword>
-<keyword>KDED</keyword>
 <keyword>trash</keyword>
-<keyword>service</keyword>
+<keyword>protocol</keyword>
 </keywordset>
 
 </articleinfo>
 
 <sect1 id="apologies">
 <title>We Apologize</title>
-<para>No documentation has yet been written for this service.</para>
+<para>No documentation has yet been written for this protocol.</para>
 
 <para>If you need help, please check <ulink url="http://www.trinitydesktop.org">The &tde;
 web site</ulink>, submit questions to the <ulink url="http://www.trinitydesktop.org/mailinglist.php">

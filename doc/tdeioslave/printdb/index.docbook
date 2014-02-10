@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE" > <!-- change language only here -->
+]>
+
+<article lang="&language;" id="printdb">
+<title>printdb</title>
+
+<articleinfo>
+
+<authorgroup>
+<author>&tde-authors;</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the printdb protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>printdb</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
+</articleinfo>
+
+<sect1 id="apologies">
+<title>We Apologize</title>
+<para>No documentation has yet been written for this protocol.</para>
+
+<para>If you need help, please check <ulink url="http://www.trinitydesktop.org">The &tde;
+web site</ulink>, submit questions to the <ulink url="http://www.trinitydesktop.org/mailinglist.php">
+&tde; mail lists</ulink>, or file a bug report at the <ulink url="http://bugs.trinitydesktop.org/">
+&tde; bug tracker</ulink>.</para>
+
+<para>If you are interested in helping, please consider writing the help file.
+Submitting a basic text file is acceptable as the &tde-team; will convert the text.</para>
+
+<para>Thank you for helping and thank you for your patience.</para>
+
+&underFDL;
+
+</sect1>
+
+</article>

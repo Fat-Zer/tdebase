@@ -6,17 +6,45 @@
 
 <article lang="&language;" id="gzip">
 <title>gzip</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Lauri.Watts; &Lauri.Watts.mail;</author>
+<author>&Lauri.Watts;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Lauri.Watts;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the gzip protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>gzip</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
 
 <para><command>gzip</command> is a compression program</para>
 
 <para>The gzip tdeioslave is not directly usable, and is intended for use
-as a filter.  For example, the tar tdeioslave can filter a file through
+as a filter. For example, the tar tdeioslave can filter a file through
 the gzip tdeioslave, in order to display the contents of a <literal
 role="extension">tar.gz</literal> file directly in a &konqueror;
 window.</para>
@@ -26,11 +54,7 @@ role="extension">gz</literal> extension in &konqueror;, this tdeioslave is
 used to uncompress it and display it as a normal (uncompressed)
 file.</para>
 
-<para>If you are a developer, and would like to use the gzip filter, you
-can find documentation on using tdeioslaves at <ulink
-url="http://developer.kde.org">http://developer.kde.org</ulink></para>
-
-<para> See the manual: <ulink url="man:/gzip">gzip</ulink>.
+<para>Read the man page: <ulink url="man:/gzip">gzip</ulink>.
 </para>
 
 </article>

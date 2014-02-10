@@ -5,17 +5,45 @@
 ]>
 
 <article lang="&language;" id="man">
-<title>Man</title>
+<title>man</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Lauri.Watts; &Lauri.Watts.mail;</author>
+<author>&Lauri.Watts;</author>
 <author>
   <firstname>Nicolas</firstname>
   <surname>Goutte</surname>
-  <email>goutte@kde.org</email>
 </author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Lauri.Watts;</holder>
+<holder>Nicolas Goutte</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the man protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>man</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
 
 <para>
@@ -83,10 +111,6 @@ As with any other &tde; ioslave, it is possible to enter a &URL;, like
 <userinput><command>man:socket</command></userinput> in <emphasis>any</emphasis>
 &tde; application.  Try it in &kwrite; and you will see the man page in
 &HTML; format.
-</para>
-
-<para>
-Contact mailing list: <email>kde-devel@kde.org</email>
 </para>
 
 </article>

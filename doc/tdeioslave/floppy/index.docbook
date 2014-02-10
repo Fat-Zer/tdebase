@@ -5,12 +5,40 @@
 ]>
 
 <article lang="&language;" id="floppy">
-<title>Floppy</title>
+<title>floppy</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Alexander.Neundorf; &Alexander.Neundorf.mail;</author>
+<author>&Alexander.Neundorf;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Alexander.Neundorf;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the floppy protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>floppy</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
 
 <para>
@@ -21,7 +49,8 @@ installed on your system.
 <para>
 The drive letter becomes the first subdirectory 
 in the floppy &URL;. Let's say there is a file <filename>logo.png</filename> on your floppy 
-disk in drive A, then the &URL; will be <userinput><command>floppy:</command><replaceable>/a/logo.png</replaceable></userinput>
+disk in drive A, then the &URL; will be <userinput><command>floppy:</command><replaceable>
+/a/logo.png</replaceable></userinput>
 </para>
 
 <para>
@@ -41,17 +70,15 @@ read from and write to your floppy drive.</para>
 
 <para>
 It also works with USB sticks, ZIP and JAZ drives.
-You can use <command>floppy:/u</command> for the USB stick and <command>floppy:/z</command> for the zip drive, for example.
-To make this work, you might need to adjust your <filename>/etc/mtools</filename> file. See the manpage
-for documentation.
+You can use <command>floppy:/u</command> for the USB stick and <command>floppy:/z</command> for
+the zip drive, for example. To make this work, you might need to adjust your
+<filename>/etc/mtools</filename> file. Read the manpage for documentation.
 </para>
 
 <para>The ioslave gives read and write access to the floppy drive, but not 
 simultaneously. While you can read and write to the floppy during the same 
 session, reading and writing have to happen one after the other, not at the same 
 time.</para>
-
-<para>Author: Alexander Neundorf <email>neundorf@kde.org</email></para>
 
 </article>
 

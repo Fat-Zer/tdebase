@@ -6,27 +6,49 @@
 
 <article lang="&language;" id="mrml">
 <title>mrml</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Carsten.Pfeiffer; &Carsten.Pfeiffer.mail;
-</author>
+<author>&Carsten.Pfeiffer;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
- 
-<date>2003-01-08</date>
 
- 
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2003</year>
+<holder>&Carsten.Pfeiffer;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the mrml protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>mrml</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
 
-<para><acronym>MRML</acronym> stands for Multimedia Retrieval Markup Language. <acronym>MRML</acronym> is an XML-based 
-protocol to provide standardized access to Multimedia retrieval software.
-See <ulink url="http://www.mrml.net">http://www.mrml.net</ulink> for more information.
+<para><acronym>MRML</acronym> stands for Multimedia Retrieval Markup Language. <acronym>MRML</acronym>
+is an XML-based protocol to provide standardized access to multimedia retrieval software.
 </para>
 
-<para>tdeio_mrml is used for the Image Finding feature in &tde;</para>
+<para>tdeio_mrml is used for the Image Finding feature in &tde;.</para>
 
-<para>&eg; type <userinput>mrml:/</userinput> or <userinput>mrml:/some.other.server</userinput> in &konqueror; to start searching for
-images.
+<para>For example, type <userinput>mrml:/</userinput> or <userinput>mrml:/some.other.server</userinput>
+in &konqueror; to start searching for images.
 </para>
 
 </article>

@@ -7,12 +7,41 @@
 
 <article lang="&language;" id="sftp">
 <title>sftp</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Ferdinand.Gassauer; &Ferdinand.Gassauer.mail;</author>
+<author>&Ferdinand.Gassauer;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Ferdinand.Gassauer;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the sftp protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>sftp</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
+
 <para><acronym>SFTP</acronym> is a Secure file transfer protocol.
 <command>sftp</command> is an interactive file transfer program,
 similar to ftp, but it performs all operations over an encrypted
@@ -20,7 +49,7 @@ similar to ftp, but it performs all operations over an encrypted
 <command>ssh</command>, including public key authentication and
 compression.</para>
 
-<para> See the manual: <ulink url="man:/sftp">sftp</ulink>.
+<para>Read the man page: <ulink url="man:/sftp">sftp</ulink>.
 </para>
 
 </article>

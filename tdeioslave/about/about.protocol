@@ -7,3 +7,4 @@ reading=true
 defaultMimetype=text/html
 Icon=help_index
 Class=:local
+DocPath=tdeioslave/about/index.html

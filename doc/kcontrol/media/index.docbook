@@ -4,10 +4,6 @@
   <!ENTITY % English "INCLUDE">
 ]>
 
-<!-- Note: When updating this empty handbook, remember that usually most handbooks -->
-<!-- use the book model rather than article. Feel free to use article if the new handbook -->
-<!-- remains really short. -->
-
 <article lang="&language;">
 <title>Storage Media</title>
 

@@ -8,16 +8,37 @@
 <title>Data URLs</title>
 
 <articleinfo>
+
 <authorgroup>
 <author><personname><firstname>Leo</firstname><surname>Savernik</surname></personname>
-<address><email>l.savernik@aon.at</email></address>
 </author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
-<date>2003-02-06</date>
-<!--releaseinfo>2.20.00</releaseinfo-->
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
 
+<copyright>
+<year>2003</year>
+<holder>Leo Savernik</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the data protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>data</keyword>
+<keyword>protocol</keyword>
+</keywordset>
 </articleinfo>
 
 <para>Data URLs allow small document data to be included in the URL itself.
@@ -50,4 +71,3 @@ whereas omitting the charset attribute might lead to something like
 RFC2397</ulink> provides more information.</para>
 
 </article>
-

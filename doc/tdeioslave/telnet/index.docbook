@@ -7,18 +7,48 @@
 
 <article lang="&language;" id="telnet">
 <title>telnet</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Ferdinand.Gassauer; &Ferdinand.Gassauer.mail;</author>
+<author>&Ferdinand.Gassauer;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
-</articleinfo>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Ferdinand.Gassauer;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
 <para>
-The network terminal protocol (TELNET) allows a user to log in on any other computer on the network supporting TELNET.
+This handbook describes the telnet protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>telnet</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
+</articleinfo>
+
+<para>
+The network terminal protocol (TELNET) allows a user to log in on any other computer on the
+network supporting TELNET.
 
 </para>
 
-<para> See the manual: <ulink url="man:/telnet">telnet</ulink>.
+<para>Read the man page: <ulink url="man:/telnet">telnet</ulink>.
 </para>
 
 </article>

@@ -6,36 +6,62 @@
 
 <article lang="&language;" id="fish">
 <title>fish</title>
+
 <articleinfo>
 <authorgroup>
-<author>&Joerg.Walter; &Joerg.Walter.mail;</author>
-<author>&Brad.Hards; &Brad.Hards.mail;</author>
+<author>&Joerg.Walter;</author>
+<author>&Brad.Hards;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
-<date>2005-02-29</date>
-<releaseinfo>1.1.2</releaseinfo>
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2005</year>
+<holder>&Joerg.Walter;</holder>
+<holder>&Brad.Hards;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the fish protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>fish</keyword>
+<keyword>protocol</keyword>
+</keywordset>
 
 </articleinfo>
 
-<para>Allows you to access another computer's files using the SEcure Shell (<acronym>SSH</acronym>) protocol.  The remote computer needs to be running the <acronym>SSH</acronym> daemon, but the remainder of the protocol uses standard commandline tools as discussed below.</para>
+<para>Allows you to access another computer's files using the Secure Shell (<acronym>SSH</acronym>) protocol.
+The remote computer needs to be running the <acronym>SSH</acronym> daemon, but the remainder of the protocol
+uses standard command line tools.</para>
 
 <para>You can use the fish tdeioslave like this:
-<userinput>fish://<replaceable>hostname</replaceable></userinput> or <userinput>fish://<replaceable>username</replaceable>@<replaceable>hostname</replaceable></userinput>.</para>
+<userinput>fish://<replaceable>hostname</replaceable></userinput> or <userinput>fish://<replaceable>username
+</replaceable>@<replaceable>hostname</replaceable></userinput>.</para>
 
 <note><para>You need to use double forward slashes.</para></note>
 
 <para>You can omit the <replaceable>username</replaceable> (and the trailing
-@ symbol) if you have the same username on both computers.</para>
+@ symbol) when using the same username on both computers.</para>
 
 <para>You can add a password in the format:
-<userinput>fish://<replaceable>username</replaceable>:<replaceable>password</replaceable>@<replaceable>hostname</replaceable></userinput>
-but it is not necessary as you will be prompted for one if it is not
+<userinput>fish://<replaceable>username</replaceable>:<replaceable>password</replaceable>@<replaceable>
+hostname</replaceable></userinput> but it is not necessary as you will be prompted for one if it is not
 supplied.</para>
 
-<para>If you are running the <acronym>SSH</acronym> daemon on a non-standard
-port, you can specify that port using the normal &URL; syntax as shown
-below:
+<para>When you are running the <acronym>SSH</acronym> daemon on a non-standard
+port, you can specify that port using the normal &URL; syntax as shown below:
 <userinput>fish://<replaceable>hostname</replaceable>:<replaceable>portnumber</replaceable></userinput>.</para>
 
 <para>Fish should work with any roughly <acronym>POSIX</acronym> compatible
@@ -63,8 +89,8 @@ machine, it will be used instead. Then only <command>env</command> and
 <application>Perl</application> has the additional benefit of being
 faster.</para>
 
-<para>Fish may even work on &Windows; machines, if tools like
-<application>Cygwin</application> are installed.  All the above
+<para>Fish might even work on &Windows; machines, if tools like
+<application>Cygwin</application> are installed. All the above
 utilities must be in the system <envar>PATH</envar>, and the initial
 shell must be able to process the command <command>echo
 FISH:;/bin/sh</command> correctly.</para>

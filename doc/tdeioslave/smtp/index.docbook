@@ -6,18 +6,49 @@
 ]>
 
 <article lang="&language;" id="smtp">
-<title>smtp</title>
+<title>smtp / smtps</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Ferdinand.Gassauer; &Ferdinand.Gassauer.mail;</author>
+<author>&Ferdinand.Gassauer;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
-</articleinfo>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Ferdinand.Gassauer;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
 <para>
-A protocol to send mail from the client workstation to the mail server.
+This handbook describes the smtp protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>smtp</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
+</articleinfo>
+
+<para>
+A protocol to send mail from a client workstation to a mail server.
 </para>
 
-<para> See : <ulink url="http://cr.yp.to/smtp.html">Simple Mail Transfer Protocol </ulink>.
+<para>SMTPS is the SMTP protocol encrypted via SSL.</para>
+
+<para>Refer to: <ulink url="http://cr.yp.to/smtp.html">Simple Mail Transfer Protocol </ulink>.
 </para>
 
 </article>

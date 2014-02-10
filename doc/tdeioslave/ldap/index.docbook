@@ -6,17 +6,44 @@
 
 <article lang="&language;" id="ldap">
 <title>ldap / ldaps</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Lauri.Watts; &Lauri.Watts.mail;</author>
+<author>&Lauri.Watts;</author>
 <author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Lauri.Watts;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the ldap protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>ldap</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
 
-<para><acronym>ldap</acronym> is the lightweight directory access
-protocol.  It provides access to an X.500 directory, or to a stand-alone
-<acronym>LDAP</acronym> server.</para>
+<para><acronym>ldap</acronym> is the <emphasis>L</emphasis>ightweight <emphasis>D</emphasis>irectory
+<emphasis>A</emphasis>ccess <emphasis>P</emphasis>rotocol. It provides access to an X.500 directory,
+or to a stand-alone <acronym>LDAP</acronym> server.</para>
 
 <para>You can use the ldap tdeioslave as follows:</para>
 

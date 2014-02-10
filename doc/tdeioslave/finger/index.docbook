@@ -6,11 +6,39 @@
 
 <article lang="&language;" id="finger">
 <title>finger</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Lauri.Watts;&Lauri.Watts.mail;</author>
+<author>&Lauri.Watts;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Lauri.Watts;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the finger protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>finger</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
 
 <para>Finger is a program to display information about users.</para>
@@ -33,7 +61,7 @@ on vacation, and all sorts of information.</para>
 <para>Use the finger tdeioslave like this:
 <userinput>finger://<replaceable>username</replaceable>@<replaceable>hostname</replaceable></userinput></para>
 
-<para> See the manual: <ulink url="man:/finger">finger</ulink>.
+<para>Read the man page: <ulink url="man:/finger">finger</ulink>.
 </para>
 
 </article>

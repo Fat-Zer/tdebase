@@ -6,14 +6,39 @@
 
 <article lang="&language;" id="imap">
 <title>imap / imaps</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Michael.Haeckel; &Michael.Haeckel.mail;</author>
+<author>&Michael.Haeckel;</author>
 <author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
-<date>2001-08-07</date>
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2001</year>
+<holder>&Michael.Haeckel;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the imap protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>imap</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 
 </articleinfo>
 

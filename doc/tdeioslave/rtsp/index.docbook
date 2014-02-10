@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE" > <!-- change language only here -->
+]>
+
+<article lang="&language;" id="about">
+<title>rtsp / rtspt / rtspu</title>
+
+<articleinfo>
+
+<authorgroup>
+<author>&tde-authors;</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the rtsp (Real Time Streaming Protocol) protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>rtsp</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
+</articleinfo>
+
+<para>The rtsp/rtspt/rtspu protocols are Microsoft proprietary network-streaming protocols.</para>
+
+<para>rtspt uses tcp and rtspu uses udp.</para>
+
+<para>Source: <ulink url="https://en.wikipedia.org/wiki/RTSP">Wikipedia</ulink></para>
+
+&underFDL;
+
+</article>

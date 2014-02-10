@@ -6,19 +6,47 @@
 
 <article lang="&language;" id="bzip">
 <title>bzip</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Lauri.Watts; &Lauri.Watts.mail;</author>
+<author>&Lauri.Watts;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Lauri.Watts;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the bzip protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>bzip</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
 
-<para><command>bzip</command> is a compression program.  It is rarely
+<para><command>bzip</command> is a compression program. It is rarely
 used today, having been replaced with bzip2, which offers much better
 compression.</para>
 
-<para>The bzip tdeioslave is not directly usable, and is intended for use
-as a filter.  For example, the tar tdeioslave can filter a file through
+<para>The bzip tdeioslave is not directly usable and is intended for use
+as a filter. For example, the tar tdeioslave can filter a file through
 the bzip tdeioslave, in order to display the contents of a <literal
 role="extension">tar.bz</literal> file directly in a &konqueror;
 window.</para>
@@ -27,9 +55,5 @@ window.</para>
 role="extension">bz</literal> extension in &konqueror;, this tdeioslave is
 used to uncompress it and display it as a normal (uncompressed)
 file.</para>
-
-<para>If you are a developer, and would like to use the bzip filter,
-you can find documentation on using tdeioslaves at <ulink
-url="http://developer.kde.org">http://developer.kde.org</ulink></para>
 
 </article>

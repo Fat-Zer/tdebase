@@ -8,11 +8,36 @@
 <title>webdav / webdavs</title>
 
 <articleinfo>
+
 <authorgroup>
 <author>&Hamish.Rodda;</author>
 <author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Hamish.Rodda;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the webdav protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>webdav</keyword>
+<keyword>protocol</keyword>
+</keywordset>
 
 </articleinfo>
 
@@ -20,7 +45,7 @@
 <emphasis>A</emphasis>uthoring and <emphasis>V</emphasis>ersioning
 protocol for the World Wide Web. It allows for easy management of
 documents and scripts on a <ulink
-url="help:/tdeioslave/webdav.html">http</ulink> server, and has
+url="help:/tdeioslave/http">http</ulink> server, and has
 additional features designed to simplify version management amongst
 multiple authors.</para>
 

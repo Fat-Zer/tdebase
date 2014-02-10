@@ -6,18 +6,47 @@
 
 <article lang="&language;" id="mac">
 <title>mac</title>
+
 <articleinfo>
+
 <authorgroup>
-<author><personname><firstname>Johnathan</firstname><surname>Riddell</surname></personname><email>jr@jriddell.org</email>
+<author><personname><firstname>Johnathan</firstname>
+<surname>Riddell</surname></personname>
 </author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Lauri.Watts;</holder>
+<holder>Johnathan Riddell</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the mac protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>mac</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
 
 <para>The mac ioslave lets you read an HFS+ partition from &konqueror;
-or any other &tde; file dialog. It uses <ulink
-url="http://www.google.com/search?hl=en&amp;q=hfsplus+utils"> hfsplus
-tools</ulink>, so you will need these installed for it to work.</para>
+or any other &tde; file dialog. It uses hfsutils and you will need those
+files installed for it to work.</para>
 
 <para>Enter <userinput>mac:/</userinput> into &konqueror; and you
 should see the contents of your &MacOS; partition. If you have not
@@ -29,7 +58,7 @@ can probably guess by changing hda2 to hda3 and so on or use the print
 command from <command>mac-fdisk</command>). This partition will be
 used the next time, so you do not have to specify it each time.</para>
 
-<para><application>Hfsplus tools</application> let you see the file and copy
+<para><application>Hfsutils tools</application> let you see the file and copy
 data from the HFS+ partition, but not to copy data to it or change the
 filenames.</para>
 
@@ -46,7 +75,7 @@ another query:
 <userinput>mac:/<option>myfile?mode=t</option></userinput>. See the
 <command>hpcopy</command> man page for more.</para>
 
-<para>Note that you need permissions to read your HFS+ partition.  How
+<para>Note that you need permissions to read your HFS+ partition. How
 you get this depends on your distribution. <!-- , do a <command>ls -l
 /dev/hdaX</command> on it to see. Under Debian you have to be in the
 'disk' group (just add your username to the end of the entry in

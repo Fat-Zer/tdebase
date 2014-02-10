@@ -6,12 +6,41 @@
 
 <article lang="&language;" id="nfs">
 <title>nfs</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Lauri.Watts; &Lauri.Watts.mail;</author>
+<author>&Lauri.Watts;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Lauri.Watts;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the nfs protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>nfs</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
+
 <para>
 Sun's <acronym>NFS</acronym> protocol provides transparent remote access to 
 shared file systems across networks. The <acronym>NFS</acronym> protocol is 
@@ -40,6 +69,6 @@ Source:
 http://www.networksorcery.com/enp/protocol/nfs.htm</ulink>
 </para>
 
-<para> See the manual: <ulink url="man:/nfs">nfs</ulink>.
+<para>Read the man page: <ulink url="man:/nfs">nfs</ulink>.
 </para>
 </article>

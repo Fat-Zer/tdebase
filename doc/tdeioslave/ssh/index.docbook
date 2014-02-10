@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE" > <!-- change language only here -->
+]>
+
+<article lang="&language;" id="about">
+<title>ssh</title>
+
+<articleinfo>
+
+<authorgroup>
+<author>&tde-authors;</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the ssh protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>ssh</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
+</articleinfo>
+
+<para>The ssh protocol is the Secure Shell protocol, indended for secure (encrypted) communications
+across networks.The ssh protocol was developed to overcome shortcomings of similar protocols that do
+not encrypt, such as <ulink url="help:/tdeioslave/telnet">telnet</ulink></para>
+
+&underFDL;
+
+</article>

@@ -4,13 +4,41 @@
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
 ]>
 
-<article id="ftp">
+<article lang="&language;" id="ftp">
 <title>&FTP;</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Lauri.Watts; &Lauri.Watts.mail;</author>
+<author>&Lauri.Watts;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Lauri.Watts;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the &FTP; protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>ftp</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
 
 <para>
@@ -39,11 +67,11 @@ files at &FTP; archive sites throughout the world.
 
 
 <para>
-Source: Paraphrased from <ulink 
+Original source: Paraphrased from <ulink 
 url="http://tlc.nlm.nih.gov/resources/tutorials/internetdistlrn/ftpdef.htm"> 
 http://tlc.nlm.nih.gov/resources/tutorials/internetdistlrn/ftpdef.htm</ulink>
 </para>
 
-<para> See the manual: <ulink url="man:/ftp">ftp</ulink>.</para>
+<para>Read the man page: <ulink url="man:/ftp">ftp</ulink>.</para>
 
 </article>

@@ -6,12 +6,41 @@
 
 <article lang="&language;" id="rlogin">
 <title>rlogin</title>
+
 <articleinfo>
+
 <authorgroup>
 <author><personname><firstname>Christian</firstname><surname>Bunting</surname></personname></author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>Christian Bunting</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the rlogin protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>rlogin</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
+
 <para>Using &konqueror; you can start up an <command>rlogin</command>
 session with a server hosting the rlogin service.</para>
 
@@ -28,10 +57,7 @@ account you are currently using in &tde;.</para>
 <para>After you have successfully entered your password, you can begin
 your remote session.</para>
 
-<para> See the manual: <ulink url="man:/rlogin">rlogin</ulink>.
+<para>Read the man page: <ulink url="man:/rlogin">rlogin</ulink>.
 </para>
-
-
-<!-- By Christian Bunting (need to ask if he wants crediting and email) -->
 
 </article>

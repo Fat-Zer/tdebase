@@ -6,12 +6,41 @@
 
 <article lang="&language;" id="thumbnail">
 <title>thumbnail</title>
+
 <articleinfo>
+
 <authorgroup>
-<author>&Carsten.Pfeiffer; &Carsten.Pfeiffer.mail;</author>
+<author>&Carsten.Pfeiffer;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<releaseinfo>&tde-release-version;</releaseinfo>
+<date>Reviewed: &tde-release-date;</date>
+
+<copyright>
+<year>2010</year>
+<holder>&Carsten.Pfeiffer;</holder>
+</copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
+
+<abstract>
+<para>
+This handbook describes the thumbnail protocol.
+</para>
+</abstract>
+
+<keywordset>
+<keyword>TDE</keyword>
+<keyword>thumbnail</keyword>
+<keyword>protocol</keyword>
+</keywordset>
+
 </articleinfo>
+
 <para>The thumbnail tdeioslave is used by &tde; for network transparent
 and persistent generation of thumbnails.</para>
 
