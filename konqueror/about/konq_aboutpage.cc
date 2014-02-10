@@ -215,7 +215,7 @@ TQString KonqAboutPageFactory::intro()
 		      ) )
           .arg( i18n( "Konqueror is also a full featured and easy to use web browser which you "
                       "can  use to explore the Internet. "
-                      "Enter the address (e.g. <a href=\"http://www.kde.org\">http://www.kde.org</A>) "
+                      "Enter the address (e.g. <a href=\"http://www.trinitydesktop.org\">http://www.trinitydesktop.org</A>) "
                       "of a web page you would like to visit in the location bar and press Enter, "
                       "or choose an entry from the Bookmarks menu.") )
           .arg( i18n( "To return to the previous "
@@ -362,8 +362,8 @@ TQString KonqAboutPageFactory::tips()
 	.arg( i18n( "Tips" ) )
 	.arg( i18n( "Specifications" ) )
 	.arg( i18n( "Tips &amp; Tricks" ) )
-	  .arg( i18n( "Use Internet-Keywords and Web-Shortcuts: by typing \"gg: KDE\" one can search the Internet, "
-		      "using Google, for the search phrase \"KDE\". There are a lot of "
+	  .arg( i18n( "Use Internet-Keywords and Web-Shortcuts: by typing \"gg: Trinity Desktop\" one can search the Internet, "
+		      "using Google, for the search phrase \"Trinity Desktop\". There are a lot of "
 		      "Web-Shortcuts predefined to make searching for software or looking "
 		      "up certain words in an encyclopedia a breeze. You can even "
                       "<a href=\"%1\">create your own</a> Web-Shortcuts." ).arg("exec:/tdecmshell ebrowsing") )
