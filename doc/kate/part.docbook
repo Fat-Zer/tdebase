@@ -359,6 +359,7 @@ with the corresponding string capture (parenthesized substring)
 from the search pattern. A button for listing all available string captures
 will also be enabled. You can click on any of the available string captures
 to include them in your replacement string.</para>
+<note><para>Placeholders can only be used when searching using regular expressions.</para></note>
 </listitem>
 </varlistentry>
 
@@ -458,6 +459,12 @@ captured in parenthesized subpatterns of the expression.</para>
 <link linkend="advanced-editing-tools-commandline">command line</link>.</para>
 </tip>
 
+</sect2>
+
+<sect2>
+<title>Finding text in multiple files</title>
+<para>To search for text in multiple files at once, please refer to the
+<link linkend="kate-mdi-tools-find-in-files">Find in Files Panel</link> section.</para>
 </sect2>
 
 </sect1>

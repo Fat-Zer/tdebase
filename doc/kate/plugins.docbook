@@ -21,9 +21,14 @@ linkend="configuring-kate-configdialog">configuration dialog</link>, which also
 provides access to additional configuration options for plugins that requires
 that.</para>
 
-<para>There are many plugins for various purposes available in the tdeaddons
+<para>There are many plugins for various purposes available in the <emphasis>tdeaddons</emphasis>
 module, and you can search the web for more. A few plugins are shipped with the
-editor component, for doing word completion, automatic bookmarks, insert files,
+editor component, for doing word completion, insert files,
 thesaurus and word spell checking and incremental search.</para>
+
+<para>You can find additional information about some of &kate;'s plugins in
+<emphasis>The Kate Plugins Handbook</emphasis> accessible from 
+<menuchoice><guimenu>Help</guimenu><guimenuitem>Plugins Handbook</guimenuitem></menuchoice>
+if the <emphasis>tdeaddons</emphasis> module has been installed on your system</para>
 
 </chapter>

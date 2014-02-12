@@ -286,6 +286,88 @@ information, see the &konsole; manual.</para>
 
 </sect1>
 
+<sect1 id="kate-mdi-tools-find-in-files">
+<title>The Find in Files Panel</title>
+
+<para><indexterm><primary>The Find in Files Panel</primary></indexterm>
+The Find in Files panel in &kate; allows you to search for text in 
+multiple files at once.</para>
+<para>Results of the search will be displayed in the list at the bottom of the
+panel, while search errors will be displayed in a separate dialog.</para>
+
+<para>The panel offers the following options:</para>
+
+<variablelist>
+
+<varlistentry>
+<term><guilabel>Pattern</guilabel></term>
+<listitem><para>The text to look for. The interpretation of the string
+depends on some of the options described below.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Case sensitive</guilabel></term>
+<listitem>
+<para>If enabled, the search will be case sensitive.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Regular expression</guilabel></term>
+<listitem>
+<para>If checked, the search string will be interpreted as a regular
+expression.</para>
+<para>See <link linkend="regular-expressions">Regular
+Expressions</link> for more on these.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Template</guilabel> (edit field and dropbox)</term>
+<listitem>
+<para>Here you can specify an additional context string to be used as a wrapper around
+the search pattern. Some default templates are available through the dropbox on the right
+of the template edit field.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Files</guilabel></term>
+<listitem>
+<para>The file name pattern used to select which files to search.
+It is possible to specify multiple patterns by separating them with commas
+(for example *.h, *.cpp).</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Folder</guilabel></term>
+<listitem>
+<para>The folder to search for files.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Recursive</guilabel></term>
+<listitem>
+<para>If checked, the search will also recurse in the subfolders of the
+specified folder.</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+<para>You can use the <guimenuitem>Find</guimenuitem> button to start the search
+and the <guimenuitem>Cancel</guimenuitem> button to interrupt a running search.
+</para>
+<para>The <guimenuitem>Clear</guimenuitem> button can be used to clear the search
+list at the bottom of the panel.</para>
+
+<para>The default location of the Find in Files panel in &kate; is at the bottom,
+below the editing area.</para>
+
+</sect1>
+
 <sect1 id="kate-mdi-tools-externaltools">
 <title>External Tools</title>
 

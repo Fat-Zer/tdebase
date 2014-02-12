@@ -484,7 +484,7 @@ wrapped lines.</para></listitem>
 </listitem>
 </varlistentry>
 
-<varlistentry>
+<varlistentry id="appearance-code-folding">
 <term><guilabel>Code Folding</guilabel></term>
 <listitem>
 <variablelist>
