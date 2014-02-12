@@ -4,13 +4,12 @@
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
 ]>
 
-<article lang="&language;" id="file">
-<title>file</title>
+<article lang="&language;" id="lan">
+<title>zeroconf</title>
 
 <articleinfo>
 
 <authorgroup>
-<author>&Ferdinand.Gassauer;</author>
 <author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
@@ -19,34 +18,30 @@
 <date>Reviewed: &tde-release-date;</date>
 
 <copyright>
-<year>2010</year>
-<holder>&Ferdinand.Gassauer;</holder>
-</copyright>
-<copyright>
 <year>&tde-copyright-date;</year>
 <holder>&tde-team;</holder>
 </copyright>
 
 <abstract>
 <para>
-This handbook describes the file protocol.
+This handbook describes the zeroconf protocol.
 </para>
 </abstract>
 
 <keywordset>
 <keyword>TDE</keyword>
-<keyword>file</keyword>
+<keyword>zeroconf</keyword>
 <keyword>protocol</keyword>
 </keywordset>
 
 </articleinfo>
 
-<para>
-The <emphasis>file</emphasis> protocol is used by all &tde; applications to 
-display locally available files.
-</para>
-<para>Entering <userinput><command>file:/directoryname</command></userinput> in &konqueror;
-lists the files of a folder.
+<para>The zeroconf protocol is used in network device discovery, commonly known as
+DNS Service Discovery (DNSSD). To be useful &tde; must be compiled with zeroconf support.
+Typically that means installing the <ulink url="http://www.avahi.org/">avahi</ulink>
+service before compiling &tde;.</para>
+
+<para>DNS-SD is defined in <ulink url="https://tools.ietf.org/html/rfc6763">RFC 6763</ulink>.
 </para>
 
 </article>
