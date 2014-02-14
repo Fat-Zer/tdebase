@@ -85,3 +85,4 @@ Name[zh_CN]=外设
 Name[zh_TW]=週邊設備
 Name[zu]=Imixhantela
 Icon=input_devices_settings
+OnlyShowIn=TDE;

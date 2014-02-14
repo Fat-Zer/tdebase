@@ -84,3 +84,4 @@ Name[zh_CN]=Internet 和网络
 Name[zh_TW]=網路
 Name[zu]=Internet & Uxhumano olusakazekile
 Icon=network
+OnlyShowIn=TDE;

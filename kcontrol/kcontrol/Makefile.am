@@ -38,7 +38,7 @@ kcontrol_la_LDFLAGS = $(all_libraries) -module -avoid-version
 rccontroldir = $(kde_datadir)/kcontrol
 rccontrol_DATA = kcontrolui.rc
 
-xdg_apps_DATA = KControl.desktop
+xdg_apps_DATA = KControl.desktop tde-kcontrol.desktop
 
 KDE_ICON=AUTO
 

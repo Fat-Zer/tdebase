@@ -1,5 +1,5 @@
 [Desktop Entry]
-NotShowIn=GNOME;
+OnlyShowIn=TDE;
 MimeType=application/x-ksysguard
 Comment=TDE System Guard
 Comment[af]=TDE Stelsel Wag

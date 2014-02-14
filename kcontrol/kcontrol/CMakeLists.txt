@@ -26,7 +26,7 @@ link_directories(
 
 tde_install_icons()
 install( FILES kcontrolui.rc DESTINATION ${DATA_INSTALL_DIR}/kcontrol )
-install( FILES  KControl.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+install( FILES  KControl.desktop tde-kcontrol.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 
 ##### kcontrol (tdeinit) ########################

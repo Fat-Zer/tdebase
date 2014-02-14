@@ -5,6 +5,7 @@ Icon=konsole
 DocPath=konsole/index.html
 MimeType=application/x-konsole;
 Terminal=false
+OnlyShowIn=TDE;
 
 Name=Konsole
 GenericName=Terminal Program - Super User Mode

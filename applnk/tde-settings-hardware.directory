@@ -57,3 +57,4 @@ Name[wa]=Éndjolreye
 Name[zh_CN]=硬件
 Name[zh_TW]=硬體
 Icon=input_devices_settings
+OnlyShowIn=TDE;
