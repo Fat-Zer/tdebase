@@ -1,16 +1,15 @@
 <?xml version="1.0" ?>
-<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
 ]>
 
 <article id="release-notes" lang="&language;">
-
 <title>&tde-release-version; Release Notes</title>
-<articleinfo>
 
+<articleinfo>
 <authorgroup>
-<corpauthor>&tde-team;</corpauthor>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
@@ -32,9 +31,10 @@
 <keyword>TDE</keyword>
 <keyword>release notes</keyword>
 </keywordset>
+
 </articleinfo>
 
-<sect1 id="current-release-notes-introduction">
+<sect1 id="release-notes-introduction">
 <title>Summary</title>
 
 <para>This  document contains important information for users, developers, and  packagers. This document is
@@ -98,9 +98,7 @@ Application names
 
 <para>An exhaustive list of renaming changes is available at the end of this document.</para>
 
-</sect1>
-
-<sect1 id="current-release-notes-project-changes">
+<sect2 id="release-notes-project-changes">
 <title>Project Changes</title>
 
 <itemizedlist>
@@ -126,9 +124,9 @@ Continuing efforts to update locale and translation files.
 
 </itemizedlist>
 
-</sect1>
+</sect2>
 
-<sect1 id="current-release-notes-usability-changes">
+<sect2 id="release-notes-usability-changes">
 <title>Usability Changes</title>
 
 <para>Because of the wide-scale renaming efforts, existing KDE3 and 3.5.13.x user profile directories will not
@@ -163,9 +161,28 @@ a package rebuild to change. A second method includes a global menu replacement,
 that explicitly excludes KDE4 apps from the menu. Using that special menu requires administrative privileges to
 update.</para>
 
-</sect1>
+<para>Because of a common heritage shared with KDE, Trinity still shares many app and library names with KDE.
+Therefore to avoid conflicts, the normal practice is to install Trinity to /opt/trinity. Because of this
+atypical installation location, on many systems non-Trinity desktops and window managers initially will not
+find any Trinity apps. For systems using /etc/profile.d, ensure the packager includes appropriate scripts to
+populate all necessary environment variables. For other systems, at least the XDG_CONFIG_DIRS and XDG_DATA_DIRS
+environment variables must be modified to recognize the /opt/trinity directory. Typical modifications look like
+this:</para>
 
-<sect1 id="current-release-notes-new-or-improved-features">
+<itemizedlist>
+
+<listitem><para>
+XDG_CONFIG_DIRS=/etc/trinity/xdg:/etc/xdg:/etc/kde/xdg
+</para></listitem>
+<listitem><para>
+XDG_DATA_DIRS=/opt/trinity/share:/usr/share
+</para></listitem>
+
+</itemizedlist>
+
+</sect2>
+
+<sect2 id="release-notes-new-or-improved-features">
 <title>New or Improved Features</title>
 
 <itemizedlist>
@@ -230,9 +247,9 @@ Kate syntax highlighting files have been updated and the lookup moved to the TDE
 
 </itemizedlist>
 
-</sect1>
+</sect2>
 
-<sect1 id="current-release-notes-new-packages">
+<sect2 id="release-notes-new-packages">
 <title>New Packages</title>
 
 <itemizedlist>
@@ -303,9 +320,9 @@ TorK
 
 </itemizedlist>
 
-</sect1>
+</sect2>
 
-<sect1 id="current-release-notes-package-renaming">
+<sect2 id="release-notes-package-renaming">
 <title>Package Renaming</title>
 
 <itemizedlist>
@@ -421,9 +438,9 @@ qca-tls -> tqca-tls
 
 </itemizedlist>
 
-</sect1>
+</sect2>
 
-<sect1 id="current-release-notes-application-and-file-renaming">
+<sect2 id="release-notes-application-and-file-renaming">
 <title>Application and File Renaming</title>
 
 <itemizedlist>
@@ -438,7 +455,13 @@ applications-kmenuedit.menu -> applications-tdemenuedit.menu
 kab2kabc -> tdeab2tdeabc
 </para></listitem>
 <listitem><para>
+kbuildsycoca -> tdebuildsycoca
+</para></listitem>
+<listitem><para>
 kcache -> tdecache
+</para></listitem>
+<listitem><para>
+kcmshell -> tdecmshell
 </para></listitem>
 <listitem><para>
 kconf_update -> tdeconf_update
@@ -450,7 +473,19 @@ kde-$USER -> tde-$USER
 kde-config -> tde-config
 </para></listitem>
 <listitem><para>
-kdeprint -> tdeprint
+kdebugdialog -> tdedebugdialog
+</para></listitem>
+<listitem><para>
+kdeeject -> tdeeject
+</para></listitem>
+<listitem><para>
+kdekillall -> tdekillall
+</para></listitem>
+<listitem><para>
+kdepasswd -> tdepasswd
+</para></listitem>
+<listitem><para>
+kdessh -> tdessh
 </para></listitem>
 <listitem><para>
 kdesu -> tdesu
@@ -471,7 +506,22 @@ kdmtheme -> tdmtheme
 kfile -> tdefile
 </para></listitem>
 <listitem><para>
+kfilereplace -> tdefilereplace
+</para></listitem>
+<listitem><para>
+kfontinst -> tdefontinst
+</para></listitem>
+<listitem><para>
+kfontview -> tdefontview
+</para></listitem>
+<listitem><para>
 khtml -> tdehtml
+</para></listitem>
+<listitem><para>
+kiconedit -> tdeiconedit
+</para></listitem>
+<listitem><para>
+kinit* -> tdeinit*
 </para></listitem>
 <listitem><para>
 kio_apt -> tdeio_apt
@@ -501,10 +551,19 @@ klaunch -> tdelaunch
 kmenu -> tdemenu
 </para></listitem>
 <listitem><para>
+kmid -> tdemid
+</para></listitem>
+<listitem><para>
 knetworkmanager -> tdenetworkmanager
 </para></listitem>
 <listitem><para>
 kpowersave -> tdepowersave
+</para></listitem>
+<listitem><para>
+kprint -> tdeprint
+</para></listitem>
+<listitem><para>
+kprintfax -> tdeprintfax
 </para></listitem>
 <listitem><para>
 kradio -> tderadio
@@ -534,14 +593,26 @@ kwin -> twin
 kwin4 -> twin4
 </para></listitem>
 <listitem><para>
+qmake -> tqmake
+</para></listitem>
+<listitem><para>
+qmoc -> tqmoc
+</para></listitem>
+<listitem><para>
+qtconfig -> tqconfig
+</para></listitem>
+<listitem><para>
+quic -> tquic
+</para></listitem>
+<listitem><para>
 startkde -> starttde
 </para></listitem>
 
 </itemizedlist>
 
-</sect1>
+</sect2>
 
-<sect1 id="current-release-notes-environment-variable-renaming">
+<sect2 id="release-notes-environment-variable-renaming">
 <title>Environment Variable Renaming</title>
 
 <itemizedlist>
@@ -618,9 +689,9 @@ KDE_VERSION -> TDE_VERSION
 
 </itemizedlist>
 
-</sect1>
+</sect2>
 
-<sect1 id="current-release-notes-class-and-library-renaming">
+<sect2 id="release-notes-class-and-library-renaming">
 <title>Class and Library Renaming</title>
 
 <itemizedlist>
@@ -808,12 +879,14 @@ makekdewidgets -> maketdewidgets
 
 </itemizedlist>
 
-</sect1>
+</sect2>
 
-<sect1 id="current-release-notes-thank-you">
+<sect2 id="release-notes-thank-you">
 <title>Thank You!</title>
 
 <para>Thank you for using and supporting &tde;.</para>
+
+</sect2>
 
 </sect1>
 
