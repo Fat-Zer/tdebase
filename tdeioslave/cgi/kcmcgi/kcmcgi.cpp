@@ -44,7 +44,7 @@ extern "C"
 KCMCgi::KCMCgi(TQWidget *parent, const char *name)
   : TDECModule(parent, name)
 {
-  setButtons(Default|Apply);
+  setButtons(Default|Apply|Help);
 
   TQVBoxLayout *topLayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 

@@ -45,7 +45,7 @@ KCMFilter::KCMFilter(TDEConfig *config, TQString group,
       mGroupname( group ),
       mSelCount(0)
 {
-    setButtons(Default|Apply);
+    setButtons(Default|Apply|Help);
 
     TQVBoxLayout *topLayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 

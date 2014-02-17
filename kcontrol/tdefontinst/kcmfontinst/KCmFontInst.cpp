@@ -169,7 +169,7 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
 #endif
     layout->addWidget(itsStatusLabel);
 
-    setButtons(0);
+    setButtons(Default|Apply|Help);
     setRootOnlyMsg(i18n("<b>The fonts shown are your personal fonts.</b><br>To see (and install) "
                         "system-wide fonts, click on the \"Administrator Mode\" button below."));
     setUseRootOnlyMsg(true);

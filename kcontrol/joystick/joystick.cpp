@@ -97,7 +97,7 @@ joystick::joystick(TQWidget *parent, const char *name, const TQStringList &)
 
   setMinimumSize(joyWidget->minimumSize());
 
-  setButtons(TDECModule::Default);
+  setButtons(TDECModule::Default|TDECModule::Help);
 }
 
 //---------------------------------------------------------------------------------------------

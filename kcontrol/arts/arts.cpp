@@ -141,7 +141,7 @@ void KArtsModule::slotProcessArtsdOutput(TDEProcess*, char* buf, int len)
 KArtsModule::KArtsModule(TQWidget *parent, const char *name)
   : TDECModule(parent, name), configChanged(false)
 {
-	setButtons(Default|Apply);
+	setButtons(Default|Apply|Help);
 
 	setQuickHelp( i18n("<h1>Sound System</h1> Here you can configure aRts, TDE's sound server."
 		    " This program not only allows you to hear your system sounds while simultaneously"

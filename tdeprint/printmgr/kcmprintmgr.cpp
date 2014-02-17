@@ -33,7 +33,7 @@ K_EXPORT_COMPONENT_FACTORY( kcm_printmgr, KPrintMgrFactory("kcmprintmgr") )
 KCMPrintMgr::KCMPrintMgr(TQWidget *parent, const char *name, const TQStringList &)
 : TDECModule(KPrintMgrFactory::instance(),parent,name)
 {
-	setButtons(TDECModule::Ok);
+	setButtons(TDECModule::Default|TDECModule::Help);
 	setRootOnlyMsg( i18n(
 		"Print management as normal user\n"
 		"Some print management operations may need administrator privileges. Use the\n"
