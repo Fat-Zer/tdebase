@@ -98,3 +98,4 @@ GenericName[zh_TW]=字型檢視器
 Terminal=false
 InitialPreference=1
 Categories=Qt;TDE;Graphics;
+DocPath=tdefontview/index.html
