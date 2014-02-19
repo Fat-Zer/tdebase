@@ -130,3 +130,4 @@ Exec=dcop kdesktop KDesktopIface toggleShowDesktop
 Icon=desktop
 Type=Application
 Categories=Qt;TDE;X-TDE-settings-desktop;
+NoDisplay=true
