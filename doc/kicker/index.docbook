@@ -16,8 +16,12 @@
 <authorgroup>
 <author>&Orville.Bennett; &Orville.Bennett.mail;</author>
 <author>&Dirk.Doerflinger; &Dirk.Doerflinger.mail;</author>
+<author>&tde-authors;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
+<date>Reviewed: &tde-release-date;</date>
+<releaseinfo>&tde-release-version;</releaseinfo>
 
 <copyright>
 <year>2001</year><year>2002</year>
@@ -31,11 +35,12 @@
 <year>2005</year>
 <holder>Titus Laska</holder>
 </copyright>
+<copyright>
+<year>&tde-copyright-date;</year>
+<holder>&tde-team;</holder>
+</copyright>
 
 <legalnotice>&FDLNotice;</legalnotice>
-
-<date>2006-06-15</date>
-<releaseinfo>3.5.2</releaseinfo>
 
 <abstract>
 <para>
@@ -46,7 +51,7 @@ the desktop.
 </abstract>
 
 <keywordset>
-<keyword>KDE</keyword>
+<keyword>TDE</keyword>
 <keyword>Kicker</keyword>
 <keyword>tdebase</keyword>
 <keyword>panel</keyword>
@@ -59,7 +64,6 @@ the desktop.
 <chapter id="introduction">
 <title>Introduction</title>
 
-
 <para>
 &kicker; is the application launcher panel of the Trinity Desktop Environment.
 Besides the <guimenu>TDE</guimenu> Menu, where you can start applications,
@@ -69,9 +73,29 @@ taskbar or the clock, and extensions, such as child panels.
 
 <para>
 &kicker; usually resides on the bottom of the desktop, but it can also
-be moved to any other border.  Please report any problems or feature
-requests to the &tde; mailing lists.
+be moved to any other border.
 </para>
+
+<para>The panel gives you quick access to applications and makes it
+easier for you to organize your desktop. Using the &tde; panel you
+can:</para>
+
+<itemizedlist>
+
+<listitem><para>Launch applications using the <guimenu>TDE</guimenu> menu or
+the application buttons.</para></listitem>
+<listitem><para>Switch desktops using the panel's pager applet.</para>
+</listitem>
+<listitem><para>Switch active windows, and minimize or maximize them.</para>
+</listitem>
+<listitem><para>Browse folder using the browser menu functionality.</para>
+</listitem>
+<listitem><para>Access panel applets that extend the panel's functionality,
+offering for example mixers, clocks or a system monitor.</para> </listitem>
+
+</itemizedlist>
+
+<para>Please report any problems or feature requests to the &tde; mailing lists.</para>
 
 </chapter>
 
@@ -150,7 +174,7 @@ Having a look at the screenshots above, there are from left to right:
 <listitem>
 <para>
 It is used for launching applications and some other useful
-things. Refer to <link linkend="k-menu">The <guimenu>TDE</guimenu> Menu
+things. Refer to <link linkend="tde-menu">The <guimenu>TDE</guimenu> Menu
 </link>for more information.
 </para>
 </listitem>
@@ -257,7 +281,8 @@ As mentioned before, there are a lot of things that can be added to
 &kicker;. This section will tell you everything about application
 starting, folder browsing and adding some kinds of applets and
 extensions. Lots of things can be done from the context
-menu with <guimenuitem>Configure Panel...</guimenuitem> or via the &kcontrolcenter;'s section <menuchoice><guimenu>Desktop</guimenu> <guisubmenu>Panels</guisubmenu></menuchoice>.
+menu with <guimenuitem>Configure Panel...</guimenuitem> or via the &kcontrolcenter;'s
+ section <menuchoice><guimenu>Desktop</guimenu> <guisubmenu>Panels</guisubmenu></menuchoice>.
 </para>
 
 <sect2 id="adding-apps">
@@ -273,7 +298,7 @@ There are three different ways to add an application to &kicker;:
 <listitem>
 <para>
 Simply drag any file from &konqueror; into &kicker; and it's there. Dragging
-also works from the <guimenu>TDE</guimenu> Menu with any entry.  You can
+also works from the <guimenu>TDE</guimenu> Menu with any entry. You can
 change the attributes like optional command line parameters or the icon
 by clicking it with the &RMB; and choosing <guimenuitem>Configure 
 <replaceable>applicationname</replaceable> Button...</guimenuitem> from the
@@ -323,8 +348,9 @@ choose an icon, the application will use the gear as a default.
 <para>
 Applications can be moved or removed by &RMB; click and choosing
 <guimenuitem>Move <replaceable>application name</replaceable> Button</guimenuitem> or
-<guimenuitem>Remove <replaceable>application name</replaceable> Button</guimenuitem>. 
-You can also move icons using the &MMB; if you have one. To do this click on an icon using the &MMB;, hold for a second and then drag the icon to its new position.
+<guimenuitem>Remove <replaceable>application name</replaceable> Button</guimenuitem>.
+You can also move icons using the &MMB; if you have one. To do this click on an icon using
+ the &MMB;, hold for a second and then drag the icon to its new position.
 Another way to remove an application is by clicking the &RMB; on any free space
 and then choosing <menuchoice><guimenu>Remove from Panel</guimenu>
 <guisubmenu>Application</guisubmenu></menuchoice> and then the application you want to be
@@ -368,7 +394,7 @@ contents of this folder.</para>
 Manager</guimenuitem>, which does the same as a file manager &URL;, and
 <guimenuitem>Open in Terminal</guimenuitem>, which opens a terminal with
 this folder as the working path. Also, this submenu contains the contents of
-that folder.  Sub-folders are displayed as new submenus like the Quick
+that folder. Sub-folders are displayed as new submenus like the Quick
 Browser itself. The maximum number of displayed elements can be set in
 the <link linkend="configuring">Settings Dialog</link>.
 Quick Browsers can also be added from the context menu of
@@ -385,7 +411,8 @@ then <guilabel>Special Buttons</guilabel> on the right top of the
 Both kinds of folders can be moved or removed by &RMB; click and
 choosing <guimenuitem>Move <replaceable>application name</replaceable> Button</guimenuitem> or
 <guimenuitem>Remove <replaceable>application name</replaceable> Button</guimenuitem>.
-You can also move icons using the &MMB; if you have one. To do this click on an icon using the &MMB;, hold for a second and then drag the icon to its new position.
+You can also move icons using the &MMB; if you have one. To do this click on an icon using
+ the &MMB;, hold for a second and then drag the icon to its new position.
 Another way to remove a folder is by clicking the &RMB; on any free space
 and then choosing <menuchoice><guimenu>Remove from Panel</guimenu>
 <guisubmenu>Applet</guisubmenu></menuchoice> and then the applet you want to be
@@ -420,7 +447,7 @@ fileref="k_menu_icon.png"
 format="PNG"/></imageobject></inlinemediaobject></guiicon> The
 <guiicon>TDE Menu icon</guiicon> is one of the most necessary icons in
 &kicker;. As you might guess, it opens the <guimenu>TDE</guimenu> Menu,
-which you can learn more about in <link linkend="k-menu">The K
+which you can learn more about in <link linkend="tde-menu">The K
 Menu</link>.
 </para>
 </listitem>
@@ -614,7 +641,8 @@ menu will remove the icon from &kicker;.
 <para>
 Another way of removing icons is clicking the &RMB; on any free space in
 &kicker; and choosing <guimenuitem>Remove From Panel</guimenuitem> and then
-<guimenuitem>Applet</guimenuitem>, <guimenuitem>Application</guimenuitem> or <guimenuitem>All</guimenuitem>. You can then choose the button you want to remove in
+<guimenuitem>Applet</guimenuitem>, <guimenuitem>Application</guimenuitem> or
+<guimenuitem>All</guimenuitem>. You can then choose the button you want to remove in
 the submenu.</para>
 
 <note>
@@ -654,8 +682,10 @@ linkend="applets">Applets</link>.
 <sect2 id="removing-applets">
 <title>Removing Applets</title>
 <para>
-Applets can be removed by choosing the <guimenuitem>Remove <replaceable>applet name</replaceable></guimenuitem> option from the context menu, which appears when the
-&RMB; is clicked on the applet's handle (left or top side of the applet) or on the icon itself.
+Applets can be removed by choosing the
+<guimenuitem>Remove <replaceable>applet name</replaceable></guimenuitem> option from the
+context menu, which appears when the &RMB; is clicked on the applet's handle (left or top
+side of the applet) or on the icon itself.
 </para>
 
 
@@ -669,7 +699,8 @@ There is also the possibility to add external extensions to &kicker;,
 like the <guimenuitem>External Taskbar</guimenuitem>, the <guimenuitem>Dock 
 Application Bar</guimenuitem> for WindowMaker
 dock-applications, <guimenuitem>Kasbar</guimenuitem>, an iconic kind of
-taskbar, an <guimenuitem>Universal Sidebar</guimenuitem> and even child <guimenuitem>Panel</guimenuitem>s which behave like new instances of
+taskbar, an <guimenuitem>Universal Sidebar</guimenuitem> and even child
+<guimenuitem>Panel</guimenuitem>s which behave like new instances of
 &kicker;.
 </para>
 
@@ -710,8 +741,9 @@ menu.
 
 <para>
 Every <guiicon>application starter</guiicon> has some preferences you
-can set from their context menu with <guimenuitem>Configure <replaceable>application name</replaceable>Button...</guimenuitem>. Usually applications
-and folders have the same preferences as in &konqueror;.  Only the
+can set from their context menu with <guimenuitem>Configure <replaceable>application name</replaceable>
+Button...</guimenuitem>. Usually applications
+and folders have the same preferences as in &konqueror;. Only the
 applications which are located in the <guimenu>TDE</guimenu> Menu (for
 experienced users: those which have a <literal
 role="extension">.desktop</literal> extension in the <filename
@@ -824,7 +856,7 @@ This feature is not implemented yet.
 </listitem>
 <listitem><para>&kicker; has the possibility to swallow some applications
 like <abbrev>e.g.</abbrev> <application>XOSView</application>. This means that
-the application will show up directly in the panel.  Therefore you have to
+the application will show up directly in the panel. Therefore you have to
 insert the exact title of the application window in the <guilabel>Window
 Title</guilabel> Textfield. You can also specify an application that will be
 executed when clicking on the swallowed application by typing it's name in the
@@ -919,8 +951,8 @@ Not yet written
 
 <para>
 This section describes the ways &kicker; can be configured. It's only
-about the basic &kicker; settings, configuration of the applets are
-described in their <link linkend="applets">sections</link>
+about the basic &kicker; settings. Configuration of applets are
+described in another <link linkend="applets">section</link>.
 </para>
 
 <para>
@@ -931,7 +963,6 @@ going to <guilabel>Desktop</guilabel> and then selecting the
 <guilabel>Panels</guilabel> or the <guilabel>Taskbar</guilabel> module.
 </para>
 
-
 <sect1 id="panel">
 <title>The Panel Section</title>
 
@@ -939,7 +970,7 @@ going to <guilabel>Desktop</guilabel> and then selecting the
 <title>Extensions</title>
 <para>
 Panels and panel <link linkend="extensions">extensions</link> are configured
-on the same page.  Simply choose one of your extensions (&eg;
+on the same page. Simply choose one of your extensions (&eg;
 Child Panel) from the <guilabel>Settings for:</guilabel> listbox. You will then
 be adjust its settings rather than that of the Main Panel.
 </para>
@@ -956,68 +987,138 @@ panel applications as well; later we'll come to the more interesting
 features).
 </para>
 
+<para>If you have more than one panel on screen, you can select at the
+top of the window which panel you wish to configure.</para>
+
 <para>
-In the <guilabel>Position</guilabel> frame you can choose which
-screen border the panel should be attached to. Please note that usually
-the available space is used more efficiently if the panel is aligned
-horizontally, &ie; attached to the top or bottom screen border. If you
+In the <guilabel>Position</guilabel> section you can choose which
+screen border the panel should be attached. If you
 want to play around with different settings you can change the panel's
 position even easier by dragging the panel from one border to the other.
 </para>
 
-<para>
-The <guilabel>Length</guilabel> frame lets you define how much space a panel
-will occupy on the side of the screen which it resides. By default this is on the
-bottom so changing this value will affect a panel's width. The value can be anywhere
-from 1% to 100%.
-Checking the check box <guilabel>Expand as required to fit contents</guilabel>
-makes sure that a panel is at least as big as needed to show every icon and
-applet.
-</para>
+<para>In the section labeled <guilabel>Position</guilabel> is a set of
+12 buttons arranged in a square. Each button corresponds to a
+location for the panel. Click on a button and notice where the panel
+is located on the preview monitor to the right.</para>
+
+<tip><para>Generally, the available space in kicker is used more
+efficiently when the panel is aligned horizontally, &ie; attached to the
+top or bottom screen border.</para></tip>
 
 <para>
-The <guilabel>Size</guilabel> frame lets you define how large a panel will be.
-The panel's size can be tiny, small, medium, large or custom. Depending on
-which applets you use you may find that some applets work better at
-different panel sizes.
-<!--You can also change the size by clicking the &RMB; on any free space
-and choosing a size from the <guimenu>Size</guimenu> menu.-->
+The <guilabel>Length</guilabel> section lets you define how much space a panel
+will occupy on the side of the screen which it resides. By default this is on the
+bottom so changing this value will affect a panel's width. The value can be anywhere
+from 1% to 100%. Use the combo box and slider to adjust the <emphasis>minimum</emphasis>
+length of the panel. Checking the check box <guilabel>Expand as required to fit
+contents</guilabel> makes sure that a panel is at least as big as needed to show
+every icon and applet. The panel will become longer if more space is needed. When
+less space is required on the panel, the panel will shrink down to the minimum size.
+If there is no mark in the checkbox, then the panel is fixed to the
+length specified in this section.
 </para>
+
+<para>The final section of this table is labeled
+<guilabel>Size</guilabel>, and refers to the
+<emphasis>height</emphasis> of the panel. The panel's size can be
+<guilabel>Tiny</guilabel>, <guilabel>Small</guilabel>,
+<guilabel>Medium</guilabel>, <guilabel>Large</guilabel> or
+<guilabel>Custom</guilabel>. If you choose
+<guilabel>Custom</guilabel> mode, you can resize &kicker; by
+specifying a height in the combobox.</para>
+
+<para>If you have multiple monitors, you can configure the panel for
+each screen entirely independently. If you are not sure which screen
+is which, Press the <guibutton>Identify</guibutton> and a number will
+appear centred on each screen.</para>
+<!-- TODO: It's not centered on dual head non-xinerama, they both
+appear on the primary head, file a bug -->
+
+<para>Then simply choose the screen you wish to configure from the
+drop down box labelled <guilabel>Xinerama screen</guilabel>, or choose
+<guilabel>All Screens</guilabel> to have identical configurations on
+each.
+</para>
+
 </sect2>
 
 <sect2 id="panel-hiding">
 <title><guilabel>Hiding</guilabel></title>
 
 <para>
-Depending on your screen resolution you may find that the panel takes
-away too much of your precious screen real estate. To save screen space,
-the panel offers an auto hide feature. When this feature is enabled, the
-panel will hide when the mouse cursor has not been moved over it for a
-configurable amount of time. If you move the mouse to the panel's screen
-border it will show up again. Select the <guilabel>Hide automatically</guilabel>
-option in the <guilabel>Hide Mode</guilabel> frame to enable this feature.
-You can also configure the amount of time the panel will wait before
-it hides here.  The check box <guilabel>Show panel when switching
-desktops</guilabel> makes sure that the panel will be shown on the new
-chosen desktop. Otherwise, if there are too many applets and icons on
-&kicker;, two small scroll buttons will be displayed to scroll the whole
-panel.
-</para>
+Depending on your screen resolution you may find that the panel
+takes away too much of your precious screen real estate. To save
+screen space, the panel offers manual hiding of the panel, an auto
+hide feature, and the ability to allow other windows to lay on top of
+the panel. These features are selected in the section entitled
+<guilabel>Hide Mode</guilabel>.</para>
+
+<para>When the <guilabel>Hide Mode</guilabel> feature is enabled, the
+panel will hide when the mouse cursor has not been moved over it for the
+configured time. If you move the mouse to the panel's screen
+border it will show up again.</para>
+
+<para>The <guilabel>Hide Mode</guilabel> section has three options:</para>
+<variablelist>
+<varlistentry>
+<term><guilabel>Only hide when panel-hiding button is clicked</guilabel></term>
+<listitem><para>When this option is selected, the panel will remain visible at 
+the location you defined unless you click on the button at the far right (for horizontally 
+oriented) or bottom (for vertically oriented) button. This button has an arrow on it pointed 
+to the edge of the screen.</para>
+
+<para>Once clicked, the panel will disappear. If the button is clicked again, the panel will re-appear 
+at the same location.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Hide automatically</guilabel></term>
+<listitem><para>If this option is selected, then the panel will automatically disappear after 
+the number of seconds specified in the combo box below the option. To make the panel reappear, 
+simply move the mouse pointer to the edge of the screen where the panel is located, and the 
+panel will reappear immediately.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Allow other windows to cover the panel</guilabel></term>
+<listitem><para>As this option's label implies, the panel is always on the desktop when 
+this option is selected. It is now possible, however, for application windows to lay 
+on top of the panel.</para>  
+
+<para>Once the panel has moved back on top of the application window, it will stay there 
+until an application window becomes active again.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para>If you place a mark in the checkbox labeled <guilabel>Show panel when switching
+desktops</guilabel>, the panel will automatically reappear when you switch desktops. (The panel
+will disappear again after the specified number of seconds.) Otherwise, if there are too many
+applets and icons on &kicker;, two small scroll buttons will be displayed to scroll the whole
+panel.</para>
+
+<para>To restore the panel, simply move the mouse cursor to the screen 
+location specified in the drop box labeled <guilabel>Raise when the pointer touches 
+the screen's:</guilabel>. You can change this value by selecting one of the choices 
+provided in the drop down box.</para>
 
 <para>
 When the panel's hide buttons are enabled you'll see buttons on both
 sides of the panel, with arrows showing to the screen border. If you
 click on one of these buttons, the panel will slide away in that
-direction.  After that, you'll see a remaining show button in that
+direction. After that, you'll see a remaining show button in that
 corner, which will make the panel show again. Check the appropriate
 checkbox if you want the hide buttons to show up on any side of
 &kicker;. Using the slider you can change the width of the buttons.
 </para>
 
-<para>
-You can toggle which hide buttons the chosen panel should have with
-the check boxes in the group <guilabel>Panel-Hiding Buttons</guilabel>.
-</para>
+<para>The next section down is labeled <guilabel>Panel-Hiding Buttons</guilabel>. It 
+consists of two check boxes: <guilabel>Show left panel-hiding button</guilabel> and 
+<guilabel>Show left panel-hiding button</guilabel>. Use these checkboxes to show and 
+hide the left and right manual panel hiding buttons.</para>
 
 <para>
 The <guilabel>Panel Animation</guilabel> frame allows you to choose
@@ -1033,50 +1134,141 @@ naturally, disables the panel animations.
 <title>Menus</title>
 
 <para>
-In the <guilabel>Menus</guilabel> tab you can configure the panel menu's
+In the <guilabel>Menus</guilabel> tab you can configure the panel menu
 behavior. This affects the <guimenu>TDE</guimenu> menu you will often use
 to launch applications, the browser menus you can use to access
 folders and other menus like the recent documents menu.
 </para>
 
-<para>
-The <guilabel>TDE Menu</guilabel> frame offers you some options to
-configure the <guimenu>TDE</guimenu> menu's functionality. The
-<guilabel>Bookmarks</guilabel> and <guilabel>Recent Documents</guilabel> options
-will enable submenus showing your <application>konqueror</application>
-bookmarks and the last documents you've opened using &tde; applications
-respectively. The <guilabel>Quick Browser</guilabel> option will enable a browser menu.
-Enabling the <guilabel>Show side image</guilabel> check box will display a neat
-image on the left side of the <guimenu>TDE</guimenu> menu.
-The <guilabel>Menu item format</guilabel> entry allows you to set how
-detailed the <guimenu>TDE</guimenu> menu entries will be.
-The <guilabel>Name only</guilabel> option simply shows the application's name in the menu.
+<para> The first option is the menu style. &tde; supports two menu styles:
+a classic menu familiar to many desktops and operating systems and a Kickoff style.</para>
+
+<para>The <guilabel>TDE Menu</guilabel> section provides many options to
+configure the <guimenu>TDE</guimenu> menu functionality.</para>
+
+<para>The <guilabel>Menu item format</guilabel> section allows you to adjust the
+details of the <guimenu>TDE</guimenu> menu entries. There are four
+buttons. Each button option determines how the application <emphasis>Name</emphasis>
+(&ie; &konqueror;, &kword;, &etc;) and the <emphasis>Description</emphasis> (&ie; Web
+Browser, Word Processor, &etc;) are displayed on the &kmenu;. The <guilabel>Name only</guilabel>
+option simply shows the application's name in the menu.
 The <guilabel>Name (Description)</guilabel> option will show a small description
 besides the name of the application.
 The <guilabel>Description (Name)</guilabel> and <guilabel>Name
 (Description)</guilabel> options will show both name and description in
-the KMenu.
+the &kmenu;.
 </para>
 
-<para>
-In the <guilabel>QuickBrowser Menus</guilabel> frame you can configure
+<para>Below the <guilabel>Menu item format</guilabel> section is a button to
+<guilabel>Edit TDE Menu</guilabel>. Then menu editor is a tool to customize the
+menu layout and add or delete menu items.</para>
+
+<para>The <guilabel>Optional Menus</guilabel> checkboxes allow
+you to determine which special menu items appear in the &kmenu;.</para>
+
+<itemizedlist>
+
+<listitem>
+<para>The <guilabel>Bookmarks</guilabel> 
+menu allows you to quickly select from the same bookmarks that are available in &konqueror;.</para>
+</listitem>
+
+<listitem>
+<para>The <guilabel>Find</guilabel> menu offers access to the &kfind; application to search for
+local files, and a quick link to a search engine to search for things on the Internet.</para>
+</listitem>
+
+<listitem>
+<para>The <guilabel>Kate Session Menu</guilabel> allows you to
+open any of your Kate sessions.</para>
+</listitem>
+
+<listitem>
+<para>The <guilabel>Konqueror Profiles</guilabel> menu allows you to
+launch &konqueror; with any of your configured profiles.</para>
+</listitem>
+
+<listitem>
+<para>The <guilabel>Network Folders</guilabel> menu can launch a
+&konqueror; file manager window displaying any of your configured
+network folders.</para>
+</listitem>
+
+<listitem>
+<para>The <guilabel>Print System</guilabel> menu provides several menu entries to help manage 
+the printer(s) attached to your system.</para>
+</listitem>
+
+<listitem>
+<para>The <guilabel>Quick Browser</guilabel> menu gives you quick links to locations on your
+hard drive.</para>
+</listitem>
+
+<listitem>
+<para>The <guilabel>Recent Documents</guilabel> menu lists the most recently edited documents
+and will automatically launch the application to edit or view this document.</para>
+</listitem>
+
+<listitem>
+<para>The <guilabel>Settings</guilabel> menu allows you to launch each &kcontrol; module 
+directly from the TDE menu.</para>
+</listitem>
+
+<listitem>
+<para>The <guilabel>System Menu</guilabel> allows you quick access to
+some commonly visited places, including your Home folder, and the
+Trash. You may find this useful instead of having a separate entry for
+each of these in the &kmenu;</para>
+</listitem>
+
+<listitem>
+<para>The <guilabel>Terminal Sessions</guilabel> menu provides menu items to launch several
+different types of 
+terminal programs (command line interfaces).</para>
+</listitem>
+</itemizedlist>
+
+<para>Other options in the <guilabel>Menu item format</guilabel> section include:</para>
+
+<para><guilabel>Open menu on mouse hover</guilabel>: This option affects only the Kickoff
+menu style. When enabled, hovering the mouse pointer over the menu buttons will atuomatically
+open that menu without clicking the mouse button.</para>
+
+<para><guilabel>Show Tooltip</guilabel>: When enabled a tooltip appears when hovering the mouse
+pointer over menu items. Using this option requires that tooltips ar enabled in Panels Appearance.</para>
+
+<para><guilabel>Show side image</guilabel>: Enabling this option displays a nice
+image on the left side of the <guimenu>TDE</guimenu> menu.</para>
+
+<para><guilabel>Display text in menu button</guilabel>: When enabled the text enter into the
+associated text box will be displayed in the menu button.</para>
+
+<para><guilabel>Font</guilabel>: This option allows you to select the font and size for all items
+in the menu.</para>
+
+<para><guilabel>Change TDE Menu icon</guilabel>: This option allows you to change the menu icon.</para>
+
+<para>In the <guilabel>QuickBrowser Menus</guilabel> section you can configure
 whether the panel's browser menus will show hidden files or not (hidden
 files on &UNIX; systems are those whose filenames begin with a dot) as
-well as how many files at most will be shown in a browser menu; the
-latter option may be especially useful if you have a rather small screen
-resolution, as the browser menus would otherwise quickly fill up your screen
-when you browse folders containing many files.
+well as how many files at most will be shown in a quick browser menu. The
+latter option might be useful when you have a rather small screen
+resolution, because the browser menus would otherwise quickly fill up your screen
+when you browse folders containing many files.</para>
+
+<para>The <guilabel>QuickStart Menu Items</guilabel> section provides quick
+access to programs you have used often or recently. You
+can choose whether to show the most recently programs or the most
+frequently used programs. Use the option <guilabel>Maximum number of
+entries</guilabel> to configure how many programs the quick start section will remember.
 </para>
 
-<para>
-The quick start section in the <guimenu>TDE</guimenu> menu offers quick
-access to programs you have used often or recently. In the
-<guilabel>QuickStart Menu Items</guilabel> frame you
-can choose whether this section will show the most recently or the most
-frequently used programs. Using the option <guilabel>Maximum number of
-entries</guilabel> you can configure how many
-programs the quick start section will remember.
-</para>
+<para>The <guilabel>Recent Documents Menu</guilabel> section includes an option to enable a
+submenu showing the most recent documents opened using &tde; applications. This option does
+not show recent documents opened with non &tde; applications.</para>
+
+<para>The <guilabel>TDE Menu Search</guilabel> section includes an option to show a search box
+in the menu to help find items in the menu.</para>
 
 </sect2>
 
@@ -1088,11 +1280,17 @@ Using the <guilabel>Appearance</guilabel> tab you can configure the
 panel's overall appearance.
 </para>
 
+<sect3 id="panel-appearance-general">
+<title><guilabel>General</guilabel></title>
+
 <para>
 The check box <guilabel>Enable icon mouseover effects</guilabel>
 toggles the large animated tooltips of &kicker;. They show name and
 description of the icons and applets the mousepointer is positioned on.
 </para>
+
+<para>When <guilabel>Enable icon activation effects</guilabel> is enabled,
+the icons in the panel (not the taskbar) activate or "blink" when selected.</para>
 
 <para>
 If <guilabel>Show tooltips</guilabel> is checked, the classical small
@@ -1102,11 +1300,20 @@ has no effect as long as the option to <guilabel>Enable icon mouseover
 effects</guilabel> is enabled.
 </para>
 
-<para>
-The &tde; panel supports so-called <quote>tiled buttons</quote>. This
-means that the buttons shown on the panel will be drawn using
-configurable images/colors.
-</para>
+</sect3>
+
+<sect3 id="panel-appearance-button-backgrounds">
+<title><guilabel>Button Backgrounds</guilabel></title>
+
+<para>The &tde; panel supports so-called <guilabel>Button
+Backgrounds</guilabel>. This means that the buttons shown on the panel
+will be drawn using configurable images. To enable button backgrounds,
+simply choose the button type from the list, and change the drop down
+box to the color image you would like to use. Choose
+<guilabel>Default</guilabel> to return to an unstyled button. If you
+choose <guilabel>Custom color</guilabel>, the color button next to the
+drop down list will be enabled. Click on it to select a custom color
+to use.</para>
 
 <para>
 For every kind of panel button there is a combo box offering a custom
@@ -1167,6 +1374,11 @@ The <guiicon>Window List</guiicon> icon will be displayed as a tile
 </varlistentry>
 </variablelist>
 
+</sect3>
+
+<sect3 id="panel-appearance-background">
+<title><guilabel>Panel Background</guilabel></title>
+
 <para>
 The <guilabel>Enable transparency</guilabel> option, when checked, allows the
 panel to appear transparent.
@@ -1184,7 +1396,34 @@ modify the background image's colors. You'll see a preview of the selected
 picture on the right.
 </para>
 
+</sect3>
 
+<sect3 id="panel-appearance-advanced">
+<title><guilabel>Advanced Options</guilabel></title>
+
+<para>The <guilabel>Hide button size:</guilabel> option allows you to
+choose a width in pixels for the hide buttons, if they are
+visible.</para>
+
+<para>The panel itself has several default sizes set, which you can
+switch between by simply dragging the edge of it, or by &RMB; clicking
+on an empty space in the panel, choosing <guisubmenu>Size</guisubmenu>
+and selecting the desired size from the submenu. If you enable
+<guilabel>Allow Drag and Drop resizing of panels</guilabel> then by
+choosing <guimenuitem>Custom</guimenuitem> in the panel menu, you can
+drag the panel edge to any size you like.</para>
+
+<para>Applet handles are normally visible beside each applet on the panel,
+so that it is clear where to click to configure them, or to get to the panel menu.
+ You can instead have them <guilabel>Fade out</guilabel>, or hide unless you hover
+the mouse over them, or you can choose to <guilabel>Hide</guilabel> them completely.</para>
+
+<para>Finally, if the panel is transparent, you can tint it with a
+color of your choice. The slider allows you to choose how opaque the
+tint is. At the lowest end, there is no tint visible, while at the
+highest, the panel is not transparent at all.</para>
+
+</sect3>
 
 </sect2>
 
@@ -1251,47 +1490,69 @@ the list of available applets to the list of trusted ones.
 </sect1>
 
 <sect1 id="taskbar-settings">
-<title>The <guilabel>Taskbar</guilabel> Section</title>
+<title>The <guilabel>Taskbar</guilabel></title>
+
+<sect2>
+<title><guilabel>Taskbar</guilabel></title>
 
 <para>
 This section changes the settings of the taskbar. Changes affect the
 external taskbar and also taskbar applets on &kicker; or child-panels.
-</para>
+The taskbar can be located in the panel (default), or outside the panel
+on the desktop.</para>
 
 <variablelist>
+
 <varlistentry>
-<term>Show windows from all desktops</term>
+<term><guilabel>Show windows from all desktops</guilabel></term>
 <listitem>
 <para>
-If this box is checked, the taskbar will show all running apps of every
-desktop. Otherwise, only the applications of the current desktop are
-shown.
+This option determines whether all open windows are included in the taskbar or not. By default,
+the taskbar only shows the open windows <emphasis>on the current
+desktop</emphasis>. If this option is enabled, the taskbar will show
+all open windows <emphasis>on all desktops</emphasis>.
 </para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term>Sort windows by desktop</term>
+<term><guilabel>Sort windows by desktop</guilabel></term>
 <listitem>
 <para>
-Checking this box will sort all <guibutton>taskbar buttons</guibutton>
-in a group for each desktop, otherwise they are sorted by the order they
-are started. This will not affect grouped tasks if they are spread over
-more than one desktop.
+This option changes the sort order of the icons on the taskbar, so that windows on virtual
+desktop 1 are shown first (to the left, or at the top of the taskbar),
+followed by windows on virtual desktop 2, and so on.
 </para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term>Sort alphabetically by window name</term>
+<term><guilabel>Sort alphabetically by application name</guilabel></term>
 <listitem>
-<para>
-To be written</para>
+<para>This options shows the icons in an alphabetical sort order on the taskbar.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term>Show only minimized windows</term>
+<term><guilabel>Allow taskbar items to be rearranged using drag and drop</guilabel></term>
+<listitem>
+<para>
+When selected the order of the taskbar buttons can be rearranged simply by selecting
+the button with the mouse pointer and dragging to the desired location.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Cycle through windows with mouse wheel</guilabel></term>
+<listitem>
+<para>This option allows cycling or switching through all apps in the taskbar by
+moving the mouse scrool wheel while the mouse pointer hovers over the taskbar.</para> 
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Show only minimized windows</guilabel></term>
 <listitem>
 <para>
 If this box is checked, only windows which have been minimized will be
@@ -1303,26 +1564,26 @@ minimized windows of the current virtual desktop will be shown.
 </varlistentry>
 
 <varlistentry>
-<term>Show application icons</term>
-<listitem>
-<para>
-If this box is checked, every <guibutton>taskbar button</guibutton> will
-have the icon of the running application beside its title.
-</para>
-</listitem>
-</varlistentry>
-
-<varlistentry>
-<term>Show window list button</term>
+<term><guilabel>Show window list button</guilabel></term>
 <listitem>
 <para>Checking this box will show the small <guibutton>window list
-button</guibutton>.
+button</guibutton> at the fat left of the taskbar. This button opens a popup menu listing
+all applications in the taskbar.
 </para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term>Group similar tasks</term>
+<term><guilabel>Display</guilabel></term>
+<listitem>
+<para>This option affects how taskbar buttons are displayed. The drop-down list button supports
+three options: Icons and Text, Text only, and Icons only.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Group similar tasks</guilabel></term>
 <listitem>
 <para>
 <inlinemediaobject><imageobject><imagedata fileref="taskbar_group.png"
@@ -1330,24 +1591,50 @@ format="PNG"/></imageobject></inlinemediaobject>
 </para>
 
 <para>
-This is an option which helps you if you often lack space in your
+This is option helps you if you often lack space in your
 taskbar. If it is set to <guilabel>Always</guilabel>, several
 instances of the same application are grouped together in one taskbar
 button. Select <guilabel>When Taskbar Full</guilabel> to make &kicker;
 only group similar tasks if there is not much space left in the taskbar.
 </para>
+</listitem>
+</varlistentry>
 
+<varlistentry>
+<term><guilabel>Appearance</guilabel></term>
+<listitem>
+<para>This option allows you to set the taskbar appearance to
+<guilabel>Elegant</guilabel>, <guilabel>Classic</guilabel> or
+<guilabel>For Transparency</guilabel>.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Use custom colors</guilabel></term>
+<listitem>
+<para>This option allows you to choose different colors for the taskbar buttons.</para>
 </listitem>
 </varlistentry>
 
 </variablelist>
 
-<para>
-You can define the mouse actions of the taskbar buttons with the settings in
-the <guilabel>Actions</guilabel> frame. Each action can be one of the
-following:</para>
+</sect2>
+
+<sect2>
+<title><guilabel>Actions</guilabel></title>
+
+<para>The next set of options allow you to customize the actions
+performed with different mouse clicks on taskbar icons.</para>
+
+<para>You can select any action from the list for the <guilabel>Left button</guilabel>, 
+the <guilabel>Middle button</guilabel> and the <guilabel>Right button</guilabel>.</para>
+
+<note><para>Some of these settings have effect only when a taskbar button contains
+more than one application.
+</para></note>
 
 <variablelist>
+
 <varlistentry>
 <term>
 <guilabel>Show Task List</guilabel>
@@ -1362,7 +1649,6 @@ button, the corresponding application will become active.</para>
 <varlistentry>
 <term><guilabel>Show Operations Menu</guilabel></term>
 <listitem>
-
 <para>Clicking with the mousebutton will open a menu with all
 applications of that group, where every application has its window
 menu as a submenu and there are some group specific entries like
@@ -1375,22 +1661,26 @@ appends those actions to all applications of that group.
 </para>
 </listitem>
 </varlistentry>
+
 <varlistentry>
-<term><guilabel>Cycle Through Windows</guilabel></term>
-<listitem><para>If this action is chosen, each
-click with the mousebutton on the <guibutton>taskbar button</guibutton> will
-activate one of that group's applications, one after each others.</para>
+<term><guilabel>Activate, Raise or Minimize Task</guilabel></term>
+<listitem>
+<para>When a task is minimized, this option activates and raises the task to focus. When open
+in the background but not visibile, this option raises the task to focus.
+</para>
 </listitem>
 </varlistentry>
+
 <varlistentry>
 <term><guilabel>Activate Task</guilabel></term>
 <listitem>
 <para>
-<guilabel>Activate Task</guilabel>: Clicking with the mousebutton will activate
+Clicking with the mousebutton will activate
 the first application in that group without opening the group menu.
 </para>
 </listitem>
 </varlistentry>
+
 <varlistentry>
 <term><guilabel>Raise Task</guilabel></term>
 <listitem>
@@ -1398,6 +1688,7 @@ the first application in that group without opening the group menu.
 put in the foreground without giving focus to it.</para>
 </listitem>
 </varlistentry>
+
 <varlistentry>
 <term><guilabel>Lower Task</guilabel></term>
 <listitem>
@@ -1406,6 +1697,7 @@ The first application of that group will be
 put in the background. It won't lose the focus.</para>
 </listitem>
 </varlistentry>
+
 <varlistentry>
 <term><guilabel>Minimize Task</guilabel></term>
 <listitem>
@@ -1413,17 +1705,33 @@ put in the background. It won't lose the focus.</para>
 minimized. If it is already minimized, it will be restored again.</para>
 </listitem>
 </varlistentry>
+
+<varlistentry>
+<term><guilabel>Move To Current Desktop</guilabel></term>
+<listitem>
+<para>When the taskbar is configured to show all apps from all desktops, this options will move the
+selected app from a different desktop to the current desktop.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Close Task</guilabel></term>
+<listitem>
+<para>This option closes or terminates the task.
+</para>
+</listitem>
+</varlistentry>
+
 </variablelist>
 
-<para>Please note that some of these settings only have effect if a
-taskbar button contains more than one application.
-</para>
+</sect2>
 
 </sect1>
 
 </chapter>
 
-<chapter id="k-menu">
+<chapter id="tde-menu">
 <title>The <guimenu>TDE</guimenu> Menu</title>
 
 <para>
@@ -1436,7 +1744,7 @@ There are five main groups in the <guimenu>TDE</guimenu> Menu which will
 be described now from bottom to top.
 </para>
 
-<sect1 id="kde-group">
+<sect1 id="tde-group">
 <title>The &tde; Group</title>
 
 <para>
@@ -1496,7 +1804,7 @@ This will bring up a small but powerful application start dialog.
 
 <para>
 In the standard case, you just type in a command and press
-<keycap>Enter</keycap> or click <guibutton>Run</guibutton>.  But there
+<keycap>Enter</keycap> or click <guibutton>Run</guibutton>. But there
 is also an <guibutton>Options &gt;&gt;</guibutton> button which will bring up
 some starting options to the command window.
 </para>
@@ -1530,7 +1838,7 @@ below.
 <para>
 Check this option to run with a different priority. A higher priority
 will tell the operating system to give more processing time to the
-applications.  You can use the slider to change the priority. If you
+applications. You can use the slider to change the priority. If you
 want to give your app a higher priority than the default one (middle
 position), you will need to enter the root password below.
 </para>
@@ -1674,7 +1982,7 @@ desktops, you can move this app to the current desktop.
 <para>
 There is also a small icon on the left or top side of the taskbar, which
 opens a menu. This is called the <guibutton>windows list
-icon</guibutton>.  The menu's first entry, <guimenuitem>Unclutter
+icon</guibutton>. The menu's first entry, <guimenuitem>Unclutter
 Windows</guimenuitem>, tries to move the windows on your active desktop
 in a way to see as many as possible. <guimenuitem>Cascade
 Windows</guimenuitem> puts all windows on the active desktop over each
@@ -1885,7 +2193,8 @@ tab of <guilabel>Configure</guilabel> dialog of the clock applet with
 
 <para>
 This option starts the <guilabel>Date &amp; Time</guilabel>
-configuration module in the section <guilabel>System Administration</guilabel> of the &kcontrolcenter;.</para>
+configuration module in the section <guilabel>System Administration</guilabel> of the
+&kcontrolcenter;.</para>
 
 <note>
 <para>
@@ -1899,8 +2208,10 @@ You will need the super user password for adjusting date and time.
 <title><guimenuitem>Date &amp; Time Format</guimenuitem></title>
 
 <para>
-This will open the <guilabel>Country/Region &amp; Language</guilabel> module in the section <guilabel>Regional &amp; Accessibility</guilabel> of the &kcontrolcenter; 
-where you can set your formats on the page <guilabel>Times &amp; Dates</guilabel>. There aren't any special permissions needed for that.
+This will open the <guilabel>Country/Region &amp; Language</guilabel> module in the section
+<guilabel>Regional &amp; Accessibility</guilabel> of the &kcontrolcenter; 
+where you can set your formats on the page <guilabel>Times &amp; Dates</guilabel>. There aren't
+any special permissions needed for that.
 </para>
 
 </sect2>
@@ -2059,7 +2370,7 @@ messagebox will appear and ask you how to handle that application.
 <para>
 Clicking it with the &LMB; will show a configuration dialog. Here you
 can set the <guilabel>Update interval</guilabel>, which is set in
-seconds, and the <guilabel>CPU load threshold</guilabel>.  At the
+seconds, and the <guilabel>CPU load threshold</guilabel>. At the
 moment, there is no real advice for setting this up, you will have to do
 some experimenting. These settings will probably change in a future
 release. There is also a section <guilabel>Programs to ignore</guilabel>
@@ -2092,7 +2403,8 @@ There are also some features that run outside of &kicker;, the
 extensions. They are added from the
 context menu by choosing <guisubmenu>Add New Panel</guisubmenu>. You can move them to any
 screenborder by dragging them at the small applet
-handle on their side and remove it by right clicking on an empty space and choose <guimenuitem>Remove Panel</guimenuitem>.
+handle on their side and remove it by right clicking on an empty space and choose
+<guimenuitem>Remove Panel</guimenuitem>.
 </para>
 
 <para>
@@ -2331,7 +2643,7 @@ another picture?
 Look for <filename>$HOME/.trinity/share/apps/kicker/pics/go.png</filename>
 and <filename>$HOME/.trinity/share/apps/kicker/pics/mini/go.png</filename>
 and replace them. Do not forget to flatten the replacements to one
-layer, or else you will not see anything.  Create the folders if
+layer, or else you will not see anything. Create the folders if
 they do not already exist. Then restart &kicker;.
 </para>
 </answer>
@@ -2420,15 +2732,3 @@ url="http://www.kde.org"> (www.kde.org)</ulink>.
 &documentation.index;
 
 </book>
-
-<!--
-Local Variables:
-mode: sgml
-sgml-minimize-attributes: nil
-sgml-general-insert-case: lower
-sgml-intent-step:0
-sgml-indent-data:nil
-End:
--->
-
-

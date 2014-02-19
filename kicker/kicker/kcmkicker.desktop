@@ -76,6 +76,6 @@ Name[wa]=Apontyî li scriftôr
 Name[zh_CN]=配置面板
 Name[zh_TW]=設定面板
 X-TDE-StartupNotify=true
-DocPath=kicker/index.html
+DocPath=kicker/configuring.html
 OnlyShowIn=TDE;
 Categories=Qt;TDE;Settings;

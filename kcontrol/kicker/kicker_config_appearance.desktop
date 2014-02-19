@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=kcmkicker
 Type=Application
-DocPath=kcontrol/panel/index.html#panel-looknfeel
+DocPath=kicker/configuring.html#panel-appearance
 Exec=tdecmshell kicker_appearance
 
 

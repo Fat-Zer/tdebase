@@ -104,7 +104,7 @@ const TQStringList& TaskbarConfig::actionList()
             << I18N_NOOP("Activate, Raise or Minimize Task")
             << I18N_NOOP("Activate Task") << I18N_NOOP("Raise Task")
             << I18N_NOOP("Lower Task") << I18N_NOOP("Minimize Task")
-            << I18N_NOOP("To Current Desktop")
+            << I18N_NOOP("Move To Current Desktop")
             << I18N_NOOP("Close Task") );
     return list;
 }
