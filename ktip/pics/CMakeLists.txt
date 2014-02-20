@@ -9,4 +9,4 @@
 #
 #################################################
 
-install( FILES wizard_small.png DESTINATION ${DATA_INSTALL_DIR}/kdewizard/pics )
+install( FILES wizard_small.png DESTINATION ${DATA_INSTALL_DIR}/tdewizard/pics )

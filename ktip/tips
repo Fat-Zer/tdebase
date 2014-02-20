@@ -5,7 +5,7 @@ There is a lot of information about TDE on the
 <A HREF="http://www.trinitydesktop.org/">TDE web site</A>.</P>
 <br>
 <center>
-<img src="crystalsvg/48x48/filesystems/desktop.png">
+<img src="crystalsvg/48x48/places/desktop.png">
 </center>
 </html>
 </tip>
@@ -23,8 +23,7 @@ language with the Control Center in "Regional &amp; Accessibility"
 </html>
 </tip>
 
-
-<tip category="TDE2">
+<tip category="TDE">
 <html>
 <p>
 You can minimize all your windows on the current desktop at once and
@@ -34,7 +33,7 @@ panel.</p>
 <p>If you do not currently have the icon there, you can add it by right clicking on the panel, and then selecting Add to Panel->Special Button->Desktop Access.
 <br>
 <center>
-<img src="crystalsvg/48x48/filesystems/desktop.png">
+<img src="crystalsvg/48x48/places/desktop.png">
 </center>
 </html>
 </tip>
@@ -53,7 +52,6 @@ href="help:/kicker">the Kicker Handbook</a>.
 </p>
 </html>
 </tip>
-
 
 <tip category="TDE|Win2Unix">
 <html>
@@ -111,7 +109,7 @@ displayed in Konqueror).</p>
 </html>
 </tip>
 
-<tip category="TDE2|Desktop">
+<tip category="TDE|Desktop">
 <html>
 <p>
 Double-clicking on the titlebar of any window "shades" it, which means
@@ -148,7 +146,7 @@ key:". Press the key combination you want (say, Ctrl+Alt+K).
 </html>
 </tip>
 
-<tip category="TDE2|Win2Unix">
+<tip category="TDE|Win2Unix">
 <html>
 <p>
 You can configure the number of virtual desktops by adjusting the "Number
@@ -176,7 +174,6 @@ donating, or if you would like to contribute in other ways.</p>
 </html>
 </tip>
 
-
 <tip category="TDE|Win2Unix">
 <html>
 <p>TDE provides some shortcuts to change the size of a window:</p>
@@ -195,8 +192,7 @@ donating, or if you would like to contribute in other ways.</p>
 <tip category="General">
 <html>
 <p>You can stay up to date with new developments in TDE and releases
-by regularly checking the web site <A
- HREF="http://www.trinitydesktop.org/">http://www.trinitydesktop.org/</A>.</p>
+by regularly checking the <a href="http://www.trinitydesktop.org/">TDE web site</A>.</p>
 <BR>
 <center><img src="hicolor/48x48/apps/konqueror.png"></center></p>
 </html>
@@ -205,7 +201,7 @@ by regularly checking the web site <A
 <tip category="General">
 <html>
 <p align="center"><strong>TDEPrinting (I)</strong></p>
-<p><strong>kprinter</strong>, TDE's printing utility supports
+<p><strong>tdeprinter</strong>, TDE's printing utility supports
 different print subsystems. These subsystems differ very much
 in their abilities.</p>
 <p>Among the supported systems are:
@@ -218,7 +214,6 @@ use network printers);</li>
 </ul>
 </html>
 </tip>
-
 
 <tip category="General">
 <html>
@@ -237,7 +232,6 @@ as well as for large networks.
 <p align="right"><em>Contributed by Kurt Pfeifle</em></p>
 </html>
 </tip>
-
 
 <tip category="General">
 <html>
@@ -271,7 +265,7 @@ TDE User Guide</a>.</p>
 
 <tip category="General">
 <html>
-<p>You can start <strong>kprinter</strong> as a standalone program
+<p>You can start <strong>tdeprinter</strong> as a standalone program
 from any xterm, Konsole window or from the "Run Command" dialog (started
 by pressing <i>Alt+F2</i>). Then select the file to print. You can print
 as many items of different types as you want, all at once.
@@ -282,11 +276,9 @@ as many items of different types as you want, all at once.
 </html>
 </tip>
 
-
-
 <tip category="General">
 <html>
-<p>You may at any time switch <strong>kprinter</strong> to another
+<p>You may at any time switch <strong>tdeprinter</strong> to another
 print subsystem "on the fly" (and you do not need to be root to do it.)
 </p>
 <p>Laptop users who frequently change to different environments may find
@@ -341,7 +333,6 @@ displayed.</p>
 </html>
 </tip>
 
-
 <tip category="General">
 <html>
 <P>You can run non-TDE applications without problems on a TDE
@@ -394,7 +385,6 @@ right-click the panel (Panel Menu) and select Add to Panel->Application->whateve
 </p>
 </html>
 </tip>
-
 
 <tip category="Panel">
 <html>
@@ -454,7 +444,7 @@ You can <strong>browse any URL</strong> by pressing
 command-line window provided.
 </p><br>
 <center>
-<img src="crystalsvg/48x48/filesystems/network.png">
+<img src="crystalsvg/48x48/places/network.png">
 </html>
 </tip>
 
@@ -508,7 +498,7 @@ and "dragging" it with the mouse.</p><br>
 <tip category="General">
 <html>
 <p> Want TDE's printing power in non-TDE apps?  </p>
-<p> Then use <strong>'kprinter'</strong> as "print command".
+<p> Then use <strong>'tdeprinter'</strong> as "print command".
 Works with Firefox, Seamonkey, Epiphany, gv, Acrobat Reader,
 LibreOffice, OpenOffice, any GNOME application and many more...</p>
 <center>
@@ -516,7 +506,6 @@ LibreOffice, OpenOffice, any GNOME application and many more...</p>
 <p align="right"><em>Contributed by Kurt Pfeifle</em></p>
 </html>
 </tip>
-
 
 <tip category="Keyboard|Desktop">
 <html>
@@ -548,7 +537,6 @@ href="help:/kscd">the KsCD Handbook</a>.</p>
 </html>
 </tip>
 
-
 <tip category="Keyboard|Konsole">
 <html>
 <p>
@@ -575,7 +563,7 @@ color example in the <em>Appearance & Themes</em> module within the Control Cent
 <html>
 <p align="center"><strong>TDE Command Line Printing (I)</strong></p>
 <p> Want to print from command line, without missing TDE's printing power?</p>
-<p> Type <strong>'kprinter'</strong>. Up pops the
+<p> Type <strong>'tdeprinter'</strong>. Up pops the
 TDEPrint dialog. Select printer, print options and
 print files (note that you may select <em>different</em>
 files of <em>different</em> types for <em>one</em> print job...). </p>
@@ -584,14 +572,13 @@ files of <em>different</em> types for <em>one</em> print job...). </p>
 </html>
 </tip>
 
-
 <tip category="General">
 <html>
 <p align="center"><strong>TDE Command Line Printing (II)</strong></p>
 <p>
 You may specify print files and/or name a printer from the command line:
 <pre>
-kprinter -d infotec \
+tdeprinter -d infotec \
    /home/kurt/paragliding.jpg \
    ../tdeprint-handbook.pdf \
    /opt/trinity/flyer.ps
@@ -637,7 +624,6 @@ selecting "Configure Window Behavior...".</p>
 </html>
 </tip>
 
-
 <tip category="Keyboard">
 <html>
 <p>If you do not like the default completion mode (e.g. in Konqueror), you
@@ -648,7 +634,6 @@ completion in a UNIX shell. Use Ctrl+E to invoke it.
 </p>
 </html>
 </tip>
-
 
 <tip category="Panel">
 <html>
@@ -707,7 +692,6 @@ href="help:/konqueror/enhanced-browsing.html">the Konqueror Handbook</a>.</p>
 </html>
 </tip>
 
-
 <tip category="Win2Unix">
 <html>
 <p>
@@ -719,7 +703,6 @@ by entering the <b>cd</b> command without any parameters.
 <p align="right"><em>Contributed by Carsten Niehaus</em></p>
 </html>
 </tip>
-
 
 <tip category="Win2Unix">
 <html>
@@ -764,7 +747,7 @@ Want to print by using "DragNDrop"?
 </p>
 <p>
 Drag a file and drop it on the "Files" tab of an opened
-<strong>kprinter</strong> dialog. </p>
+<strong>tdeprinter</strong> dialog. </p>
 <p>Then continue as you would normally: select a printer, job options, etc.
 and click the "Print" button.
 </p>
@@ -773,7 +756,6 @@ and click the "Print" button.
 <p align="right"><em>Contributed by Kurt Pfeifle</em></p>
 </html>
 </tip>
-
 
 <tip category="General">
 <html>
@@ -790,7 +772,6 @@ just like <em>xmag</em>, with the difference that it magnifies on the fly.
 <p align="right"><em>Contributed by Jesper Pedersen</em></p><br>
 </html>
 </tip>
-
 
 <tip category="Multimedia">
 <html>
@@ -813,7 +794,6 @@ from the Control Center by selecting Sound &amp; Multimedia->System Notification
 </html>
 </tip>
 
-
 <tip category="Multimedia">
 <html>
 <p>
@@ -829,7 +809,6 @@ The command format is:<br>
 <p align="right"><em>Contributed by Jeff Tranter</em></p><br>
 </html>
 </tip>
-
 
 <tip category="Panel">
 <html>
@@ -883,7 +862,7 @@ Anti-Spam Wizard chapter</a>.
 </html>
 </tip>
 
-<tip category="KWin">
+<tip category="TWin">
 <html>
 <p>
 You can make a window go below other windows by middle-clicking on its titlebar.
@@ -902,7 +881,7 @@ is a lowercase "i" instead of a question mark).
 </html>
 </tip>
 
-<tip category="KWin">
+<tip category="TWin">
 <html>
 <p>
 TDE supports several different window focus modes: take a look in the
@@ -933,15 +912,14 @@ to view the handbook for kwrite simply type help:/kwrite.</p>
 
 <tip category="LookNFeel">
 <html>
-<p>Thanks to the <a href="http://svg.kde.org" title="ksvg">KSVG
-project</a>, TDE has full support for the Scalable Vector Graphics
-(SVG) image filetypes. You can view these images in Konqueror and even
-set an SVG image as a background for your desktop.</p>
+<p>Thanks to the original KSVG project, TDE has full support for Scalable
+Vector Graphics (SVG) image filetypes. You can view these images in
+Konqueror and even set an SVG image as a background for your desktop.</p>
 
 <p>There is a great bunch of <a
-href="http://kdelook.org/index.php?xcontentmode=7" title="kdelook
+href="http://kde-look.org/index.php?xcontentmode=7" title="kdelook
 SVG">SVG wallpapers</a> for your desktop background available at <a
-href="http://kdelook.org" title="kdelook">kde-look.org</a>.</p>
+href="http://kde-look.org" title="kdelook">kde-look.org</a>.</p>
 </html>
 </tip>
 
@@ -961,11 +939,11 @@ Shortcuts icon.</p>
 
 <tip category="accessbility">
 <html>
-<p>TDE developers are always looking to improve accessibility, and with the
-launch of KTTS (TDE Text-to-Speech) you have the power to convert
+<p>TDE developers are always looking to improve accessibility, and with
+KTTS (TDE Text-to-Speech) you have the power to convert
 strings of text into audible speech. </p>
 
-<p>KTTS is constantly improving, and currently provides support to
+<p>KTTS currently provides support to
 speak all or any portion of plain text files (as viewed in Kate), HTML
 pages in Konqueror, text in the TDE clipboard, as well as speech of
 TDE notifications (KNotify).</p>
@@ -1005,7 +983,7 @@ suite, and it integrates all components under it seamlessly.</p>
 <p>Other possible programs to integrate with Kontact include
 KAddressBook (for handling Contacts), KNotes (for keeping notes),
 KNode (to keep up-to-date with the latest news), and KOrganizer (for a
-comprehensive calender).</p>
+comprehensive calendar).</p>
 </html>
 </tip>
 
@@ -1040,7 +1018,7 @@ location.</p>
 <p>Although TDE will automatically restore your TDE programs that were
 left open after you logged out, you can specifically tell TDE to start
 particular applications on start up; see the <a
-href="help:/khelpcenter/faq/configure.html#id2574142" title="Autostart
+href="help:/khelpcenter/faq/configure.html" title="Autostart
 FAQ">FAQ entry</a> for more information.</p>
 </html>
 </tip>
@@ -1076,7 +1054,7 @@ password.</p>
 <p>TDEWallet can be accessed from kcontrol, TDE's Control Center; from
 there, simply go to Security &amp; Privacy->TDE Wallet. For more
 information on TDEWallet and on how to use it, check <a
-href="help:/tdewallet" title="tdewallet">the handbook</a>.</p>
+href="help:/tdewallet" title="tdewallet">the TDEWallet handbook</a>.</p>
 
 </html>
 </tip>

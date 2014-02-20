@@ -25,5 +25,5 @@ messages:
 	rm -f tips.txt
 
 appdata_DATA = tips
-appdatadir=$(kde_datadir)/kdewizard
+appdatadir=$(kde_datadir)/tdewizard
 
