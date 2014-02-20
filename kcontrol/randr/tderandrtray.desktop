@@ -139,3 +139,4 @@ Icon=randr
 Type=Application
 OnlyShowIn=TDE;
 Categories=Qt;TDE;System;
+DocPath=tderandrtray/index.html
