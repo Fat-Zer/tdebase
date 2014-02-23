@@ -90,6 +90,5 @@ Name[zh_TW]=控制中心
 Name[zu]=Indawo Yokulawula
 
 X-DCOP-ServiceType=Unique
-Categories=Qt;TDE;Core;
+Categories=Qt;TDE;Settings;
 OnlyShowIn=TDE;
-NoDisplay=true
