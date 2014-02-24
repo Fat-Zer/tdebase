@@ -37,5 +37,5 @@ kicker_3_4_reverseLayout_LDFLAGS = $(all_libraries)
 
 updatedir = $(kde_datadir)/tdeconf_update
 update_DATA = kickerrc.upd
-update_SCRIPTS = kicker-3.1-properSizeSetting.pl kicker-3.5-taskbarEnums.pl kicker-3.5-tdeconfigXTize.pl
+update_SCRIPTS = kicker-3.1-properSizeSetting.pl kicker-3.5-taskbarEnums.pl
 

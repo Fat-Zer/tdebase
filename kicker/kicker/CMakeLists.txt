@@ -37,7 +37,6 @@ install( FILES kickerrc.upd DESTINATION ${DATA_INSTALL_DIR}/tdeconf_update )
 
 install( PROGRAMS
     kicker-3.1-properSizeSetting.pl kicker-3.5-taskbarEnums.pl
-    kicker-3.5-tdeconfigXTize.pl
   DESTINATION ${DATA_INSTALL_DIR}/tdeconf_update )
 
 
