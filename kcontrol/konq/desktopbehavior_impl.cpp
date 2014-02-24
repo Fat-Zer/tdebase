@@ -257,7 +257,7 @@ void DesktopBehavior::fillMediaListView()
     g_pConfig->setGroup( "Media" );
     enableMediaBox->setChecked(g_pConfig->readBoolEntry("enabled",true));
     enableMediaFreeSpaceOverlayBox->setChecked(g_pConfig->readBoolEntry("FreeSpaceDisplayEnabled",true));
-    TQString excludedMedia=g_pConfig->readEntry("exclude","media/hdd_mounted,media/hdd_unmounted,media/floppy_unmounted,media/cdrom_unmounted,media/floppy5_unmounted");
+    TQString excludedMedia=g_pConfig->readEntry("exclude","media/nfs_mounted,media/nfs_unmounted,media/hdd_mounted,media/hdd_unmounted,media/floppy_unmounted,media/cdrom_unmounted,media/floppy5_unmounted");
     for (; it2 != mimetypes.end(); ++it2) {
         if ( ((*it2)->name().startsWith("media/")) )
         {
