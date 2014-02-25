@@ -405,17 +405,6 @@ fi
 dl=$DESKTOP_LOCKED
 unset DESKTOP_LOCKED # Don't want it in the environment
 
-# Clean house in case a previous session was terminated abruptly.
-# When left hanging these two processes interfere with starting Trinity.
-DESKTOP_LOCK="`ps aux | grep $USER | grep kdesktop_lock | grep -v grep | awk '{print $2}'`"
-if [ "$DESKTOP_LOCK" != "" ]; then
-  kill -9 $DESKTOP_LOCK &>/dev/null
-fi
-DCOP="`ps aux | grep $USER | grep dcopserver | grep -v grep | awk '{print $2}'`"
-if [ "$DCOP" != "" ]; then
-  kill -9 $DCOP &>/dev/null
-fi
-
 # Launch splash that doesn't need any TDE libraries here, before
 # TDE libraries are loaded into memory (which may take some time
 # with cold caches). Makes the splash appear sooner.
@@ -751,11 +740,6 @@ echo "[starttde] Shutting down Trinity..." 1>&2
 $TDEDIR/bin/tdeinit_shutdown
 $TDEDIR/bin/dcopserver_shutdown --wait
 $TDEDIR/bin/artsshell -q terminate
-# Sometimes gamin prevents halting or rebooting a system. Just terminate the process now.
-GAM_SERVER="`ps aux | grep $USER | grep gam_server | grep -v grep | awk '{print $2}'`"
-if [ "$GAM_SERVER" != "" ]; then
-  kill -9 $GAM_SERVER 2>/dev/null
-fi
 # KDE4 support.
 if [ -f /usr/bin/kdeinit4_shutdown ]; then
   /usr/bin/kde4 kdeinit4_shutdown 2>/dev/null
