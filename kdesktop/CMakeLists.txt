@@ -32,11 +32,14 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/libkonq
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
+  ${DBUS_INCLUDE_DIRS}
+  ${DBUS_1_TQT_INCLUDE_DIRS}
 )
 
 link_directories(
   ${TQT_LIBRARY_DIRS}
   ${LIBART_LIBRARY_DIRS}
+  ${DBUS_1_TQT_LIBRARY_DIRS}
 )
 
 
@@ -95,7 +98,7 @@ tde_add_tdeinit_executable( ${target} AUTOMOC
     kdesktopsettings-static bgnd-static dmctl-static
     konq-shared tdeutils-shared
     ${XRENDER_LIBRARIES} ${XCURSOR_LIBRARIES} Xext dl
-    ${XSS_LIBRARIES}
+    ${XSS_LIBRARIES} ${DBUS_1_TQT_LIBRARIES}
 )
 
 

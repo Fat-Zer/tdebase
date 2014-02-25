@@ -269,12 +269,23 @@ find_package( TDE )
 
 
 
-# dbus (tdm)
-if( BUILD_TDM )
+# dbus (tdm, kdesktop)
+if( BUILD_TDM OR BUILD_KDESKTOP )
 
   pkg_search_module( DBUS dbus-1 )
   if( NOT DBUS_FOUND )
     tde_message_fatal( "dbus-1 is required, but was not found on your system" )
+  endif( )
+
+endif( )
+
+
+# dbus-1-tqt (kdesktop)
+if( BUILD_KDESKTOP )
+
+  pkg_search_module( DBUS_1_TQT dbus-1-tqt )
+  if( NOT DBUS_1_TQT_FOUND )
+    tde_message_fatal( "dbus-1-tqt is required, but was not found on your system" )
   endif( )
 
 endif( )

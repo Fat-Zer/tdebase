@@ -15,7 +15,11 @@
 #include "xautolock.h"
 #include "xautolock_c.h"
 
+#include <tqdbusconnection.h>
+
 class DCOPClientTransaction;
+class TQT_DBusMessage;
+class TQT_DBusProxy;
 
 //===========================================================================
 /**
@@ -82,6 +86,7 @@ public slots:
     void slotLockProcessWaiting();
     void slotLockProcessFullyActivated();
     void slotLockProcessReady();
+    void handleDBusSignal(const TQT_DBusMessage&);
 
 protected slots:
     void idleTimeout();
@@ -98,8 +103,14 @@ private slots:
     void enableExports();
     void recoverFromHackingAttempt();
 
+    bool dBusReconnect();
+
 private:
     bool restartDesktopLockProcess();
+    void dBusClose();
+    bool dBusConnect();
+    void onDBusServiceRegistered(const TQString&);
+    void onDBusServiceUnregistered(const TQString&);
 
 protected:
     enum LockType { DontLock, DefaultLock, ForceLock, SecureDialog };
@@ -131,6 +142,10 @@ private:
     TDEProcess*   mSAKProcess;
     bool        mTerminationRequested;
     bool        mSaverProcessReady;
+    TQT_DBusConnection	dBusConn;
+    TQT_DBusProxy*	dBusLocal;
+    TQT_DBusProxy*	dBusWatch;
+    TQT_DBusProxy*	systemdSession;
 };
 
 #endif

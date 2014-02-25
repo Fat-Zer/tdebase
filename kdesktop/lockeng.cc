@@ -21,9 +21,24 @@
 #include <dcopclient.h>
 #include <assert.h>
 
+#include <dbus/dbus-shared.h>
+#include <tqdbusdata.h>
+#include <tqdbuserror.h>
+#include <tqdbusmessage.h>
+#include <tqdbusobjectpath.h>
+#include <tqdbusproxy.h>
+
 #include "lockeng.h"
 #include "lockeng.moc"
 #include "kdesktopsettings.h"
+
+#define SYSTEMD_LOGIN1_SERVICE		"org.freedesktop.login1"
+#define SYSTEMD_LOGIN1_PATH		"/org/freedesktop/login1"
+#define SYSTEMD_LOGIN1_MANAGER_IFACE	"org.freedesktop.login1.Manager"
+#define SYSTEMD_LOGIN1_SESSION_IFACE	"org.freedesktop.login1.Session"
+#define SYSTEMD_LOGIN1_SEAT_IFACE	"org.freedesktop.login1.Seat"
+
+#define DBUS_CONN_NAME			"kdesktop_lock"
 
 #include "xautolock_c.h"
 extern xautolock_corner_t xautolock_corners[ 4 ];
@@ -62,7 +77,10 @@ SaverEngine::SaverEngine()
       mBlankOnly(false),
       mSAKProcess(NULL),
       mTerminationRequested(false),
-      mSaverProcessReady(false)
+      mSaverProcessReady(false),
+      dBusLocal(0),
+      dBusWatch(0),
+      systemdSession(0)
 {
     struct sigaction act;
 
@@ -121,6 +139,8 @@ SaverEngine::SaverEngine()
     {
 	kdDebug( 1204 ) << "Failed to start kdesktop_lock!" << endl;
     }
+
+    dBusConnect();
 }
 
 //---------------------------------------------------------------------------
@@ -135,6 +155,8 @@ SaverEngine::~SaverEngine()
 
     mLockProcess.detach(); // don't kill it if we crash
     delete mXAutoLock;
+
+    dBusClose();
 
     // Restore X screensaver parameters
     XSetScreenSaver(tqt_xdisplay(), mXTimeout, mXInterval, mXBlanking,
@@ -467,6 +489,12 @@ void SaverEngine::stopLockProcess()
     }
     processLockTransactions();
     mState = Waiting;
+
+    if( systemdSession && systemdSession->canSend() ) {
+	TQValueList<TQT_DBusData> params;
+	params << TQT_DBusData::fromBool(false);
+	TQT_DBusMessage reply = systemdSession->sendWithReply("SetIdleHint", params);
+    }
 }
 
 void SaverEngine::recoverFromHackingAttempt()
@@ -523,6 +551,12 @@ void SaverEngine::slotLockProcessWaiting()
 void SaverEngine::slotLockProcessFullyActivated()
 {
     mState = Saving;
+
+    if( systemdSession && systemdSession->canSend() ) {
+	TQValueList<TQT_DBusData> params;
+	params << TQT_DBusData::fromBool(true);
+	TQT_DBusMessage reply = systemdSession->sendWithReply("SetIdleHint", params);
+    }
 }
 
 void SaverEngine::slotLockProcessReady()
@@ -550,6 +584,12 @@ void SaverEngine::lockProcessWaiting()
     }
     processLockTransactions();
     mState = Waiting;
+
+    if( systemdSession && systemdSession->canSend() ) {
+	TQValueList<TQT_DBusData> params;
+	params << TQT_DBusData::fromBool(false);
+	TQT_DBusMessage reply = systemdSession->sendWithReply("SetIdleHint", params);
+    }
 }
 
 //---------------------------------------------------------------------------
@@ -588,5 +628,159 @@ xautolock_corner_t SaverEngine::applyManualSettings(int action)
 	{
 		kdDebug() << "no lock nothing" << endl;
 		return ca_nothing;
+	}
+}
+
+/*!
+ * This function try a reconnect to D-Bus.
+ * \return boolean with the result of the operation
+ * \retval true if successful reconnected to D-Bus
+ * \retval false if unsuccessful
+ */
+bool SaverEngine::dBusReconnect() {
+	// close D-Bus connection
+	dBusClose();
+	// init D-Bus conntection
+	return (dBusConnect());
+}
+
+/*!
+ * This function is used to close D-Bus connection.
+ */
+void SaverEngine::dBusClose() {
+	if( dBusConn.isConnected() ) {
+		if( dBusLocal ) {
+			delete dBusLocal;
+			dBusLocal = 0;
+		}
+		if( dBusWatch ) {
+			delete dBusWatch;
+			dBusWatch = 0;
+		}
+		if( systemdSession ) {
+			delete systemdSession;
+			systemdSession = 0;
+		}
+	}
+	dBusConn.closeConnection(DBUS_CONN_NAME);
+}
+
+/*!
+ * This function is used to connect to D-Bus.
+ */
+bool SaverEngine::dBusConnect() {
+	dBusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus, DBUS_CONN_NAME);
+	if( !dBusConn.isConnected() ) {
+	    kdError() << "Failed to open connection to system message bus: " << dBusConn.lastError().message() << endl;
+	    TQTimer::singleShot(4000, this, TQT_SLOT(dBusReconnect()));
+	    return false;
+	}
+
+	// watcher for Disconnect signal
+	dBusLocal = new TQT_DBusProxy(DBUS_SERVICE_DBUS, DBUS_PATH_LOCAL, DBUS_INTERFACE_LOCAL, dBusConn);
+	TQObject::connect(dBusLocal, TQT_SIGNAL(dbusSignal(const TQT_DBusMessage&)),
+			  this, TQT_SLOT(handleDBusSignal(const TQT_DBusMessage&)));
+
+	// watcher for NameOwnerChanged signals
+	dBusWatch = new TQT_DBusProxy(DBUS_SERVICE_DBUS, DBUS_PATH_DBUS, DBUS_INTERFACE_DBUS, dBusConn);
+	TQObject::connect(dBusWatch, TQT_SIGNAL(dbusSignal(const TQT_DBusMessage&)),
+			  this, TQT_SLOT(handleDBusSignal(const TQT_DBusMessage&)));
+
+	// find already running SystemD
+	TQT_DBusProxy checkSystemD(DBUS_SERVICE_DBUS, DBUS_PATH_DBUS, DBUS_INTERFACE_DBUS, dBusConn);
+	if( checkSystemD.canSend() ) {
+		TQValueList<TQT_DBusData> params;
+		params << TQT_DBusData::fromString(SYSTEMD_LOGIN1_SERVICE);
+		TQT_DBusMessage reply = checkSystemD.sendWithReply("NameHasOwner", params);
+		if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1 && reply[0].toBool() ) {
+			onDBusServiceRegistered(SYSTEMD_LOGIN1_SERVICE);
+		}
+	}
+	return true;
+}
+
+/*!
+ * This function handles D-Bus service registering
+ */
+void SaverEngine::onDBusServiceRegistered(const TQString& service) {
+	if( service == SYSTEMD_LOGIN1_SERVICE ) {
+		// get current systemd session
+		TQT_DBusProxy managerIface(SYSTEMD_LOGIN1_SERVICE, SYSTEMD_LOGIN1_PATH, SYSTEMD_LOGIN1_MANAGER_IFACE, dBusConn);
+		TQT_DBusObjectPath systemdSessionPath = TQT_DBusObjectPath();
+		if( managerIface.canSend() ) {
+			TQValueList<TQT_DBusData> params;
+			params << TQT_DBusData::fromUInt32( getpid() );
+			TQT_DBusMessage reply = managerIface.sendWithReply("GetSessionByPID", params);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1 ) {
+				systemdSessionPath = reply[0].toObjectPath();
+			}
+		}
+		// wather for systemd session signals
+		if( systemdSessionPath.isValid() ) {
+			systemdSession = new TQT_DBusProxy(SYSTEMD_LOGIN1_SERVICE, systemdSessionPath, SYSTEMD_LOGIN1_SESSION_IFACE, dBusConn);
+			TQObject::connect(systemdSession, TQT_SIGNAL(dbusSignal(const TQT_DBusMessage&)),
+					  this, TQT_SLOT(handleDBusSignal(const TQT_DBusMessage&)));
+		}
+		return;
+	}
+}
+
+/*!
+ * This function handles D-Bus service unregistering
+ */
+void SaverEngine::onDBusServiceUnregistered(const TQString& service) {
+	if( service == SYSTEMD_LOGIN1_SERVICE ) {
+		if( systemdSession ) {
+			delete systemdSession;
+			systemdSession = 0;
+		}
+		return;
+	}
+}
+
+/*!
+ * This function handles signals from the D-Bus daemon.
+ */
+void SaverEngine::handleDBusSignal(const TQT_DBusMessage& msg) {
+	// dbus terminated
+	if( msg.path() == DBUS_PATH_LOCAL
+	 && msg.interface() == DBUS_INTERFACE_LOCAL
+	 && msg.member() == "Disconnected" ) {
+		dBusClose();
+		TQTimer::singleShot(1000, this, TQT_SLOT(dBusReconnect()));
+		return;
+	}
+
+	// service registered / unregistered
+	if( msg.path() == DBUS_PATH_DBUS
+	 && msg.interface() == DBUS_INTERFACE_DBUS
+	 && msg.member() == "NameOwnerChanged" ) {
+		if( msg[1].toString().isEmpty() ) {
+			// old-owner is empty
+			onDBusServiceRegistered(msg[0].toString());
+		}
+		if( msg[2].toString().isEmpty() ) {
+			// new-owner is empty
+			onDBusServiceUnregistered(msg[0].toString());
+		}
+		return;
+	}
+
+	// systemd signal Lock()
+	if( systemdSession && systemdSession->canSend()
+	 && msg.path() == systemdSession->path()
+	 && msg.interface() == SYSTEMD_LOGIN1_SESSION_IFACE
+	 && msg.member() == "Lock") {
+		lock();
+		return;
+	}
+
+	// systemd signal Unlock()
+	if( systemdSession && systemdSession->canSend()
+	 && msg.path() == systemdSession->path()
+	 && msg.interface() == SYSTEMD_LOGIN1_SESSION_IFACE
+	 && msg.member() == "Unlock") {
+		// unlock?
+		return;
 	}
 }
