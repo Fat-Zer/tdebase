@@ -2010,9 +2010,9 @@ Description:
 
 Key: UseSAK
 Type: bool
-Default: true
+Default: false
 User: greeter
-Instance: #*/!
+Instance: #:*/false
 Comment:
  SAK
 Description:
