@@ -3,7 +3,7 @@
 # A script to perform R14.0.0 XDG compliance updates.
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201402020
+SCRIPT_VERSION=201403020
 
 # This script should be needed to run only once, but corner cases
 # and file/directory permissions could cause incomplete updates.
@@ -627,6 +627,44 @@ if [ "$R14_VERSION" -lt "201309150" ]; then
   if [ ! -f $PROFILE_DIR/share/config/tdeveloprc ] && [ -f $PROFILE_DIR/share/config/kdeveloprc ]; then
     Log "  kdevelop->tdevelop"
     mv $PROFILE_DIR/share/config/kdeveloprc $PROFILE_DIR/share/config/tdeveloprc 2>/dev/null
+  fi
+fi
+if [ "$R14_VERSION" -lt "201403020" ]; then
+  if [ ! -f $PROFILE_DIR/share/config/doctdevtocpluginrc ] && [ -f $PROFILE_DIR/share/config/dockdevtocpluginrc ]; then
+    Log "  dockdevtocpluginrc->doctdevtocpluginrc"
+    mv $PROFILE_DIR/share/config/dockdevtocpluginrc $PROFILE_DIR/share/config/doctdevtocpluginrc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdevgrepviewrc ] && [ -f $PROFILE_DIR/share/config/kdevgrepviewrc ]; then
+    Log "  kdevgrepviewrc->tdevgrepviewrc"
+    mv $PROFILE_DIR/share/config/kdevgrepviewrc $PROFILE_DIR/share/config/tdevgrepviewrc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdevsnippetrc ] && [ -f $PROFILE_DIR/share/config/kdevsnippetrc ]; then
+    Log "  kdevsnippetrc->tdevsnippetrc"
+    mv $PROFILE_DIR/share/config/kdevsnippetrc $PROFILE_DIR/share/config/tdevsnippetrc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdevassistantrc ] && [ -f $PROFILE_DIR/share/config/kdevassistantrc ]; then
+    Log "  kdevassistantrc->tdevassistantrc"
+    mv $PROFILE_DIR/share/config/kdevassistantrc $PROFILE_DIR/share/config/tdevassistantrc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdevfileselectorrc ] && [ -f $PROFILE_DIR/share/config/kdevfileselectorrc ]; then
+    Log "  kdevfileselectorrc->tdevfileselectorrc"
+    mv $PROFILE_DIR/share/config/kdevfileselectorrc $PROFILE_DIR/share/config/tdevfileselectorrc 2>/dev/null
+  fi
+  if [ ! -f $PROFILE_DIR/share/config/tdevdesignerrc ] && [ -f $PROFILE_DIR/share/config/kdevdesignerrc ]; then
+    Log "  kdevdesignerrc->tdevdesignerrc"
+    mv $PROFILE_DIR/share/config/kdevdesignerrc $PROFILE_DIR/share/config/tdevdesignerrc 2>/dev/null
+  fi
+  if [ ! -d $PROFILE_DIR/share/apps/tdevdocumentation ] && [ -d $PROFILE_DIR/share/apps/kdevdocumentation ]; then
+    Log "  kdevdocumentation->tdevdocumentation"
+    mv $PROFILE_DIR/share/apps/kdevdocumentation $PROFILE_DIR/share/apps/tdevdocumentation 2>/dev/null
+  fi
+  if [ ! -d $PROFILE_DIR/share/apps/tdevfileselector ] && [ -d $PROFILE_DIR/share/apps/kdevfileselector ]; then
+    Log "  kdevfileselector->tdevfileselector"
+    mv $PROFILE_DIR/share/apps/kdevfileselector $PROFILE_DIR/share/apps/tdevfileselector 2>/dev/null
+  fi
+  if [ ! -d $PROFILE_DIR/share/apps/tdevabbrev ] && [ -d $PROFILE_DIR/share/apps/kdevabbrev ]; then
+    Log "  kdevabbrev->tdevabbrev"
+    mv $PROFILE_DIR/share/apps/kdevabbrev $PROFILE_DIR/share/apps/tdevabbrev 2>/dev/null
   fi
 fi
 # kwin/twin is the Trinity window manager. kwin4/twin4 is a game.
