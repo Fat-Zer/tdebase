@@ -11,6 +11,6 @@
 
 install( FILES
     unknownapp.png ksysguardd.png computer.png daemon.png
-    shell.png kernel.png kdeapp.png X.png tools.png
+    shell.png kernel.png tdeapp.png X.png tools.png
     waiting.png running.png
   DESTINATION ${DATA_INSTALL_DIR}/ksysguard/pics )
