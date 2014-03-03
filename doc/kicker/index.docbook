@@ -546,7 +546,7 @@ about quick browsers.
 <listitem>
 <para>
 <!-- <guiicon><inlinemediaobject><imageobject><imagedata -->
-<!-- fileref="nonkdeapp_icon.png" format="PNG"/></imageobject> -->
+<!-- fileref="nontdeapp_icon.png" format="PNG"/></imageobject> -->
 <!-- </inlinemediaobject></guiicon> -->
 The <guilabel>Non-&tde; Application Launcher</guilabel> lets you add an
 application which doesn't appear in the <guimenu>TDE</guimenu> menu to &kicker;.

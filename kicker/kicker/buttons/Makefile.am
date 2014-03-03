@@ -6,7 +6,7 @@ noinst_LTLIBRARIES = libkicker_buttons.la
 libkicker_buttons_la_SOURCES = servicebutton.cpp bookmarksbutton.cpp \
 	browserbutton.cpp knewbutton.cpp \
 	desktopbutton.cpp extensionbutton.cpp kbutton.cpp \
-	nonkdeappbutton.cpp servicemenubutton.cpp urlbutton.cpp \
+	nontdeappbutton.cpp servicemenubutton.cpp urlbutton.cpp \
 	windowlistbutton.cpp
 
 libkicker_buttons_la_LDFLAGS = $(all_libraries)

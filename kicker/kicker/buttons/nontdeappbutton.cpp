@@ -39,10 +39,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "exe_dlg.h"
 
 // our own definition
-#include "nonkdeappbutton.h"
+#include "nontdeappbutton.h"
 
 // we include the "moc" file so that the TDE build system knows to create it
-#include "nonkdeappbutton.moc"
+#include "nontdeappbutton.moc"
 
 // this is one of the two constructors. gets called when creating a new button
 // e.g. via the "non-TDE Application" dialog, not one that was saved and then

@@ -21,8 +21,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#ifndef __nonkdeappbutton_h__
-#define __nonkdeappbutton_h__
+#ifndef __nontdeappbutton_h__
+#define __nontdeappbutton_h__
 
 // pull in the superclass's definition
 #include "panelbutton.h"

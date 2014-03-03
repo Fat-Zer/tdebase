@@ -47,7 +47,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "kicker.h"
 #include "kickerSettings.h"
 #include "kickertip.h"
-#include "nonkdeappbutton.h"
+#include "nontdeappbutton.h"
 #include "paneldrag.h"
 #include "servicebutton.h"
 #include "servicemenubutton.h"

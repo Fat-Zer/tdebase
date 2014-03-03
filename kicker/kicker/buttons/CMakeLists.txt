@@ -42,7 +42,7 @@ set( target kicker_buttons )
 set( ${target}_SRCS
   servicebutton.cpp bookmarksbutton.cpp browserbutton.cpp
   knewbutton.cpp desktopbutton.cpp extensionbutton.cpp
-  kbutton.cpp nonkdeappbutton.cpp servicemenubutton.cpp
+  kbutton.cpp nontdeappbutton.cpp servicemenubutton.cpp
   urlbutton.cpp windowlistbutton.cpp
 )
 
