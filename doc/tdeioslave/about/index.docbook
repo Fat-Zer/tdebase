@@ -36,22 +36,38 @@ This handbook describes the about protocol.
 
 </articleinfo>
 
-<sect1 id="apologies">
-<title>We Apologize</title>
-<para>No documentation has yet been written for this protocol.</para>
+<para>The about protocol is used by web browsers to display internal information
+and sometimes <ulink url="https://en.wikipedia.org/wiki/Easter_egg_%28media%29">
+Easter Eggs</ulink>. Although referred to as a protocol, the correct designation
+is a URI scheme, as described in <ulink url="http://tools.ietf.org/html/rfc6694">
+RFC 6694</ulink>.</para>
+<para>Currently the following are supported by &konqueror;:
 
-<para>If you need help, please check <ulink url="http://www.trinitydesktop.org">The &tde;
-web site</ulink>, submit questions to the <ulink url="http://www.trinitydesktop.org/mailinglist.php">
-&tde; mail lists</ulink>, or file a bug report at the <ulink url="http://bugs.trinitydesktop.org/">
-&tde; bug tracker</ulink>.</para>
-
-<para>If you are interested in helping, please consider writing the help file.
-Submitting a basic text file is acceptable as the &tde-team; will convert the text.</para>
-
-<para>Thank you for helping and thank you for your patience.</para>
-
-&underFDL;
-
-</sect1>
+<itemizedlist>
+<listitem>
+  <para>about:blank: Displays a blank page.</para>
+</listitem>
+</itemizedlist>
+<itemizedlist>
+<listitem>
+  <para>about:cache: Displays information about the &konqueror; cache.</para>
+</listitem>
+</itemizedlist>
+<itemizedlist>
+<listitem>
+  <para>about:config: Displays the default &konqueror; Welcome page.</para>
+</listitem>
+</itemizedlist>
+<itemizedlist>
+<listitem>
+  <para>about:plugins: Displays what plugins are installed.</para>
+</listitem>
+</itemizedlist>
+<itemizedlist>
+<listitem>
+  <para>about:konqueror: Displays the default &konqueror; Welcome page.</para>
+</listitem>
+</itemizedlist>
+</para>
 
 </article>

@@ -5,7 +5,7 @@
 ]>
 
 <article lang="&language;">
-<title>System Base URL Notifier</title>
+<title>system</title>
 
 <articleinfo>
 
@@ -24,35 +24,59 @@
 
 <abstract>
 <para>
-This handbook describes the System Base URL Notifier service.
+This handbook describes the system protocol.
 </para>
 </abstract>
 
 <keywordset>
 <keyword>TDE</keyword>
-<keyword>KDED</keyword>
 <keyword>system</keyword>
-<keyword>service</keyword>
+<keyword>protocol</keyword>
 </keywordset>
 
 </articleinfo>
 
-<sect1 id="apologies">
-<title>We Apologize</title>
-<para>No documentation has yet been written for this service.</para>
+<para>The system protocol provides direct access to several &tde; system related protocols:
 
-<para>If you need help, please check <ulink url="http://www.trinitydesktop.org">The &tde;
-web site</ulink>, submit questions to the <ulink url="http://www.trinitydesktop.org/mailinglist.php">
-&tde; mail lists</ulink>, or file a bug report at the <ulink url="http://bugs.trinitydesktop.org/">
-&tde; bug tracker</ulink>.</para>
+<itemizedlist>
+<listitem>
+<para><guilabel>Documents Folder</guilabel>. This is the same as the special
+<guilabel>My Documents</guilabel> desktop icon.</para>
+</listitem>
+</itemizedlist>
+<itemizedlist>
+<listitem>
+<para><guilabel>Home Folder</guilabel>. This is the same as $HOME or selecting
+the Home button in &konqueror;.</para>
+</listitem>
+</itemizedlist>
+<itemizedlist>
+<listitem>
+<para><guilabel>Remote Places</guilabel>. This is the same as the special
+<guilabel>My Network Places</guilabel> desktop icon or using the
+<ulink url="help:/tdeioslave/remote">remote</ulink> protocol.</para>
+</listitem>
+</itemizedlist>
+<itemizedlist>
+<listitem>
+<para><guilabel>Storage Media</guilabel>. This is the same as the special
+<guilabel>My Computer</guilabel> desktop icon.</para>
+</listitem>
+</itemizedlist>
+<itemizedlist>
+<listitem>
+<para><guilabel>Trash</guilabel>. This is the same as the special
+<guilabel>Trash</guilabel> desktop icon or panel applet, or using the
+<ulink url="help:/tdeioslave/trash">trash</ulink> protocol.</para>
+</listitem>
+</itemizedlist>
+<itemizedlist>
+<listitem>
+<para><guilabel>User Folders</guilabel>. This is the same as using the
+<ulink url="help:/tdeioslave/home">home</ulink> protocol.</para>
+</listitem>
+</itemizedlist>
 
-<para>If you are interested in helping, please consider writing the help file.
-Submitting a basic text file is acceptable as the &tde-team; will convert the text.</para>
-
-<para>Thank you for helping and thank you for your patience.</para>
-
-&underFDL;
-
-</sect1>
+</para>
 
 </article>

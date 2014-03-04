@@ -5,7 +5,7 @@
 ]>
 
 <article lang="&language;">
-<title>Remote Base URL Notifier</title>
+<title>remote</title>
 
 <articleinfo>
 
@@ -24,35 +24,24 @@
 
 <abstract>
 <para>
-This handbook describes the Remote Base URL Notifier service.
+This handbook describes the remote protocol.
 </para>
 </abstract>
 
 <keywordset>
 <keyword>TDE</keyword>
-<keyword>KDED</keyword>
 <keyword>remote</keyword>
-<keyword>service</keyword>
+<keyword>protocol</keyword>
 </keywordset>
 
 </articleinfo>
 
-<sect1 id="apologies">
-<title>We Apologize</title>
-<para>No documentation has yet been written for this service.</para>
-
-<para>If you need help, please check <ulink url="http://www.trinitydesktop.org">The &tde;
-web site</ulink>, submit questions to the <ulink url="http://www.trinitydesktop.org/mailinglist.php">
-&tde; mail lists</ulink>, or file a bug report at the <ulink url="http://bugs.trinitydesktop.org/">
-&tde; bug tracker</ulink>.</para>
-
-<para>If you are interested in helping, please consider writing the help file.
-Submitting a basic text file is acceptable as the &tde-team; will convert the text.</para>
-
-<para>Thank you for helping and thank you for your patience.</para>
-
-&underFDL;
-
-</sect1>
+<para>The remote protocol provides access to various network protocols, such as network shares
+through <ulink url="help:/tdeioslave/nfs">NFS</ulink>, or
+<ulink url="help:/tdeioslave/smb">Samba</ulink>, or other network services such as
+<ulink url="help:/tdeioslave/zeroconf">Zeroconf</ulink>,
+<ulink url="help:/tdeioslave/ftp">FTP</ulink>,
+<ulink url="help:/tdeioslave/ssh">SSH</ulink>,
+<ulink url="help:/tdeioslave/webdav">Webdav</ulink>, etc.</para>
 
 </article>
