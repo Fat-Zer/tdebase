@@ -161,12 +161,20 @@ TDE User Guide</a>.</p>
 
 <tip category="TDE|General">
 <html>
-<p>The Trinity Desktop Environment is a fork of the K Desktop Environment
-version 3.5, which originally was written by the KDE Team, a world-wide
-network of software engineers committed to Free Software development. TDE
-was first released in April 2010.</p>
+<p>The <b>Trinity Desktop Environment</b> was born as a fork of the
+K Desktop Environment version 3.5, which was originally written by the KDE Team,
+a world-wide network of software engineers committed to Free Software development.
+The name <i>Trinity</i> was chosen because the word means <i>Three</i> as in
+<i>continuation of KDE 3</i>.</p>
+<p>Since then, TDE has evolved to be an indipendent and standalone computer desktop
+environment project. The developers have molded the code to its own identity without
+giving up on the efficiency, productivity and traditional user interface experience
+characteristic of the original KDE 3 series.</p>
+
 <p>The KDE project was founded in October 1996 and was first released
 on July 12, 1998.</p>
+<p>TDE first release dates back to April 2010.</p>
+
 <p>You can <em>support the TDE project</em> with work (programming, designing,
 documenting, proof-reading, translating, etc.) and financial or
 hardware donations. Please contact the TDE team if you are interested in
