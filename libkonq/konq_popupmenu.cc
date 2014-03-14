@@ -425,7 +425,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
     if (!realURL.isLocalFile()) {
         TDEIO::LocalURLJob* localURLJob = TDEIO::localURL(m_sViewURL);
         if (localURLJob) {
-            connect(localURLJob, TQT_SIGNAL(localURL(TDEIO::Job*, const KURL&, bool)), this, TQT_SLOT(slotLocalURL(TDEIO::Job*, const KURL&, bool)));
+            connect(localURLJob, TQT_SIGNAL(localURL(TDEIO::LocalURLJob*, const KURL&, bool)), this, TQT_SLOT(slotLocalURL(TDEIO::LocalURLJob*, const KURL&, bool)));
             connect(localURLJob, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotLocalURLKIODestroyed()));
             d->localURLSlotFired = false;
             while (!d->localURLSlotFired) {
@@ -1226,7 +1226,7 @@ KURL::List KonqPopupMenu::popupURLList() const
   return m_lstPopupURLs;
 }
 
-void KonqPopupMenu::slotLocalURL(TDEIO::Job *job, const KURL& url, bool isLocal)
+void KonqPopupMenu::slotLocalURL(TDEIO::LocalURLJob *job, const KURL& url, bool isLocal)
 {
   d->localURLSlotFired = true;
   d->localURLResultURL = url;

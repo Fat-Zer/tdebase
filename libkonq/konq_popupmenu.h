@@ -34,6 +34,7 @@
 #include <libkonq_export.h>
 
 #include <tdeparts/browserextension.h>
+#include <tdeio/jobclasses.h>
 
 #include "konq_xmlguiclient.h"
 
@@ -178,7 +179,7 @@ protected:
   TDEActionCollection m_ownActions;
 
 private slots:
-  void slotLocalURL( TDEIO::Job *, const KURL&, bool );
+  void slotLocalURL( TDEIO::LocalURLJob *, const KURL&, bool );
   void slotLocalURLKIODestroyed( );
 
 private:
