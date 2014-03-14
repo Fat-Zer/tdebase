@@ -1359,8 +1359,15 @@ void KMenu::insertStaticExitItems()
     }
 
     bool maysd = false;
+#ifdef COMPILE_HALBACKEND
     if (ksmserver.readBoolEntry( "offerShutdown", true ) && DM().canShutdown())
         maysd = true;
+#else
+    TDERootSystemDevice* rootDevice = TDEGlobal::hardwareDevices()->rootSystemDevice();
+    if( rootDevice ) {
+        maysd = rootDevice->canPowerOff();
+    }
+#endif
 
     if ( maysd )
     {
