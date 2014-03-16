@@ -338,9 +338,10 @@ void KSMServer::shutdown( TDEApplication::ShutdownConfirm confirm,
 
 void KSMServer::logoutTimed( int sdtype, int sdmode, TQString bootOption )
 {
-    int confirmDelay;
+    int confirmDelay = 0;
 
     TDEConfig* config = TDEGlobal::config();
+    config->reparseConfiguration(); // config may have changed in the KControl module
     config->setGroup( "General" );
 
     if ( sdtype == TDEApplication::ShutdownTypeHalt ) {
@@ -350,14 +351,20 @@ void KSMServer::logoutTimed( int sdtype, int sdmode, TQString bootOption )
         confirmDelay = config->readNumEntry( "confirmRebootDelay", 31 );
     }
     else {
-        confirmDelay = config->readNumEntry( "confirmLogoutDelay", 31 );
+        if(config->readBoolEntry("confirmLogout", true)) {
+            confirmDelay = config->readNumEntry( "confirmLogoutDelay", 31 );
+        }
     }
 
     bool result = true;
-    if (confirmDelay) {
-        KSMShutdownFeedback::start(); // make the screen gray
+    if (confirmDelay > 0) {
+        if(config->readBoolEntry("doFancyLogout", true)) {
+            KSMShutdownFeedback::start(); // make the screen gray
+        }
         result = KSMDelayedMessageBox::showTicker( (TDEApplication::ShutdownType)sdtype, bootOption, confirmDelay );
-        KSMShutdownFeedback::stop(); // make the screen become normal again
+        if(config->readBoolEntry("doFancyLogout", true)) {
+            KSMShutdownFeedback::stop(); // make the screen become normal again
+        }
     }
 
     if ( result )
