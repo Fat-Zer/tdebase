@@ -139,6 +139,5 @@ Comment[vi]=Trung tâm điều khiển mô đun thực đơn
 Comment[wa]=Dressêye des modules do cinte di contrôle
 Comment[zh_CN]=控制中心模块菜单
 Comment[zh_TW]=控制中心模組選單
-Icon=package_settings
-
+Icon=kcontrol
 X-TDE-Library=kickermenu_prefmenu
