@@ -9,9 +9,9 @@
 #
 #################################################
 
-add_subdirectory( blue-bend )
-add_subdirectory( default )
-add_subdirectory( unified )
-add_subdirectory( none )
-add_subdirectory( simple )
-add_subdirectory( TDE-Classic )
+add_subdirectory( locolor )
+
+install( FILES
+    Theme.rc Preview.png splash_active_bar.png splash_bottom.png
+    splash_inactive_bar.png splash_top.png
+  DESTINATION ${DATA_INSTALL_DIR}/ksplash/Themes/TDE-Classic )
