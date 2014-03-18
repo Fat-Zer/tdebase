@@ -1,19 +1,23 @@
-# Default KSplash/ML Theme
+#
+# Refresh KSplash/ML Theme
+#
 
-[KSplash Theme: default]
-Name = KDE 3.5 Splash Screen
-Description = Waves of change
+[KSplash Theme: Refresh]
+Name = Refresh TDE Splash Theme
+Description = Load Refresh TDE KSplash theme.
 Version = 1.0
-Author = Lee Olson <clearbeast@gmail.com> and Timothy Pearson <kb9vqf@pearsoncomputing.net>
+Author = TDE Team
+Homepage = trinitydesktop.org
 
-# Theme behaviour settings.
+# Theme behavior settings.
 Engine = Default
 
-# Should icons blink ala Trinity, or not?
+# Should icons blink ala TDE, or not?
 Icons Flashing = true
 
-# Show progress bar?
-Always Show Progress = false
-
-# Status text colour
-Label Foreground = #FFFFFF
+# Configurable Messages.  You may specify messages in as many
+# languages as you prefer.  Messages may be copied verbatim from
+# this file, if you wish to maintain the default settings.
+#Message1 = Please wait, starting TDE...
+#Message1[es] = Por favor escuchar, estarto TDE...
+#Message2 = Loading ...
