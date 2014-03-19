@@ -55,18 +55,32 @@
                     </property>
                 </widget>
                 <widget class="TQCheckBox">
-                    <property name="name">
-                        <cstring>showFancyFadeAway</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>Show fancy &amp;logout fadeaway</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>Check this option if you want to see a fancy fadeaway when displaying a logout confirmation dialog box.</string>
-                    </property>
+                  <property name="name">
+                    <cstring>showFadeAway</cstring>
+                  </property>
+                  <property name="enabled">
+                    <bool>false</bool>
+                  </property>
+                  <property name="text">
+                    <string>Show &amp;logout fadeaway</string>
+                  </property>
+                  <property name="whatsThis" stdset="0">
+                    <string>Check this option if you want to see a fadeaway when displaying a logout confirmation dialog box.</string>
+                  </property>
+                </widget>
+                <widget class="TQCheckBox">
+                  <property name="name">
+                    <cstring>showFancyFadeAway</cstring>
+                  </property>
+                  <property name="enabled">
+                    <bool>false</bool>
+                  </property>
+                  <property name="text">
+                    <string>Sho&amp;w fancy logout fadeaway</string>
+                  </property>
+                  <property name="whatsThis" stdset="0">
+                    <string>Check this option if you want to see a fancy fadeaway when displaying a logout confirmation dialog box.</string>
+                  </property>
                 </widget>
                 <widget class="TQCheckBox">
                     <property name="name">
@@ -235,16 +249,34 @@
         <slot>configChanged()</slot>
     </connection>
     <connection>
-        <sender>confirmLogoutCheck</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>showFancyFadeAway</receiver>
-        <slot>setEnabled(bool)</slot>
+      <sender>confirmLogoutCheck</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>showFadeAway</receiver>
+      <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>showFancyFadeAway</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>SMServerConfigDlg</receiver>
-        <slot>configChanged()</slot>
+      <sender>confirmLogoutCheck</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>showFancyFadeAway</receiver>
+      <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+      <sender>showFadeAway</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>showFancyFadeAway</receiver>
+      <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+      <sender>showFadeAway</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>SMServerConfigDlg</receiver>
+      <slot>configChanged()</slot>
+    </connection>
+    <connection>
+      <sender>showFancyFadeAway</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>SMServerConfigDlg</receiver>
+      <slot>configChanged()</slot>
     </connection>
     <connection>
         <sender>showLogoutStatusDialog</sender>

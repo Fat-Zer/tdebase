@@ -113,7 +113,8 @@ void KSMShutdownFeedback::fadeBack( void )
 void KSMShutdownFeedback::slotPaintEffect()
 {
 	// determine which fade to use
-	if (TDEConfigGroup(TDEGlobal::config(), "Logout").readBoolEntry("doFancyLogout", true)) {
+	if ( (TDEConfigGroup(TDEGlobal::config(), "Logout").readBoolEntry("doFadeaway", true)) &&
+	     (TDEConfigGroup(TDEGlobal::config(), "Logout").readBoolEntry("doFancyLogout", true)) ) {
 		// fancy logout fade
 		float doFancyLogoutAdditionalDarkness  = (float)TDEConfigGroup(TDEGlobal::config(), "Logout").readDoubleNumEntry("doFancyLogoutAdditionalDarkness", 0.6);
 		float doFancyLogoutFadeTime = (float)TDEConfigGroup(TDEGlobal::config(), "Logout").readDoubleNumEntry("doFancyLogoutFadeTime", 4000);
@@ -363,149 +364,151 @@ void KSMShutdownFeedback::slotPaintEffect()
 		}
 	}
 	else {
-		// standard logout fade
-		 if (kapp->isX11CompositionAvailable()) {
-			// We can do this in a different (simpler) manner because we have compositing support!
-			// The end effect will be very similar to the old style logout
-			float doFancyLogoutFadeTime = 1000;
-			float doFancyLogoutFadeBackTime = 0;
-			if ( m_greyImageCreated == false ) {
-				m_greyImageCreated = true;
-
-				// eliminate nasty flicker on first show
-				m_root.resize( width(), height() );
-				TQImage blendedImage = m_grayImage;
-				TQPainter p;
-				p.begin( &m_root );
-				blendedImage.setAlphaBuffer(false);
-				p.drawImage( 0, 0, blendedImage );
-				p.end();
-
-				setBackgroundPixmap( m_root );
-				setGeometry( TQApplication::desktop()->geometry() );
-				setBackgroundMode( TQWidget::NoBackground );
-
-				m_unfadedImage = m_grayImage.copy();
-
-				register uchar * r = m_grayImage.bits();
-				uchar * end = m_grayImage.bits() + m_grayImage.numBytes();
-
-				while ( r != end ) {
-					*reinterpret_cast<TQRgb*>(r) = tqRgba(0, 0, 0, 107);
-					r += 4;
+		if (TDEConfigGroup(TDEGlobal::config(), "Logout").readBoolEntry("doFadeaway", true)) {
+			// standard logout fade
+			 if (kapp->isX11CompositionAvailable()) {
+				// We can do this in a different (simpler) manner because we have compositing support!
+				// The end effect will be very similar to the old style logout
+				float doFancyLogoutFadeTime = 1000;
+				float doFancyLogoutFadeBackTime = 0;
+				if ( m_greyImageCreated == false ) {
+					m_greyImageCreated = true;
+	
+					// eliminate nasty flicker on first show
+					m_root.resize( width(), height() );
+					TQImage blendedImage = m_grayImage;
+					TQPainter p;
+					p.begin( &m_root );
+					blendedImage.setAlphaBuffer(false);
+					p.drawImage( 0, 0, blendedImage );
+					p.end();
+	
+					setBackgroundPixmap( m_root );
+					setGeometry( TQApplication::desktop()->geometry() );
+					setBackgroundMode( TQWidget::NoBackground );
+	
+					m_unfadedImage = m_grayImage.copy();
+	
+					register uchar * r = m_grayImage.bits();
+					uchar * end = m_grayImage.bits() + m_grayImage.numBytes();
+	
+					while ( r != end ) {
+						*reinterpret_cast<TQRgb*>(r) = tqRgba(0, 0, 0, 107);
+						r += 4;
+					}
+	
+					// start timer which is used for cpu-speed-independent fading
+					m_fadeTime.start();
+					m_rowsDone = 0;
 				}
-
-				// start timer which is used for cpu-speed-independent fading
-				m_fadeTime.start();
-				m_rowsDone = 0;
-			}
-
-			// return if fading is completely done...
-			if ( ( m_grayOpacity >= 1.0f && m_fadeBackwards == FALSE ) || ( m_grayOpacity <= 0.0f && m_fadeBackwards == TRUE ) ) {
-				return;
-			}
-
-			if ( m_fadeBackwards == FALSE ) {
-				m_grayOpacity = m_fadeTime.elapsed() / doFancyLogoutFadeTime;
-				if ( m_grayOpacity > 1.0f )
-				m_grayOpacity = 1.0f;
-			}
-			else {
-				m_grayOpacity = 1.0f - m_fadeTime.elapsed() / doFancyLogoutFadeBackTime - m_compensation;
-				if ( m_grayOpacity < 0.0f )
-				m_grayOpacity = 0.0f;
-			}
-
-			const int imgWidth = m_unfadedImage.width();
-			int imgHeight = m_unfadedImage.height();
-			int heightUnit = imgHeight / 3;
-			if( heightUnit < 1 )
-				heightUnit = 1;
-
-			int y1 = static_cast<int>( imgHeight*m_grayOpacity - heightUnit + m_grayOpacity*heightUnit*2.0f );
-			if( y1 > imgHeight ) {
-				y1 = imgHeight;
-			}
-
-			int y2 = y1+heightUnit;
-			if( y2 > imgHeight ) {
-				y2 = imgHeight;
-			}
-
-			if( m_fadeBackwards == FALSE )
-			{
-				if( y1 > 0 && y1 < imgHeight && y1-m_rowsDone > 0 && m_rowsDone < imgHeight )
-				{
-					TQImage img( imgWidth, y1-m_rowsDone, 32 );
-					memcpy( img.bits(), m_grayImage.scanLine( m_rowsDone ), imgWidth*(y1-m_rowsDone)*4 );
-					bitBlt( this, 0, m_rowsDone, &img );
-					m_rowsDone = y1;
+	
+				// return if fading is completely done...
+				if ( ( m_grayOpacity >= 1.0f && m_fadeBackwards == FALSE ) || ( m_grayOpacity <= 0.0f && m_fadeBackwards == TRUE ) ) {
+					return;
 				}
-			}
-			else {
-				// when fading back we have to blit area which isnt gray anymore to unfaded image
-				if( y2 > 0 && y2 < imgHeight && m_rowsDone > y2 )
-				{
-					TQImage img( imgWidth, m_rowsDone-y2, 32 );
-					memcpy( img.bits(), m_unfadedImage.scanLine( y2 ), imgWidth*(m_rowsDone-y2)*4 );
-					bitBlt( this, 0, y2, &img );
-					m_rowsDone = y2;
+	
+				if ( m_fadeBackwards == FALSE ) {
+					m_grayOpacity = m_fadeTime.elapsed() / doFancyLogoutFadeTime;
+					if ( m_grayOpacity > 1.0f )
+					m_grayOpacity = 1.0f;
 				}
-			}
-
-			int start_y1 = y1;
-			if( start_y1 < 0 ) {
-				start_y1 = 0;
-			}
-			if( y2 > start_y1 ) {
-				TQImage img( imgWidth, y2-start_y1, 32 );
-				memcpy( img.bits(), m_grayImage.scanLine( start_y1 ), ( y2-start_y1 ) * imgWidth * 4 );
-				register uchar * rs = m_unfadedImage.scanLine( start_y1 );
-				register uchar * rd = img.bits();
-				for( int y = start_y1; y < y2; ++y )
+				else {
+					m_grayOpacity = 1.0f - m_fadeTime.elapsed() / doFancyLogoutFadeBackTime - m_compensation;
+					if ( m_grayOpacity < 0.0f )
+					m_grayOpacity = 0.0f;
+				}
+	
+				const int imgWidth = m_unfadedImage.width();
+				int imgHeight = m_unfadedImage.height();
+				int heightUnit = imgHeight / 3;
+				if( heightUnit < 1 )
+					heightUnit = 1;
+	
+				int y1 = static_cast<int>( imgHeight*m_grayOpacity - heightUnit + m_grayOpacity*heightUnit*2.0f );
+				if( y1 > imgHeight ) {
+					y1 = imgHeight;
+				}
+	
+				int y2 = y1+heightUnit;
+				if( y2 > imgHeight ) {
+					y2 = imgHeight;
+				}
+	
+				if( m_fadeBackwards == FALSE )
 				{
-				// linear gradients look bad, so use cos-function
-					for( short int x = 0; x < imgWidth; ++x )
+					if( y1 > 0 && y1 < imgHeight && y1-m_rowsDone > 0 && m_rowsDone < imgHeight )
 					{
-						*reinterpret_cast<TQRgb*>(rd) = tqRgba(0, 0, 0, 107);
-						rs += 4; rd += 4;
+						TQImage img( imgWidth, y1-m_rowsDone, 32 );
+						memcpy( img.bits(), m_grayImage.scanLine( m_rowsDone ), imgWidth*(y1-m_rowsDone)*4 );
+						bitBlt( this, 0, m_rowsDone, &img );
+						m_rowsDone = y1;
 					}
 				}
-				bitBlt( this, 0, start_y1, &img );
-			}
-
-			TQTimer::singleShot( 1, this, TQT_SLOT( slotPaintEffect() ) );
-		 }
-		 else {
-			if ( m_currentY >= height() ) {
-				if ( backgroundMode() == TQWidget::NoBackground ) {
-					setBackgroundMode( TQWidget::NoBackground );
-					setBackgroundPixmap( m_root );
+				else {
+					// when fading back we have to blit area which isnt gray anymore to unfaded image
+					if( y2 > 0 && y2 < imgHeight && m_rowsDone > y2 )
+					{
+						TQImage img( imgWidth, m_rowsDone-y2, 32 );
+						memcpy( img.bits(), m_unfadedImage.scanLine( y2 ), imgWidth*(m_rowsDone-y2)*4 );
+						bitBlt( this, 0, y2, &img );
+						m_rowsDone = y2;
+					}
 				}
-				return;
-			}
-
-			if ( m_currentY == 0 ) {
-				setBackgroundMode( TQWidget::NoBackground );
-				setGeometry( TQApplication::desktop()->geometry() );
-				m_root.resize( width(), height() ); // for the default logout
-
+	
+				int start_y1 = y1;
+				if( start_y1 < 0 ) {
+					start_y1 = 0;
+				}
+				if( y2 > start_y1 ) {
+					TQImage img( imgWidth, y2-start_y1, 32 );
+					memcpy( img.bits(), m_grayImage.scanLine( start_y1 ), ( y2-start_y1 ) * imgWidth * 4 );
+					register uchar * rs = m_unfadedImage.scanLine( start_y1 );
+					register uchar * rd = img.bits();
+					for( int y = start_y1; y < y2; ++y )
+					{
+					// linear gradients look bad, so use cos-function
+						for( short int x = 0; x < imgWidth; ++x )
+						{
+							*reinterpret_cast<TQRgb*>(rd) = tqRgba(0, 0, 0, 107);
+							rs += 4; rd += 4;
+						}
+					}
+					bitBlt( this, 0, start_y1, &img );
+				}
+	
+				TQTimer::singleShot( 1, this, TQT_SLOT( slotPaintEffect() ) );
+			 }
+			 else {
+				if ( m_currentY >= height() ) {
+					if ( backgroundMode() == TQWidget::NoBackground ) {
+						setBackgroundMode( TQWidget::NoBackground );
+						setBackgroundPixmap( m_root );
+					}
+					return;
+				}
+	
+				if ( m_currentY == 0 ) {
+					setBackgroundMode( TQWidget::NoBackground );
+					setGeometry( TQApplication::desktop()->geometry() );
+					m_root.resize( width(), height() ); // for the default logout
+	
+					KPixmap pixmap;
+					pixmap = TQPixmap(TQPixmap::grabWindow( tqt_xrootwin(), 0, 0, width(), height() ));
+					bitBlt( this, 0, 0, &pixmap );
+					bitBlt( &m_root, 0, 0, &pixmap );
+				}
+	
 				KPixmap pixmap;
-				pixmap = TQPixmap(TQPixmap::grabWindow( tqt_xrootwin(), 0, 0, width(), height() ));
-				bitBlt( this, 0, 0, &pixmap );
-				bitBlt( &m_root, 0, 0, &pixmap );
+				pixmap = TQPixmap(TQPixmap::grabWindow( tqt_xrootwin(), 0, m_currentY, width(), 10 ));
+				TQImage image = pixmap.convertToImage();
+				KImageEffect::blend( Qt::black, image, 0.4 );
+				KImageEffect::toGray( image, true );
+				pixmap.convertFromImage( image );
+				bitBlt( this, 0, m_currentY, &pixmap );
+				bitBlt( &m_root, 0, m_currentY, &pixmap );
+				m_currentY += 10;
+				TQTimer::singleShot( 1, this, TQT_SLOT( slotPaintEffect() ) );
 			}
-
-			KPixmap pixmap;
-			pixmap = TQPixmap(TQPixmap::grabWindow( tqt_xrootwin(), 0, m_currentY, width(), 10 ));
-			TQImage image = pixmap.convertToImage();
-			KImageEffect::blend( Qt::black, image, 0.4 );
-			KImageEffect::toGray( image, true );
-			pixmap.convertFromImage( image );
-			bitBlt( this, 0, m_currentY, &pixmap );
-			bitBlt( &m_root, 0, m_currentY, &pixmap );
-			m_currentY += 10;
-			TQTimer::singleShot( 1, this, TQT_SLOT( slotPaintEffect() ) );
 		}
 	}
 
