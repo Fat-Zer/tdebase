@@ -745,10 +745,7 @@ now.
                         <glossterm><acronym>TDEPrint Handbook...</acronym></glossterm>
                         <glossdef><para>...is the name of the reference document that describes TDEPrint
 				functions to users and administrators. You can load it into Konqueror by
-				typing "help:/tdeprint" into the address field. The <ulink
-				url="http://printing.kde.org/">TDEPrint website</ulink>
-				is the resource for updates to this documentation, as well as PDF
-				versions suitable for printing it. It is authored and maintained by Kurt 
+				typing "help:/tdeprint" into the address field. It is authored and maintained by Kurt 
 				Pfeifle.
 				</para>
                                 <glossseealso otherterm="gloss-cupsfaq">&CUPS;-FAQ</glossseealso>

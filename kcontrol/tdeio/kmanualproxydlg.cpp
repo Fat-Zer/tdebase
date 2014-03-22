@@ -475,8 +475,7 @@ bool KManualProxyDlg::getException ( TQString& result,
                             "<b><u>NOTE:</u></b> Wildcard matching such as "
                             "<code>*.kde.org</code> is not supported. If you want "
                             "to match any host in the <code>.kde.org</code> domain, "
-                            "e.g. <code>printing.kde.org</code>, then simply enter "
-                            "<code>.kde.org</code></qt>");
+                            "then simply enter <code>.kde.org</code></qt>");
                             
     bool ok;
     result = KInputDialog::text( caption, label, value, &ok, 0, 0, 0, 
