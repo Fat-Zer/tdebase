@@ -38,7 +38,7 @@ without the need of installing the <application>Kolab</application> server
 or another groupware backend. It can work with just an
 <acronym>IMAP</acronym> server, that can be easily set up.</para>
 
-<para>My scenario is a server with Debian unstable and &tde; 3.4. I access
+<para>My scenario is a server with Debian unstable and &kde; 3.4. I access
 &kontact; and other fabulous GNU/Linux apps from windows using Cygwin/X,
 while waiting Wine project to be able to run the last Windows programs I
 need (and that are not available under GNU/Linux). I want to share contacts,
