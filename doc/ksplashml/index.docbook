@@ -238,6 +238,16 @@ true.</entry>
 <entry>[true/false]</entry>
 <entry>Indicates whether icons should <quote>flash</quote>. Default is true.</entry>
 </row>
+<row>
+<entry>Icon Offsets</entry>
+<entry>[7-int list]</entry>
+<entry>A comma separated list of 7 integers, default is 0, 0, 0, 0, 0, 0, 0. 
+By default, each of the 7 icons is allowed 58 pixels on the screen. If some icons are
+wider or narrower, you can use this list to specify an offset to the default x-coordinate
+start point of each icon (0, 58, 116, 174, 232, 290, 348). For example, if the first 3 icons
+are 68, 53 and 53 pixels wide, you will need to specify the offsets as follow: 0, 10, 5, 0, 0, 0, 0.
+</entry>
+</row>
 </tbody>
 </tgroup>
 </table>

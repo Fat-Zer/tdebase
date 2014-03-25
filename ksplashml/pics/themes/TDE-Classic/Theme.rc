@@ -17,3 +17,6 @@ Always Show Progress = false
 
 # Status text colour
 Label Foreground = #FFFFFF
+
+# Offset of each of the 7 icons, useful for adjusting flashing positon for different size icons
+Icon Offsets = 0, 0, 0, 0, 0, 0, -8

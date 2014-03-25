@@ -19,6 +19,9 @@
 #include <tqwidget.h>
 
 #include "themeengine.h"
+
+static const int MAX_ICONS=7;
+
 class TQPixmap;
 class TQTimer;
 
@@ -88,8 +91,9 @@ private:
   TQString _findPicture( const TQString &pic );
 
   // Configurable Options
-  bool mIconsFlashing;
+  bool    mIconsFlashing;
   TQColor mLabelForeground;
+  int     mIconOffsets[MAX_ICONS];
 
   // Internals.
   KProgress *mProgressBar;

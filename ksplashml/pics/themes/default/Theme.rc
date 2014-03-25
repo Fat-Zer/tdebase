@@ -15,9 +15,5 @@ Engine = Default
 # Should icons blink ala TDE, or not?
 Icons Flashing = true
 
-# Configurable Messages.  You may specify messages in as many
-# languages as you prefer.  Messages may be copied verbatim from
-# this file, if you wish to maintain the default settings.
-#Message1 = Please wait, starting TDE...
-#Message1[es] = Por favor escuchar, estarto TDE...
-#Message2 = Loading ...
+# Offset of each of the 7 icons, useful for adjusting flashing positon for different size icons
+# Icon Offsets = 0, 0, 0, 0, 0, 0, 0

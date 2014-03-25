@@ -25,11 +25,14 @@
 #include <tqpixmap.h>
 #include <tqwidget.h>
 #include <tqtimer.h>
+#include <tqvaluelist.h>
 
 #include "objkstheme.h"
 #include "themeengine.h"
 #include "themelegacy.h"
 #include "themelegacy.moc"
+
+const int MAX_STATES=8;
 
 DefaultConfig::DefaultConfig( TQWidget *parent, TDEConfig *config )
     :ThemeEngineConfig( parent, config )
@@ -59,6 +62,8 @@ ThemeDefault::ThemeDefault( TQWidget *parent, const char *name, const TQStringLi
 
   mActivePixmap = mInactivePixmap = 0L;
   mState = 0;
+  for (int i=0; i<MAX_ICONS; ++i)
+    mIconOffsets[i]=0;
 
   _readSettings();
   _initUi();
@@ -197,11 +202,11 @@ void ThemeDefault::_initUi()
 // Attempt to find overrides elsewhere?
 void ThemeDefault::_readSettings()
 {
-  if( !mTheme )
+  if (!mTheme)
     return;
 
   TDEConfig *cfg = mTheme->themeConfig();
-  if( !cfg )
+  if (!cfg)
     return;
 
   cfg->setGroup( TQString("KSplash Theme: %1").arg(mTheme->theme()) );
@@ -209,6 +214,14 @@ void ThemeDefault::_readSettings()
   mIconsFlashing = cfg->readBoolEntry( "Icons Flashing", true );
   TQColor df(Qt::white);
   mLabelForeground = cfg->readColorEntry( "Label Foreground", &df );
+  TQValueList<int> io_list=cfg->readIntListEntry("Icon Offsets");
+  if (io_list.size() == MAX_ICONS)
+  {
+    TQValueList<int>::iterator io_it;
+    int i=0;
+    for (io_it = io_list.begin(); io_it != io_list.end(); ++io_it, ++i)
+      mIconOffsets[i]=*io_it;
+  }
 }
 
 /*
@@ -219,8 +232,8 @@ void ThemeDefault::_readSettings()
  */
 void ThemeDefault::slotUpdateState()
 {
-  if( mState > 8 )
-    mState = 8;
+  if (mState >= MAX_STATES)
+    mState = MAX_STATES-1;
 
   if( mIconsFlashing )
   {
@@ -230,7 +243,7 @@ void ThemeDefault::slotUpdateState()
     mBarLabel->setPixmap(*mFlashPixmap2);
     mFlashTimer->stop();
 
-    if( mState < 8 )
+    if( mState < MAX_STATES )
       mFlashTimer->start(400);
   }
   else
@@ -252,8 +265,6 @@ TQPixmap ThemeDefault::updateBarPixmap( int state )
   TQPixmap x;
   if( !mActivePixmap ) return( x );
 #if BIDI
-
-
   if( TQApplication::reverseLayout() )
     {
       if ( state > 7 ) 
@@ -261,12 +272,10 @@ TQPixmap ThemeDefault::updateBarPixmap( int state )
     }
 #endif
 
-  offs = state * 58;
-  if (state == 3)
-    offs += 8;
-  else if (state == 6)
-    offs -= 8;
-
+  offs = state*58;
+  if (state>=0 && state<MAX_ICONS)
+    offs += mIconOffsets[state];
+  
   TQPixmap tmp(*mActivePixmap);
   TQPainter p(&tmp);
 #if BIDI
