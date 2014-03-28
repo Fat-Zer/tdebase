@@ -113,6 +113,7 @@ void KrashConfig :: readConfig()
   m_kcrashRegExp = debuggers.readEntry("TDECrashRegExp");
   m_kcrashRegExpSingle = debuggers.readEntry("TDECrashRegExpSingle");
   m_threadRegExp = debuggers.readEntry("ThreadRegExp");
+  m_infoSharedLibraryHeader = debuggers.readEntry("InfoSharedLibraryHeader");
 
   TDEConfig preset(TQString::fromLatin1("presets/%1rc").arg(configname),
                  true, false, "appdata");

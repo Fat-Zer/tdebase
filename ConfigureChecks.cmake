@@ -311,3 +311,15 @@ if( WITH_HAL AND (BUILD_KSMSERVER OR BUILD_KICKER OR BUILD_TDEIOSLAVES) )
   endif( )
 
 endif( )
+
+# check for libr
+if( WITH_ELFICON )
+  pkg_search_module( LIBR libr )
+  if( NOT LIBR_FOUND )
+      message(FATAL_ERROR "\nelficon support was requested, but libr was not found on your system" )
+  endif( NOT LIBR_FOUND )
+  if( NOT "${LIBR_VERSION}" STREQUAL "0.6.0" )
+      message(FATAL_ERROR "\nelficon support was requested, but the libr version on your system may not be compatible with TDE" )
+  endif( NOT "${LIBR_VERSION}" STREQUAL "0.6.0" )
+  set( HAVE_ELFICON 1 )
+endif( )

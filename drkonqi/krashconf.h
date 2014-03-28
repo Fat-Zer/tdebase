@@ -68,6 +68,7 @@ public:
   TQString kcrashRegExp() const { return m_kcrashRegExp; }
   TQString kcrashRegExpSingle() const { return m_kcrashRegExpSingle; }
   TQString threadRegExp() const { return m_threadRegExp; }
+  TQString infoSharedLibraryHeader() const { return m_infoSharedLibraryHeader; }
   bool showBacktrace() const { return m_showbacktrace; };
   bool showDebugger() const { return m_showdebugger && !m_debugger.isNull(); };
   bool showBugReport() const { return m_showbugreport; };
@@ -112,6 +113,7 @@ private:
   TQString m_kcrashRegExp;
   TQString m_kcrashRegExpSingle;
   TQString m_threadRegExp;
+  TQString m_infoSharedLibraryHeader;
 };
 
 #endif

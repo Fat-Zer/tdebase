@@ -88,6 +88,7 @@ option( WITH_SENSORS "Enable lm_sensors support (ksysguard)" ${WITH_ALL_OPTIONS}
 option( WITH_HAL "Enable HAL support" OFF )
 option( WITH_TDEHWLIB "Enable TDE hardware library support" ${WITH_ALL_OPTIONS} )
 option( WITH_UPOWER "Enable UPOWER support" ${WITH_ALL_OPTIONS} )
+option( WITH_ELFICON "Enable ELF embedded metadata support" ${WITH_ALL_OPTIONS} )
 option( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" ${WITH_ALL_OPTIONS} )
 
 ##### options comments ##########################

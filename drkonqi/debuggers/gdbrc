@@ -158,7 +158,7 @@ Comment[zu]=Umcoshi wamaphutha osekelwe umbhalo osuka kwi-GNU kwikhonsoli
 Exec=konsole -e gdb -nw %execname %pid
 ExecBatch=gdb -nw -n -batch -x %tempfile %execname %pid
 TryExec=gdb
-BacktraceCommand=echo \\n\necho ==== (gdb) bt ====\\n\nbt\necho \\n\\n\necho ==== (gdb) bt full ====\\n\nbt full\necho\\n\\n\necho ==== (gdb) info thread ====\\n\ninfo thread\necho\\n\\n\necho ==== (gdb) thread apply all bt ====\\n\nthread apply all bt
+BacktraceCommand=echo \\n\necho ==== (gdb) bt ====\\n\nbt\necho \\n\\n\necho ==== (gdb) bt full ====\\n\nbt full\necho\\n\\n\necho ==== (gdb) info thread ====\\n\ninfo thread\necho\\n\\n\necho ==== (gdb) thread apply all bt ====\\n\nthread apply all bt\necho\\n\\n\necho ==== (gdb) info sharedlibrary ====\\n\ninfo sharedlibrary
 RemoveFromBacktraceRegExp=\(no debugging symbols found\)\.\.\.\\n?
 InvalidStackFrameRegExp=\\n#[0-9]+\\s+0x[0-9A-Fa-f]+ \w* \?\?
 FrameRegExp=\\n#[0-9]+\\s+0x[0-9A-Fa-f]+
@@ -166,3 +166,4 @@ NeededInValidBacktraceRegExp=\\n#5
 TDECrashRegExp=\\n#0[ ]*0x[0123456789abcdefABCDEF]+.*<signal handler called>[ ]*\\n
 TDECrashRegExpSingle=\\n0x[0123456789abcdefABCDEF][^\\n]*\\n
 ThreadRegExp=\\nThread [0123456789]
+InfoSharedLibraryHeader= ==== (gdb) info sharedlibrary ====

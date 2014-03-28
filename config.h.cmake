@@ -33,6 +33,9 @@
 // libart
 #cmakedefine HAVE_LIBART 1
 
+// libr
+#cmakedefine HAVE_ELFICON 1
+
 // tdm, tdeioslave
 #cmakedefine HAVE_TERMIOS_H 1
 

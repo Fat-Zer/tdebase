@@ -25,6 +25,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
 
+#include "config.h"
+
 #include <tqfile.h>
 #include <tqregexp.h>
 
@@ -35,6 +37,16 @@
 #include <tdelocale.h>
 #include <tdetempfile.h>
 #include <tdehardwaredevices.h>
+
+#ifdef HAVE_ELFICON
+	// Elven things
+	extern "C" {
+		#include <libr.h>
+		#include <libr-icons.h>
+	}
+	#include <tqfileinfo.h>
+	#include <tdeio/tdelficon.h>
+#endif // HAVE_ELFICON
 
 #include "krashconf.h"
 #include "backtrace.h"
@@ -199,8 +211,16 @@ bool BackTrace::usefulBacktrace()
   TQString strBt = '\n' + m_strBt + '\n';
   // how many " ?? " in the bt ?
   int unknown = 0;
-  if( !m_krashconf->invalidStackFrameRegExp().isEmpty())
-    unknown = strBt.contains( TQRegExp( m_krashconf->invalidStackFrameRegExp()));
+  if( !m_krashconf->invalidStackFrameRegExp().isEmpty()) {
+    int isfPos = strBt.find( TQRegExp( m_krashconf->invalidStackFrameRegExp()));
+    int islPos = strBt.find( m_krashconf->infoSharedLibraryHeader());
+    if ((isfPos >=0) && (isfPos < islPos)) {
+      unknown = true;
+    }
+    else {
+      unknown = false;
+    }
+  }
   // how many stack frames in the bt ?
   int frames = 0;
   if( !m_krashconf->frameRegExp().isEmpty())
@@ -277,6 +297,64 @@ void BackTrace::processBacktrace()
 			m_strBt.remove( pos, len );
 		}
 	}
+
+#ifdef HAVE_ELFICON
+	m_strBt.append("\n==== (tdemetainfo) application version information ====\n");
+
+	// Extract embedded SCM metadata from the crashed application
+	TQString crashedExec = TDEStandardDirs::findExe(m_krashconf->execName());
+	if (crashedExec.startsWith("/")) {
+		libr_file *handle = NULL;
+		libr_access_t access = LIBR_READ;
+	
+		if((handle = libr_open(const_cast<char*>(crashedExec.ascii()), access)) == NULL) {
+			kdWarning() << "failed to open file" << crashedExec << endl;
+		}
+		else {
+			TQString scmModule = elf_get_resource(handle, ".metadata_scmmodule");
+			TQString scmRevision = elf_get_resource(handle, ".metadata_scmrevision");
+			if (scmRevision != "") {
+				m_strBt.append(TQString("%1:\t%2:%3\n").arg(TQFileInfo(crashedExec).fileName()).arg(scmModule).arg(scmRevision));
+			}
+		}
+
+		libr_close(handle);
+	}
+
+	m_strBt.append("\n==== (tdemetainfo) library version information ====\n");
+
+	// Extract embedded SCM metadata from shared libraries
+	int islPos = m_strBt.find( m_krashconf->infoSharedLibraryHeader());
+	TQString infoSharedLibraryText = m_strBt.mid(islPos);
+	TQTextStream infoSharedLibraryTextStream(&infoSharedLibraryText, IO_ReadOnly);
+	infoSharedLibraryTextStream.readLine();	// Skip info header x1
+	infoSharedLibraryTextStream.readLine();	// Skip info header x2
+	TQString infoSharedLibraryLine = infoSharedLibraryTextStream.readLine();
+	while (infoSharedLibraryLine != TQString::null) {
+		TQStringList libraryInfoList = TQStringList::split(" ", infoSharedLibraryLine, false);
+		if (libraryInfoList.count() > 0) {
+			TQString libraryName = libraryInfoList[libraryInfoList.count()-1];
+			if (libraryName.startsWith("/")) {
+				libr_file *handle = NULL;
+				libr_access_t access = LIBR_READ;
+			
+				if((handle = libr_open(const_cast<char*>(libraryName.ascii()), access)) == NULL) {
+					kdWarning() << "failed to open file" << libraryName << endl;
+				}
+				else {
+					TQString scmModule = elf_get_resource(handle, ".metadata_scmmodule");
+					TQString scmRevision = elf_get_resource(handle, ".metadata_scmrevision");
+					if (scmRevision != "") {
+						m_strBt.append(TQString("%1:\t%2:%3\n").arg(TQFileInfo(libraryName).fileName()).arg(scmModule).arg(scmRevision));
+					}
+				}
+
+				libr_close(handle);
+			}
+		}
+		infoSharedLibraryLine = infoSharedLibraryTextStream.readLine();
+	}
+#endif // HAVE_ELFICON
 
 	// Append potentially important hardware information
 	m_strBt.append("\n==== (tdehwlib) hardware information ====\n");
