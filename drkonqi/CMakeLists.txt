@@ -31,7 +31,9 @@ link_directories(
 tde_add_executable( drkonqi AUTOMOC
   SOURCES
     krashdcopinterface.skel main.cpp debugger.cpp
-    krashconf.cpp drbugreport.cpp backtrace.cpp toplevel.cpp
+    bugdescription.cpp bugdescriptiondialog.cpp
+    sha1.cc krashconf.cpp drbugreport.cpp
+    backtrace.cpp toplevel.cpp
   LINK tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

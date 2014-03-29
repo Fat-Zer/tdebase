@@ -33,8 +33,12 @@
 class TDEAboutData;
 class KrashConfig;
 class DrKBugReport;
+class BugDescription;
 
 #include <kdialogbase.h>
+
+#include <tdeio/job.h>
+#include <tdeio/netaccess.h>
 
 class Toplevel : public KDialogBase
 {
@@ -47,6 +51,7 @@ public:
 private:
   // helper methods
   TQString generateText() const;
+  int postCrashDataToServer(TQByteArray data);
 
 protected slots:
   void slotUser1();
@@ -58,9 +63,18 @@ protected slots:
   void slotBacktraceSomeError();
   void slotBacktraceDone(const TQString &);
 
+  void slotSendReportBacktraceSomeError();
+  void slotSendReportBacktraceDone(const TQString &);
+
+  void postCrashDataToServerData(TDEIO::Job *, const TQByteArray &);
+  void postCrashDataToServerResult(TDEIO::Job *job);
+  void postCrashDataToServerDataRedirection(TDEIO::Job * /*job*/, const KURL& url);
+
 private:
   KrashConfig *m_krashconf;
   DrKBugReport *m_bugreport;
+  BugDescription* m_bugdescription;
+  TQCString serverResponse;
 };
 
 #endif
