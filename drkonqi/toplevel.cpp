@@ -29,16 +29,18 @@
 #include <tqlabel.h>
 #include <tqhbox.h>
 
-#include "netwm.h"
-
 #include <tdelocale.h>
 #include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <kbugreport.h>
+#include <tdefiledialog.h>
 #include <tdemessagebox.h>
 #include <kprocess.h>
 #include <tdeapplication.h>
 #include <dcopclient.h>
+#include <tdetempfile.h>
+
+#include "netwm.h"
 
 #include "backtrace.h"
 #include "drbugreport.h"
@@ -192,6 +194,7 @@ void Toplevel :: slotNewDebuggingApp(const TQString& launchName)
 
 void Toplevel :: slotUser3()
 {
+	enableButton(User3, false);
 	TQApplication::setOverrideCursor ( tqwaitCursor );
 	
 	// generate the backtrace
@@ -239,6 +242,8 @@ void Toplevel::slotSendReportBacktraceSomeError()
 	
 	delete m_bugdescription;
 	m_bugdescription = 0;
+
+	enableButton(User3, true);
 }
 
 void Toplevel::slotSendReportBacktraceDone(const TQString &str)
@@ -258,6 +263,7 @@ void Toplevel::slotSendReportBacktraceDone(const TQString &str)
 	
 	if (i == KMessageBox::Cancel) {
 		TQApplication::restoreOverrideCursor();
+		enableButton(User3, true);
 
 		return;
 	}
@@ -277,6 +283,30 @@ void Toplevel::slotSendReportBacktraceDone(const TQString &str)
 		}
 	}
 
+	// Get automatic system information
+	TQString autoSystemInformation;
+	KBugReport* kbugreport = new KBugReport(0, true, m_krashconf->aboutData());
+	autoSystemInformation += "Application: ";
+	autoSystemInformation += m_krashconf->appName();
+	autoSystemInformation += "\n";
+	autoSystemInformation += "Signal: ";
+	autoSystemInformation += TQString("%1").arg(m_krashconf->signalNumber());
+	autoSystemInformation += "\n";
+	autoSystemInformation += "Compiler: ";
+	autoSystemInformation += kbugreport->compilerVersion();
+	autoSystemInformation += "\n";
+	autoSystemInformation += "Kernel: ";
+	autoSystemInformation += kbugreport->operatingSystem();
+	autoSystemInformation += "\n";
+	autoSystemInformation += "TDE Version: ";
+	autoSystemInformation += kbugreport->tdeVersion();
+	autoSystemInformation += "\n";
+	autoSystemInformation += "Timestamp: ";
+	autoSystemInformation += TQString("%1").arg(TQDateTime::currentDateTime().toTime_t());
+	autoSystemInformation += "\n";
+	delete kbugreport;
+	kbugreport = 0;
+
 	// Generate automatic crash description
 	TQString autoCrashDescription = m_krashconf->errorDescriptionText();
 	m_krashconf->expandString(autoCrashDescription, false);
@@ -285,6 +315,8 @@ void Toplevel::slotSendReportBacktraceDone(const TQString &str)
 	TQString backtraceSubmission = str;
 	backtraceSubmission.append("\n==== (tdebugreport) automatic crash description ====\n");
 	backtraceSubmission.append(TQString("%1\n").arg(autoCrashDescription));
+	backtraceSubmission.append("\n==== (tdebugreport) automatic system description ====\n");
+	backtraceSubmission.append(TQString("%1\n").arg(autoSystemInformation));
 	if (m_bugdescription->emailAddress().contains("@") && m_bugdescription->emailAddress().contains(".")) {
 		backtraceSubmission.append("\n==== (tdebugreport) reporting Email address ====\n");
 		backtraceSubmission.append(TQString("%1\n").arg(m_bugdescription->emailAddress()));
@@ -302,13 +334,13 @@ void Toplevel::slotSendReportBacktraceDone(const TQString &str)
 	backtraceSubmission.append("\n==== (tdebugreport) proof of work ====\n");
 	int proofOfWorkPos = backtraceSubmission.length();
 	backtraceSubmission.append(TQUuid::createUuid().toString());
-	TQCString backtraceSubmissionData(backtraceSubmission.ascii());
+	m_backtraceSubmissionData = TQCString(backtraceSubmission.ascii());
 
 	while ((hash[0] != 0) || ((hash[1] & 0xfc) != 0)) {	// First 14 bits of the SHA1 hash must be zero
 		TQCString proofOfWork(TQUuid::createUuid().toString().ascii());
-		memcpy(backtraceSubmissionData.data() + proofOfWorkPos, proofOfWork.data(), proofOfWork.size());
+		memcpy(m_backtraceSubmissionData.data() + proofOfWorkPos, proofOfWork.data(), proofOfWork.size());
 		sha.reset();
-		sha.process(backtraceSubmissionData, backtraceSubmissionData.length());
+		sha.process(m_backtraceSubmissionData.data(), m_backtraceSubmissionData.size());
 		memcpy(hash.data(), sha.hash(), hash.size());
 	}
 
@@ -324,6 +356,7 @@ void Toplevel::slotSendReportBacktraceDone(const TQString &str)
 		if (i == KMessageBox::Cancel) {
 			delete m_bugdescription;
 			m_bugdescription = 0;
+			enableButton(User3, true);
 
 			return;
 		}
@@ -331,20 +364,20 @@ void Toplevel::slotSendReportBacktraceDone(const TQString &str)
 		if (i == KMessageBox::Yes) {
 			BugDescription fullReport(0, true, NULL);
 			fullReport.fullReportViewMode(true);
-			fullReport.setText(TQString(backtraceSubmissionData.data()));
+			fullReport.setText(TQString(m_backtraceSubmissionData.data()));
 			fullReport.showMaximized();
 			fullReport.exec();
 		}
 	}
 
-	postCrashDataToServer(backtraceSubmissionData);
+	postCrashDataToServer(m_backtraceSubmissionData);
 
 	delete m_bugdescription;
 	m_bugdescription = 0;
 }
 
 int Toplevel::postCrashDataToServer(TQByteArray data) {
-	serverResponse = "";
+	m_serverResponse = "";
 	TQCString formDataBoundary = "-----------------------------------DrKonqiCrashReporterBoundary";
 
 	TQCString postData;
@@ -378,21 +411,21 @@ int Toplevel::postCrashDataToServer(TQByteArray data) {
 void Toplevel::postCrashDataToServerData(TDEIO::Job *, const TQByteArray &ba)
 {
 	uint offset = 0;
-	if (serverResponse.count() > 0) {
-		offset = serverResponse.count() - 1;
+	if (m_serverResponse.count() > 0) {
+		offset = m_serverResponse.count() - 1;
 	}
 	uint size = ba.count();
 
-	serverResponse.resize(offset + size + 1);
-	memcpy(serverResponse.data() + offset, ba.data(), size);
-	*(serverResponse.data() + offset + size) = 0;
+	m_serverResponse.resize(offset + size + 1);
+	memcpy(m_serverResponse.data() + offset, ba.data(), size);
+	*(m_serverResponse.data() + offset + size) = 0;
 }
 
 void Toplevel::postCrashDataToServerResult(TDEIO::Job *job)
 {
 	int err = job->error();
 	if (err == 0) {
-		TQString responseString(serverResponse);
+		TQString responseString(m_serverResponse);
 		if (responseString.startsWith("ACK\n")) {
 			responseString = responseString.mid(4);
 			KMessageBox::information
@@ -403,17 +436,75 @@ void Toplevel::postCrashDataToServerResult(TDEIO::Job *job)
 		}
 		else {
 			responseString = responseString.mid(4);
-			KMessageBox::error
-			(0,
-			i18n("<p>Your crash report failed to upload!</p><p>Please check your network settings and try again.</p><p>The server responded:<br>%1</p>").arg(responseString),
-			i18n("Upload failure"));
+// 			KMessageBox::error
+// 			(0,
+// 			i18n("<p>Your crash report failed to upload!</p><p>Please check your network settings and try again.</p><p>The server responded:<br>%1</p>").arg(responseString),
+// 			i18n("Upload failure"));
+
+			int i = KMessageBox::warningYesNoCancel
+				(0,
+				i18n("<p>Your crash report failed to upload!</p><p>Please check your network settings and try again.</p><p>The server responded:<br>%1</p>").arg(responseString),
+				i18n("Upload failure"),i18n("Save Report"),i18n("Retry Upload"));
+	
+			if (i == KMessageBox::No) {
+				postCrashDataToServer(m_backtraceSubmissionData);
+			}
+	
+			if (i == KMessageBox::Yes) {
+				saveOfflineCrashReport(m_backtraceSubmissionData);
+			}
 		}
 	}
 	else {
-		KMessageBox::error
-		(0,
-		i18n("<p>Your crash report failed to upload!</p><p>Please check your network settings and try again.</p>"),
-		i18n("Upload failure"));
+		int i = KMessageBox::warningYesNoCancel
+			(0,
+			i18n("<p>Your crash report failed to upload!</p><p>Please check your network settings and try again.</p>"),
+			i18n("Upload failure"),i18n("Save Report"),i18n("Retry Upload"));
+
+		if (i == KMessageBox::No) {
+			postCrashDataToServer(m_backtraceSubmissionData);
+		}
+
+		if (i == KMessageBox::Yes) {
+			saveOfflineCrashReport(m_backtraceSubmissionData);
+		}
+	}
+}
+
+int Toplevel::saveOfflineCrashReport(TQByteArray data)
+{
+	TQString defname = m_krashconf->execName() + TQString::fromLatin1( ".tdecrash" );
+	if( defname.contains( '/' ))
+		defname = defname.mid( defname.findRev( '/' ) + 1 );
+	TQString filename = KFileDialog::getSaveFileName(defname, TQString::null, this, i18n("Select Filename"));
+	if (filename.isEmpty()) {
+		enableButton(User3, true);
+		return 1;
+	}
+	else {
+		TQFile f(filename);
+		
+		if (f.exists()) {
+			if (KMessageBox::Cancel ==
+				KMessageBox::warningContinueCancel( 0,
+				i18n( "A file named \"%1\" already exists. "
+					"Are you sure you want to overwrite it?" ).arg( filename ),
+				i18n( "Overwrite File?" ),
+				i18n( "&Overwrite" ) ))
+				return 2;
+		}
+		
+		if (f.open(IO_WriteOnly)) {
+			f.writeBlock(data.data(), data.count());
+			f.close();
+			enableButton(User3, true);
+			return 0;
+		}
+		else {
+			KMessageBox::sorry(this, i18n("Cannot open file %1 for writing").arg(filename));
+			enableButton(User3, true);
+			return 3;
+		}
 	}
 }
 

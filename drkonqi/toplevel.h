@@ -52,6 +52,7 @@ private:
   // helper methods
   TQString generateText() const;
   int postCrashDataToServer(TQByteArray data);
+  int saveOfflineCrashReport(TQByteArray data);
 
 protected slots:
   void slotUser1();
@@ -74,7 +75,8 @@ private:
   KrashConfig *m_krashconf;
   DrKBugReport *m_bugreport;
   BugDescription* m_bugdescription;
-  TQCString serverResponse;
+  TQCString m_serverResponse;
+  TQCString m_backtraceSubmissionData;
 };
 
 #endif
