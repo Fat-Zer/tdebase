@@ -239,13 +239,13 @@ Bool            winTypeShadow[NUM_WINTYPES];
 Bool            winTypeFade[NUM_WINTYPES];
 
 /* opacity property name; sometime soon I'll write up an EWMH spec for it */
-#define OPACITY_PROP	"_KDE_WM_WINDOW_OPACITY"
-#define SHADOW_PROP	"_KDE_WM_WINDOW_SHADOW"
-#define SHADE_PROP	"_KDE_WM_WINDOW_SHADE"
-#define SHAPABLE_PROP	"_KDE_WM_WINDOW_SHAPABLE"
-#define DECOHASH_PROP	"_KDE_WM_WINDOW_DECOHASH"
-#define DIM_PROP	"_KDE_WM_WINDOW_DIM"
-#define DESKCHANGE_PROP "_KDE_WM_DESKTOP_CHANGE"
+#define OPACITY_PROP	"_TDE_WM_WINDOW_OPACITY"
+#define SHADOW_PROP	"_TDE_WM_WINDOW_SHADOW"
+#define SHADE_PROP	"_TDE_WM_WINDOW_SHADE"
+#define SHAPABLE_PROP	"_TDE_WM_WINDOW_SHAPABLE"
+#define DECOHASH_PROP	"_TDE_WM_WINDOW_DECOHASH"
+#define DIM_PROP	"_TDE_WM_WINDOW_DIM"
+#define DESKCHANGE_PROP "_TDE_WM_DESKTOP_CHANGE"
 
 #define TRANSLUCENT	0xe0000000
 #define OPAQUE		0xffffffff
@@ -3546,8 +3546,8 @@ main (int argc, char **argv)
         dimAtom = XInternAtom (dpy, DIM_PROP, False);
         deskChangeAtom = XInternAtom (dpy, DESKCHANGE_PROP, False);
 	winTypeAtom = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE", False);
-	winTDETTDAtom = XInternAtom (dpy, "_KDE_TRANSPARENT_TO_DESKTOP", False);
-	winTDETTBAtom = XInternAtom (dpy, "_KDE_TRANSPARENT_TO_BLACK", False);
+	winTDETTDAtom = XInternAtom (dpy, "_TDE_TRANSPARENT_TO_DESKTOP", False);
+	winTDETTBAtom = XInternAtom (dpy, "_TDE_TRANSPARENT_TO_BLACK", False);
 	winType[WINTYPE_DESKTOP] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_DESKTOP", False);
 	winType[WINTYPE_DOCK] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_DOCK", False);
 	winType[WINTYPE_TOOLBAR] = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_TOOLBAR", False);

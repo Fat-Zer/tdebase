@@ -68,19 +68,19 @@ Atoms::Atoms()
     names[n++] = (char*) "_NET_WM_TAKE_ACTIVITY";
     
     atoms[n] = &net_wm_window_opacity;
-    names[n++] = (char*) "_KDE_WM_WINDOW_OPACITY";
+    names[n++] = (char*) "_TDE_WM_WINDOW_OPACITY";
 
     atoms[n] = &net_wm_window_shadow;
-    names[n++] = (char*) "_KDE_WM_WINDOW_SHADOW";
+    names[n++] = (char*) "_TDE_WM_WINDOW_SHADOW";
 
     atoms[n] = &net_wm_window_shade;
-    names[n++] = (char*) "_KDE_WM_WINDOW_SHADE";
+    names[n++] = (char*) "_TDE_WM_WINDOW_SHADE";
     
     atoms[n] = &net_wm_window_shapable;
-    names[n++] = (char*) "_KDE_WM_WINDOW_SHAPABLE";
+    names[n++] = (char*) "_TDE_WM_WINDOW_SHAPABLE";
     
     atoms[n] = &net_wm_window_decohash;
-    names[n++] = (char*) "_KDE_WM_WINDOW_DECOHASH";
+    names[n++] = (char*) "_TDE_WM_WINDOW_DECOHASH";
     
     atoms[n] = &net_wm_system_modal_notification;
     names[n++] = (char*) "_KDE_WM_MODAL_SYS_NOTIFICATION";

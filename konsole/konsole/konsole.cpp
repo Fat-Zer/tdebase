@@ -371,7 +371,7 @@ Konsole::Konsole(const char* name, int histon, bool menubaron, bool tabbaron, bo
 
   // Signal that we want to be transparent to the desktop, not to windows behind us...
   Atom kde_wm_transparent_to_desktop;
-  kde_wm_transparent_to_desktop = XInternAtom(tqt_xdisplay(), "_KDE_TRANSPARENT_TO_DESKTOP", False);
+  kde_wm_transparent_to_desktop = XInternAtom(tqt_xdisplay(), "_TDE_TRANSPARENT_TO_DESKTOP", False);
   XChangeProperty(tqt_xdisplay(), winId(), kde_wm_transparent_to_desktop, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
 }
 

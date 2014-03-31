@@ -230,8 +230,8 @@ LockProcess::LockProcess()
 
     // Set up atoms
     kde_wm_system_modal_notification = XInternAtom(tqt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
-    kde_wm_transparent_to_desktop = XInternAtom(tqt_xdisplay(), "_KDE_TRANSPARENT_TO_DESKTOP", False);
-    kde_wm_transparent_to_black = XInternAtom(tqt_xdisplay(), "_KDE_TRANSPARENT_TO_BLACK", False);
+    kde_wm_transparent_to_desktop = XInternAtom(tqt_xdisplay(), "_TDE_TRANSPARENT_TO_DESKTOP", False);
+    kde_wm_transparent_to_black = XInternAtom(tqt_xdisplay(), "_TDE_TRANSPARENT_TO_BLACK", False);
 
     kapp->installX11EventFilter(this);
 
