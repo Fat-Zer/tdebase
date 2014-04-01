@@ -3,6 +3,9 @@
 #  (C) 2010-2012 Serghei Amelian
 #  serghei (DOT) amelian (AT) gmail.com
 #
+#  (C) 2014 Timothy Pearson
+#  kb9vqf (AT) pearsoncomputing (DOT) net
+#
 #  Improvements and feedback are welcome
 #
 #################################################
@@ -70,6 +73,7 @@ option( WITH_XRANDR "Enable xrandr support" ${WITH_ALL_OPTIONS} )
 option( WITH_XRENDER "Enable xrender support" ${WITH_ALL_OPTIONS} )
 option( WITH_XDAMAGE "Enable xdamage support" ${WITH_ALL_OPTIONS} )
 option( WITH_XEXT "Enable xext support" ${WITH_ALL_OPTIONS} )
+option( WITH_LIBCONFIG "Enable libconfig support" ${WITH_ALL_OPTIONS} )
 option( WITH_XTEST "Enable xtest support" ${WITH_ALL_OPTIONS} )
 option( WITH_OPENGL "Enable openGL support" ${WITH_ALL_OPTIONS} )
 option( WITH_XSCREENSAVER "Enable xscreensaver support" ${WITH_ALL_OPTIONS} )

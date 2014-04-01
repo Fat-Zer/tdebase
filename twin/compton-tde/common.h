@@ -12,6 +12,8 @@
 #ifndef COMPTON_COMMON_H
 #define COMPTON_COMMON_H
 
+#include "config.h"
+
 // === Options ===
 
 // Debug options, enable them using -D in CFLAGS
@@ -65,6 +67,9 @@
 // #define USE_ENV_HOME 1
 #define WRITE_PID_FILE 1
 #define _TDE_COMP_MGR_VERSION_ 3.00
+#if defined(HAVE_LIBCONFIG_OLD_API)
+#define CONFIG_LIBCONFIG_LEGACY 1
+#endif
 
 #if !defined(CONFIG_C2) && defined(DEBUG_C2)
 #error Cannot enable c2 debugging without c2 support.

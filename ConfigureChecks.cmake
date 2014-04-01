@@ -3,6 +3,9 @@
 #  (C) 2010-2012 Serghei Amelian
 #  serghei (DOT) amelian (AT) gmail.com
 #
+#  (C) 2014 Timothy Pearson
+#  kb9vqf (AT) pearsoncomputing (DOT) net
+#
 #  Improvements and feedback are welcome
 #
 #  This file is released under GPL >= 2
@@ -129,6 +132,20 @@ if( WITH_XEXT )
     set( HAVE_XEXT 1 )
   else( XEXT_FOUND )
     tde_message_fatal( "xext is requested, but was not found on your system" )
+  endif( )
+endif( )
+
+
+# libconfig (twin/compton-tde)
+if( WITH_LIBCONFIG )
+  pkg_search_module( LIBCONFIG libconfig )
+  if( LIBCONFIG_FOUND )
+    set( HAVE_LIBCONFIG 1 )
+    if( LIBCONFIG_VERSION VERSION_LESS 1.5.0 )
+      set( HAVE_LIBCONFIG_OLD_API 1 )
+    endif( )
+  else( LIBCONFIG_FOUND )
+    tde_message_fatal( "libconfig is requested, but was not found on your system" )
   endif( )
 endif( )
 

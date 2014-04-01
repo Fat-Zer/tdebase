@@ -36,6 +36,10 @@
 // libr
 #cmakedefine HAVE_ELFICON 1
 
+// libconfig
+#cmakedefine HAVE_LIBCONFIG 1
+#cmakedefine HAVE_LIBCONFIG_OLD_API 1
+
 // tdm, tdeioslave
 #cmakedefine HAVE_TERMIOS_H 1
 

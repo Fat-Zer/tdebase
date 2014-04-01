@@ -13,7 +13,7 @@
 if( NOT WITH_XRENDER )
   tde_message_fatal( "xrender support is needed to build compton-tde.\n Pass -DWITH_XRENDER=ON to cmake arguments." )
 elseif( NOT WITH_XRANDR )
-  tde_message_fatal( "xrandr support is needed to build compton-tde.\n Pass -DWITH_XFIXES=ON to cmake arguments." )
+  tde_message_fatal( "xrandr support is needed to build compton-tde.\n Pass -DWITH_XRANDR=ON to cmake arguments." )
 elseif( NOT WITH_XFIXES )
   tde_message_fatal( "xfixes support is needed to build compton-tde.\n Pass -DWITH_XFIXES=ON to cmake arguments." )
 elseif( NOT WITH_XDAMAGE )
@@ -21,11 +21,14 @@ elseif( NOT WITH_XDAMAGE )
 elseif( NOT WITH_XEXT )
   tde_message_fatal( "xext support is needed to build compton-tde.\n Pass -DWITH_XEXT=ON to cmake arguments." )
 elseif( NOT WITH_XINERAMA )
-  tde_message_fatal( "xinerama support is needed to build compton-tde.\n Pass -DWITH_XEXT=ON to cmake arguments." )
+  tde_message_fatal( "xinerama support is needed to build compton-tde.\n Pass -DWITH_XINERAMA=ON to cmake arguments." )
+elseif( NOT WITH_LIBCONFIG )
+  tde_message_fatal( "libconfig support is needed to build compton-tde.\n Pass -DWITH_LIBCONFIG=ON to cmake arguments." )
 endif( )
 
 
 include_directories(
+  ${CMAKE_BINARY_DIR}
   ${TDE_INCLUDE_DIR}
   ${TQT_INCLUDE_DIRS}
 )
@@ -68,6 +71,6 @@ endif ()
 
 tde_add_executable( compton-tde
   SOURCES c2.c compton.c opengl.c
-  LINK m GL config Xinerama ${XRENDER_LIBRARIES} ${XRANDR_LIBRARIES} ${XFIXES_LIBRARIES} ${XDAMAGE_LIBRARIES} ${XEXT_LIBRARIES} ${XCOMPOSITE_LIBRARIES}
+  LINK m GL Xinerama ${LIBCONFIG_LIBRARIES} ${XRENDER_LIBRARIES} ${XRANDR_LIBRARIES} ${XFIXES_LIBRARIES} ${XDAMAGE_LIBRARIES} ${XEXT_LIBRARIES} ${XCOMPOSITE_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )
