@@ -17,6 +17,9 @@
 #include <locale.h>
 #include <signal.h>
 
+#include <sys/types.h>
+#include <pwd.h>
+
 #ifdef CONFIG_VSYNC_DRM
 #include <fcntl.h>
 // We references some definitions in drm.h, which could also be found in
@@ -753,6 +756,9 @@ unmap_win(session_t *ps, win *w);
 
 static opacity_t
 wid_get_opacity_prop(session_t *ps, Window wid, opacity_t def);
+
+static bool
+init_filters(session_t *ps);
 
 /**
  * Reread opacity property of a window.

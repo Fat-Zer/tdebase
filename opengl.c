@@ -4,6 +4,7 @@
  * Based on `xcompmgr` - Copyright (c) 2003, Keith Packard
  *
  * Copyright (c) 2011-2013, Christopher Jeffrey
+ * Copyright (c) 2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
  * See LICENSE for more information.
  *
  */
@@ -1378,7 +1379,7 @@ glx_render(session_t *ps, const glx_texture_t *ptex,
       glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_ALPHA, GL_REPLACE);
       glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_ALPHA, GL_TEXTURE);
       glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA);
-   
+
       // Texture stage 1
       glActiveTexture(GL_TEXTURE1);
       glEnable(ptex->target);
@@ -1502,6 +1503,41 @@ glx_render(session_t *ps, const glx_texture_t *ptex,
     glDisable(ptex->target);
     glActiveTexture(GL_TEXTURE0);
   }
+
+  glx_check_err(ps);
+
+  return true;
+}
+
+/**
+ * @brief Render a region with a specified color.
+ */
+bool
+glx_render_specified_color(session_t *ps, int color, int dx, int dy, int width, int height, int z,
+    XserverRegion reg_tgt, const reg_data_t *pcache_reg) {
+
+  glColor4f(color,
+      color,
+      color,
+      1.0f
+      );
+
+  {
+    P_PAINTREG_START();
+    {
+      GLint rdx = crect.x;
+      GLint rdy = ps->root_height - crect.y;
+      GLint rdxe = rdx + crect.width;
+      GLint rdye = rdy - crect.height;
+
+      glVertex3i(rdx, rdy, z);
+      glVertex3i(rdxe, rdy, z);
+      glVertex3i(rdxe, rdye, z);
+      glVertex3i(rdx, rdye, z);
+    }
+    P_PAINTREG_END();
+  }
+  glColor4f(0.0f, 0.0f, 0.0f, 0.0f);
 
   glx_check_err(ps);
 

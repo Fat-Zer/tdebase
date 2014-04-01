@@ -4,6 +4,7 @@
  * Based on `xcompmgr` - Copyright (c) 2003, Keith Packard
  *
  * Copyright (c) 2011-2013, Christopher Jeffrey
+ * Copyright (c) 2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
  * See LICENSE for more information.
  *
  */
@@ -93,6 +94,140 @@ const static char *background_props_str[] = {
 /// <code>error()</code> and <code>reset_enable()</code>, which could not
 /// have a pointer to current session passed in.
 session_t *ps_g = NULL;
+
+// === Execution control ===
+
+struct sigaction usr_action;
+sigset_t block_mask;
+
+int my_exit_code = 3;
+
+void write_pid_file(pid_t pid)
+{
+#ifdef WRITE_PID_FILE
+#ifdef USE_ENV_HOME
+    const char *home = getenv("HOME");
+#else
+    const char *home;
+    struct passwd *p;
+    p = getpwuid(getuid());
+    if (p)
+        home = p->pw_dir;
+    else
+        home = getenv("HOME");
+#endif
+    const char *filename;
+    const char *configfile = "/.compton-tde.pid";
+    int n = strlen(home)+strlen(configfile)+1;
+    filename = (char*)malloc(n*sizeof(char));
+    memset(filename,0,n);
+    strcat(filename, home);
+    strcat(filename, configfile);
+
+    printf("writing '%s' as pidfile\n\n", filename);
+
+    /* now that we did all that by way of introduction...write the file! */
+    FILE *pFile;
+    char buffer[255];
+    sprintf(buffer, "%d", pid);
+    pFile = fopen(filename, "w");
+    if (pFile) {
+        fwrite(buffer,1,strlen(buffer), pFile);
+        fclose(pFile);
+    }
+
+    free(filename);
+    filename = NULL;
+#endif
+}
+
+void delete_pid_file()
+{
+#ifdef WRITE_PID_FILE
+#ifdef USE_ENV_HOME
+    const char *home = getenv("HOME");
+#else
+    const char *home;
+    struct passwd *p;
+    p = getpwuid(getuid());
+    if (p)
+        home = p->pw_dir;
+    else
+        home = getenv("HOME");
+#endif
+    const char *filename;
+    const char *configfile = "/.compton-tde.pid";
+    int n = strlen(home)+strlen(configfile)+1;
+    filename = (char*)malloc(n*sizeof(char));
+    memset(filename,0,n);
+    strcat(filename, home);
+    strcat(filename, configfile);
+
+    printf("deleting '%s' as pidfile\n\n", filename);
+
+    /* now that we did all that by way of introduction...delete the file! */
+    unlink(filename);
+
+    free(filename);
+    filename = NULL;
+#endif
+
+#if WORK_AROUND_FGLRX
+    if ((my_exit_code == 3) && (restartOnSigterm)) {
+        printf("compton-tde lost connection to X server, restarting...\n"); fflush(stdout);
+        sleep(1);
+        char me[2048];
+        int chars = readlink("/proc/self/exe", me, sizeof(me));
+        me[chars] = 0;
+        me[2047] = 0;
+	execl(me, basename(me), (char*)NULL);
+    }
+#endif
+}
+
+void handle_siguser (int sig)
+{
+    int uidnum;
+    if (sig == SIGTERM) {
+        my_exit_code=0;
+        delete_pid_file();
+        exit(0);
+    }
+    if (sig == SIGUSR1) {
+        char newuid[1024];
+#ifndef NDEBUG
+        printf("Enter the new user ID:\n"); fflush(stdout);
+#endif
+        char *eof;
+        newuid[0] = '\0';
+        newuid[sizeof(newuid)-1] = '\0';
+        eof = fgets(newuid, sizeof(newuid), stdin);
+        uidnum = atoi(newuid);
+#ifndef NDEBUG
+        printf("Setting compton-tde process uid to %d...\n", uidnum); fflush(stdout);
+#endif
+
+        my_exit_code=4;
+        delete_pid_file();
+        my_exit_code=3;
+        setuid(uidnum);
+        write_pid_file(getpid());
+
+    }
+    else {
+        uidnum = getuid();
+    }
+    if ((sig == SIGUSR1) || (sig == SIGUSR2)) {
+        get_cfg(ps_g, 0, 0, false); /* reload the configuration file */
+
+        /* set background/shadow picture using the new settings */
+        ps_g->cshadow_picture = solid_picture(ps_g, true, 1, ps_g->o.shadow_red, ps_g->o.shadow_green, ps_g->o.shadow_blue);
+
+        /* regenerate shadows using the new settings */
+        init_alpha_picts(ps_g);
+        init_filters(ps_g);
+    }
+}
 
 // === Fading ===
 
@@ -799,6 +934,12 @@ recheck_focus(session_t *ps) {
 
   return NULL;
 }
+
+static Bool
+determine_window_transparent_to_black(const session_t *ps, Window w);
+
+static Bool
+determine_window_transparent_to_desktop(const session_t *ps, Window w);
 
 static bool
 get_root_tile(session_t *ps) {
@@ -1890,6 +2031,45 @@ paint_all(session_t *ps, XserverRegion region, XserverRegion region_real, win *t
       reg_data_t cache_reg = REG_DATA_INIT;
       if (!is_region_empty(ps, reg_paint, &cache_reg)) {
         set_tgt_clip(ps, reg_paint, &cache_reg);
+
+        /* Here we redraw the background of the transparent window if we want
+        to do anything special (i.e. anything other than showing the
+        windows and desktop prestacked behind of the window).
+        For example, if you want to blur the background or show another
+        background pixmap entirely here is the place to do it; simply
+        draw the new background onto ps->tgt_buffer.pict before continuing! */
+        switch (ps->o.backend) {
+          case BKEND_XRENDER:
+          case BKEND_XR_GLX_HYBRID:
+            {
+              if (w->show_root_tile) {
+                XRenderComposite (ps->dpy, PictOpSrc, ps->root_tile_paint.pict, None, ps->tgt_buffer.pict,
+                    w->a.x, w->a.y, w->a.x, w->a.y,
+                    w->a.x, w->a.y, w->widthb, w->heightb);
+              }
+              else if (w->show_black_background) {
+                XRenderComposite (ps->dpy, PictOpSrc, ps->black_picture, None, ps->tgt_buffer.pict,
+                    w->a.x, w->a.y, w->a.x, w->a.y,
+                    w->a.x, w->a.y, w->widthb, w->heightb);
+              }
+              break;
+            }
+#ifdef CONFIG_VSYNC_OPENGL
+          case BKEND_GLX:
+            {
+              if (w->show_root_tile) {
+                glx_render(ps, ps->root_tile_paint.ptex, w->a.x, w->a.y, w->a.x, w->a.y, w->widthb, w->heightb,
+                    ps->glx_z, 1.0, false, reg_paint, &cache_reg);
+              }
+              else if (w->show_black_background) {
+                glx_render_specified_color(ps, 0, w->a.x, w->a.y, w->widthb, w->heightb,
+                    ps->glx_z, reg_paint, &cache_reg);
+              }
+              break;
+            }
+#endif
+        }
+
         // Blur window background
         if (w->blur_background && (WMODE_SOLID != w->mode
               || (ps->o.blur_background_frame && w->frame_opacity))) {
@@ -2131,6 +2311,11 @@ map_win(session_t *ps, Window id) {
   // Make sure the XSelectInput() requests are sent
   XFlush(ps->dpy);
 
+  /* This needs to be here since we don't get PropertyNotify when unmapped */
+  w->opacity = wid_get_opacity_prop(ps, w->id, OPAQUE);
+  w->show_root_tile = determine_window_transparent_to_desktop(ps, id);
+  w->show_black_background = determine_window_transparent_to_black(ps, id);
+
   // Update window mode here to check for ARGB windows
   win_determine_mode(ps, w);
 
@@ -2165,7 +2350,7 @@ map_win(session_t *ps, Window id) {
   win_update_opacity_prop(ps, w);
   w->flags |= WFLAG_OPCT_CHANGE;
 
-  // Check for _COMPTON_SHADOW
+  // Check for _TDE_WM_WINDOW_SHADOW
   if (ps->o.respect_prop_shadow)
     win_update_prop_shadow_raw(ps, w);
 
@@ -2283,6 +2468,125 @@ get_opacity_percent(win *w) {
   return ((double) w->opacity) / OPAQUE;
 }
 
+static Bool
+get_window_transparent_to_desktop(const session_t *ps, Window w)
+{
+	Atom actual;
+	int format;
+	unsigned long n, left;
+
+	unsigned char *data;
+	int result = XGetWindowProperty (ps->dpy, w, ps->atom_win_type_tde_transparent_to_desktop, 0L, 1L, False,
+			XA_ATOM, &actual, &format,
+			&n, &left, &data);
+
+	if (result == Success && data != None && format == 32 )
+	{
+		Atom a;
+		a = *(long*)data;
+		XFree ( (void *) data);
+		return True;
+	}
+	return False;
+}
+
+static Bool
+get_window_transparent_to_black(const session_t *ps, Window w)
+{
+	Atom actual;
+	int format;
+	unsigned long n, left;
+
+	unsigned char *data;
+	int result = XGetWindowProperty (ps->dpy, w, ps->atom_win_type_tde_transparent_to_black, 0L, 1L, False,
+			XA_ATOM, &actual, &format,
+			&n, &left, &data);
+
+	if (result == Success && data != None && format == 32 )
+	{
+		Atom a;
+		a = *(long*)data;
+		XFree ( (void *) data);
+		return True;
+	}
+	return False;
+}
+
+static Bool
+determine_window_transparent_to_desktop (const session_t *ps, Window w)
+{
+	Window       root_return, parent_return;
+	Window      *children = NULL;
+	unsigned int nchildren, i;
+	Bool         type;
+
+	type = get_window_transparent_to_desktop (ps, w);
+	if (type == True) {
+		return True;
+	}
+
+	if (!XQueryTree (ps->dpy, w, &root_return, &parent_return, &children,
+				&nchildren))
+	{
+		/* XQueryTree failed. */
+		if (children)
+			XFree ((void *)children);
+		return False;
+	}
+
+	for (i = 0;i < nchildren;i++)
+	{
+		type = determine_window_transparent_to_desktop (ps, children[i]);
+		if (type == True)
+			return True;
+	}
+
+	if (children)
+		XFree ((void *)children);
+
+	return False;
+}
+
+static Bool
+determine_window_transparent_to_black (const session_t *ps, Window w)
+{
+	Window       root_return, parent_return;
+	Window      *children = NULL;
+	unsigned int nchildren, i;
+	Bool         type;
+	Bool         ret = False;
+
+	type = get_window_transparent_to_black (ps, w);
+	if (type == True) {
+		return True;
+	}
+
+	if (!XQueryTree (ps->dpy, w, &root_return, &parent_return, &children,
+				&nchildren))
+	{
+		/* XQueryTree failed. */
+		if (children) {
+			XFree ((void *)children);
+		}
+		return False;
+	}
+
+	for (i = 0;i < nchildren;i++)
+	{
+		type = determine_window_transparent_to_black (ps, children[i]);
+		if (type == True) {
+			ret = True;
+			break;
+		}
+	}
+
+	if (children) {
+		XFree ((void *)children);
+	}
+
+	return ret;
+}
+
 static void
 win_determine_mode(session_t *ps, win *w) {
   winmode_t mode = WMODE_SOLID;
@@ -2375,7 +2679,8 @@ win_determine_fade(session_t *ps, win *w) {
   if (UNSET != w->fade_force)
     w->fade = w->fade_force;
   else if ((ps->o.no_fading_openclose && w->in_openclose)
-      || win_match(ps, w, ps->o.fade_blacklist, &w->cache_fblst))
+      || win_match(ps, w, ps->o.fade_blacklist, &w->cache_fblst)
+      || (ps->o.no_fading_opacitychange && (!w->in_openclose)))
     w->fade = false;
   else
     w->fade = ps->o.wintype_fade[w->window_type];
@@ -2416,7 +2721,7 @@ win_update_shape(session_t *ps, win *w) {
 }
 
 /**
- * Reread _COMPTON_SHADOW property from a window.
+ * Reread _TDE_WM_WINDOW_SHADOW property from a window.
  *
  * The property must be set on the outermost window, usually the WM frame.
  */
@@ -2436,7 +2741,7 @@ win_update_prop_shadow_raw(session_t *ps, win *w) {
 }
 
 /**
- * Reread _COMPTON_SHADOW property from a window and update related
+ * Reread _TDE_WM_WINDOW_SHADOW property from a window and update related
  * things.
  */
 static void
@@ -2497,7 +2802,7 @@ win_determine_invert_color(session_t *ps, win *w) {
 
   if (UNSET != w->invert_color_force)
     w->invert_color = w->invert_color_force;
-  else 
+  else
     w->invert_color = win_match(ps, w, ps->o.invert_color_list, &w->cache_ivclst);
 
   if (w->invert_color != invert_color_old)
@@ -2621,8 +2926,8 @@ calc_win_size(session_t *ps, win *w) {
  */
 static void
 calc_shadow_geometry(session_t *ps, win *w) {
-  w->shadow_dx = ps->o.shadow_offset_x;
-  w->shadow_dy = ps->o.shadow_offset_y;
+  w->shadow_dx = ps->o.shadow_offset_x * w->shadow_size;
+  w->shadow_dy = ps->o.shadow_offset_y * w->shadow_size;
   w->shadow_width = w->widthb + ps->gaussian_map->size;
   w->shadow_height = w->heightb + ps->gaussian_map->size;
 }
@@ -2828,6 +3133,7 @@ add_win(session_t *ps, Window id, Window prev) {
     .shadow_dy = 0,
     .shadow_width = 0,
     .shadow_height = 0,
+    .shadow_size = 100,
     .shadow_paint = PAINT_INIT,
     .prop_shadow = -1,
 
@@ -2837,6 +3143,9 @@ add_win(session_t *ps, Window id, Window prev) {
     .invert_color_force = UNSET,
 
     .blur_background = false,
+
+    .show_black_background = false,
+    .show_root_tile = false,
   };
 
   // Reject overlay window and already added windows
@@ -3772,6 +4081,19 @@ opts_set_no_fading_openclose(session_t *ps, bool newval) {
   }
 }
 
+/**
+ * Set no_fading_opacitychange option.
+ */
+void
+opts_set_no_fading_opacitychange(session_t *ps, bool newval) {
+  if (newval != ps->o.no_fading_opacitychange) {
+    ps->o.no_fading_opacitychange = newval;
+    for (win *w = ps->list; w; w = w->next)
+      win_determine_fade(ps, w);
+    ps->ev_received = true;
+  }
+}
+
 //!@}
 #endif
 
@@ -4160,7 +4482,7 @@ ev_property_notify(session_t *ps, XPropertyEvent *ev) {
     }
   }
 
-  // If _COMPTON_SHADOW changes
+  // If _TDE_WM_WINDOW_SHADOW changes
   if (ps->o.respect_prop_shadow && ps->atom_compton_shadow == ev->atom) {
     win *w = find_win(ps, ev->window);
     if (w)
@@ -4401,6 +4723,8 @@ usage(int ret) {
     "  Daemonize process.\n"
     "-S\n"
     "  Enable synchronous operation (for debugging).\n"
+    "-v\n"
+    "  Print version Number and exit\\n"
     "--config path\n"
     "  Look for configuration file at the path.\n"
     "--write-pid-path path\n"
@@ -4427,6 +4751,8 @@ usage(int ret) {
     "  Mark windows that have no WM frame as active.\n"
     "--no-fading-openclose\n"
     "  Do not fade on window open/close.\n"
+    "--no-fading-opacitychange\n"
+    "  Do not fade on window opacity change.\n"
     "--shadow-ignore-shaped\n"
     "  Do not paint shadows on shaped windows.\n"
     "--detect-rounded-corners\n"
@@ -4486,7 +4812,7 @@ usage(int ret) {
     "  Use _NET_WM_ACTIVE_WINDOW on the root window to determine which\n"
     "  window is focused instead of using FocusIn/Out events.\n"
     "--respect-prop-shadow\n"
-    "  Respect _COMPTON_SHADOW. This a prototype-level feature, which\n"
+    "  Respect _TDE_WM_WINDOW_SHADOW. This a prototype-level feature, which\n"
     "  you must not rely on.\n"
     "--unredir-if-possible\n"
     "  Unredirect all windows if a full-screen opaque window is\n"
@@ -4685,10 +5011,18 @@ register_cm(session_t *ps) {
       s /= 10;
     }
 
+    Window w;
+    Atom a;
+    static char net_wm_cm[] = "_NET_WM_CM_Sxx";
+
+    snprintf (net_wm_cm, sizeof (net_wm_cm), "_NET_WM_CM_S%d", ps->scr);
+    a = XInternAtom (ps->dpy, net_wm_cm, False);
+
     char *buf = malloc(len);
     snprintf(buf, len, REGISTER_PROP "%d", ps->scr);
     buf[len - 1] = '\0';
-    XSetSelectionOwner(ps->dpy, get_atom(ps, buf), ps->reg_win, 0);
+    // setting this causes compton to abort on TDE login
+    // XSetSelectionOwner(ps->dpy, get_atom(ps, buf), ps->reg_win, 0);
     free(buf);
   }
 
@@ -4828,7 +5162,7 @@ parse_matrix(session_t *ps, const char *src, const char **endptr) {
   int wid = 0, hei = 0;
   const char *pc = NULL;
   XFixed *matrix = NULL;
-  
+
   // Get matrix width and height
   {
     double val = 0.0;
@@ -5090,8 +5424,8 @@ parse_rule_opacity(session_t *ps, const char *src) {
  */
 static FILE *
 open_config_file(char *cpath, char **ppath) {
-  const static char *config_filename = "/compton.conf";
-  const static char *config_filename_legacy = "/.compton.conf";
+  const static char *config_filename = "/compton-tde.conf";
+  const static char *config_filename_legacy = "/.compton-tde.conf";
   const static char *config_home_suffix = "/.config";
   const static char *config_system_dir = "/etc/xdg";
 
@@ -5307,6 +5641,8 @@ parse_config(session_t *ps, struct options_tmp *pcfgtmp) {
     wintype_arr_enable(ps->o.wintype_fade);
   // --no-fading-open-close
   lcfg_lookup_bool(&cfg, "no-fading-openclose", &ps->o.no_fading_openclose);
+  // --no-fading-opacitychange
+  lcfg_lookup_bool(&cfg, "no-fading-opacitychange", &ps->o.no_fading_opacitychange);
   // --shadow-red
   config_lookup_float(&cfg, "shadow-red", &ps->o.shadow_red);
   // --shadow-green
@@ -5439,6 +5775,10 @@ parse_config(session_t *ps, struct options_tmp *pcfgtmp) {
   }
 
   config_destroy(&cfg);
+
+  // Adjust shadow offsets
+  ps->o.shadow_offset_x = ((-ps->o.shadow_radius * 7 / 5) - ps->o.shadow_offset_x * ps->o.shadow_radius / 100);
+  ps->o.shadow_offset_y = ((-ps->o.shadow_radius * 7 / 5) - ps->o.shadow_offset_y * ps->o.shadow_radius / 100);
 }
 #endif
 
@@ -5447,7 +5787,7 @@ parse_config(session_t *ps, struct options_tmp *pcfgtmp) {
  */
 static void
 get_cfg(session_t *ps, int argc, char *const *argv, bool first_pass) {
-  const static char *shortopts = "D:I:O:d:r:o:m:l:t:i:e:hscnfFCaSzGb";
+  const static char *shortopts = "D:I:O:d:r:o:m:l:t:i:e:hvscnfFCaSzGb";
   const static struct option longopts[] = {
     { "help", no_argument, NULL, 'h' },
     { "config", required_argument, NULL, 256 },
@@ -5522,6 +5862,7 @@ get_cfg(session_t *ps, int argc, char *const *argv, bool first_pass) {
     { "vsync-use-glfinish", no_argument, NULL, 311 },
     { "xrender-sync", no_argument, NULL, 312 },
     { "xrender-sync-fence", no_argument, NULL, 313 },
+    { "no-fading-opacitychange", no_argument, NULL, 314 },
     // Must terminate with a NULL entry
     { NULL, 0, NULL, 0 },
   };
@@ -5593,6 +5934,7 @@ get_cfg(session_t *ps, int argc, char *const *argv, bool first_pass) {
       case 'h':
         usage(0);
         break;
+      case 'v': fprintf (stderr, "%s v%-3.2f\n", argv[0], _TDE_COMP_MGR_VERSION_); my_exit_code=0; exit (0);
       case 'd':
       case 'S':
         break;
@@ -5774,6 +6116,7 @@ get_cfg(session_t *ps, int argc, char *const *argv, bool first_pass) {
       P_CASEBOOL(311, vsync_use_glfinish);
       P_CASEBOOL(312, xrender_sync);
       P_CASEBOOL(313, xrender_sync_fence);
+      P_CASEBOOL(314, no_fading_opacitychange);
       default:
         usage(1);
         break;
@@ -5879,7 +6222,7 @@ init_atoms(session_t *ps) {
   ps->atom_transient = XA_WM_TRANSIENT_FOR;
   ps->atom_client_leader = get_atom(ps, "WM_CLIENT_LEADER");
   ps->atom_ewmh_active_win = get_atom(ps, "_NET_ACTIVE_WINDOW");
-  ps->atom_compton_shadow = get_atom(ps, "_COMPTON_SHADOW");
+  ps->atom_compton_shadow = get_atom(ps, "_TDE_WM_WINDOW_SHADOW");
 
   ps->atom_win_type = get_atom(ps, "_NET_WM_WINDOW_TYPE");
   ps->atoms_wintypes[WINTYPE_UNKNOWN] = 0;
@@ -5911,6 +6254,9 @@ init_atoms(session_t *ps) {
       "_NET_WM_WINDOW_TYPE_COMBO");
   ps->atoms_wintypes[WINTYPE_DND] = get_atom(ps,
       "_NET_WM_WINDOW_TYPE_DND");
+
+  ps->atom_win_type_tde_transparent_to_black = get_atom(ps, "_TDE_TRANSPARENT_TO_BLACK");
+  ps->atom_win_type_tde_transparent_to_desktop = get_atom(ps, "_TDE_TRANSPARENT_TO_DESKTOP");
 }
 
 /**
@@ -6754,6 +7100,7 @@ session_init(session_t *ps_old, int argc, char **argv) {
       .fade_out_step = 0.03 * OPAQUE,
       .fade_delta = 10,
       .no_fading_openclose = false,
+      .no_fading_opacitychange = false,
       .fade_blacklist = NULL,
 
       .wintype_opacity = { 0.0 },
@@ -6871,6 +7218,8 @@ session_init(session_t *ps_old, int argc, char **argv) {
     .atom_ewmh_active_win = None,
     .atom_compton_shadow = None,
     .atom_win_type = None,
+    .atom_win_type_tde_transparent_to_black = None,
+    .atom_win_type_tde_transparent_to_desktop = None,
     .atoms_wintypes = { 0 },
     .track_atom_lst = NULL,
 
@@ -7097,6 +7446,8 @@ session_init(session_t *ps_old, int argc, char **argv) {
     exit(1);
 
   cxinerama_upd_scrs(ps);
+
+  fprintf(stderr, "Started\n");
 
   // Create registration window
   if (!ps->reg_win && !register_cm(ps))
@@ -7470,17 +7821,14 @@ main(int argc, char **argv) {
   // correctly
   setlocale(LC_ALL, "");
 
-  // Set up SIGUSR1 signal handler to reset program
-  {
-    sigset_t block_mask;
-    sigemptyset(&block_mask);
-    const struct sigaction action= {
-      .sa_handler = reset_enable,
-      .sa_mask = block_mask,
-      .sa_flags = 0
-    };
-    sigaction(SIGUSR1, &action, NULL);
-  }
+  // Initialize signal handlers
+  sigfillset(&block_mask);
+  usr_action.sa_handler = handle_siguser;
+  usr_action.sa_mask = block_mask;
+  usr_action.sa_flags = 0;
+  sigaction(SIGUSR1, &usr_action, NULL);
+  sigaction(SIGUSR2, &usr_action, NULL);
+  sigaction(SIGTERM, &usr_action, NULL);
 
   // Main loop
   session_t *ps_old = ps_g;
@@ -7490,6 +7838,11 @@ main(int argc, char **argv) {
       printf_errf("(): Failed to create new session.");
       return 1;
     }
+
+    /* Under no circumstances should these two lines EVER be moved earlier in main() than this point */
+    atexit(delete_pid_file);
+    write_pid_file(getpid());
+
     session_run(ps_g);
     ps_old = ps_g;
     session_destroy(ps_g);

@@ -4,6 +4,7 @@
  * Based on `xcompmgr` - Copyright (c) 2003, Keith Packard
  *
  * Copyright (c) 2011-2013, Christopher Jeffrey
+ * Copyright (c) 2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
  * See LICENSE for more information.
  *
  */
@@ -59,6 +60,11 @@
 // #define CONFIG_XSYNC 1
 // Whether to enable GLX Sync support.
 // #define CONFIG_GLX_XSYNC 1
+
+// TDE specific options
+// #define USE_ENV_HOME 1
+#define WRITE_PID_FILE 1
+#define _TDE_COMP_MGR_VERSION_ 3.00
 
 #if !defined(CONFIG_C2) && defined(DEBUG_C2)
 #error Cannot enable c2 debugging without c2 support.
@@ -599,7 +605,7 @@ typedef struct _options_t {
   c2_lptr_t *shadow_blacklist;
   /// Whether bounding-shaped window should be ignored.
   bool shadow_ignore_shaped;
-  /// Whether to respect _COMPTON_SHADOW.
+  /// Whether to respect _TDE_WM_WINDOW_SHADOW.
   bool respect_prop_shadow;
   /// Whether to crop shadow to the very Xinerama screen.
   bool xinerama_shadow_crop;
@@ -615,6 +621,8 @@ typedef struct _options_t {
   time_ms_t fade_delta;
   /// Whether to disable fading on window open/close.
   bool no_fading_openclose;
+  /// Whether to disable fading on opacity change
+  bool no_fading_opacitychange;
   /// Fading blacklist. A linked list of conditions.
   c2_lptr_t *fade_blacklist;
 
@@ -967,10 +975,14 @@ typedef struct _session_t {
   Atom atom_client_leader;
   /// Atom of property <code>_NET_ACTIVE_WINDOW</code>.
   Atom atom_ewmh_active_win;
-  /// Atom of property <code>_COMPTON_SHADOW</code>.
+  /// Atom of property <code>_TDE_WM_WINDOW_SHADOW</code>.
   Atom atom_compton_shadow;
   /// Atom of property <code>_NET_WM_WINDOW_TYPE</code>.
   Atom atom_win_type;
+  /// Atom of property <code>_KDE_TRANSPARENT_TO_BLACK</code>.
+  Atom atom_win_type_tde_transparent_to_black;
+  /// Atom of property <code>_KDE_TRANSPARENT_TO_DESKTOP</code>.
+  Atom atom_win_type_tde_transparent_to_desktop;
   /// Array of atoms of all possible window types.
   Atom atoms_wintypes[NUM_WINTYPES];
   /// Linked list of additional atoms to track.
@@ -1132,9 +1144,11 @@ typedef struct _win {
   int shadow_width;
   /// Height of shadow. Affected by window size and commandline argument.
   int shadow_height;
+  /// Relative size of shadow.
+  int shadow_size;
   /// Picture to render shadow. Affected by window size.
   paint_t shadow_paint;
-  /// The value of _COMPTON_SHADOW attribute of the window. Below 0 for
+  /// The value of _TDE_WM_WINDOW_SHADOW attribute of the window. Below 0 for
   /// none.
   long prop_shadow;
 
@@ -1150,6 +1164,12 @@ typedef struct _win {
 
   /// Whether to blur window background.
   bool blur_background;
+
+  /// Whether to show black background
+  bool show_black_background;
+
+  /// Whether to show desktop background
+  bool show_root_tile;
 
 #ifdef CONFIG_VSYNC_OPENGL_GLSL
   /// Textures and FBO background blur use.
@@ -2094,6 +2114,10 @@ glx_render(session_t *ps, const glx_texture_t *ptex,
     double opacity, bool neg,
     XserverRegion reg_tgt, const reg_data_t *pcache_reg);
 
+bool
+glx_render_specified_color(session_t *ps, int color, int dx, int dy, int width, int height, int z,
+    XserverRegion reg_tgt, const reg_data_t *pcache_reg);
+
 void
 glx_swap_copysubbuffermesa(session_t *ps, XserverRegion reg);
 
@@ -2320,6 +2344,9 @@ opts_init_track_focus(session_t *ps);
 
 void
 opts_set_no_fading_openclose(session_t *ps, bool newval);
+
+void
+opts_set_no_fading_opacitychange(session_t *ps, bool newval);
 //!@}
 #endif
 
