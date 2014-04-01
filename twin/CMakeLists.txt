@@ -23,6 +23,7 @@ tde_conditional_add_subdirectory( WITH_XCOMPOSITE kompmgr )
 
 
 include_directories(
+  ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/lib
   ${TDE_INCLUDE_DIR}

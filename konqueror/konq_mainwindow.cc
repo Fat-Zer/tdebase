@@ -5807,10 +5807,10 @@ void KonqMainWindow::resetWindow()
     XEvent ev;
     XWindowEvent( tqt_xdisplay(), tmp_widget.winId(), PropertyChangeMask, &ev );
     long x_time = ev.xproperty.time;
-    // bad hack - without updating the _KDE_NET_WM_USER_CREATION_TIME property,
+    // bad hack - without updating the _TDE_NET_WM_USER_CREATION_TIME property,
     // KWin will apply don't_steal_focus to this window, and will not make it active
     // (shows mainly with 'konqueror --preload')
-    static Atom atom = XInternAtom( tqt_xdisplay(), "_KDE_NET_WM_USER_CREATION_TIME", False );
+    static Atom atom = XInternAtom( tqt_xdisplay(), "_TDE_NET_WM_USER_CREATION_TIME", False );
     XChangeProperty( tqt_xdisplay(), winId(), atom, XA_CARDINAL, 32,
 		     PropModeReplace, (unsigned char *) &x_time, 1);
     SET_QT_X_USER_TIME(CurrentTime); // won't have _NET_WM_USER_TIME set

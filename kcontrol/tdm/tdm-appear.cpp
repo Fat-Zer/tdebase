@@ -177,7 +177,7 @@ TDMAppearanceWidget::TDMAppearanceWidget(TQWidget *parent, const char *name)
 
   compositorcombo = new KBackedComboBox(group);
   compositorcombo->insertItem( "", i18n("None") );
-  compositorcombo->insertItem( "kompmgr", i18n("Trinity compositor") );
+  compositorcombo->insertItem( TDE_COMPOSITOR_BINARY, i18n("Trinity compositor") );
   label = new TQLabel(compositorcombo, i18n("Compositor:"), group);
   connect(compositorcombo, TQT_SIGNAL(activated(int)), TQT_SLOT(changed()));
   hglay->addWidget(label, 0, 0);

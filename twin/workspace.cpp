@@ -48,6 +48,8 @@ License. See the file "COPYING" for the exact licensing terms.
 
 #include <pwd.h>
 
+#include "config.h"
+
 namespace KWinInternal
 {
 
@@ -227,7 +229,7 @@ Workspace::Workspace( bool restore )
         {
         kompmgr = new TDEProcess;
         connect(kompmgr, TQT_SIGNAL(receivedStderr(TDEProcess*, char*, int)), TQT_SLOT(handleKompmgrOutput(TDEProcess*, char*, int)));
-        *kompmgr << "kompmgr";
+        *kompmgr << TDE_COMPOSITOR_BINARY;
         startKompmgr();
         }
     else if (!disable_twin_composition_manager)
@@ -1135,7 +1137,7 @@ void Workspace::slotReconfigure()
                     {
                     kompmgr = new TDEProcess;
                     connect(kompmgr, TQT_SIGNAL(receivedStderr(TDEProcess*, char*, int)), TQT_SLOT(handleKompmgrOutput(TDEProcess*, char*, int)));
-                    *kompmgr << "kompmgr";
+                    *kompmgr << TDE_COMPOSITOR_BINARY;
                     }
                 TQTimer::singleShot( 200, this, TQT_SLOT(startKompmgr()) ); // wait some time to ensure system's ready for restart
                 }
@@ -1850,7 +1852,7 @@ bool Workspace::removeSystemTrayWin( WId w, bool check )
     // reparenting the window into itself, or if it's the window
     // going away. This is obviously a flaw in the design, and we were
     // just lucky it worked for so long. Kicker's systray temporarily
-    // sets _KDE_SYSTEM_TRAY_EMBEDDING property on the window while
+    // sets _TDE_SYSTEM_TRAY_EMBEDDING property on the window while
     // embedding it, allowing KWin to figure out. Kicker just mustn't
     // crash before removing it again ... *shrug* .
         int num_props;
@@ -2815,7 +2817,7 @@ void Workspace::startKompmgr()
         options->useTranslucency = FALSE;
         TDEProcess proc;
         proc << "kdialog" << "--error"
-            << i18n("The Composite Manager could not be started.\\nMake sure you have \"kompmgr\" in a $PATH directory.")
+            << i18n("The Composite Manager could not be started.\\nMake sure you have \"" TDE_COMPOSITOR_BINARY "\" in a $PATH directory.")
             << "--title" << "Composite Manager Failure";
         proc.start(TDEProcess::DontCare);
     }
@@ -2907,7 +2909,7 @@ void Workspace::restartKompmgr( TDEProcess *proc )
 //             {
 //             kompmgr = new TDEProcess;
 //             kompmgr->clearArguments();
-//             *kompmgr << "kompmgr";
+//             *kompmgr << TDE_COMPOSITOR_BINARY;
 //             }
 // -------------------
         if (!kompmgr->start(TDEProcess::NotifyOnExit, TDEProcess::Stderr))
@@ -2917,7 +2919,7 @@ void Workspace::restartKompmgr( TDEProcess *proc )
             options->useTranslucency = FALSE;
             TDEProcess proc;
             proc << "kdialog" << "--error"
-                << i18n("The Composite Manager could not be started.\\nMake sure you have \"kompmgr\" in a $PATH directory.")
+                << i18n("The Composite Manager could not be started.\\nMake sure you have \"" TDE_COMPOSITOR_BINARY "\" in a $PATH directory.")
                 << "--title" << i18n("Composite Manager Failure");
             proc.start(TDEProcess::DontCare);
         }
@@ -2936,9 +2938,9 @@ void Workspace::handleKompmgrOutput( TDEProcess* , char *buffer, int buflen)
     if (output.contains("Started",false))
         ; // don't do anything, just pass to the connection release
     else if (output.contains("Can't open display",false))
-        message = i18n("<qt><b>kompmgr failed to open the display</b><br>There is probably an invalid display entry in your ~/.xcompmgrrc.</qt>");
+        message = i18n("<qt><b>The TDE composition manager failed to open the display</b><br>There is probably an invalid display entry in your ~/.compton-tde.conf file.</qt>");
     else if (output.contains("No render extension",false))
-        message = i18n("<qt><b>kompmgr cannot find the Xrender extension</b><br>You are using either an outdated or a crippled version of XOrg.<br>Get XOrg &ge; 6.8 from www.freedesktop.org.<br></qt>");
+        message = i18n("<qt><b>The TDE composition manager cannot find the Xrender extension</b><br>You are using either an outdated or a crippled version of XOrg.<br>Get XOrg &ge; 6.8 from www.freedesktop.org.<br></qt>");
     else if (output.contains("No composite extension",false))
         message = i18n("<qt><b>Composite extension not found</b><br>You <i>must</i> use XOrg &ge; 6.8 for translucency and shadows to work.<br>Additionally, you need to add a new section to your X config file:<br>"
         "<i>Section \"Extensions\"<br>"

@@ -258,6 +258,7 @@ private:
   TQCheckBox *dockWindowTransparency;
   TQCheckBox *keepAboveAsActive;
   TQCheckBox *disableARGB;
+  TQCheckBox *useOpenGL;
   TQCheckBox *fadeInWindows;
   TQCheckBox *fadeInMenuWindows;
   TQCheckBox *fadeOnOpacityChange;

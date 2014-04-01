@@ -93,6 +93,7 @@
 #define MAX_WNDW_SNAP                          100
 #define MAX_EDGE_RES                          1000
 
+TQString TDECompositor = TDE_COMPOSITOR_BINARY;
 
 KFocusConfig::~KFocusConfig ()
 {
@@ -1279,7 +1280,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
   KActiveLabel *label = new KActiveLabel(i18n("<qt><b>It seems that alpha channel support is not available.</b><br><br>"
                                  "Please make sure you have "
                                  "<a href=\"http://www.freedesktop.org/\">Xorg &ge; 6.8</a>,"
-                                 " and installed the kompmgr that came with twin.<br>"
+                                 " and installed the composition manager that came with twin.<br>"
                                  "Also, make sure you have the following entries in your XConfig (e.g. /etc/X11/xorg.conf):<br><br>"
                                  "<i>Section \"Extensions\"<br>"
                                  "Option \"Composite\" \"Enable\"<br>"
@@ -1339,6 +1340,15 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
 
   disableARGB = new TQCheckBox(i18n("Disable ARGB windows (ignores window alpha maps, fixes gtk1 apps)"),tGroup);
   vLay->addWidget(disableARGB);
+  if (TDECompositor == "compton-tde") {
+      disableARGB->hide();
+  }
+
+  useOpenGL = new TQCheckBox(i18n("Use OpenGL compositor (best performance)"),tGroup);
+  vLay->addWidget(useOpenGL);
+  if (TDECompositor != "compton-tde") {
+      useOpenGL->hide();
+  }
 
   vLay->addStretch();
   tabW->addTab(tGroup, i18n("Opacity"));
@@ -1463,6 +1473,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
   connect(dockWindowTransparency, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(keepAboveAsActive, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(disableARGB, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(useOpenGL, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(useShadows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(removeShadowsOnResize, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(removeShadowsOnMove, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
@@ -1503,6 +1514,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
   // handle kompmgr restarts if necessary
   connect(useTranslucency, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(disableARGB, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
+  connect(useOpenGL, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(useShadows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(inactiveWindowShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
   connect(baseShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
@@ -1560,6 +1572,7 @@ void KTranslucencyConfig::load( void )
   conf_.setGroup("xcompmgr");
 
   disableARGB->setChecked(conf_.readBoolEntry("DisableARGB",FALSE));
+  useOpenGL->setChecked(conf_.readBoolEntry("useOpenGL",FALSE));
 
   useShadows->setChecked(conf_.readEntry("Compmode","").compare("CompClientShadows") == 0);
   shadowTopOffset->setValue(-1*(conf_.readNumEntry("ShadowOffsetY",-200)));
@@ -1592,8 +1605,9 @@ void KTranslucencyConfig::load( void )
 
 void KTranslucencyConfig::save( void )
 {
-    if (!kompmgrAvailable_)
-        return;
+  if (!kompmgrAvailable_)
+      return;
+
   config->setGroup( "Notification Messages" );
   config->writeEntry("UseTranslucency",useTranslucency->isChecked());
 
@@ -1628,6 +1642,7 @@ void KTranslucencyConfig::save( void )
 
   conf_->writeEntry("Compmode",useShadows->isChecked()?"CompClientShadows":"");
   conf_->writeEntry("DisableARGB",disableARGB->isChecked());
+  conf_->writeEntry("useOpenGL",useOpenGL->isChecked());
   conf_->writeEntry("ShadowOffsetY",-1*shadowTopOffset->value());
   conf_->writeEntry("ShadowOffsetX",-1*shadowLeftOffset->value());
 
@@ -1645,6 +1660,55 @@ void KTranslucencyConfig::save( void )
   conf_->writeEntry("FadeOutStep",fadeOutSpeed->value()/1000.0);
 
   delete conf_;
+
+  // Now write out compton settings
+  TQFile* compton_conf_file_ = new TQFile(TQDir::homeDirPath() + "/.compton-tde.conf");
+  if ( compton_conf_file_->open( IO_WriteOnly ) ) {
+      TQTextStream stream(compton_conf_file_);
+
+      stream << "shadow = " << (useShadows->isChecked()?"true":"false") << ";\n";
+      stream << "shadow-offset-y = " << (-1*shadowTopOffset->value()) << ";\n";
+      stream << "shadow-offset-x = " << (-1*shadowLeftOffset->value()) << ";\n";
+
+      int r, g, b;
+      shadowColor->color().rgb( &r, &g, &b );
+      stream << "shadow-red = " << (r/255.0) << ";\n";
+      stream << "shadow-green = " << (g/255.0) << ";\n";
+      stream << "shadow-blue = " << (b/255.0) << ";\n";
+
+      stream << "shadow-radius = " << baseShadowSize->value() << ";\n";
+
+      bool fadeOpacity = fadeOnOpacityChange->isChecked();
+      bool fadeWindows = fadeInWindows->isChecked();
+      bool fadeMenuWindows = fadeInMenuWindows->isChecked();
+      stream << "fading = " << ((fadeWindows || fadeMenuWindows || fadeOpacity)?"true":"false") << ";\n";
+      stream << "no-fading-opacitychange = " << (fadeOpacity?"false":"true") << ";\n";
+      stream << "no-fading-openclose = " << (fadeWindows?"false":"true") << ";\n";
+      stream << "wintypes:" << "\n";
+      stream << "{" << "\n";
+      stream << "  menu = { no-fading-openclose = " << (fadeMenuWindows?"false":"true") << "; }" << "\n";
+      stream << "  dropdown_menu = { no-fading-openclose = " << (fadeMenuWindows?"false":"true") << "; }" << "\n";
+      stream << "  popup_menu = { no-fading-openclose = " << (fadeMenuWindows?"false":"true") << "; }" << "\n";
+      stream << "}" << "\n";
+
+      stream << "fade-in-step = " << (fadeInSpeed->value()/1000.0) << ";\n";
+      stream << "fade-out-step = " << (fadeOutSpeed->value()/1000.0) << ";\n";
+
+      stream << "backend = \"" << (useOpenGL->isChecked()?"glx":"xrender") << "\";\n";
+      stream << "vsync = \"" << (useOpenGL->isChecked()?"opengl":"none") << "\";\n";
+
+      // Global settings
+      stream << "no-dock-shadow = true;\n";
+      stream << "no-dnd-shadow = true;\n";
+      stream << "clear-shadow = true;\n";
+      stream << "shadow-ignore-shaped = true;\n";
+
+      // Features not currently supported by compton
+//       stream << "DisableARGB = " << (disableARGB->isChecked()?"true":"false") << ";\n";
+
+      compton_conf_file_->close();
+   }
+   delete compton_conf_file_;
 
   if (standAlone)
   {
@@ -1707,7 +1771,7 @@ bool KTranslucencyConfig::kompmgrAvailable()
 {
     bool ret;
     TDEProcess proc;
-    proc << "kompmgr" << "-v";
+    proc << TDECompositor << "-v";
     ret = proc.start(TDEProcess::DontCare, TDEProcess::AllOutput);
     proc.detach();
     return ret;

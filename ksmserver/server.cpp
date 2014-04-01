@@ -948,7 +948,7 @@ bool KSMServer::isCM( const KSMClient* client ) const
 bool KSMServer::isCM( const TQString& program ) const
 {
     // Returns true if the program in question is a composition manager
-    return (program == "kompmgr");
+    return (program == TDE_COMPOSITOR_BINARY);
 }
 
 bool KSMServer::isDesktop( const KSMClient* client ) const

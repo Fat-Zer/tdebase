@@ -774,7 +774,7 @@ Time Client::readUserTimeMapTimestamp( const TDEStartupInfoId* asn_id, const TDE
         { // The window doesn't have any timestamp.
       // If it's the first window for its application
       // (i.e. there's no other window from the same app),
-      // use the _KDE_NET_WM_USER_CREATION_TIME trick.
+      // use the _TDE_NET_WM_USER_CREATION_TIME trick.
       // Otherwise, refuse activation of a window
       // from already running application if this application
       // is not the active one (unless focus stealing prevention is turned off).

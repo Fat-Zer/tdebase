@@ -201,3 +201,6 @@
 // Kickoff menu
 #cmakedefine KICKOFF_DIST_CONFIG_SHORTCUT1 "@KICKOFF_DIST_CONFIG_SHORTCUT1@"
 #cmakedefine KICKOFF_DIST_CONFIG_SHORTCUT2 "@KICKOFF_DIST_CONFIG_SHORTCUT2@"
+
+// TDE compositor binary name
+#define TDE_COMPOSITOR_BINARY "compton-tde"

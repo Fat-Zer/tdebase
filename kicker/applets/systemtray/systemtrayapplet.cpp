@@ -532,7 +532,7 @@ void SystemTrayApplet::embedWindow( WId w, bool kde_tray )
 
     if (kde_tray)
     {
-        static Atom hack_atom = XInternAtom( tqt_xdisplay(), "_KDE_SYSTEM_TRAY_EMBEDDING", False );
+        static Atom hack_atom = XInternAtom( tqt_xdisplay(), "_TDE_SYSTEM_TRAY_EMBEDDING", False );
         XChangeProperty( tqt_xdisplay(), w, hack_atom, hack_atom, 32, PropModeReplace, NULL, 0 );
         emb->embed(w);
         XDeleteProperty( tqt_xdisplay(), w, hack_atom );

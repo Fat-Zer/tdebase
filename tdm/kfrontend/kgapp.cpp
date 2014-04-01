@@ -516,7 +516,7 @@ kg_main( const char *argv0 )
 	}
 	if (comp) {
 		if (comp->isRunning()) {
-			if (_compositor == "kompmgr") {
+			if (_compositor == TDE_COMPOSITOR_BINARY) {
 				// Change process UID
 				// Get user UID
 				passwd* userinfo = getpwnam(login_user.ascii());

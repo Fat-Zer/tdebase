@@ -27,7 +27,7 @@ Atoms::Atoms()
     int n = 0;
 
     atoms[n] = &twin_running;
-    names[n++] = (char *) "KWIN_RUNNING";
+    names[n++] = (char *) "TWIN_RUNNING";
 
     atoms[n] = &wm_protocols;
     names[n++] = (char *) "WM_PROTOCOLS";
@@ -54,21 +54,21 @@ Atoms::Atoms()
     names[n++] = (char *) "_NET_WM_PING";
 
     atoms[n] = &kde_wm_change_state;
-    names[n++] = (char *) "_KDE_WM_CHANGE_STATE";
+    names[n++] = (char *) "_TDE_WM_CHANGE_STATE";
 
     atoms[n] = &net_wm_user_time;
     names[n++] = (char *) "_NET_WM_USER_TIME";
     atoms[n] = &kde_net_wm_user_creation_time;
-    names[n++] = (char *) "_KDE_NET_WM_USER_CREATION_TIME";
+    names[n++] = (char *) "_TDE_NET_WM_USER_CREATION_TIME";
 
     atoms[n] = &kde_system_tray_embedding;
-    names[n++] = (char*) "_KDE_SYSTEM_TRAY_EMBEDDING";
+    names[n++] = (char*) "_TDE_SYSTEM_TRAY_EMBEDDING";
     
     atoms[n] = &net_wm_take_activity;
     names[n++] = (char*) "_NET_WM_TAKE_ACTIVITY";
     
     atoms[n] = &net_wm_window_opacity;
-    names[n++] = (char*) "_TDE_WM_WINDOW_OPACITY";
+    names[n++] = (char*) "_NET_WM_WINDOW_OPACITY";
 
     atoms[n] = &net_wm_window_shadow;
     names[n++] = (char*) "_TDE_WM_WINDOW_SHADOW";
@@ -83,7 +83,7 @@ Atoms::Atoms()
     names[n++] = (char*) "_TDE_WM_WINDOW_DECOHASH";
     
     atoms[n] = &net_wm_system_modal_notification;
-    names[n++] = (char*) "_KDE_WM_MODAL_SYS_NOTIFICATION";
+    names[n++] = (char*) "_TDE_WM_MODAL_SYS_NOTIFICATION";
         
     Atom fake;
     atoms[n] = &fake;
@@ -99,7 +99,7 @@ Atoms::Atoms()
     atoms[n] = &net_frame_extents;
     names[n++] = (char*) "_NET_FRAME_EXTENTS";
     atoms[n] = &kde_net_wm_frame_strut;
-    names[n++] = (char*) "_KDE_NET_WM_FRAME_STRUT";
+    names[n++] = (char*) "_TDE_NET_WM_FRAME_STRUT";
     
     assert( n <= max );
 
