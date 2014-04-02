@@ -306,7 +306,7 @@ void BackTrace::processBacktrace()
 	if (crashedExec.startsWith("/")) {
 		libr_file *handle = NULL;
 		libr_access_t access = LIBR_READ;
-	
+
 		if((handle = libr_open(const_cast<char*>(crashedExec.ascii()), access)) == NULL) {
 			kdWarning() << "failed to open file" << crashedExec << endl;
 		}
@@ -337,7 +337,7 @@ void BackTrace::processBacktrace()
 			if (libraryName.startsWith("/")) {
 				libr_file *handle = NULL;
 				libr_access_t access = LIBR_READ;
-			
+
 				if((handle = libr_open(const_cast<char*>(libraryName.ascii()), access)) == NULL) {
 					kdWarning() << "failed to open file" << libraryName << endl;
 				}

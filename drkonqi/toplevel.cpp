@@ -196,14 +196,14 @@ void Toplevel :: slotUser3()
 {
 	enableButton(User3, false);
 	TQApplication::setOverrideCursor ( tqwaitCursor );
-	
+
 	// generate the backtrace
 	BackTrace *backtrace = new BackTrace(m_krashconf, TQT_TQOBJECT(this));
 	connect(backtrace, TQT_SIGNAL(someError()), TQT_SLOT(slotSendReportBacktraceSomeError()));
 	connect(backtrace, TQT_SIGNAL(done(const TQString &)), TQT_SLOT(slotSendReportBacktraceDone(const TQString &)));
-	
+
 	backtrace->start();
-	
+
 	return;
 }
 
@@ -237,9 +237,9 @@ void Toplevel :: slotBacktraceSomeError()
 void Toplevel::slotSendReportBacktraceSomeError()
 {
 	TQApplication::restoreOverrideCursor();
-	
+
 	KMessageBox::sorry(0, i18n("It was not possible to generate a backtrace."), i18n("Backtrace Not Possible"));
-	
+
 	delete m_bugdescription;
 	m_bugdescription = 0;
 
@@ -260,14 +260,14 @@ void Toplevel::slotSendReportBacktraceDone(const TQString &str)
 			"wrong.</p>\n"),
 		i18n("Include Description"),i18n("Add Description"),i18n("Just Report the Crash"));
 	}
-	
+
 	if (i == KMessageBox::Cancel) {
 		TQApplication::restoreOverrideCursor();
 		enableButton(User3, true);
 
 		return;
 	}
-	
+
 	m_bugdescription = new BugDescription(0, true, m_krashconf->aboutData());
 
 	if (i == KMessageBox::Yes) {
@@ -340,7 +340,7 @@ void Toplevel::slotSendReportBacktraceDone(const TQString &str)
 		TQCString proofOfWork(TQUuid::createUuid().toString().ascii());
 		memcpy(m_backtraceSubmissionData.data() + proofOfWorkPos, proofOfWork.data(), proofOfWork.size());
 		sha.reset();
-		sha.process(m_backtraceSubmissionData.data(), m_backtraceSubmissionData.size());
+		sha.process(m_backtraceSubmissionData.data(), m_backtraceSubmissionData.size()-1);
 		memcpy(hash.data(), sha.hash(), hash.size());
 	}
 
@@ -376,7 +376,7 @@ void Toplevel::slotSendReportBacktraceDone(const TQString &str)
 	m_bugdescription = 0;
 }
 
-int Toplevel::postCrashDataToServer(TQByteArray data) {
+int Toplevel::postCrashDataToServer(TQCString data) {
 	m_serverResponse = "";
 	TQCString formDataBoundary = "-----------------------------------DrKonqiCrashReporterBoundary";
 
@@ -386,16 +386,18 @@ int Toplevel::postCrashDataToServer(TQByteArray data) {
 	postData += "\r\n";
 	postData += "Content-Disposition: form-data; name=\"crashreport\"; filename=\"crashreport.txt\"\r\n";
 	postData += "Content-Type: application/octet-stream\r\n";
+	postData += (TQString("Content-Length: %1\r\n").arg(data.count())).ascii();
 	postData += "Content-Transfer-Encoding: binary\r\n\r\n";
 	postData += data;
+	postData += "\r\n";
 	postData += "--";
 	postData += formDataBoundary;
-	postData += "--";
+	postData += "--\r\n";
 
 	KURL url("https://crashreport.trinitydesktop.org/");
 // 	TDEIO::TransferJob* job = TDEIO::http_post(url, postData, false);
 	TDEIO::TransferJob* job = TDEIO::http_post(url, postData, true);
-	job->addMetaData("content-type", TQString("Content-Type: multipart/form-data, boundary=%1").arg(formDataBoundary));
+	job->addMetaData("content-type", TQString("Content-Type: multipart/form-data; boundary=%1").arg(formDataBoundary));
 	job->addMetaData("referrer", "http://drkonqi-client.crashreport.trinitydesktop.org");
 	connect(job, TQT_SIGNAL(data(TDEIO::Job *, const TQByteArray &)), TQT_SLOT(postCrashDataToServerData(TDEIO::Job *, const TQByteArray &)));
 	connect(job, TQT_SIGNAL(result(TDEIO::Job *)), TQT_SLOT(postCrashDataToServerResult(TDEIO::Job *)));
@@ -445,13 +447,15 @@ void Toplevel::postCrashDataToServerResult(TDEIO::Job *job)
 				(0,
 				i18n("<p>Your crash report failed to upload!</p><p>Please check your network settings and try again.</p><p>The server responded:<br>%1</p>").arg(responseString),
 				i18n("Upload failure"),i18n("Save Report"),i18n("Retry Upload"));
-	
+
 			if (i == KMessageBox::No) {
 				postCrashDataToServer(m_backtraceSubmissionData);
 			}
-	
-			if (i == KMessageBox::Yes) {
+			else if (i == KMessageBox::Yes) {
 				saveOfflineCrashReport(m_backtraceSubmissionData);
+			}
+			else {
+				enableButton(User3, true);
 			}
 		}
 	}
@@ -464,14 +468,16 @@ void Toplevel::postCrashDataToServerResult(TDEIO::Job *job)
 		if (i == KMessageBox::No) {
 			postCrashDataToServer(m_backtraceSubmissionData);
 		}
-
-		if (i == KMessageBox::Yes) {
+		else if (i == KMessageBox::Yes) {
 			saveOfflineCrashReport(m_backtraceSubmissionData);
+		}
+		else {
+			enableButton(User3, true);
 		}
 	}
 }
 
-int Toplevel::saveOfflineCrashReport(TQByteArray data)
+int Toplevel::saveOfflineCrashReport(TQCString data)
 {
 	TQString defname = m_krashconf->execName() + TQString::fromLatin1( ".tdecrash" );
 	if( defname.contains( '/' ))
@@ -483,7 +489,7 @@ int Toplevel::saveOfflineCrashReport(TQByteArray data)
 	}
 	else {
 		TQFile f(filename);
-		
+
 		if (f.exists()) {
 			if (KMessageBox::Cancel ==
 				KMessageBox::warningContinueCancel( 0,
@@ -493,9 +499,9 @@ int Toplevel::saveOfflineCrashReport(TQByteArray data)
 				i18n( "&Overwrite" ) ))
 				return 2;
 		}
-		
+
 		if (f.open(IO_WriteOnly)) {
-			f.writeBlock(data.data(), data.count());
+			f.writeBlock(data.data(), data.count()-1);
 			f.close();
 			enableButton(User3, true);
 			return 0;

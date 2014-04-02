@@ -166,4 +166,4 @@ NeededInValidBacktraceRegExp=\\n#5
 TDECrashRegExp=\\n#0[ ]*0x[0123456789abcdefABCDEF]+.*<signal handler called>[ ]*\\n
 TDECrashRegExpSingle=\\n0x[0123456789abcdefABCDEF][^\\n]*\\n
 ThreadRegExp=\\nThread [0123456789]
-InfoSharedLibraryHeader= ==== (gdb) info sharedlibrary ====
+InfoSharedLibraryHeader===== (gdb) info sharedlibrary ====

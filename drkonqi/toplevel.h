@@ -51,8 +51,8 @@ public:
 private:
   // helper methods
   TQString generateText() const;
-  int postCrashDataToServer(TQByteArray data);
-  int saveOfflineCrashReport(TQByteArray data);
+  int postCrashDataToServer(TQCString data);
+  int saveOfflineCrashReport(TQCString data);
 
 protected slots:
   void slotUser1();
