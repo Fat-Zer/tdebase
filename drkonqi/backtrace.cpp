@@ -339,7 +339,7 @@ void BackTrace::processBacktrace()
 				libr_access_t access = LIBR_READ;
 
 				if((handle = libr_open(const_cast<char*>(libraryName.ascii()), access)) == NULL) {
-					kdWarning() << "failed to open file" << libraryName << endl;
+					kdWarning() << "failed to open file " << libraryName << endl;
 				}
 				else {
 					TQString scmModule = elf_get_resource(handle, ".metadata_scmmodule");
@@ -347,9 +347,9 @@ void BackTrace::processBacktrace()
 					if (scmRevision != "") {
 						m_strBt.append(TQString("%1:\t%2:%3\n").arg(TQFileInfo(libraryName).fileName()).arg(scmModule).arg(scmRevision));
 					}
-				}
 
-				libr_close(handle);
+					libr_close(handle);
+				}
 			}
 		}
 		infoSharedLibraryLine = infoSharedLibraryTextStream.readLine();

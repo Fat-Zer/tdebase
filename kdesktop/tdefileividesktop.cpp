@@ -150,7 +150,9 @@ void KFileIVIDesktop::drawShadowedText( TQPainter *p, const TQColorGroup &cg )
   int textY = textRect( FALSE ).y();
   int align = ((TDEIconView *) iconView())->itemTextPos() == TQIconView::Bottom
     ? AlignHCenter : AlignAuto;
-  bool rebuild = shouldUpdateShadow(isSelected());
+  // FIXME
+  // Work around incorrect shadow position detailed in Bug 1807
+  bool rebuild = true; // shouldUpdateShadow(isSelected());
 
   KDesktopShadowSettings *settings = (KDesktopShadowSettings *) (m_shadow->shadowSettings());
 
