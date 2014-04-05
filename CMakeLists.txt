@@ -71,8 +71,6 @@ option( WITH_XCURSOR "Enable xcursor support" ${WITH_ALL_OPTIONS} )
 option( WITH_XFIXES "Enable xfixes support" ${WITH_ALL_OPTIONS} )
 option( WITH_XRANDR "Enable xrandr support" ${WITH_ALL_OPTIONS} )
 option( WITH_XRENDER "Enable xrender support" ${WITH_ALL_OPTIONS} )
-option( WITH_XDAMAGE "Enable xdamage support" ${WITH_ALL_OPTIONS} )
-option( WITH_XEXT "Enable xext support" ${WITH_ALL_OPTIONS} )
 option( WITH_LIBCONFIG "Enable libconfig support" ${WITH_ALL_OPTIONS} )
 option( WITH_XTEST "Enable xtest support" ${WITH_ALL_OPTIONS} )
 option( WITH_OPENGL "Enable openGL support" ${WITH_ALL_OPTIONS} )
@@ -104,8 +102,6 @@ option( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" 
 # WITH_XCOMPOSITE   affects twin kicker(taskmanager) tdm
 # WITH_XCURSOR      affects tdeioslaves(thumbnail), kcontrol(input), kdesktop
 # WITH_XFIXES       affects twin klipper kicker(taskmanager)
-# WITH_XDAMAGE      affects <nothing>
-# WITH_XEXT         affects <nothing>
 # WITH_XRANDR       affects tdm, kcontrol(displayconfig randr iccconfig)
 # WITH_XRENDER      affects twin konsole kicker(taskmanager) kdesktop
 #                           kcontrol(style)
@@ -136,10 +132,6 @@ option( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" 
 # NOTE: if WITH_XCOMPOSITE=ON then the following options are also required:
 #       WITH_XRENDER=ON
 #       WITH_XFIXES=ON
-#       WITH_XDAMAGE=ON
-#       WITH_XEXT=ON
-# NOTE: seems WITH_XDAMAGE and WITH_XET doesn't change anything
-#       they are just required by WITH_XCOMPOSITE
 
 ##### user requested modules ####################
 

@@ -14,10 +14,6 @@ if( NOT WITH_XRENDER )
   tde_message_fatal( "xrender support is needed to build kompmgr.\n Pass -DWITH_XRENDER=ON to cmake arguments." )
 elseif( NOT WITH_XFIXES )
   tde_message_fatal( "xfixes support is needed to build kompmgr.\n Pass -DWITH_XFIXES=ON to cmake arguments." )
-elseif( NOT WITH_XDAMAGE )
-  tde_message_fatal( "xdamage support is needed to build kompmgr.\n Pass -DWITH_XDAMAGE=ON to cmake arguments." )
-elseif( NOT WITH_XEXT )
-  tde_message_fatal( "xext support is needed to build kompmgr.\n Pass -DWITH_XEXT=ON to cmake arguments." )
 endif( )
 
 

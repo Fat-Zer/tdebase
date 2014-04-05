@@ -102,6 +102,20 @@ if( WITH_XCOMPOSITE )
   else( XCOMPOSITE_FOUND )
     tde_message_fatal( "xcomposite is requested, but was not found on your system" )
   endif( XCOMPOSITE_FOUND )
+
+
+  # xdamage (twin/kompmgr)
+  pkg_search_module( XDAMAGE xdamage )
+  if( NOT XDAMAGE_FOUND )
+    tde_message_fatal( "xdamage is required for xcomposite support, but was not found on your system" )
+  endif( )
+
+  # xext (twin/kompmgr)
+  pkg_search_module( XEXT xext )
+  if( NOT XEXT_FOUND )
+    tde_message_fatal( "xext is required for xcomposite support, but was not found on your system" )
+  endif( )
+
 endif( )
 
 
@@ -112,26 +126,6 @@ if( WITH_XFIXES )
     set( HAVE_XFIXES 1 CACHE INTERNAL "" FORCE )
   else( )
     tde_message_fatal( "xfixes is requested, but was not found on your system" )
-  endif( )
-endif( )
-
-
-# xdamage (twin/kompmgr)
-if( WITH_XDAMAGE )
-  pkg_search_module( XDAMAGE xdamage )
-  if( NOT XDAMAGE_FOUND )
-    tde_message_fatal( "xdamage is requested, but was not found on your system" )
-  endif( )
-endif( )
-
-
-# xext (twin/kompmgr)
-if( WITH_XEXT )
-  pkg_search_module( XEXT xext )
-  if( XEXT_FOUND )
-    set( HAVE_XEXT 1 )
-  else( XEXT_FOUND )
-    tde_message_fatal( "xext is requested, but was not found on your system" )
   endif( )
 endif( )
 
