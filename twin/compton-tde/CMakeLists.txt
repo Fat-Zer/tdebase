@@ -12,8 +12,6 @@
 
 if( NOT WITH_XRENDER )
   tde_message_fatal( "xrender support is needed to build compton-tde.\n Pass -DWITH_XRENDER=ON to cmake arguments." )
-elseif( NOT WITH_XRANDR )
-  tde_message_fatal( "xrandr support is needed to build compton-tde.\n Pass -DWITH_XRANDR=ON to cmake arguments." )
 elseif( NOT WITH_XFIXES )
   tde_message_fatal( "xfixes support is needed to build compton-tde.\n Pass -DWITH_XFIXES=ON to cmake arguments." )
 endif( )
@@ -28,7 +26,8 @@ include_directories(
 ##### compton-tde (executable) ###################
 
 # TDE to compton config option map
-#  WITH_XINNERAMA         -> CONFIG_XINERAMA    
+#  WITH_XINNERAMA         -> CONFIG_XINERAMA
+#  WITH_XRANDR            -> CONFIG_XANDR
 #  WITH_OPENGL            -> CONFIG_VSYNC_OPENGL
 #  WITH_OPENGL            -> CONFIG_VSYNC_OPENGL_GLSL
 #  WITH_OPENGL            -> CONFIG_VSYNC_OPENGL_FBO
@@ -68,6 +67,11 @@ if( WITH_XINERAMA )
   list( APPEND compton_LIBRARIES ${XINERAMA_LIBRARIES} )
 endif( )
 
+if( WITH_XRANDR )
+  set( CONFIG_XRANDR ${WITH_XRANDR} )
+  list( APPEND compton_LIBRARIES ${XRANDR_LIBRARIES} )
+endif( )
+
 if( WITH_PCRE )
   set( CONFIG_REGEX_PCRE        ${WITH_PCRE} )
   set( CONFIG_REGEX_PCRE_JIT    ${WITH_PCRE} )
@@ -82,8 +86,7 @@ list( APPEND compton_LIBRARIES ${DBUS_LIBRARIES} )
 
 tde_add_executable( compton-tde
     SOURCES ${compton_SRCS}
-  LINK m ${compton_LIBRARIES} ${XRENDER_LIBRARIES} 
-    ${XRANDR_LIBRARIES} ${XFIXES_LIBRARIES} ${XDAMAGE_LIBRARIES} 
-    ${XEXT_LIBRARIES} ${XCOMPOSITE_LIBRARIES}
+  LINK m ${compton_LIBRARIES} ${XRENDER_LIBRARIES} ${XFIXES_LIBRARIES} 
+    ${XDAMAGE_LIBRARIES} ${XEXT_LIBRARIES} ${XCOMPOSITE_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )

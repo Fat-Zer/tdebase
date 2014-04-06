@@ -32,5 +32,7 @@
 // Whether to enable GLX Sync support.
 #cmakedefine CONFIG_GLX_XSYNC 1
 
+// Whether to enable Xranr support
+#cmakedefine CONFIG_XRANDR 1
 // Whether to enable Xinerama support
 #cmakedefine CONFIG_XINERAMA 1
