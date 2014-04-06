@@ -4543,6 +4543,7 @@ ev_shape_notify(session_t *ps, XShapeEvent *ev) {
   update_reg_ignore_expire(ps, w);
 }
 
+#ifdef CONFIG_XRANDR
 /**
  * Handle ScreenChangeNotify events from X RandR extension.
  */
@@ -4561,6 +4562,7 @@ ev_screen_change_notify(session_t *ps,
     }
   }
 }
+#endif // CONFIG_XRANDR
 
 #if defined(DEBUG_EVENTS) || defined(DEBUG_RESTACK)
 /**
@@ -4659,10 +4661,12 @@ ev_handle(session_t *ps, XEvent *ev) {
         ev_shape_notify(ps, (XShapeEvent *) ev);
         break;
       }
+#ifdef CONFIG_XRANDR
       if (ps->randr_exists && ev->type == (ps->randr_event + RRScreenChangeNotify)) {
         ev_screen_change_notify(ps, (XRRScreenChangeNotifyEvent *) ev);
         break;
       }
+#endif // CONFIG_XRANDR
       if (isdamagenotify(ps, ev)) {
         ev_damage_notify(ps, (XDamageNotifyEvent *) ev);
         break;
@@ -4762,9 +4766,14 @@ usage(int ret) {
     "  Detect _NET_WM_OPACITY on client windows, useful for window\n"
     "  managers not passing _NET_WM_OPACITY of client windows to frame\n"
     "  windows.\n"
+#ifndef CONFIG_XRANDR
+#define WARNING " (AUTODETECTION DISABLED AT COMPILE TIME)"
+#else
+#define WARNING
+#endif
     "--refresh-rate val\n"
     "  Specify refresh rate of the screen. If not specified or 0, compton\n"
-    "  will try detecting this with X RandR extension.\n"
+    "  will try detecting this with X RandR extension."WARNING"\n"
     "--vsync vsync-method\n"
     "  Set VSync method. There are up to 4 VSync methods currently available.\n"
     "    none = No VSync\n"
@@ -6259,6 +6268,7 @@ init_atoms(session_t *ps) {
   ps->atom_win_type_tde_transparent_to_desktop = get_atom(ps, "_TDE_TRANSPARENT_TO_DESKTOP");
 }
 
+#ifdef CONFIG_XRANDR
 /**
  * Update refresh rate info with X Randr extension.
  */
@@ -6277,6 +6287,7 @@ update_refresh_rate(session_t *ps) {
   else
     ps->refresh_intv = 0;
 }
+#endif // CONFIG_XRANDR
 
 /**
  * Initialize refresh-rated based software optimization.
@@ -6291,10 +6302,12 @@ swopti_init(session_t *ps) {
   if (ps->refresh_rate)
     ps->refresh_intv = US_PER_SEC / ps->refresh_rate;
 
+#ifdef CONFIG_XRANDR
   // Auto-detect refresh rate otherwise
   if (!ps->refresh_rate && ps->randr_exists) {
     update_refresh_rate(ps);
   }
+#endif // CONFIG_XRANDR
 
   // Turn off vsync_sw if we can't get the refresh rate
   if (!ps->refresh_rate)
@@ -7196,9 +7209,11 @@ session_init(session_t *ps_old, int argc, char **argv) {
     .shape_exists = false,
     .shape_event = 0,
     .shape_error = 0,
+#ifdef CONFIG_XRANDR
     .randr_exists = 0,
     .randr_event = 0,
     .randr_error = 0,
+#endif // CONFIG_XRANDR
 #ifdef CONFIG_VSYNC_OPENGL
     .glx_exists = false,
     .glx_event = 0,
@@ -7371,11 +7386,15 @@ session_init(session_t *ps_old, int argc, char **argv) {
 
   // Query X RandR
   if ((ps->o.sw_opti && !ps->o.refresh_rate) || ps->o.xinerama_shadow_crop) {
-    if (XRRQueryExtension(ps->dpy, &ps->randr_event, &ps->randr_error))
-      ps->randr_exists = true;
-    else
-      printf_errf("(): No XRandR extension, automatic screen change "
-          "detection impossible.");
+#ifdef CONFIG_XRANDR
+	if (XRRQueryExtension(ps->dpy, &ps->randr_event, &ps->randr_error))
+	  ps->randr_exists = true;
+	else
+	  printf_errf("(): No XRandR extension, automatic screen change "
+	      "detection impossible.");
+#else // CONFIG_XRANDR
+    printf_errf("(): Xrandr support not compiled in.");
+#endif // CONFIG_XRANDR
   }
 
   // Query X DBE extension
@@ -7435,11 +7454,21 @@ session_init(session_t *ps_old, int argc, char **argv) {
   if (ps->o.sw_opti)
     ps->o.sw_opti = swopti_init(ps);
 
+#ifdef CONFIG_XRANDR
   // Monitor screen changes if vsync_sw is enabled and we are using
   // an auto-detected refresh rate, or when Xinerama features are enabled
   if (ps->randr_exists && ((ps->o.sw_opti && !ps->o.refresh_rate)
-        || ps->o.xinerama_shadow_crop))
-    XRRSelectInput(ps->dpy, ps->root, RRScreenChangeNotifyMask);
+    || ps->o.xinerama_shadow_crop))
+	  XRRSelectInput(ps->dpy, ps->root, RRScreenChangeNotifyMask);
+#else
+  if( (ps->o.sw_opti && !ps->o.refresh_rate) ) {
+    printf_errf("(): Xrandr support not compiled in. Plese specify --refrash-rate manually");
+  }
+  if (ps->o.xinerama_shadow_crop) {
+    printf_errf("(): due to Xrandr support not compiled in."
+			" Xinerama features may malfunction on changing screen size.");
+  }
+#endif // CONFIG_XRANDR
 
   // Initialize VSync
   if (!vsync_init(ps))

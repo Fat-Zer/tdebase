@@ -106,10 +106,13 @@
 #include <X11/extensions/Xdamage.h>
 #include <X11/extensions/Xrender.h>
 #include <X11/extensions/shape.h>
-#include <X11/extensions/Xrandr.h>
 #include <X11/extensions/Xdbe.h>
 #ifdef CONFIG_XSYNC
 #include <X11/extensions/sync.h>
+#endif
+
+#ifdef CONFIG_XRANDR
+#include <X11/extensions/Xrandr.h>
 #endif
 
 #ifdef CONFIG_XINERAMA
@@ -921,12 +924,14 @@ typedef struct _session_t {
   int shape_event;
   /// Error base number for X Shape extension.
   int shape_error;
+#ifdef CONFIG_XRANDR
   /// Whether X RandR extension exists.
   bool randr_exists;
   /// Event base number for X RandR extension.
   int randr_event;
   /// Error base number for X RandR extension.
   int randr_error;
+#endif // CONFIG_XRANDR
 #ifdef CONFIG_VSYNC_OPENGL
   /// Whether X GLX extension exists.
   bool glx_exists;
