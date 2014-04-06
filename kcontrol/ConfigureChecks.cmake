@@ -45,16 +45,6 @@ else( )
 endif( )
 
 
-##### check for Xrandr ##########################
-
-if( WITH_XRANDR )
-  pkg_search_module( XRANDR xrandr )
-  if( NOT XRANDR_FOUND )
-    tde_message_fatal( "xrandr are requested, but not found on your system" )
-  endif( )
-endif( )
-
-
 ##### check for libusb ##########################
 
 if( WITH_LIBUSB )

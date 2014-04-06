@@ -83,6 +83,15 @@ if( WITH_XRENDER OR BUILD_KDESKTOP OR BUILD_KONSOLE OR BUILD_KCONTROL OR BUILD_K
 endif( )
 
 
+# xrender (kcontrol, twin)
+if( WITH_XRANDR )
+  pkg_search_module( XRANDR xrandr )
+  if( NOT XRANDR_FOUND )
+    tde_message_fatal( "xrandr are requested, but not found on your system" )
+  endif( )
+endif( )
+
+
 # xcursor (tdeioslave, kcontrol)
 if( WITH_XCURSOR )
   pkg_search_module( XCURSOR xcursor )
