@@ -83,13 +83,24 @@ if( WITH_XRENDER OR BUILD_KDESKTOP OR BUILD_KONSOLE OR BUILD_KCONTROL OR BUILD_K
 endif( )
 
 
-# xrandr (kcontrol)
+# xrandr (kcontrol, twin/compot-tde)
 if( WITH_XRANDR )
   pkg_search_module( XRANDR xrandr )
   if( NOT XRANDR_FOUND )
     tde_message_fatal( "xrandr are requested, but not found on your system" )
   endif( )
 endif( )
+
+
+# xinerama (ksplashml, twin/compot-tde)
+if( WITH_XINERAMA )
+  pkg_search_module( XINERAMA xinerama )
+  if( XINERAMA_FOUND )
+    set( HAVE_XINERAMA 1 )
+  else( )
+    tde_message_fatal( "xinerama is requested, but not found on your system" )
+  endif( )
+endif( WITH_XINERAMA )
 
 
 # xcursor (tdeioslave, kcontrol)

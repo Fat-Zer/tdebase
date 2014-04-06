@@ -31,6 +31,8 @@ include_directories(
 #  WITH_XINNERAMA         -> CONFIG_XINERAMA
 #  WITH_OPENGL            -> CONFIG_VSYNC_OPENGL
 #  WITH_OPENGL            -> CONFIG_VSYNC_OPENGL_GLSL
+#  WITH_OPENGL            -> CONFIG_VSYNC_OPENGL_FBO
+#  WITH_OPENGL            -> CONFIG_GLX_XSYNC
 #  WITH_PCRE              -> CONFIG_REGEX_PCRE
 #  WITH_PCRE              -> CONFIG_REGEX_PCRE_JIT
 #  WITH_LIBCONFIG         -> CONFIG_LIBCONFIG
@@ -50,6 +52,8 @@ set( compton_SRCS compton.c )
 if( WITH_OPENGL )
   set( CONFIG_VSYNC_OPENGL      ${WITH_OPENGL} )
   set( CONFIG_VSYNC_OPENGL_GLSL ${WITH_OPENGL} )
+  set( CONFIG_VSYNC_OPENGL_FBO  ${WITH_OPENGL} )
+  set( CONFIG_GLX_XSYNC         ${WITH_OPENGL} )
   list( APPEND compton_LIBRARIES ${GL_LIBRARIES})
   list( APPEND compton_SRCS opengl.c )
 endif( )

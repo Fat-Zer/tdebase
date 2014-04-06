@@ -115,7 +115,7 @@ option( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" 
 # WITH_LIBART       affects tdm kcontrol(icons background)
 # WITH_LIBUSB       affects kcontrol(input)
 # WITH_XDMCP        affects tdm
-# WITH_XINERAMA     affects ksplashml
+# WITH_XINERAMA     affects ksplashml twin/compton-tde
 # WITH_ARTS         affects libkonq khotkeys
 # WITH_I8K          affects ksysguard
 # WITH_SENSORS      affects ksysguard
