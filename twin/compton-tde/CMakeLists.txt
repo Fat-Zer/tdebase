@@ -16,57 +16,70 @@ elseif( NOT WITH_XRANDR )
   tde_message_fatal( "xrandr support is needed to build compton-tde.\n Pass -DWITH_XRANDR=ON to cmake arguments." )
 elseif( NOT WITH_XFIXES )
   tde_message_fatal( "xfixes support is needed to build compton-tde.\n Pass -DWITH_XFIXES=ON to cmake arguments." )
-elseif( NOT WITH_XINERAMA )
-  tde_message_fatal( "xinerama support is needed to build compton-tde.\n Pass -DWITH_XINERAMA=ON to cmake arguments." )
-elseif( NOT WITH_LIBCONFIG )
-  tde_message_fatal( "libconfig support is needed to build compton-tde.\n Pass -DWITH_LIBCONFIG=ON to cmake arguments." )
 endif( )
-
 
 include_directories(
   ${CMAKE_BINARY_DIR}
-  ${TDE_INCLUDE_DIR}
-  ${TQT_INCLUDE_DIRS}
-)
-
-link_directories(
-  ${TQT_LIBRARY_DIRS}
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${DBUS_INCLUDE_DIRS}
 )
 
 
 ##### compton-tde (executable) ###################
 
-add_definitions("-Wall" "-std=c99")
+# TDE to compton config option map
+#  WITH_XINNERAMA         -> CONFIG_XINERAMA    
+#  WITH_OPENGL            -> CONFIG_VSYNC_OPENGL
+#  WITH_OPENGL            -> CONFIG_VSYNC_OPENGL_GLSL
+#  WITH_PCRE              -> CONFIG_REGEX_PCRE
+#  WITH_PCRE              -> CONFIG_REGEX_PCRE_JIT
+#  WITH_LIBCONFIG         -> CONFIG_LIBCONFIG
+#
+#  HAVE_LIBCONFIG_OLD_API -> CONFIG_LIBCONFIG_LEGACY (set up in compton_config.h)
+#
+#  CONFIG_DBUS              - always ON
+#  CONFIG_C2                - always ON
+#  CONFIG_XSYNC             - always ON (utilieses Xext)
 
-option(CONFIG_LIBCONFIG "Enable configuration file parsing using libconfig" ON)
-if (CONFIG_LIBCONFIG)
-	add_definitions("-DCONFIG_LIBCONFIG")
-endif ()
+# TODO: think about some configuration option for CONFIG_VSYNC_DRM
 
-option(CONFIG_VSYNC_DRM "Enable DRM VSync support" ON)
-if (CONFIG_VSYNC_DRM)
-	add_definitions("-DCONFIG_LIBCONFIG")
-endif ()
+add_definitions("-std=c99")
 
-option(CONFIG_VSYNC_OPENGL "Enable OpenGL support" ON)
-if (CONFIG_VSYNC_OPENGL)
-	add_definitions("-DCONFIG_VSYNC_OPENGL")
-	list(APPEND compton_SRCS src/opengl.c)
-endif ()
+set( compton_SRCS compton.c )
 
-option(CONFIG_XINERAMA "Enable additional Xinerama features" ON)
-if (CONFIG_XINERAMA)
-	add_definitions("-DCONFIG_XINERAMA")
-endif ()
+if( WITH_OPENGL )
+  set( CONFIG_VSYNC_OPENGL      ${WITH_OPENGL} )
+  set( CONFIG_VSYNC_OPENGL_GLSL ${WITH_OPENGL} )
+  list( APPEND compton_LIBRARIES ${GL_LIBRARIES})
+  list( APPEND compton_SRCS opengl.c )
+endif( )
 
-option(CONFIG_C2 "Enable matching system" ON)
-if (CONFIG_C2)
-	add_definitions("-DCONFIG_C2")
-	list(APPEND compton_SRCS src/c2.c)
-endif ()
+if( WITH_LIBCONFIG )
+  set( CONFIG_LIBCONFIG ${WITH_LIBCONFIG} )
+  list( APPEND compton_LIBRARIES ${LIBCONFIG_LIBRARIES} )
+endif( )
+
+if( WITH_XINERAMA )
+  set( CONFIG_XINERAMA ${WITH_XINERAMA} )
+  list( APPEND compton_LIBRARIES ${XINERAMA_LIBRARIES} )
+endif( )
+
+if( WITH_PCRE )
+  set( CONFIG_REGEX_PCRE        ${WITH_PCRE} )
+  set( CONFIG_REGEX_PCRE_JIT    ${WITH_PCRE} )
+  list( APPEND compton_LIBRARIES ${LIBPCRE_LIBRARIES} )
+endif( )
+
+configure_file( compton_config.h.cmake compton_config.h )
+
+# permanently turn on some optional features: dbus c2
+list( APPEND compton_SRCS dbus.c c2.c )
+list( APPEND compton_LIBRARIES ${DBUS_LIBRARIES} )
 
 tde_add_executable( compton-tde
-  SOURCES c2.c compton.c opengl.c
-  LINK m GL Xinerama ${LIBCONFIG_LIBRARIES} ${XRENDER_LIBRARIES} ${XRANDR_LIBRARIES} ${XFIXES_LIBRARIES} ${XDAMAGE_LIBRARIES} ${XEXT_LIBRARIES} ${XCOMPOSITE_LIBRARIES}
+    SOURCES ${compton_SRCS}
+  LINK m ${compton_LIBRARIES} ${XRENDER_LIBRARIES} 
+    ${XRANDR_LIBRARIES} ${XFIXES_LIBRARIES} ${XDAMAGE_LIBRARIES} 
+    ${XEXT_LIBRARIES} ${XCOMPOSITE_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )
