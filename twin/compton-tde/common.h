@@ -12,7 +12,7 @@
 #ifndef COMPTON_COMMON_H
 #define COMPTON_COMMON_H
 
-#include "config.h"
+#include "compton_config.h"
 
 // === Options ===
 

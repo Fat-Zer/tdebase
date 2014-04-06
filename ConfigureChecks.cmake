@@ -83,7 +83,7 @@ if( WITH_XRENDER OR BUILD_KDESKTOP OR BUILD_KONSOLE OR BUILD_KCONTROL OR BUILD_K
 endif( )
 
 
-# xrender (kcontrol, twin)
+# xrandr (kcontrol)
 if( WITH_XRANDR )
   pkg_search_module( XRANDR xrandr )
   if( NOT XRANDR_FOUND )
@@ -144,12 +144,22 @@ if( WITH_LIBCONFIG )
   pkg_search_module( LIBCONFIG libconfig )
   if( LIBCONFIG_FOUND )
     set( HAVE_LIBCONFIG 1 )
-    if( LIBCONFIG_VERSION VERSION_LESS 1.5.0 )
+    # TODO replace with functionality check
+    if( LIBCONFIG_VERSION VERSION_LESS 1.4.0 )
       set( HAVE_LIBCONFIG_OLD_API 1 )
     endif( )
   else( LIBCONFIG_FOUND )
     tde_message_fatal( "libconfig is requested, but was not found on your system" )
   endif( )
+endif( )
+
+
+# pcre (twin/compton-tde)
+if( WITH_PCRE )
+  pkg_search_module( LIBPCRE libpcre )
+  if( NOT LIBPCRE_FOUND )
+    tde_message_fatal( "pcre support is requested, but not found on your system" )
+  endif( NOT LIBPCRE_FOUND )
 endif( )
 
 
@@ -196,7 +206,7 @@ if( WITH_XSCREENSAVER )
 endif( )
 
 
-# openGL (kdesktop or kcontrol or tdescreensaver )
+# openGL (kdesktop or kcontrol or tdescreensaver or twin/compot-tde )
 if( WITH_OPENGL )
   pkg_search_module( GL gl )
   if( GL_FOUND )
@@ -297,8 +307,8 @@ find_package( TDE )
 
 
 
-# dbus (tdm, kdesktop)
-if( BUILD_TDM OR BUILD_KDESKTOP )
+# dbus (tdm, kdesktop, twin/compton-tde.c)
+if( BUILD_TDM OR BUILD_KDESKTOP OR (BUILD_TWIN AND WITH_XCOMPOSITE) )
 
   pkg_search_module( DBUS dbus-1 )
   if( NOT DBUS_FOUND )
