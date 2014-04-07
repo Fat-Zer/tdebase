@@ -429,8 +429,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
             connect(localURLJob, TQT_SIGNAL(localURL(TDEIO::LocalURLJob*, const KURL&, bool)), this, TQT_SLOT(slotLocalURL(TDEIO::LocalURLJob*, const KURL&, bool)));
             connect(localURLJob, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotLocalURLKIODestroyed()));
             while (!d->localURLSlotFired) {
-                usleep(100);
-                tqApp->eventLoop()->processEvents(TQEventLoop::ExcludeUserInput);
+                kapp->eventLoop()->enterLoop();
             }
             if (d->localURLResultIsLocal) {
                 realURL = d->localURLResultURL;
@@ -1231,6 +1230,7 @@ void KonqPopupMenu::slotLocalURL(TDEIO::LocalURLJob *job, const KURL& url, bool 
   d->localURLSlotFired = true;
   d->localURLResultURL = url;
   d->localURLResultIsLocal = isLocal;
+  kapp->eventLoop()->exitLoop();
 }
 
 void KonqPopupMenu::slotLocalURLKIODestroyed()
@@ -1239,6 +1239,7 @@ void KonqPopupMenu::slotLocalURLKIODestroyed()
     d->localURLSlotFired = true;
     d->localURLResultURL = KURL();
     d->localURLResultIsLocal = false;
+    kapp->eventLoop()->exitLoop();
   }
 }
 
