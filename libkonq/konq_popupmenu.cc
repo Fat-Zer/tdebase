@@ -423,14 +423,15 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
     // If a local path is available, monitor that instead of the given remote URL...
     KURL realURL = m_sViewURL;
     if (!realURL.isLocalFile()) {
+        d->localURLSlotFired = false;
         TDEIO::LocalURLJob* localURLJob = TDEIO::localURL(m_sViewURL);
         if (localURLJob) {
             connect(localURLJob, TQT_SIGNAL(localURL(TDEIO::LocalURLJob*, const KURL&, bool)), this, TQT_SLOT(slotLocalURL(TDEIO::LocalURLJob*, const KURL&, bool)));
             connect(localURLJob, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotLocalURLKIODestroyed()));
-            d->localURLSlotFired = false;
+//printf("[RAJA DEBUG 600.0] Waiting for result... %p\n\r", this); fflush(stdout);
             while (!d->localURLSlotFired) {
+                usleep(100);
                 tqApp->eventLoop()->processEvents(TQEventLoop::ExcludeUserInput);
-                usleep(1000);
             }
             if (d->localURLResultIsLocal) {
                 realURL = d->localURLResultURL;
@@ -1228,6 +1229,7 @@ KURL::List KonqPopupMenu::popupURLList() const
 
 void KonqPopupMenu::slotLocalURL(TDEIO::LocalURLJob *job, const KURL& url, bool isLocal)
 {
+//printf("[RAJA DEBUG 600.1] In KonqPopupMenu::slotLocalURL %p\n\r", this); fflush(stdout);
   d->localURLSlotFired = true;
   d->localURLResultURL = url;
   d->localURLResultIsLocal = isLocal;
@@ -1235,6 +1237,7 @@ void KonqPopupMenu::slotLocalURL(TDEIO::LocalURLJob *job, const KURL& url, bool 
 
 void KonqPopupMenu::slotLocalURLKIODestroyed()
 {
+//printf("[RAJA DEBUG 600.2] In KonqPopupMenu::slotLocalURLKIODestroyed %p\n\r", this); fflush(stdout);
   if (!d->localURLSlotFired) {
     d->localURLSlotFired = true;
     d->localURLResultURL = KURL();
