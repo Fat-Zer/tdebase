@@ -1406,6 +1406,47 @@ TQString TDEBackend::unmount(const TQString &_udi)
 	return TQString();
 }
 
+void TDEBackend::slotResult(TDEIO::Job *job)
+{
+	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+
+	struct mount_job_data *data = mount_jobs[job];
+	TQString& qerror = data->errorMessage;
+	const Medium* medium = data->medium;
+
+	if (job->error() == TDEIO::ERR_COULD_NOT_UNMOUNT) {
+		TQString proclist(listUsingProcesses(medium));
+
+		qerror = "<qt>";
+		qerror += "<p>" + i18n("Unfortunately, the device <b>%1</b> (%2) named <b>'%3'</b> and "
+			"currently mounted at <b>%4</b> could not be unmounted. ").arg(
+				"system:/media/" + medium->name(),
+				medium->deviceNode(),
+				medium->prettyLabel(),
+				medium->prettyBaseURL().pathOrURL()) + "</p>";
+		qerror += "<p>" + i18n("The following error was returned by umount command:");
+		qerror += "</p><pre>" + job->errorText() + "</pre>";
+
+		if (!proclist.isEmpty()) {
+			qerror += proclist;
+		}
+		qerror += "</qt>";
+	} else if (job->error()) {
+		qerror = job->errorText();
+	}
+
+	TDEStorageDevice * sdevice = hwdevices->findDiskByUID(medium->id());
+	if (sdevice) {
+		ResetProperties(sdevice);
+	}
+	mount_jobs.remove(job);
+
+	/* Job completed. Notify the caller */
+	data->error = job->error();
+	data->completed = true;
+	kapp->eventLoop()->exitLoop();
+}
+
 TQString TDEBackend::isInFstab(const Medium *medium)
 {
 	KMountPoint::List fstab = KMountPoint::possibleMountPoints(KMountPoint::NeedMountOptions|KMountPoint::NeedRealDeviceName);

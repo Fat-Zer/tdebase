@@ -142,6 +142,9 @@ private:
 	TQString m_decryptionPassword;
 	bool m_decryptPasswordValid;
 
+private slots:
+	void slotResult(TDEIO::Job *job);
+
 /* TDE structures */
 private:
 	/**
