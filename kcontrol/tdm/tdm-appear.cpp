@@ -546,7 +546,7 @@ void TDMAppearanceWidget::load()
 
   // See if the SAK is enabled
   if (!sakwarning) {
-    sakbox->setChecked(config->readBoolEntry("UseSAK", true));
+    sakbox->setChecked(config->readBoolEntry("UseSAK", false));
   }
   else {
     sakbox->setChecked(false);

@@ -699,7 +699,7 @@ void KScreenSaver::processLockouts()
         mDelaySaverStartCheckBox->setEnabled( false );
         mDelaySaverStartCheckBox->setChecked( false );
     }
-    if (!mUseUnmanagedLockWindows && mTDMConfig->readBoolEntry("UseSAK", true)) {
+    if (!mUseUnmanagedLockWindows && mTDMConfig->readBoolEntry("UseSAK", false)) {
         mUseTSAKCheckBox->setEnabled( true );
         mUseTSAKCheckBox->setChecked( mUseTSAK );
     }
