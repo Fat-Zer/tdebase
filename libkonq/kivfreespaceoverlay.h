@@ -45,11 +45,9 @@ protected:
     virtual void timerEvent(TQTimerEvent *);
 
 private slots:
-    void slotCompleted();
-    void slotNewItems( const KFileItemList& items );
+    void slotDisplay();
 
 private:
-    KDirLister* m_lister;
     KFileIVI* m_freespace;
 };
 

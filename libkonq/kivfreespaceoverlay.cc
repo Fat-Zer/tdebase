@@ -26,6 +26,7 @@
 #include <tqbitmap.h>
 #include <tqimage.h>
 #include <tqfile.h>
+#include <tqtimer.h>
 
 #include <tdefileivi.h>
 #include <tdefileitem.h>
@@ -48,40 +49,29 @@
 #include "kivfreespaceoverlay.h"
 
 KIVFreeSpaceOverlay::KIVFreeSpaceOverlay(KFileIVI* freespace)
-: m_lister(0)
 {
-    if (!m_lister)
-    {
-        m_lister = new KDirLister;
-        m_lister->setAutoErrorHandlingEnabled(false, 0);
-        connect(m_lister, TQT_SIGNAL(completed()), TQT_SLOT(slotCompleted()));
-        connect(m_lister, TQT_SIGNAL(newItems( const KFileItemList& )), TQT_SLOT(slotNewItems( const KFileItemList& )));
-        m_lister->setShowingDotFiles(false);
-    }
     m_freespace = freespace;
 }
 
 KIVFreeSpaceOverlay::~KIVFreeSpaceOverlay()
 {
-    if (m_lister) m_lister->stop();
-    delete m_lister;
+    //
 }
 
 void KIVFreeSpaceOverlay::start()
 {
-    if ( m_freespace->item()->isReadable() ) {
-        m_lister->openURL(m_freespace->item()->url());
-    } else {
+    if ( !m_freespace->item()->isReadable() ) {
         emit finished();
     }
+    TQTimer::singleShot(0, this, TQT_SLOT(slotDisplay()));
 }
 
 void KIVFreeSpaceOverlay::timerEvent(TQTimerEvent *)
 {
-    m_lister->stop();
+    //
 }
 
-void KIVFreeSpaceOverlay::slotCompleted()
+void KIVFreeSpaceOverlay::slotDisplay()
 {
     KFileItem* item = m_freespace->item();
     if (item) {
@@ -123,11 +113,6 @@ void KIVFreeSpaceOverlay::slotCompleted()
     }
 
     emit finished();
-}
-
-void KIVFreeSpaceOverlay::slotNewItems( const KFileItemList& items )
-{
-    //
 }
 
 #include "kivfreespaceoverlay.moc"
