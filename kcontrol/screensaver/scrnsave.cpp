@@ -58,7 +58,7 @@ if( stat( KDE_CONFDIR "/tdm/tdmdistrc" , &st ) == 0) {							\
 else {													\
 	mTDMConfig = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/tdm/tdmrc" ));		\
 }													\
-mTDMConfig->setGroup("X-*-Greeter");
+mTDMConfig->setGroup("X-:*-Greeter");
 
 template class TQPtrList<SaverConfig>;
 

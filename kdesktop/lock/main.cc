@@ -61,7 +61,7 @@ if( stat( KDE_CONFDIR "/tdm/tdmdistrc" , &st ) == 0) {							\
 else {													\
 	tdmconfig = new KSimpleConfig( TQString::fromLatin1( KDE_CONFDIR "/tdm/tdmrc" ));		\
 }													\
-tdmconfig->setGroup("X-*-Greeter");
+tdmconfig->setGroup("X-:*-Greeter");
 
 TQXLibWindowList trinity_desktop_lock_hidden_window_list;
 

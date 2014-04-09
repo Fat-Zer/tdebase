@@ -477,6 +477,7 @@ void TDMAppearanceWidget::save()
   config->writeEntry("Language", langcombo->current());
 
   if (!sakwarning) {
+    config->setGroup("X-:*-Greeter");
     config->writeEntry("UseSAK", sakbox->isChecked());
   }
 
@@ -546,6 +547,7 @@ void TDMAppearanceWidget::load()
 
   // See if the SAK is enabled
   if (!sakwarning) {
+    config->setGroup("X-:*-Greeter");
     sakbox->setChecked(config->readBoolEntry("UseSAK", false));
   }
   else {
