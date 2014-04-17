@@ -441,7 +441,8 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 	medium->mountableState(sdevice->deviceNode(), sdevice->mountPath(), sdevice->fileSystemName(), !sdevice->mountPath().isNull());
 
 	TQString diskLabel = sdevice->diskLabel();
-	if (diskLabel.isNull()) {
+	bool useDefaultLabel = diskLabel.isNull();
+	if (useDefaultLabel) {
 		diskLabel = i18n("%1 Removable Device").arg(sdevice->deviceFriendlySize());
 	}
 
@@ -478,6 +479,9 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 
 		// Default
 		mimeType = "media/cdrom" + MOUNT_SUFFIX;
+		if (useDefaultLabel) {
+			diskLabel = i18n("%1 Removable Device").arg(sdevice->deviceFriendlySize());
+		}
 
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDROM)) {
 			mimeType = "media/cdrom" + MOUNT_SUFFIX;
@@ -700,9 +704,16 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 
 		// Default
 		mimeType = "media/hdd" + MOUNT_SUFFIX;
+		if (useDefaultLabel) {
+			diskLabel = i18n("%1 Fixed Disk (%2)").arg(sdevice->deviceFriendlySize(), sdevice->deviceNode());
+		}
 
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::USB)) {
 			mimeType = "media/removable" + MOUNT_SUFFIX;
+			if (useDefaultLabel) {
+				diskLabel = i18n("%1 Removable Device").arg(sdevice->deviceFriendlySize());
+			}
+
 			medium->needMounting();
 
 			if (sdevice->isDiskOfType(TDEDiskDeviceType::CompactFlash)) {

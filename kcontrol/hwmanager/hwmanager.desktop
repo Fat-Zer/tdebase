@@ -6,7 +6,6 @@ DocPath=kcontrol/hwmanager/index.html
 
 X-TDE-Library=hwmanager
 X-TDE-ParentApp=kcontrol
-X-TDE-RootOnly=true
 X-TDE-SubstituteUID=true
 
 Categories=Qt;TDE;X-TDE-settings-hardware;
