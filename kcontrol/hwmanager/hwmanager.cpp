@@ -144,7 +144,7 @@ void TDEHWManager::populateTreeView()
 		TDEGenericHardwareList hwlist = hwdevices->listByDeviceClass(TDEGenericDeviceType::RootSystem);
 		TDEGenericDevice *hwdevice;
 		for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
-			DeviceIconItem* item = new DeviceIconItem(base->deviceTree, hwdevice->friendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
+			DeviceIconItem* item = new DeviceIconItem(base->deviceTree, hwdevice->detailedFriendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
 			if ((!selected_syspath.isNull()) && (hwdevice->systemPath() == selected_syspath)) {
 				base->deviceTree->ensureItemVisible(item);
 				base->deviceTree->setSelected(item, true);
@@ -160,7 +160,7 @@ void TDEHWManager::populateTreeView()
 				TDEGenericDevice *hwdevice;
 				TDEGenericHardwareList hwlist = hwdevices->listByDeviceClass((TDEGenericDeviceType::TDEGenericDeviceType)i);
 				for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
-					DeviceIconItem* item = new DeviceIconItem(rootitem, hwdevice->friendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
+					DeviceIconItem* item = new DeviceIconItem(rootitem, hwdevice->detailedFriendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
 					if ((!selected_syspath.isNull()) && (hwdevice->systemPath() == selected_syspath)) {
 						base->deviceTree->ensureItemVisible(item);
 						base->deviceTree->setSelected(item, true);
@@ -178,7 +178,7 @@ void TDEHWManager::populateTreeViewLeaf(DeviceIconItem *parent, bool show_by_con
 		TDEGenericDevice *hwdevice;
 		for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
 			if (hwdevice->parentDevice() == parent->device()) {
-				DeviceIconItem* item = new DeviceIconItem(parent, hwdevice->friendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
+				DeviceIconItem* item = new DeviceIconItem(parent, hwdevice->detailedFriendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
 				if ((!selected_syspath.isNull()) && (hwdevice->systemPath() == selected_syspath)) {
 					base->deviceTree->ensureItemVisible(item);
 					base->deviceTree->setSelected(item, true);
@@ -197,8 +197,8 @@ void TDEHWManager::deviceChanged(TDEGenericDevice* device) {
 			TDEGenericDevice* candidate = item->device();
 			if (candidate) {
 				if (candidate->systemPath() == device->systemPath()) {
-					if (item->text(0) != device->friendlyName()) {
-						item->setText(0, device->friendlyName());
+					if (item->text(0) != device->detailedFriendlyName()) {
+						item->setText(0, device->detailedFriendlyName());
 					}
 				}
 			}
