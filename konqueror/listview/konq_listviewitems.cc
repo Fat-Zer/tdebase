@@ -135,7 +135,11 @@ void KonqListViewItem::updateContents()
                if ( _time != 0 )
                {
                    dt.setTime_t( _time );
-                   setText(tmpColumn->displayInColumn,TDEGlobal::locale()->formatDateTime(dt));
+                   setText(tmpColumn->displayInColumn, TDEGlobal::locale()->formatDateTime(dt));
+               }
+               else
+               {
+                   setText(tmpColumn->displayInColumn, TQString::null);
                }
             }
             break;
