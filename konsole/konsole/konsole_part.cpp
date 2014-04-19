@@ -105,6 +105,7 @@ konsolePart::konsolePart(TQWidget *_parentWidget, const char *widgetName, TQObje
 ,rootxpm(0)
 ,blinkingCursor(0)
 ,showFrame(0)
+,metaAsAlt(0)
 ,m_useKonsoleSettings(0)
 ,selectBell(0)
 ,selectLineSpacing(0)
@@ -431,6 +432,11 @@ void konsolePart::makeGUI()
      showFrame->setCheckedState(i18n("Hide Fr&ame"));
      showFrame->plug(m_options);
 
+     // Meta key as Alt key
+     metaAsAlt = new TDEToggleAction(i18n("Me&ta key as Alt key"), 0,
+                                this, TQT_SLOT(slotToggleMetaAsAltMode()), settingsActions);
+     metaAsAlt->plug(m_options);
+
      // Word Connectors
      TDEAction *WordSeps = new TDEAction(i18n("Wor&d Connectors..."), 0, this,
                                   TQT_SLOT(slotWordSeps()), settingsActions);
@@ -505,6 +511,8 @@ void konsolePart::applySettingsToGUI()
      selectLineSpacing->setCurrentItem(te->lineSpacing());
   if (blinkingCursor)
      blinkingCursor->setChecked(te->blinkingCursor());
+  if (metaAsAlt)
+     metaAsAlt->setChecked(b_metaAsAlt);
   if (m_schema)
      m_schema->setItemChecked(curr_schema,true);
   if (selectSetEncoding)
@@ -532,6 +540,8 @@ void konsolePart::applyProperties()
    se->widget()->setVTFont( defaultFont );
    se->setSchemaNo( curr_schema );
    slotSetEncoding();
+
+   se->setMetaAsAltMode(b_metaAsAlt);
 }
 
 void konsolePart::setSettingsMenuEnabled( bool enable )
@@ -560,13 +570,13 @@ void konsolePart::readProperties()
   config->setDesktopGroup();
 
   b_framevis = config->readBoolEntry("has frame",false);
+  b_metaAsAlt = config->readBoolEntry("metaAsAltMode",false);
   b_histEnabled = config->readBoolEntry("historyenabled",true);
   n_bell = TQMIN(config->readUnsignedNumEntry("bellmode",TEWidget::BELLSYSTEM),3);
   n_keytab=config->readNumEntry("keytab",0); // act. the keytab for this session
   n_scroll = TQMIN(config->readUnsignedNumEntry("scrollbar",TEWidget::SCRRIGHT),2);
   m_histSize = config->readNumEntry("history",DEFAULT_HISTORY_SIZE);
   s_word_seps= config->readEntry("wordseps",":@-./_~");
-
   n_encoding = config->readNumEntry("encoding",0);
 
   TQFont tmpFont = TDEGlobalSettings::fixedFont();
@@ -637,6 +647,7 @@ void konsolePart::saveProperties()
     config->writeEntry("historyenabled", b_histEnabled);
     config->writeEntry("keytab",n_keytab);
     config->writeEntry("has frame",b_framevis);
+    config->writeEntry("metaAsAltMode",b_metaAsAlt);
     config->writeEntry("LineSpacing", te->lineSpacing());
     config->writeEntry("schema",s_tdeconfigSchema);
     config->writeEntry("scrollbar",n_scroll);
@@ -914,14 +925,18 @@ void konsolePart::slotBlinkingCursor()
   te->setBlinkingCursor(blinkingCursor->isChecked());
 }
 
+void konsolePart::slotToggleMetaAsAltMode()
+{
+  b_metaAsAlt ^= true;
+  if (!se) return;
+  se->setMetaAsAltMode(b_metaAsAlt);
+}
+
 void konsolePart::slotUseKonsoleSettings()
 {
    b_useKonsoleSettings = m_useKonsoleSettings->isChecked();
-
    setSettingsMenuEnabled( !b_useKonsoleSettings );
-
    readProperties();
-
    applySettingsToGUI();
 }
 

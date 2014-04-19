@@ -2953,21 +2953,21 @@ TQString Konsole::newSession(KSimpleConfig *co, TQString program, const TQStrLis
   s->enableFullScripting(b_fullScripting);
   // If you add any new signal-slot connection below, think about doing it in konsolePart too
   connect( s,TQT_SIGNAL(done(TESession*)),
-           this,TQT_SLOT(doneSession(TESession*)) );
-  connect( s, TQT_SIGNAL( updateTitle(TESession*) ),
-           this, TQT_SLOT( updateTitle(TESession*) ) );
-  connect( s, TQT_SIGNAL( notifySessionState(TESession*, int) ),
-           this, TQT_SLOT( notifySessionState(TESession*, int)) );
+           this,TQT_SLOT(doneSession(TESession*)));
+  connect( s, TQT_SIGNAL(updateTitle(TESession*)),
+           this, TQT_SLOT(updateTitle(TESession*)));
+  connect( s, TQT_SIGNAL(notifySessionState(TESession*, int)),
+           this, TQT_SLOT(notifySessionState(TESession*, int)));
   connect( s, TQT_SIGNAL(disableMasterModeConnections()),
-           this, TQT_SLOT(disableMasterModeConnections()) );
+           this, TQT_SLOT(disableMasterModeConnections()));
   connect( s, TQT_SIGNAL(enableMasterModeConnections()),
-           this, TQT_SLOT(enableMasterModeConnections()) );
+           this, TQT_SLOT(enableMasterModeConnections()));
   connect( s, TQT_SIGNAL(renameSession(TESession*,const TQString&)),
-           this, TQT_SLOT(slotRenameSession(TESession*, const TQString&)) );
+           this, TQT_SLOT(slotRenameSession(TESession*, const TQString&)));
   connect( s->getEmulation(), TQT_SIGNAL(changeColumns(int)),
            this, TQT_SLOT(changeColumns(int)) );
   connect( s->getEmulation(), TQT_SIGNAL(changeColLin(int,int)),
-           this, TQT_SLOT(changeColLin(int,int)) );
+           this, TQT_SLOT(changeColLin(int,int)));
   connect( s->getEmulation(), TQT_SIGNAL(ImageSizeChanged(int,int)),
            this, TQT_SLOT(notifySize(int,int)));
   connect( s, TQT_SIGNAL(zmodemDetected(TESession*)),
@@ -2983,7 +2983,7 @@ TQString Konsole::newSession(KSimpleConfig *co, TQString program, const TQStrLis
   connect( s, TQT_SIGNAL(setSessionSchema(TESession*, const TQString &)),
            this, TQT_SLOT(slotSetSessionSchema(TESession*, const TQString &)));
   connect( s, TQT_SIGNAL(changeTabTextColor(TESession*, int)),
-           this,TQT_SLOT(changeTabTextColor(TESession*, int)) );
+           this,TQT_SLOT(changeTabTextColor(TESession*, int)));
 
   s->widget()->setVTFont(defaultFont);// Hack to set font again after newSession
   s->setSchemaNo(schmno);

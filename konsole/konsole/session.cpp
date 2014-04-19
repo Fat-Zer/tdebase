@@ -464,6 +464,12 @@ void TESession::setFontNo(int fn)
   font_no = fn;
 }
 
+void TESession::setMetaAsAltMode(bool mode)
+{
+  if (em)
+    em->setMetaKeyMode(mode);
+}
+
 void TESession::setTitle(const TQString& _title)
 {
   title = _title;
