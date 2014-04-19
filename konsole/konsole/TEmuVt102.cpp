@@ -936,18 +936,21 @@ void TEmuVt102::onKeyPress( TQKeyEvent* ev )
 
   // lookup in keyboard translation table ...
   int cmd = CMD_none; 
-  const char* txt; 
+  const char *txt; 
   int len;
   bool metaspecified;
-  if (keytrans->findEntry(ev->key(), encodeMode(MODE_NewLine		, BITS_NewLine   ) + // OLD,
-                                     encodeMode(MODE_Ansi		, BITS_Ansi      ) + // OBSOLETE,
-                                     encodeMode(MODE_AppCuKeys		, BITS_AppCuKeys ) + // VT100 stuff
-                                     encodeMode(MODE_AppScreen		, BITS_AppScreen ) + // VT100 stuff
-                                     encodeStat(TQt::ControlButton	, BITS_Control   ) +
-                                     encodeStat(TQt::ShiftButton	, BITS_Shift     ) +
-                                     encodeStat(TQt::AltButton		, BITS_Alt       ),
-                          &cmd, &txt, &len, &metaspecified ))
-//printf("cmd: %d, %s, %d\n",cmd,txt,len);
+  int bits = encodeMode(MODE_NewLine		  , BITS_NewLine   ) + // OLD,
+             encodeMode(MODE_Ansi		      , BITS_Ansi      ) + // OBSOLETE,
+             encodeMode(MODE_AppCuKeys		, BITS_AppCuKeys ) + // VT100 stuff
+             encodeMode(MODE_AppScreen		, BITS_AppScreen ) + // VT100 stuff
+             encodeStat(TQt::ControlButton, BITS_Control   ) +
+             encodeStat(TQt::ShiftButton	, BITS_Shift     ) +
+             encodeStat(TQt::AltButton		, BITS_Alt       );
+  if (metaKeyMode)
+    bits += encodeStat(TQt::MetaButton , BITS_Alt);
+  bool transRes = keytrans->findEntry(ev->key(), bits, &cmd, &txt, &len, &metaspecified);
+//if (transRes)
+//  printf("cmd: %d, %s, %d\n",cmd,txt,len);
   if (connected)
   {
   switch(cmd) // ... and execute if found.
@@ -976,8 +979,10 @@ void TEmuVt102::onKeyPress( TQKeyEvent* ev )
     || ev->key()==Qt::Key_PageUp || ev->key()==Qt::Key_PageDown))
     scr->setHistCursor(scr->getHistLines());
 
-  if (cmd==CMD_send) {
-    if ((ev->state() & TQt::AltButton) && !metaspecified ) sendString("\033");
+  if (cmd==CMD_send)
+  {
+    if (((ev->state() & TQt::AltButton) || (metaKeyMode && (ev->state() & TQt::MetaButton))) && !metaspecified)
+      sendString("\033");
     emit sndBlock(txt,len);
     return;
   }

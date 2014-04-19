@@ -89,6 +89,7 @@ public:
 
   virtual void setMode  (int) = 0;
   virtual void resetMode(int) = 0;
+  void setMetaKeyMode(bool mode) { metaKeyMode = mode; }
 
   virtual void sendString(const char*) = 0;
 
@@ -119,6 +120,7 @@ protected:
 
   bool   connected;    // communicate with widget
   bool   listenToKeyPress;  // listen to input
+  bool   metaKeyMode;       // true -> meta key is handled as Alt
 
   void setCodec(int c); // codec number, 0 = locale, 1=utf8
 

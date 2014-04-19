@@ -98,6 +98,7 @@ TEmulation::TEmulation(TEWidget* w)
   scr(0),
   connected(false),
   listenToKeyPress(false),
+  metaKeyMode(false),
   m_codec(0),
   decoder(0),
   keytrans(0),
