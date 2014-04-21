@@ -169,7 +169,7 @@
                             </widget>
                             <widget class="TQCheckBox" row="10" column="0" rowspan="1" colspan="3">
                                 <property name="name">
-                                    <cstring>tabsCycleWheel</cstring>
+                                    <cstring>tabsCycleWheelCB</cstring>
                                 </property>
                                 <property name="text">
                                     <string>Cycle tabs with mouse wheel</string>
@@ -177,7 +177,7 @@
                             </widget>
                             <widget class="TQCheckBox" row="11" column="0" rowspan="1" colspan="3">
                                 <property name="name">
-                                    <cstring>menuAccelerators</cstring>
+                                    <cstring>menuAcceleratorsCB</cstring>
                                 </property>
                                 <property name="text">
                                     <string>Enable main menu accelerator keys</string>
