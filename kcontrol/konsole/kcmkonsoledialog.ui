@@ -131,7 +131,7 @@
                                     <cstring>xonXoffCB</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Use Ctrl+S/Ctrl+Q flow control</string>
+                                  <string>&amp;Use Ctrl+S/Ctrl+Q flow control</string>
                                 </property>
                             </widget>
                             <spacer row="12" column="3">
@@ -156,7 +156,7 @@
                                     <cstring>bidiCB</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Enable bidirectional text rendering</string>
+                                  <string>E&amp;nable bidirectional text rendering</string>
                                 </property>
                             </widget>
                             <widget class="TQCheckBox" row="9" column="0" rowspan="1" colspan="4">
@@ -164,7 +164,7 @@
                                     <cstring>matchTabWinTitleCB</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Set tab title to match window title</string>
+                                  <string>Set &amp;tab title to match window title</string>
                                 </property>
                             </widget>
                             <widget class="TQCheckBox" row="10" column="0" rowspan="1" colspan="3">
@@ -172,7 +172,7 @@
                                     <cstring>tabsCycleWheelCB</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Cycle tabs with mouse wheel</string>
+                                  <string>Cycle tabs &amp;with mouse wheel</string>
                                 </property>
                             </widget>
                             <widget class="TQCheckBox" row="11" column="0" rowspan="1" colspan="3">
@@ -180,7 +180,7 @@
                                     <cstring>menuAcceleratorsCB</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Enable main menu accelerator keys</string>
+                                  <string>Enable main &amp;menu accelerator keys</string>
                                 </property>
                             </widget>
                             <widget class="TQCheckBox" row="12" column="0" rowspan="1" colspan="3">
@@ -188,7 +188,7 @@
                                 <cstring>metaAsAltModeCB</cstring>
                               </property>
                               <property name="text">
-                                <string>Handle Meta key as Alt Key</string>
+                                <string>Handle Meta &amp;key as Alt Key</string>
                               </property>
                             </widget>
                             <widget class="TQLabel" row="13" column="0" rowspan="1" colspan="2">
