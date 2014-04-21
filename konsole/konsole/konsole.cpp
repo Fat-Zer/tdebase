@@ -273,6 +273,7 @@ Konsole::Konsole(const char* name, int histon, bool menubaron, bool tabbaron, bo
 ,b_autoResizeTabs(false)
 ,b_installBitmapFonts(false)
 ,b_framevis(true)
+,b_metaAsAlt(false)
 ,b_fullscreen(false)
 ,m_menuCreated(false)
 ,b_warnQuit(false)
@@ -1622,6 +1623,7 @@ void Konsole::readProperties(TDEConfig* config, const TQString &schema, bool glo
      b_bidiEnabled = config->readBoolEntry("EnableBidi",false);
      s_word_seps= config->readEntry("wordseps",":@-./_~");
      b_framevis = config->readBoolEntry("has frame",true);
+     b_metaAsAlt = config->readBoolEntry("metaAsAltMode",false);
      TQPtrList<TEWidget> tes = activeTEs();
      for (TEWidget *_te = tes.first(); _te; _te = tes.next()) {
        _te->setWordCharacters(s_word_seps);
@@ -1636,7 +1638,10 @@ void Konsole::readProperties(TDEConfig* config, const TQString &schema, bool glo
 
      monitorSilenceSeconds=config->readUnsignedNumEntry("SilenceSeconds", 10);
      for (TESession *ses = sessions.first(); ses; ses = sessions.next())
+     {
+       ses->setMetaAsAltMode(b_metaAsAlt);
        ses->setMonitorSilenceSeconds(monitorSilenceSeconds);
+     }
 
      b_xonXoff = config->readBoolEntry("XonXoff",false);
      b_matchTabWinTitle = config->readBoolEntry("MatchTabWinTitle",false);
@@ -2187,7 +2192,9 @@ void Konsole::reparseConfiguration()
   curr_schema = sch->numb();
   pmPath = sch->imagePath();
 
-  for (TESession *_se = sessions.first(); _se; _se = sessions.next()) {
+  for (TESession *_se = sessions.first(); _se; _se = sessions.next())
+  {
+     _se->setMetaAsAltMode(b_metaAsAlt);
      ColorSchema* s = colors->find( _se->schemaNo() );
      if (s) {
        if (s->hasSchemaFileChanged())
@@ -2951,6 +2958,8 @@ TQString Konsole::newSession(KSimpleConfig *co, TQString program, const TQStrLis
   s->setProgram(TQFile::encodeName(program),cmdArgs);
   s->setMonitorSilenceSeconds(monitorSilenceSeconds);
   s->enableFullScripting(b_fullScripting);
+  s->setMetaAsAltMode(b_metaAsAlt);
+  
   // If you add any new signal-slot connection below, think about doing it in konsolePart too
   connect( s,TQT_SIGNAL(done(TESession*)),
            this,TQT_SLOT(doneSession(TESession*)));
