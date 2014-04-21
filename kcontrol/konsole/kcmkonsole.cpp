@@ -73,6 +73,7 @@ KCMKonsole::KCMKonsole(TQWidget * parent, const char *name, const TQStringList&)
     connect(dialog->matchTabWinTitleCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
     connect(dialog->tabsCycleWheel,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
     connect(dialog->menuAccelerators,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
+    connect(dialog->metaAsAltModeCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
     connect(dialog->silence_secondsSB,TQT_SIGNAL(valueChanged(int)), TQT_SLOT( changed() ));
     connect(dialog->word_connectorLE,TQT_SIGNAL(textChanged(const TQString &)), TQT_SLOT( changed() ));
     connect(dialog->SchemaEditor1, TQT_SIGNAL(changed()), TQT_SLOT( changed() ));
@@ -110,6 +111,7 @@ void KCMKonsole::load(bool useDefaults)
     dialog->line_spacingSB->setValue(config.readUnsignedNumEntry( "LineSpacing", 0 ));
     dialog->silence_secondsSB->setValue(config.readUnsignedNumEntry( "SilenceSeconds", 10 ));
     dialog->word_connectorLE->setText(config.readEntry("wordseps",":@-./_~"));
+    dialog->metaAsAltModeCB->setChecked(config.readBoolEntry("metaAsAltMode",false));
 
     dialog->SchemaEditor1->setSchema(config.readEntry("schema"));
 
@@ -150,6 +152,7 @@ void KCMKonsole::save()
     config.writeEntry("LineSpacing" , dialog->line_spacingSB->value());
     config.writeEntry("SilenceSeconds" , dialog->silence_secondsSB->value());
     config.writeEntry("wordseps", dialog->word_connectorLE->text());
+    config.writeEntry("metaAsAltMode", dialog->metaAsAltModeCB->isChecked());
 
     config.writeEntry("schema", dialog->SchemaEditor1->schema());
 
