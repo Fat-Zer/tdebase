@@ -134,23 +134,6 @@
                                   <string>&amp;Use Ctrl+S/Ctrl+Q flow control</string>
                                 </property>
                             </widget>
-                            <spacer row="12" column="3">
-                                <property name="name">
-                                    <cstring>Spacer3</cstring>
-                                </property>
-                                <property name="orientation">
-                                    <enum>Horizontal</enum>
-                                </property>
-                                <property name="sizeType">
-                                    <enum>Expanding</enum>
-                                </property>
-                                <property name="sizeHint">
-                                    <size>
-                                        <width>20</width>
-                                        <height>20</height>
-                                    </size>
-                                </property>
-                            </spacer>
                             <widget class="TQCheckBox" row="8" column="0" rowspan="1" colspan="3">
                                 <property name="name">
                                     <cstring>bidiCB</cstring>
@@ -210,6 +193,23 @@
                                 <cstring>line_spacingSB</cstring>
                               </property>
                             </widget>
+                            <spacer row="12" column="3">
+                              <property name="name">
+                                <cstring>Spacer3</cstring>
+                              </property>
+                              <property name="orientation">
+                                <enum>Horizontal</enum>
+                              </property>
+                              <property name="sizeType">
+                                <enum>Expanding</enum>
+                              </property>
+                              <property name="sizeHint">
+                                <size>
+                                  <width>20</width>
+                                  <height>20</height>
+                                </size>
+                              </property>
+                            </spacer>
                             <widget class="KIntNumInput" row="13" column="2">
                                 <property name="name">
                                     <cstring>line_spacingSB</cstring>

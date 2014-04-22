@@ -44,16 +44,6 @@ Daemon</guilabel>.</para>
 functions.  It contains the following options:</para>
 
 <variablelist>
-<varlistentry>
-<term><guilabel>Use Konsole as default terminal
-application</guilabel></term>
-<listitem>
-<para>If you wish to have &tde; use another terminal application by
-default, uncheck this box and enter the preferred application
-(<application>wterm</application>, <application>rxvt</application>,
-&etc;) in the text field below.</para>
-</listitem>
-</varlistentry>
 
 <varlistentry>
 <term><guilabel>Show Terminal Size when Resizing</guilabel></term>
@@ -72,9 +62,9 @@ behavior.</para></listitem>
 </varlistentry>
 
 <varlistentry>
-<term><guilabel>Confirm quit with open sessions</guilabel></term>
+<term><guilabel>Confirm quit when closing more than one session</guilabel></term>
 <listitem>
-<para>When set, a warning appears when you try to close a  &konsole;
+<para>When set, a warning appears when you try to close a &konsole;
 window with multiple sessions.</para>
 </listitem>
 </varlistentry>
@@ -87,9 +77,88 @@ attention.</para></listitem>
 </varlistentry>
 
 <varlistentry>
+<term><guilabel>Require Ctrl key for drag and drop</guilabel></term>
+<listitem><para>If unchecked, you can drag and drop selected text by using the mouse.
+If checked, the Ctrl key needs to be held down to allow drag and drop (this is
+a good way to avoid erroneous drag and drop operations).
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Triple click selects only from the current word forward</guilabel></term>
+<listitem><para>If checked, a mouse triple click will select everything from the 
+current cursor position to the end of the lime. If unchecked, a mouse triple click will select
+the entire current row.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Allow programs to resize terminal window</guilabel></term>
+<listitem><para>If checked, programs can resize the terminal window.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Use Ctrl+S/Ctrl+Q flow control</guilabel></term>
+<listitem><para>If checked, Ctrl+S/Ctrl+Q can be used to control the flow of output
+characters sent to the terminal. After pressing CTRL-S, the system will not send any
+more data to the screen until a CTRL-Q is pressed.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Enable bidirectional text rendering</guilabel></term>
+<listitem><para>If checked, text can be rendered from left to right or from right to left.
+This is useful to support languages which are written in the second way.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Set tab title to match window title</guilabel></term>
+<listitem><para>If checked, the title of the tab representing the current session will match
+the text displayed on the window title bar. Whenever the window title changes, the tab 
+tile changes as well.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Cycle tabs with mouse wheel</guilabel></term>
+<listitem><para>If checked, you can move through the different session tabs 
+using the mouse wheel over the tabbar control. If unchecked, the action is disabled.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Enable main menu accelerator keys</guilabel></term>
+<listitem><para>If checked, the main menu shortcut keys are enabled, otherwise
+they are disabled.
+</para>
+<note><para>If menu accelerators are enabled, some Alt-key combinations may not
+be handled correctly any longer in Konsole applications.</para></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Handle Meta key as Alt Key</guilabel></term>
+<listitem><para>If checked, the Meta key will be handled as if it was an Alt key.
+</para>
+<note><para>This is a useful option if you have enabled the main menu shortcut keys.
+You can use the Meta key to activate those Alt-key combinations that otherwise
+would not work any longer in Konsole.</para></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
 <term><guilabel>Line Spacing</guilabel></term>
 <listitem><para>Change the space between lines of text.</para>
 </listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Seconds to detect silence</guilabel></term>
+<listitem><para>Allows to specify the time interval used for monitoring the
+Konsole for silence,
+</para></listitem>
 </varlistentry>
 
 <varlistentry>
