@@ -157,7 +157,7 @@ would not work any longer in Konsole.</para></note>
 <varlistentry>
 <term><guilabel>Seconds to detect silence</guilabel></term>
 <listitem><para>Allows to specify the time interval used for monitoring the
-Konsole for silence,
+Konsole for silence.
 </para></listitem>
 </varlistentry>
 
