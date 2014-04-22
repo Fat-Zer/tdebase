@@ -948,19 +948,17 @@ void TEmuVt102::onKeyPress( TQKeyEvent* ev )
              encodeStat(TQt::AltButton		, BITS_Alt       );
   if (metaKeyMode)
     bits += encodeStat(TQt::MetaButton , BITS_Alt);
-  bool transRes = keytrans->findEntry(ev->key(), bits, &cmd, &txt, &len, &metaspecified);
-//if (transRes)
-//  printf("cmd: %d, %s, %d\n",cmd,txt,len);
+  keytrans->findEntry(ev->key(), bits, &cmd, &txt, &len, &metaspecified);
   if (connected)
   {
-  switch(cmd) // ... and execute if found.
-  {
-    case CMD_scrollPageUp   : gui->doScroll(-gui->Lines()/2); return;
-    case CMD_scrollPageDown : gui->doScroll(+gui->Lines()/2); return;
-    case CMD_scrollLineUp   : gui->doScroll(-1             ); return;
-    case CMD_scrollLineDown : gui->doScroll(+1             ); return;
-    case CMD_scrollLock     : onScrollLock(                ); return;
-  }
+    switch(cmd) // ... and execute if found.
+    {
+      case CMD_scrollPageUp   : gui->doScroll(-gui->Lines()/2); return;
+      case CMD_scrollPageDown : gui->doScroll(+gui->Lines()/2); return;
+      case CMD_scrollLineUp   : gui->doScroll(-1             ); return;
+      case CMD_scrollLineDown : gui->doScroll(+1             ); return;
+      case CMD_scrollLock     : onScrollLock(                ); return;
+    }
   }
   if (holdScreen)
   {
@@ -990,7 +988,8 @@ void TEmuVt102::onKeyPress( TQKeyEvent* ev )
   // fall back handling
   if (!ev->text().isEmpty())
   {
-    if (ev->state() & TQt::AltButton) sendString("\033"); // ESC, this is the ALT prefix
+    if ((ev->state() & TQt::AltButton) || (metaKeyMode && (ev->state() & TQt::MetaButton)))
+      sendString("\033"); // ESC, this is the ALT prefix
     TQCString s = m_codec->fromUnicode(ev->text());     // encode for application
     // FIXME: In Qt 2, TQKeyEvent::text() would return "\003" for Ctrl-C etc.
     //        while in Qt 3 it returns the actual key ("c" or "C") which caused
