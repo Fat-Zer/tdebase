@@ -1457,7 +1457,7 @@ void TaskContainer::dragEnterEvent( TQDragEnterEvent* e )
         return;
     }
 
-    if ((e->source()->parent() == this->parent()) && TaskDrag::canDecode(e) && READ_MERGED_TASBKAR_SETTING(allowDragAndDropReArrange) && (!READ_MERGED_TASBKAR_SETTING(sortByApp)))
+    if (e->source() && (e->source()->parent() == this->parent()) && TaskDrag::canDecode(e) && READ_MERGED_TASBKAR_SETTING(allowDragAndDropReArrange) && (!READ_MERGED_TASBKAR_SETTING(sortByApp)))
     {
         e->accept();
     }
