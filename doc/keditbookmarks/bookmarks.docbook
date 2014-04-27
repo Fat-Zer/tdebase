@@ -1,0 +1,87 @@
+<chapter id="bookmarks">
+<chapterinfo>
+<authorgroup><author>&tde-authors;</author></authorgroup>
+</chapterinfo>
+
+<title>Editing bookmarks</title>
+
+<para>The <guilabel>Bookmark Editor</guilabel> shows a tree view of your bookmarks
+and bookmark subfolders. As is usual for tree views in &tde;, subfolders are shown
+with a small square at the left of the folder name; if the square contains a 
+<keycap>+</keycap> sign <mousebutton>left</mousebutton> clicking on it will expand
+the view to show the contents of that subfolder and the <keycap>+</keycap> sign will 
+change to <keycap>-</keycap>, <mousebutton>left</mousebutton> clicking on the 
+<keycap>-</keycap> sign will collapse the subfolder view.</para>
+
+<para>To select an item in the list you can <mousebutton>left</mousebutton> 
+click on it, or you can navigate through the list by using the <keysym>
+Up arrow</keysym> and <keysym>Down arrow</keysym> keys to move around, 
+<keysym>Right arrow</keysym> to expand a subfolder and <keysym>
+Left arrow</keysym> to collapse it.</para>
+
+<para>You can move an item to a different place in the list by using the 
+normal Drag and Drop or <guimenuitem>Cut</guimenuitem> and <guimenuitem>
+Paste</guimenuitem> methods. The order in which the items appear in 
+the <guilabel>Bookmark Editor</guilabel> is the order they will appear in the 
+<guimenu>Bookmarks</guimenu> drop down list. The <menuchoice><guimenu>Insert
+</guimenu><guimenuitem>Insert Separator</guimenuitem></menuchoice> option can 
+be used to insert separating lines into the list wherever you wish.</para>
+
+<para>A new subfolder can be created at the selected point in the list by 
+using the <guimenuitem>Create New Folder...</guimenuitem> option in the 
+<guimenu>Insert</guimenu> menu or from the drop down menu you get when you 
+<mousebutton>right</mousebutton> click on an item in the main part of the 
+window, or with <keycombo action="simul">&Ctrl;<keycap>N</keycap></keycombo>
+</para>
+
+<para>To change the name of a bookmark or folder select it then press 
+<keycap>F2</keycap> or choose the <guimenuitem>Rename</guimenuitem> item from 
+the <guimenu>Edit</guimenu> menu or the pop up menu that appears when you 
+<mousebutton>right</mousebutton> click on the item. Similarly, you can edit 
+the &URL; by pressing <keycap>F3</keycap> or choosing the <guimenuitem>
+Change URL</guimenuitem> menu item.</para>
+
+<para>The <guilabel>Bookmark Editor</guilabel> lets you import bookmarks from 
+a range of other browsers into &konqueror;'s bookmark list, putting them into 
+ a new folder or replacing all current bookmarks. To do this select 
+<guisubmenu>Import</guisubmenu> from the <guimenu>File</guimenu> menu. The 
+<menuchoice><guimenu>File</guimenu><guisubmenu>Export</guisubmenu>
+</menuchoice> option can be used to export &konqueror;'s bookmarks to a 
+&Netscape; or Mozilla browser.</para>
+
+<para>If you often use the &Netscape; browser as well as &konqueror;, then 
+rather than importing your &Netscape; bookmarks into &konqueror; it is 
+better to select the <guimenuitem>Show Netscape Bookmarks in Konqueror 
+Windows</guimenuitem> item in the <guimenu>Settings</guimenu> menu. If you 
+do this any updates to &Netscape;'s bookmarks are automatically seen by 
+&konqueror;.</para>
+
+<para>To select which bookmark subfolder is used to hold the Bookmark 
+Toolbar items select the subfolder then choose <guimenuitem>Set as Toolbar 
+Folder</guimenuitem> from the <guimenu>Edit</guimenu> menu.</para>
+
+<para>If you are tiding up your bookmarks and have forgotten what a 
+particular web page is, you can easily open it from within the <guilabel>
+Bookmark Editor</guilabel> by <mousebutton>right</mousebutton> clicking 
+on the item and selecting <guimenuitem>Open in Konqueror</guimenuitem> from 
+the pop up menu. If you just want to check that the &URL; is still valid 
+select <guimenuitem>Check Status</guimenuitem> instead.</para>
+
+<important><para>Don't forget to save your changes with <menuchoice>
+<guimenu>File</guimenu><guimenuitem>Save</guimenuitem></menuchoice> or 
+<keycombo action="simul">&Ctrl;<keycap>S</keycap></keycombo> before you leave 
+the <guilabel>Bookmark Editor</guilabel>.
+</para></important>
+
+
+</chapter>
+<!--
+Local Variables:
+mode: sgml
+sgml-omittag: nil
+sgml-shorttag: t
+sgml-minimize-attributes: nil
+sgml-general-insert-case: lower
+sgml-parent-document:("index.docbook" "book" "chapter")
+End:
+-->
