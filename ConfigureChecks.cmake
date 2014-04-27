@@ -136,6 +136,13 @@ if( WITH_XCOMPOSITE )
     tde_message_fatal( "xext is required for xcomposite support, but was not found on your system" )
   endif( )
 
+  # for (twin/compton)
+  # older libXext (e.g.in debian-6.0) doesn't provide XSyncFence
+  tde_save_and_set( CMAKE_REQUIRED_INCLUDES   "${XEXT_INCLUDE_DIRS}" )
+  tde_save_and_set( CMAKE_REQUIRED_LIBRARIES  "${XEXT_LIBRARIES}" )
+  check_symbol_exists( "XSyncCreateFence" "X11/Xlib.h;X11/extensions/sync.h" HAVE_XEXT_XSYNCFENCE )
+  tde_restore( CMAKE_REQUIRED_LIBRARIES )
+  tde_restore( CMAKE_REQUIRED_INCLUDES )
 endif( )
 
 

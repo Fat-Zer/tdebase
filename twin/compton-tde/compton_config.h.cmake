@@ -21,7 +21,7 @@
 #define CONFIG_C2 1
 
 // Whether to enable X Sync support.
-#define CONFIG_XSYNC 1
+#cmakedefine CONFIG_XSYNC 1
 
 // Whether to enable OpenGL support
 #cmakedefine CONFIG_VSYNC_OPENGL 1
@@ -30,7 +30,7 @@
 // Whether to enable GLX FBO support
 #cmakedefine CONFIG_VSYNC_OPENGL_FBO 1
 // Whether to enable GLX Sync support.
-#cmakedefine CONFIG_GLX_XSYNC 1
+#cmakedefine CONFIG_GLX_SYNC 1
 
 // Whether to enable Xranr support
 #cmakedefine CONFIG_XRANDR 1

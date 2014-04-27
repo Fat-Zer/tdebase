@@ -28,31 +28,35 @@ include_directories(
 # TDE to compton config option map
 #  WITH_XINNERAMA         -> CONFIG_XINERAMA
 #  WITH_XRANDR            -> CONFIG_XANDR
+#  HAVE_XEXT_XSYNCFENCE   -> CONFIG_XSYNC
 #  WITH_OPENGL            -> CONFIG_VSYNC_OPENGL
 #  WITH_OPENGL            -> CONFIG_VSYNC_OPENGL_GLSL
 #  WITH_OPENGL            -> CONFIG_VSYNC_OPENGL_FBO
-#  WITH_OPENGL            -> CONFIG_GLX_XSYNC
 #  WITH_PCRE              -> CONFIG_REGEX_PCRE
 #  WITH_PCRE              -> CONFIG_REGEX_PCRE_JIT
 #  WITH_LIBCONFIG         -> CONFIG_LIBCONFIG
 #
 #  HAVE_LIBCONFIG_OLD_API -> CONFIG_LIBCONFIG_LEGACY (set up in compton_config.h)
+#  CONFIG_XSYNC           -> CONFIG_GLX_SYNC
 #
 #  CONFIG_DBUS              - always ON
 #  CONFIG_C2                - always ON
-#  CONFIG_XSYNC             - always ON (utilieses Xext)
 
 # TODO: think about some configuration option for CONFIG_VSYNC_DRM
+# NOTE: HAVE__XEXT_XSYNCFENCE is an automatically detected feature that shows
+#       that libXext provides coresponding feature.
 
 add_definitions("-std=c99")
 
 set( compton_SRCS compton.c )
 
+set( CONFIG_XSYNC ${HAVE_XEXT_XSYNCFENCE} )
+
 if( WITH_OPENGL )
   set( CONFIG_VSYNC_OPENGL      ${WITH_OPENGL} )
   set( CONFIG_VSYNC_OPENGL_GLSL ${WITH_OPENGL} )
   set( CONFIG_VSYNC_OPENGL_FBO  ${WITH_OPENGL} )
-  set( CONFIG_GLX_XSYNC         ${WITH_OPENGL} )
+  set( CONFIG_GLX_SYNC          ${CONFIG_XSYNC} )
   list( APPEND compton_LIBRARIES ${GL_LIBRARIES})
   list( APPEND compton_SRCS opengl.c )
 endif( )

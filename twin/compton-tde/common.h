@@ -61,7 +61,7 @@
 // Whether to enable X Sync support.
 // #define CONFIG_XSYNC 1
 // Whether to enable GLX Sync support.
-// #define CONFIG_GLX_XSYNC 1
+// #define CONFIG_GLX_SYNC 1
 
 // TDE specific options
 // #define USE_ENV_HOME 1
