@@ -150,11 +150,10 @@ void PasswordDlg::init(GreeterPluginHandle *plugin)
     mNewSessButton = new KPushButton( KGuiItem(i18n("Sw&itch User..."), "fork"), frame );
     ok = new KPushButton( i18n("Unl&ock"), frame );
     cancel = new KPushButton( KStdGuiItem::cancel(), frame );
-    if (!trinity_desktop_lock_autohide_lockdlg && !trinity_desktop_lock_use_sak) cancel->setEnabled(false);
+    //if (!trinity_desktop_lock_autohide_lockdlg && !trinity_desktop_lock_use_sak) cancel->setEnabled(false);
 
     greet = plugin->info->create( this, 0, this, mLayoutButton, TQString::null,
               KGreeterPlugin::Authenticate, KGreeterPlugin::ExUnlock );
-
 
     TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
     unlockDialogLayout->addWidget( frame );
@@ -257,7 +256,7 @@ PasswordDlg::~PasswordDlg()
 
 void PasswordDlg::reject()
 {
-    if (trinity_desktop_lock_autohide_lockdlg || trinity_desktop_lock_use_sak)
+  //  if (trinity_desktop_lock_autohide_lockdlg || trinity_desktop_lock_use_sak)
         TQDialog::reject();
 }
 
@@ -440,7 +439,7 @@ void PasswordDlg::reapVerify()
                 updateLabel();
                 mFailedTimerId = startTimer(1500);
                 ok->setEnabled(false);
-                cancel->setEnabled(false);
+                //cancel->setEnabled(false);
                 mNewSessButton->setEnabled( false );
                 return;
             case AuthAbort:
