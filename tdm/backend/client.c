@@ -386,6 +386,7 @@ doPAMAuth( const char *psrv, struct pam_data *pdata )
 # ifdef PAM_FAIL_DELAY
 	pam_set_item( pamh, PAM_FAIL_DELAY, (void *)fail_delay );
 # endif
+	pretc = pam_putenv( pamh, "XDG_SESSION_CLASS=greeter" );
 	ReInitErrorLog();
 
 	Debug( " pam_authenticate() ...\n" );
