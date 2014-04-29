@@ -211,9 +211,9 @@ if( WITH_XSCREENSAVER )
     tde_message_fatal( "xscreensaver is requested, but was not found on your system" )
   endif( )
 
-  # We don't really need the xscreensaver package for build, we only must know
-  # there xscreensaver stores its executables. So leave user the posibility
-  # to define XSCREENSAVER_DIR to so let the user.
+  # We don't really need the xscreensaver package for building, we only need to know
+  # where xscreensaver stores its executables. So give the user the possibility
+  # to define XSCREENSAVER_DIR and speficy the location manually.
   include( FindXscreensaver.cmake ) # not really good practise
   if( NOT XSCREENSAVER_DIR )
     tde_message_fatal(
