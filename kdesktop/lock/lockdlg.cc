@@ -271,7 +271,8 @@ PasswordDlg::~PasswordDlg()
 
 void PasswordDlg::reject()
 {
-  if (!trinity_desktop_lock_hide_cancel_button)
+  if (!trinity_desktop_lock_hide_cancel_button || trinity_desktop_lock_autohide_lockdlg ||
+      trinity_desktop_lock_use_sak)
   {
     TQDialog::reject();
   }
