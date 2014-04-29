@@ -271,92 +271,71 @@
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- /home/paco/cvsroot/tdebase/kdesktop/lock/lockprocess.cc:308 -->
-      <!--     if(config.readBoolEntry("Lock", false)) -->
     </entry>
     <entry key="LockGrace" type="Int">
       <default>5000</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- /home/paco/cvsroot/tdebase/kdesktop/lock/lockprocess.cc:310 -->
-      <!--         mLockGrace = config.readNumEntry("LockGrace", LOCK_GRACE_DEFAULT); -->
     </entry>
     <entry key="AutoLogout" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- /home/paco/cvsroot/tdebase/kdesktop/lock/lockprocess.cc:319 -->
-      <!--     if (config.readBoolEntry("AutoLogout", false)) -->
     </entry>
     <entry key="AutoLogoutTimeout" type="Int">
       <default>600</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- /home/paco/cvsroot/tdebase/kdesktop/lock/lockprocess.cc:322 -->
-      <!--         mAutoLogoutTimeout = config.readNumEntry("AutoLogoutTimeout", AUTOLOGOUT_DEFAULT); -->
     </entry>
     <entry key="Priority" type="Int">
       <default>19</default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- /home/paco/cvsroot/tdebase/kdesktop/lock/lockprocess.cc:332 -->
-      <!--     mPriority = config.readNumEntry("Priority", 19); -->
     </entry>
     <entry key="Saver" type="String">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- /home/paco/cvsroot/tdebase/kdesktop/lock/lockprocess.cc:336 -->
-      <!--     mSaver = config.readEntry("Saver"); -->
     </entry>
     <entry key="UseUnmanagedLockWindows" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis>When enabled this restores the old style unmanaged window behavior of desktop locking.</whatsthis>
-      <!-- /home/paco/cvsroot/tdebase/kdesktop/lock/lockprocess.cc:336 -->
-      <!--     mSaver = config.readEntry("UseUnmanagedLockWindows"); -->
     </entry>
     <entry key="ShowLockDateTime" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis>When enabled the date and time when the desktop was locked is displayed as an additional intrusion detection measure.</whatsthis>
-      <!-- /home/paco/cvsroot/tdebase/kdesktop/lock/lockprocess.cc:336 -->
-      <!--     mSaver = config.readEntry("ShowLockDateTime"); -->
     </entry>
     <entry key="DelaySaverStart" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis>When disabled the screensaver starts immediately when locking the desktop.</whatsthis>
-      <!-- /home/paco/cvsroot/tdebase/kdesktop/lock/lockprocess.cc:336 -->
-      <!--     mSaver = config.readEntry("DelaySaverStart"); -->
     </entry>
     <entry key="HideActiveWindowsFromSaver" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis>When enabled all active windows are hidden from the screensaver, showing only the desktop background as a result.</whatsthis>
-      <!-- /home/paco/cvsroot/tdebase/kdesktop/lock/lockprocess.cc:336 -->
-      <!--     mSaver = config.readEntry("HideActiveWindowsFromSaver"); -->
+    </entry>
+    <entry key="HideCancelButton" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis>Hide Cancel button from the "Desktop Session Locked" dialog.</whatsthis>
     </entry>
     <entry key="UseTDESAK" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis>When enabled, the Trinity Secure Attention Key (TSAK) system will be used to secure the screen locker.  This requires system wide TSAK support to be enabled prior to use.</whatsthis>
-      <!-- /home/paco/cvsroot/tdebase/kdesktop/lock/lockprocess.cc:336 -->
-      <!--     mSaver = config.readEntry("UseTDESAK"); -->
     </entry>
     <entry key="PluginsUnlock" type="StringList">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- /home/paco/cvsroot/tdebase/kdesktop/lock/lockprocess.cc:342 -->
-      <!--     mPlugins = config.readListEntry("PluginsUnlock"); -->
     </entry>
     <entry key="PluginOptions" type="StringList">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
-      <!-- /home/paco/cvsroot/tdebase/kdesktop/lock/lockprocess.cc:345 -->
-      <!--     mPluginOptions = config.readListEntry("PluginOptions"); -->
     </entry>
   </group>
   <group name="MiniCli"> 
