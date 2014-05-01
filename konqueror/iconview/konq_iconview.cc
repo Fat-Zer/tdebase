@@ -1051,14 +1051,9 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
 
 void KonqKfmIconView::slotDeleteItem( KFileItem * _fileitem )
 {
-    // new in 3.5.5
-#ifdef TDEPARTS_BROWSEREXTENSION_HAS_ITEMS_REMOVED
     KFileItemList list;
     list.append( _fileitem );
     emit m_extension->itemsRemoved( list );
-#else
-#error "Your tdelibs doesn't have KParts::BrowserExtension::itemsRemoved, please update it to at least 3.5.5"
-#endif
 
     if ( _fileitem == m_dirLister->rootItem() )
     {
@@ -1079,7 +1074,6 @@ void KonqKfmIconView::slotDeleteItem( KFileItem * _fileitem )
         m_pIconView->stopImagePreview();
         KonqDirPart::deleteItem( _fileitem );
 
-        m_pIconView->takeItem( ivi );
         m_mimeTypeResolver->m_lstPendingMimeIconItems.remove( ivi );
         m_itemDict.remove( _fileitem );
         if (m_paOutstandingOverlays.first() == ivi) // Being processed?
