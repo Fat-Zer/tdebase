@@ -81,7 +81,7 @@ unset BIN_DIR
 
 # When the X server dies we get a HUP signal from xinit. We must ignore it
 # because we still need to do some cleanup.
-trap '[starttde] echo GOT SIGHUP' HUP
+trap 'echo "[starttde] GOT SIGHUP"' HUP
 
 # Check if a TDE session is already running.
 if kcheckrunning >/dev/null 2>&1; then
