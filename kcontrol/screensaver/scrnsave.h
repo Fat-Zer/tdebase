@@ -60,6 +60,7 @@ protected slots:
     void slotUseTSAK( bool );
     void slotUseUnmanagedLockWindows( bool );
     void slotHideActiveWindowsFromSaver( bool );
+    void slotHideCancelButton( bool );
     void processLockouts();
     void slotSetupDone(TDEProcess*);
     // when selecting a new screensaver, the old preview will
@@ -103,6 +104,7 @@ protected:
     TQCheckBox   *mUseTSAKCheckBox;
     TQCheckBox   *mUseUnmanagedLockWindowsCheckBox;
     TQCheckBox   *mHideActiveWindowsFromSaverCheckBox;
+    TQCheckBox   *mHideCancelButtonCheckBox;
 
     int         mSelected;
     int         mPrevSelected;
@@ -121,6 +123,7 @@ protected:
     bool        mUseTSAK;
     bool        mUseUnmanagedLockWindows;
     bool        mHideActiveWindowsFromSaver;
+    bool        mHideCancelButton;
 
     KSimpleConfig* mTDMConfig;
 };
