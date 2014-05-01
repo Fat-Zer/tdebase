@@ -66,7 +66,6 @@ extern bool trinity_desktop_lock_autohide_lockdlg;
 extern bool trinity_desktop_lock_delay_screensaver_start;
 extern bool trinity_desktop_lock_use_system_modal_dialogs;
 extern bool trinity_desktop_lock_use_sak;
-extern bool trinity_desktop_lock_hide_cancel_button;
 
 int dialogHideTimeout = 10*1000;
 
@@ -150,16 +149,12 @@ void PasswordDlg::init(GreeterPluginHandle *plugin)
 
     mNewSessButton = new KPushButton( KGuiItem(i18n("Sw&itch User..."), "fork"), frame );
     ok = new KPushButton( i18n("Unl&ock"), frame );
-    ok->setDefault(true);
-
-    if (!trinity_desktop_lock_hide_cancel_button)
-    {
-      cancel = new KPushButton( KStdGuiItem::cancel(), frame );
-      // if (!trinity_desktop_lock_autohide_lockdlg && !trinity_desktop_lock_use_sak) cancel->setEnabled(false);
-    }
+    cancel = new KPushButton( KStdGuiItem::cancel(), frame );
+    if (!trinity_desktop_lock_autohide_lockdlg && !trinity_desktop_lock_use_sak) cancel->setEnabled(false);
 
     greet = plugin->info->create( this, 0, this, mLayoutButton, TQString::null,
               KGreeterPlugin::Authenticate, KGreeterPlugin::ExUnlock );
+
 
     TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
     unlockDialogLayout->addWidget( frame );
@@ -171,11 +166,8 @@ void PasswordDlg::init(GreeterPluginHandle *plugin)
     TQHBoxLayout *layButtons = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
     layButtons->addWidget( mNewSessButton );
     layButtons->addStretch();
-    layButtons->addWidget(ok);
-    if (!trinity_desktop_lock_hide_cancel_button)
-    {
-      layButtons->addWidget(cancel);
-    }
+    layButtons->addWidget( ok );
+    layButtons->addWidget( cancel );
 
     if (trinity_desktop_lock_use_system_modal_dialogs) {
         KSMModalDialogHeader* theader = new KSMModalDialogHeader( frame );
@@ -211,17 +203,11 @@ void PasswordDlg::init(GreeterPluginHandle *plugin)
     }
 
     setTabOrder( ok, cancel );
-    if (!trinity_desktop_lock_hide_cancel_button)
-    {
-      setTabOrder( cancel, mNewSessButton );
-    }
+    setTabOrder( cancel, mNewSessButton );
     setTabOrder( mNewSessButton, mLayoutButton );
 
     connect(mLayoutButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(layoutClicked()));
-    if (!trinity_desktop_lock_hide_cancel_button)
-    { 
-      connect(cancel, TQT_SIGNAL(clicked()), TQT_SLOT(reject()));
-    }
+    connect(cancel, TQT_SIGNAL(clicked()), TQT_SLOT(reject()));
     connect(ok, TQT_SIGNAL(clicked()), TQT_SLOT(slotOK()));
     connect(mNewSessButton, TQT_SIGNAL(clicked()), TQT_SLOT(slotSwitchUser()));
 
@@ -271,12 +257,9 @@ PasswordDlg::~PasswordDlg()
 
 void PasswordDlg::reject()
 {
-  if (!trinity_desktop_lock_hide_cancel_button || trinity_desktop_lock_autohide_lockdlg ||
-      trinity_desktop_lock_use_sak)
-  {
-    TQDialog::reject();
-  }
-} 
+    if (trinity_desktop_lock_autohide_lockdlg || trinity_desktop_lock_use_sak)
+        TQDialog::reject();
+}
 
 void PasswordDlg::layoutClicked()
 {
@@ -327,14 +310,11 @@ void PasswordDlg::timerEvent(TQTimerEvent *ev)
 {
     if (ev->timerId() == mTimeoutTimerId)
     {
-        if (trinity_desktop_lock_autohide_lockdlg)
-        {
-          // Force dialog rejection regardless of the value of trinity_desktop_lock_hide_cancel_button
-          TQDialog::reject();
+        if (trinity_desktop_lock_autohide_lockdlg) {
+            reject();
         }
-        else
-        {
-          slotActivity();
+        else {
+            slotActivity();
         }
     }
     else if (ev->timerId() == mFailedTimerId)
@@ -345,11 +325,7 @@ void PasswordDlg::timerEvent(TQTimerEvent *ev)
         mUnlockingFailed = false;
         updateLabel();
         ok->setEnabled(true);
-        if (!trinity_desktop_lock_hide_cancel_button)
-        // if (trinity_desktop_lock_autohide_lockdlg || trinity_desktop_lock_use_sak)
-        {
-          cancel->setEnabled(true);
-        }
+        if (trinity_desktop_lock_autohide_lockdlg || trinity_desktop_lock_use_sak) cancel->setEnabled(true);
         mNewSessButton->setEnabled( true );
         greet->revive();
         greet->start();
@@ -464,7 +440,7 @@ void PasswordDlg::reapVerify()
                 updateLabel();
                 mFailedTimerId = startTimer(1500);
                 ok->setEnabled(false);
-                //cancel->setEnabled(false);
+                cancel->setEnabled(false);
                 mNewSessButton->setEnabled( false );
                 return;
             case AuthAbort:

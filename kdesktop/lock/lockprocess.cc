@@ -154,7 +154,6 @@ extern bool trinity_desktop_lock_use_system_modal_dialogs;
 extern bool trinity_desktop_lock_delay_screensaver_start;
 extern bool trinity_desktop_lock_use_sak;
 extern bool trinity_desktop_lock_hide_active_windows;
-extern bool trinity_desktop_lock_hide_cancel_button;
 extern bool trinity_desktop_lock_forced;
 
 extern bool argb_visual;

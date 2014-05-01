@@ -70,7 +70,7 @@ bool trinity_desktop_lock_use_system_modal_dialogs = FALSE;
 bool trinity_desktop_lock_delay_screensaver_start = FALSE;
 bool trinity_desktop_lock_use_sak = FALSE;
 bool trinity_desktop_lock_hide_active_windows = FALSE;
-bool trinity_desktop_lock_hide_cancel_button = FALSE;
+
 bool trinity_desktop_lock_forced = FALSE;
 
 bool signalled_forcelock;
@@ -445,7 +445,6 @@ int main( int argc, char **argv )
             trinity_desktop_lock_delay_screensaver_start = false;	// If trinity_desktop_lock_delay_screensaver_start is true with unmanaged windows, the lock dialog may never appear
         }
         trinity_desktop_lock_hide_active_windows = KDesktopSettings::hideActiveWindowsFromSaver();
-        trinity_desktop_lock_hide_cancel_button = KDesktopSettings::hideCancelButton();
 
         delete tdmconfig;
 

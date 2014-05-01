@@ -177,7 +177,7 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
     mSettingsGroup = new TQGroupBox( i18n("Settings"), this );
     mSettingsGroup->setColumnLayout( 0, Qt::Vertical );
     leftColumnLayout->addWidget( mSettingsGroup );
-    TQGridLayout *settingsGroupLayout = new TQGridLayout( mSettingsGroup->layout(), 5, 2, KDialog::spacingHint() );
+    TQGridLayout *settingsGroupLayout = new TQGridLayout( mSettingsGroup->layout(), 4, 2, KDialog::spacingHint() );
 
     mEnabledCheckBox = new TQCheckBox(i18n("Start a&utomatically"), mSettingsGroup);
     mEnabledCheckBox->setChecked(mEnabled);
@@ -264,19 +264,12 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
     settingsGroupLayout->addWidget(mUseUnmanagedLockWindowsCheckBox, 2, 1);
     TQWhatsThis::add( mUseUnmanagedLockWindowsCheckBox, i18n("Use old-style unmanaged X11 lock windows.") );
 
-    mHideActiveWindowsFromSaverCheckBox = new TQCheckBox( i18n("Hide active &windows from saver"), mSettingsGroup );
+    mHideActiveWindowsFromSaverCheckBox = new TQCheckBox( i18n("&Hide active windows from saver"), mSettingsGroup );
     mHideActiveWindowsFromSaverCheckBox->setEnabled( true );
     mHideActiveWindowsFromSaverCheckBox->setChecked( mHideActiveWindowsFromSaver );
     connect( mHideActiveWindowsFromSaverCheckBox, TQT_SIGNAL( toggled( bool ) ), this, TQT_SLOT( slotHideActiveWindowsFromSaver( bool ) ) );
     settingsGroupLayout->addWidget(mHideActiveWindowsFromSaverCheckBox, 3, 1);
     TQWhatsThis::add( mHideActiveWindowsFromSaverCheckBox, i18n("Hide all active windows from the screen saver and use the desktop background as the screen saver input.") );
-
-    mHideCancelButtonCheckBox = new TQCheckBox( i18n("&Hide Cancel &button"), mSettingsGroup );
-    mHideCancelButtonCheckBox->setEnabled( true );
-    mHideCancelButtonCheckBox->setChecked( mHideCancelButton );
-    connect( mHideCancelButtonCheckBox, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(slotHideCancelButton(bool)) );
-    settingsGroupLayout->addWidget(mHideCancelButtonCheckBox, 4, 1);
-    TQWhatsThis::add(mHideCancelButtonCheckBox, i18n("Hide Cancel button from the \"Desktop Session Locked\" dialog."));
 
     // right column
     TQBoxLayout* rightColumnLayout = new TQVBoxLayout(topLayout, KDialog::spacingHint());
@@ -439,7 +432,6 @@ void KScreenSaver::readSettings( bool useDefaults )
     mUseTSAK = config->readBoolEntry("UseTDESAK", true);
     mUseUnmanagedLockWindows = config->readBoolEntry("UseUnmanagedLockWindows", false);
     mHideActiveWindowsFromSaver = config->readBoolEntry("HideActiveWindowsFromSaver", true);
-    mHideCancelButton = config->readBoolEntry("HideCancelButton", false);
     mSaver = config->readEntry("Saver");
 
     if (mTimeout < 60) mTimeout = 60;
@@ -492,7 +484,6 @@ void KScreenSaver::save()
     config->writeEntry("UseTDESAK", mUseTSAK);
     config->writeEntry("UseUnmanagedLockWindows", mUseUnmanagedLockWindows);
     config->writeEntry("HideActiveWindowsFromSaver", mHideActiveWindowsFromSaver);
-    config->writeEntry("HideCancelButton", mHideCancelButton);
 
     if ( !mSaver.isEmpty() )
         config->writeEntry("Saver", mSaver);
@@ -982,16 +973,6 @@ void KScreenSaver::slotUseUnmanagedLockWindows( bool u )
 void KScreenSaver::slotHideActiveWindowsFromSaver( bool h )
 {
     if (mHideActiveWindowsFromSaverCheckBox->isEnabled()) mHideActiveWindowsFromSaver = h;
-    processLockouts();
-    mChanged = true;
-    emit changed(true);
-}
-
-//---------------------------------------------------------------------------
-//
-void KScreenSaver::slotHideCancelButton( bool h )
-{
-    if (mHideCancelButtonCheckBox->isEnabled()) mHideCancelButton = h;
     processLockouts();
     mChanged = true;
     emit changed(true);
