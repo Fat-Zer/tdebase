@@ -271,7 +271,7 @@ KScreenSaver::KScreenSaver(TQWidget *parent, const char *name, const TQStringLis
     settingsGroupLayout->addWidget(mHideActiveWindowsFromSaverCheckBox, 3, 1);
     TQWhatsThis::add( mHideActiveWindowsFromSaverCheckBox, i18n("Hide all active windows from the screen saver and use the desktop background as the screen saver input.") );
 
-    mHideCancelButtonCheckBox = new TQCheckBox( i18n("&Hide Cancel &button"), mSettingsGroup );
+    mHideCancelButtonCheckBox = new TQCheckBox( i18n("Hide &cancel button"), mSettingsGroup );
     mHideCancelButtonCheckBox->setEnabled( true );
     mHideCancelButtonCheckBox->setChecked( mHideCancelButton );
     connect( mHideCancelButtonCheckBox, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(slotHideCancelButton(bool)) );
@@ -697,6 +697,7 @@ void KScreenSaver::slotEnable(bool e)
 //
 void KScreenSaver::processLockouts()
 {
+    bool useSAK = mTDMConfig->readBoolEntry("UseSAK", false);
     mActivateLbl->setEnabled( mEnabled );
     mWaitEdit->setEnabled( mEnabled );
     mLockCheckBox->setEnabled( mEnabled );
@@ -708,7 +709,7 @@ void KScreenSaver::processLockouts()
         mDelaySaverStartCheckBox->setEnabled( false );
         mDelaySaverStartCheckBox->setChecked( false );
     }
-    if (!mUseUnmanagedLockWindows && mTDMConfig->readBoolEntry("UseSAK", false)) {
+    if (!mUseUnmanagedLockWindows && useSAK) {
         mUseTSAKCheckBox->setEnabled( true );
         mUseTSAKCheckBox->setChecked( mUseTSAK );
     }
@@ -723,6 +724,14 @@ void KScreenSaver::processLockouts()
     else {
         mHideActiveWindowsFromSaverCheckBox->setEnabled( false );
         mHideActiveWindowsFromSaverCheckBox->setChecked( false );
+    }
+    if (mUseUnmanagedLockWindows || (useSAK && mUseTSAK)) {
+        mHideCancelButtonCheckBox->setEnabled( false );
+        mHideCancelButtonCheckBox->setChecked( false );
+    }
+    else {
+        mHideCancelButtonCheckBox->setEnabled( true );
+        mHideCancelButtonCheckBox->setChecked( mHideCancelButton );
     }
     mLockLbl->setEnabled( mEnabled && mLock );
     mWaitLockEdit->setEnabled( mEnabled && mLock );
