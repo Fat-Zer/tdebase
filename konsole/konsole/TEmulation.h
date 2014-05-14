@@ -55,7 +55,12 @@ public slots: // signals incoming from TEWidget
 
   virtual void onImageSizeChange(int lines, int columns);
   virtual void onHistoryCursorChange(int cursor);
-  virtual void onKeyPress(TQKeyEvent*);
+
+  // HACK
+          void onKeyPress(TQKeyEvent*);   // This should not be overwritten by derived classes
+  virtual void doKeyPress(TQKeyEvent*);   // Instead this function should be overwritten if necessary
+          void onKeyReleased(TQKeyEvent*);   // This should not be overwritten by derived classes
+  virtual void doKeyReleased(TQKeyEvent*);   // Instead this function should be overwritten if necessary
  
   virtual void clearSelection();
   virtual void copySelection();
@@ -121,6 +126,7 @@ protected:
   bool   connected;    // communicate with widget
   bool   listenToKeyPress;  // listen to input
   bool   metaKeyMode;       // true -> meta key is handled as Alt
+  bool   metaIsPressed;     // true -> the meta key has been pressed down - HACK
 
   void setCodec(int c); // codec number, 0 = locale, 1=utf8
 

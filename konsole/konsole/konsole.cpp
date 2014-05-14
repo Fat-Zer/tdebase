@@ -2376,8 +2376,12 @@ void Konsole::disableMasterModeConnections()
       for (; to_it.current(); ++to_it) {
         TESession *to = to_it.current();
         if (to!=from)
+        {
           disconnect(from->widget(),TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
                      to->getEmulation(),TQT_SLOT(onKeyPress(TQKeyEvent*)));
+          disconnect(from->widget(),TQT_SIGNAL(keyReleasedSignal(TQKeyEvent*)),
+                     to->getEmulation(),TQT_SLOT(onKeyReleased(TQKeyEvent*)));
+        }
       }
     }
   }
@@ -2392,9 +2396,12 @@ void Konsole::enableMasterModeConnections()
       TQPtrListIterator<TESession> to_it(sessions);
       for (; to_it.current(); ++to_it) {
         TESession *to = to_it.current();
-        if (to!=from) {
+        if (to!=from)
+        {
           connect(from->widget(),TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
                   to->getEmulation(),TQT_SLOT(onKeyPress(TQKeyEvent*)));
+          connect(from->widget(),TQT_SIGNAL(keyReleasedSignal(TQKeyEvent*)),
+                  to->getEmulation(),TQT_SLOT(onKeyReleased(TQKeyEvent*)));
         }
       }
     }
@@ -3736,8 +3743,12 @@ void Konsole::detachSession(TESession* _se) {
     for(; from_it.current(); ++from_it) {
       TESession *from = from_it.current();
       if(from->isMasterMode())
+      {
         disconnect(from->widget(), TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
-	           _se->getEmulation(), TQT_SLOT(onKeyPress(TQKeyEvent*)));
+	            _se->getEmulation(), TQT_SLOT(onKeyPress(TQKeyEvent*)));
+        disconnect(from->widget(), TQT_SIGNAL(keyReleasedSignal(TQKeyEvent*)),
+              _se->getEmulation(), TQT_SLOT(onKeyReleased(TQKeyEvent*)));
+      }
     }
   }
 

@@ -1901,7 +1901,7 @@ bool TEWidget::eventFilter( TQObject *obj, TQEvent *e )
       return false; // not us
   if ( e->type() == TQEvent::KeyPress )
   {
-    TQKeyEvent* ke = (TQKeyEvent*)e;
+    TQKeyEvent *ke = TQT_TQKEYEVENT(e);
 
     actSel=0; // Key stroke implies a screen update, so TEWidget won't
               // know where the current selection is.
@@ -1915,14 +1915,12 @@ bool TEWidget::eventFilter( TQObject *obj, TQEvent *e )
     }
 
     emit keyPressedSignal(ke); // expose
-
-    // in Qt2 when key events were propagated up the tree
-    // (unhandled? -> parent widget) they passed the event filter only once at
-    // the beginning. in qt3 this has changed, that is, the event filter is
-    // called each time the event is sent (see loop in TQApplication::notify,
-    // when internalNotify() is called for KeyPress, whereas internalNotify
-    // activates also the global event filter) . That's why we stop propagation
-    // here.
+    return true;
+  }
+  if ( e->type() == TQEvent::KeyRelease )
+  {
+    TQKeyEvent* ke = (TQKeyEvent*)e;
+    emit keyReleasedSignal(ke); // expose
     return true;
   }
   if ( e->type() == TQEvent::Enter )

@@ -99,6 +99,7 @@ TEmulation::TEmulation(TEWidget* w)
   connected(false),
   listenToKeyPress(false),
   metaKeyMode(false),
+  metaIsPressed(false),
   m_codec(0),
   decoder(0),
   keytrans(0),
@@ -124,6 +125,8 @@ void TEmulation::connectGUI()
                    this,TQT_SLOT(onHistoryCursorChange(int)));
   TQObject::connect(gui,TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
                    this,TQT_SLOT(onKeyPress(TQKeyEvent*)));
+  TQObject::connect(gui,TQT_SIGNAL(keyReleasedSignal(TQKeyEvent*)),
+                   this,TQT_SLOT(onKeyReleased(TQKeyEvent*)));
   TQObject::connect(gui,TQT_SIGNAL(beginSelectionSignal(const int,const int,const bool)),
 		   this,TQT_SLOT(onSelectionBegin(const int,const int,const bool)) );
   TQObject::connect(gui,TQT_SIGNAL(extendSelectionSignal(const int,const int)),
@@ -152,6 +155,8 @@ void TEmulation::changeGUI(TEWidget* newgui)
                      this,TQT_SLOT(onHistoryCursorChange(int)));
     TQObject::disconnect(gui,TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
                      this,TQT_SLOT(onKeyPress(TQKeyEvent*)));
+    TQObject::disconnect(gui,TQT_SIGNAL(keyReleasedSignal(TQKeyEvent*)),
+                     this,TQT_SLOT(onKeyReleased(TQKeyEvent*)));
     TQObject::disconnect(gui,TQT_SIGNAL(beginSelectionSignal(const int,const int,const bool)),
                      this,TQT_SLOT(onSelectionBegin(const int,const int,const bool)) );
     TQObject::disconnect(gui,TQT_SIGNAL(extendSelectionSignal(const int,const int)),
@@ -276,11 +281,30 @@ void TEmulation::onRcvChar(int c)
 
 /*!
 */
-
 void TEmulation::onKeyPress( TQKeyEvent* ev )
 {
   if (!listenToKeyPress) return; // someone else gets the keys
+
+  // HACK - workaround for what looks like a bug in Qt.
+  // Specifically keep track of when the meta button is pressed or released.
+  // Upon restarting TDE, restored windows do not received the correct KeyEvent state
+  // when multiple keys are pressed: the MetaButton is missing. 
+  // Instead on new created window, MetaButton information is correct.
+  // Ex:
+  // Meta is pressed --> the state is correct, both before and after 
+  //   State: Before=0x0000/After=0x0800 Key: 0x1022 
+  // Then h is presed --> the state does not contain the MetaButton anymore
+  //   State: Before=0x0000/After=0x0000 Key: 0x0048
+  if (ev->key() == TQt::Key_Meta)
+    metaIsPressed = true;
+  
+  doKeyPress(ev);
+}
+
+void TEmulation::doKeyPress( TQKeyEvent* ev )
+{
   emit notifySessionState(NOTIFYNORMAL);
+
   if (scr->getHistCursor() != scr->getHistLines() && !ev->text().isEmpty())
     scr->setHistCursor(scr->getHistLines());
   if (!ev->text().isEmpty())
@@ -295,6 +319,30 @@ void TEmulation::onKeyPress( TQKeyEvent* ev )
     c[0] = ev->ascii();
     emit sndBlock((char*)c,1);
   }
+}
+
+void TEmulation::onKeyReleased( TQKeyEvent* ev )
+{
+  if (!listenToKeyPress) return; // someone else gets the keys
+
+  // HACK - workaround for what looks like a bug in Qt.
+  // Specifically keep track of when the meta button is pressed or released.
+  // Upon restarting TDE, restored windows do not received the correct KeyEvent state
+  // when multiple keys are pressed: the MetaButton is missing. 
+  // Instead on new created window, MetaButton information is correct.
+  // Ex:
+  // Meta is pressed --> the state is correct, both before and after 
+  //   State: Before=0x0000/After=0x0800 Key: 0x1022 
+  // Then h is presed --> the state does not contain the MetaButton anymore
+  //   State: Before=0x0000/After=0x0000 Key: 0x0048
+  if (ev->key() == TQt::Key_Meta || !(ev->stateAfter() & TQt::MetaButton))
+    metaIsPressed = false;
+  
+  doKeyReleased(ev);
+}
+
+void TEmulation::doKeyReleased( TQKeyEvent* ke )
+{
 }
 
 // Unblocking, Byte to Unicode translation --------------------------------- --

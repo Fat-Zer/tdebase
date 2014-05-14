@@ -927,12 +927,12 @@ void TEmuVt102::onScrollLock()
    the complications towards a configuration file [see KeyTrans class].
 */
 
-void TEmuVt102::onKeyPress( TQKeyEvent* ev )
+void TEmuVt102::doKeyPress( TQKeyEvent* ev )
 {
-  if (!listenToKeyPress) return; // someone else gets the keys
   emit notifySessionState(NOTIFYNORMAL);
 
-//printf("State/Key: 0x%04x 0x%04x (%d,%d)\n",ev->state(),ev->key(),ev->text().length(),ev->text().length()?ev->text().ascii()[0]:0);
+  //printf("State/Key: 0x%04x 0x%04x (%d,%d)\n", ev->state(),ev->key(),
+  //       ev->text().length(),ev->text().length()?ev->text().ascii()[0]:0);
 
   // lookup in keyboard translation table ...
   int cmd = CMD_none; 
@@ -979,7 +979,8 @@ void TEmuVt102::onKeyPress( TQKeyEvent* ev )
 
   if (cmd==CMD_send)
   {
-    if (((ev->state() & TQt::AltButton) || (metaKeyMode && (ev->state() & TQt::MetaButton))) && !metaspecified)
+    if ((ev->state() & TQt::AltButton) || 
+        (metaKeyMode && ((ev->state() & TQt::MetaButton) || metaIsPressed) && !metaspecified))
       sendString("\033");
     emit sndBlock(txt,len);
     return;
@@ -988,7 +989,8 @@ void TEmuVt102::onKeyPress( TQKeyEvent* ev )
   // fall back handling
   if (!ev->text().isEmpty())
   {
-    if ((ev->state() & TQt::AltButton) || (metaKeyMode && (ev->state() & TQt::MetaButton)))
+    if ((ev->state() & TQt::AltButton) || 
+        (metaKeyMode && ((ev->state() & TQt::MetaButton) || metaIsPressed)))
       sendString("\033"); // ESC, this is the ALT prefix
     TQCString s = m_codec->fromUnicode(ev->text());     // encode for application
     // FIXME: In Qt 2, TQKeyEvent::text() would return "\003" for Ctrl-C etc.
