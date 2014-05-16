@@ -127,6 +127,8 @@ void TEmulation::connectGUI()
                    this,TQT_SLOT(onKeyPress(TQKeyEvent*)));
   TQObject::connect(gui,TQT_SIGNAL(keyReleasedSignal(TQKeyEvent*)),
                    this,TQT_SLOT(onKeyReleased(TQKeyEvent*)));
+  TQObject::connect(gui,TQT_SIGNAL(focusInSignal(TQFocusEvent*)),
+                   this,TQT_SLOT(onFocusIn(TQFocusEvent*)));
   TQObject::connect(gui,TQT_SIGNAL(beginSelectionSignal(const int,const int,const bool)),
 		   this,TQT_SLOT(onSelectionBegin(const int,const int,const bool)) );
   TQObject::connect(gui,TQT_SIGNAL(extendSelectionSignal(const int,const int)),
@@ -157,6 +159,8 @@ void TEmulation::changeGUI(TEWidget* newgui)
                      this,TQT_SLOT(onKeyPress(TQKeyEvent*)));
     TQObject::disconnect(gui,TQT_SIGNAL(keyReleasedSignal(TQKeyEvent*)),
                      this,TQT_SLOT(onKeyReleased(TQKeyEvent*)));
+    TQObject::disconnect(gui,TQT_SIGNAL(focusInSignal(TQFocusEvent*)),
+                     this,TQT_SLOT(onFocusIn(TQFocusEvent*)));
     TQObject::disconnect(gui,TQT_SIGNAL(beginSelectionSignal(const int,const int,const bool)),
                      this,TQT_SLOT(onSelectionBegin(const int,const int,const bool)) );
     TQObject::disconnect(gui,TQT_SIGNAL(extendSelectionSignal(const int,const int)),
@@ -342,6 +346,20 @@ void TEmulation::onKeyReleased( TQKeyEvent* ev )
 }
 
 void TEmulation::doKeyReleased( TQKeyEvent* ke )
+{
+}
+
+void TEmulation::onFocusIn( TQFocusEvent* fe )
+{
+  // HACK - workaround for what looks like a bug in Qt.
+  // Always reset the status of 'metaIsPressed' when the emulation gets the focus,
+  // to avoid pending cases. A pending case is a case where the emulation lost the 
+  // focus while Meta was pressed but gets the focus when Meta is no longer pressed.
+  metaIsPressed = false;
+  doFocusIn(fe);
+}
+
+void TEmulation::doFocusIn( TQFocusEvent* fe )
 {
 }
 

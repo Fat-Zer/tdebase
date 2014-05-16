@@ -2377,10 +2377,12 @@ void Konsole::disableMasterModeConnections()
         TESession *to = to_it.current();
         if (to!=from)
         {
-          disconnect(from->widget(),TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
-                     to->getEmulation(),TQT_SLOT(onKeyPress(TQKeyEvent*)));
-          disconnect(from->widget(),TQT_SIGNAL(keyReleasedSignal(TQKeyEvent*)),
-                     to->getEmulation(),TQT_SLOT(onKeyReleased(TQKeyEvent*)));
+          disconnect(from->widget(), TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
+                     to->getEmulation(), TQT_SLOT(onKeyPress(TQKeyEvent*)));
+          disconnect(from->widget(), TQT_SIGNAL(keyReleasedSignal(TQKeyEvent*)),
+                     to->getEmulation(), TQT_SLOT(onKeyReleased(TQKeyEvent*)));
+          disconnect(from->widget(), TQT_SIGNAL(focusInSignal(TQFocusEvent*)),
+                     to->getEmulation(), TQT_SLOT(onFocusIn(TQFocusEvent*))); 
         }
       }
     }
@@ -2398,10 +2400,12 @@ void Konsole::enableMasterModeConnections()
         TESession *to = to_it.current();
         if (to!=from)
         {
-          connect(from->widget(),TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
-                  to->getEmulation(),TQT_SLOT(onKeyPress(TQKeyEvent*)));
-          connect(from->widget(),TQT_SIGNAL(keyReleasedSignal(TQKeyEvent*)),
-                  to->getEmulation(),TQT_SLOT(onKeyReleased(TQKeyEvent*)));
+          connect(from->widget(), TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
+                  to->getEmulation(), TQT_SLOT(onKeyPress(TQKeyEvent*)));
+          connect(from->widget(), TQT_SIGNAL(keyReleasedSignal(TQKeyEvent*)),
+                  to->getEmulation(), TQT_SLOT(onKeyReleased(TQKeyEvent*)));
+          connect(from->widget(), TQT_SIGNAL(focusInSignal(TQFocusEvent*)),
+                  to->getEmulation(), TQT_SLOT(onFocusIn(TQFocusEvent*))); 
         }
       }
     }
@@ -3748,6 +3752,8 @@ void Konsole::detachSession(TESession* _se) {
 	            _se->getEmulation(), TQT_SLOT(onKeyPress(TQKeyEvent*)));
         disconnect(from->widget(), TQT_SIGNAL(keyReleasedSignal(TQKeyEvent*)),
               _se->getEmulation(), TQT_SLOT(onKeyReleased(TQKeyEvent*)));
+        disconnect(from->widget(), TQT_SIGNAL(focusInSignal(TQFocusEvent*)),
+              _se->getEmulation(), TQT_SLOT(onFocusIn(TQFocusEvent*)));
       }
     }
   }

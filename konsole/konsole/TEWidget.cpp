@@ -1914,14 +1914,23 @@ bool TEWidget::eventFilter( TQObject *obj, TQEvent *e )
         cursorBlinking = false;
     }
 
-    emit keyPressedSignal(ke); // expose
+    emit keyPressedSignal(ke);
     return true;
   }
   if ( e->type() == TQEvent::KeyRelease )
   {
-    TQKeyEvent* ke = (TQKeyEvent*)e;
-    emit keyReleasedSignal(ke); // expose
+    TQKeyEvent *ke = TQT_TQKEYEVENT(e);
+    emit keyReleasedSignal(ke);
     return true;
+  }
+  if ( e->type() == TQEvent::FocusIn )
+  {
+    TQFocusEvent *fe = TQT_TQFOCUSEVENT(e);
+    if (fe->gotFocus())
+    {
+      emit focusInSignal(fe);
+      return true;
+    }
   }
   if ( e->type() == TQEvent::Enter )
   {

@@ -154,6 +154,7 @@ signals:
 
     void keyPressedSignal(TQKeyEvent *e);
     void keyReleasedSignal(TQKeyEvent *e);
+    void focusInSignal(TQFocusEvent *e);
     void mouseSignal(int cb, int cx, int cy);
     void changedFontMetricSignal(int height, int width);
     void changedContentSizeSignal(int height, int width);

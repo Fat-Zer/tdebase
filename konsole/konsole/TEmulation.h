@@ -56,11 +56,14 @@ public slots: // signals incoming from TEWidget
   virtual void onImageSizeChange(int lines, int columns);
   virtual void onHistoryCursorChange(int cursor);
 
-  // HACK
-          void onKeyPress(TQKeyEvent*);   // This should not be overwritten by derived classes
-  virtual void doKeyPress(TQKeyEvent*);   // Instead this function should be overwritten if necessary
-          void onKeyReleased(TQKeyEvent*);   // This should not be overwritten by derived classes
-  virtual void doKeyReleased(TQKeyEvent*);   // Instead this function should be overwritten if necessary
+  // HACK - start
+          void onKeyPress(TQKeyEvent*);    // This should not be overwritten by derived classes
+  virtual void doKeyPress(TQKeyEvent*);    // Instead this function should be overwritten if necessary
+          void onKeyReleased(TQKeyEvent*); // This should not be overwritten by derived classes
+  virtual void doKeyReleased(TQKeyEvent*); // Instead this function should be overwritten if necessary
+          void onFocusIn(TQFocusEvent*);   // This should not be overwritten by derived classes
+  virtual void doFocusIn(TQFocusEvent*);   // Instead this function should be overwritten if necessary
+  // HACK - end
  
   virtual void clearSelection();
   virtual void copySelection();
