@@ -67,6 +67,14 @@
                     <property name="name">
                         <cstring>textLabel3</cstring>
                     </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>3</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
                     <property name="text">
                         <string>Here you can specify default mount options for your storage media. Please note that some options are not supported for certain filesystems and/or medium. You will be able to redefine all these options on per-volume basis later, using Properties dialog of the corresponding volume.&lt;br&gt;
 Some of the options are tristate. Leave them "undefined" to let TDE choose the best value depending on your media.</string>

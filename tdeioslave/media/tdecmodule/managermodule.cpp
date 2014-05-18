@@ -1,5 +1,5 @@
 /* This file is part of the KDE Project
-   Copyright (c) 2005 Kévin Ottens <ervin ipsquad net>
+   Copyright (c) 2005 KÃ©vin Ottens <ervin ipsquad net>
    Copyright (c) 2006 Valentine Sinitsyn <e_val@inbox.ru>
 
    This library is free software; you can redistribute it and/or
@@ -26,7 +26,8 @@
 #include <dcopref.h>
 #include <tqbutton.h>
 #include <tqcheckbox.h>
-#include <tqcombobox.h>
+#include <kcombobox.h>
+#include <tqlayout.h>
 #include <tqobjectlist.h>
 #include <kdirnotify_stub.h>
 
@@ -36,7 +37,10 @@
 ManagerModule::ManagerModule( TQWidget* parent, const char* name )
 	: TDECModule( parent, name )
 {
+	TQBoxLayout *layout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
+
 	view = new ManagerModuleView( this );
+	layout->addWidget( view );
 
 	addConfig(  MediaManagerSettings::self(), view );
 
