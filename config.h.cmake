@@ -182,6 +182,7 @@
 
 // ksmserver
 #cmakedefine DBUS_SYSTEM_BUS "@DBUS_SYSTEM_BUS@"
+#cmakedefine HAVE__ICETRANSNOLISTEN 1
 
 // ksplashml
 #cmakedefine HAVE_XINERAMA 1

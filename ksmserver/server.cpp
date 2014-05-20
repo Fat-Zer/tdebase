@@ -392,9 +392,9 @@ Status SetAuthentication (int count, IceListenObj *listenObjs,
 {
     KTempFile addAuthFile;
     addAuthFile.setAutoDelete(true);
-    
+
     remAuthFile = new KTempFile;
-    remAuthFile->setAutoDelete(true);    
+    remAuthFile->setAutoDelete(true);
 
     if ((addAuthFile.status() != 0) || (remAuthFile->status() != 0))
         return 0;
@@ -468,7 +468,7 @@ void FreeAuthenticationData(int count, IceAuthDataEntry *authDataEntries)
         tqWarning("[KSMServer] could not find iceauth");
         return;
     }
-    
+
     TDEProcess p;
     p << iceAuth << "source" << remAuthFile->name();
     p.start(TDEProcess::Block);
@@ -489,7 +489,7 @@ static int Xio_ErrorHandler( Display * )
        server->cleanUp();
        // Don't delete server!!
     }
-    
+
     exit(0); // Don't report error, it's not our fault.
 }
 
@@ -854,7 +854,7 @@ void KSMServer::storeSession()
     TDEConfig* config = TDEGlobal::config();
     config->reparseConfiguration(); // config may have changed in the KControl module
     config->setGroup("General" );
-    excludeApps = TQStringList::split( TQRegExp( "[,:]" ), config->readEntry( "excludeApps" ).lower()); 
+    excludeApps = TQStringList::split( TQRegExp( "[,:]" ), config->readEntry( "excludeApps" ).lower());
     config->setGroup( sessionGroup );
     int count =  config->readNumEntry( "count" );
     for ( int i = 1; i <= count; i++ ) {

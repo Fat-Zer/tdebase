@@ -9,6 +9,8 @@
 #
 #################################################
 
+include( ConfigureChecks.cmake )
+
 if( NOT DBUS_SYSTEM_BUS )
   set( DBUS_SYSTEM_BUS "unix:path=/var/run/dbus/system_bus_socket" CACHE INTERNAL "" FORCE )
 endif()
