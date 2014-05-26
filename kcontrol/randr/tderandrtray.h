@@ -58,6 +58,7 @@ protected slots:
 	void slotOutputChanged(int parameter);
 	void slotColorProfileChanged(int parameter);
 	void slotDisplayProfileChanged(int parameter);
+	void slotHelpContents();
 
 protected:
 	void mousePressEvent( TQMouseEvent *e );

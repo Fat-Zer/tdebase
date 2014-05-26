@@ -54,7 +54,9 @@ KRandRSystemTray::KRandRSystemTray(TQWidget* parent, const char *name)
 	, m_popupUp(false)
 	, m_help(new KHelpMenu(this, TDEGlobal::instance()->aboutData(), false, actionCollection()))
 {
-	setPixmap(KSystemTray::loadSizedIcon("randr", width()));
+  TDEPopupMenu *help = m_help->menu();
+  help->connectItem(KHelpMenu::menuHelpContents, this, TQT_SLOT(slotHelpContents()));
+  setPixmap(KSystemTray::loadSizedIcon("randr", width()));
 	setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 	connect(this, TQT_SIGNAL(quitSelected()), this, TQT_SLOT(_quit()));
 	TQToolTip::add(this, i18n("Screen resize & rotate"));
@@ -882,3 +884,9 @@ void KRandRSystemTray::deviceChanged (TDEGenericDevice* device) {
 		applyHotplugRules(locateLocal("config", "/", true));
 	}
 }
+
+void KRandRSystemTray::slotHelpContents()
+{
+  kapp->invokeHelp(TQString::null, "tderandrtray");
+}
+
