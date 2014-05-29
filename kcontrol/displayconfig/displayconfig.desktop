@@ -1,25 +1,31 @@
 [Desktop Entry]
-Categories=Qt;TDE;X-TDE-settings-system;
-Comment=Configure display
-Comment[en_US]=Configure display
-DocPath=kcontrol/displayconfig/index.html
 Exec=tdecmshell displayconfig
-GenericName=
-GenericName[en_US]=
 Icon=background
-Keywords=monitor,resolution,display
-MimeType=
-Name=Monitor & Display
-Name[en_US]=Monitor & Display
-NoDisplay=false
-Path=
-StartupNotify=true
-Terminal=false
-TerminalOptions=
 Type=Application
-X-DCOP-ServiceType=
+DocPath=kcontrol/displayconfig/index.html
+
 X-TDE-Library=displayconfig
 X-TDE-ParentApp=kcontrol
 X-TDE-RootOnly=true
 X-TDE-SubstituteUID=true
 X-TDE-Username=
+
+Categories=Qt;TDE;X-TDE-settings-system;
+Comment=Configure display
+Comment[en_US]=Configure display
+Comment[ru]=Конфигурация экрана
+Comment[uk]=Конфігурація екрану
+GenericName=
+GenericName[en_US]=
+Keywords=monitor,resolution,display
+MimeType=
+Name=Monitor & Display
+Name[en_US]=Monitor & Display
+Name[ru]=Монитор & Экран
+Name[uk]=Монітор & Екран
+NoDisplay=false
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+X-DCOP-ServiceType=

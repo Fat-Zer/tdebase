@@ -244,7 +244,7 @@ void SystemTrayApplet::preferences()
 
     TQGrid *settingsGrid = m_settingsDialog->makeGridMainWidget( 2, Qt::Vertical);
 
-    m_showClockSettingCB = new TQCheckBox("Show Clock in Tray", settingsGrid);
+    m_showClockSettingCB = new TQCheckBox(i18n("Show Clock in Tray"), settingsGrid);
     m_showClockSettingCB->setChecked(m_showClockInTray);
 
     //m_iconSelector = new TDEActionSelector(m_settingsDialog);
