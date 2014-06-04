@@ -163,7 +163,7 @@
 							</widget>
 						</grid>
 					</widget>
-					<widget class="TQPushButton" colspan="4">
+					<widget class="TQPushButton">
 						<property name="name">
 							<cstring>m_editKMenuButton</cstring>
 						</property>
@@ -174,7 +174,21 @@
 							<string>Start the editor for the TDE Menu. Here you can add, edit, remove and hide applications.</string>
 						</property>
 					</widget>
-					<spacer>
+          <widget class="KPushButton">
+            <property name="name">
+              <cstring>btnCustomKMenuIcon</cstring>
+            </property>
+            <property name="text">
+              <string>Change menu icon</string>
+            </property>
+            <property name="whatsThis" stdset="0">
+              <string>Allows you to choose a different icon for the TDE menu.</string>
+            </property>
+            <property name="acceptDrops">
+              <bool>false</bool>
+            </property>
+          </widget>
+          <spacer>
 						<property name="name">
 							<cstring>Spacer10</cstring>
 						</property>
@@ -293,6 +307,22 @@
 						<property name="margin">
 							<number>0</number>
 						</property>
+            <widget class="TQLabel" row="0" column="0">
+              <property name="name">
+                <cstring>TextLabel1_3_3_2</cstring>
+              </property>
+              <property name="sizePolicy">
+                <sizepolicy>
+                  <hsizetype>4</hsizetype>
+                  <vsizetype>1</vsizetype>
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                </sizepolicy>
+              </property>
+              <property name="text">
+                <string>Text:</string>
+              </property>
+            </widget>
 						<widget class="TQLineEdit" row="0" column="1" colspan="3">
 							<property name="name">
 								<cstring>kcfg_KMenuText</cstring>
@@ -301,70 +331,7 @@
 								<number>35</number>
 							</property>
 						</widget>
-						<widget class="TQLabel" row="3" column="0" colspan="2">
-							<property name="name">
-								<cstring>TextLabel1_3_3_2</cstring>
-							</property>
-							<property name="sizePolicy">
-								<sizepolicy>
-									<hsizetype>4</hsizetype>
-									<vsizetype>1</vsizetype>
-									<horstretch>0</horstretch>
-									<verstretch>0</verstretch>
-								</sizepolicy>
-							</property>
-							<property name="text">
-								<string>Change TDE Menu icon:</string>
-							</property>
-						</widget>
-						<widget class="KPushButton" row="3" column="3" colspan="1">
-							<property name="name">
-								<cstring>btnCustomKMenuIcon</cstring>
-							</property>
-							<property name="sizePolicy">
-								<sizepolicy>
-									<hsizetype>0</hsizetype>
-									<vsizetype>0</vsizetype>
-									<horstretch>0</horstretch>
-									<verstretch>0</verstretch>
-								</sizepolicy>
-							</property>
-							<property name="minimumSize">
-								<size>
-									<width>26</width>
-									<height>26</height>
-								</size>
-							</property>
-							<property name="maximumSize">
-								<size>
-									<width>26</width>
-									<height>26</height>
-								</size>
-							</property>
-							<property name="acceptDrops">
-								<bool>false</bool>
-							</property>
-							<property name="text">
-								<string></string>
-							</property>
-						</widget>
-						<widget class="TQLabel" row="0" column="0">
-							<property name="name">
-								<cstring>TextLabel1_3_3_2</cstring>
-							</property>
-							<property name="sizePolicy">
-								<sizepolicy>
-									<hsizetype>4</hsizetype>
-									<vsizetype>1</vsizetype>
-									<horstretch>0</horstretch>
-									<verstretch>0</verstretch>
-								</sizepolicy>
-							</property>
-							<property name="text">
-								<string>Text:</string>
-							</property>
-						</widget>
-						<widget class="TQLabel" row="2" column="0">
+						<widget class="TQLabel" row="1" column="0">
 							<property name="name">
 								<cstring>TextLabel1_3_3_2</cstring>
 							</property>
@@ -380,12 +347,12 @@
 								<string>Font:</string>
 							</property>
 						</widget>
-						<widget class="TDEFontRequester" row="2" column="1" rowspan="1" colspan="3">
+						<widget class="TDEFontRequester" row="1" column="1" colspan="3">
 							<property name="name">
 								<cstring>kcfg_ButtonFont</cstring>
 							</property>
 						</widget>
-						<spacer row="4" column="3">
+						<spacer row="2" column="3">
 							<property name="name">
 								<cstring>spacer6</cstring>
 							</property>

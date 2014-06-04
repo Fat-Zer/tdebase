@@ -85,13 +85,12 @@ MenuTab::MenuTab( TQWidget *parent, const char* name )
     connect(maxrecentdocs, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(kmenuChanged()));
 
     TDEIconLoader * ldr = TDEGlobal::iconLoader();
-    TQPixmap kmenu_icon;
     m_kmenu_icon = KickerSettings::customKMenuIcon();
     if (m_kmenu_icon.isNull() == true) {
         m_kmenu_icon = TQString("kmenu");
     }
-    kmenu_icon = ldr->loadIcon(m_kmenu_icon, TDEIcon::Small, TDEIcon::SizeSmall);
-    btnCustomKMenuIcon->setPixmap(kmenu_icon);
+    TQIconSet kmenu_icon = ldr->loadIconSet(m_kmenu_icon, TDEIcon::Small, TDEIcon::SizeSmall);
+    btnCustomKMenuIcon->setIconSet(kmenu_icon);
 
     TDEConfig *config;
     config = new TDEConfig(TQString::fromLatin1("kdeglobals"), false, false);
@@ -323,10 +322,9 @@ void MenuTab::launchIconEditor()
         return;
 
     m_kmenu_icon = newIcon;
-    TDEIconLoader * ldr = TDEGlobal::iconLoader();
-    TQPixmap kmenu_icon;
-    kmenu_icon = ldr->loadIcon(m_kmenu_icon, TDEIcon::Small, TDEIcon::SizeSmall);
-    btnCustomKMenuIcon->setPixmap(kmenu_icon);
+    TDEIconLoader * ldr = TDEGlobal::iconLoader();    
+    TQIconSet kmenu_icon = ldr->loadIconSet(m_kmenu_icon, TDEIcon::Small, TDEIcon::SizeSmall);
+    btnCustomKMenuIcon->setIconSet(kmenu_icon);
     m_kmenu_button_changed = true;
 
     emit changed();
