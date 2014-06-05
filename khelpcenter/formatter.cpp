@@ -51,7 +51,7 @@ bool Formatter::readTemplates()
   }
   
   if ( mainTemplate.isEmpty() ) {
-    kdWarning() << "Main template file name is empty." << endl;
+    kdDebug() << "Main template file name is empty." << endl;
     return false;
   }
   
