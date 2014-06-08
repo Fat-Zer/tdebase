@@ -12,6 +12,8 @@ X-TDE-SubstituteUID=true
 Categories=Qt;TDE;X-TDE-settings-hardware;
 Comment=Configure display ICC profile
 Comment[en_US]=Configure display ICC profile
+Comment[fr]=Configurer les profils de couleurs ICC
+Comment[it]=Configurazione del profilo ICC del display
 Comment[ru]=Конфигурация профиля ICC экрана
 Comment[uk]=Конфігурація профілю ICC екрану
 GenericName=
@@ -20,6 +22,8 @@ Keywords=ICC,display,color,profile
 MimeType=
 Name=ICC Color Profile
 Name[en_US]=ICC Color Profile
+Name[fr]=Profils de couleurs ICC
+Name[it]=Profilo dei colori ICC
 Name[ru]=ICC Профиль цвета
 Name[uk]=ICC Профіль кольору
 
