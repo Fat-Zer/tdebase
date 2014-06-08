@@ -72,7 +72,7 @@ TDM's config files are all located in ${tde_confdir}/tdm.
 deriving it from an already present TDM/XDM installation or by using
 defaults if no previous installation is found.
 
-You can change the configuration from the TDE Control Center. You will
+You can change the configuration from the Trinity Control Center. You will
 find the "Login Manager" module in the "System Administration" group.
 
 Have a look at README.pam in the tdebase top level directory if your

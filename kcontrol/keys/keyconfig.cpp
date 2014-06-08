@@ -137,7 +137,7 @@ void KKeyModule::init( bool isGlobal, bool _bSeriesOnly, bool bSeriesNone )
   // That move will take a lot of UI redesigning, though, so i'll do it once CVS
   //  opens up for feature commits again. -- ellis
   /* Needed to remove because this depended upon non-BC changes in KeyEntry.*/
-  // If this is the "Global Keys" section of the TDE Control Center:
+  // If this is the "Global Keys" section of the Trinity Control Center:
   if( isGlobal && !bSeriesOnly ) {
 	preferMetaBt = new TQCheckBox( i18n("Prefer 4-modifier defaults"), this );
 	if( !KKeySequence::keyboardHasMetaKey() )

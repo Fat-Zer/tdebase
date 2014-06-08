@@ -135,7 +135,7 @@ void View::showAboutPage()
           .arg( i18n( "Frequently Asked Questions" ) )
           .arg( i18n( "Basic Applications" ) )
           .arg( i18n( "The Kicker Desktop Panel" ) )
-          .arg( i18n( "The TDE Control Center" ) )
+          .arg( i18n( "The Trinity Control Center" ) )
           .arg( i18n( "The Konqueror File manager and Web Browser" ) )
           .arg( langLookup( "khelpcenter/kdelogo2.png" ) );
     begin( KURL( "about:khelpcenter" ) );

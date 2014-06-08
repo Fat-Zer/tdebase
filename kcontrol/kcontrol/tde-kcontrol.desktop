@@ -5,7 +5,7 @@ Type=Application
 DocPath=kcontrol/index.html
 X-TDE-StartupNotify=true
 
-Name=TDE Control Center
+Name=Trinity Control Center
 Name[ca]=Centre de control del TDE
 Name[cs]=Ovládací centrum TDE
 Name[da]=TDE Kontrolcenter

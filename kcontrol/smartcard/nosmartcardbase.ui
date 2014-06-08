@@ -44,7 +44,7 @@
                     </property>
                     <property name="text">
                         <string>
-1) The TDE daemon, 'kded' is not running. You can restart it by running the command 'tdeinit' and then try reloading the TDE Control Center to see if this message goes away.
+1) The TDE daemon, 'kded' is not running. You can restart it by running the command 'tdeinit' and then try reloading the Trinity Control Center to see if this message goes away.
 
 2) You don't appear to have smartcard support in the TDE libraries. You will need to recompile the tdelibs package with libpcsclite installed.</string>
                     </property>

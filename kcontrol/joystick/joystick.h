@@ -1,7 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2003 by Martin Koller                                   *
  *   m.koller@surfeu.at                                                    *
- *   This file is part of the TDE Control Center Module for Joysticks      *
+ *   This file is part of the Trinity Control Center Module for Joysticks  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
