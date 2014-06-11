@@ -245,7 +245,7 @@ void PrefMenu::initialize()
     if (m_root.isEmpty())
     {
         insertItem(KickerLib::menuIconSet("kcontrol"),
-                   i18n("Control Center"),
+                   i18n("Trinity Control Center"),
                    this, TQT_SLOT(launchControlCenter()));
         insertSeparator();
     }
