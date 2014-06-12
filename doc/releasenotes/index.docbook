@@ -193,7 +193,7 @@ Please refrain from filing bugs related to those broken symlinks.</para>
 <itemizedlist>
 
 <listitem><para>
-Faster startup and logout
+Faster startup and logout.
 </para></listitem>
 <listitem><para>
 Ability to force Kate into MDI mode all the time.
@@ -202,7 +202,7 @@ Ability to force Kate into MDI mode all the time.
 Built-in hardware detection libraries and support to fully replace HAL.
 </para></listitem>
 <listitem><para>
-File copy window focus enhancement: focus is now on the file name edit line by default
+File copy window focus enhancement: focus is now on the file name edit line by default.
 </para></listitem>
 <listitem><para>
 GUI support for controlling whether to display archives as folders.
@@ -226,16 +226,16 @@ Rearrangeable (draggable) items in the taskbar.
 Reduced TDE menu clutter and duplication.
 </para></listitem>
 <listitem><para>
-Icons only mode available for taskbar
+Icons only mode available for taskbar.
 </para></listitem>
 <listitem><para>
-Accelerator key for Konsole main menu can be enabled when desired
+Accelerator key for Konsole main menu can be enabled when desired.
 </para></listitem>
 <listitem><para>
-Possible to move to next/previous file in a Konqueror list view while renaming
+Possible to move to next/previous file in a Konqueror list view while renaming.
 </para></listitem>
 <listitem><para>
-Kate taskbar: middle mouse click close selected document, if enabled
+Kate taskbar: middle mouse click close selected document, if enabled.
 </para></listitem>
 <listitem><para>
 The number of files in the Kate MRU (Most Recently Used) list is user-configurable.
@@ -247,7 +247,7 @@ Added a progress bar to the logout status dialog.
 Added a mouse doubleclick test option in the control panel.
 </para></listitem>
 <listitem><para>
-Kate syntax highlighting files have been updated and the lookup moved to the TDE repository
+Kate syntax highlighting files have been updated and the lookup moved to the TDE repository.
 </para></listitem>
 <listitem><para>
 tdecmshell --list output is now sorted alphabetically.
@@ -255,7 +255,9 @@ tdecmshell --list output is now sorted alphabetically.
 <listitem><para>
 Improved application crash report framework, which now also includes source code commit references for better debugging.
 </para></listitem>
-
+<listitem><para>
+Additional xdg folders support in Kickoff menu.
+</para></listitem>
 
 </itemizedlist>
 
