@@ -250,6 +250,9 @@ Added a mouse doubleclick test option in the control panel.
 Kate syntax highlighting files have been updated and the lookup moved to the TDE repository.
 </para></listitem>
 <listitem><para>
+Kate sort plugin now available
+</para></listitem>
+<listitem><para>
 tdecmshell --list output is now sorted alphabetically.
 </para></listitem>
 <listitem><para>
