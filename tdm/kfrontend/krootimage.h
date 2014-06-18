@@ -27,6 +27,7 @@ Boston, MA 02110-1301, USA.
 #include <tqtimer.h>
 
 #include <bgrender.h>
+#include <KCrossBGRender.h>
 
 
 class MyApplication : public TDEApplication

@@ -437,6 +437,7 @@ KBackgroundSettings::KBackgroundSettings(int desk, int screen, bool drawBackgrou
     defBlendMode = _defBlendMode;
     defBlendBalance = _defBlendBalance;
     defReverseBlending = _defReverseBlending;
+    defCrossFadeBg = _defCrossFadeBg;
 
     m_MinOptimizationDepth = _defMinOptimizationDepth;
     m_bShm = _defShm;
@@ -537,6 +538,7 @@ void KBackgroundSettings::copyConfig(const KBackgroundSettings *settings)
     m_BlendMode = settings->m_BlendMode;
     m_BlendBalance = settings->m_BlendBalance;
     m_ReverseBlending = settings->m_ReverseBlending;
+    m_CrossFadeBg = settings->m_CrossFadeBg;
     m_MinOptimizationDepth = settings->m_MinOptimizationDepth;
     m_bShm = settings->m_bShm;
     m_MultiMode = settings->m_MultiMode;
@@ -630,6 +632,15 @@ void KBackgroundSettings::setReverseBlending(bool value)
 	return;
     dirty = hashdirty = true;
     m_ReverseBlending = value;
+}
+
+
+void KBackgroundSettings::setCrossFadeBg(bool value)
+{
+    if (m_CrossFadeBg == value)
+	return;
+    dirty = hashdirty = true;
+    m_CrossFadeBg = value;
 }
 
 
@@ -774,6 +785,8 @@ void KBackgroundSettings::readSettings(bool reparse)
 
     m_ReverseBlending = m_pConfig->readBoolEntry( "ReverseBlending", defReverseBlending);
 
+    m_CrossFadeBg = m_pConfig->readBoolEntry( "CrossFadeBg", defCrossFadeBg);
+
     // Multiple wallpaper config
     m_WallpaperList = m_pConfig->readPathListEntry("WallpaperList");
 
@@ -834,6 +847,7 @@ void KBackgroundSettings::writeSettings()
     m_pConfig->writeEntry("BlendMode", m_BlMRevMap[m_BlendMode]);
     m_pConfig->writeEntry("BlendBalance", m_BlendBalance);
     m_pConfig->writeEntry("ReverseBlending", m_ReverseBlending);
+    m_pConfig->writeEntry("CrossFadeBg", m_CrossFadeBg);
     m_pConfig->writeEntry("MinOptimizationDepth", m_MinOptimizationDepth);
     m_pConfig->writeEntry("UseSHM", m_bShm);
 

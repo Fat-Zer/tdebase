@@ -7,12 +7,13 @@
  * License. See the file "COPYING" for the exact licensing terms.
  */
 
-#ifndef __BGManager_h_Included__
-#define __BGManager_h_Included__
+#ifndef __BGMANAGER_H__
+#define __BGMANAGER_H__
 
 #include <tqstring.h>
 #include <tqptrvector.h>
 
+#include <tqdatetime.h>
 #include <KBackgroundIface.h>
 
 #if defined(Q_WS_X11) && defined(HAVE_XRENDER) && TQT_VERSION >= 0x030300
@@ -89,6 +90,7 @@ private slots:
     void desktopResized();
     void clearRoot();
     void saveImages();
+    void slotCrossFadeTimeout();
     void slotCmBackgroundChanged(bool);
 
 private:
@@ -131,6 +133,15 @@ private:
     KPixmapServer *m_pPixmapServer;
     
     unsigned long m_xrootpmap;
+
+    /*CrossFade vars*/
+    TQTimer * m_crossTimer;
+    double mAlpha;
+    TQPixmap  mNextScreen;
+    TQPixmap  * mOldScreen;
+    int fadeDesk;
+    TQTime mBenchmark;
+    bool crossInit;
 };
 
-#endif // __BGManager_h_Included__
+#endif // __BGMANAGER_H__

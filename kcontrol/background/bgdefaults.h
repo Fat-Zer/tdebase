@@ -34,5 +34,6 @@
 #define _defBlendMode KBackgroundSettings::NoBlending
 #define _defBlendBalance 100
 #define _defReverseBlending false
+#define _defCrossFadeBg false
 
 #endif // __BGDefaults_h_Included__

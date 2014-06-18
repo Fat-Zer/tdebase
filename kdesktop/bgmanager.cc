@@ -16,10 +16,15 @@
 #include "bgsettings.h"
 #include "kdesktopapp.h"
 
+#include "KCrossBGRender.h"
+#include "crossfade.h"
+
 #include <assert.h>
 
 #include <tqtimer.h>
 #include <tqscrollview.h>
+#include <tqpainter.h>
+#include <tqdesktopwidget.h>
 
 #include <kiconloader.h>
 #include <tdeconfig.h>
@@ -34,6 +39,8 @@
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
+#include <X11/extensions/Xrender.h>
+#include <unistd.h>
 
 #ifndef None
 #define None 0L
@@ -47,7 +54,7 @@
 
 #include "pixmapserver.h"
 
-template class TQPtrVector<KBackgroundRenderer>;
+template class TQPtrVector<KCrossBGRender>;
 template class TQPtrVector<KBackgroundCacheEntry>;
 template class TQMemArray<int>;
 
@@ -107,6 +114,12 @@ KBackgroundManager::KBackgroundManager(TQWidget *desktop, KWinModule* twinModule
     m_pTimer = new TQTimer(this);
     connect(m_pTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotTimeout()));
     m_pTimer->start( 60000 );
+
+    /*CrossFade's config*/
+    m_crossTimer = new TQTimer(this);
+    connect(m_crossTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotCrossFadeTimeout()));
+    /*Ends here*/
+
 
     connect(m_pKwinmodule, TQT_SIGNAL(currentDesktopChanged(int)),
 	    TQT_SLOT(slotChangeDesktop(int)));
@@ -577,6 +590,36 @@ void KBackgroundManager::renderBackground(int desk)
 
 
 /*
+ * This slot is called when the Timeout is executed
+ */
+void KBackgroundManager::slotCrossFadeTimeout()
+{
+    KVirtualBGRenderer *r = m_Renderer[fadeDesk];
+    if (crossInit) {
+        mBenchmark.start();
+    }
+
+    if (mAlpha <= 0.0 || mBenchmark.elapsed() > 300 ) {
+        bool do_cleanup = true;
+        mAlpha = 1;
+        m_crossTimer->stop();
+        KPixmap pixm(mNextScreen);
+        setPixmap(&pixm, r->hash(), fadeDesk);
+        return;
+    }
+    // Reset Timer
+    mBenchmark.start();
+
+    TQPixmap dst = crossFade(*mOldScreen, mNextScreen, mAlpha, crossInit);
+    KPixmap pixm(dst);
+    setPixmap(&pixm, r->hash(), fadeDesk);
+
+    mAlpha -=0.03;
+    crossInit = false;
+}
+
+
+/*
  * This slot is called when a renderer is done.
  */
 void KBackgroundManager::slotImageDone(int desk)
@@ -592,18 +635,49 @@ void KBackgroundManager::slotImageDone(int desk)
     KPixmap *pm = new KPixmap();
     KVirtualBGRenderer *r = m_Renderer[desk];
     bool do_cleanup = true;
+    fadeDesk = desk; 
+    mAlpha = 1.0;
+    int width,height;
+
 
     *pm = r->pixmap();
     // If current: paint it
     bool current = (r->hash() == m_Renderer[effectiveDesktop()]->hash());
     if (current)
     {
-        //KPixmap * viewport_background = new KPixmap(TQPixmap(pm->width()*s.width(), pm->height()*s.height()));
-        //printf("slotImageDone(): x: %d y: %d\n", viewport_background->size().width(), viewport_background->size().height());
-        //setPixmap(viewport_background, r->hash(), desk);
-        //delete viewport_background;
-        
-        setPixmap(pm, r->hash(), desk);
+        //START
+        if (m_Renderer[effectiveDesktop()]->renderer(0)->crossFadeBg() && !m_Renderer[effectiveDesktop()]->renderer(0)->usingCrossXml()){	
+            int mode = m_Renderer[effectiveDesktop()]->renderer(0)->wallpaperMode();
+            width = TQApplication::desktop()->screenGeometry().width();
+            height = TQApplication::desktop()->screenGeometry().height();
+
+            if (mode == KBackgroundSettings::NoWallpaper || mode == KBackgroundSettings::Tiled || mode  == KBackgroundSettings::CenterTiled ){
+                mNextScreen = TQPixmap(width,height);
+                TQPainter p (&mNextScreen);
+                p.drawTiledPixmap(0,0,width,height,*pm);        
+            } else {
+                mNextScreen = TQPixmap(*pm);
+            }
+
+            if (m_pDesktop){
+                mOldScreen = const_cast<TQPixmap *>( m_pDesktop->backgroundPixmap() );
+            }else{
+                mOldScreen = const_cast<TQPixmap *>(
+                TQApplication::desktop()->screen()->backgroundPixmap() );
+            }
+
+            //TODO Find a way to discover if CrossFade effect needs to run  
+            if (mOldScreen){
+                crossInit = true;
+                m_crossTimer->start(70);
+            } else{
+                setPixmap(pm, r->hash(), desk);
+            }
+        }else{
+            setPixmap(pm, r->hash(), desk);
+        }
+        //ENDS HERE  */
+
         if (!m_bBgInitDone)
         {
             m_bBgInitDone = true;
@@ -801,7 +875,7 @@ int KBackgroundManager::validateDesk(int desk)
 TQString KBackgroundManager::currentWallpaper(int desk)
 {
     //TODO Is the behaviour of this function appropriate for multiple screens?
-    KBackgroundRenderer *r = m_Renderer[validateDesk(desk)]->renderer(0);
+    KCrossBGRender *r = m_Renderer[validateDesk(desk)]->renderer(0);
 
     return r->currentWallpaper();
 }
@@ -818,7 +892,7 @@ void KBackgroundManager::changeWallpaper()
 // DCOP exported
 void KBackgroundManager::setExport(int _export)
 {
-    kdDebug() << "KBackgroundManager enabling exports.\n";
+//    kdDebug() << "KBackgroundManager enabling exports.\n";
     applyExport(_export);
     slotChangeDesktop(0);
 }
@@ -843,7 +917,7 @@ void KBackgroundManager::setWallpaper(TQString wallpaper, int mode)
     //TODO Is the behaviour of this function appropriate for multiple screens?
     for (unsigned i=0; i < m_Renderer[effectiveDesktop()]->numRenderers(); ++i)
     {
-        KBackgroundRenderer *r = m_Renderer[effectiveDesktop()]->renderer(i);
+        KCrossBGRender *r = m_Renderer[effectiveDesktop()]->renderer(i);
         r->stop();
         r->setWallpaperMode(mode);
         r->setMultiWallpaperMode(KBackgroundSettings::NoMulti);
@@ -856,7 +930,7 @@ void KBackgroundManager::setWallpaper(TQString wallpaper, int mode)
 void KBackgroundManager::setWallpaper(TQString wallpaper)
 {
     //TODO Is the behaviour of this function appropriate for multiple screens?
-    KBackgroundRenderer *r = m_Renderer[effectiveDesktop()]->renderer(0);
+    KCrossBGRender *r = m_Renderer[effectiveDesktop()]->renderer(0);
     int mode = r->wallpaperMode();
     if (mode == KBackgroundSettings::NoWallpaper)
        mode = KBackgroundSettings::Tiled;
@@ -869,7 +943,7 @@ void KBackgroundManager::setWallpaper(TQString wallpaper)
 TQStringList KBackgroundManager::wallpaperFiles(int desk)
 {
     //TODO Is the behaviour of this function appropriate for multiple screens?
-    KBackgroundRenderer *r = m_Renderer[validateDesk(desk)]->renderer(0);
+    KCrossBGRender *r = m_Renderer[validateDesk(desk)]->renderer(0);
 
     return r->wallpaperFiles();
 }
@@ -880,7 +954,7 @@ TQStringList KBackgroundManager::wallpaperFiles(int desk)
 TQStringList KBackgroundManager::wallpaperList(int desk)
 {
     //TODO Is the behaviour of this function appropriate for multiple screens?
-    KBackgroundRenderer *r = m_Renderer[validateDesk(desk)]->renderer(0);;
+    KCrossBGRender *r = m_Renderer[validateDesk(desk)]->renderer(0);;
 
     return r->wallpaperList();
 }
@@ -907,7 +981,7 @@ void KBackgroundManager::setWallpaper(int desk, TQString wallpaper, int mode)
     //TODO Is the behaviour of this function appropriate for multiple screens?
     for (unsigned i=0; i < m_Renderer[sdesk]->numRenderers(); ++i)
     {
-        KBackgroundRenderer *r = m_Renderer[sdesk]->renderer(i);
+        KCrossBGRender *r = m_Renderer[sdesk]->renderer(i);
     
         setCommon(false);   // Force each desktop to have it's own wallpaper
     
@@ -974,7 +1048,7 @@ void KBackgroundManager::setColor(const TQColor & c, bool isColorA)
     //TODO Is the behaviour of this function appropriate for multiple screens?
     for (unsigned i=0; i < m_Renderer[effectiveDesktop()]->numRenderers(); ++i)
     {
-        KBackgroundRenderer *r = m_Renderer[effectiveDesktop()]->renderer(i);
+        KCrossBGRender *r = m_Renderer[effectiveDesktop()]->renderer(i);
         r->stop();
     
         if (isColorA)

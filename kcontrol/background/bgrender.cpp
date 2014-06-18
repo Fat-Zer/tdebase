@@ -10,6 +10,8 @@
 
 #include <config.h>
 
+#include "KCrossBGRender.h"
+
 #include <time.h>
 #include <stdlib.h>
 #include <utime.h>
@@ -1061,7 +1063,7 @@ KVirtualBGRenderer::~KVirtualBGRenderer()
 }
 
 
-KBackgroundRenderer * KVirtualBGRenderer::renderer(unsigned screen)
+KCrossBGRender * KVirtualBGRenderer::renderer(unsigned screen)
 {
     return m_renderer[screen];
 }
@@ -1220,7 +1222,7 @@ void KVirtualBGRenderer::initRenderers()
     for (unsigned i=0; i<m_numRenderers; ++i)
     {
         int eScreen = m_bCommonScreen ? 0 : i;
-        KBackgroundRenderer * r = new KBackgroundRenderer( m_desk, eScreen, m_bDrawBackgroundPerScreen, m_pConfig );
+        KCrossBGRender *r = new KCrossBGRender(m_desk, eScreen, m_bDrawBackgroundPerScreen, m_pConfig);
         m_renderer.insert( i, r );
         r->setSize(renderSize(i));
         connect( r, TQT_SIGNAL(imageDone(int,int)), this, TQT_SLOT(screenDone(int,int)) );
@@ -1250,7 +1252,7 @@ void KVirtualBGRenderer::screenDone(int _desk, int _screen)
     Q_UNUSED(_desk);
     Q_UNUSED(_screen);
 
-    const KBackgroundRenderer * sender = dynamic_cast<const KBackgroundRenderer*>(this->sender());
+    const KCrossBGRender * sender = dynamic_cast<const KCrossBGRender*>(this->sender());
     int screen = m_renderer.find(sender);
     if (screen == -1)
         //??

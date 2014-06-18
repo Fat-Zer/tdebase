@@ -174,6 +174,10 @@ BGDialog::BGDialog(TQWidget* parent, TDEConfig* _config, bool _multidesktop)
    connect(m_cbBlendReverse, TQT_SIGNAL(toggled(bool)),
            TQT_SLOT(slotBlendReverse(bool)));
 
+   // Crossfading background
+   connect(m_cbCrossFadeBg, TQT_SIGNAL(toggled(bool)),
+           TQT_SLOT(slotCrossFadeBg(bool)));
+
    // advanced options
    connect(m_buttonAdvanced, TQT_SIGNAL(clicked()),
            TQT_SLOT(slotAdvanced()));
@@ -304,6 +308,7 @@ void BGDialog::makeReadOnly()
     m_cbBlendReverse->setEnabled( false );
     m_buttonAdvanced->setEnabled( false );
     m_buttonGetNew->setEnabled( false );
+    m_cbCrossFadeBg->setEnabled( false );
 }
 
 void BGDialog::load( bool useDefaults )
@@ -780,6 +785,8 @@ void BGDialog::updateUI()
     m_comboBlend->setCurrentItem(mode);
     m_cbBlendReverse->setChecked(r->reverseBlending());
     m_sliderBlend->setValue( r->blendBalance() / 10 );
+
+    m_cbCrossFadeBg->setChecked(r->crossFadeBg());
 
     m_comboBlend->blockSignals(false);
     m_sliderBlend->blockSignals(false);
@@ -1292,6 +1299,17 @@ void BGDialog::slotBlendReverse(bool b)
 
    eRenderer()->stop();
    eRenderer()->setReverseBlending(b);
+   eRenderer()->start(true);
+}
+
+void BGDialog::slotCrossFadeBg(bool b)
+{
+   if (b == eRenderer()->crossFadeBg())
+      return;
+   emit changed(true);
+
+   eRenderer()->stop();
+   eRenderer()->setCrossFadeBg(b);
    eRenderer()->start(true);
 }
 

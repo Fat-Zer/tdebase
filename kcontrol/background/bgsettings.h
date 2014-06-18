@@ -8,8 +8,8 @@
  * Public License. See the file "COPYING.LIB" for the exact licensing terms.
  */
 
-#ifndef __BGSettings_h_Included__
-#define __BGSettings_h_Included__
+#ifndef __BGSETTINGS_H__
+#define __BGSETTINGS_H__
 
 
 #include <tqstringlist.h>
@@ -198,6 +198,9 @@ public:
     void setReverseBlending(bool value);
     bool reverseBlending() const { return m_ReverseBlending; }
 
+    void setCrossFadeBg(bool value);
+    bool crossFadeBg() const { return m_CrossFadeBg; }
+
     void setBlendBalance(int value);
     int blendBalance() const { return m_BlendBalance; }
 
@@ -273,6 +276,7 @@ private:
     int m_BlendMode, defBlendMode;
     int m_BlendBalance, defBlendBalance;
     bool m_ReverseBlending, defReverseBlending;
+    bool m_CrossFadeBg, defCrossFadeBg;
     int m_MinOptimizationDepth;
     bool m_bShm;
     bool m_bDrawBackgroundPerScreen;
@@ -369,4 +373,4 @@ private:
 };
 
 
-#endif // __BGSettings_h_Included__
+#endif // __BGSETTINGS_H__

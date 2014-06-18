@@ -28,6 +28,7 @@ class TDEProcess;
 class KTempFile;
 class KShellProcess;
 class TDEStandardDirs;
+class KCrossBGRender;
 
 /**
  * This class renders a desktop background to a TQImage. The operation is
@@ -127,7 +128,7 @@ public:
     KVirtualBGRenderer(int desk, TDEConfig *config=0l);
     ~KVirtualBGRenderer();
     
-    KBackgroundRenderer * renderer(unsigned screen);
+    KCrossBGRender * renderer(unsigned screen);
     unsigned numRenderers() const { return m_numRenderers; }
 
     TQPixmap pixmap();
@@ -173,7 +174,7 @@ private:
     TQSize m_size;
     
     TQMemArray<bool> m_bFinished;
-    TQPtrVector<KBackgroundRenderer> m_renderer;
+    TQPtrVector<KCrossBGRender> m_renderer;
     TQPixmap *m_pPixmap;
 };
 

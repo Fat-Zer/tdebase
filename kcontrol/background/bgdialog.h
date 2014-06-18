@@ -80,6 +80,7 @@ protected slots:
    void slotBlendReverse(bool b);
    void desktopResized();
    void setBlendingEnabled(bool);
+   void slotCrossFadeBg(bool);
 
 protected:
    void getEScreen();
