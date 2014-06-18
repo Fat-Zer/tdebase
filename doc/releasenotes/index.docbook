@@ -258,6 +258,9 @@ Improved application crash report framework, which now also includes source code
 <listitem><para>
 Additional xdg folders support in Kickoff menu.
 </para></listitem>
+<listitem><para>
+A smooth crossfade effect is now available when changing the desktop wallpaper.
+</para></listitem>
 
 </itemizedlist>
 
@@ -270,6 +273,9 @@ Additional xdg folders support in Kickoff menu.
 
 <listitem><para>
 GTK3/TQt Theme Engine
+</para></listitem>
+<listitem><para>
+Kate Sort plugin
 </para></listitem>
 <listitem><para>
 KControl LDAP Manager
