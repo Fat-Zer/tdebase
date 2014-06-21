@@ -251,14 +251,14 @@ fi
 # set in $TDEDIRS are intended to override data files found in $TDEDIR. Those additional
 # directories should be placed before $TDEDIR and before /usr/share.
 if [ "$TDEDIR" != "/usr" ] && [ -d $TDEDIR/share ]; then
-  # If '/usr/share' is not already here, we include it at the last position.
-  if ! is_in_path XDG_DATA_DIRS "/usr/share"; then
-    XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share
-  fi
+  # Make sure '/usr/local/share' and '/usr/share' are included in that order at the end
+  remove_from_path XDG_DATA_DIRS "/usr/share"
+  remove_from_path XDG_DATA_DIRS "/usr/local/share"
+  XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/local/share:/usr/share
 
-  # Ensure that $TDEDIR/share is always before '/usr/share'.
+  # Ensure that $TDEDIR/share is always before '/usr/local/share'.
   remove_from_path XDG_DATA_DIRS $TDEDIR/share
-  place_before_in_path XDG_DATA_DIRS "$TDEDIR/share" "/usr/share"
+  place_before_in_path XDG_DATA_DIRS "$TDEDIR/share" "/usr/local/share"
 
   # Adds supplementary directories from TDEDIRS, if any, before TDEDIR.
   if [ "$TDEDIRS" != "" ]; then
