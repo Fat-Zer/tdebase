@@ -27,6 +27,20 @@ is_in_path() {
   return 1
 }
 
+# Usage: is_before_in_path ENV_VAR var before_var
+# Return 0 if 'var' is before 'before_var' in 'ENV_VAR', 1 otherwise
+is_before_in_path() {
+  [ $# -ge 3 ] || return 1
+  var="$1"; search="$2"; before="$3"
+  ifs="$IFS"; IFS=":"; eval set \$$var; IFS="$ifs"
+  for i in $*; do
+    echo "${i}, ${search}, ${before}"
+    [ "${i}" = "${search}" ] && return 0
+    [ "${i}" = "${before}" ] && return 1
+  done
+  return 1
+}
+
 # Usage: place_before_in_path PATH /opt/trinity/games /usr/games
 place_before_in_path() {
   var="$1"; insert="$2";
@@ -251,14 +265,26 @@ fi
 # set in $TDEDIRS are intended to override data files found in $TDEDIR. Those additional
 # directories should be placed before $TDEDIR and before /usr/share.
 if [ "$TDEDIR" != "/usr" ] && [ -d $TDEDIR/share ]; then
-  # Make sure '/usr/local/share' and '/usr/share' are included in that order at the end
-  remove_from_path XDG_DATA_DIRS "/usr/share"
-  remove_from_path XDG_DATA_DIRS "/usr/local/share"
-  XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/local/share:/usr/share
+  # If '/usr/share' is not already there, we include it at the last position.
+  if ! is_in_path XDG_DATA_DIRS "/usr/share"; then
+    if [ "$XDG_DATA_DIRS" = "" ]; then
+      XDG_DATA_DIRS=/usr/share    # In case XDG_DATA_DIRS is empty, to avoid a leading :
+    else
+      XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share
+    fi
+  fi
+  # If '/usr/local/share' is not already there, we include it before '/usr/share'
+  if ! is_in_path XDG_DATA_DIRS "/usr/local/share"; then
+    place_before_in_path XDG_DATA_DIRS "/usr/local/share" "/usr/share"
+  fi  
 
-  # Ensure that $TDEDIR/share is always before '/usr/local/share'.
+  # Ensure that $TDEDIR/share is always before '/usr/local/share' and '/usr/share'.
   remove_from_path XDG_DATA_DIRS $TDEDIR/share
-  place_before_in_path XDG_DATA_DIRS "$TDEDIR/share" "/usr/local/share"
+  if is_before_in_path XDG_DATA_DIRS "/usr/local/share" "/usr/share"; then
+    place_before_in_path XDG_DATA_DIRS "$TDEDIR/share" "/usr/local/share"
+  else
+    place_before_in_path XDG_DATA_DIRS "$TDEDIR/share" "/usr/share"
+  fi
 
   # Adds supplementary directories from TDEDIRS, if any, before TDEDIR.
   if [ "$TDEDIRS" != "" ]; then
