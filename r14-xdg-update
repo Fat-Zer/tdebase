@@ -383,7 +383,7 @@ if [ "$R14_VERSION" -lt "201407050" ]; then
   if [ -r $PROFILE_DIR/share/config/kickerrc ]; then
     Log "Updating kicker/panel customizations in kickerrc."
     sed -i 's|StorageId\[\$e\]=kde-|StorageId\[\$e\]=tde-|g' "$PROFILE_DIR/share/config/kickerrc" 2>/dev/null
-    sed -i '/^\(Favorites\|FirstSeenApps\)/s|\([=,]\)kde-|\1tde-|gp' "$PROFILE_DIR/share/config/kickerrc" 2>/dev/null
+    sed -i '/^\(Favorites\|FirstSeenApps\)/s|\([=,]\)kde-|\1tde-|g' "$PROFILE_DIR/share/config/kickerrc" 2>/dev/null
   else
     Log "kickerrc does not exist."
   fi
