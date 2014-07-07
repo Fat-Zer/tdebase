@@ -63,6 +63,7 @@ protected slots:
 protected:
 	void mousePressEvent( TQMouseEvent *e );
 	void resizeEvent ( TQResizeEvent * );
+	void showEvent ( TQShowEvent * );
 
 private:
 	void populateMenu(TDEPopupMenu* menu);
@@ -71,6 +72,7 @@ private:
 	int GetHackResolutionParameter();
 	void findPrimaryDisplay();
 	void reloadDisplayConfiguration();
+	void resizeTrayIcon();
 
 	bool m_popupUp;
 	KHelpMenu* m_help;

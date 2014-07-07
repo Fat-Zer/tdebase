@@ -54,9 +54,9 @@ KRandRSystemTray::KRandRSystemTray(TQWidget* parent, const char *name)
 	, m_popupUp(false)
 	, m_help(new KHelpMenu(this, TDEGlobal::instance()->aboutData(), false, actionCollection()))
 {
-  TDEPopupMenu *help = m_help->menu();
-  help->connectItem(KHelpMenu::menuHelpContents, this, TQT_SLOT(slotHelpContents()));
-  setPixmap(KSystemTray::loadSizedIcon("randr", width()));
+	TDEPopupMenu *help = m_help->menu();
+	help->connectItem(KHelpMenu::menuHelpContents, this, TQT_SLOT(slotHelpContents()));
+	setPixmap(KSystemTray::loadIcon("randr"));
 	setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 	connect(this, TQT_SIGNAL(quitSelected()), this, TQT_SLOT(_quit()));
 	TQToolTip::add(this, i18n("Screen resize & rotate"));
@@ -113,7 +113,7 @@ void KRandRSystemTray::_quit (){
 	exit(0);
 }
 
-void KRandRSystemTray::resizeEvent ( TQResizeEvent * )
+void KRandRSystemTray::resizeTrayIcon ()
 {
 	// Honor Free Desktop specifications that allow for arbitrary system tray icon sizes
 	TQPixmap origpixmap;
@@ -124,6 +124,18 @@ void KRandRSystemTray::resizeEvent ( TQResizeEvent * )
 	newIcon = newIcon.smoothScale(width(), height());
 	scaledpixmap = newIcon;
 	setPixmap(scaledpixmap);
+}
+
+void KRandRSystemTray::resizeEvent ( TQResizeEvent * )
+{
+	// Honor Free Desktop specifications that allow for arbitrary system tray icon sizes
+	resizeTrayIcon();
+}
+
+void KRandRSystemTray::showEvent ( TQShowEvent * )
+{
+	// Honor Free Desktop specifications that allow for arbitrary system tray icon sizes
+	resizeTrayIcon();
 }
 
 void KRandRSystemTray::mousePressEvent(TQMouseEvent* e)
