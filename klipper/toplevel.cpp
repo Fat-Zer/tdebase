@@ -198,12 +198,21 @@ KlipperWidget::KlipperWidget( TQWidget *parent, TDEConfig* config )
 
     if ( isApplet() ) {
         m_pixmap = KSystemTray::loadIcon( "klipper" );
+        m_iconOrigWidth = width();
+        m_iconOrigHeight = height();
     }
     else {
-        m_pixmap = KSystemTray::loadSizedIcon( "klipper", width() );
+        if (isShown()) {
+            m_pixmap = KSystemTray::loadSizedIcon( "klipper", width() );
+            m_iconOrigWidth = width();
+            m_iconOrigHeight = height();
+        }
+        else {
+            m_pixmap = KSystemTray::loadIcon( "klipper" );
+            m_iconOrigWidth = m_pixmap.width();
+            m_iconOrigHeight = m_pixmap,height();
+        }
     }
-    m_iconOrigWidth = width();
-    m_iconOrigHeight = height();
     adjustSize();
 
     globalKeys = new TDEGlobalAccel(TQT_TQOBJECT(this));
