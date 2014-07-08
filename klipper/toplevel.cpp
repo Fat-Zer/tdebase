@@ -210,7 +210,7 @@ KlipperWidget::KlipperWidget( TQWidget *parent, TDEConfig* config )
         else {
             m_pixmap = KSystemTray::loadIcon( "klipper" );
             m_iconOrigWidth = m_pixmap.width();
-            m_iconOrigHeight = m_pixmap,height();
+            m_iconOrigHeight = m_pixmap.height();
         }
     }
     adjustSize();
