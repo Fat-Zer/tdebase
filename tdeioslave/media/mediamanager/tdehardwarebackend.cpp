@@ -152,7 +152,13 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 			&& !(sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
 			&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank))
 			) {
-			// 
+			//
+		}
+		/* We also don't display devices that underlie other devices;
+		/* e.g. the raw partition of a device mapper volume
+		*/
+		else if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::UsedByDevice)) {
+			//
 		}
 		else {
 			// Create medium
