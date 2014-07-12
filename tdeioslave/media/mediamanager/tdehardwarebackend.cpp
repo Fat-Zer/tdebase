@@ -152,13 +152,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 			&& !(sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
 			&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank))
 			) {
-			//
-		}
-		/* We also don't display devices that underlie other devices;
-		/* e.g. the raw partition of a device mapper volume
-		*/
-		else if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::UsedByDevice)) {
-			//
+			// 
 		}
 		else {
 			// Create medium
@@ -174,7 +168,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 					medium->setHidden(false);
 				}
 			}
-
+			
 			// Insert medium into list
 			m_mediaList.addMedium(medium, allowNotification);
 
@@ -217,7 +211,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 		// Create medium
 		Medium* medium = new Medium(sdevice->uniqueID(), driveUDIFromDeviceUID(sdevice->uniqueID()), "");
 		setVolumeProperties(medium);
-
+		
 		// Insert medium into list
 		m_mediaList.addMedium(medium, allowNotification);
 
@@ -246,7 +240,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 			&& !(sdevice->isDiskOfType(TDEDiskDeviceType::Floppy))
 			&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank))
 			) {
-			//
+			// 
 		}
 		else {
 			// Create medium
@@ -392,7 +386,7 @@ void TDEBackend::ResetProperties(TDEStorageDevice * sdevice, bool allowNotificat
 			&& !(sdevice->isDiskOfType(TDEDiskDeviceType::Floppy))
 			&& !(sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank))
 			) {
-			//
+			// 
 		}
 		else {
 			// Do not list the LUKS backend device if it has been unlocked elsewhere
@@ -542,7 +536,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 				diskLabel = i18n("Blank Mount Ranier CD-RW-W");
 			}
 		}
-
+	
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
@@ -551,7 +545,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 				diskLabel = i18n("Blank DVD-ROM");
 			}
 		}
-
+	
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
@@ -564,7 +558,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDR)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				mimeType = "media/blankdvd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank DVD-R");
 			}
@@ -573,7 +567,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				mimeType = "media/blankdvd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank DVD-RW");
 			}
@@ -582,7 +576,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRDL)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				mimeType = "media/blankdvd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank Dual Layer DVD-R");
 			}
@@ -591,7 +585,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRWDL)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				mimeType = "media/blankdvd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank Dual Layer DVD-RW");
 			}
@@ -600,7 +594,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSR)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				mimeType = "media/blankdvd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank DVD+R");
 			}
@@ -609,7 +603,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRW)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				mimeType = "media/blankdvd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank DVD+RW");
 			}
@@ -618,7 +612,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRDL)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				mimeType = "media/blankdvd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank Dual Layer DVD+R");
 			}
@@ -627,7 +621,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRWDL)) {
 			mimeType = "media/dvd" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankdvd" + MOUNT_SUFFIX;
+				mimeType = "media/blankdvd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank Dual Layer DVD+RW");
 			}
@@ -636,7 +630,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::BDROM)) {
 			mimeType = "media/bluray" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankbd" + MOUNT_SUFFIX;
+				mimeType = "media/blankbd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank BD-ROM");
 			}
@@ -645,7 +639,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::BDR)) {
 			mimeType = "media/bluray" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankbd" + MOUNT_SUFFIX;
+				mimeType = "media/blankbd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank BD-R");
 			}
@@ -654,7 +648,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW)) {
 			mimeType = "media/bluray" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankbd" + MOUNT_SUFFIX;
+				mimeType = "media/blankbd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank BD-RW");
 			}
@@ -663,7 +657,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDROM)) {
 			mimeType = "media/bluray" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankhddvd" + MOUNT_SUFFIX;
+				mimeType = "media/blankhddvd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank HDDVD-ROM");
 			}
@@ -672,7 +666,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDR)) {
 			mimeType = "media/bluray" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankhddvd" + MOUNT_SUFFIX;
+				mimeType = "media/blankhddvd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank HDDVD-R");
 			}
@@ -681,12 +675,12 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDRW)) {
 			mimeType = "media/bluray" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
-				mimeType = "media/blankhddvd" + MOUNT_SUFFIX;
+				mimeType = "media/blankhddvd";
 				medium->unmountableState("");
 				diskLabel = i18n("Blank HDDVD-RW");
 			}
 		}
-
+	
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio)) {
 			mimeType = "media/audiocd";
 			medium->unmountableState("audiocd:/?device=" + sdevice->deviceNode());
@@ -702,7 +696,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::BDVideo)) {
 			mimeType = "media/bdvideo";
 		}
-
+	
 		medium->setIconName(TQString::null);
 	}
 	else {
@@ -790,7 +784,7 @@ bool TDEBackend::setFloppyProperties(Medium* medium)
 		else {
 			medium->setEncrypted(false);
 		}
-
+	
 		// USAGE: mountableState(Device node, Mount point, Filesystem type, Mounted ?)
 		medium->mountableState(sdevice->deviceNode(), sdevice->mountPath(), sdevice->fileSystemName(), !sdevice->mountPath().isNull());
 	}
@@ -825,11 +819,11 @@ bool TDEBackend::setFloppyProperties(Medium* medium)
 		}
 		medium->setLabel(diskLabel);
 	}
-
+	
 	/** @todo Mimetype for JAZ drives ? */
-
+	
 	medium->setIconName(TQString::null);
-
+	
 	return true;
 }
 
@@ -873,7 +867,7 @@ void TDEBackend::setFloppyMountState( Medium *medium )
 	KMountPoint::List mtab = KMountPoint::currentMountPoints();
 	KMountPoint::List::iterator it = mtab.begin();
 	KMountPoint::List::iterator end = mtab.end();
-
+	
 	TQString fstype;
 	TQString mountpoint;
 	for (; it!=end; ++it) {
@@ -1110,36 +1104,36 @@ bool TDEBackend::setMountoptions(const TQString &name, const TQStringList &optio
 	TQString drive_udi = driveUDIFromDeviceUID(medium->id());
 
 	kdDebug(1219) << "setMountoptions " << name << " " << options << endl;
-
+	
 	TDEConfig config("mediamanagerrc");
 	config.setGroup(drive_udi);
-
+	
 	TQMap<TQString,TQString> valids = MediaManagerUtils::splitOptions(options);
-
+	
 	const char *names[] = { "use_defaults", "ro", "quiet", "atime", "uid", "utf8", "flush", "sync", 0 };
 	for (int index = 0; names[index]; ++index) {
 		if (valids.contains(names[index])) {
 			config.writeEntry(names[index], valids[names[index]] == "true");
 		}
 	}
-
+	
 	if (valids.contains("shortname")) {
 		config.writeEntry("shortname", valids["shortname"]);
 	}
-
+	
 	if (valids.contains("journaling")) {
 		config.writeEntry("journaling", valids["journaling"]);
 	}
-
+	
 	if (!mountoptions(name).contains(TQString("mountpoint=%1").arg(valids["mountpoint"]))) {
 		config.writeEntry("mountpoint", valids["mountpoint"]);
 	}
-
+	
 	if (valids.contains("automount")) {
 		config.setGroup(drive_udi);
 		config.writeEntry("automount", valids["automount"]);
 	}
-
+	
 	return true;
 }
 
@@ -1158,14 +1152,14 @@ TQString TDEBackend::mount(const Medium *medium)
 	if (medium->isMounted()) {
 		return TQString(); // that was easy
 	}
-
+	
 	TQString mountPoint = isInFstab(medium);
 	if (!mountPoint.isNull())
 	{
 		struct mount_job_data data;
 		data.completed = false;
 		data.medium = medium;
-
+		
 		TDEIO::Job *job = TDEIO::mount( false, 0, medium->deviceNode(), mountPoint );
 		connect(job, TQT_SIGNAL( result (TDEIO::Job *)), TQT_SLOT( slotResult( TDEIO::Job *)));
 		mount_jobs[job] = &data;
@@ -1176,7 +1170,7 @@ TQString TDEBackend::mount(const Medium *medium)
 		}
 		// Return the error message (if any) to the caller
 		return (data.error) ? data.errorMessage : TQString::null;
-
+		
 	}
 
 	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
@@ -1187,9 +1181,9 @@ TQString TDEBackend::mount(const Medium *medium)
 	}
 
 	TQString diskLabel;
-
+	
 	TQMap<TQString,TQString> valids = MediaManagerUtils::splitOptions(mountoptions(medium->id()));
-
+	
 	TQString mount_point = valids["mountpoint"];
 	if (mount_point.startsWith("/media/")) {
 		diskLabel = mount_point.mid(7);
@@ -1202,7 +1196,7 @@ TQString TDEBackend::mount(const Medium *medium)
 		diskLabel = medium->label() + " (" + node + ")";
 		diskLabel.replace("/", "_");
 	}
-
+	
 	TQString qerror = i18n("Cannot mount encrypted drives!");
 
 	if (!medium->isEncrypted()) {
@@ -1234,7 +1228,7 @@ TQString TDEBackend::mount(const Medium *medium)
 
 			m_decryptDialog = new Dialog(sdevice->deviceNode(), iconName);
 			m_decryptDialog->show();
-
+	
 			connect(m_decryptDialog, TQT_SIGNAL (user1Clicked()), this, TQT_SLOT (slotPasswordReady()));
 			connect(m_decryptDialog, TQT_SIGNAL (cancelClicked()), this, TQT_SLOT (slotPasswordCancel()));
 			connect(this, TQT_SIGNAL (signalDecryptionPasswordError(TQString)), m_decryptDialog, TQT_SLOT (slotDialogError(TQString)));
@@ -1322,18 +1316,18 @@ TQString TDEBackend::mount(const TQString &_udi)
 	if (!medium) {
 		return i18n("No such medium: %1").arg(_udi);
 	}
-
+	
 	return mount(medium);
 }
 
 TQString TDEBackend::unmount(const TQString &_udi)
 {
 	const Medium* medium = m_mediaList.findById(_udi);
-
+	
 	if ( !medium ) {
 		return i18n("No such medium: %1").arg(_udi);
 	}
-
+	
 	if (!medium->isMounted()) {
 		return TQString(); // that was easy
 	}
@@ -1344,7 +1338,7 @@ TQString TDEBackend::unmount(const TQString &_udi)
 		struct mount_job_data data;
 		data.completed = false;
 		data.medium = medium;
-
+		
 		TDEIO::Job *job = TDEIO::unmount( medium->mountPoint(), false );
 		connect(job, TQT_SIGNAL( result (TDEIO::Job *)), TQT_SLOT( slotResult( TDEIO::Job *)));
 		mount_jobs[job] = &data;
@@ -1507,7 +1501,7 @@ TQString TDEBackend::listUsingProcesses(const Medium* medium)
 		while (!is.atEnd()) {
 			tmp = is.readLine();
 			tmp = TQStyleSheet::escape(tmp) + "\n";
-
+		
 			proclist += tmp;
 			if (counter++ > 10) {
 				proclist += "...";
@@ -1548,7 +1542,7 @@ TQString TDEBackend::killUsingProcesses(const Medium* medium)
 		while (!is.atEnd()) {
 			tmp = is.readLine();
 			tmp = TQStyleSheet::escape(tmp) + "\n";
-
+		
 			proclist += tmp;
 			if (counter++ > 10) {
 				proclist += "...";
