@@ -196,23 +196,14 @@ KlipperWidget::KlipperWidget( TQWidget *parent, TDEConfig* config )
     connect( poll, TQT_SIGNAL( clipboardChanged( bool ) ),
              this, TQT_SLOT( newClipData( bool ) ) );
 
-    if ( isApplet() ) {
+    if ( isApplet() || !isShown() ) {
         m_pixmap = KSystemTray::loadIcon( "klipper" );
-        m_iconOrigWidth = width();
-        m_iconOrigHeight = height();
     }
     else {
-        if (isShown()) {
-            m_pixmap = KSystemTray::loadSizedIcon( "klipper", width() );
-            m_iconOrigWidth = width();
-            m_iconOrigHeight = height();
-        }
-        else {
-            m_pixmap = KSystemTray::loadIcon( "klipper" );
-            m_iconOrigWidth = m_pixmap.width();
-            m_iconOrigHeight = m_pixmap.height();
-        }
+        m_pixmap = KSystemTray::loadSizedIcon( "klipper", width() );
     }
+    m_iconOrigWidth = m_pixmap.width();
+    m_iconOrigHeight = m_pixmap.height();
     adjustSize();
 
     globalKeys = new TDEGlobalAccel(TQT_TQOBJECT(this));
@@ -307,8 +298,11 @@ void KlipperWidget::paintEvent(TQPaintEvent *)
 {
     TQPainter p(this);
     // Honor Free Desktop specifications that allow for arbitrary system tray icon sizes
-    if ((m_iconOrigWidth != width()) || (m_iconOrigHeight != height())) {
+    if (m_scaledpixmap.isNull() ||
+        (m_iconOrigWidth != width()) || (m_iconOrigHeight != height())) {
         TQImage newIcon;
+        m_iconOrigWidth = width();
+        m_iconOrigHeight = height();
         m_pixmap = KSystemTray::loadSizedIcon( "klipper", width() );
         newIcon = m_pixmap;
         newIcon = newIcon.smoothScale(width(), height());
