@@ -422,8 +422,19 @@ int main( int argc, char **argv )
                     return 12;
                 }
 
+		// Get root window attributes
+		XWindowAttributes rootAttr;
+		XGetWindowAttributes(tqt_xdisplay(), RootWindow(tqt_xdisplay(), tqt_xscreen()), &rootAttr);
+
+		// Disable reception of all X11 events on the root window
+		XSelectInput( tqt_xdisplay(), tqt_xrootwin(), 0 );
+		app.processEvents();
+
                 // wait for SIGUSR1, SIGUSR2, SIGWINCH, SIGTTIN, or SIGTTOU
                 sigsuspend(&new_mask);
+
+		// Reenable reception of X11 events on the root window
+		XSelectInput( tqt_xdisplay(), tqt_xrootwin(), rootAttr.your_event_mask );
             }
         }
 
