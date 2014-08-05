@@ -14,7 +14,7 @@
 
 
 TDEpasswd1Dialog::TDEpasswd1Dialog()
-    : KPasswordDialog(Password, false, 0)
+    : KPasswordDialog(Password, false, Help)
 {
     setCaption(i18n("Change Password"));
     setPrompt(i18n("Please enter your current password:"));
@@ -79,7 +79,7 @@ int TDEpasswd1Dialog::getPassword(TQCString &password)
 
 
 TDEpasswd2Dialog::TDEpasswd2Dialog(const char *oldpass, TQCString user)
-    : KPasswordDialog(NewPassword, false, 0)
+    : KPasswordDialog(NewPassword, false, Help)
 {
     m_Pass = oldpass;
     m_User = user;
