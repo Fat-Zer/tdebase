@@ -40,7 +40,7 @@ This handbook describes the bzip2 protocol.
 
 </articleinfo>
 
-<para>Bzip2 is a compression program</para>
+<para>Bzip2 is a compression program.</para>
 
 <para>The bzip2 tdeioslave is not directly usable, and is intended for use
 as a filter. For example, the tar tdeioslave can filter a file through

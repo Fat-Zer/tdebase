@@ -29,38 +29,31 @@
 
 <abstract>
 <para>
-&kappname; is a system utility which can be used to modify user passwords.
+&kappname; is a utility to change user passwords.
 </para>
 </abstract>
 
 <keywordset>
 <keyword>TDE</keyword>
-<keyword>network</keyword>
-<keyword>manager</keyword>
-<keyword>connection</keyword>
-<keyword>connections</keyword>
-<keyword>wired</keyword>
-<keyword>wireless</keyword>
+<keyword>System Settings</keyword>
+<keyword>kcontrol</keyword>
+<keyword>user</keyword>
+<keyword>account</keyword>
+<keyword>password</keyword>
 </keywordset>
 
 </articleinfo>
 
-<sect1 id="apologies">
-<title>We Apologize</title>
-<para>No documentation has yet been written for &kappname;.</para>
+<para>
+Use this dialog to change your user password. Your user password
+is the password used to log into your system. First enter your current password. Then you will be asked
+for your new password and to confirm.
+</para>
 
-<para>If you need help, please check <ulink url="http://www.trinitydesktop.org">The &tde;
-web site</ulink>, submit questions to the <ulink url="http://www.trinitydesktop.org/mailinglist.php">
-&tde; mail lists</ulink>, or file a bug report at the <ulink url="http://bugs.trinitydesktop.org/">
-&tde; bug tracker</ulink>.</para>
-
-<para>If you are interested in helping, please consider writing the help file.
-Submitting a basic text file is acceptable as the &tde-team; will convert the text.</para>
-
-<para>Thank you for helping and thank you for your patience.</para>
+<para>
+When run as root, no password is required. Only the new password and confirmation are required. Passwords of other users can be changed by passing the <parameter>account name</parameter> as a parameter. Normally that requires root privileges and using <command>tdesu</command>.
+</para>
 
 &underFDL;
-
-</sect1>
 
 </article>
