@@ -221,7 +221,7 @@ TQString KonqMisc::konqFilteredURL( TQWidget* parent, const TQString& _url, cons
 }
 
 KonqDraggableLabel::KonqDraggableLabel( KonqMainWindow* mw, const TQString& text )
-  : TQLabel( text, 0L, "kde toolbar widget" )	// Use this name for it to be styled!
+  : TQLabel( text, 0L, "tde toolbar widget" )	// Use this name for it to be styled!
   , m_mw(mw)
 {
   setBackgroundMode( TQt::PaletteButton );

@@ -216,7 +216,7 @@ KEBApp::KEBApp(
         "Resets the quick search so that all bookmarks are shown again." ) );
     resetQuickSearch->plug( quicksearch );
 
-    TQLabel *lbl = new TQLabel(i18n("Se&arch:"), quicksearch, "kde toolbar widget");
+    TQLabel *lbl = new TQLabel(i18n("Se&arch:"), quicksearch, "tde toolbar widget");
 
     TDEListViewSearchLine *searchLineEdit = new KEBSearchLine(quicksearch, 0, "TDEListViewSearchLine");
     quicksearch->setStretchableWidget(searchLineEdit);
