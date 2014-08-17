@@ -9,14 +9,13 @@
 
 #title {
   right: 80px;
-  font-size: x-large;
+  font-size: xx-large;
 }
 
 #tagline {
   right: 80px;
-  font-size: x-small;
-  text-shadow: #c8c8c8 0px 0px 3px;
-
+  font-size: small;
+  text-shadow: #000000 1px 1px 1px;
 }
 
 #barCenter {
