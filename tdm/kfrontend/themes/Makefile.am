@@ -1,1 +1,1 @@
-SUBDIRS = circles o2_enterprise
+SUBDIRS = circles minimalist o2_enterprise

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE greeter SYSTEM "greeter.dtd">
+
+<greeter id="theme">
+	<style font="Sans 11" window-text-color="#f07746"
+	       base-color="#f07746" alternate-base-color="#999999"
+	       text-color="#dfdbd2" disabled-text-color="#666666"
+	       base-alpha="0" 
+	       disabled-base-color="#df382c"
+	       disabled-base-alpha="0" 
+	       disabled-highlight-alpha="0"
+	       frame="false" />
+	       
+<!-- backgound image -->
+	<item type="pixmap" id="background" background="true">
+		<normal file="background.png" scalemode="crop"/>
+		<pos x="0" y="0" width="100%" height="100%"/>
+	</item>
+	
+	
+<!-- topline -->
+	<item type="pixmap">
+		<normal file="topline.png"/>
+		<pos anchor="nw" x="0" y="0" width="100%" height="26"/>
+	</item>
+		
+<!-- box -->	
+	<item type="pixmap">
+		<normal file="box.png"/>
+		<pos anchor="nw" x="120" y="200" width="340" height="160"/>
+	</item>
+	
+<!-- user line -->
+	<item type="pixmap">
+		<pos anchor="nw" x="140" y="245" width="300" height="32"/>
+		<normal file="lineedit.png"/>
+	</item>	
+	
+<!-- user field -->	
+			<item type="label">
+				<pos anchor="nw" x="145" y="225"/>
+				<normal font="Sans 11" color="#dfdbd2"/>
+				<stock type="username-label"/>
+			</item>
+			
+			
+			<item type="entry" id="user-entry">
+				<style font="Sans 10" text-color="#dfdbd2"/>
+				<pos anchor="nw" x="143" y="248" width="293" height="26"/>
+			</item>
+		
+<!-- password line -->
+	<item type="pixmap">
+		<pos anchor="nw" x="140" y="305" width="300" height="32"/>
+		<normal file="lineedit.png"/>
+	</item>	
+	
+	
+<!-- password field -->
+	
+			<item type="label">
+				<pos anchor="nw" x="145" y="285"/>
+				<normal font="Sans 11" color="#dfdbd2"/>
+				<stock type="password-label"/>
+			</item>
+			
+			<item type="entry" id="pw-entry">
+				<style font="Sans 10" text-color="#dfdbd2"/>
+				<pos anchor="nw" x="143" y="308" width="267" height="26"/>
+			</item>	
+	
+<!-- login button -->
+			<item type="pixmap" id="login_button" button="true">
+				<normal alpha="1" file="login_normal.png"/>
+				<prelight file="login_prelight.png"/>
+				<active file="login_prelight.png"/>
+				<pos anchor="nw" x="410" y="308"/>
+			</item>	
+			
+	
+<!-- Session button --> 
+	<item type="pixmap" id="session_button" button="true">
+		<normal alpha="1" file="session_normal.png"/>
+		<prelight file="session_prelight.png"/>
+		<active file="session_prelight.png"/>
+		<pos anchor="nw" x="422" y="215"/>
+	</item>	
+	
+
+	<!-- logo -->
+	<item type="pixmap">
+		<normal file="tdelogo.png"/>
+		<pos anchor="ns" x="95%" y="95%" width="48" height="48"/>
+	</item>	
+
+<!-- Clock -->
+			<item type="rect" id="system-session">
+				<pos anchor="ne" x="100%" y="0"/>
+				<fixed>
+					<item type="label">
+						<pos anchor="ne" x="-32" y="5"/>
+						<normal font="Sans 10" color="#dfdbd2"/>
+						<text>%c</text>
+					</item>
+				</fixed>
+			</item>
+			
+<!-- Welcome Label -->
+			<item type="label" id="welcome">
+				<pos anchor="nw" x="6" y="4" width="50%" height="26"/>
+				<normal font="Sans 12" color="#dfdbd2"/>
+				<text>%h</text>
+			</item>
+
+<!-- System button -->
+			<item type="pixmap" id="system_button" button="true">
+				<show modes="console" type="system"/>
+				<normal alpha="1" file="system_normal.png"/>
+				<prelight file="system_prelight.png"/>
+				<active file="system_prelight.png"/>
+				<pos anchor="ne" x="100%" y="0"/>
+			</item>
+				
+<!-- caps lock and pam warning -->
+	<item type="label" id="pam-error" >
+		<pos x="50%" y="20%" anchor="nw" />
+		<normal color="#CD0000" font="Sans Serif 12" />
+		<text/>
+	</item>
+	<item type="label" id="caps-lock-warning" >
+		<normal color="#CD0000" font="Sans Serif 12" />
+		<pos x="50%" y="20%" anchor="nw" />
+		<stock type="caps-lock-warning" />
+	</item>
+
+</greeter>

@@ -1,0 +1,10 @@
+# This is not really a .desktop file like the rest, but it's useful to treat
+# it as such
+
+[GdmGreeterTheme]
+Encoding=UTF-8
+Greeter=minimalist.xml
+Name=Minimalist
+Description=A minimalist TDM theme for TDE, inspired by LightDM
+Author=TDE
+Screenshot=screenshot.png

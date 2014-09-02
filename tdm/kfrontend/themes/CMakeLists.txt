@@ -10,4 +10,5 @@
 #################################################
 
 add_subdirectory( circles )
+add_subdirectory( minimalist )
 add_subdirectory( o2_enterprise )
