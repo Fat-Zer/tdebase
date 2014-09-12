@@ -184,8 +184,16 @@ XDG_DATA_DIRS=/opt/trinity/share:/usr/share
 non-English documention folders of some applications. Such symlinks are hooks to the correct location 
 of localized common resources and will work properly once the related tde-i18n package is installed.
 Please refrain from filing bugs related to those broken symlinks.</para>
-</sect2>
 
+<para>Some old wallpapers have been removed from the list displayed in Trinity Control Center -->
+Appearance &amp; Themes --> Background and a few new ones have been added. The removed wallpapers
+are still available and if desired they can be manually selected. They are located in the
+/opt/trinity/share/wallpapers/obsolete folder.</para>
+
+<para>As part of the rebranding effort, TDE now has its own theme style and system-wide changes have
+been made to conform to such style as much as possible.</para>
+
+</sect2>
 
 <sect2 id="release-notes-new-or-improved-features">
 <title>New or Improved Features</title>
@@ -232,7 +240,7 @@ Icons only mode available for taskbar.
 Accelerator key for Konsole main menu can be enabled when desired.
 </para></listitem>
 <listitem><para>
-Possible to move to next/previous file in a Konqueror list view while renaming.
+Konqueror file rename improvement: in list view mode it is now possible to move directly to the next/previous file without leaving the rename mode. Default key shortcuts are Tab (next) and Shift+Tab (previous).
 </para></listitem>
 <listitem><para>
 Kate taskbar: middle mouse click close selected document, if enabled.
