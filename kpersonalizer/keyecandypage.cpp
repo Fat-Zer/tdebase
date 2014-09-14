@@ -45,7 +45,7 @@
 #include "ksysinfo.h"
 #include "keyecandypage.h"
 
-#define DEFAULT_WALLPAPER "isadora.png"
+#define DEFAULT_WALLPAPER "Trinity-lineart.svg"
 
 KEyeCandyPage::KEyeCandyPage(TQWidget *parent, const char *name ) : KEyeCandyPageDlg(parent,name) {
 

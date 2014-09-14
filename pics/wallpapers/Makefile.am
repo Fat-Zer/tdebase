@@ -53,6 +53,8 @@ pics_wallpaper_data_DATA = \
      Totally-New-Product-1.jpg.desktop \
      Trinity4.png \
      Trinity4.png.desktop \
+     Trinity-lineart.svg \
+     Trinity-lineart.svg.desktop \
      Won-Ton-Soup-3.jpg \
      Won-Ton-Soup-3.jpg.desktop \
      world-desktop.jpg \

@@ -37,6 +37,7 @@ install( FILES
     Time-For-Lunch-2.jpg Time-For-Lunch-2.jpg.desktop
     Totally-New-Product-1.jpg Totally-New-Product-1.jpg.desktop
     Trinity4.png Trinity4.png.desktop
+    Trinity-lineart.svg Trinity-lineart.svg.desktop
     Won-Ton-Soup-3.jpg Won-Ton-Soup-3.jpg.desktop
     world-desktop.jpg world-desktop.jpg.desktop
   DESTINATION ${WALLPAPER_INSTALL_DIR} )

@@ -694,7 +694,7 @@ static const char def_background[] =
 "Program=\n"
 "ReverseBlending=false\n"
 "UseSHM=false\n"
-"Wallpaper=isadora.png\n"
+"Wallpaper=Trinity-lineart.svg\n"
 "WallpaperList=\n"
 "WallpaperMode=Scaled\n";
 
