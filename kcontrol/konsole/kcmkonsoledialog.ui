@@ -66,9 +66,6 @@
                         <property name="name">
                             <cstring>GroupBox2</cstring>
                         </property>
-                        <property name="title">
-                            <string>Misc</string>
-                        </property>
                         <grid>
                             <property name="name">
                                 <cstring>unnamed</cstring>
@@ -134,32 +131,15 @@
                                     <cstring>xonXoffCB</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Use Ctrl+S/Ctrl+Q flow control</string>
+                                  <string>&amp;Use Ctrl+S/Ctrl+Q flow control</string>
                                 </property>
                             </widget>
-                            <spacer row="12" column="3">
-                                <property name="name">
-                                    <cstring>Spacer3</cstring>
-                                </property>
-                                <property name="orientation">
-                                    <enum>Horizontal</enum>
-                                </property>
-                                <property name="sizeType">
-                                    <enum>Expanding</enum>
-                                </property>
-                                <property name="sizeHint">
-                                    <size>
-                                        <width>20</width>
-                                        <height>20</height>
-                                    </size>
-                                </property>
-                            </spacer>
                             <widget class="TQCheckBox" row="8" column="0" rowspan="1" colspan="3">
                                 <property name="name">
                                     <cstring>bidiCB</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Enable bidirectional text rendering</string>
+                                  <string>E&amp;nable bidirectional text rendering</string>
                                 </property>
                             </widget>
                             <widget class="TQCheckBox" row="9" column="0" rowspan="1" colspan="4">
@@ -167,26 +147,70 @@
                                     <cstring>matchTabWinTitleCB</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Set tab title to match window title</string>
+                                  <string>Set &amp;tab title to match window title</string>
                                 </property>
                             </widget>
                             <widget class="TQCheckBox" row="10" column="0" rowspan="1" colspan="3">
                                 <property name="name">
-                                    <cstring>tabsCycleWheel</cstring>
+                                    <cstring>tabsCycleWheelCB</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Cycle tabs with mouse wheel</string>
+                                  <string>Cycle tabs &amp;with mouse wheel</string>
                                 </property>
                             </widget>
                             <widget class="TQCheckBox" row="11" column="0" rowspan="1" colspan="3">
                                 <property name="name">
-                                    <cstring>menuAccelerators</cstring>
+                                    <cstring>menuAcceleratorsCB</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Enable main menu accelerator keys</string>
+                                  <string>Enable main &amp;menu accelerator keys</string>
                                 </property>
                             </widget>
-                            <widget class="KIntNumInput" row="12" column="2">
+                            <widget class="TQCheckBox" row="12" column="0" rowspan="1" colspan="3">
+                              <property name="name">
+                                <cstring>metaAsAltModeCB</cstring>
+                              </property>
+                              <property name="text">
+                                <string>Handle Meta &amp;key as Alt Key</string>
+                              </property>
+                            </widget>
+                            <widget class="TQLabel" row="13" column="0" rowspan="1" colspan="2">
+                              <property name="name">
+                                <cstring>TextLabel1_4</cstring>
+                              </property>
+                              <property name="sizePolicy">
+                                <sizepolicy>
+                                  <hsizetype>1</hsizetype>
+                                  <vsizetype>5</vsizetype>
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                </sizepolicy>
+                              </property>
+                              <property name="text">
+                                <string>&amp;Line spacing:</string>
+                              </property>
+                              <property name="buddy" stdset="0">
+                                <cstring>line_spacingSB</cstring>
+                              </property>
+                            </widget>
+                            <spacer row="12" column="3">
+                              <property name="name">
+                                <cstring>Spacer3</cstring>
+                              </property>
+                              <property name="orientation">
+                                <enum>Horizontal</enum>
+                              </property>
+                              <property name="sizeType">
+                                <enum>Expanding</enum>
+                              </property>
+                              <property name="sizeHint">
+                                <size>
+                                  <width>20</width>
+                                  <height>20</height>
+                                </size>
+                              </property>
+                            </spacer>
+                            <widget class="KIntNumInput" row="13" column="2">
                                 <property name="name">
                                     <cstring>line_spacingSB</cstring>
                                 </property>
@@ -203,25 +227,6 @@
                                 </property>
                                 <property name="maxValue">
                                     <number>8</number>
-                                </property>
-                            </widget>
-                            <widget class="TQLabel" row="12" column="0" rowspan="1" colspan="2">
-                                <property name="name">
-                                    <cstring>TextLabel1_4</cstring>
-                                </property>
-                                <property name="sizePolicy">
-                                    <sizepolicy>
-                                        <hsizetype>1</hsizetype>
-                                        <vsizetype>5</vsizetype>
-                                        <horstretch>0</horstretch>
-                                        <verstretch>0</verstretch>
-                                    </sizepolicy>
-                                </property>
-                                <property name="text">
-                                    <string>&amp;Line spacing:</string>
-                                </property>
-                                <property name="buddy" stdset="0">
-                                    <cstring>line_spacingSB</cstring>
                                 </property>
                             </widget>
                             <spacer row="12" column="3">
@@ -241,7 +246,7 @@
                                     </size>
                                 </property>
                             </spacer>
-                            <widget class="TQLabel" row="13" column="0">
+                            <widget class="TQLabel" row="14" column="0" rowspan="1" colspan="2">
                                 <property name="name">
                                     <cstring>SilenceLabel</cstring>
                                 </property>
@@ -260,7 +265,7 @@
                                     <cstring>silence_secondsSB</cstring>
                                 </property>
                             </widget>
-                            <widget class="KIntNumInput" row="13" column="1" rowspan="1" colspan="2">
+                            <widget class="KIntNumInput" row="14" column="2">
                                 <property name="name">
                                     <cstring>silence_secondsSB</cstring>
                                 </property>
@@ -276,20 +281,10 @@
                                     <number>1</number>
                                 </property>
                             </widget>
-                        </grid>
-                    </widget>
-                    <widget class="TQGroupBox" row="1" column="0">
-                        <property name="name">
-                            <cstring>GroupBox3</cstring>
-                        </property>
-                        <property name="title">
-                            <string>Double Click</string>
-                        </property>
-                        <grid>
                             <property name="name">
                                 <cstring>unnamed</cstring>
                             </property>
-                            <widget class="TQLabel" row="0" column="0">
+                            <widget class="TQLabel" row="15" column="0" colspan="3">
                                 <property name="name">
                                     <cstring>TextLabel1_3</cstring>
                                 </property>
@@ -300,7 +295,7 @@
                                     <cstring>word_connectorLE</cstring>
                                 </property>
                             </widget>
-                            <widget class="TQLineEdit" row="1" column="0">
+                            <widget class="TQLineEdit" row="16" column="0" colspan="3">
                                 <property name="name">
                                     <cstring>word_connectorLE</cstring>
                                 </property>

@@ -927,37 +927,38 @@ void TEmuVt102::onScrollLock()
    the complications towards a configuration file [see KeyTrans class].
 */
 
-void TEmuVt102::onKeyPress( TQKeyEvent* ev )
+void TEmuVt102::doKeyPress( TQKeyEvent* ev )
 {
-  if (!listenToKeyPress) return; // someone else gets the keys
   emit notifySessionState(NOTIFYNORMAL);
 
-//printf("State/Key: 0x%04x 0x%04x (%d,%d)\n",ev->state(),ev->key(),ev->text().length(),ev->text().length()?ev->text().ascii()[0]:0);
+  //printf("State/Key: 0x%04x 0x%04x (%d,%d)\n", ev->state(),ev->key(),
+  //       ev->text().length(),ev->text().length()?ev->text().ascii()[0]:0);
 
   // lookup in keyboard translation table ...
   int cmd = CMD_none; 
-  const char* txt; 
+  const char *txt; 
   int len;
   bool metaspecified;
-  if (keytrans->findEntry(ev->key(), encodeMode(MODE_NewLine		, BITS_NewLine   ) + // OLD,
-                                     encodeMode(MODE_Ansi		, BITS_Ansi      ) + // OBSOLETE,
-                                     encodeMode(MODE_AppCuKeys		, BITS_AppCuKeys ) + // VT100 stuff
-                                     encodeMode(MODE_AppScreen		, BITS_AppScreen ) + // VT100 stuff
-                                     encodeStat(TQt::ControlButton	, BITS_Control   ) +
-                                     encodeStat(TQt::ShiftButton	, BITS_Shift     ) +
-                                     encodeStat(TQt::AltButton		, BITS_Alt       ),
-                          &cmd, &txt, &len, &metaspecified ))
-//printf("cmd: %d, %s, %d\n",cmd,txt,len);
+  int bits = encodeMode(MODE_NewLine		  , BITS_NewLine   ) + // OLD,
+             encodeMode(MODE_Ansi		      , BITS_Ansi      ) + // OBSOLETE,
+             encodeMode(MODE_AppCuKeys		, BITS_AppCuKeys ) + // VT100 stuff
+             encodeMode(MODE_AppScreen		, BITS_AppScreen ) + // VT100 stuff
+             encodeStat(TQt::ControlButton, BITS_Control   ) +
+             encodeStat(TQt::ShiftButton	, BITS_Shift     ) +
+             encodeStat(TQt::AltButton		, BITS_Alt       );
+  if (metaKeyMode)
+    bits += encodeStat(TQt::MetaButton , BITS_Alt);
+  keytrans->findEntry(ev->key(), bits, &cmd, &txt, &len, &metaspecified);
   if (connected)
   {
-  switch(cmd) // ... and execute if found.
-  {
-    case CMD_scrollPageUp   : gui->doScroll(-gui->Lines()/2); return;
-    case CMD_scrollPageDown : gui->doScroll(+gui->Lines()/2); return;
-    case CMD_scrollLineUp   : gui->doScroll(-1             ); return;
-    case CMD_scrollLineDown : gui->doScroll(+1             ); return;
-    case CMD_scrollLock     : onScrollLock(                ); return;
-  }
+    switch(cmd) // ... and execute if found.
+    {
+      case CMD_scrollPageUp   : gui->doScroll(-gui->Lines()/2); return;
+      case CMD_scrollPageDown : gui->doScroll(+gui->Lines()/2); return;
+      case CMD_scrollLineUp   : gui->doScroll(-1             ); return;
+      case CMD_scrollLineDown : gui->doScroll(+1             ); return;
+      case CMD_scrollLock     : onScrollLock(                ); return;
+    }
   }
   if (holdScreen)
   {
@@ -976,8 +977,11 @@ void TEmuVt102::onKeyPress( TQKeyEvent* ev )
     || ev->key()==Qt::Key_PageUp || ev->key()==Qt::Key_PageDown))
     scr->setHistCursor(scr->getHistLines());
 
-  if (cmd==CMD_send) {
-    if ((ev->state() & TQt::AltButton) && !metaspecified ) sendString("\033");
+  if (cmd==CMD_send)
+  {
+    if ((ev->state() & TQt::AltButton) || 
+        (metaKeyMode && ((ev->state() & TQt::MetaButton) || metaIsPressed) && !metaspecified))
+      sendString("\033");
     emit sndBlock(txt,len);
     return;
   }
@@ -985,7 +989,9 @@ void TEmuVt102::onKeyPress( TQKeyEvent* ev )
   // fall back handling
   if (!ev->text().isEmpty())
   {
-    if (ev->state() & TQt::AltButton) sendString("\033"); // ESC, this is the ALT prefix
+    if ((ev->state() & TQt::AltButton) || 
+        (metaKeyMode && ((ev->state() & TQt::MetaButton) || metaIsPressed)))
+      sendString("\033"); // ESC, this is the ALT prefix
     TQCString s = m_codec->fromUnicode(ev->text());     // encode for application
     // FIXME: In Qt 2, TQKeyEvent::text() would return "\003" for Ctrl-C etc.
     //        while in Qt 3 it returns the actual key ("c" or "C") which caused

@@ -60,7 +60,8 @@ public:
   void changeGUI(TEWidget* newgui);
   ~TEmuVt102();
 
-  virtual void onKeyPress(TQKeyEvent*);
+  virtual void doKeyPress(TQKeyEvent*);
+
 public slots: // signals incoming from TEWidget
 
   void onMouse(int cb, int cx, int cy);

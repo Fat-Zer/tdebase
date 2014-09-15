@@ -71,8 +71,9 @@ KCMKonsole::KCMKonsole(TQWidget * parent, const char *name, const TQStringList&)
     connect(dialog->frameCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
     connect(dialog->line_spacingSB,TQT_SIGNAL(valueChanged(int)), TQT_SLOT( changed() ));
     connect(dialog->matchTabWinTitleCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
-    connect(dialog->tabsCycleWheel,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
-    connect(dialog->menuAccelerators,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
+    connect(dialog->tabsCycleWheelCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
+    connect(dialog->menuAcceleratorsCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
+    connect(dialog->metaAsAltModeCB,TQT_SIGNAL(toggled(bool)), TQT_SLOT( changed() ));
     connect(dialog->silence_secondsSB,TQT_SIGNAL(valueChanged(int)), TQT_SLOT( changed() ));
     connect(dialog->word_connectorLE,TQT_SIGNAL(textChanged(const TQString &)), TQT_SLOT( changed() ));
     connect(dialog->SchemaEditor1, TQT_SIGNAL(changed()), TQT_SLOT( changed() ));
@@ -97,8 +98,8 @@ void KCMKonsole::load(bool useDefaults)
     bidiOrig = config.readBoolEntry("EnableBidi",false);
     dialog->bidiCB->setChecked(bidiOrig);
     dialog->matchTabWinTitleCB->setChecked(config.readBoolEntry("MatchTabWinTitle",false));
-    dialog->tabsCycleWheel->setChecked(config.readBoolEntry("TabsCycleWheel",true));
-    dialog->menuAccelerators->setChecked(config.readBoolEntry("MenuAccelerators",false));
+    dialog->tabsCycleWheelCB->setChecked(config.readBoolEntry("TabsCycleWheel",true));
+    dialog->menuAcceleratorsCB->setChecked(config.readBoolEntry("MenuAccelerators",false));
     dialog->warnCB->setChecked(config.readBoolEntry("WarnQuit",true));
     dialog->ctrldragCB->setChecked(config.readBoolEntry("CtrlDrag",true));
     dialog->cutToBeginningOfLineCB->setChecked(config.readBoolEntry("CutToBeginningOfLine",false));
@@ -110,6 +111,7 @@ void KCMKonsole::load(bool useDefaults)
     dialog->line_spacingSB->setValue(config.readUnsignedNumEntry( "LineSpacing", 0 ));
     dialog->silence_secondsSB->setValue(config.readUnsignedNumEntry( "SilenceSeconds", 10 ));
     dialog->word_connectorLE->setText(config.readEntry("wordseps",":@-./_~"));
+    dialog->metaAsAltModeCB->setChecked(config.readBoolEntry("metaAsAltMode",false));
 
     dialog->SchemaEditor1->setSchema(config.readEntry("schema"));
 
@@ -137,8 +139,8 @@ void KCMKonsole::save()
     bool bidiNew = dialog->bidiCB->isChecked();
     config.writeEntry("EnableBidi", bidiNew);
     config.writeEntry("MatchTabWinTitle", dialog->matchTabWinTitleCB->isChecked());
-    config.writeEntry("TabsCycleWheel", dialog->tabsCycleWheel->isChecked());
-    config.writeEntry("MenuAccelerators", dialog->menuAccelerators->isChecked());
+    config.writeEntry("TabsCycleWheel", dialog->tabsCycleWheelCB->isChecked());
+    config.writeEntry("MenuAccelerators", dialog->menuAcceleratorsCB->isChecked());
     config.writeEntry("WarnQuit", dialog->warnCB->isChecked());
     config.writeEntry("CtrlDrag", dialog->ctrldragCB->isChecked());
     config.writeEntry("CutToBeginningOfLine", dialog->cutToBeginningOfLineCB->isChecked());
@@ -150,6 +152,7 @@ void KCMKonsole::save()
     config.writeEntry("LineSpacing" , dialog->line_spacingSB->value());
     config.writeEntry("SilenceSeconds" , dialog->silence_secondsSB->value());
     config.writeEntry("wordseps", dialog->word_connectorLE->text());
+    config.writeEntry("metaAsAltMode", dialog->metaAsAltModeCB->isChecked());
 
     config.writeEntry("schema", dialog->SchemaEditor1->schema());
 

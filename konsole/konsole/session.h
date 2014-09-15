@@ -123,6 +123,7 @@ public:
   void setSize(TQSize size);
   void setFont(const TQString &font);
   TQString font();
+  void setMetaAsAltMode(bool mode);
 
 public slots:
 

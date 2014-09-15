@@ -118,6 +118,7 @@ signals:
     void slotSelectBell();
     void slotSelectLineSpacing();
     void slotBlinkingCursor();
+    void slotToggleMetaAsAltMode();
     void slotUseKonsoleSettings();
     void slotWordSeps();
     void slotSetEncoding();
@@ -136,9 +137,9 @@ signals:
     void setSchema(ColorSchema* s);
     void updateKeytabMenu();
 
-	bool doOpenStream( const TQString& );
-	bool doWriteStream( const TQByteArray& );
-	bool doCloseStream();
+	  bool doOpenStream( const TQString& );
+  	bool doWriteStream( const TQByteArray& );
+  	bool doCloseStream();
 
     TQWidget* parentWidget;
     TEWidget* te;
@@ -151,6 +152,7 @@ signals:
 
     TDEToggleAction* blinkingCursor;
     TDEToggleAction* showFrame;
+    TDEToggleAction* metaAsAlt;
     TDEToggleAction* m_useKonsoleSettings;
 
     TDESelectAction* selectBell;
@@ -174,6 +176,7 @@ signals:
     TQString     s_word_seps;			// characters that are considered part of a word
 
     bool        b_framevis:1;
+    bool        b_metaAsAlt:1;
     bool        b_histEnabled:1;
     bool        b_useKonsoleSettings:1;
     bool        b_autoDestroy:1;

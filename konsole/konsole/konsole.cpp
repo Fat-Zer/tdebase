@@ -273,6 +273,7 @@ Konsole::Konsole(const char* name, int histon, bool menubaron, bool tabbaron, bo
 ,b_autoResizeTabs(false)
 ,b_installBitmapFonts(false)
 ,b_framevis(true)
+,b_metaAsAlt(false)
 ,b_fullscreen(false)
 ,m_menuCreated(false)
 ,b_warnQuit(false)
@@ -1622,6 +1623,7 @@ void Konsole::readProperties(TDEConfig* config, const TQString &schema, bool glo
      b_bidiEnabled = config->readBoolEntry("EnableBidi",false);
      s_word_seps= config->readEntry("wordseps",":@-./_~");
      b_framevis = config->readBoolEntry("has frame",true);
+     b_metaAsAlt = config->readBoolEntry("metaAsAltMode",false);
      TQPtrList<TEWidget> tes = activeTEs();
      for (TEWidget *_te = tes.first(); _te; _te = tes.next()) {
        _te->setWordCharacters(s_word_seps);
@@ -1636,7 +1638,10 @@ void Konsole::readProperties(TDEConfig* config, const TQString &schema, bool glo
 
      monitorSilenceSeconds=config->readUnsignedNumEntry("SilenceSeconds", 10);
      for (TESession *ses = sessions.first(); ses; ses = sessions.next())
+     {
+       ses->setMetaAsAltMode(b_metaAsAlt);
        ses->setMonitorSilenceSeconds(monitorSilenceSeconds);
+     }
 
      b_xonXoff = config->readBoolEntry("XonXoff",false);
      b_matchTabWinTitle = config->readBoolEntry("MatchTabWinTitle",false);
@@ -2187,7 +2192,9 @@ void Konsole::reparseConfiguration()
   curr_schema = sch->numb();
   pmPath = sch->imagePath();
 
-  for (TESession *_se = sessions.first(); _se; _se = sessions.next()) {
+  for (TESession *_se = sessions.first(); _se; _se = sessions.next())
+  {
+     _se->setMetaAsAltMode(b_metaAsAlt);
      ColorSchema* s = colors->find( _se->schemaNo() );
      if (s) {
        if (s->hasSchemaFileChanged())
@@ -2369,8 +2376,14 @@ void Konsole::disableMasterModeConnections()
       for (; to_it.current(); ++to_it) {
         TESession *to = to_it.current();
         if (to!=from)
-          disconnect(from->widget(),TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
-                     to->getEmulation(),TQT_SLOT(onKeyPress(TQKeyEvent*)));
+        {
+          disconnect(from->widget(), TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
+                     to->getEmulation(), TQT_SLOT(onKeyPress(TQKeyEvent*)));
+          disconnect(from->widget(), TQT_SIGNAL(keyReleasedSignal(TQKeyEvent*)),
+                     to->getEmulation(), TQT_SLOT(onKeyReleased(TQKeyEvent*)));
+          disconnect(from->widget(), TQT_SIGNAL(focusInSignal(TQFocusEvent*)),
+                     to->getEmulation(), TQT_SLOT(onFocusIn(TQFocusEvent*))); 
+        }
       }
     }
   }
@@ -2385,9 +2398,14 @@ void Konsole::enableMasterModeConnections()
       TQPtrListIterator<TESession> to_it(sessions);
       for (; to_it.current(); ++to_it) {
         TESession *to = to_it.current();
-        if (to!=from) {
-          connect(from->widget(),TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
-                  to->getEmulation(),TQT_SLOT(onKeyPress(TQKeyEvent*)));
+        if (to!=from)
+        {
+          connect(from->widget(), TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
+                  to->getEmulation(), TQT_SLOT(onKeyPress(TQKeyEvent*)));
+          connect(from->widget(), TQT_SIGNAL(keyReleasedSignal(TQKeyEvent*)),
+                  to->getEmulation(), TQT_SLOT(onKeyReleased(TQKeyEvent*)));
+          connect(from->widget(), TQT_SIGNAL(focusInSignal(TQFocusEvent*)),
+                  to->getEmulation(), TQT_SLOT(onFocusIn(TQFocusEvent*))); 
         }
       }
     }
@@ -2951,23 +2969,25 @@ TQString Konsole::newSession(KSimpleConfig *co, TQString program, const TQStrLis
   s->setProgram(TQFile::encodeName(program),cmdArgs);
   s->setMonitorSilenceSeconds(monitorSilenceSeconds);
   s->enableFullScripting(b_fullScripting);
+  s->setMetaAsAltMode(b_metaAsAlt);
+  
   // If you add any new signal-slot connection below, think about doing it in konsolePart too
   connect( s,TQT_SIGNAL(done(TESession*)),
-           this,TQT_SLOT(doneSession(TESession*)) );
-  connect( s, TQT_SIGNAL( updateTitle(TESession*) ),
-           this, TQT_SLOT( updateTitle(TESession*) ) );
-  connect( s, TQT_SIGNAL( notifySessionState(TESession*, int) ),
-           this, TQT_SLOT( notifySessionState(TESession*, int)) );
+           this,TQT_SLOT(doneSession(TESession*)));
+  connect( s, TQT_SIGNAL(updateTitle(TESession*)),
+           this, TQT_SLOT(updateTitle(TESession*)));
+  connect( s, TQT_SIGNAL(notifySessionState(TESession*, int)),
+           this, TQT_SLOT(notifySessionState(TESession*, int)));
   connect( s, TQT_SIGNAL(disableMasterModeConnections()),
-           this, TQT_SLOT(disableMasterModeConnections()) );
+           this, TQT_SLOT(disableMasterModeConnections()));
   connect( s, TQT_SIGNAL(enableMasterModeConnections()),
-           this, TQT_SLOT(enableMasterModeConnections()) );
+           this, TQT_SLOT(enableMasterModeConnections()));
   connect( s, TQT_SIGNAL(renameSession(TESession*,const TQString&)),
-           this, TQT_SLOT(slotRenameSession(TESession*, const TQString&)) );
+           this, TQT_SLOT(slotRenameSession(TESession*, const TQString&)));
   connect( s->getEmulation(), TQT_SIGNAL(changeColumns(int)),
            this, TQT_SLOT(changeColumns(int)) );
   connect( s->getEmulation(), TQT_SIGNAL(changeColLin(int,int)),
-           this, TQT_SLOT(changeColLin(int,int)) );
+           this, TQT_SLOT(changeColLin(int,int)));
   connect( s->getEmulation(), TQT_SIGNAL(ImageSizeChanged(int,int)),
            this, TQT_SLOT(notifySize(int,int)));
   connect( s, TQT_SIGNAL(zmodemDetected(TESession*)),
@@ -2983,7 +3003,7 @@ TQString Konsole::newSession(KSimpleConfig *co, TQString program, const TQStrLis
   connect( s, TQT_SIGNAL(setSessionSchema(TESession*, const TQString &)),
            this, TQT_SLOT(slotSetSessionSchema(TESession*, const TQString &)));
   connect( s, TQT_SIGNAL(changeTabTextColor(TESession*, int)),
-           this,TQT_SLOT(changeTabTextColor(TESession*, int)) );
+           this,TQT_SLOT(changeTabTextColor(TESession*, int)));
 
   s->widget()->setVTFont(defaultFont);// Hack to set font again after newSession
   s->setSchemaNo(schmno);
@@ -3727,8 +3747,14 @@ void Konsole::detachSession(TESession* _se) {
     for(; from_it.current(); ++from_it) {
       TESession *from = from_it.current();
       if(from->isMasterMode())
+      {
         disconnect(from->widget(), TQT_SIGNAL(keyPressedSignal(TQKeyEvent*)),
-	           _se->getEmulation(), TQT_SLOT(onKeyPress(TQKeyEvent*)));
+	            _se->getEmulation(), TQT_SLOT(onKeyPress(TQKeyEvent*)));
+        disconnect(from->widget(), TQT_SIGNAL(keyReleasedSignal(TQKeyEvent*)),
+              _se->getEmulation(), TQT_SLOT(onKeyReleased(TQKeyEvent*)));
+        disconnect(from->widget(), TQT_SIGNAL(focusInSignal(TQFocusEvent*)),
+              _se->getEmulation(), TQT_SLOT(onFocusIn(TQFocusEvent*)));
+      }
     }
   }
 
