@@ -19,8 +19,11 @@ install( FILES
     aurora.svgz aurora.svgz.desktop
     blue-bend.jpg blue-bend.jpg.desktop
     celtic.svgz celtic.svgz.desktop
+    Chicken-Songs-2.jpg Chicken-Songs-2.jpg.desktop
     default_blue.jpg default_blue.jpg.desktop
+    default_gears.jpg default_gears.jpg.desktop
     floating-leaves.jpg floating-leaves.jpg.desktop
+    globe.svgz globe.svgz.desktop
     green_curtain.jpg green_curtain.jpg.desktop
     here-gear.svgz here-gear.svgz.desktop
     horse-head-nebula.png horse-head-nebula.png.desktop
@@ -33,11 +36,13 @@ install( FILES
     seaofconero.jpg seaofconero.jpg.desktop
     soft-green.jpg soft-green.jpg.desktop
     stelvio.jpg stelvio.jpg.desktop
+    stripes.jpg stripes.jpg.desktop
     sunshine-after-the-rain.jpg sunshine-after-the-rain.jpg.desktop
     Time-For-Lunch-2.jpg Time-For-Lunch-2.jpg.desktop
     Totally-New-Product-1.jpg Totally-New-Product-1.jpg.desktop
     Trinity4.png Trinity4.png.desktop
     Trinity-lineart.svg Trinity-lineart.svg.desktop
+    triplegears.jpg triplegears.jpg.desktop
     Won-Ton-Soup-3.jpg Won-Ton-Soup-3.jpg.desktop
     world-desktop.jpg world-desktop.jpg.desktop
   DESTINATION ${WALLPAPER_INSTALL_DIR} )

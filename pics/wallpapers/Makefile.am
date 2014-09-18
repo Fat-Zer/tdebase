@@ -17,12 +17,18 @@ pics_wallpaper_data_DATA = \
      blue-bend.jpg.desktop \
      celtic.svgz \
      celtic.svgz.desktop \
+     Chicken-Songs-2.jpg \
+     Chicken-Songs-2.jpg.desktop \
      default_blue.jpg \
      default_blue.jpg.desktop \
+     default_gears.jpg \
+     default_gears.jpg.desktop \
      floating-leaves.jpg \
      floating-leaves.jpg.desktop \
      green_curtain.jpg \
      green_curtain.jpg.desktop \
+     globe.svgz \
+     globe.svgz.desktop \
      here-gear.svgz \
      here-gear.svgz.desktop \
      horse-head-nebula.png \
@@ -45,6 +51,8 @@ pics_wallpaper_data_DATA = \
      soft-green.jpg.desktop \
      stelvio.jpg \
      stelvio.jpg.desktop \
+     stripes.jpg \
+     stripes.jpg.desktop \
      sunshine-after-the-rain.jpg \
      sunshine-after-the-rain.jpg.desktop \
      Time-For-Lunch-2.jpg \
@@ -55,6 +63,8 @@ pics_wallpaper_data_DATA = \
      Trinity4.png.desktop \
      Trinity-lineart.svg \
      Trinity-lineart.svg.desktop \
+     triplegears.jpg \
+     triplegears.jpg.desktop \
      Won-Ton-Soup-3.jpg \
      Won-Ton-Soup-3.jpg.desktop \
      world-desktop.jpg \
