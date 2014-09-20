@@ -143,6 +143,7 @@ KEnergy::KEnergy(TQWidget *parent, const char *name)
     m_Off = DFLT_OFF;
     m_bDPMS = false;
     m_bKPowersave = false;
+    m_bTDEPowersave = false;
     m_bMaintainSanity = true;
 
     setQuickHelp( i18n("<h1>Display Power Control</h1> If your display supports"
@@ -164,6 +165,13 @@ KEnergy::KEnergy(TQWidget *parent, const char *name)
         m_bKPowersave = managingDPMS;
         m_bDPMS = !m_bKPowersave;
     }
+
+    DCOPRef tdepowersave("tdepowersave", "tdepowersaveIface");
+    managingDPMS = tdepowersave.call("currentSchemeManagesDPMS()");
+    if (managingDPMS.isValid()) {
+        m_bTDEPowersave = managingDPMS;
+        m_bDPMS = !m_bTDEPowersave;
+    }
 #endif
 
     TQVBoxLayout *top = new TQVBoxLayout(this, 0, KDialog::spacingHint());
@@ -181,7 +189,7 @@ KEnergy::KEnergy(TQWidget *parent, const char *name)
         TQWhatsThis::add( m_pCBEnable, i18n("Check this option to enable the"
            " power saving features of your display.") );
         // ###
-    } else if(m_bKPowersave) {
+    } else if(m_bKPowersave || m_bTDEPowersave) {
         m_pCBEnable = new TQCheckBox(i18n("&Enable specific display power management"), this);
         hbox->addWidget(m_pCBEnable);
         m_bEnabled = false;
@@ -203,7 +211,7 @@ connect(logo, TQT_SIGNAL(leftClickedURL(const TQString&)), TQT_SLOT(openURL(cons
     hbox->addWidget(logo);
 
     // Sliders
-    if (!m_bKPowersave) {
+    if (!m_bKPowersave && !m_bTDEPowersave) {
     m_pStandbySlider = new KIntNumInput(m_Standby, this);
     m_pStandbySlider->setLabel(i18n("&Standby after:"));
     m_pStandbySlider->setRange(0, 120, 10);
@@ -243,10 +251,18 @@ connect(logo, TQT_SIGNAL(leftClickedURL(const TQString&)), TQT_SLOT(openURL(cons
         m_pStandbySlider = 0;
         m_pSuspendSlider = 0;
         m_pOffSlider = 0;
-        TQPushButton* btnKPowersave = new TQPushButton(this);
-        btnKPowersave->setText(i18n("Configure KPowersave..."));
-        connect(btnKPowersave, TQT_SIGNAL(clicked()), TQT_SLOT(slotLaunchKPowersave()));
-        top->addWidget(btnKPowersave);
+        if(m_bKPowersave) {
+            TQPushButton* btnKPowersave = new TQPushButton(this);
+            btnKPowersave->setText(i18n("Configure KPowersave..."));
+            connect(btnKPowersave, TQT_SIGNAL(clicked()), TQT_SLOT(slotLaunchKPowersave()));
+            top->addWidget(btnKPowersave);
+        }
+        if(m_bTDEPowersave) {
+            TQPushButton* btnTDEPowersave = new TQPushButton(this);
+            btnTDEPowersave->setText(i18n("Configure TDEPowersave..."));
+            connect(btnTDEPowersave, TQT_SIGNAL(clicked()), TQT_SLOT(slotLaunchTDEPowersave()));
+            top->addWidget(btnTDEPowersave);
+		}
     }
 
     top->addStretch();
@@ -337,6 +353,11 @@ void KEnergy::slotLaunchKPowersave()
     r.send("openConfigureDialog()");
 }
 
+void KEnergy::slotLaunchTDEPowersave()
+{
+    DCOPRef r("tdepowersave", "tdepowersaveIface");
+    r.send("openConfigureDialog()");
+}
 
 void KEnergy::showSettings()
 {
@@ -346,7 +367,7 @@ void KEnergy::showSettings()
         m_pCBEnable->setChecked(m_bEnabled);
     }
 
-    if (!m_bKPowersave) {
+    if (!m_bKPowersave && !m_bTDEPowersave) {
         m_pStandbySlider->setEnabled(m_bEnabled);
         m_pStandbySlider->setValue(m_Standby);
         m_pSuspendSlider->setEnabled(m_bEnabled);
