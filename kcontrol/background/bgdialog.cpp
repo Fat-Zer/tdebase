@@ -55,7 +55,7 @@
 #include <twin.h>
 #include <twinmodule.h>
 #include <kimagefilepreview.h>
-#include <knewstuff/downloaddialog.h>
+#include <tdenewstuff/downloaddialog.h>
 
 #include <stdlib.h>
 
@@ -1252,12 +1252,12 @@ void BGDialog::slotGetNewStuff()
    //should really be in a .rc file but could be either
    //tdecmshellrc or kcontrolrc
    TDEConfig* config = TDEGlobal::config();
-   config->setGroup("KNewStuff");
-   config->writeEntry( "ProvidersUrl", "http://download.kde.org/khotnewstuff/wallpaper-providers.xml" );
+   config->setGroup("TDENewStuff");
+   config->writeEntry( "ProvidersUrl", "https://www.trinitydesktop.org/ocs/providers.xml" );
    config->writeEntry( "StandardResource", "wallpaper" );
    config->sync();
 
-   KNS::DownloadDialog::open("wallpapers", i18n("Get New Wallpapers"));
+   KNS::DownloadDialog::open("wallpaper", i18n("Get New Wallpapers"));
    loadWallpaperFilesList();
 }
 
