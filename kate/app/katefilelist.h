@@ -166,6 +166,8 @@ class KateFileList : public TDEListView
 
     TQListViewItem *m_clickedMenuItem;
 
+    TQPoint m_lastMouseDownPos;
+
     class ToolTip *m_tooltip;
 };
 

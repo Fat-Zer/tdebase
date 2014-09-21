@@ -176,6 +176,8 @@ void KateFileList::keyPressEvent(TQKeyEvent *e) {
 // returning
 void KateFileList::contentsMousePressEvent( TQMouseEvent *e )
 {
+  m_lastMouseDownPos = e->pos();
+
   if ( ! itemAt( contentsToViewport( e->pos() ) ) )
   return;
 
@@ -259,7 +261,17 @@ void KateFileList::slotActivateView( TQListViewItem *item )
   if ( ! item || item->rtti() != RTTI_KateFileListItem )
     return;
 
-  viewManager->activateView( ((KateFileListItem *)item)->documentNumber() );
+  KateFileListItem *i = ((KateFileListItem*)item);
+  const KateDocumentInfo *info = KateDocManager::self()->documentInfo(i->document());
+
+  if (info && info->modifiedOnDisc) {
+    // Simulate mouse button release, otherwise the paused DND operation
+    // will reactivate as soon as the mouse re-enters the list view!
+    TQMouseEvent e(TQEvent::MouseButtonRelease, m_lastMouseDownPos, Qt::LeftButton, 0);
+    contentsMouseReleaseEvent(&e);
+  }
+
+  viewManager->activateView( i->documentNumber() );
 }
 
 void KateFileList::slotModChanged (Kate::Document *doc)
