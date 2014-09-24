@@ -36,6 +36,6 @@ tde_add_kpart( kcm_tdm AUTOMOC
   SOURCES
     background.cpp tdm-appear.cpp tdm-font.cpp tdm-shut.cpp
     tdm-users.cpp tdm-conv.cpp main.cpp kbackedcombobox.cpp
-  LINK kcmbgnd-static bgnd-static knewstuff-shared
+  LINK kcmbgnd-static bgnd-static tdenewstuff-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

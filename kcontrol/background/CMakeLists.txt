@@ -49,7 +49,7 @@ if( BUILD_KCONTROL )
 
   tde_add_kpart( kcm_background AUTOMOC
     SOURCES main.cpp
-    LINK kcmbgnd-static bgnd-static knewstuff-shared
+    LINK kcmbgnd-static bgnd-static tdenewstuff-shared
     DESTINATION ${PLUGIN_INSTALL_DIR}
   )
 
