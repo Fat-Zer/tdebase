@@ -42,7 +42,7 @@ class NavigatorAppItem : public NavigatorItem
     void setRelpath( const TQString & );
 
     virtual void setOpen(bool);
-    void populate( bool recursive = false );
+    bool populate( bool recursive = false );
 
   protected:
     TQString documentationURL( KService *s );

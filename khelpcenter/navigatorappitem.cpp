@@ -78,20 +78,21 @@ void NavigatorAppItem::setOpen(bool open)
   TQListViewItem::setOpen(open); 
 }
 
-void NavigatorAppItem::populate( bool recursive )
+bool NavigatorAppItem::populate( bool recursive )
 {
-  if ( mPopulated ) return;
+  bool entriesAdded = false;
+
+  if ( mPopulated ) return false;
 
   KServiceGroup::Ptr root = KServiceGroup::group(mRelpath);
   if ( !root ) {
     kdWarning() << "No Service groups\n";
-    return;
+    return false;
   }
   KServiceGroup::List list = root->entries();
 
 
-  for ( KServiceGroup::List::ConstIterator it = list.begin();
-        it != list.end(); ++it )
+  for ( KServiceGroup::List::ConstIterator it = list.begin(); it != list.end(); ++it )
   {
     KSycocaEntry * e = *it;
     KService::Ptr s;
@@ -108,20 +109,41 @@ void NavigatorAppItem::populate( bool recursive )
           DocEntry *entry = new DocEntry( s->name(), url, s->icon() );
           item = new NavigatorItem( entry, this );
           item->setAutoDeleteDocEntry( true );
-          item->setExpandable( true );
+          item->setExpandable( false );
+          entriesAdded = true;
         }
         break;
       }
       case KST_KServiceGroup:
       {
         g = static_cast<KServiceGroup*>(e);
-        if ( ( g->childCount() == 0 ) || g->name().startsWith( "." ) )
+        if ( ( g->childCount() == 0 ) || g->name().startsWith( "." ) ) {
           continue;
-        DocEntry *entry = new DocEntry( g->caption(), "", g->icon() );              
-        NavigatorAppItem *appItem;
-        appItem = new NavigatorAppItem( entry, this, g->relPath() );
-        appItem->setAutoDeleteDocEntry( true );
-        if ( recursive ) appItem->populate( recursive );
+        }
+        KServiceGroup::List entryList = g->entries(false, true, false, false);
+        if (entryList.count() > 0) {
+          int entryCount = 0;
+          for( KServiceGroup::List::ConstIterator it2 = entryList.begin(); it2 != entryList.end(); it2++)
+          {
+            KSycocaEntry *p = (*it2);
+            if (p->isType(KST_KService))
+            {
+              KService *s = static_cast<KService *>(p);
+              url = documentationURL( s );
+              if ( !url.isEmpty() ){
+                entryCount++;
+              }
+            }
+          }
+          if (entryCount > 0) {
+            DocEntry *entry = new DocEntry( g->caption(), "", g->icon() );
+            NavigatorAppItem *appItem;
+            appItem = new NavigatorAppItem( entry, this, g->relPath() );
+            appItem->setAutoDeleteDocEntry( true );
+            if ( recursive ) appItem->populate( recursive );
+            entriesAdded = true;
+          }
+        }
         break;
       }
       default:
@@ -130,6 +152,8 @@ void NavigatorAppItem::populate( bool recursive )
   }
   sortChildItems( 0, true /* ascending */ );
   mPopulated = true;
+
+  return entriesAdded;
 }
 
 TQString NavigatorAppItem::documentationURL( KService *s )

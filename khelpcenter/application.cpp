@@ -34,7 +34,7 @@ Application::Application() : KUniqueApplication(), mMainWindow( 0 )
 int Application::newInstance()
 {
   if (restoringSession()) return 0;
-  
+
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   KURL url;

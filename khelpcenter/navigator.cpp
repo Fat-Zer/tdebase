@@ -225,8 +225,9 @@ void Navigator::insertParentAppDocs( const TQString &name, NavigatorItem *topIte
   KServiceGroup::List::ConstIterator end = entries.end();
   for ( ; it != end; ++it ) {
     TQString desktopFile = ( *it )->entryPath();
-    if ( TQDir::isRelativePath( desktopFile ) )
+    if ( TQDir::isRelativePath( desktopFile ) ) {
         desktopFile = locate( "apps", desktopFile );
+    }
     createItemFromDesktopFile( topItem, desktopFile );
   }
 }

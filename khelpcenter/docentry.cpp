@@ -269,7 +269,7 @@ void DocEntry::addChild( DocEntry *entry )
     if ( i == 0 ) {
       if ( entry->weight() < mChildren.first()->weight() ) {
         entry->setNextSibling( mChildren.first() );
-        mChildren.prepend( entry );        
+        mChildren.prepend( entry );
         break;
       }
     }
