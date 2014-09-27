@@ -236,9 +236,9 @@ void KonqBaseListViewWidget::readProtocolConfig( const KURL & url )
          lstColumns << column;
       const TQString type = (*extraFieldsIt).type; // ## TODO use when sorting
       TQVariant::Type t = TQVariant::Invalid;
-      if ( type.lower() == "qstring" )
+      if ( type.lower() == TQString(TQSTRING_OBJECT_NAME_STRING).lower() )
           t = TQVariant::String;
-      else if ( type.lower() == "qdatetime" )
+      else if ( type.lower() == TQString(TQDATETIME_OBJECT_NAME_STRING).lower() )
           t = TQVariant::DateTime;
       else
           kdWarning() << "Unsupported ExtraType '" << type << "'" << endl;

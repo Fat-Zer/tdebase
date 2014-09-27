@@ -59,6 +59,7 @@ class KonqTextViewItem : public KonqBaseListViewItem
        * on the view)*/
       virtual void paintCell( TQPainter *_painter, const TQColorGroup & _cg, int _column, int _width, int _alignment );
 //      virtual void paintFocus( TQPainter *_painter, const TQColorGroup & _cg, const TQRect & r );
+      virtual void mimetypeFound();
       virtual void updateContents();
 
    protected:

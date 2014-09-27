@@ -106,10 +106,14 @@ void KonqListViewItem::updateContents()
             setText(tmpColumn->displayInColumn,m_fileitem->group());
             break;
          case TDEIO::UDS_FILE_TYPE:
-            setText(tmpColumn->displayInColumn,m_fileitem->mimeComment());
+            if (m_fileitem->isMimeTypeKnown()) {
+               setText(tmpColumn->displayInColumn,m_fileitem->mimeComment());
+            }
             break;
          case TDEIO::UDS_MIME_TYPE:
-            setText(tmpColumn->displayInColumn,m_fileitem->mimetype());
+            if (m_fileitem->isMimeTypeKnown()) {
+               setText(tmpColumn->displayInColumn,m_fileitem->mimetype());
+            }
             break;
          case TDEIO::UDS_URL:
             setText(tmpColumn->displayInColumn,m_fileitem->url().prettyURL());

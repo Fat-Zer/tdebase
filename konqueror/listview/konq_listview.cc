@@ -348,6 +348,10 @@ void KonqListView::determineIcon( KonqBaseListViewItem * item )
   //if ( oldSerial != newIcon.serialNumber() )
   //  item->setPixmap( 0, newIcon );
 
+  if (item->item()->isMimeTypeKnown()) {
+    item->mimetypeFound();
+  }
+
   // We also have columns to update, not only the icon
   item->updateContents();
 }

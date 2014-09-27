@@ -255,14 +255,14 @@ void KonqInfoListViewItem::paintFocus( TQPainter * _painter, const TQColorGroup 
     TQListViewItem::paintFocus( _painter, cg, r );
 }
 
-#if 0
-void KonqBaseListViewItem::mimetypeFound()
+void KonqInfoListViewItem::mimetypeFound()
 {
+#if 0
     // Update icon
     setDisabled( m_bDisabled );
     uint done = 0;
-    KonqBaseListViewWidget * lv = static_cast<KonqBaseListViewWidget*>(listView());
-    for (unsigned int i=0; i<KonqBaseListViewWidget::NumberOfAtoms && done < 2; i++)
+    KonqBaseListViewWidget * lv = m_pListViewWidget;
+    for (unsigned int i=0; i<m_pListViewWidget->NumberOfAtoms && done < 2; i++)
     {
         ColumnInfo *tmpColumn=&lv->columnConfigInfo()[i];
         if (lv->columnConfigInfo()[i].udsId==TDEIO::UDS_FILE_TYPE && tmpColumn->displayThisOne)
@@ -276,6 +276,5 @@ void KonqBaseListViewItem::mimetypeFound()
             done++;
         }
     }
-}
-
 #endif
+}

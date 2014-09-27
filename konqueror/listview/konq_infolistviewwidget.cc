@@ -208,8 +208,9 @@ void KonqInfoListViewWidget::slotNewItems( const KFileItemList& list)
            }
         }
 
-        if ( !(*kit)->isMimeTypeKnown() )
+        if ( !(*kit)->isMimeTypeKnown() ) {
             m_pBrowserView->lstPendingMimeIconItems().append( tmp );
+        }
     }
     m_pBrowserView->newItems( list );
 

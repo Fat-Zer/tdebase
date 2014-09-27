@@ -570,14 +570,9 @@ void KFileIVI::updatePixmapSize()
 
     KonqIconViewWidget* view = static_cast<KonqIconViewWidget*>( iconView() );
 
-    if ( view && view->canPreview( item() ) ) {
-        int previewSize = view->previewIconSize( size );
-        setPixmapSize( TQSize( previewSize, previewSize ) );
-    }
-    else {
-        TQSize pixSize = TQSize( size, size );
-        if ( pixSize != pixmapSize() )
-            setPixmapSize( pixSize );
+    TQSize pixSize = TQSize( size, size );
+    if ( pixSize != pixmapSize() ) {
+        setPixmapSize( pixSize );
     }
 }
 

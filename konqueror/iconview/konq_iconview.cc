@@ -1008,7 +1008,7 @@ void KonqKfmIconView::slotNewItems( const KFileItemList& entries )
         if ( fileItem->isDir() && m_pProps->isShowingDirectoryOverlays() ) {
             showDirectoryOverlay(item);
         }
-        if ( fileItem->mimetype().startsWith("media/") && fileItem->mimetype().contains("_mounted") && m_pProps->isShowingFreeSpaceOverlays() ) {
+        if ( fileItem->mimetypeFast().startsWith("media/") && fileItem->mimetypeFast().contains("_mounted") && m_pProps->isShowingFreeSpaceOverlays() ) {
             showFreeSpaceOverlay(item);
         }
 
@@ -1207,8 +1207,8 @@ void KonqKfmIconView::slotRefreshItems( const KFileItemList& entries )
             if ( !bNeedRepaint && oldSize != ivi->pixmap()->size() ) {
                 bNeedRepaint = true;
             }
-            if ( (*rit)->mimetype().startsWith("media/") && m_pProps->isShowingFreeSpaceOverlays() ) {
-                if ((*rit)->mimetype().contains("_mounted")) {
+            if ( (*rit)->mimetypeFast().startsWith("media/") && m_pProps->isShowingFreeSpaceOverlays() ) {
+                if ((*rit)->mimetypeFast().contains("_mounted")) {
                     showFreeSpaceOverlay(ivi);
                 }
                 else {

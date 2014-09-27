@@ -94,7 +94,8 @@ void KonqTextViewWidget::slotNewItems( const KFileItemList & entries )
             setSelected( tmp, true );
          }
       }
-
+      if ( !(*kit)->isMimeTypeKnown() )
+         m_pBrowserView->lstPendingMimeIconItems().append( tmp );
    }
 
    m_pBrowserView->newItems( entries );

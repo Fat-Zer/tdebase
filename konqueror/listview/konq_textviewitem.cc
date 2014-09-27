@@ -161,10 +161,14 @@ void KonqTextViewItem::updateContents()
             setText(tmpColumn->displayInColumn,m_fileitem->linkDest());
             break;
          case TDEIO::UDS_FILE_TYPE:
-            setText(tmpColumn->displayInColumn,m_fileitem->mimeComment());
+            if (m_fileitem->isMimeTypeKnown()) {
+               setText(tmpColumn->displayInColumn,m_fileitem->mimeComment());
+            }
             break;
          case TDEIO::UDS_MIME_TYPE:
-            setText(tmpColumn->displayInColumn,m_fileitem->mimetype());
+            if (m_fileitem->isMimeTypeKnown()) {
+               setText(tmpColumn->displayInColumn,m_fileitem->mimetype());
+            }
             break;
          case TDEIO::UDS_URL:
             setText(tmpColumn->displayInColumn,m_fileitem->url().prettyURL());
@@ -229,4 +233,26 @@ void KonqTextViewItem::setup()
    int h(listView()->fontMetrics().height());
    if ( h % 2 > 0 ) h++;
    setHeight(h);
+}
+
+void KonqTextViewItem::mimetypeFound()
+{
+    // Update icon
+    setDisabled( m_bDisabled );
+    uint done = 0;
+    KonqBaseListViewWidget * lv = m_pListViewWidget;
+    for (unsigned int i=0; i<m_pListViewWidget->NumberOfAtoms && done < 2; i++)
+    {
+        ColumnInfo *tmpColumn=&lv->columnConfigInfo()[i];
+        if (lv->columnConfigInfo()[i].udsId==TDEIO::UDS_FILE_TYPE && tmpColumn->displayThisOne)
+        {
+            setText(tmpColumn->displayInColumn, m_fileitem->mimeComment());
+            done++;
+        }
+        if (lv->columnConfigInfo()[i].udsId==TDEIO::UDS_MIME_TYPE && tmpColumn->displayThisOne)
+        {
+            setText(tmpColumn->displayInColumn, m_fileitem->mimetype());
+            done++;
+        }
+    }
 }

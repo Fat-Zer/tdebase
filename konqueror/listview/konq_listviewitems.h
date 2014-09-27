@@ -48,7 +48,7 @@ class KonqBaseListViewItem : public TDEListViewItem
       /** @return the file item held by this instance */
       KFileItem * item() { return m_fileitem; }
 
-      void mimetypeFound();
+      virtual void mimetypeFound();
       virtual void updateContents() = 0;
       virtual void setDisabled( bool disabled ) { m_bDisabled = disabled; }
       virtual void setActive  ( bool active   ) { m_bActive   = active;   }
