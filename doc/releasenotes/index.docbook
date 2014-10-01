@@ -519,9 +519,6 @@ kdeeject -> tdeeject
 kdekillall -> tdekillall
 </para></listitem>
 <listitem><para>
-knewstuff -> tdenewstuff
-</para></listitem>
-<listitem><para>
 kdepasswd -> tdepasswd
 </para></listitem>
 <listitem><para>
@@ -595,6 +592,9 @@ kmid -> tdemid
 </para></listitem>
 <listitem><para>
 knetworkmanager -> tdenetworkmanager
+</para></listitem>
+<listitem><para>
+knewstuff -> tdenewstuff
 </para></listitem>
 <listitem><para>
 kpowersave -> tdepowersave
