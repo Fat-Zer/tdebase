@@ -360,8 +360,8 @@ void KonqSidebarDirTreeModule::listDirectory( KonqSidebarTreeItem *item )
           if (! fileItem->isDir() )
           {
 	      KMimeType::Ptr ptr;
-		
-	      if ( fileItem->url().isLocalFile() && (((ptr=fileItem->determineMimeType())!=0) && (ptr->is("inode/directory") || m_showArchivesAsFolders) && ((!ptr->property("X-TDE-LocalProtocol").toString().isEmpty()) ))) {
+
+	      if ( fileItem->url().isLocalFile() && (((ptr=fileItem->mimeTypePtrFast())!=0) && (ptr->is("inode/directory") || m_showArchivesAsFolders) && ((!ptr->property("X-TDE-LocalProtocol").toString().isEmpty()) ))) {
 		kdDebug()<<"Something not really a directory"<<endl;
 	      } else {
 //	              kdError() << "Item " << fileItem->url().prettyURL() << " is not a directory!" << endl;
@@ -429,7 +429,7 @@ void KonqSidebarDirTreeModule::slotNewItems( const KFileItemList& entries )
             if (! fileItem->isDir() ) {
                 KMimeType::Ptr ptr;
 
-                if ( fileItem->url().isLocalFile() && (( (ptr=fileItem->determineMimeType())!=0) && (ptr->is("inode/directory") || m_showArchivesAsFolders) &&  ((!ptr->property("X-TDE-LocalProtocol").toString().isEmpty()) ))) {
+                if ( fileItem->url().isLocalFile() && (( (ptr=fileItem->mimeTypePtrFast())!=0) && (ptr->is("inode/directory") || m_showArchivesAsFolders) &&  ((!ptr->property("X-TDE-LocalProtocol").toString().isEmpty()) ))) {
                     kdDebug()<<"Something really a directory"<<endl;
                 }
                 else {
