@@ -204,6 +204,9 @@ been made to conform to such style as much as possible.</para>
 Faster startup and logout.
 </para></listitem>
 <listitem><para>
+Improved Konqueror speed for listing files in folder.
+</para></listitem>
+<listitem><para>
 Ability to force Kate into MDI mode all the time.
 </para></listitem>
 <listitem><para>
@@ -271,6 +274,9 @@ Additional xdg folders support in Kickoff menu.
 </para></listitem>
 <listitem><para>
 A smooth crossfade effect is now available when changing the desktop wallpaper.
+</para></listitem>
+<listitem><para>
+Fixed Konqueror selection handling when using arrow keys.
 </para></listitem>
 
 </itemizedlist>
@@ -586,6 +592,9 @@ kmid -> tdemid
 </para></listitem>
 <listitem><para>
 knetworkmanager -> tdenetworkmanager
+</para></listitem>
+<listitem><para>
+knewstuff -> tdenewstuff
 </para></listitem>
 <listitem><para>
 kpowersave -> tdepowersave
