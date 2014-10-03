@@ -81,7 +81,6 @@ private:
   ProxyWidget *_module;
   QXEmbed     *_embedWidget;
   TDEProcess    *_rootProcess;
-  TQVBoxLayout *_embedLayout;
   TQVBox       *_embedFrame;
   TQWidgetStack *_embedStack;
 

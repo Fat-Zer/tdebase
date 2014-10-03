@@ -48,7 +48,7 @@ template class TQPtrList<ConfigModule>;
 
 ConfigModule::ConfigModule(const KService::Ptr &s)
   : TDECModuleInfo(s), _changed(false), _module(0), _embedWidget(0),
-    _rootProcess(0), _embedLayout(0), _embedFrame(0), _embedStack(0)
+    _rootProcess(0), _embedFrame(0), _embedStack(0)
 {
 }
 
@@ -102,13 +102,10 @@ void ConfigModule::deleteClient()
   delete _embedFrame;
   _embedFrame = 0;
   kapp->syncX();
-  
+
   if(_module)
     _module->close(true);
   _module = 0;
-
-  delete _embedLayout;
-  _embedLayout = 0;
 
   TDECModuleLoader::unloadModule(*this);
   _changed = false;
@@ -137,21 +134,18 @@ void ConfigModule::runAsRoot()
 
   delete _rootProcess;
   delete _embedWidget;
-  delete _embedLayout;
   delete _embedStack;
 
   // create an embed widget that will embed the
   // tdecmshell running as root
-  _embedLayout = new TQVBoxLayout(_module->parentWidget());
-  _embedFrame = new TQVBox( _module->parentWidget() );
+  TQWidget* parentWidget = _module->parentWidget();
+  _embedFrame = new TQVBox( parentWidget );
   _embedFrame->setFrameStyle( TQFrame::Box | TQFrame::Raised );
   TQPalette pal( red );
-  pal.setColor( TQColorGroup::Background,
-		_module->parentWidget()->colorGroup().background() );
+  pal.setColor( TQColorGroup::Background, parentWidget->colorGroup().background() );
   _embedFrame->setPalette( pal );
   _embedFrame->setLineWidth( 2 );
   _embedFrame->setMidLineWidth( 2 );
-  _embedLayout->addWidget(_embedFrame,1);
   // cannot reparent anything else inside QXEmbed, so put the busy label separately
   _embedStack = new TQWidgetStack(_embedFrame);
   _embedWidget = new KControlEmbed(_embedStack);
@@ -220,8 +214,6 @@ void ConfigModule::runAsRoot()
   _embedStack = 0;
   delete _embedFrame;
   _embedWidget = 0;
-  delete _embedLayout;
-  _embedLayout = 0;
   _module->show();
 }
 
@@ -236,9 +228,6 @@ void ConfigModule::rootExited(TDEProcess *)
 
   delete _rootProcess;
   _rootProcess = 0;
-
-  delete _embedLayout;
-  _embedLayout = 0;
 
   delete _module;
   _module=0;
