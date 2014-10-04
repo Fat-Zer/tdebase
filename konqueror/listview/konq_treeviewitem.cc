@@ -89,8 +89,13 @@ void KonqListViewDir::open( bool _open, bool _reload )
   }
 }
 
+KURL KonqListViewDir::kurl()
+{
+  return m_fileitemURL;
+}
+
 TQString KonqListViewDir::url( int _trailing )
 {
-  return item()->url().url( _trailing );
+  return m_fileitemURL.url( _trailing );
 }
 

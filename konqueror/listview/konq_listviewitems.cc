@@ -404,6 +404,7 @@ KonqBaseListViewItem::KonqBaseListViewItem(KonqBaseListViewWidget *_listViewWidg
 ,m_bDisabled(false)
 ,m_bActive(false)
 ,m_fileitem(_fileitem)
+,m_fileitemURL(_fileitem->url())
 ,m_pListViewWidget(_listViewWidget)
 {}
 
@@ -413,6 +414,7 @@ KonqBaseListViewItem::KonqBaseListViewItem(KonqBaseListViewWidget *_listViewWidg
 ,m_bDisabled(false)
 ,m_bActive(false)
 ,m_fileitem(_fileitem)
+,m_fileitemURL(_fileitem->url())
 ,m_pListViewWidget(_listViewWidget)
 {}
 

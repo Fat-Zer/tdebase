@@ -294,13 +294,13 @@ void KonqTreeViewWidget::slotDeleteItem( KFileItem *_fileItem )
 
 void KonqTreeViewWidget::openSubFolder( KonqListViewDir* _dir, bool _reload )
 {
-   m_dirLister->openURL( _dir->item()->url(), true /* keep existing data */, _reload );
+   m_dirLister->openURL( _dir->kurl(), true /* keep existing data */, _reload );
    slotUpdateBackground();
 }
 
 void KonqTreeViewWidget::stopListingSubFolder( KonqListViewDir* _dir )
 {
-   m_dirLister->stop( _dir->item()->url() );
+   m_dirLister->stop( _dir->kurl() );
    slotUpdateBackground();
 }
 

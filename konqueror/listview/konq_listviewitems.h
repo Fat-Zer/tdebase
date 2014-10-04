@@ -71,8 +71,11 @@ class KonqBaseListViewItem : public TDEListViewItem
       bool m_bDisabled;
       bool m_bActive; 
       
-      /** Pointer to the file item in KDirLister's list */
+      /** Pointer to the file item in KDirLister's list
+        * Don't use this unless you absolutely have to! */
       KFileItem* m_fileitem;
+      /** URL of file item */
+      KURL m_fileitemURL;
       /** Parent tree view */
       KonqBaseListViewWidget* m_pListViewWidget;
 

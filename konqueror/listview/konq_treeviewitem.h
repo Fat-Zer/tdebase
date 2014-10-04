@@ -68,6 +68,11 @@ public:
 
   /**
    * URL of this directory
+   */
+  KURL kurl();
+
+  /**
+   * URL of this directory
    * @param _trailing set to true for a trailing slash (see KURL)
    */
   TQString url( int _trailing );
