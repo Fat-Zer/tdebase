@@ -13,22 +13,22 @@
 
 <para> &tde; has some mailing lists. See below for some of the
 most useful. Older articles can be found in the <ulink
-url="http://www.trinitydesktop.org/mailinglist.php">mailing list archive</ulink>.</para>
+url="https://www.trinitydesktop.org/mailinglist.php">mailing list archive</ulink>.</para>
 
 <variablelist>
 
 <varlistentry>
-<term><ulink url="http://www.trinitydesktop.org/mailinglist.php">tde-users</ulink></term>
+<term><ulink url="https://www.trinitydesktop.org/mailinglist.php">tde-users</ulink></term>
 <listitem><para>For general discussion, users helping each other.</para></listitem>
 </varlistentry>
 
 <varlistentry>
-<term><ulink url="http://www.trinitydesktop.org/mailinglist.php">tde-announce</ulink></term>
+<term><ulink url="https://www.trinitydesktop.org/mailinglist.php">tde-announce</ulink></term>
 <listitem><para>Announcements of &tde; news</para></listitem>
 </varlistentry>
 
 <varlistentry>
-<term><ulink url="http://www.trinitydesktop.org/mailinglist.php">tde-devel</ulink></term>
+<term><ulink url="https://www.trinitydesktop.org/mailinglist.php">tde-devel</ulink></term>
 <listitem><para>For developers, artists, documentation writers.</para></listitem>
 </varlistentry>
 
@@ -51,7 +51,7 @@ found in the documentation of their individual application.</para>
 
 <variablelist>
 <varlistentry>
-<term><ulink url="http://www.trinitydesktop.org/wiki">www.trinitydesktop.org/wiki</ulink></term>
+<term><ulink url="https://www.trinitydesktop.org/wiki">www.trinitydesktop.org/wiki</ulink></term>
 <listitem><para>The &tde; Wiki</para></listitem>
 </varlistentry>
 
@@ -61,7 +61,7 @@ found in the documentation of their individual application.</para>
 </varlistentry>
 
 <varlistentry>
-<term><ulink url="http://git.trinitydesktop.org/cgit/">Internet Relay Chat</ulink></term>
+<term><ulink url="https://www.trinitydesktop.org/support.php">Internet Relay Chat</ulink></term>
 <listitem><para>The freenode &tde; internet relay chat channel is #trinity-desktop.</para></listitem>
 </varlistentry>
 
