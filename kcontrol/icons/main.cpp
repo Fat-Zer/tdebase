@@ -100,6 +100,21 @@ TQString IconModule::quickHelp() const
     "<p>You can also specify effects that should be applied to the icons.</p>");
 }
 
+TQString IconModule::handbookSection() const
+{
+  int index = tab->currentPageIndex();
+  if (index == 0) {
+    //return "icon-theme";
+    return TQString::null;
+  }
+  else if (index == 1) {
+    return "icons-use";
+  }
+  else {
+    return TQString::null;
+  }
+}
+
 
 
 #include "main.moc"

@@ -40,6 +40,7 @@ public:
   void save();
   void defaults();
   TQString quickHelp() const;
+  virtual TQString handbookSection() const;
 
 protected slots:
   void moduleChanged(bool state);

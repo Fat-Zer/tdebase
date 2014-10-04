@@ -29,7 +29,7 @@
 <sect1 id="window-deco">
 <title>Window Decoration</title>
 
-<sect2>
+<sect2 id="window-deco-general">
 <title>General</title>
 
 <para>This module allows you to select a style for the borders around
@@ -61,7 +61,7 @@ use.</para>
 
 </sect2>
 
-<sect2>
+<sect2 id="window-deco-buttons">
 <title>Buttons</title>
 
 <para>This page has instructions directly on it - just drag around the

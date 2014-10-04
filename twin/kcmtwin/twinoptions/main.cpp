@@ -200,6 +200,40 @@ void KWinOptions::moduleChanged(bool state)
   emit TDECModule::changed(state);
 }
 
+TQString KWinOptions::handbookSection() const
+{
+    int index = tab->currentPageIndex();
+    if (index == 0)
+    {
+        //return "focus";
+        return TQString::null;
+    }
+    else if (index == 1)
+    {
+        return "titlebar-actions";
+    }
+    else if (index == 2)
+    {
+        return "window-actions";
+    }
+    else if (index == 3)
+    {
+        return "moving";
+    }
+    else if (index == 4)
+    {
+        return "advanced";
+    }
+    else if (index == 5)
+    {
+        return "translucency";
+    }
+    else
+    {
+        return TQString::null;
+    }
+}
+
 
 TDEActionsOptions::TDEActionsOptions(TQWidget *parent, const char *name)
   : TDECModule(parent, name)

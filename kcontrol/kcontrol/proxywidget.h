@@ -46,6 +46,7 @@ public:
   ~ProxyWidget();
 
   TQString quickHelp() const;
+  TQString handbookSection() const;
   const TDEAboutData *aboutData() const;
 
 public slots:

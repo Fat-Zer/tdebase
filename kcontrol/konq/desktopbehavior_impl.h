@@ -36,8 +36,9 @@ public:
         virtual void save();
         virtual void defaults();
         virtual TQString quickHelp() const;
+        virtual TQString handbookSection() const;
         friend class DesktopBehaviorPreviewItem;
-	friend class DesktopBehaviorMediaItem;
+        friend class DesktopBehaviorMediaItem;
 
 signals:
         void changed();
@@ -71,6 +72,7 @@ public:
         virtual void load() { m_behavior->load(); emit TDECModule::changed( false ); }
         virtual void save() { m_behavior->save(); emit TDECModule::changed( false ); }
         virtual void defaults() { m_behavior->defaults(); emit TDECModule::changed( true ); }
+        virtual TQString handbookSection() const { return m_behavior->handbookSection(); };
 
 private slots:
         void changed();

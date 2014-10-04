@@ -73,6 +73,8 @@ public:
 	virtual void save();
 	virtual void defaults();
 
+	virtual TQString handbookSection() const;
+
 protected:
 	bool findStyle( const TQString& str, int& combobox_item );
 	void switchStyle(const TQString& styleName, bool force = false);

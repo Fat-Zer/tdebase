@@ -160,7 +160,7 @@ scheme, discarding your changes.</para></important> </sect3>
 
 </sect2>
 
-<sect2>
+<sect2 id="key-bindings-modifiers">
 <title>Modifier Keys</title>
 
 <para>Different keyboards offer different sets of modifier keys.  A

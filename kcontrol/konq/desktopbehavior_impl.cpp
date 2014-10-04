@@ -485,4 +485,22 @@ TQString DesktopBehavior::quickHelp() const
     "Use the \"What's This?\" (Shift+F1) to get help on specific options.");
 }
 
+TQString DesktopBehavior::handbookSection() const
+{
+  int index = behaviorTab->currentPageIndex();
+  if (index == 0) {
+    //return "desktop-desktop";
+    return TQString::null;
+  }
+  else if (index == 1) {
+    return "desktop-behavior-file-icons";
+  }
+  else if (index == 2) {
+    return "desktop-behavior-device-icons";
+  }
+  else {
+    return TQString::null;
+  }
+}
+
 #include "desktopbehavior_impl.moc"

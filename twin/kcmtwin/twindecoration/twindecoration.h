@@ -73,6 +73,8 @@ class KWinDecorationModule : public TDECModule, virtual public KWinDecorationIfa
 
 		TQString quickHelp() const;
 
+		virtual TQString handbookSection() const;
+
 		virtual void dcopUpdateClientList();
 
 	signals:

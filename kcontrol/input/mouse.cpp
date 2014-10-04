@@ -890,4 +890,28 @@ void MouseConfig::slotScrollPolarityChanged()
   settings->m_handedNeedsApply = true;
 }
 
+TQString MouseConfig::handbookSection() const
+{
+  int index = tabwidget->currentPageIndex();
+  if (index == 0) {
+    //return "mouse-general";
+    return TQString::null;
+  }
+  else if (index == 1) {
+    return "cursor-theme";
+  }
+  else if (index == 2) {
+    return "mouse-advanced";
+  }
+  else if (index == 3) {
+    return "mouse-navigation";
+  }
+  else if (index >= 4) {
+    return "logitech-mouse";
+  }
+  else {
+    return TQString::null;
+  }
+}
+
 #include "mouse.moc"

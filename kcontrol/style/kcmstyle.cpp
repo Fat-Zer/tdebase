@@ -1138,6 +1138,18 @@ void KCMStyle::addWhatsThis()
 							"or submenu appears.") );
 }
 
+TQString KCMStyle::handbookSection() const
+{
+	int index = tabWidget->currentPageIndex();
+	if (index == 0) {
+		//return "style-intro";
+		return TQString::null;
+	}
+	else {
+		return TQString::null;
+	}
+}
+
 #include "kcmstyle.moc"
 
 // vim: set noet ts=4:

@@ -102,6 +102,8 @@ public:
   void load( bool useDefaults );
   void defaults();
 
+  virtual TQString handbookSection() const;
+
 private slots:
 
   void slotClick();

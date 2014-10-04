@@ -43,6 +43,8 @@ class KeyModule : public TDECModule
 	void save();
 	void defaults();
 
+	virtual TQString handbookSection() const;
+
  protected:
 	void initGUI();
 	void resizeEvent( TQResizeEvent* );

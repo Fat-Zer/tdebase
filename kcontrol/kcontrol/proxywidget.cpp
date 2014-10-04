@@ -320,6 +320,14 @@ void ProxyWidget::clientChanged(bool state)
   emit changed(state);
 }
 
+TQString ProxyWidget::handbookSection() const
+{
+  if (_client)
+    return _client->handbookSection();
+  else
+    return TQString::null;
+}
+
 const TDEAboutData *ProxyWidget::aboutData() const
 {
   return _client->aboutData();

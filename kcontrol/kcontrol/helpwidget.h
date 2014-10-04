@@ -22,11 +22,12 @@
 
 class TQWidget;
 class TQWhatsThis;
+class DockContainer;
 
 class HelpWidget : public TQWhatsThis
 {
 public:
-  HelpWidget(TQWidget *parent);
+  HelpWidget(DockContainer *parent);
 
   void setText( const TQString& docPath, const TQString& text);
   void setBaseText();
@@ -38,6 +39,7 @@ public:
 private:
   TQString docpath;
   TQString helptext;
+  DockContainer* _dock;
 };
 
 #endif

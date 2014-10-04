@@ -956,6 +956,20 @@ TQString KWinDecorationModule::quickHelp() const
 		" In the \"Buttons\" tab you can change the positions of the buttons to your liking.</p>" );
 }
 
+TQString KWinDecorationModule::handbookSection() const
+{
+	int index = tabWidget->currentPageIndex();
+	if (index == 0) {
+		//return "window-deco-general";
+		return TQString::null;
+	}
+	else if (index == 1) {
+		return "window-deco-buttons";
+	}
+	else {
+		return TQString::null;
+	}
+}
 
 void KWinDecorationModule::resetKWin()
 {

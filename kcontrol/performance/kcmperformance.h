@@ -37,9 +37,11 @@ class Config
         virtual void load( bool useDefaults );
         virtual void save();
         virtual void defaults();
+        virtual TQString handbookSection() const;
     private:
         Konqueror* konqueror_widget;
         SystemWidget* system_widget;
+        TQTabWidget* tabs;
     };
 
 class KonquerorConfig

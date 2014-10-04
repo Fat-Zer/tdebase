@@ -49,7 +49,7 @@ Config::Config( TQWidget* parent_P, const char* )
         " You can configure settings that improve TDE performance here." ));
     
     TQVBoxLayout *topLayout = new TQVBoxLayout( this );
-    TQTabWidget* tabs = new TQTabWidget( this );
+    tabs = new TQTabWidget( this );
     konqueror_widget = new Konqueror( tabs );
     konqueror_widget->layout()->setMargin( KDialog::marginHint() );
     connect( konqueror_widget, TQT_SIGNAL( changed()), TQT_SLOT( changed()));
@@ -83,6 +83,21 @@ void Config::save()
 void Config::defaults()
     {
 		 load( true );
+    }
+
+TQString Config::handbookSection() const
+    {
+	int index = tabs->currentPageIndex();
+	if (index == 0) {
+	    //return "konqueror-performance";
+	    return TQString::null;
+	}
+	else if (index == 1) {
+	    return "system-performance";
+	}
+	else {
+	    return TQString::null;
+	}
     }
 
 KonquerorConfig::KonquerorConfig( TQWidget* parent_P, const char* )

@@ -26,9 +26,13 @@
 #include <krun.h>
 
 #include "global.h"
+#include "dockcontainer.h"
+#include "proxywidget.h"
+#include "modules.h"
+
 #include "helpwidget.h"
 
-HelpWidget::HelpWidget(TQWidget *parent) : TQWhatsThis(parent)
+HelpWidget::HelpWidget(DockContainer *parent) : TQWhatsThis(parent), _dock(parent)
 {
   setBaseText();
 }
@@ -60,16 +64,25 @@ TQString HelpWidget::text() const
 
 bool HelpWidget::clicked(const TQString & _url)
 {
-    if ( _url.isNull() )
+    TQString textUrl = _url;
+    ConfigModule* dockModule = _dock->module();
+    if ( dockModule) {
+        TQString section = dockModule->module()->handbookSection();
+        if (section != "") {
+            textUrl = TQString( "%1#%2" ).arg( textUrl ).arg( section );
+        }
+    }
+
+    if ( textUrl.isNull() )
         return true;
 
-    if ( _url.find('@') > -1 ) {
-        kapp->invokeMailer(_url);
+    if ( textUrl.find('@') > -1 ) {
+        kapp->invokeMailer(textUrl);
         return true;
     }
 
     TDEProcess process;
-    KURL url(KURL("help:/"), _url);
+    KURL url(KURL("help:/"), textUrl);
 
     if (url.protocol() == "help" || url.protocol() == "man" || url.protocol() == "info") {
         process << "khelpcenter"

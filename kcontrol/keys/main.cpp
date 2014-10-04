@@ -125,6 +125,25 @@ void KeyModule::resizeEvent( TQResizeEvent * )
 	m_pTab->setGeometry( 0, 0, width(), height() );
 }
 
+TQString KeyModule::handbookSection() const
+{
+	int index = m_pTab->currentPageIndex();
+	if (index == 0) {
+		//return "key-bindings-intro";
+		return TQString::null;
+	}
+	else if (index == 1) {
+		//return "key-bindings-use";
+		return TQString::null;
+	}
+	else if (index == 2) {
+		return "key-bindings-modifiers";
+	}
+	else {
+		return TQString::null;
+	}
+}
+
 //----------------------------------------------------
 
 extern "C"
