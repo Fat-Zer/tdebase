@@ -230,6 +230,7 @@ void Navigator::insertParentAppDocs( const TQString &name, NavigatorItem *topIte
     }
     createItemFromDesktopFile( topItem, desktopFile );
   }
+  topItem->sortChildItems( 0, true /* ascending */ );
 }
 
 void Navigator::insertIOSlaveDocs( const TQString &name, NavigatorItem *topItem )
@@ -269,8 +270,10 @@ void Navigator::insertAppletDocs( NavigatorItem *topItem )
   TQStringList files = appletDir.entryList( TQDir::Files | TQDir::Readable );
   TQStringList::ConstIterator it = files.begin();
   TQStringList::ConstIterator end = files.end();
-  for ( ; it != end; ++it )
+  for ( ; it != end; ++it ) {
     createItemFromDesktopFile( topItem, appletDir.absPath() + "/" + *it );
+  }
+  topItem->sortChildItems( 0, true /* ascending */ );
 }
 
 void Navigator::createItemFromDesktopFile( NavigatorItem *topItem,

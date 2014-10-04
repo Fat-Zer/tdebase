@@ -49,12 +49,14 @@ class NavigatorItem : public TQListViewItem
     TOC *toc() const { return mToc; }
 
     TOC *createTOC();
-  
+
     void setOpen( bool open );
+
+    virtual TQString key( int column, bool ascending ) const;
 
   private:
     void init( DocEntry * );
-    
+
     TOC *mToc;
 
     DocEntry *mEntry;

@@ -156,6 +156,11 @@ bool NavigatorAppItem::populate( bool recursive )
   return entriesAdded;
 }
 
+TQString NavigatorAppItem::key( int column, bool ascending ) const
+{
+  return text( column ).lower();
+}
+
 TQString NavigatorAppItem::documentationURL( KService *s )
 {
   TQString docPath = s->property( "DocPath" ).toString();

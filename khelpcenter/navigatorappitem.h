@@ -43,6 +43,7 @@ class NavigatorAppItem : public NavigatorItem
 
     virtual void setOpen(bool);
     bool populate( bool recursive = false );
+    virtual TQString key( int column, bool ascending ) const;
 
   protected:
     TQString documentationURL( KService *s );
