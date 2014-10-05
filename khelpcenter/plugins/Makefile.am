@@ -1,5 +1,4 @@
-
-# SUBDIRS = Applications Manpages Tutorials Scrollkeeper
+# SUBDIRS = Applications Manpages Scrollkeeper
 SUBDIRS = Applications Manpages
 
 plugin_DATA = applets.desktop contact.desktop faq.desktop info.desktop \

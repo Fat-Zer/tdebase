@@ -11,7 +11,6 @@
 
 add_subdirectory( Applications )
 add_subdirectory( Manpages )
-# add_subdirectory( Tutorials )
 # add_subdirectory( Scrollkeeper )
 
 install( FILES
