@@ -419,9 +419,11 @@ void KonqDirPart::slotClipboardDataChanged()
 
     KURL::List lst;
     TQMimeSource *data = TQApplication::clipboard()->data();
-    if ( data->provides( "application/x-tde-cutselection" ) && data->provides( "text/uri-list" ) )
-        if ( KonqDrag::decodeIsCutSelection( data ) )
+    if ( data->provides( "application/x-tde-cutselection" ) && data->provides( "text/uri-list" ) ) {
+        if ( KonqDrag::decodeIsCutSelection( data ) ) {
             (void) KURLDrag::decode( data, lst );
+        }
+    }
 
     disableIcons( lst );
 
@@ -432,8 +434,9 @@ void KonqDirPart::updatePasteAction() // KDE4: merge into method above
 {
     TQString actionText = TDEIO::pasteActionText();
     bool paste = !actionText.isEmpty();
-    if ( paste )
+    if ( paste ) {
       emit m_extension->setActionText( "paste", actionText );
+    }
     emit m_extension->enableAction( "paste", paste );
 }
 

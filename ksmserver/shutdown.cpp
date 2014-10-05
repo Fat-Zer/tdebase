@@ -484,7 +484,7 @@ void KSMServer::updateLogoutStatusDialog()
             if (c->saveYourselfDone) {
                 continue;
             }
-            if( isWM( c ) || isCM( c ) || isNotifier( c ) ) {
+            if( isWM( c ) || isCM( c ) || isNotifier( c ) || isDesktop( c ) ) {
                 continue;
             }
             waitingClients++;
@@ -814,7 +814,7 @@ void KSMServer::completeShutdownOrCheckpoint()
             TQDateTime currentDateTime = TQDateTime::currentDateTime();
             TQDateTime oldestFoundDateTime = currentDateTime;
             for( KSMClient* c = clients.first(); c; c = clients.next()) {
-                if( isWM( c ) || isCM( c ) || isNotifier( c ) ) {
+                if( isWM( c ) || isCM( c ) || isNotifier( c ) || isDesktop( c ) ) {
                     continue;
                 }
                 if (c->program() != "") {
@@ -857,8 +857,9 @@ void KSMServer::startKilling()
     // kill all clients
     state = Killing;
     for ( KSMClient* c = clients.first(); c; c = clients.next() ) {
-        if( isWM( c ) || isCM( c ) || isNotifier( c ) ) // kill the WM and CM as the last one in order to reduce flicker.  Also wait to kill knotify to avoid logout delays
+        if( isWM( c ) || isCM( c ) || isNotifier( c ) || isDesktop( c ) ) { // kill the WM and CM as the last one in order to reduce flicker.  Also wait to kill knotify to avoid logout delays
             continue;
+        }
         kdDebug( 1218 ) << "completeShutdown: client " << c->program() << "(" << c->clientId() << ")" << endl;
         c->terminationRequestTimeStamp = TQDateTime::currentDateTime();
         SmsDie( c->connection() );
@@ -883,7 +884,7 @@ void KSMServer::completeKilling()
         TQDateTime currentDateTime = TQDateTime::currentDateTime();
         TQDateTime oldestFoundDateTime = currentDateTime;
         for( KSMClient* c = clients.first(); c; c = clients.next()) {
-            if( isWM( c ) || isCM( c ) || isNotifier( c ) ) {
+            if( isWM( c ) || isCM( c ) || isNotifier( c ) || isDesktop( c ) ) {
                 continue;
             }
             if (c->program() != "") {
@@ -929,6 +930,11 @@ void KSMServer::killWM()
         shutdownNotifierIPDlg=0;
     }
     for ( KSMClient* c = clients.first(); c; c = clients.next() ) {
+        if( isDesktop( c )) {
+            iswm = true;
+            c->terminationRequestTimeStamp = TQDateTime::currentDateTime();
+            SmsDie( c->connection() );
+        }
         if( isNotifier( c )) {
             iswm = true;
             c->terminationRequestTimeStamp = TQDateTime::currentDateTime();
@@ -978,6 +984,11 @@ void KSMServer::killingCompleted()
         child = fork();
         if (child != 0) {
             kapp->quit();
+        }
+        else if (child == 0) {
+            // If any remaining client(s) do not exit quickly (e.g. drkonqui) terminate so that they can be seen and interacted with
+            sleep(30);
+            exit(0);
         }
     }
     else {

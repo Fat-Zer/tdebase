@@ -161,6 +161,8 @@ private:
     bool isDesktop( const TQString& program ) const;
     bool isNotifier( const KSMClient* client ) const;
     bool isNotifier( const TQString& program ) const;
+    bool isCrashHandler( const KSMClient* client ) const;
+    bool isCrashHandler( const TQString& program ) const;
     bool defaultSession() const; // empty session
     void setupXIOErrorHandler();
 

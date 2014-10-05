@@ -972,6 +972,16 @@ bool KSMServer::isNotifier( const TQString& program ) const
     return (program == "knotify");
 }
 
+bool KSMServer::isCrashHandler( const KSMClient* client ) const
+{
+    return isNotifier( client->program());
+}
+
+bool KSMServer::isCrashHandler( const TQString& program ) const
+{
+    return (program == "drkonqi");
+}
+
 bool KSMServer::defaultSession() const
 {
     return sessionGroup.isEmpty();
