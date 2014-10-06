@@ -420,7 +420,7 @@ KBackgroundSettings::KBackgroundSettings(int desk, int screen, bool drawBackgrou
       KBackgroundProgram()
 {
     dirty = false; hashdirty = true;
-	m_bDrawBackgroundPerScreen = drawBackgroundPerScreen;
+    m_bDrawBackgroundPerScreen = drawBackgroundPerScreen;
     m_Desk = desk;
     m_Screen = screen;
     m_bEnabled = true;
@@ -1227,7 +1227,7 @@ void TDEGlobalBackgroundSettings::readSettings()
     m_bExport = m_pConfig->readBoolEntry("Export", _defExport);
     m_bLimitCache = m_pConfig->readBoolEntry("LimitCache", _defLimitCache);
     m_CacheSize = m_pConfig->readNumEntry("CacheSize", _defCacheSize);
-    
+
     m_Names.clear();
     NETRootInfo info( tqt_xdisplay(), NET::DesktopNames | NET::NumberOfDesktops );
     m_bDrawBackgroundPerScreen.resize(info.numberOfDesktops());
