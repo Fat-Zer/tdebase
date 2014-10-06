@@ -42,5 +42,5 @@ tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK kickermain-shared clock_panelapplet-static
   DESTINATION ${PLUGIN_INSTALL_DIR}
-  DEPENDENCIES kicker_core-static kicker-static kicker-shared clock_panelapplet-static
+  DEPENDENCIES kicker_core-static clock_panelapplet-static
 )

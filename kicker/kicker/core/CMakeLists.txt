@@ -49,6 +49,6 @@ set( ${target}_SRCS
 
 tde_add_library( ${target} STATIC_PIC AUTOMOC
   SOURCES ${${target}_SRCS}
-  DEPENDENCIES libkicker-shared
+  DEPENDENCIES kickermain-shared
   LINK konq-shared
 )
