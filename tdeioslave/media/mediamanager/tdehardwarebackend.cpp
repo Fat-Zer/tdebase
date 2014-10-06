@@ -499,7 +499,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		}
 
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDR)) {
-			mimeType = "media/cdwriter" + MOUNT_SUFFIX;
+			mimeType = "media/cd-r" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
 				mimeType = "media/blankcd";
 				medium->unmountableState("");
@@ -508,7 +508,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		}
 
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW)) {
-			mimeType = "media/cdwriter" + MOUNT_SUFFIX;
+			mimeType = "media/cd-rw" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
 				mimeType = "media/blankcd";
 				medium->unmountableState("");
@@ -517,7 +517,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		}
 
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDMO)) {
-			mimeType = "media/cdwriter" + MOUNT_SUFFIX;
+			mimeType = "media/cd-rw" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
 				mimeType = "media/blankcd";
 				medium->unmountableState("");
@@ -526,7 +526,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		}
 
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDMRRW)) {
-			mimeType = "media/cdwriter" + MOUNT_SUFFIX;
+			mimeType = "media/cd-rw" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
 				mimeType = "media/blankcd";
 				medium->unmountableState("");
@@ -535,7 +535,7 @@ void TDEBackend::setVolumeProperties(Medium* medium)
 		}
 
 		if (sdevice->isDiskOfType(TDEDiskDeviceType::CDMRRWW)) {
-			mimeType = "media/cdwriter" + MOUNT_SUFFIX;
+			mimeType = "media/cd-rw" + MOUNT_SUFFIX;
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank)) {
 				mimeType = "media/blankcd";
 				medium->unmountableState("");

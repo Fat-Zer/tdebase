@@ -2,9 +2,9 @@
 Encoding=UTF-8
 Icon=cdwriter_mount_decrypt
 Type=MimeType
-MimeType=media/cdwriter_mounted_decrypted
-Comment=Mounted Decrypted CD Writer
-Comment[de]=Eingebundener, entschlüsselter CD-Brenner
+MimeType=media/cd-rw_mounted_decrypted
+Comment=Mounted Decrypted CD-RW
+Comment[de]=Eingebundener, entschlüsselter CD-RW
 Patterns=
 
 X-TDE-AutoEmbed=true

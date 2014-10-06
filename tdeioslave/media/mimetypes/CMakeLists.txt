@@ -24,9 +24,10 @@ install( FILES
     cdrom_unmounted_encrypted.desktop cdrom_unmounted_decrypted.desktop
     dvd_mounted.desktop dvd_unmounted.desktop dvd_mounted_decrypted.desktop
     dvd_unmounted_encrypted.desktop dvd_unmounted_decrypted.desktop
-    cdwriter_mounted.desktop cdwriter_unmounted.desktop
-    cdwriter_mounted_decrypted.desktop cdwriter_unmounted_encrypted.desktop
-    cdwriter_unmounted_decrypted.desktop smb_mounted.desktop
+    cd-r_mounted.desktop cd-r_unmounted.desktop cd-r_mounted_decrypted.desktop
+    cd-r_unmounted_encrypted.desktop cd-r_unmounted_decrypted.desktop
+    cd-rw_mounted.desktop cd-rw_unmounted.desktop cd-rw_mounted_decrypted.desktop
+    cd-rw_unmounted_encrypted.desktop cd-rw_unmounted_decrypted.desktop smb_mounted.desktop
     smb_unmounted.desktop nfs_mounted.desktop nfs_unmounted.desktop
     audiocd.desktop dvdvideo.desktop blankcd.desktop blankdvd.desktop
     svcd.desktop vcd.desktop gphoto2camera.desktop camera_mounted.desktop
