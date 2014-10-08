@@ -142,6 +142,7 @@ private:
     int fadeDesk;
     TQTime mBenchmark;
     bool crossInit;
+    bool resizingDesktop; // is True if desktop is resizing
 };
 
 #endif // __BGMANAGER_H__

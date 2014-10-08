@@ -118,6 +118,7 @@ KBackgroundManager::KBackgroundManager(TQWidget *desktop, KWinModule* twinModule
     /*CrossFade's config*/
     m_crossTimer = new TQTimer(this);
     connect(m_crossTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotCrossFadeTimeout()));
+    resizingDesktop = true;
     /*Ends here*/
 
 
@@ -351,6 +352,7 @@ void KBackgroundManager::slotChangeNumberOfDesktops(int num)
  */
 void KBackgroundManager::slotChangeDesktop(int desk)
 {
+    resizingDesktop = true;
     TQSize s(m_pKwinmodule->numberOfViewports(m_pKwinmodule->currentDesktop()));
     m_numberOfViewports = s.width() * s.height();
     if (m_numberOfViewports < 1) {
@@ -631,11 +633,11 @@ void KBackgroundManager::slotImageDone(int desk)
         m_numberOfViewports = 1;
         t_useViewports = 0;
     }
-    
+
     KPixmap *pm = new KPixmap();
     KVirtualBGRenderer *r = m_Renderer[desk];
     bool do_cleanup = true;
-    fadeDesk = desk; 
+    fadeDesk = desk;
     mAlpha = 1.0;
     int width,height;
 
@@ -646,7 +648,7 @@ void KBackgroundManager::slotImageDone(int desk)
     if (current)
     {
         //START
-        if (m_Renderer[effectiveDesktop()]->renderer(0)->crossFadeBg() && !m_Renderer[effectiveDesktop()]->renderer(0)->usingCrossXml()){	
+        if (m_Renderer[effectiveDesktop()]->renderer(0)->crossFadeBg() && !m_Renderer[effectiveDesktop()]->renderer(0)->usingCrossXml() && !resizingDesktop) {
             int mode = m_Renderer[effectiveDesktop()]->renderer(0)->wallpaperMode();
             width = TQApplication::desktop()->screenGeometry().width();
             height = TQApplication::desktop()->screenGeometry().height();
@@ -654,7 +656,7 @@ void KBackgroundManager::slotImageDone(int desk)
             if (mode == KBackgroundSettings::NoWallpaper || mode == KBackgroundSettings::Tiled || mode  == KBackgroundSettings::CenterTiled ){
                 mNextScreen = TQPixmap(width,height);
                 TQPainter p (&mNextScreen);
-                p.drawTiledPixmap(0,0,width,height,*pm);        
+                p.drawTiledPixmap(0,0,width,height,*pm);
             } else {
                 mNextScreen = TQPixmap(*pm);
             }
@@ -700,6 +702,8 @@ void KBackgroundManager::slotImageDone(int desk)
         r->saveCacheFile();
         r->cleanup();
     }
+
+    resizingDesktop = false;
 }
 
 
@@ -1004,6 +1008,7 @@ void KBackgroundManager::repaintBackground()
 
 void KBackgroundManager::desktopResized()
 {
+    resizingDesktop = true;
     for (unsigned i=0; i<m_Renderer.size(); i++)
     {
         KVirtualBGRenderer * r = m_Renderer[i];
@@ -1025,8 +1030,12 @@ void KBackgroundManager::desktopResized()
 #endif
     
     m_Hash = 0;
-    if( m_pDesktop )
+    if( m_pDesktop ) {
         m_pDesktop->resize( kapp->desktop()->geometry().size());
+        if (m_Renderer[effectiveDesktop()]->renderer(0)->usingCrossXml()){
+            m_Renderer[effectiveDesktop()]->renderer(0)->changeWallpaper();
+        }
+    }
     // Repaint desktop
     slotChangeDesktop(0);
     repaintBackground();
