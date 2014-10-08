@@ -51,6 +51,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kstandarddirs.h>
 #include <tdetoolbarbutton.h>
 #include <twin.h>
+#include <popupmenutop.h>
 
 #include "client_mnu.h"
 #include "container_base.h"
@@ -156,7 +157,7 @@ void PanelKMenu::windowClearTimeout()
 
 bool PanelKMenu::loadSidePixmap()
 {
-    if (!KickerSettings::useSidePixmap())
+    if (!KickerSettings::useSidePixmap() || KickerSettings::useTopSide())
     {
         return false;
     }
@@ -754,8 +755,15 @@ void PanelKMenu::createRecentMenuItems()
     if (RecentApps.count() > 0)
     {
         bool bSeparator = KickerSettings::showMenuTitles();
+        bool bTitleTop = KickerSettings::useTopSide();
         int nId = serviceMenuEndId() + 1;
-        int nIndex = KickerSettings::showMenuTitles() ? 1 : 0;
+
+        int nIndex;
+        if( bTitleTop ) {
+            nIndex = KickerSettings::showMenuTitles() ? 2 : 0;
+        } else {
+            nIndex = KickerSettings::showMenuTitles() ? 1 : 0;
+        }
 
         for (TQValueList<TQString>::ConstIterator it =
              RecentApps.fromLast(); /*nop*/; --it)
@@ -775,6 +783,10 @@ void PanelKMenu::createRecentMenuItems()
                             RecentlyLaunchedApps::the().caption(), font()),
                         serviceMenuEndId(), 0);
                     setItemEnabled( id, false );
+                    if( bTitleTop) {
+                        id = insertItem(new PopupMenuTop(),serviceMenuEndId(),0);
+                        setItemEnabled( id, false );
+                    }
                 }
                 insertMenuItem(s, nId++, nIndex);
                 RecentlyLaunchedApps::the().m_nNumMenuItems++;
@@ -790,6 +802,11 @@ void PanelKMenu::createRecentMenuItems()
         {
             insertSeparator(RecentlyLaunchedApps::the().m_nNumMenuItems);
         }
+    }
+    else if(KickerSettings::useTopSide())
+    {
+        int id = insertItem(new PopupMenuTop(),serviceMenuEndId(),0);
+        setItemEnabled( id, false );
     }
 }
 
@@ -822,6 +839,8 @@ void PanelKMenu::updateRecent()
 
     RecentlyLaunchedApps::the().m_bNeedToUpdate = false;
 
+    bool bTitleTop = KickerSettings::useTopSide();
+
     int nId = serviceMenuEndId() + 1;
 
     // remove previous items
@@ -829,6 +848,10 @@ void PanelKMenu::updateRecent()
     {
         // -1 --> menu title
         int i = KickerSettings::showMenuTitles() ? -1 : 0;
+        if(bTitleTop) {
+            i = KickerSettings::showMenuTitles() ? -2 : 0;
+        }
+
         for (; i < RecentlyLaunchedApps::the().m_nNumMenuItems; i++)
         {
             removeItem(nId + i);
@@ -840,6 +863,10 @@ void PanelKMenu::updateRecent()
         {
             removeItemAt(0);
         }
+    }
+
+    if(bTitleTop) {
+        removeItemAt(0);
     }
 
     // insert new items
@@ -866,6 +893,10 @@ void PanelKMenu::updateRecent()
                         RecentlyLaunchedApps::the().caption(),
                             font()), nId - 1, 0);
                     setItemEnabled( id, false );
+                    if(bTitleTop) {
+                        id = insertItem(new PopupMenuTop(),nId - 1,0);
+                        setItemEnabled( id, false );
+                    }
                 }
                 insertMenuItem(s, nId++, KickerSettings::showMenuTitles() ?
                     1 : 0);
@@ -880,6 +911,11 @@ void PanelKMenu::updateRecent()
         {
             insertSeparator(RecentlyLaunchedApps::the().m_nNumMenuItems);
         }
+    }
+    else if(bTitleTop)
+    {
+        int id = insertItem(new PopupMenuTop(),serviceMenuEndId(),0);
+        setItemEnabled( id, false );
     }
 }
 

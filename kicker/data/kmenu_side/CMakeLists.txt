@@ -9,4 +9,4 @@
 #
 #################################################
 
-install( FILES kside.png kside_tile.png DESTINATION ${DATA_INSTALL_DIR}/kicker/pics )
+install( FILES kside.png kside_tile.png kside_top_left.png kside_top_right.png kside_top_tile.png DESTINATION ${DATA_INSTALL_DIR}/kicker/pics )

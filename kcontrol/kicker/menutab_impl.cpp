@@ -84,6 +84,11 @@ MenuTab::MenuTab( TQWidget *parent, const char* name )
     //connect(kcfg_ButtonFont, TQT_SIGNAL(fontSelected(const TQFont &)), TQT_SLOT(kmenuChanged()));
     connect(maxrecentdocs, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(kmenuChanged()));
 
+    // FIXME
+    // When top pixmap support is ready for end-user visibility, replace
+    // the separate top/side checkboxes with either a drop down or radio buttons
+    kcfg_UseTopPixmap->hide();
+
     TDEIconLoader * ldr = TDEGlobal::iconLoader();
     m_kmenu_icon = KickerSettings::customKMenuIcon();
     if (m_kmenu_icon.isNull() == true) {
@@ -109,7 +114,7 @@ void MenuTab::load()
 void MenuTab::load( bool useDefaults )
 {
     TDESharedConfig::Ptr c = TDESharedConfig::openConfig(KickerConfig::the()->configName());
-    
+
     c->setReadDefaults( useDefaults );
 
     c->setGroup("menus");
@@ -175,6 +180,7 @@ void MenuTab::menuStyleChanged()
        m_openOnHover->setEnabled(false);
        m_subMenus->setEnabled(true);
        kcfg_UseSidePixmap->setEnabled(true);
+       kcfg_UseTopPixmap->setEnabled(true);
        kcfg_UseTooltip->setEnabled(true);
        kcfg_MenuEntryFormat->setEnabled(true);
        kcfg_RecentVsOften->setEnabled(true);
@@ -184,12 +190,13 @@ void MenuTab::menuStyleChanged()
        maxrecentdocs->setEnabled(true);
        kcfg_NumVisibleEntries->setEnabled(true);
     }
-    
+
     // Kickoff Menu
     else {
        m_openOnHover->setEnabled(true);
        m_subMenus->setEnabled(false);
        kcfg_UseSidePixmap->setEnabled(false);
+       kcfg_UseTopPixmap->setEnabled(true);
        kcfg_UseTooltip->setEnabled(false);
        kcfg_MenuEntryFormat->setEnabled(false);
        kcfg_RecentVsOften->setEnabled(false);
@@ -261,6 +268,13 @@ void MenuTab::save()
     bool oldsidepixmapsetting = c->readBoolEntry("UseSidePixmap", true);
 
     if (sidepixmapsetting != oldsidepixmapsetting) {
+        forceRestart = true;
+    }
+
+    bool toppixmapsetting = kcfg_UseTopPixmap->isChecked();
+    bool oldtoppixmapsetting = c->readBoolEntry("UseTopPixmap", true);
+
+    if (toppixmapsetting != oldtoppixmapsetting) {
         forceRestart = true;
     }
 

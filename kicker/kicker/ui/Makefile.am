@@ -12,7 +12,7 @@ libkicker_ui_la_SOURCES = addbutton_mnu.cpp appletitem.ui appletview.ui addapple
         addextension_mnu.cpp extensionop_mnu.cpp k_mnu_stub.cpp \
         recentapps.cpp browser_dlg.cpp itemview.cpp kickoff_bar.cpp \
         removeapplet_mnu.cpp removeextension_mnu.cpp removecontainer_mnu.cpp \
-        removebutton_mnu.cpp popupmenutitle.cpp hidebutton.cpp \
+        removebutton_mnu.cpp popupmenutitle.cpp popupmenutop.cpp hidebutton.cpp \
         addappletvisualfeedback.cpp clicklineedit.cpp flipscrollview.cpp \
         media_watcher.cpp media_watcher.skel mykickoffsearchinterface.cpp query.cpp
 

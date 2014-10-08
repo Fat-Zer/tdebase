@@ -354,42 +354,62 @@
 
 <group name="KMenu" >
 
-<entry name="UseSidePixmap" type="Bool" >
+   <entry name="UseSidePixmap" type="Bool" >
       <label>Use side image in Kmenu</label>
       <default>true</default>
    </entry>
 
-<entry name="UseTooltip" type="Bool" >
+   <entry name="UseTooltip" type="Bool" >
       <label>Use Tooltip in Kmenu</label>
       <default>false</default>
-</entry>
+   </entry>
 
-<entry name="UseSearchBar" type="Bool" >
+   <entry name="UseSearchBar" type="Bool" >
       <label>Show searh field in Kmenu</label>
       <default>true</default>
    </entry>
 
-<entry name="SidePixmapName" key="SideName" type="String" >
+   <entry name="UseTopSide" type="Bool" >
+      <label>Use side image on top of Kmenu</label>
+      <default>false</default>
+   </entry>
+
+   <entry name="LeftSideTopPixmapName" key="LeftSideTopName" type="String" >
+      <label>The name of the file to use as the side image in the TDE Menu</label>
+      <default>kside_top_left.png</default>
+   </entry>
+
+   <entry name="RightSideTopPixmapName" key="RightSideTopName" type="String" >
+      <label>The name of the file to use as the side image in the TDE Menu</label>
+      <default>kside_top_right.png</default>
+   </entry>
+
+   <entry name="SideTopTileName" key="SideTopTileName" type="String" >
+      <label>The name of the file used as a tile to fill the height of TDE Menu that SidePixmapName does not cover</label>
+      <default>kside_top_tile.png</default>
+   </entry>
+
+   <entry name="SidePixmapName" key="SideName" type="String" >
       <label>The name of the file to use as the side image in the TDE Menu</label>
       <default>kside.png</default>
    </entry>
 
-<entry name="SideTileName" key="SideTileName" type="String" >
+   <entry name="SideTileName" key="SideTileName" type="String" >
       <label>The name of the file used as a tile to fill the height of TDE Menu that SidePixmapName does not cover</label>
       <default>kside_tile.png</default>
    </entry>
 
-<entry name="ShowKMenuText" key="ShowText" type="Bool" >
+   <entry name="ShowKMenuText" key="ShowText" type="Bool" >
       <label>Show text on the TDE Menu button</label>
       <default>false</default>
    </entry>
 
-<entry name="KMenuText" key="Text" type="String" >
+   <entry name="KMenuText" key="Text" type="String" >
       <label>Text to be shown on TDE Menu Button</label>
       <default code="true">i18n("Applications")</default>
    </entry>
 
-<entry name="CustomKMenuIcon" key="CustomIcon" type="Path" >
+   <entry name="CustomKMenuIcon" key="CustomIcon" type="Path" >
       <label>Custom TDE Menu Button Icon</label>
       <default code="true">QString("kmenu")</default>
    </entry>

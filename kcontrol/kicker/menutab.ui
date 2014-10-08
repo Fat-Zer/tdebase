@@ -288,6 +288,22 @@
 					</widget>
 					<widget class="TQCheckBox">
 						<property name="name">
+							<cstring>kcfg_UseTopPixmap</cstring>
+						</property>
+						<property name="text">
+							<string>Show top ima&amp;ge</string>
+						</property>
+						<property name="checked">
+							<bool>true</bool>
+						</property>
+						<property name="whatsThis" stdset="0">
+							<string>&lt;qt&gt;When this option is selected an image will appear on top of the TDE Menu. The image will be tinted according to your color settings.
+								
+								&lt;p&gt;&lt;b&gt;Tip&lt;/b&gt;: You can customize the image that appears in the TDE Menu by putting image files called kside_top_left.png and kside_top_right.png, and a tileable image file called kside_top_tile.png in $TDEHOME/share/apps/kicker/pics.&lt;/qt&gt;</string>
+						</property>
+					</widget>
+					<widget class="TQCheckBox">
+						<property name="name">
 							<cstring>kcfg_ShowKMenuText</cstring>
 						</property>
 						<property name="text">
