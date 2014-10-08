@@ -1368,9 +1368,9 @@ Description:
 
 Key: ServerArgsLocal
 Type: string
-Default: ""
+Default: "-nolisten tcp"
 User: core
-Instance: :*/"-nolisten tcp"
+Instance: :*/"-deferglyphs 16 -nolisten tcp"
 Comment: &
 Description:
  Additional arguments for the &X-Server;s for local sessions.

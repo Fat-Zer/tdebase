@@ -142,6 +142,7 @@ public:
 //        virtual void showMessage(TQString &);    for later extension
 	/* end of interface implementation */
 
+	TQStringList getRestrictedViews() const { return m_restrictedViews; }
 
  /* The following public slots are wrappers for browserextension fields */
 public slots:
@@ -217,6 +218,7 @@ private:
 	TQString m_currentProfile;
 	TQStringList m_visibleViews; // The views that are actually open
 	TQStringList m_openViews; // The views that should be opened
+	TQStringList m_restrictedViews;
 
 signals:
 	void panelHasBeenExpanded(bool);

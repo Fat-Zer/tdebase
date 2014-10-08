@@ -44,6 +44,7 @@
 #include <kinputdialog.h>
 #include <tdefiledialog.h>
 #include <kdesktopfile.h>
+#include <tdeapplication.h>
 #include "konqsidebar.h"
 
 #include "sidebar_widget.h"
@@ -65,10 +66,19 @@ addBackEnd::addBackEnd(TQWidget *parent, class TQPopupMenu *addmenu,
 
 void addBackEnd::aboutToShowAddMenu()
 {
+	TQStringList m_restrictedViews( dynamic_cast<Sidebar_Widget *>( m_parent )->getRestrictedViews() );
 	if (!menu)
 		return;
 	TDEStandardDirs *dirs = TDEGlobal::dirs();
-	TQStringList list = dirs->findAllResources("data","konqsidebartng/add/*.desktop",true,true);
+	TQStringList list;
+
+	if ( ! m_restrictedViews.empty() ) {
+		for ( TQStringList::Iterator it = m_restrictedViews.begin(); it != m_restrictedViews.end(); ++it ) {
+			list += dirs->findAllResources("data","konqsidebartng/add/" + *it + ".desktop",true,true);
+		}
+	} else {
+		list = dirs->findAllResources( "data","konqsidebartng/add/*.desktop",true,true );
+	}
 	libNames.setAutoDelete(true);
 	libNames.resize(0);
 	libParam.setAutoDelete(true);
@@ -645,17 +655,16 @@ void Sidebar_Widget::activatedMenu(int id)
 
 void Sidebar_Widget::readConfig()
 {
-        m_disableConfig = m_config->readBoolEntry("DisableConfig",false);
+	m_disableConfig = m_config->readBoolEntry("DisableConfig",false);
 	m_singleWidgetMode = m_config->readBoolEntry("SingleWidgetMode",true);
-        m_immutableSingleWidgetMode =
-                m_config->entryIsImmutable("SingleWidgetMode");
+	m_immutableSingleWidgetMode = m_config->entryIsImmutable("SingleWidgetMode");
 	m_showExtraButtons = m_config->readBoolEntry("ShowExtraButtons",false);
-        m_immutableShowExtraButtons =
-                m_config->entryIsImmutable("ShowExtraButtons");
+	m_immutableShowExtraButtons = m_config->entryIsImmutable("ShowExtraButtons");
 	m_showTabsLeft = m_config->readBoolEntry("ShowTabsLeft", true);
-        m_immutableShowTabsLeft = m_config->entryIsImmutable("ShowTabsLeft");
+	m_immutableShowTabsLeft = m_config->entryIsImmutable("ShowTabsLeft");
 	m_hideTabs = m_config->readBoolEntry("HideTabs", false);
-        m_immutableHideTabs = m_config->entryIsImmutable("HideTabs");
+	m_immutableHideTabs = m_config->entryIsImmutable("HideTabs");
+	m_restrictedViews = m_config->readListEntry( "RestrictViews" );
 
 	if (m_initial) {
 		m_openViews = m_config->readListEntry("OpenViews");
@@ -722,9 +731,19 @@ void Sidebar_Widget::createButtons()
 	{
 		kdDebug()<<"m_path: "<<m_path<<endl;
 		TQDir dir(m_path);
-		TQStringList list=dir.entryList("*.desktop");
+		TQStringList list;
+
+		if ( ! m_restrictedViews.empty() ) {
+			for ( TQStringList::Iterator it = m_restrictedViews.begin(); it != m_restrictedViews.end(); ++it ) {
+				list += dir.entryList( *it + ".desktop");
+			}
+		} else {
+			list = dir.entryList("*.desktop");
+		}
+
 		for (TQStringList::Iterator it=list.begin(); it!=list.end(); ++it)
 		{
+			kdDebug() << "Sidebar buttons: " << *it << endl;
 			addButton(*it);
 		}
 	}
@@ -833,47 +852,48 @@ bool Sidebar_Widget::addButton(const TQString &desktoppath,int pos)
 
 bool Sidebar_Widget::eventFilter(TQObject *obj, TQEvent *ev)
 {
-
-	if (ev->type()==TQEvent::MouseButtonPress && ((TQMouseEvent *)ev)->button()==Qt::RightButton)
-	{
-		KMultiTabBarTab *bt=tqt_dynamic_cast<KMultiTabBarTab*>(obj);
-		if (bt)
+	if ( kapp->authorize( "action/konqsidebarmenu" ) ) {
+		if (ev->type()==TQEvent::MouseButtonPress && ((TQMouseEvent *)ev)->button()==Qt::RightButton)
 		{
-			kdDebug()<<"Request for popup"<<endl;
-			m_currentButton = 0;
-			for (uint i=0;i<m_buttons.count();i++)
+			KMultiTabBarTab *bt=tqt_dynamic_cast<KMultiTabBarTab*>(obj);
+			if (bt)
 			{
-				if (bt==m_buttonBar->tab(i))
+				kdDebug()<<"Request for popup"<<endl;
+				m_currentButton = 0;
+				for (uint i=0;i<m_buttons.count();i++)
 				{
-					m_currentButton = m_buttons.at(i);
-					break;
+					if (bt==m_buttonBar->tab(i))
+					{
+						m_currentButton = m_buttons.at(i);
+						break;
+					}
 				}
-			}
 
-			if (m_currentButton)
-			{
-				if (!m_buttonPopup)
+				if (m_currentButton)
 				{
-					m_buttonPopup=new TDEPopupMenu(this, "Sidebar_Widget::ButtonPopup");
-					m_buttonPopup->insertTitle(SmallIcon("unknown"), "", 50);
-					m_buttonPopup->insertItem(SmallIconSet("text"), i18n("Set Name..."),4); // Item to open a dialog to change the name of the sidebar item (by Pupeno)
-					m_buttonPopup->insertItem(SmallIconSet("www"), i18n("Set URL..."),2);
-					m_buttonPopup->insertItem(SmallIconSet("icons"), i18n("Set Icon..."),1);
-					m_buttonPopup->insertSeparator();
-					m_buttonPopup->insertItem(SmallIconSet("editdelete"), i18n("Remove"),3);
-					m_buttonPopup->insertSeparator();
-					m_buttonPopup->insertItem(SmallIconSet("configure"), i18n("Configure Navigation Panel"), m_menu, 4);
-					connect(m_buttonPopup, TQT_SIGNAL(activated(int)),
-						this, TQT_SLOT(buttonPopupActivate(int)));
+					if (!m_buttonPopup)
+					{
+						m_buttonPopup=new TDEPopupMenu(this, "Sidebar_Widget::ButtonPopup");
+						m_buttonPopup->insertTitle(SmallIcon("unknown"), "", 50);
+						m_buttonPopup->insertItem(SmallIconSet("text"), i18n("Set Name..."),4); // Item to open a dialog to change the name of the sidebar item (by Pupeno)
+						m_buttonPopup->insertItem(SmallIconSet("www"), i18n("Set URL..."),2);
+						m_buttonPopup->insertItem(SmallIconSet("icons"), i18n("Set Icon..."),1);
+						m_buttonPopup->insertSeparator();
+						m_buttonPopup->insertItem(SmallIconSet("editdelete"), i18n("Remove"),3);
+						m_buttonPopup->insertSeparator();
+						m_buttonPopup->insertItem(SmallIconSet("configure"), i18n("Configure Navigation Panel"), m_menu, 4);
+						connect(m_buttonPopup, TQT_SIGNAL(activated(int)),
+							this, TQT_SLOT(buttonPopupActivate(int)));
+					}
+					m_buttonPopup->setItemEnabled(2,!m_currentButton->URL.isEmpty());
+						m_buttonPopup->changeTitle(50,SmallIcon(m_currentButton->iconName),
+							m_currentButton->displayName);
+					if (!m_disableConfig)
+									{ m_buttonPopup->exec(TQCursor::pos()); }
 				}
-				m_buttonPopup->setItemEnabled(2,!m_currentButton->URL.isEmpty());
-			        m_buttonPopup->changeTitle(50,SmallIcon(m_currentButton->iconName),
-						m_currentButton->displayName);
-				if (!m_disableConfig)
-                                { m_buttonPopup->exec(TQCursor::pos()); }
-			}
-			return true;
+				return true;
 
+			}
 		}
 	}
 	return false;
@@ -881,10 +901,11 @@ bool Sidebar_Widget::eventFilter(TQObject *obj, TQEvent *ev)
 
 void Sidebar_Widget::mousePressEvent(TQMouseEvent *ev)
 {
-	if (ev->type()==TQEvent::MouseButtonPress &&
-            ((TQMouseEvent *)ev)->button()==Qt::RightButton &&
-            !m_disableConfig)
-        { m_menu->exec(TQCursor::pos()); }
+	if ( kapp->authorize( "action/konqsidebarmenu" ) ) {
+		if (ev->type()==TQEvent::MouseButtonPress && ((TQMouseEvent *)ev)->button()==Qt::RightButton) {
+			m_menu->exec(TQCursor::pos());
+		}
+	}
 }
 
 KonqSidebarPlugin *Sidebar_Widget::loadModule(TQWidget *par,TQString &desktopName,TQString lib_name,ButtonInfo* bi)
