@@ -406,66 +406,60 @@ void KonqBaseListViewWidget::initConfig()
    updateListContents();
 }
 
-void KonqBaseListViewWidget::contentsMousePressEvent( TQMouseEvent *e )
-{
-   if ( m_rubber )
-   {
+void KonqBaseListViewWidget::contentsMousePressEvent( TQMouseEvent *e ) {
+	if ( m_rubber ) {
+		TQRect r( m_rubber->normalize() );
+		delete m_rubber;
+		m_rubber = 0;
+		repaintContents( r, FALSE );
+	}
 
-      TQRect r( m_rubber->normalize() );
-       delete m_rubber;
-       m_rubber = 0;
-      repaintContents( r, FALSE );
-   }
+	delete m_selected;
+	m_selected = new TQPtrList<KonqBaseListViewItem>;
 
-   delete m_selected;
-   m_selected = new TQPtrList<KonqBaseListViewItem>;
+	TQPoint vp = contentsToViewport( e->pos() );
+	KonqBaseListViewItem* item = isExecuteArea( vp ) ?
+		static_cast<KonqBaseListViewItem*>( itemAt( vp ) ) : 0L;
 
-   TQPoint vp = contentsToViewport( e->pos() );
-   KonqBaseListViewItem* item = isExecuteArea( vp ) ?
-         static_cast<KonqBaseListViewItem*>( itemAt( vp ) ) : 0L;
+	if ( item ) {
+		TDEListView::contentsMousePressEvent( e );
+	}
+	else {
+		if ( e->button() == Qt::LeftButton ) {
+			m_rubber = new TQRect( e->x(), e->y(), 0, 0 );
+			clearSelection();
+			emit selectionChanged();
+			m_fileTip->setItem( 0 );
+		}
+		if ( e->button() != Qt::RightButton ) {
+			TQListView::contentsMousePressEvent( e );
+		}
+	}
 
-   if ( item ) {
-      TDEListView::contentsMousePressEvent( e );
-      }
-   else {
-      if ( e->button() == Qt::LeftButton )
-      {
-         m_rubber = new TQRect( e->x(), e->y(), 0, 0 );
-	  clearSelection();
-	 emit selectionChanged();
-         m_fileTip->setItem( 0 );
-      }
-      if ( e->button() != Qt::RightButton )
-         TQListView::contentsMousePressEvent( e );
-   }
-   // Store list of selected items at mouse-press time.
-   // This is used when autoscrolling (why?)
-   // and during dnd (the target item is temporarily selected)
-   selectedItems( m_selected );
+	// Store list of selected items at mouse-press time.
+	// This is used when autoscrolling (why?)
+	// and during dnd (the target item is temporarily selected)
+	selectedItems( m_selected );
 }
 
-void KonqBaseListViewWidget::contentsMouseReleaseEvent( TQMouseEvent *e )
-{
-   if ( m_rubber )
-   {
+void KonqBaseListViewWidget::contentsMouseReleaseEvent( TQMouseEvent *e ) {
+	if ( m_rubber ) {
+		resetKeyboardSelectionOperation();
+		TQRect r( m_rubber->normalize() );
+		delete m_rubber;
+		m_rubber = 0;
+		repaintContents( r, FALSE );
+	}
 
-      TQRect r( m_rubber->normalize() );
-      delete m_rubber;
-      m_rubber = 0;
-      repaintContents( r, FALSE );
-   }
+	if ( m_scrollTimer ) {
+		disconnect( m_scrollTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( slotAutoScroll() ) );
+		m_scrollTimer->stop();
+		delete m_scrollTimer;
+		m_scrollTimer = 0;
+	}
 
-   if ( m_scrollTimer )
-   {
-      disconnect( m_scrollTimer, TQT_SIGNAL( timeout() ),
-                  this, TQT_SLOT( slotAutoScroll() ) );
-      m_scrollTimer->stop();
-      delete m_scrollTimer;
-      m_scrollTimer = 0;
-   }
-
-   delete m_selected; m_selected = 0;
-   TDEListView::contentsMouseReleaseEvent( e );
+	delete m_selected; m_selected = 0;
+	TDEListView::contentsMouseReleaseEvent( e );
 }
 
 void KonqBaseListViewWidget::contentsMouseMoveEvent( TQMouseEvent *e )
@@ -558,7 +552,6 @@ void KonqBaseListViewWidget::drawRubber( TQPainter *p )
    style().tqdrawPrimitive( TQStyle::PE_RubberBand, p,
                           TQRect( pt.x(), pt.y(), m_rubber->width(), m_rubber->height() ),
                           colorGroup(), TQStyle::Style_Default, colorGroup().base() );
-   
 }
 
 void KonqBaseListViewWidget::slotAutoScroll()
@@ -570,16 +563,17 @@ void KonqBaseListViewWidget::slotAutoScroll()
 
    const TQPoint pos = viewport()->mapFromGlobal( TQCursor::pos() );
    const TQPoint vc = viewportToContents( pos );
+   TQListViewItem *at = itemAt( vc );
 
    if ( vc == m_rubber->bottomRight() )
       return;
 
-      TQRect oldRubber = *m_rubber;
-      
+   TQRect oldRubber = *m_rubber;
+
    const int oldTop = m_rubber->normalize().top();
    const int oldBottom = m_rubber->normalize().bottom();
 
-   
+
    m_rubber->setBottomRight( vc );
 
    TQListViewItem *cur = itemAt( TQPoint(0,0) );
@@ -590,7 +584,7 @@ void KonqBaseListViewWidget::slotAutoScroll()
    TQRect rr;
    TQRect nr = m_rubber->normalize();
    bool changed = FALSE;
-   
+
    if ( cur )
    {
          TQRect rect;
@@ -600,7 +594,7 @@ void KonqBaseListViewWidget::slotAutoScroll()
           rect = itemRect( cur );
           rect.setWidth( executeArea( cur ) );
       }
-  
+
 
       rect = TQRect( viewportToContents( rect.topLeft() ),
                     viewportToContents( rect.bottomRight() ) );
@@ -626,24 +620,26 @@ void KonqBaseListViewWidget::slotAutoScroll()
             if ( !cur->isSelected() && cur->isSelectable() )
 	    {
                setSelected( cur, true );
+               setActiveMultiSelectItem( at );
                changed = TRUE;
                rr = rr.unite( itemRect( cur ) );
 	    }
-         } 
-	 else 
+         }
+	 else
 	 {
             if ( cur->isSelected() )
 	    {
                changed = TRUE;
                rr = rr.unite( itemRect( cur ) );
 	    }
-	    
+
 	    if ( !m_selected || !m_selected->contains( (KonqBaseListViewItem*)cur ) )
 	    {
                setSelected( cur, false );
+               setActiveMultiSelectItem( at );
 	    }
 	 }
- 
+
 
          cur = cur->itemBelow();
          if (cur && !allColumnsShowFocus())
@@ -662,6 +658,7 @@ void KonqBaseListViewWidget::slotAutoScroll()
             if ( !cur->isSelected() && cur->isSelectable() )
 	    {
                setSelected( cur, true );
+               setActiveMultiSelectItem( at );
                changed = TRUE;
                rr = rr.unite( itemRect( cur ) );
 	    }
@@ -677,6 +674,7 @@ void KonqBaseListViewWidget::slotAutoScroll()
             if ( !m_selected || !m_selected->contains( (KonqBaseListViewItem*)cur ) )
 	    {
                setSelected( cur, false );
+               setActiveMultiSelectItem( at );
 	    }
 	 }
 	 
@@ -705,7 +703,7 @@ void KonqBaseListViewWidget::slotAutoScroll()
    TQPixmap backrubber( viewport()->rect().size() );
    backrubber.fill( viewport(), viewport()->rect().topLeft() );
 
-   TQPainter p( &backrubber ); 
+   TQPainter p( &backrubber );
    p.save();
    drawContentsOffset( &p, 
       contentsX(), 
@@ -745,9 +743,9 @@ void KonqBaseListViewWidget::slotAutoScroll()
 
 void KonqBaseListViewWidget::viewportPaintEvent( TQPaintEvent *e )
 {
-   
+
    TDEListView::viewportPaintEvent( e );
-   
+
    TQPainter p( viewport() );
    drawRubber( &p );
    p.end();
