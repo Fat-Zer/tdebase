@@ -36,6 +36,7 @@ public:
 	~KCMDnssd();
 	virtual void save();
 	virtual void load();
+	virtual TQString handbookSection() const;
 private slots:
 	void wdchanged();
 	void enableZeroconfChanged(bool);

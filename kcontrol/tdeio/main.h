@@ -34,6 +34,8 @@ class LanBrowser:public TDECModule
       virtual void load();
       virtual void save();
 
+      virtual TQString handbookSection() const;
+
    private:
       TQVBoxLayout layout;
       TQTabWidget tabs;
@@ -41,6 +43,9 @@ class LanBrowser:public TDECModule
       TDECModule *lisaPage;
 //      TDECModule *resLisaPage;
       TDECModule *tdeioLanPage;
+      int smbPageTabNumber;
+      int lisaPageTabNumber;
+      int tdeioLanPageTabNumber;
 };
 #endif
 

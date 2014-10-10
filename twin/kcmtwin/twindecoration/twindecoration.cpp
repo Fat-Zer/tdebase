@@ -958,6 +958,8 @@ TQString KWinDecorationModule::quickHelp() const
 
 TQString KWinDecorationModule::handbookSection() const
 {
+	// FIXME
+	// Incomplete context-sensitive help documentation currently exists for this module!
 	int index = tabWidget->currentPageIndex();
 	if (index == 0) {
 		//return "window-deco-general";

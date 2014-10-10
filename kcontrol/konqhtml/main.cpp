@@ -175,4 +175,16 @@ TQString KJSParts::quickHelp() const
               "JavaScript programs." );
 }
 
-
+TQString KJSParts::handbookSection() const
+{
+	int index = tab->currentPageIndex();
+	if (index == 0) {
+		return "kbrowse-java";
+	}
+	else if (index == 1) {
+		return "kbrowse-javascript";
+	}
+	else {
+		return TQString::null;
+	}
+}

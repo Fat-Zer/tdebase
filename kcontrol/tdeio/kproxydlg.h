@@ -44,6 +44,8 @@ public:
   virtual void defaults();
   virtual TQString quickHelp() const;
 
+  virtual TQString handbookSection() const;
+
 private:
   TDECModule* mProxy;
   TDECModule* mSocks;

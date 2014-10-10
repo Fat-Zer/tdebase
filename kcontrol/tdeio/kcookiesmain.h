@@ -27,11 +27,15 @@ public:
     virtual void defaults();
     virtual TQString quickHelp() const;
 
+    virtual TQString handbookSection() const;
+
 private:
 
     TQTabWidget* tab;
     KCookiesPolicies* policies;
     KCookiesManagement* management;
+    int policiesTabNumber;
+    int managementTabNumber;
 };
 
 #endif // __KCOOKIESMAIN_H

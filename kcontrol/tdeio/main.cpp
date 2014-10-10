@@ -81,7 +81,12 @@ LanBrowser::LanBrowser(TQWidget *parent)
 :TDECModule(parent,"kcmtdeio")
 ,layout(this)
 ,tabs(this)
+,smbPageTabNumber(-1)
+,lisaPageTabNumber(-1)
+,tdeioLanPageTabNumber(-1)
 {
+   int currentTabNumber = 0;
+
    setQuickHelp( i18n("<h1>Local Network Browsing</h1>Here you setup your "
 		"<b>\"Network Neighborhood\"</b>. You "
 		"can use either the LISa daemon and the lan:/ ioslave, or the "
@@ -103,12 +108,16 @@ LanBrowser::LanBrowser(TQWidget *parent)
 
    smbPage = create_smb(&tabs, 0);
    tabs.addTab(smbPage, i18n("&Windows Shares"));
+   smbPageTabNumber = currentTabNumber;
+   currentTabNumber++;
    connect(smbPage,TQT_SIGNAL(changed(bool)), TQT_SLOT( changed() ));
 
    lisaPage = TDECModuleLoader::loadModule("kcmlisa", TDECModuleLoader::None, &tabs);
    if (lisaPage)
    {
      tabs.addTab(lisaPage,i18n("&LISa Daemon"));
+     lisaPageTabNumber = currentTabNumber;
+     currentTabNumber++;
      connect(lisaPage,TQT_SIGNAL(changed()), TQT_SLOT( changed() ));
    }
 
@@ -123,6 +132,8 @@ LanBrowser::LanBrowser(TQWidget *parent)
    if (tdeioLanPage)
    {
      tabs.addTab(tdeioLanPage,i18n("lan:/ Iosla&ve"));
+     tdeioLanPageTabNumber = currentTabNumber;
+     currentTabNumber++;
      connect(tdeioLanPage,TQT_SIGNAL(changed()), TQT_SLOT( changed() ));
    }
 
@@ -152,6 +163,28 @@ void LanBrowser::save()
    if (lisaPage)
      lisaPage->save();
    emit changed(false);
+}
+
+TQString LanBrowser::handbookSection() const
+{
+	int index = tabs.currentPageIndex();
+	if (index == smbPageTabNumber) {
+		//return "windows-shares";
+		return TQString::null;
+	}
+	else if (index == lisaPageTabNumber) {
+		// FIXME
+		// Documentation does not yet exist!
+		return "";
+	}
+	else if (index == tdeioLanPageTabNumber) {
+		// FIXME
+		// Documentation does not yet exist!
+		return "";
+	}
+	else {
+		return TQString::null;
+	}
 }
 
 #include "main.moc"

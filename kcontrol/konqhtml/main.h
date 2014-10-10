@@ -47,6 +47,8 @@ public:
   void defaults();
   TQString quickHelp() const;
 
+  virtual TQString handbookSection() const;
+
 
 private:
   TQTabWidget   *tab;

@@ -190,5 +190,19 @@ bool KCMDnssd::saveMdnsd()
 	kill(pid,SIGHUP);
 	return true;
 }
+
+TQString KCMDnssd::handbookSection() const
+{
+	// FIXME
+	// No context-sensitive help documentation currently exists for this module!
+	int index = tabs->currentPageIndex();
+	if (index == 0) {
+		//return "";
+		return TQString::null;
+	}
+	else {
+		return TQString::null;
+	}
+}
 	
 #include "kcmdnssd.moc"

@@ -19,6 +19,10 @@
 KCookiesMain::KCookiesMain(TQWidget *parent)
   : TDECModule(parent, "kcmtdeio")
 {
+    int currentTabNumber = 0;
+    policiesTabNumber = -1;
+    managementTabNumber = -1;
+
     management = 0;
     bool managerOK = true;
 
@@ -33,19 +37,23 @@ KCookiesMain::KCookiesMain(TQWidget *parent)
                              "You will not be able to manage the cookies that "
                              "are stored on your computer."));
     }
-    
+
     TQVBoxLayout *layout = new TQVBoxLayout(this);
     tab = new TQTabWidget(this);
     layout->addWidget(tab);
 
     policies = new KCookiesPolicies(this);
     tab->addTab(policies, i18n("&Policy"));
+    policiesTabNumber = currentTabNumber;
+    currentTabNumber++;
     connect(policies, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
 
     if( managerOK )
     {
         management = new KCookiesManagement(this);
         tab->addTab(management, i18n("&Management"));
+        managementTabNumber = currentTabNumber;
+        currentTabNumber++;
         connect(management, TQT_SIGNAL(changed(bool)), TQT_SIGNAL(changed(bool)));
     }
 }
@@ -94,6 +102,21 @@ TQString KCookiesMain::quickHelp() const
     " allowing you to decide. For your favorite shopping web sites that you trust, you might"
     " want to set the policy to accept, then you can access the web sites without being prompted"
     " every time TDE receives a cookie." );
+}
+
+TQString KCookiesMain::handbookSection() const
+{
+	int index = tab->currentPageIndex();
+	if (index == policiesTabNumber) {
+		//return "cookie-policy";
+		return TQString::null;
+	}
+	else if (index == managementTabNumber) {
+		return "cookie-management";
+	}
+	else {
+		return TQString::null;
+	}
 }
 
 #include "kcookiesmain.moc"

@@ -44,7 +44,7 @@ KProxyOptions::KProxyOptions (TQWidget* parent )
               :TDECModule (parent, "kcmtdeio")
 {
   TQVBoxLayout *layout = new TQVBoxLayout(this);
-  
+
   mTab = new TQTabWidget(this);
   layout->addWidget(mTab);
 
@@ -92,6 +92,21 @@ TQString KProxyOptions::quickHelp() const
   }
   
   return TQString::null;
+}
+
+TQString KProxyOptions::handbookSection() const
+{
+	int index = mTab->currentPageIndex();
+	if (index == 0) {
+		//return "proxies-intro";
+		return TQString::null;
+	}
+	else if (index == 1) {
+		return "socks";
+	}
+	else {
+		return TQString::null;
+	}
 }
 
 

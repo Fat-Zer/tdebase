@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-DocPath=kcontrol/tdehtml/index.html#kbrowse-java
+DocPath=kcontrol/tdehtml/index.html
 Icon=konqueror
 Exec=tdecmshell tdehtml_java_js
 

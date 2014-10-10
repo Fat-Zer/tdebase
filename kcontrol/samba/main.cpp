@@ -37,6 +37,8 @@ class SambaContainer:public TDECModule
       virtual void load();
       virtual void save();
 
+      virtual TQString handbookSection() const;
+
    private:
       TDEConfig config;
       TQTabWidget tabs;
@@ -71,7 +73,7 @@ SambaContainer::SambaContainer(TQWidget *parent, const char* name, const TQStrin
    setQuickHelp( i18n("The Samba and NFS Status Monitor is a front end to the programs"
      " <em>smbstatus</em> and <em>showmount</em>. Smbstatus reports on current"
      " Samba connections, and is part of the suite of Samba tools, which"
-     " implements the SMB (Session Message Block) protocol, also called the"
+     " implements the SMB (Server Message Block) protocol, also called the"
      " NetBIOS or LanManager protocol. This protocol can be used to provide"
      " printer sharing or drive sharing services on a network including"
      " machines running the various flavors of Microsoft Windows.<p>"
@@ -117,3 +119,23 @@ void SambaContainer::save()
    config.sync();
 }
 
+TQString SambaContainer::handbookSection() const
+{
+	int index = tabs.currentPageIndex();
+	if (index == 0) {
+		//return "smb-exports";
+		return TQString::null;
+	}
+	else if (index == 1) {
+		return "smb-imports";
+	}
+	else if (index == 2) {
+		return "smb-log";
+	}
+	else if (index == 3) {
+		return "smb-statistics";
+	}
+	else {
+		return TQString::null;
+	}
+}
