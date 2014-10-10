@@ -92,3 +92,8 @@ void PositionConfig::defaults()
     // while we manage some of the widgets ourselves
     TQTimer::singleShot(0, this, TQT_SLOT(changed()));
 }
+
+TQString PositionConfig::handbookSection() const
+{
+    return "panel-arrangement";
+}

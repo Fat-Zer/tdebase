@@ -127,7 +127,7 @@ private:
 	TQCheckBox* cbAutoHideAccelerators;
 	TQCheckBox* cbMenuAltKeyNavigation;
 	TQCheckBox* cbEnableTooltips;
-  KIntNumInput *m_popupMenuDelay;
+	KIntNumInput *m_popupMenuDelay;
 
 	// Page2 widgets
 	TQCheckBox* cbEnableEffects;

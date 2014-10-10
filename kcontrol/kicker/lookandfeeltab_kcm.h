@@ -34,6 +34,8 @@ public:
     void defaults();
     TQString quickHelp() const;
 
+    virtual TQString handbookSection() const;
+
 public slots:
     void configChanged();
 

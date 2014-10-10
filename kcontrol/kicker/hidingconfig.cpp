@@ -92,3 +92,8 @@ void HidingConfig::defaults()
     // while we manage some of the widgets ourselves
     TQTimer::singleShot(0, this, TQT_SLOT(changed()));
 }
+
+TQString HidingConfig::handbookSection() const
+{
+    return "panel-hiding";
+}

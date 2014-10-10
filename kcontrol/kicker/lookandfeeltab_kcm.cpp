@@ -92,3 +92,7 @@ TQString LookAndFeelConfig::quickHelp() const
                 " manipulation of the panel's buttons and applets.");
 }
 
+TQString LookAndFeelConfig::handbookSection() const
+{
+    return "panel-appearance";
+}

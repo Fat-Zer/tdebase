@@ -358,7 +358,7 @@ TDEAboutData *KickerConfig::aboutData()
           = new TDEAboutData(I18N_NOOP("kcmkicker"),
                            I18N_NOOP("TDE Panel Control Module"),
                            0, 0, TDEAboutData::License_GPL,
-                           I18N_NOOP("(c) 2009 - 2010 Timothy Pearson\n"
+                           I18N_NOOP("(c) 2009 - 2014 Timothy Pearson\n"
                                      "(c) 1999 - 2001 Matthias Elter\n"
                                      "(c) 2002 - 2003 Aaron J. Seigo"));
 

@@ -45,7 +45,9 @@ url="help:/kcontrol/color/index.html">Colors</ulink>.</para>
 <para>This panel is divided into three tabs:  <guilabel>Style</guilabel>, 
 <guilabel>Effects</guilabel>, <guilabel>Toolbar</guilabel>.</para>
 
-<sect3 id="style-style">
+</sect2>
+
+<sect2 id="style-style">
 <title><guilabel>Style</guilabel> tab</title>
 
 <para>The top list box, labeled <guilabel>Widget Style</guilabel> 
@@ -87,9 +89,9 @@ application.</para>
 </varlistentry> 
 </variablelist>
 -->
-</sect3>
+</sect2>
 
-<sect3 id="style-effects">
+<sect2 id="style-effects">
 <title><guilabel>Effects</guilabel> tab</title>
 
 <para>If you click on the <guilabel>Effects</guilabel> tab, you will see the panel is divided 
@@ -145,9 +147,9 @@ appearance that the menu is lifted off the application, and the menu is creating
 to select the method &tde; uses to generate the transparency.  You can use the slider to determine the level of 
 transparency in menus.  A preview is visible on the right side of this section.</para>
 
-</sect3>
+</sect2>
 
-<sect3 id="style-misc">
+<sect2 id="style-misc">
 <title><guilabel>Toolbar</guilabel> tab</title>
 
 <variablelist> 
@@ -179,8 +181,6 @@ If <guilabel>Icon Only</guilabel> is selected, then there is no text on the tool
 </varlistentry> 
 
 </variablelist>
-
-</sect3>
 
 </sect2>
 

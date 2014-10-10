@@ -92,3 +92,8 @@ void LookAndFeelConfig::defaults()
     // while we manage some of the widgets ourselves
     TQTimer::singleShot(0, this, TQT_SLOT(changed()));
 }
+
+TQString LookAndFeelConfig::handbookSection() const
+{
+    return "panel-appearance";
+}

@@ -33,6 +33,8 @@ public:
     void save();
     void defaults();
 
+    virtual TQString handbookSection() const;
+
 public slots:
     void notChanged();
     void aboutToNotifyKicker();

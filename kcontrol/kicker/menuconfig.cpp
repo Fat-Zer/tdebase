@@ -92,3 +92,8 @@ void MenuConfig::defaults()
     // while we manage some of the widgets ourselves
     TQTimer::singleShot(0, this, TQT_SLOT(changed()));
 }
+
+TQString MenuConfig::handbookSection() const
+{
+    return "panel-menus";
+}

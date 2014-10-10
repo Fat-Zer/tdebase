@@ -65,6 +65,11 @@ TQString HelpWidget::text() const
 bool HelpWidget::clicked(const TQString & _url)
 {
     TQString textUrl = _url;
+
+    if ( textUrl.isNull() ) {
+        return true;
+    }
+
     ConfigModule* dockModule = _dock->module();
     if ( dockModule) {
         TQString section = dockModule->module()->handbookSection();
@@ -72,9 +77,6 @@ bool HelpWidget::clicked(const TQString & _url)
             textUrl = TQString( "%1#%2" ).arg( textUrl ).arg( section );
         }
     }
-
-    if ( textUrl.isNull() )
-        return true;
 
     if ( textUrl.find('@') > -1 ) {
         kapp->invokeMailer(textUrl);

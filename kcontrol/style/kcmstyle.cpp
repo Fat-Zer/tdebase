@@ -1142,8 +1142,14 @@ TQString KCMStyle::handbookSection() const
 {
 	int index = tabWidget->currentPageIndex();
 	if (index == 0) {
-		//return "style-intro";
+		//return "style-style";
 		return TQString::null;
+	}
+	else if (index == 1) {
+		return "style-effects";
+	}
+	else if (index == 2) {
+		return "style-misc";
 	}
 	else {
 		return TQString::null;
