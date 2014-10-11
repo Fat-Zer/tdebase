@@ -470,8 +470,8 @@ void writeServicesFile( TQStringList mimeTypes )
         ts << "Icon=netscape" << endl;
         ts << "Comment=" << i18n("Netscape plugin viewer") << endl;
         ts << "X-TDE-Library=libnsplugin" << endl;
-        ts << "InitialPreference=7" << endl;
-        ts << "ServiceTypes=KParts/ReadOnlyPart,Browser/View" << endl;
+        ts << "X-TDE-InitialPreference=7" << endl;
+        ts << "X-TDE-ServiceTypes=KParts/ReadOnlyPart,Browser/View" << endl;
         ts << "X-TDE-BrowserView-PluginsInfo=nsplugins/pluginsinfo" << endl;
 
         if (mimeTypes.count() > 0)

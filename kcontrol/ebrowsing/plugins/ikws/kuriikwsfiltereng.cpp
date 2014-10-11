@@ -501,7 +501,7 @@ void KURISearchFilterEngine::loadConfig()
         KSimpleConfig desktop(kapp->dirs()->saveLocation("services", "searchproviders/") + name + ".desktop");
         desktop.setGroup("Desktop Entry");
         desktop.writeEntry("Type", "Service");
-        desktop.writeEntry("ServiceTypes", "SearchProvider");
+        desktop.writeEntry("X-TDE-ServiceTypes", "SearchProvider");
         desktop.writeEntry("Name", *it);
         desktop.writeEntry("Query", query);
         desktop.writeEntry("Keys", keys);

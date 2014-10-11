@@ -159,7 +159,7 @@ void NotifierServiceAction::save() const
 
 	desktopFile.setDesktopGroup();
 
-	desktopFile.writeEntry(TQString("ServiceTypes"), m_mimetypes, ",");
+	desktopFile.writeEntry(TQString("X-TDE-ServiceTypes"), m_mimetypes, ",");
 	desktopFile.writeEntry(TQString("Actions"),
 	                       TQStringList(m_service.m_strName),";");
 }

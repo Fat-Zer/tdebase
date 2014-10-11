@@ -277,7 +277,7 @@ void FilterOptions::save()
       KSimpleConfig service(path + name + ".desktop");
       service.setGroup("Desktop Entry");
       service.writeEntry("Type", "Service");
-      service.writeEntry("ServiceTypes", "SearchProvider");
+      service.writeEntry("X-TDE-ServiceTypes", "SearchProvider");
       service.writeEntry("Name", provider->name());
       service.writeEntry("Query", provider->query(), true, false, true);
       service.writeEntry("Keys", provider->keys());
@@ -307,7 +307,7 @@ void FilterOptions::save()
       KSimpleConfig service(path + *it + ".desktop");
       service.setGroup("Desktop Entry");
       service.writeEntry("Type", "Service");
-      service.writeEntry("ServiceTypes", "SearchProvider");
+      service.writeEntry("X-TDE-ServiceTypes", "SearchProvider");
       service.writeEntry("Hidden", true);
   }
 

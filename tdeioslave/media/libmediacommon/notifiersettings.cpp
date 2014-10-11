@@ -297,7 +297,7 @@ TQValueList<NotifierServiceAction*> NotifierSettings::loadActions( KDesktopFile 
 	TQValueList<NotifierServiceAction*> services;
 	
 	const TQString filename = desktop.fileName();
-	const TQStringList mimetypes = desktop.readListEntry( "ServiceTypes" );
+	const TQStringList mimetypes = desktop.readListEntry( "X-TDE-ServiceTypes" );
 
 	TQValueList<KDEDesktopMimeType::Service> type_services
 		= KDEDesktopMimeType::userDefinedServices(filename, true);
@@ -325,7 +325,7 @@ bool NotifierSettings::shouldLoadActions( KDesktopFile &desktop, const TQString 
 	desktop.setDesktopGroup();
 
 	if ( desktop.hasKey( "Actions" )
-	  && desktop.hasKey( "ServiceTypes" )
+	  && desktop.hasKey( "X-TDE-ServiceTypes" )
 	  && !desktop.readBoolEntry( "X-TDE-MediaNotifierHide", false )  )
 	{
 		const TQStringList actions = desktop.readListEntry( "Actions" );
@@ -335,7 +335,7 @@ bool NotifierSettings::shouldLoadActions( KDesktopFile &desktop, const TQString 
 			return false;
 		}
 		
-		const TQStringList types = desktop.readListEntry( "ServiceTypes" );
+		const TQStringList types = desktop.readListEntry( "X-TDE-ServiceTypes" );
 
 		if ( mimetype.isEmpty() )
 		{

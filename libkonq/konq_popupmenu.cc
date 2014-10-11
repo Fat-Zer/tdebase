@@ -782,10 +782,10 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
                 if ( capabilities.contains( "Write" ) && !sWriting )
                     continue;
             }
-            if ( (cfg.hasKey( "Actions" ) || cfg.hasKey( "X-TDE-GetActionMenu") ) && cfg.hasKey( "ServiceTypes" ) )
+            if ( (cfg.hasKey( "Actions" ) || cfg.hasKey( "X-TDE-GetActionMenu") ) && cfg.hasKey( "X-TDE-ServiceTypes" ) )
             {
-                const TQStringList types = cfg.readListEntry( "ServiceTypes" );
-                const TQStringList excludeTypes = cfg.readListEntry( "ExcludeServiceTypes" );
+                const TQStringList types = cfg.readListEntry( "X-TDE-ServiceTypes" );
+                const TQStringList excludeTypes = cfg.readListEntry( "X-TDE-ExcludeServiceTypes" );
                 bool ok = false;
 
                 // check for exact matches or a typeglob'd mimetype if we have a mimetype
