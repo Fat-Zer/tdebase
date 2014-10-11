@@ -12,7 +12,7 @@ Name=User Interface
 Name[it]=Interfaccia utente
 Comment=Configure user interface options
 Comment[it]=Configura opzioni dell'interfaccia utente
-Keywords=konqueror,kfm,user,interface,tabbed,browsing
-Keywords[it]=konqueror,kfm,utente,interfaccia,linguette,navigazione
+Keywords=konqueror;kfm;user;interface;tabbed;browsing
+Keywords[it]=konqueror;kfm;utente;interfaccia;linguette;navigazione
 
 Categories=Qt;TDE;X-TDE-settings-webbrowsing;
