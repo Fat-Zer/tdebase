@@ -221,6 +221,8 @@ bool KCrossBGRender::setCurrentEvent(bool init){
 			return true;
 		}
 	}
+
+	return false;
 }
 
 TQPixmap KCrossBGRender::getCurrentPixmap()

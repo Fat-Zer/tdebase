@@ -264,7 +264,7 @@ void KICCConfig::updateDisplayedInformation () {
 }
 
 TQString KICCConfig::extractFileName(TQString displayName, TQString profileName) {
-	//
+	return TQString();
 }
 
 int KICCConfig::findProfileIndex(TQString profileName) {
