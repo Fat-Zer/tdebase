@@ -79,4 +79,4 @@ Name[zh_CN]=(6) 游戏
 Name[zh_TW]=(6) 遊戲
 Name[zu]=(6) Imidlalo
 
-DocPath=man:/(6)
+X-DocPath=man:/(6)

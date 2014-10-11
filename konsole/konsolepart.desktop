@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Service
 Icon=konsole
-ServiceTypes=KParts/ReadOnlyPart,Browser/View,inode/directory,TerminalEmulator
+X-TDE-ServiceTypes=KParts/ReadOnlyPart,Browser/View,inode/directory,TerminalEmulator
 
 X-TDE-Library=libkonsolepart
 X-TDE-BrowserView-AllowAsDefault=false

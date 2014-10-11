@@ -9,6 +9,6 @@ Name[pa]=ਵੀਵੀਸੀਮੋ
 Name[ta]=விவிசிமோ
 Name[te]=వివిస్మొ
 Name[vi]=Tra Vivisimo
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=vi
 Query=http://vivisimo.com/search?query=\\{@}&se=Yahoo%2CAltaVista%2CMSN%2CFast%2COD%2CExcite%2CDirectHit%2CLooksmart%2CEuroseek&x=49&y=16

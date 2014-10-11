@@ -9,6 +9,6 @@ Name[ne]=एलेक्सा
 Name[pa]=ਅਲੀਕਸਾ
 Name[ta]=அலெக்சா
 Name[te]=ఎలెక్సా
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=al,alexa
 Query=http://info.alexa.com/search?q=\\{@}

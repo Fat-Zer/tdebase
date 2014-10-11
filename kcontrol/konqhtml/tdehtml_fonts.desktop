@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-DocPath=kcontrol/tdehtml/index.html#kbrowse-appearance
+X-DocPath=kcontrol/tdehtml/index.html#kbrowse-appearance
 Icon=fonts
 Exec=tdecmshell tdehtml_fonts
 

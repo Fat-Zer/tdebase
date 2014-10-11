@@ -2,7 +2,7 @@
 Exec=tdecmshell scsi
 Icon=kcmscsi
 Type=Application
-DocPath=kcontrol/scsi/index.html
+X-DocPath=kcontrol/scsi/index.html
 
 
 X-TDE-Library=info

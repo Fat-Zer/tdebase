@@ -2,7 +2,7 @@
 Exec=tdecmshell htmlsearch
 Icon=help_index
 Type=Application
-DocPath=kcontrol/help-index.html
+X-DocPath=kcontrol/help-index.html
 
 X-TDE-ModuleType=Library
 X-TDE-Library=htmlsearch

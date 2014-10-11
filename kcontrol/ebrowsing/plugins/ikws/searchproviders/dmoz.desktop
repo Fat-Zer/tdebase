@@ -45,7 +45,7 @@ Name[wa]=Drovi ridant
 Name[xh]=Vula Ulawulo
 Name[zh_TW]=開啟目錄
 Name[zu]=Vula Uhlu lwamafayela
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=dmoz,odp
 Query=http://search.dmoz.org/cgi-bin/search?search=\\{@}
 Query[ne]=http://search.dmoz.org/cgi-bin/search?खोज्नुहोस्=\\{@}

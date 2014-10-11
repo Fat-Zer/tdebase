@@ -74,5 +74,5 @@ Name[wa]=WordReference.com diccionaire inglès
 Name[zh_CN]=WordReference.com 英语字典
 Name[zh_TW]=WordReference.com 英文字典
 Query=http://www.wordreference.com/english/definition.asp?en=\\{@}
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

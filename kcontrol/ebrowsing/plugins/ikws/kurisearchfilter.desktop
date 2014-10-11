@@ -64,5 +64,5 @@ Name[zh_CN]=搜索关键字过滤
 Name[zh_TW]=搜索關鍵字過濾
 Name[zu]=Ihluzo lamagama abalulekile okusesha
 X-TDE-Library=libkurisearchfilter
-ServiceTypes=KURIFilter/Plugin
-InitialPreference=4
+X-TDE-ServiceTypes=KURIFilter/Plugin
+X-TDE-InitialPreference=4

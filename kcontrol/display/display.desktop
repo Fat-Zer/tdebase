@@ -2,7 +2,7 @@
 Icon=tdescreensaver
 Type=Application
 Exec=tdecmshell display
-DocPath=kcontrol/display/index.html
+X-DocPath=kcontrol/display/index.html
 
 X-TDE-Library=display
 X-TDE-FactoryName=display

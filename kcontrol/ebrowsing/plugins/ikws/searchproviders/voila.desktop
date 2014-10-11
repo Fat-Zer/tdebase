@@ -10,7 +10,7 @@ Name[te]=వొయిలా
 Name[th]=เวยลา
 Name[vi]=Tra Voila
 Name[wa]=Voilà
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=voila
 Query=http://search.ke.voila.fr/S/voila?lg=fr&profil=geeks&rtype=kw&bhv=web_mondial&rdata=\\{@}
 Query[ja]=http://search.ke.voila.fr/S/voila?lg=fr&profil=geeks&rtype=kw&bhv=web_mondial&rdata=\\\\{@}

@@ -1,5 +1,5 @@
 [Desktop Entry]
-ServiceTypes=text/x-adasrc
+X-TDE-ServiceTypes=text/x-adasrc
 Actions=Print;
 
 [Desktop Action Print]

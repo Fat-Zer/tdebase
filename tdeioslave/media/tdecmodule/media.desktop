@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-DocPath=kcontrol/media/index.html
+X-DocPath=kcontrol/media/index.html
 Icon=system
 Exec=tdecmshell media
 X-TDE-Library=media

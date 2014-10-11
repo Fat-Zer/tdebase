@@ -75,5 +75,5 @@ Name[wa]=Documintåcion di l' API di KDE
 Name[zh_CN]=KDE API 文档
 Name[zh_TW]=KDE API 文件
 Query=http://api.kde.org/classmapper.php?class=\\{@}
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

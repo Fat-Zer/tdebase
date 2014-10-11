@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-DocPath=kcontrol/tdehtml/index.html#tdehtml-adblock
+X-DocPath=kcontrol/tdehtml/index.html#tdehtml-adblock
 Icon=filter
 Exec=tdecmshell tdehtml_filter
 

@@ -9,7 +9,7 @@ Name[ta]=இலவசடிபி
 Name[te]=ఫ్రీడిబి
 Name[tg]=ОзодиDB
 Name[vi]=Tra FreeDB
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=fdb,freedb
 Query=http://www.freedb.org/freedb_search.php?words=\\{@}
 Charset=utf8

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Exec=tdecmshell nic
 Type=Application
-DocPath=kcontrol/nics/index.html
+X-DocPath=kcontrol/nics/index.html
 Icon=network
 
 

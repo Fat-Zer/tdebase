@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-DocPath=kcontrol/tdehtml/index.html#userinterface
+X-DocPath=kcontrol/tdehtml/index.html#userinterface
 Icon=konqueror
 Exec=tdecmshell tdehtml_userinterface
 

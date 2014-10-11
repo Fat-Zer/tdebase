@@ -2,7 +2,7 @@
 Exec=tdecmshell partitions
 Icon=kcmpartitions
 Type=Application
-DocPath=kcontrol/partitions/index.html
+X-DocPath=kcontrol/partitions/index.html
 
 
 X-TDE-Library=info

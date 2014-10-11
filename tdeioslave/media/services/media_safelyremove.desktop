@@ -1,5 +1,5 @@
 [Desktop Entry]
-ServiceTypes=media/removable_mounted,media/removable_mounted_decrypted,media/removable_unmounted,media/removable_unmounted_decrypted,media/camera_mounted,media/camera_unmounted
+X-TDE-ServiceTypes=media/removable_mounted,media/removable_mounted_decrypted,media/removable_unmounted,media/removable_unmounted_decrypted,media/camera_mounted,media/camera_unmounted
 Actions=MediaSafelyRemove;
 X-TDE-Priority=TopLevel
 X-TDE-MediaNotifierHide=true

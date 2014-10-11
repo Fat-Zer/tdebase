@@ -15,6 +15,6 @@ Name[te]=మెటా క్రాలర్
 Name[th]=เมทาคลอเรอร์
 Name[ven]=Tshikokovhi tsha Meta
 Name[vi]=Tra MetaCrawler
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=mc,meta,metacrawler
 Query=http://search.metacrawler.com/crawler?general=\\{@}&method=0&cat=Web&target=metaworld&redirect=web&rpp=20&hpe=10&region=0&timeout=0&sort=0&format=beta99&theme=classic&refer=mc-search&refer=mc-search

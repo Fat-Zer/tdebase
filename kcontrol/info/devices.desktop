@@ -2,7 +2,7 @@
 Exec=tdecmshell devices
 Icon=kcmdevices
 Type=Application
-DocPath=kcontrol/devices/index.html
+X-DocPath=kcontrol/devices/index.html
 Categories=Qt;TDE;X-TDE-settings-information;
 
 

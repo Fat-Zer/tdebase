@@ -88,6 +88,6 @@ Name=Xine
 Name[hi]=एक्साइन
 Name[lo]=ສຸວັນທອງ
 Name[te]=క్సైన్
-ServiceTypes=
+X-TDE-ServiceTypes=
 Type=Application
 

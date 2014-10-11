@@ -2,7 +2,7 @@
 Icon=identity
 Type=Application
 Exec=tdecmshell smartcard
-DocPath=kcontrol/smartcard.html
+X-DocPath=kcontrol/smartcard.html
 
 X-TDE-Library=smartcard
 X-TDE-Init=smartcard

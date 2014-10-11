@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-DocPath=kcontrol/desktopbehavior/index.html
+X-DocPath=kcontrol/desktopbehavior/index.html
 Icon=desktop
 Exec=tdecmshell desktopbehavior
 

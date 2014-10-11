@@ -68,5 +68,5 @@ Name[wa]=Cweraedje di pakets Debian
 Name[zh_CN]=Debian 软件包搜索
 Name[zh_TW]=Debian 套件搜尋
 Query=http://packages.debian.org/\\{@}
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

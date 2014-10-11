@@ -11,7 +11,7 @@ Name[ta]=க்ரேஸ்நோட்
 Name[te]=గ్రెస్ నోట్
 Name[th]=Gracenote ค้นหาดนตรี, วิดิโอ
 Name[vi]=Tra Gracenote
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=gn,gracenote
 Query=http://www.gracenote.com/music/search-adv.html?q=\\{@}
 Charset=utf8

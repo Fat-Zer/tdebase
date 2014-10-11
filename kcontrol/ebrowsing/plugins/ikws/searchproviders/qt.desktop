@@ -74,5 +74,5 @@ Name[wa]=Documintåcion di Qt so les fyis
 Name[zh_CN]=最新的 Qt 在线文档
 Name[zh_TW]=最新的 Qt 線上文件
 Query=http://doc.trolltech.com/latest/\\{@}.html
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

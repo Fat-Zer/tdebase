@@ -2,7 +2,7 @@
 Exec=tdecmshell ioports
 Icon=kcmmemory
 Type=Application
-DocPath=kcontrol/ioports/index.html
+X-DocPath=kcontrol/ioports/index.html
 Categories=Qt;TDE;X-TDE-settings-information;
 
 

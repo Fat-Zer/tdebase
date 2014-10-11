@@ -14,6 +14,6 @@ Name[te]=ఫ్రెష్ మీట్
 Name[ven]=Namathethe
 Name[vi]=Tra Freshmeat
 Name[zu]=Inyama yamanje
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=fm,freshmeat
 Query=http://freshmeat.net/search/?q=\\{@}

@@ -2,7 +2,7 @@
 Exec=kcontrol -caption "%c" %i %m
 Icon=kcontrol
 Type=Application
-DocPath=kcontrol/index.html
+X-DocPath=kcontrol/index.html
 X-TDE-StartupNotify=true
 
 Name=Trinity Control Center

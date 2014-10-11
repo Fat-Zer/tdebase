@@ -71,5 +71,5 @@ Name[wa]=WordReference.com ratournaedje di l' itålyin viè l' inglès
 Name[zh_CN]=WordReference.com 翻译：意大利语译英语
 Name[zh_TW]=WordReference.com 翻譯: 義大利文至英文
 Query=http://www.wordreference.com/it/en/translation.asp?iten=\\{@}
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

@@ -6,6 +6,6 @@ Name[eo]=Go.com
 Name[hi]=गो.कॉम
 Name[mn]=go.com
 Name[nso]=EYA.com
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=seek
 Query=http://www.go.com/Titles?col=WW&qt=\\{@}&svx=home_searchbox&sv=IS&lk=noframeso

@@ -2,7 +2,7 @@
 Icon=email
 Type=Application
 Exec=tdecmshell kcm_useraccount
-DocPath=kcontrol/email/index.html
+X-DocPath=kcontrol/email/index.html
 X-TDE-ModuleType=Library
 X-TDE-Library=useraccount
 X-TDE-ParentApp=kcontrol

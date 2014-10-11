@@ -2,7 +2,7 @@
 Exec=tdecmshell background
 Icon=background
 Type=Application
-DocPath=kcontrol/background/index.html
+X-DocPath=kcontrol/background/index.html
 
 
 X-TDE-Library=background

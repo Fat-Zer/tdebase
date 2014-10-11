@@ -1,5 +1,5 @@
 [Desktop Entry]
-ServiceTypes=text/x-java
+X-TDE-ServiceTypes=text/x-java
 Actions=Print;
 
 [Desktop Action Print]

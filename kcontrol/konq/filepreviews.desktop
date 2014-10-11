@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-DocPath=kcontrol/filemanager/index.html
+X-DocPath=kcontrol/filemanager/index.html
 Icon=kfm
 Exec=tdecmshell filepreviews
 

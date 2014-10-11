@@ -96,5 +96,5 @@ Exec=xmovie
 Terminal=false
 Icon=xmovie
 MimeType=video/x-msvideo;video/quicktime;video/x-flic;video/mpeg;video/x-mpeg;
-InitialPreference=10
+X-TDE-InitialPreference=10
 Type=Application

@@ -2,7 +2,7 @@
 Exec=tdecmshell kcmfontinst
 Icon=fonts
 Type=Application
-DocPath=kcontrol/kcmfontinst/index.html
+X-DocPath=kcontrol/kcmfontinst/index.html
 
 
 X-TDE-Library=fontinst

@@ -58,7 +58,7 @@ Name[uk]=Словник з вільного програмного забезп�
 Name[vi]=Thư mục Phần mềm Tự do FSF/UNESCO
 Name[wa]=Livreye di libes programes FSF/UNESCO
 Name[zh_TW]=FSF/UNESCO 自由軟體目錄
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=fsd
 Query=http://directory.fsf.org/search/?query=\\{@}
 Query[nds]=http://directory.fsf.org/search/fsd-search.py?q=\\{@}

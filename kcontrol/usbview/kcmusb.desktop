@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=usb
 Type=Application
-DocPath=kcontrol/usb/index.html
+X-DocPath=kcontrol/usb/index.html
 Exec=tdecmshell kcmusb
 
 X-TDE-Library=usb

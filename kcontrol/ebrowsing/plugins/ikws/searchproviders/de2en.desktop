@@ -65,5 +65,5 @@ Name[vi]=dict.cc Dịch: Tiếng Đức sang tiếng Anh
 Name[wa]=Ratournadje dict.cc: Almand viè inglès
 Name[zh_TW]=dict.cc 翻譯: 德文至英文
 Query=http://www.dict.cc/?s=\\{@}
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

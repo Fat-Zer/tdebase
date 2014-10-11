@@ -2,7 +2,7 @@
 Icon=stylesheet
 Type=Application
 Exec=tdecmshell kcmcss
-DocPath=kcontrol/kcmcss/index.html
+X-DocPath=kcontrol/kcmcss/index.html
 
 
 X-TDE-Library=css

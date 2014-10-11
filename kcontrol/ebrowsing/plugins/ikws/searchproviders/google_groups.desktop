@@ -74,7 +74,7 @@ Name[xh]=Amaqela e Google
 Name[zh_CN]=Google 兴趣组
 Name[zh_TW]=Google 群組
 Name[zu]=Amaqembu e-Google
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=ggg,groups,dj,deja
 Query=http://groups.google.com/groups?oi=djq&as_q=\\{@}
 Query[en_GB]=http://groups.google.co.uk/groups?oi=djq&as_q=\\{@}

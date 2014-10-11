@@ -78,4 +78,4 @@ Name[zh_CN]=(n) 新建
 Name[zh_TW]=(n) 新
 Name[zu]=(n) Okusha
 
-DocPath=man:/(n)
+X-DocPath=man:/(n)

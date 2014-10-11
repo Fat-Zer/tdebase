@@ -49,5 +49,5 @@ Name[vi]=CPAN - Mạng lưới lưu trữ Perl đầy đủ
 Name[xh]=CPAN - Enomxholo Perl Indawo yokugcina Yomsebenzi womnatha
 Name[zh_TW]=CPAN - 全面的 Perl 收集網路
 Query=http://search.cpan.org/search?mode=\\{mode,2,"dist"}&query=\\{query,q,1}
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

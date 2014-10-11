@@ -72,5 +72,5 @@ Name[wa]=WordReference.com ratournaedje do francès viè l' inglès
 Name[zh_CN]=WordReference.com 翻译：法语译英语
 Name[zh_TW]=WordReference.com 翻譯: 法文至英文
 Query=http://www.wordreference.com/fr/en/translation.asp?fren=\\{@}
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

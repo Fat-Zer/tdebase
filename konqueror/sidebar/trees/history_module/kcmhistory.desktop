@@ -2,7 +2,7 @@
 Icon=history
 Type=Application
 Exec=tdecmshell kcmhistory
-DocPath=kcontrol/kcmhistory/index.html
+X-DocPath=kcontrol/kcmhistory/index.html
 X-TDE-ModuleType=Library
 X-TDE-Library=history
 X-TDE-FactoryName=history

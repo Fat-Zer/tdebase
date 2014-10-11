@@ -76,7 +76,7 @@ Name[xh]=Isiseko sedata Segama elenziwe ngonoobumba bamanye amagama
 Name[zh_CN]=首字母缩写数据库
 Name[zh_TW]=Acronym 資料庫
 Name[zu]=Isiqu sedata samagama asho okufanayo
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=ad,acro,acronym
 Query=http://www.chemie.de/tools/acronym.php3?language=e&acronym=\\{@}
 Query[ne]=http://www.chemie.de/tools/acronym.php3?language=eacronym=\\{@}

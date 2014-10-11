@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Type=Service
 
-ServiceTypes=KDEDModule
+X-TDE-ServiceTypes=KDEDModule
 X-TDE-ModuleType=Library
 X-TDE-Library=kdeintegration
 X-TDE-Factory=kdeintegration

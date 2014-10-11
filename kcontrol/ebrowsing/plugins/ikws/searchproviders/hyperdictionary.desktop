@@ -7,6 +7,6 @@ Name[hu]=HyperDirectory.com
 Name[pl]=HyperDictionary.com - słownik
 Name[sv]=Hyperdictionary.com
 Name[ta]=திறந்த அடைவு
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=hd,hyperdict
 Query=http://www.hyperdictionary.com/search.aspx?define=\\{@}

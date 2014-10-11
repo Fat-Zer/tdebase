@@ -61,5 +61,5 @@ Name[vi]=Tra Từ điển Lớn của tiếng Catalan (GRan Enciclopèdia  Catal
 Name[wa]=Grand motî do catalan lingaedje (GRan Enciclopèdia  Catalana)
 Name[zh_TW]=很棒的加泰隆尼亞語文字典 (GRan Enciclopèdia  Catalana)
 Query=http://www.grec.net/cgibin/lexicx.pgm?GECART=\\{@}
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

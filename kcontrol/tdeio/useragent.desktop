@@ -2,7 +2,7 @@
 Type=Application
 Icon=agent
 Exec=tdecmshell useragent
-DocPath=kcontrol/useragent/index.html
+X-DocPath=kcontrol/useragent/index.html
 
 
 X-TDE-Library=tdeio

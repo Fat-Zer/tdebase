@@ -2,7 +2,7 @@
 Exec=tdecmshell mouse
 Icon=mouse
 Type=Application
-DocPath=kcontrol/mouse/index.html
+X-DocPath=kcontrol/mouse/index.html
 
 
 X-TDE-Library=input

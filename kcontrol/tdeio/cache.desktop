@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-DocPath=kcontrol/cache/index.html
+X-DocPath=kcontrol/cache/index.html
 Icon=cache
 Exec=tdecmshell cache
 

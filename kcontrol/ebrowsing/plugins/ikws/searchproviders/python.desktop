@@ -80,5 +80,5 @@ Query[fy]=http://www.google.nl/search?sourceid=python-search&q=\{@}&submit=Searc
 Query[nb]=http://www.google.no/search?sourceid=python-search&q=\{@}&submit=Search&q=site%3Apython.org
 Query[nl]=http://www.google.nl/search?sourceid=python-search&q=\{@}&submit=Search&q=site%3Apython.org
 Query[pt]=http://www.google.pt/search?sourceid=python-search&q=\{@}&submit=Search&q=site%3Apython.org
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

@@ -79,5 +79,5 @@ Name[zh_TW]=OpenPGP 金鑰搜尋
 Name[zu]=OpenPGP Usesho olubalulekile
 Query=http://pgp.dtype.org:11371/pks/lookup?search=\\{@}&op=vindex
 Query[ne]=http://pgp.dtype.org:11371/pks/lookup?search=\\{@}op=vindex
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

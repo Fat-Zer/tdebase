@@ -40,6 +40,6 @@ Name[vi]=Tìm mọi trang mạng nhanh
 Name[wa]=AllTheWeb rade
 Name[xh]=Yonke i Web ngokukhawuleza
 Name[zu]=Yonke i-Web ngokushesha
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=atw,alltheweb
 Query=http://www.alltheweb.com/search?exec=FAST+Search&type=all&query=\\{@}&cat=web

@@ -2,7 +2,7 @@
 Exec=tdecmshell smbstatus
 Icon=samba
 Type=Application
-DocPath=kcontrol/samba/index.html
+X-DocPath=kcontrol/samba/index.html
 
 
 X-TDE-Library=samba

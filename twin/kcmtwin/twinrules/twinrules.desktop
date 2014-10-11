@@ -2,7 +2,7 @@
 Icon=kcmkwm
 Type=Application
 Exec=tdecmshell twinrules
-DocPath=kcontrol/windowmanagement/index.html
+X-DocPath=kcontrol/windowmanagement/index.html
 
 X-TDE-ModuleType=Library
 X-TDE-Library=twinrules

@@ -77,5 +77,5 @@ Name[zh_TW]=PHP 搜尋
 Name[zu]=Usesho lwe-PHP
 Query=http://www.php.net/search.php?show=\\{mode,"manual"}&pattern=\\{@}
 Query[ne]=http://www.php.net/search.php?show=\\{mode,"manual"}pattern=\\{@}
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

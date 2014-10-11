@@ -1,7 +1,7 @@
 [Desktop Entry]
 Exec=khelpcenter
 Icon=khelpcenter
-DocPath=khelpcenter/index.html
+X-DocPath=khelpcenter/index.html
 Type=Application
 Terminal=false
 Name=Help

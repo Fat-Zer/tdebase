@@ -2,7 +2,7 @@
 Exec=tdecmshell processor
 Icon=kcmprocessor
 Type=Application
-DocPath=kcontrol/processor/index.html
+X-DocPath=kcontrol/processor/index.html
 
 
 X-TDE-Library=info

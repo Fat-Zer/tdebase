@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-DocPath=kcontrol/paths/index.html
+X-DocPath=kcontrol/paths/index.html
 Icon=kfm
 Exec=tdecmshell desktoppath
 

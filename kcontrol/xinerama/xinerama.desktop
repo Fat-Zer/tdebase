@@ -2,7 +2,7 @@
 Icon=identity
 Type=Application
 Exec=tdecmshell xinerama
-DocPath=kcontrol/multiplemonitors.html
+X-DocPath=kcontrol/multiplemonitors.html
 
 X-TDE-Library=xinerama
 X-TDE-Test-Module=true

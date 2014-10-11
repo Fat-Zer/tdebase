@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-DocPath=kcontrol/smb/index.html
+X-DocPath=kcontrol/smb/index.html
 Icon=samba
 Exec=tdecmshell smb
 

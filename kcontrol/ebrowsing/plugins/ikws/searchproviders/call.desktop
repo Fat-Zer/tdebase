@@ -66,5 +66,5 @@ Name[wa]=Båze di dnêyes callsign QRZ.com
 Name[zh_CN]=QRZ.com Callsign 数据库
 Name[zh_TW]=QRZ.com Callsign 資料庫
 Query=http://www.qrz.com/database?callsign=\\{@}
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

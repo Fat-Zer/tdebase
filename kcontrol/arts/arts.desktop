@@ -2,7 +2,7 @@
 Exec=tdecmshell arts
 Icon=arts
 Type=Application
-DocPath=kcontrol/arts/index.html
+X-DocPath=kcontrol/arts/index.html
 
 
 X-TDE-Library=arts

@@ -1,5 +1,5 @@
 [Desktop Entry]
-ServiceTypes=text/x-xslt
+X-TDE-ServiceTypes=text/x-xslt
 Actions=Print;
 
 [Desktop Action Print]

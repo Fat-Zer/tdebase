@@ -67,7 +67,7 @@ Name[xh]= Dikshinari ye Merriam-Webster
 Name[zh_CN]=韦氏词典
 Name[zh_TW]=韋氏詞典
 Name[zu]=Isichazamagama se-Merriam-Webster
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=dict,webster
 Query=http://www.m-w.com/cgi-bin/dictionary?book=Dictionary&va=\\{@}
 Query[ne]=http://www.m-w.com/cgi-bin/dictionary?book=Dictionaryva=\\{@}

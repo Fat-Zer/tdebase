@@ -71,4 +71,4 @@ Name[wa]=(1) Comandes d' uzeu
 Name[zh_CN]=(1) 用户命令
 Name[zh_TW]=(1) 使用者命令
 
-DocPath=man:/(1)
+X-DocPath=man:/(1)

@@ -2,7 +2,7 @@
 Exec=tdecmshell xserver
 Icon=kcmx
 Type=Application
-DocPath=kcontrol/xserver/index.html
+X-DocPath=kcontrol/xserver/index.html
 
 
 X-TDE-Library=info

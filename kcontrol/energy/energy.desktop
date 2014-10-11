@@ -1,7 +1,7 @@
 [Desktop Entry]
 Exec=tdecmshell energy
 Icon=energy_star
-DocPath=kcontrol/energy/index.html
+X-DocPath=kcontrol/energy/index.html
 Type=Application
 X-TDE-Library=energy
 X-TDE-Init=energy
