@@ -1929,7 +1929,8 @@ bool TEWidget::eventFilter( TQObject *obj, TQEvent *e )
     if (fe->gotFocus())
     {
       emit focusInSignal(fe);
-      return true;
+      // Do NOT return here otherwise the focusInEvent below will not fire, causing cursor drawing problems on focus
+      // See Bug 2142
     }
   }
   if ( e->type() == TQEvent::Enter )
