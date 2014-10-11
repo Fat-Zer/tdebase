@@ -62,5 +62,5 @@ Name[wa]=Cweraedje Backports Debian
 Name[zh_CN]=Debian 后端搜索
 Name[zh_TW]=Debian Backports 搜尋
 Query=http://www.backports.org/package.php?search=\\{@}
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

@@ -76,4 +76,4 @@ Name[zh_CN]=(8) 系统管理
 Name[zh_TW]=(8) 系統管理
 Name[zu]=(8) Ukugcinwa kwesistimu
 
-DocPath=man:/(8)
+X-DocPath=man:/(8)

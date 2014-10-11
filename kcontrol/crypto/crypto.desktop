@@ -2,7 +2,7 @@
 Icon=encrypted
 Type=Application
 Exec=tdecmshell crypto
-DocPath=kcontrol/crypto/index.html
+X-DocPath=kcontrol/crypto/index.html
 
 X-TDE-Library=crypto
 X-TDE-ParentApp=kcontrol

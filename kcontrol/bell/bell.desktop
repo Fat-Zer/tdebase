@@ -2,7 +2,7 @@
 Exec=tdecmshell bell
 Icon=bell
 Type=Application
-DocPath=kcontrol/bell/index.html
+X-DocPath=kcontrol/bell/index.html
 Categories=Qt;TDE;X-TDE-settings-sound;
 
 

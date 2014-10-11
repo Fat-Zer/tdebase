@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=exit
 Type=Application
-DocPath=kcontrol/kcmsmserver/index.html
+X-DocPath=kcontrol/kcmsmserver/index.html
 Exec=tdecmshell kcmsmserver
 
 

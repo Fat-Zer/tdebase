@@ -2,7 +2,7 @@
 Exec=tdecmshell iccconfig
 Icon=background
 Type=Application
-DocPath=kcontrol/iccconfig/index.html
+X-DocPath=kcontrol/iccconfig/index.html
 
 X-TDE-Library=iccconfig
 X-TDE-ParentApp=kcontrol

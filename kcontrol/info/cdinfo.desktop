@@ -2,7 +2,7 @@
 Exec=tdecmshell cdinfo
 Icon=kcmdevices
 Type=Application
-DocPath=kcontrol/cdinfo/index.html
+X-DocPath=kcontrol/cdinfo/index.html
 
 
 X-TDE-Library=info

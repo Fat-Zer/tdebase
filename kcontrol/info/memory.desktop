@@ -2,7 +2,7 @@
 Exec=tdecmshell memory
 Icon=kcmmemory
 Type=Application
-DocPath=kcontrol/memory/index.html
+X-DocPath=kcontrol/memory/index.html
 
 
 X-TDE-Library=info

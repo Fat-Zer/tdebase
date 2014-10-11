@@ -2,7 +2,7 @@
 Icon=run
 Type=Application
 Exec=tdecmshell kcmcgi
-DocPath=kcontrol/kcmcgi/index.html
+X-DocPath=kcontrol/kcmcgi/index.html
 X-TDE-ModuleType=Library
 X-TDE-Library=cgi
 

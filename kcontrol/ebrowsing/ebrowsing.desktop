@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-DocPath=kcontrol/ebrowsing/index.html
+X-DocPath=kcontrol/ebrowsing/index.html
 Icon=enhanced_browsing
 Exec=tdecmshell ebrowsing
 

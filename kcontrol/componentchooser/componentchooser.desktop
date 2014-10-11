@@ -4,7 +4,7 @@ Icon=misc
 Type=Application
 X-TDE-Library=componentchooser
 X-TDE-ParentApp=kcontrol
-DocPath=kcontrol/componentchooser/index.html
+X-DocPath=kcontrol/componentchooser/index.html
 Categories=Qt;TDE;X-TDE-settings-components;
 
 Name=Default Applications

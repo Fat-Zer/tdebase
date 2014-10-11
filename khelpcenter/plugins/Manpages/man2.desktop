@@ -72,4 +72,4 @@ Name[wa]=(2) Xhilete do sistinme
 Name[zh_CN]=(2) 系统调用
 Name[zh_TW]=(2) 系統呼叫
 
-DocPath=man:/(2)
+X-DocPath=man:/(2)

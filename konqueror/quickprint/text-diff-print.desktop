@@ -1,5 +1,5 @@
 [Desktop Entry]
-ServiceTypes=text/x-diff
+X-TDE-ServiceTypes=text/x-diff
 Actions=Print;
 
 [Desktop Action Print]

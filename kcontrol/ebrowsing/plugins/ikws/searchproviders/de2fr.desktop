@@ -66,7 +66,7 @@ Name[uz@cyrillic]=LEO - Немисчадан Французчага таржим
 Name[vi]=LEO - Dịch tiếng Đức sang tiếng Pháp
 Name[wa]=LEO - Ratourner etur l' almand et l' francès
 Name[zh_TW]=LEO - 翻譯德語和法語
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=de2fr
 Query=http://dict.leo.org/?lp=frde&search=\\{@}
 Query[ne]=http://dict.leo.org/?lp=frdesearch=\\{@}

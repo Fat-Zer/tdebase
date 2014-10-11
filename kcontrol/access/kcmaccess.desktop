@@ -2,7 +2,7 @@
 Icon=access
 Type=Application
 Exec=tdecmshell kcmaccess
-DocPath=kcontrol/kcmaccess/index.html
+X-DocPath=kcontrol/kcmaccess/index.html
 
 
 X-TDE-Library=access

@@ -88,5 +88,5 @@ Name[bn]=জিটিভি
 Name[hi]=जीटीवी
 Name[te]=జిటివి
 Name[th]=GTV 
-ServiceTypes=
+X-TDE-ServiceTypes=
 Type=Application

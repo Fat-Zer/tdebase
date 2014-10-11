@@ -2,7 +2,7 @@
 Exec=tdecmshell kcm_tdednssd
 Icon=network_local
 MimeType=
-DocPath=kcontrol/dnssd/index.html
+X-DocPath=kcontrol/dnssd/index.html
 StartupNotify=true
 Terminal=false
 Type=Application

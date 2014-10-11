@@ -74,7 +74,7 @@ Name[xh]=Isikhombisi esibonakalayo se TDE
 Name[zh_CN]=TDE 可视化指南
 Name[zh_TW]=TDE 視覺指南
 Name[zu]=Umbonisi obonakalayo oya kwi-TDE
-DocPath=help:/khelpcenter/visualdict/index.html
+X-DocPath=help:/khelpcenter/visualdict/index.html
 
 X-DOC-Weight=-2500
 Icon=kmenu

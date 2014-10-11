@@ -68,7 +68,7 @@ Name[wa]=Årtchive di programes Ruby
 Name[xh]=Indawo ye Ruby yokugcina Isicelo
 Name[zh_TW]=Ruby 應用程式檔案庫
 Name[zu]=Umqulu Womyaleli we-Ruby 
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=raa
 Query=http://raa.ruby-lang.org/search.rhtml?search=\\{@}
 Query[fy]=http://www.ruby-lang.org/en/raa-list.rhtml?name=\\{@}

@@ -1,5 +1,5 @@
 [Desktop Entry]
-ServiceTypes=text/css
+X-TDE-ServiceTypes=text/css
 Actions=Print;
 
 [Desktop Action Print]

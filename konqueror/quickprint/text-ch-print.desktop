@@ -1,5 +1,5 @@
 [Desktop Entry]
-ServiceTypes=text/x-chdr
+X-TDE-ServiceTypes=text/x-chdr
 Actions=Print;
 
 [Desktop Action Print]

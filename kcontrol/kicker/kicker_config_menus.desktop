@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=kcmkicker
 Type=Application
-DocPath=kicker/configuring.html#panel-menus
+X-DocPath=kicker/configuring.html#panel-menus
 Exec=tdecmshell kicker_menus
 
 X-TDE-Library=kicker

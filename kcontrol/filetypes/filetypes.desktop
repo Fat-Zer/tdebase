@@ -2,7 +2,7 @@
 Icon=filetypes
 Type=Application
 Exec=tdecmshell filetypes
-DocPath=kcontrol/filetypes/index.html
+X-DocPath=kcontrol/filetypes/index.html
 Categories=Qt;TDE;X-TDE-settings-components;
 
 

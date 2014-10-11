@@ -2,7 +2,7 @@
 Exec=tdecmshell keyboard
 Icon=keyboard
 Type=Application
-DocPath=kcontrol/keyboard/index.html
+X-DocPath=kcontrol/keyboard/index.html
 
 X-TDE-ModuleType=Library
 X-TDE-Library=keyboard

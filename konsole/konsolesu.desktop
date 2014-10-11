@@ -2,7 +2,7 @@
 Type=Application
 Exec=konsole --type su
 Icon=konsole
-DocPath=konsole/index.html
+X-DocPath=konsole/index.html
 MimeType=application/x-konsole;
 Terminal=false
 OnlyShowIn=TDE;

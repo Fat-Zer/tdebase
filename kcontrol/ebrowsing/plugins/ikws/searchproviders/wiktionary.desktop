@@ -63,7 +63,7 @@ Name[vi]=Wiktionary - Từ điển mở
 Name[wa]=Wikitionary - Li libe motî (inglès)
 Name[zh_CN]=维基字典 - 免费的字典
 Name[zh_TW]=Wiktionary - 免費的字典
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=wt,wikt
 Query=http://en.wiktionary.org/wiki/Special:Search?search=\{@}&go=Go
 Query[csb]=http://pl.wiktionary.org/wiki/Special:Search?search=\{@}&go=Go

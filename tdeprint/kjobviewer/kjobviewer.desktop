@@ -90,4 +90,4 @@ GenericName[zh_TW]=列印工作
 
 X-DCOP-ServiceType=Unique
 Categories=Qt;TDE;Utility;X-TDE-Utilities-Peripherals;
-DocPath=kjobviewer/index.html
+X-DocPath=kjobviewer/index.html

@@ -59,7 +59,7 @@ Name[uz]=Google - Kino
 Name[uz@cyrillic]=Google - Кино
 Name[vi]=Tìm phim ảnh qua Google
 Name[zh_TW]=Google 電影
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=ggmovie
 Query=http://www.google.com/search?q=movie:\{@}&ie=UTF-8&oe=UTF-8
 Query[csb]=http://www.google.pl/search?q=movie:\{@}&ie=UTF-8&oe=UTF-8

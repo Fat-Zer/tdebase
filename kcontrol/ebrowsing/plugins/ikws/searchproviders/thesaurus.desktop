@@ -57,7 +57,7 @@ Name[wa]=Diccionaire inglès Merriam-Webster
 Name[zh_CN]=韦氏辞典
 Name[zh_TW]=韋氏辭典
 Name[zu]=Incawdi yamagama afanayo ye-Merriam-Webster
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=ths,thesaurus
 Query=http://www.m-w.com/cgi-bin/thesaurus?book=Thesaurus&va=\\{@}
 Query[ne]=http://www.m-w.com/cgi-bin/thesaurus?book=Thesaurusva=\\{@}

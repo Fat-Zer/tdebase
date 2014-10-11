@@ -78,7 +78,7 @@ Name[xh]=Isikhombisi Sesiqalo esikhawulezayo
 Name[zh_CN]=速成指南
 Name[zh_TW]=快速入門指南
 Name[zu]=Umbonisi wokuqala ngokushesha
-DocPath=help:/khelpcenter/quickstart/index.html
+X-DocPath=help:/khelpcenter/quickstart/index.html
 
 X-DOC-Weight=-2000
 Icon=kmenu

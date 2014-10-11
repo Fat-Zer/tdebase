@@ -218,4 +218,4 @@ Type=Application
 X-TDE-FactoryName=kthememanager
 X-TDE-Library=kthememanager
 Categories=Qt;TDE;X-TDE-settings-looknfeel;
-DocPath=kcontrol/kthememanager/index.html
+X-DocPath=kcontrol/kthememanager/index.html

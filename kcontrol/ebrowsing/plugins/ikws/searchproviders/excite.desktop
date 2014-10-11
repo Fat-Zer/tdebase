@@ -16,7 +16,7 @@ Name[te]=ఎక్సైట్
 Name[ven]=Takadza
 Name[vi]=Tra Excite
 Name[zu]=Jabulisa
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=ex,excite
 Query=http://search.excite.com/search.gw?search=\\{@}
 Query[en_GB]=http://www.excite.co.uk/search/web/results?q=\\{@}&c=web

@@ -1,5 +1,5 @@
 [Desktop Entry]
-ServiceTypes=image/*
+X-TDE-ServiceTypes=image/*
 Actions=setAsBackground;tileAsBackground;
 X-TDE-Submenu=Set as Background
 X-TDE-Submenu[af]=Stel as agtergrond

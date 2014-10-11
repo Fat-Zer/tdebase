@@ -53,5 +53,5 @@ Name[zh_CN]=IETF 评论请求
 Name[zh_TW]=IETF RFC 文件
 Name[zu]=Izicelo ze-IETF zemibono
 Query=http://www.ietf.org/rfc/rfc\\{@}.txt
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

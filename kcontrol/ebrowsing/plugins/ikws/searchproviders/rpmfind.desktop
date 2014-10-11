@@ -37,7 +37,7 @@ Name[ven]=RPM-Toda
 Name[vi]=Tìm RPM
 Name[xh]=RPM-Fumana
 Name[zu]=RPM-Thola
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=rf,rpmfind
 Query=http://www.rpmfind.net/linux/rpm2html/search.php?query=\{@}
 Query[en_GB]=http://fr.rpmfind.net/linux/rpm2html/search.php?query=\{@}

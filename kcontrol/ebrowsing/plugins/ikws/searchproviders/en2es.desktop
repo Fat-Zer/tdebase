@@ -72,5 +72,5 @@ Name[wa]=WordReference.com ratournaedje di l' inglès viè l' espagnol
 Name[zh_CN]=WordReference.com 翻译：英语译西班牙语
 Name[zh_TW]=WordReference.com 翻譯: 英文至西班牙文
 Query=http://www.wordreference.com/es/translation.asp?tranword=\\{@}
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

@@ -2,7 +2,7 @@
 Exec=tdecmshell fonts
 Icon=fonts
 Type=Application
-DocPath=kcontrol/fonts/index.html
+X-DocPath=kcontrol/fonts/index.html
 
 
 X-TDE-Library=fonts

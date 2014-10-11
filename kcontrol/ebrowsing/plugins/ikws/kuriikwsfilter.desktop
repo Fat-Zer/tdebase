@@ -66,5 +66,5 @@ Name[zh_CN]=Internet 关键字过滤
 Name[zh_TW]=Internet 關鍵字過濾
 Name[zu]=Ihluzo lamagama abalulekile e-Internet
 X-TDE-Library=libkuriikwsfilter
-ServiceTypes=KURIFilter/Plugin
-InitialPreference=1
+X-TDE-ServiceTypes=KURIFilter/Plugin
+X-TDE-InitialPreference=1

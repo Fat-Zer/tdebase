@@ -2,7 +2,7 @@
 Exec=tdecmshell language
 Icon=locale
 Type=Application
-DocPath=kcontrol/language/index.html
+X-DocPath=kcontrol/language/index.html
 
 
 X-TDE-Library=locale

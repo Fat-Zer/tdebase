@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=launch
 Type=Application
-DocPath=kcontrol/kcmlaunch/index.html
+X-DocPath=kcontrol/kcmlaunch/index.html
 Exec=tdecmshell kcmlaunch
 
 

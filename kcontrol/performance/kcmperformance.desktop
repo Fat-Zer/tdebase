@@ -2,7 +2,7 @@
 Icon=launch
 Type=Application
 Exec=tdecmshell kcmperformance
-DocPath=kcontrol/performance/index.html
+X-DocPath=kcontrol/performance/index.html
 
 X-TDE-Library=performance
 X-TDE-FactoryName=performance

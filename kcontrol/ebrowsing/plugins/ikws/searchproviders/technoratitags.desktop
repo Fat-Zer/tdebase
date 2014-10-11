@@ -47,7 +47,7 @@ Name[tg]=Тегҳои Technorati
 Name[uk]=Статті Technorati
 Name[vi]=Nhãn Technorati
 Name[wa]=Tags Technorati
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=tags,tag,technoratitags
 Query=http://technorati.com/tag/\\{@}?sourceid=kde-search
 Query[ja]=http://technorati.com/tag/\\\\{@}?sourceid=kde-search

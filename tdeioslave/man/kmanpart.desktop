@@ -87,5 +87,5 @@ Name[pt_BR]=Componente KMan
 Name[ro]=Componentă  KMan
 Name[sv]=Kman-del
 Name[te]=కెమేన్ భాగం
-ServiceTypes=KParts/ReadOnlyPart,Browser/View
+X-TDE-ServiceTypes=KParts/ReadOnlyPart,Browser/View
 X-TDE-Library=libkmanpart

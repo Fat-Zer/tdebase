@@ -2,7 +2,7 @@
 Exec=tdecmshell spellchecking
 Icon=spellcheck
 Type=Application
-DocPath=kcontrol/spellchecking/index.html
+X-DocPath=kcontrol/spellchecking/index.html
 
 
 X-TDE-Library=spellchecking

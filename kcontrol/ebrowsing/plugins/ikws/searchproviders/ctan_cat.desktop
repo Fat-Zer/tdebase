@@ -73,5 +73,5 @@ Name[wa]=Catalogue do CTAN
 Name[zh_CN]=CTAN 目录
 Name[zh_TW]=CTAN 目錄
 Query=http://www.ctan.org/tools/cataloguesearch?action=/search/&catstring=\\{@}
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

@@ -2,7 +2,7 @@
 Exec=tdecmshell screensaver
 Icon=tdescreensaver
 Type=Application
-DocPath=kcontrol/screensaver/index.html
+X-DocPath=kcontrol/screensaver/index.html
 
 
 X-TDE-Library=screensaver

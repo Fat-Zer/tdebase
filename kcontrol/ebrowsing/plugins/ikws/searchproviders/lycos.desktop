@@ -11,7 +11,7 @@ Name[ta]=லைகோஸ்
 Name[te]=లైకోస్
 Name[th]=ไลคอส
 Name[vi]=Tra Lycos
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=lycos,ly
 Query=http://www.lycos.com/cgi-bin/pursuit?cat=dir&query=\\{@}
 Query[ne]=http://www.lycos.com/cgi-bin/pursuit?cat=dirquery=\\{@}

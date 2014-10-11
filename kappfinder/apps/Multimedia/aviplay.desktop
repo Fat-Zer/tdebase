@@ -93,6 +93,6 @@ Name[ven]=U tamba ha Avi
 Name[vi]=Chơi Avi
 Name[xh]=Umdlalo we Avi
 Name[zu]=Umdlali we-Avi
-ServiceTypes=
+X-TDE-ServiceTypes=
 Type=Application
 

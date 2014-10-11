@@ -2,7 +2,7 @@
 Exec=tdecmshell tdm
 Icon=tdmconfig
 Type=Application
-DocPath=tdm/index.html
+X-DocPath=tdm/index.html
 
 X-TDE-SubstituteUID=true
 

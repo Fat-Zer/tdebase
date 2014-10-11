@@ -2,7 +2,7 @@
 Exec=tdecmshell twindecoration
 Icon=kcmkwm
 Type=Application
-DocPath=kcontrol/twindecoration/index.html
+X-DocPath=kcontrol/twindecoration/index.html
 
 X-TDE-ModuleType=Library
 X-TDE-Library=twindecoration

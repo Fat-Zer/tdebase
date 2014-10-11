@@ -2,7 +2,7 @@
 Exec=tdecmshell kcmkded
 Icon=services
 Type=Application
-DocPath=kcontrol/kcmkded/index.html
+X-DocPath=kcontrol/kcmkded/index.html
 X-TDE-Library=kded
 X-TDE-Factoryname=kded
 X-TDE-ParentApp=kcontrol

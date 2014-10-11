@@ -11,7 +11,7 @@ Name[sv]=Astronaut
 Name[ta]=ஆஸ்ட்ரோநட்
 Name[te]=ఆస్ట్రొనాట్
 Name[zu]=Umuntu wasemkhathini
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=austro,austronaut
 Query=http://austronaut.at/page.php?begriff=\{@}&wo=at
 Query[ko]=http://austronaut.at/page.php?begriff=\\{@}&wo=at

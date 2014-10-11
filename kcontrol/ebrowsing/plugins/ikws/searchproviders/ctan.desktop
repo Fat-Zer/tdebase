@@ -50,5 +50,5 @@ Name[zh_TW]=CTAN - 全面的 Tex 收集網路
 Query=http://tug.ctan.org/cgi-bin/filenameSearch.py?action=/search/&filename=\\{ at }
 Query[ja]=http://tug.ctan.org/tools/filenamesearch.py?action=/search/&filename=\\\\{ at }
 Query[tg]=http://tug.ctan.org/cgi-bin/filenameSearch.py?action=/search/&filename=\\{ аз }
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

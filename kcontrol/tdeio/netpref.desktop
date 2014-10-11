@@ -196,7 +196,7 @@ Name[wa]=Preferinces di raloyaedje
 Name[zh_CN]=连接首选项
 Name[zh_TW]=連線偏好設定
 Type=Application
-DocPath=kcontrol/netpref/index.html
+X-DocPath=kcontrol/netpref/index.html
 X-TDE-FactoryName=netpref
 X-TDE-Library=tdeio
 

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Exec=kmenuedit
 Icon=kmenuedit
-DocPath=kmenuedit/index.html
+X-DocPath=kmenuedit/index.html
 Type=Application
 X-TDE-StartupNotify=true
 OnlyShowIn=TDE;

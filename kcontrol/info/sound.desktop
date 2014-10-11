@@ -2,7 +2,7 @@
 Exec=tdecmshell sound
 Icon=kcmsound
 Type=Application
-DocPath=kcontrol/sound/index.html
+X-DocPath=kcontrol/sound/index.html
 
 
 X-TDE-Library=info

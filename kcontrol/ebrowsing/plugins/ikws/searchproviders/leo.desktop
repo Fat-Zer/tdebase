@@ -44,6 +44,6 @@ Name[vi]=Dịch bằng LEO
 Name[wa]=Ratournaedje LEO
 Name[xh]=LEO-Guqulela
 Name[zu]=Uguqulelo-LEO
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=leo
 Query=http://dict.leo.org/?search=\\{@}

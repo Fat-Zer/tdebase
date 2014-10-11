@@ -63,5 +63,5 @@ Name[wa]=Cweraedje di Bug BTS Debian
 Name[zh_CN]=Debian BTS Bug 搜索
 Name[zh_TW]=Debian BTS 臭蟲搜尋
 Query=http://bugs.debian.org/\\{@}
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=kmenu
 Type=Application
-DocPath=kicker/taskbar-settings.html
+X-DocPath=kicker/taskbar-settings.html
 Exec=tdecmshell kcmtaskbar
 
 X-TDE-Library=taskbar

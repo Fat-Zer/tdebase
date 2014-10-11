@@ -2,7 +2,7 @@
 Exec=tdecmshell displayconfig
 Icon=background
 Type=Application
-DocPath=kcontrol/displayconfig/index.html
+X-DocPath=kcontrol/displayconfig/index.html
 
 X-TDE-Library=displayconfig
 X-TDE-ParentApp=kcontrol

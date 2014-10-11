@@ -15,5 +15,5 @@ Name[ta]=மூலத்திருட்டு
 Name[te]=సొర్స్ ఫొర్జ్
 Name[vi]=Tra SourceForge
 Query=http://sourceforge.net/search/?type_of_search=\\{type,"soft"}&exact=\{exact,"0"}&words=\\{@}
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

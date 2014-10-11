@@ -1,7 +1,7 @@
 [Desktop Entry]
 Icon=ieee1394
 Type=Application
-DocPath=kcontrol/view1394/index.html
+X-DocPath=kcontrol/view1394/index.html
 Exec=tdecmshell kcmview1394
 
 X-TDE-Library=view1394

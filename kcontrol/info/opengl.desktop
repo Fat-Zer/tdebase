@@ -3,7 +3,7 @@
 Exec=tdecmshell opengl
 Icon=kcmopengl
 Type=Application
-DocPath=kcontrol/opengl/index.html
+X-DocPath=kcontrol/opengl/index.html
 
 
 X-TDE-Library=info

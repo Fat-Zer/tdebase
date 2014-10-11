@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-DocPath=kcontrol/cookies/index.html
+X-DocPath=kcontrol/cookies/index.html
 Icon=cookie
 Exec=tdecmshell cookies
 

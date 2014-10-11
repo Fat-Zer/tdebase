@@ -68,5 +68,5 @@ Name[zh_CN]=DocBook - 权威的指南
 Name[zh_TW]=DocBook - 終極指南
 Name[zu]=DocBook - Umbonisi ochazayo
 Query=http://www.docbook.org/tdg/en/html/\\{1}.html
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Type=Service

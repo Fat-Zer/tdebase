@@ -79,7 +79,7 @@ Name[xh]=Uphendlo Lomfanekiso we Google
 Name[zh_CN]=Google 图像搜索
 Name[zh_TW]=Google 圖片搜尋
 Name[zu]=Ukusesha isithombe kwe-Google
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=ggi,images
 Query=http://images.google.com/images?q=\\{@}
 Query[en_GB]=http://images.google.co.uk/images?q=\\{@}

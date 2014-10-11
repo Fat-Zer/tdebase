@@ -2,7 +2,7 @@
 Type=Application
 Exec=tdecmshell tde-clock.desktop
 Icon=date
-DocPath=kcontrol/clock/index.html
+X-DocPath=kcontrol/clock/index.html
 
 
 X-TDE-Library=clock

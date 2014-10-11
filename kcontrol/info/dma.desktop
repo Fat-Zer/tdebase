@@ -2,7 +2,7 @@
 Exec=tdecmshell dma
 Icon=kcmmemory
 Type=Application
-DocPath=kcontrol/dma/index.html
+X-DocPath=kcontrol/dma/index.html
 Categories=Qt;TDE;X-TDE-settings-information;
 
 

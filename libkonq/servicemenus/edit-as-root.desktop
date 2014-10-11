@@ -1,5 +1,5 @@
 [Desktop Entry]
-ServiceTypes=text/*,application/x-desktop
+X-TDE-ServiceTypes=text/*,application/x-desktop
 Actions=Editassu
 
 [Desktop Action Editassu]

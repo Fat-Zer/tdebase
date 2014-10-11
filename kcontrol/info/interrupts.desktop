@@ -2,7 +2,7 @@
 Exec=tdecmshell interrupts
 Icon=kcmmemory
 Type=Application
-DocPath=kcontrol/interrupts/index.html
+X-DocPath=kcontrol/interrupts/index.html
 Categories=Qt;TDE;X-TDE-settings-information;
 
 

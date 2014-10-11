@@ -75,6 +75,6 @@ Icon=contents2
 
 X-TDE-KHelpcenter-Special=info
 
-DocPath=info:/dir
+X-DocPath=info:/dir
 
 X-DOC-Weight=700

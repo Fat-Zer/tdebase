@@ -1,12 +1,12 @@
 [Desktop Entry]
 Exec=khotkeys
 Type=Service
-ServiceTypes=KDEDModule
+X-TDE-ServiceTypes=KDEDModule
 X-TDE-ModuleType=Library
 X-TDE-Library=khotkeys
 X-TDE-FactoryName=khotkeys
 X-TDE-Kded-autoload=false
-DocPath=kcontrol/khotkeys/index.html
+X-DocPath=kcontrol/khotkeys/index.html
 
 Name=Input Actions
 Name[af]=Inset Aksies

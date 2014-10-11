@@ -38,6 +38,6 @@ Name[te]=ఎలెక్సా యూ అర్ ఎల్
 Name[vi]=Địa chỉ Alexa
 Name[wa]=URL d' Alexa
 Name[zu]=I-URL ye-Alexa
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=alu,url
 Query=http://info.alexa.com/data/details?url=\\{@}

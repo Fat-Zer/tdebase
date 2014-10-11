@@ -78,4 +78,4 @@ Name[zh_CN]=(4) 设备
 Name[zh_TW]=(4) 裝置
 Name[zu]=(4) Amathuluzi anenjongo
 
-DocPath=man:/(4)
+X-DocPath=man:/(4)

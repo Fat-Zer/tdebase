@@ -1,5 +1,5 @@
 [Desktop Entry]
-ServiceTypes=inode/directory
+X-TDE-ServiceTypes=inode/directory
 Actions=openTerminalHere;
 X-TDE-AuthorizeAction=shell_access
 Type=Application

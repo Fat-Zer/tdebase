@@ -95,7 +95,7 @@ Name[sv]=Mplayer
 Name[ta]=Mசாதனம்
 Name[te]=ఎంప్లెయర్
 Name[ven]=Tshitambisi tsha M
-ServiceTypes=
+X-TDE-ServiceTypes=
 Type=Application
 X-TDE-Protocols=http
 

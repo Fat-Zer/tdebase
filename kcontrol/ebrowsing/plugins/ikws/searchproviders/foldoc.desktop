@@ -67,6 +67,6 @@ Name[vi]=Từ điển Tin học Trực tuyến Miễn phí
 Name[wa]=Diccionaire informatike libe so les fyis
 Name[zh_CN]=Free On-Line Dictionary Of Computing
 Name[zh_TW]=免費的線上電腦辭典
-ServiceTypes=SearchProvider
+X-TDE-ServiceTypes=SearchProvider
 Keys=fd,foldoc
 Query=http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=\\{@}

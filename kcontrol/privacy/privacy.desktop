@@ -6,7 +6,7 @@ X-TDE-FactoryName=privacy
 X-TDE-Library=privacy
 Categories=Qt;TDE;X-TDE-settings-security;
 Icon=trashcan_empty
-DocPath=kcontrol/privacy/index.html
+X-DocPath=kcontrol/privacy/index.html
 
 Name=Privacy
 Name[af]=Privaatheid
