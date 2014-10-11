@@ -173,7 +173,7 @@ void AboutWidget::updatePixmap()
                 szComment = module->comment();
                 iconPath = loader->iconPath( module->icon(), TDEIcon::Small );
 
-                content += "<img src=\"" + iconPath +" \"</a>&nbsp;<a href=\"%1\" class=\"kcm_link\">" + szName + "</a></td><td class=\"kc_rightcol\">" + szComment;
+                content += "<img src=\"" + iconPath +" \"</img>&nbsp;<a href=\"%1\" class=\"kcm_link\">" + szName + "</a></td><td class=\"kc_rightcol\">" + szComment;
                 KURL moduleURL( TQString("kcm://%1").arg(TQString().sprintf("%p",module)) );
                 TQString linkURL( moduleURL.url() );
                 content = content.arg( linkURL );
@@ -182,7 +182,8 @@ void AboutWidget::updatePixmap()
             else
             {
                 szName = static_cast<ModuleTreeItem*>(pEntry)->caption();
-                content += szName + "</td><td class=\"kc_rightcol\">" + szName;
+                iconPath = loader->iconPath( "folder", TDEIcon::Small );
+                content += "<img src=\"" + iconPath +" \"</img>&nbsp;" + szName + "</td><td class=\"kc_rightcol\">" + szName;
             }
             content += "</td></tr>\n";
             pEntry = pEntry->nextSibling();
