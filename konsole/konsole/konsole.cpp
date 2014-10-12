@@ -1115,11 +1115,11 @@ void Konsole::makeBasicGUI()
                               TQT_SLOT(slotFindHistory()), m_shortcuts, "find_history");
   m_findHistory->setEnabled(b_histEnabled);
 
-  m_findNext = new TDEAction(i18n("Find &Next"), "next", 0, TQT_TQOBJECT(this),
+  m_findNext = new TDEAction(i18n("Find &Next"), "go-next", 0, TQT_TQOBJECT(this),
                            TQT_SLOT(slotFindNext()), m_shortcuts, "find_next");
   m_findNext->setEnabled(b_histEnabled);
 
-  m_findPrevious = new TDEAction(i18n("Find Pre&vious"), "previous", 0, TQT_TQOBJECT(this),
+  m_findPrevious = new TDEAction(i18n("Find Pre&vious"), "go-previous", 0, TQT_TQOBJECT(this),
                                TQT_SLOT(slotFindPrevious()), m_shortcuts, "find_previous");
   m_findPrevious->setEnabled( b_histEnabled );
 

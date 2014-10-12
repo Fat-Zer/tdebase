@@ -1351,7 +1351,7 @@ KSMDelayedMessageBox::KSMDelayedMessageBox( TDEApplication::ShutdownType sdtype,
 		m_title->setText( i18n( "Would you like to end your current session?" ) );
 		m_template = i18n( "This session will end\n"
 						   "after %1 seconds automatically." );
-		m_logo->setPixmap( BarIcon( "previous", 48 ) );
+		m_logo->setPixmap( BarIcon( "go-previous", 48 ) );
 	}
 
 	updateText();
