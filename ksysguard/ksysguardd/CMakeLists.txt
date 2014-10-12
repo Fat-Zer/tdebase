@@ -15,6 +15,8 @@ include( ConfigureChecks.cmake )
 
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
   set( OS_SPECIFIC_DIR Linux )
+elseif( ${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD" )
+  set( OS_SPECIFIC_DIR OpenBSD )
 else()
   tde_message_fatal( "Your operating system (${CMAKE_SYSTEM_NAME}) is not supported yet." )
 endif()
