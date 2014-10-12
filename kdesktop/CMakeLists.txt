@@ -97,7 +97,7 @@ tde_add_tdeinit_executable( ${target} AUTOMOC
   LINK
     kdesktopsettings-static bgnd-static dmctl-static
     konq-shared tdeutils-shared
-    ${XRENDER_LIBRARIES} ${XCURSOR_LIBRARIES} Xext dl
+    ${XRENDER_LIBRARIES} ${XCURSOR_LIBRARIES} Xext ${DL_LIBRARIES}
     ${XSS_LIBRARIES} ${DBUS_1_TQT_LIBRARIES}
 )
 

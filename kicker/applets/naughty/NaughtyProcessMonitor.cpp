@@ -409,12 +409,21 @@ NaughtyProcessMonitor::pidList() const
   d->cacheLoadMap_.clear () ;
   d->uidMap_.clear () ;
   for (i = 0; i < nentries; i++) {
+#ifdef __OpenBSD__
+      l << (unsigned long) kp[i].p_pid ;
+      d->cacheLoadMap_.insert (kp[i].p_pid,
+                              (kp[i].p_uticks +
+                               kp[i].p_sticks)) ;
+      d->uidMap_.insert (kp[i].p_pid,
+                        kp[i].p_uid) ;
+#else
       l << (unsigned long) kp[i].kp_proc.p_pid ;
       d->cacheLoadMap_.insert (kp[i].kp_proc.p_pid,
 			       (kp[i].kp_proc.p_uticks + 
 				kp[i].kp_proc.p_sticks)) ;
       d->uidMap_.insert (kp[i].kp_proc.p_pid,
 			 kp[i].kp_eproc.e_ucred.cr_uid) ;
+#endif
   }
 
   free (kp) ;

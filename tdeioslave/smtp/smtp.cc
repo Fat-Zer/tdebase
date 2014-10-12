@@ -30,6 +30,11 @@
 
 #include <config.h>
 
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <stdio.h>
+
 #ifdef HAVE_LIBSASL2
 extern "C" {
 #include <sasl/sasl.h>
@@ -71,12 +76,8 @@ using std::auto_ptr;
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 #include <assert.h>
 
-#ifdef HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
 #ifdef HAVE_SYS_SOCKET_H
 # include <sys/socket.h>
 #endif
