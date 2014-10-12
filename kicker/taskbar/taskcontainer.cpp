@@ -1277,7 +1277,7 @@ TQPopupMenu* TaskContainer::makeTaskMoveMenu()
 
     menu->setCheckable(false);
 
-    id = menu->insertItem(SmallIconSet("start"),
+    id = menu->insertItem(SmallIconSet("go-first"),
                           i18n("Move to Beginning"),
                           this, TQT_SLOT(slotTaskMoveBeginning()));
     menu->setItemEnabled(id, (capabilities & TaskMoveDestination::Left));
@@ -1292,7 +1292,7 @@ TQPopupMenu* TaskContainer::makeTaskMoveMenu()
                           this, TQT_SLOT(slotTaskMoveRight()));
     menu->setItemEnabled(id, (capabilities & TaskMoveDestination::Right));
 
-    id = menu->insertItem(SmallIconSet("finish"),
+    id = menu->insertItem(SmallIconSet("go-last"),
                           i18n("Move to End"),
                           this, TQT_SLOT(slotTaskMoveEnd()));
     menu->setItemEnabled(id, (capabilities & TaskMoveDestination::Right));
