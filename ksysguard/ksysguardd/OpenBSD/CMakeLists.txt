@@ -21,5 +21,5 @@ include_directories(
 
 tde_add_library( ksysguardd STATIC
   SOURCES
-    cpu.c memory.c
+    cpu.c memory.c ProcessList.c
 )
