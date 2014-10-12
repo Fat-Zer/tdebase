@@ -174,8 +174,8 @@
 #cmakedefine USE_PAM 1
 #cmakedefine TDM_PAM_SERVICE "@TDM_PAM_SERVICE@"
 
-#define USESHADOW 1
-#define HAVE_SHADOW 1
+#cmakedefine USESHADOW "@USESHADOW@"
+#cmakedefine HAVE_SHADOW "@HAVE_SHADOW@"
 
 #cmakedefine XDMCP 1
 
