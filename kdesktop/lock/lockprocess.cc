@@ -79,7 +79,9 @@
 
 #include <kcrash.h>
 
+#ifdef __Linux__
 #include <linux/stat.h>
+#endif
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>

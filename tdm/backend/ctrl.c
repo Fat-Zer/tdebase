@@ -42,7 +42,9 @@ from the copyright holder.
 #include <signal.h>
 #include <pwd.h>
 
+#ifdef __Linux__
 #include <linux/vt.h>
+#endif
 #include "getfd.h"
 
 static void
