@@ -936,7 +936,7 @@ void KMenu::slotGoExitSubMenu(const TQString& url)
         m_exitView->rightView()->insertItem( "switchuser", i18n( "Start New Session" ),
                      i18n( "Start a parallel session" ), "kicker:/switchuser", nId++, index++ );
 
-        m_exitView->rightView()->insertItem( "lock", i18n( "Lock Current && Start New Session").replace("&&","&"),
+        m_exitView->rightView()->insertItem( "system-lock-screen", i18n( "Lock Current && Start New Session").replace("&&","&"),
                      i18n( "Lock screen and start a parallel session" ), "kicker:/switchuserafterlock", nId++, index++ );
 
        SessList sess;
@@ -1340,7 +1340,7 @@ void KMenu::insertStaticExitItems()
        m_exitView->leftView()->insertItem( "undo", i18n( "Logout" ),
                                    i18n( "End session" ), "kicker:/logout", nId++, index++ );
     if (kapp->authorize("lock_screen"))
-       m_exitView->leftView()->insertItem( "lock", i18n( "Lock" ),
+       m_exitView->leftView()->insertItem( "system-lock-screen", i18n( "Lock" ),
                                    i18n( "Lock screen" ), "kicker:/lock", nId++, index++ );
 
     TDEConfig ksmserver("ksmserverrc", false, false);
@@ -1372,7 +1372,7 @@ void KMenu::insertStaticExitItems()
     if ( maysd )
     {
         m_exitView->leftView()->insertSeparator( nId++, i18n("System"), index++ );
-        m_exitView->leftView()->insertItem( "exit", i18n( "Shutdown Computer" ),
+        m_exitView->leftView()->insertItem( "system-log-out", i18n( "Shutdown Computer" ),
                                    i18n( "Turn off computer" ), "kicker:/shutdown", nId++, index++ );
 
         m_exitView->leftView()->insertItem( "reload", i18n( "&Restart Computer" ).replace("&",""),
@@ -1418,7 +1418,7 @@ void KMenu::insertStaticItems()
     // run command
     if (kapp->authorize("run_command"))
     {
-        m_systemView->insertItem( "run", i18n("Run Command..."),
+        m_systemView->insertItem( "system-run", i18n("Run Command..."),
                    "", "kicker:/runusercommand", nId++, index++ );
     }
 
@@ -2906,7 +2906,7 @@ void KMenu::slotContextMenuRequested( TQListViewItem * item, const TQPoint & pos
             if (kapp->authorize("run_command") && (m_popupService || (!m_popupPath.menuPath.isEmpty() && !m_popupPath.menuPath.endsWith("/"))))
             {
                hasEntries = true;
-               m_popupMenu->insertItem(SmallIconSet("run"),
+               m_popupMenu->insertItem(SmallIconSet("system-run"),
                i18n("Put Into Run Dialog"), PutIntoRunDialog);
             }
         }

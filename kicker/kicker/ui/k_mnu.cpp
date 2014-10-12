@@ -366,7 +366,7 @@ void PanelKMenu::initialize()
     // run command
     if (kapp->authorize("run_command"))
     {
-        insertItem(KickerLib::menuIconSet("run"),
+        insertItem(KickerLib::menuIconSet("system-run"),
                    i18n("Run Command..."),
                    this,
                    TQT_SLOT( slotRunCommand()));
@@ -393,12 +393,12 @@ void PanelKMenu::initialize()
 
     if (kapp->authorize("lock_screen"))
     {
-        insertItem(KickerLib::menuIconSet("lock"), i18n("Lock Session"), this, TQT_SLOT(slotLock()));
+        insertItem(KickerLib::menuIconSet("system-lock-screen"), i18n("Lock Session"), this, TQT_SLOT(slotLock()));
     }
 
     if (kapp->authorize("logout"))
     {
-        insertItem(KickerLib::menuIconSet("exit"), i18n("Log Out..."), this, TQT_SLOT(slotLogout()));
+        insertItem(KickerLib::menuIconSet("system-log-out"), i18n("Log Out..."), this, TQT_SLOT(slotLogout()));
     }
 
 #if 0
@@ -474,7 +474,7 @@ void PanelKMenu::slotPopulateSessions()
     if (kapp->authorize("start_new_session") && (p = dm.numReserve()) >= 0)
     {
         if (kapp->authorize("lock_screen")) {
-            sessionsMenu->insertItem(SmallIconSet("lock"), i18n("Lock Current && Start New Session"), 100 );
+            sessionsMenu->insertItem(SmallIconSet("system-lock-screen"), i18n("Lock Current && Start New Session"), 100 );
         }
         sessionsMenu->insertItem(SmallIconSet("switchuser"), i18n("Start New Session"), 101 );
         if (!p) {

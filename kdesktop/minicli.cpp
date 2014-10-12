@@ -80,7 +80,7 @@ Minicli::Minicli( TQWidget *parent, const char *name)
          m_autoCheckedRunInTerm(false), m_pURLCompletion(NULL), m_pEXECompletion(NULL)
 {
   setPlainCaption( i18n("Run Command") );
-  KWin::setIcons( winId(), DesktopIcon("run"), SmallIcon("run") );
+  KWin::setIcons( winId(), DesktopIcon("system-run"), SmallIcon("system-run") );
 
   TQVBoxLayout* mainLayout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
   m_dlg = new MinicliDlgUI (this);

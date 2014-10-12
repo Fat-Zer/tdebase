@@ -234,7 +234,7 @@ void KSysTrayCmd::execContextMenu( const TQPoint &pos )
     menu->insertTitle( *pixmap(), i18n( "KSysTrayCmd" ) );
     int hideShowId = menu->insertItem( isVisible ? i18n( "&Hide" ) : i18n( "&Restore" ) );
     int undockId = menu->insertItem( SmallIcon("close"), i18n( "&Undock" ) );
-    int quitId = menu->insertItem( SmallIcon("exit"), i18n( "&Quit" ) );
+    int quitId = menu->insertItem( SmallIcon("system-log-out"), i18n( "&Quit" ) );
 
     int cmd = menu->exec( pos );
 

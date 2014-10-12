@@ -50,7 +50,7 @@ WndStatus::WndStatus( TQPalette /*pal*/,
   // TDEGlobalSettings::splashScreenDesktopGeometry(); cannot be used here.
 
   TQLabel *pix = new TQLabel( this );
-  TQPixmap _icon( SmallIcon(icon.isNull()||icon.isEmpty()?TQString("run"):icon) );
+  TQPixmap _icon( SmallIcon(icon.isNull()||icon.isEmpty()?TQString("system-run"):icon) );
   pix->setPixmap( _icon );
   setStretchFactor(pix,0);
   pix->setFixedWidth(16);

@@ -617,7 +617,7 @@ void PanelServiceMenu::mouseReleaseEvent(TQMouseEvent * ev)
             if (kapp->authorize("run_command"))
             {
                 hasEntries = true;
-                popupMenu_->insertItem(SmallIconSet("run"),
+                popupMenu_->insertItem(SmallIconSet("system-run"),
                     i18n("Put Into Run Dialog"), PutIntoRunDialog);
             }
             break;

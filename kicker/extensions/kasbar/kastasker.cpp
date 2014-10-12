@@ -207,7 +207,7 @@ TDEPopupMenu *KasTasker::contextMenu()
 
 	if ( standalone_ ) {
 	    menu->insertSeparator();
-	    menu->insertItem( SmallIcon("exit"), i18n("&Quit"), tqApp, TQT_SLOT( quit() ) );
+	    menu->insertItem( SmallIcon("system-log-out"), i18n("&Quit"), tqApp, TQT_SLOT( quit() ) );
 	}
     }
 

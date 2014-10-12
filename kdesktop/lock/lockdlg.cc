@@ -119,7 +119,7 @@ void PasswordDlg::init(GreeterPluginHandle *plugin)
     TQLabel *pixLabel = NULL;
     if (!trinity_desktop_lock_use_system_modal_dialogs) {
         pixLabel = new TQLabel( frame, "pixlabel" );
-        pixLabel->setPixmap(DesktopIcon("lock"));
+        pixLabel->setPixmap(DesktopIcon("system-lock-screen"));
     }
 
     KUser user;

@@ -361,13 +361,13 @@ void PanelExtension::slotBuildOpMenu()
             _opMnu->insertSeparator();
         }
 
-        _opMnu->insertItem(SmallIconSet("lock"), i18n("&Lock Panels"),
+        _opMnu->insertItem(SmallIconSet("system-lock-screen"), i18n("&Lock Panels"),
                 Kicker::the(), TQT_SLOT(toggleLock()));
     }
     else if (!Kicker::the()->isKioskImmutable())
     {
         _opMnu->insertItem(kickerImmutable? SmallIconSet("unlock") :
-                                            SmallIconSet("lock"),
+                                            SmallIconSet("system-lock-screen"),
                            kickerImmutable ? i18n("Un&lock Panels") :
                                              i18n("&Lock Panels"),
                            Kicker::the(), TQT_SLOT(toggleLock()));

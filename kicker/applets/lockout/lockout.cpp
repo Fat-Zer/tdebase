@@ -77,8 +77,8 @@ Lockout::Lockout( const TQString& configFile, TQWidget *parent, const char *name
     TQToolTip::add( lockButton, i18n("Lock the session") );
     TQToolTip::add( logoutButton, i18n("Log out") );
 
-    lockButton->setPixmap( SmallIcon( "lock" ));
-    logoutButton->setPixmap( SmallIcon( "exit" ));
+    lockButton->setPixmap( SmallIcon( "system-lock-screen" ));
+    logoutButton->setPixmap( SmallIcon( "system-log-out" ));
 
     bTransparent = conf->readBoolEntry( "Transparent", bTransparent );
 
@@ -200,7 +200,7 @@ bool Lockout::eventFilter( TQObject *o, TQEvent *e )
             {
                 TQPopupMenu *popup = new TQPopupMenu();
 
-                popup->insertItem( SmallIcon( "lock" ), i18n("Lock Session"),
+                popup->insertItem( SmallIcon( "system-lock-screen" ), i18n("Lock Session"),
                                    this, TQT_SLOT( lock() ) );
                 popup->insertSeparator();
                 
@@ -223,7 +223,7 @@ bool Lockout::eventFilter( TQObject *o, TQEvent *e )
             {
                 TQPopupMenu *popup = new TQPopupMenu();
 
-                popup->insertItem( SmallIcon( "exit" ), i18n("&Log Out..."),
+                popup->insertItem( SmallIcon( "system-log-out" ), i18n("&Log Out..."),
                                    this, TQT_SLOT( logout() ) );
                 popup->insertSeparator();
                 //popup->insertItem( i18n( "&Transparent" ), 100 );
@@ -271,8 +271,8 @@ void Lockout::slotLogoutPrefs()
 
 void Lockout::slotIconChanged()
 {
-    lockButton->setPixmap( SmallIcon( "lock" ));
-    logoutButton->setPixmap( SmallIcon( "exit" ));
+    lockButton->setPixmap( SmallIcon( "system-lock-screen" ));
+    logoutButton->setPixmap( SmallIcon( "system-log-out" ));
 }
 
 #include "lockout.moc"

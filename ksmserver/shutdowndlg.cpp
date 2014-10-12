@@ -963,7 +963,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 				// Shutdown
 				FlatButton* btnHalt = new FlatButton( frame );
 				btnHalt->setTextLabel( i18n("&Turn Off"), false );
-				btnHalt->setPixmap( DesktopIcon( "exit") );
+				btnHalt->setPixmap( DesktopIcon( "system-log-out") );
 				int i = btnHalt->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
 				btnHalt->setAccel( "ALT+" + btnHalt->textLabel().lower()[i+1] ) ;
 				hbuttonbox2->addWidget ( btnHalt );
@@ -987,7 +987,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 		{
 			if (maysd) {
 				// Shutdown
-				KPushButton* btnHalt = new KPushButton( KGuiItem( i18n("&Turn Off Computer"), "exit"), frame );
+				KPushButton* btnHalt = new KPushButton( KGuiItem( i18n("&Turn Off Computer"), "system-log-out"), frame );
 				TQToolTip::add( btnHalt, i18n( "<qt><h3>Turn Off Computer</h3><p>Log out of the current session and turn off the computer</p></qt>" ) );
 				btnHalt->setFont( btnFont );
 				buttonlay->addWidget( btnHalt );
@@ -1337,7 +1337,7 @@ KSMDelayedMessageBox::KSMDelayedMessageBox( TDEApplication::ShutdownType sdtype,
 		m_title->setText( i18n( "Would you like to turn off your computer?" ) );
 		m_template = i18n( "This computer will turn off automatically\n"
 						   "after %1 seconds." );
-		m_logo->setPixmap( BarIcon( "exit", 48 ) );
+		m_logo->setPixmap( BarIcon( "system-log-out", 48 ) );
 	} else if ( sdtype == TDEApplication::ShutdownTypeReboot )
 	{
 		if (bootOption.isEmpty())

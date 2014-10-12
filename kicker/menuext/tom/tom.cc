@@ -98,9 +98,9 @@ class runMenuWidget : public TQWidget, public QMenuItem
             textRect = fontMetrics().boundingRect(i18n("Run:"));
             runLayout->setSpacing(KDialog::spacingHint());
             runLayout->addSpacing((KDialog::spacingHint() * 3) + TDEIcon::SizeMedium + textRect.width());
-            icon = DesktopIcon("run", TDEIcon::SizeMedium);
+            icon = DesktopIcon("system-run", TDEIcon::SizeMedium);
             /*TQLabel* l1 = new TQLabel(this);
-            TQPixmap foo = DesktopIcon("run", TDEIcon::SizeMedium);
+            TQPixmap foo = DesktopIcon("system-run", TDEIcon::SizeMedium);
             cout << "foo is: " << foo.width() << " by " << foo.height() << endl;
             l1->setPixmap(foo);
             runLayout->addWidget(l1);*/
@@ -486,7 +486,7 @@ void TOM::initialize()
     }
     else if (kapp->authorize("run_command"))
     {
-        insertItem(DesktopIcon("run", TDEIcon::SizeMedium), i18n("Run Command..."), this, TQT_SLOT(runCommand()));
+        insertItem(DesktopIcon("system-run", TDEIcon::SizeMedium), i18n("Run Command..."), this, TQT_SLOT(runCommand()));
     }
 
     // RECENTLY USED ITEMS
@@ -512,7 +512,7 @@ void TOM::initialize()
     // if we have no destinations, put the run command here
     if (numDests == 0 && kapp->authorize("run_command"))
     {
-        insertItem(DesktopIcon("run", TDEIcon::SizeMedium), i18n("Run Command..."), this, TQT_SLOT(runCommand()));
+        insertItem(DesktopIcon("system-run", TDEIcon::SizeMedium), i18n("Run Command..."), this, TQT_SLOT(runCommand()));
     }
 
 
@@ -563,7 +563,7 @@ void TOM::initialize()
         }
     }
 
-    insertItem(DesktopIcon("exit", TDEIcon::SizeMedium),
+    insertItem(DesktopIcon("system-log-out", TDEIcon::SizeMedium),
                i18n("Logout %1").arg(username), this, TQT_SLOT(logout()));
 }
 

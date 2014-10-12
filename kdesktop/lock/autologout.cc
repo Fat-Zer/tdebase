@@ -49,7 +49,7 @@ AutoLogout::AutoLogout(LockProcess *parent) : TQDialog(parent, "password dialog"
     frame->setLineWidth(2);
 
     TQLabel *pixLabel = new TQLabel( frame, "pixlabel" );
-    pixLabel->setPixmap(DesktopIcon("exit"));
+    pixLabel->setPixmap(DesktopIcon("system-log-out"));
 
     TQLabel *greetLabel = new TQLabel(i18n("<nobr><qt><b>Automatic Log Out</b></qt><nobr>"), frame);
     TQLabel *infoLabel = new TQLabel(i18n("<qt>To prevent being logged out, resume using this session by moving the mouse or pressing a key.</qt>"), frame);

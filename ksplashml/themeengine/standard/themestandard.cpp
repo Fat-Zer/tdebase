@@ -34,7 +34,7 @@ ThemeStandard::ThemeStandard( TQWidget *parent, const char *name, const TQString
   :ThemeEngine( parent, name, args ), mIcon(0L), mPrevIcon(0L), mIconCount(0), mStdIconWidth(-1),
   mIconPos(WndIcon::HBottomLeft), mSbAtTop(false), mSbVisible(true), mSbPbVisible(true), mSbFontName("helvetica"),
   mSbFontSz(16), mSbFontBold(true), mSbFontItalic(false), mSbFont(TQFont()), mSbFg(TQColor()), mSbBg(TQColor()),
-  mSbIcon("run"), mIconsVisible(true), mIconsJumping(true), mSplashScreen("(Default)")
+  mSbIcon("system-run"), mIconsVisible(true), mIconsJumping(true), mSplashScreen("(Default)")
 {
   _readSettings();
   _initUi();
@@ -158,7 +158,7 @@ void ThemeStandard::_readSettings()
 
   mSbFg = cfg->readColorEntry( "Statusbar Foreground", &TQt::white );
   mSbBg = cfg->readColorEntry( "Statusbar Background", &TQt::black );
-  mSbIcon = cfg->readEntry( "Statusbar Icon", "run" );
+  mSbIcon = cfg->readEntry( "Statusbar Icon", "system-run" );
   mIconsVisible = cfg->readBoolEntry( "Icons Visible", true);
   mIconsJumping = cfg->readBoolEntry( "Icons Jumping", true);
   mIconPos = (WndIcon::Position)cfg->readNumEntry( "Icon Position", 0 );

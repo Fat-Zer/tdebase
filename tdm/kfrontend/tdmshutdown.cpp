@@ -530,7 +530,7 @@ TDMSlimShutdown::TDMSlimShutdown( TQWidget *_parent )
 		// Shutdown
 		FlatButton* btnHalt = new FlatButton( lfrm );
 		btnHalt->setTextLabel( i18n("&Turn Off"), false );
-		btnHalt->setPixmap( DesktopIcon( "exit") );
+		btnHalt->setPixmap( DesktopIcon( "system-log-out") );
                 i = btnHalt->textLabel().find( TQRegExp("\\&"), 0 );    // i == 1
                 btnHalt->setAccel( "ALT+" + btnHalt->textLabel().lower()[i+1] ) ;
 		hbuttonbox->addWidget ( btnHalt );
@@ -565,7 +565,7 @@ TDMSlimShutdown::TDMSlimShutdown( TQWidget *_parent )
 		buttonlay->addStretch( 1 );
 	
 		KPushButton *btnHalt = new
-			KPushButton( KGuiItem( i18n("&Turn Off Computer"), "exit" ), this );
+			KPushButton( KGuiItem( i18n("&Turn Off Computer"), "system-log-out" ), this );
 		buttonlay->addWidget( btnHalt );
 		connect( btnHalt, TQT_SIGNAL(clicked()), TQT_SLOT(slotHalt()) );
 	

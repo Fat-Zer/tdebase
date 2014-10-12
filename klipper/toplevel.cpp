@@ -174,7 +174,7 @@ KlipperWidget::KlipperWidget( TQWidget *parent, TDEConfig* config )
                                    "configureAction" );
     configureAction->setGroup( defaultGroup );
     quitAction = new TDEAction( i18n("&Quit"),
-                              "exit",
+                              "system-log-out",
                               0,
                               TQT_TQOBJECT(this),
                               TQT_SLOT( slotQuit() ),

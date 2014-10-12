@@ -27,7 +27,7 @@ KfindDlg::KfindDlg(const KURL & url, TQWidget *parent, const char *name)
   : KDialogBase( Plain, TQString::null,
 	User1 | User2 | Apply | Close | Help, Apply,
         parent, name, true, false,
-	KGuiItem(i18n("Stop"), "stop"),
+	KGuiItem(i18n("Stop"), "process-stop"),
 	KStdGuiItem::saveAs())
 {
   TQWidget::setCaption( i18n("Find Files/Folders" ) );

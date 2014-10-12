@@ -131,7 +131,7 @@ KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop), startup(FALSE)
 
   if (kapp->authorize("run_command"))
   {
-     new TDEAction(i18n("Run Command..."), "run", 0, TQT_TQOBJECT(m_pDesktop), TQT_SLOT( slotExecuteCommand() ), m_actionCollection, "exec" );
+     new TDEAction(i18n("Run Command..."), "system-run", 0, TQT_TQOBJECT(m_pDesktop), TQT_SLOT( slotExecuteCommand() ), m_actionCollection, "exec" );
      new TDEAction(i18n("Open Terminal Here..." ), "terminal", CTRL+Key_T, this, TQT_SLOT( slotOpenTerminal() ),
 	m_actionCollection, "open_terminal" );
   }
@@ -188,12 +188,12 @@ KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop), startup(FALSE)
   // Icons in sync with kicker
   if (kapp->authorize("lock_screen"))
   {
-      new TDEAction(i18n("Lock Session"), "lock", 0, this, TQT_SLOT( slotLock() ),
+      new TDEAction(i18n("Lock Session"), "system-lock-screen", 0, this, TQT_SLOT( slotLock() ),
                   m_actionCollection, "lock" );
   }
   if (kapp->authorize("logout"))
   {
-      new TDEAction(i18n("Log Out \"%1\"...").arg(KUser().loginName()), "exit", 0,
+      new TDEAction(i18n("Log Out \"%1\"...").arg(KUser().loginName()), "system-log-out", 0,
                   this, TQT_SLOT( slotLogout() ), m_actionCollection, "logout" );
   }
 
@@ -203,7 +203,7 @@ KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop), startup(FALSE)
                   TQT_SLOT( slotNewSession() ), m_actionCollection, "newsession" );
       if (kapp->authorize("lock_screen"))
       {
-          new TDEAction(i18n("Lock Current && Start New Session"), "lock", 0, this,
+          new TDEAction(i18n("Lock Current && Start New Session"), "system-lock-screen", 0, this,
                       TQT_SLOT( slotLockNNewSession() ), m_actionCollection, "lockNnewsession" );
       }
   }

@@ -1849,9 +1849,9 @@ void KonqMainWindow::slotReloadStop() {
 }
 
 void KonqMainWindow::toggleReloadStopButton(bool isReload) {
-  //m_paStop = new TDEAction( i18n( "&Stop" ), "stop", Key_Escape, this, TQT_SLOT( slotStop() ), actionCollection(), "stop" );
+  //m_paStop = new TDEAction( i18n( "&Stop" ), "process-stop", Key_Escape, this, TQT_SLOT( slotStop() ), actionCollection(), "stop" );
   if (isReload) {
-    m_paReloadStop->setIcon("stop");
+    m_paReloadStop->setIcon("process-stop");
     m_paReloadStop->setWhatsThis( i18n( "Stop loading the document<p>"
                                         "All network transfers will be stopped and Konqueror will display the content "
                                         "that has been received so far." ) );
@@ -3950,7 +3950,7 @@ void KonqMainWindow::initActions()
 
   m_paCopy = KStdAction::copy( 0, 0, actionCollection(), "copy" );
   m_paPaste = KStdAction::paste( 0, 0, actionCollection(), "paste" );
-  m_paStop = new TDEAction( i18n( "&Stop" ), "stop", Key_Escape, TQT_TQOBJECT(this), TQT_SLOT( slotStop() ), actionCollection(), "stop" );
+  m_paStop = new TDEAction( i18n( "&Stop" ), "process-stop", Key_Escape, TQT_TQOBJECT(this), TQT_SLOT( slotStop() ), actionCollection(), "stop" );
 
   m_paRename = new TDEAction( i18n( "&Rename" ), /*"editrename",*/ Key_F2, actionCollection(), "rename" );
   m_paTrash = new TDEAction( i18n( "&Move to Trash" ), "edittrash", Key_Delete, actionCollection(), "trash" );
@@ -5325,7 +5325,7 @@ void KonqMainWindow::closeEvent( TQCloseEvent *e )
             m_pViewManager->showTab( view );
             if ( KMessageBox::warningContinueCancel( this,
               i18n("This tab contains changes that have not been submitted.\nClosing the window will discard these changes."),
-              i18n("Discard Changes?"), KGuiItem(i18n("&Discard Changes"),"exit"), "discardchangesclose") != KMessageBox::Continue )
+              i18n("Discard Changes?"), KGuiItem(i18n("&Discard Changes"),"system-log-out"), "discardchangesclose") != KMessageBox::Continue )
             {
               e->ignore();
               m_pViewManager->showTab( originalView );
@@ -5343,7 +5343,7 @@ void KonqMainWindow::closeEvent( TQCloseEvent *e )
       if (prop.isValid() && prop.toBool())
          if ( KMessageBox::warningContinueCancel( this,
            i18n("This page contains changes that have not been submitted.\nClosing the window will discard these changes."),
-           i18n("Discard Changes?"), KGuiItem(i18n("&Discard Changes"),"exit"), "discardchangesclose") != KMessageBox::Continue )
+           i18n("Discard Changes?"), KGuiItem(i18n("&Discard Changes"),"system-log-out"), "discardchangesclose") != KMessageBox::Continue )
          {
            e->ignore();
            return;

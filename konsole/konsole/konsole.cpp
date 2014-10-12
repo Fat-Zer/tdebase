@@ -1,5 +1,5 @@
 /*
-    This file is part of Konsole, an X terminal.                           
+    This file is part of Konsole, an X terminal.
     Copyright (C) 1996 by Matthias Ettrich <ettrich@kde.org>
     Copyright (C) 1997,1998 by Lars Doelle <lars.doelle@on-line.de>
 
@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
     02110-1301  USA.
 
     --------------------------------------------------------------
@@ -1183,7 +1183,7 @@ void Konsole::makeBasicGUI()
   m_closeSession = new TDEAction(i18n("C&lose Session"), "fileclose", 0, TQT_TQOBJECT(this),
                                TQT_SLOT(confirmCloseCurrentSession()), m_shortcuts, "close_session");
   m_print = new TDEAction(i18n("&Print Screen..."), "fileprint", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPrint() ), m_shortcuts, "file_print");
-  m_quit = new TDEAction(i18n("&Quit"), "exit", 0, TQT_TQOBJECT(this), TQT_SLOT( close() ), m_shortcuts, "file_quit");
+  m_quit = new TDEAction(i18n("&Quit"), "system-log-out", 0, TQT_TQOBJECT(this), TQT_SLOT( close() ), m_shortcuts, "file_quit");
 
   TDEShortcut shortcut(Qt::CTRL+Qt::ALT+Qt::Key_N);
   shortcut.append(TDEShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_N));
