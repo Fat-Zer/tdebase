@@ -174,6 +174,12 @@ ProcessList::ProcessList(TQWidget *parent, const char* name)
 		aliases.insert("wwwoffled", new TQString("daemon"));
 		aliases.insert("xntpd", new TQString("daemon"));
 		aliases.insert("ypbind", new TQString("daemon"));
+		aliases.insert("apmd", new TQString("daemon"));
+		aliases.insert("getty", new TQString("daemon"));
+		aliases.insert("mountd", new TQString("daemon"));
+		aliases.insert("inetd", new TQString("daemon"));
+		aliases.insert("nfsd", new TQString("daemon"));
+		aliases.insert("wsmoused", new TQString("daemon"));
 		/* kde applications */
 		aliases.insert("appletproxy", new TQString("tdeapp"));
 		aliases.insert("dcopserver", new TQString("tdeapp"));
@@ -210,6 +216,7 @@ ProcessList::ProcessList(TQWidget *parent, const char* name)
 		aliases.insert("tcsh", new TQString("shell"));
 		aliases.insert("tee", new TQString("tools"));
 		aliases.insert("vi", new TQString("wordprocessing"));
+		aliases.insert("vim", new TQString("wordprocessing"));
 	}
 
 	/* The filter mode is controlled by a combo box of the parent. If
