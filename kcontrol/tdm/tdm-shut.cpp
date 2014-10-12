@@ -209,7 +209,11 @@ void TDMSessionsWidget::load()
 
   config->setGroup("Shutdown");
   restart_lined->setURL(config->readEntry("RebootCmd", "/sbin/reboot"));
+#if defined(__OpenBSD__)
+  shutdown_lined->setURL(config->readEntry("HaltCmd", "/sbin/halt -p"));
+#else
   shutdown_lined->setURL(config->readEntry("HaltCmd", "/sbin/poweroff"));
+#endif
 
   bm_combo->setCurrentId(config->readEntry("BootManager", "None"));
 }
