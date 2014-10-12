@@ -83,7 +83,7 @@
     6. Email me and let me know if it works!
 */
 
-#if defined OS_Linux || defined __Linux__
+#if defined OS_Linux || defined __linux__
 
 #include <dirent.h>
 #include <ctype.h>

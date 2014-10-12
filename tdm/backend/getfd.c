@@ -4,7 +4,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <sys/ioctl.h>
-#ifdef __Linux__
+#ifdef __linux__
 #include <linux/kd.h>
 #endif
 #include "getfd.h"

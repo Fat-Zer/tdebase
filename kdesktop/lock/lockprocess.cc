@@ -79,7 +79,7 @@
 
 #include <kcrash.h>
 
-#ifdef __Linux__
+#ifdef __linux__
 #include <linux/stat.h>
 #endif
 
