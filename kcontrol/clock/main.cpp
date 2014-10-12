@@ -80,8 +80,13 @@ KclockModule::KclockModule(TQWidget *parent, const char *name, const TQStringLis
 void KclockModule::save()
 {
 //  The order here is important
+#ifdef __OpenBSD__
+  tzone->save();
+  dtime->save();
+#else
   dtime->save();
   tzone->save();
+#endif
 
   // Tell the clock applet about the change so that it can update its timezone
   kapp->dcopClient()->send( "kicker", "ClockApplet", "reconfigure()", TQByteArray() );
