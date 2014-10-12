@@ -14,6 +14,20 @@
 
 tde_setup_architecture_flags( )
 
+
+##### check for libdl ###########################
+
+set( DL_LIBRARIES dl )
+check_library_exists( ${DL_LIBRARIES} dlopen /lib HAVE_LIBDL )
+if( NOT HAVE_LIBDL )
+  unset( DL_LIBRARIES )
+  check_function_exists( dlopen HAVE_DLOPEN )
+  if( HAVE_DLOPEN )
+    set( HAVE_LIBDL 1 )
+  endif( HAVE_DLOPEN )
+endif( NOT HAVE_LIBDL )
+
+
 # termios.h (tdm, tdeioslave)
 if( BUILD_TDM OR BUILD_TDEIOSLAVES )
   check_include_file( termios.h HAVE_TERMIOS_H )
