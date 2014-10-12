@@ -55,6 +55,7 @@
         Linux         Tested on Linux 2.4
         FreeBSD       Tested on FreeBSD 5.1 by Brian Ledbetter <brian@shadowcom.net>
         NetBSD
+        OpenBSD
         Irix
         Solaris       Tested on Solaris 8 x86 by Torsten Kasch <tk@Genetik.Uni-Bielefeld.DE>
         HP-UX         Tested on HP-UX B.11.11 U 9000/800
@@ -160,7 +161,7 @@ unsigned int kfi_getPid(const char *proc, unsigned int ppid)
     return error ? 0 : pid;
 }
 
-#elif defined OS_FreeBSD || defined OS_NetBSD || defined __FreeBSD__ || defined __NetBSD__ || defined OS_Darwin
+#elif defined OS_FreeBSD || defined OS_NetBSD || defined __FreeBSD__ || defined __NetBSD__ || defined OS_Darwin || defined OS_OpenBSD || defined __OpenBSD__
 
 #include <ctype.h>
 #include <dirent.h>
@@ -202,6 +203,8 @@ unsigned int kfi_getPid(const char *proc, unsigned int ppid)
         mib[3] = p[num].ki_pid;
 #elif defined(__DragonFly__) && __DragonFly_version >= 190000
         mib[3] = p[num].kp_pid;
+#elif defined(__OpenBSD__)
+        mib[3] = p[num].p_pid;
 #else
         mib[3] = p[num].kp_proc.p_pid;
 #endif
@@ -225,14 +228,21 @@ unsigned int kfi_getPid(const char *proc, unsigned int ppid)
                     pid=p[num].kp_pid;
 #else
 #if defined(__DragonFly__)
-	    if(proc_p.kp_eproc.e_ppid==ppid && p[num].kp_thread.td_comm && 0==strcmp(p[num].kp_thread.td_comm, proc))
+            if(proc_p.kp_eproc.e_ppid==ppid && p[num].kp_thread.td_comm && 0==strcmp(p[num].kp_thread.td_comm, proc))
+#elif defined(__OpenBSD__)
+            if(proc_p.p_ppid==ppid && p[num].p_comm && 0==strcmp(p[num].p_comm, proc))
 #else
             if(proc_p.kp_eproc.e_ppid==ppid && p[num].kp_proc.p_comm && 0==strcmp(p[num].kp_proc.p_comm, proc))
 #endif
-                if(pid)
+                if(pid) {
                     error=true;
-                else
+                } else {
+#if defined(__OpenBSD__)
+                    pid=p[num].p_pid;
+#else
                     pid=p[num].kp_proc.p_pid;
+#endif
+                }
 #endif
         }
     }
