@@ -21,6 +21,8 @@ License. See the file "COPYING" for the exact licensing terms.
 #include <string.h>
 #include <netdb.h>
 
+#include <sys/socket.h>
+
 #ifndef KCMRULES
 
 #include <tqapplication.h>
