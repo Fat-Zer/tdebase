@@ -3825,7 +3825,7 @@ void KonqMainWindow::initActions()
   m_paLinkView = new TDEToggleAction( i18n( "Lin&k View"), 0, TQT_TQOBJECT(this), TQT_SLOT( slotLinkView() ), actionCollection(), "link" );
 
   // Go menu
-  m_paUp = new TDEToolBarPopupAction( i18n( "&Up" ), "up", TDEStdAccel::shortcut(TDEStdAccel::Up), actionCollection(), "up" );
+  m_paUp = new TDEToolBarPopupAction( i18n( "&Up" ), "go-up", TDEStdAccel::shortcut(TDEStdAccel::Up), actionCollection(), "up" );
   connect( m_paUp, TQT_SIGNAL( activated( TDEAction::ActivationReason, TQt::ButtonState) ), TQT_TQOBJECT(this),
 	   TQT_SLOT( slotUp(TDEAction::ActivationReason, TQt::ButtonState) ) );
   connect( m_paUp->popupMenu(), TQT_SIGNAL( aboutToShow() ), TQT_TQOBJECT(this), TQT_SLOT( slotUpAboutToShow() ) );

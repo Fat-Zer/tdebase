@@ -475,10 +475,10 @@ bool Sidebar::eventFilter(TQObject *obj, TQEvent *ev)
           p->insertItem(SmallIconSet("forward"), i18n("Right Sidebar"),1);
 
         if (position() != 2)
-          p->insertItem(SmallIconSet("up"), i18n("Top Sidebar"),2);
+          p->insertItem(SmallIconSet("go-up"), i18n("Top Sidebar"),2);
 
         if (position() != 3)
-          p->insertItem(SmallIconSet("down"), i18n("Bottom Sidebar"),3);
+          p->insertItem(SmallIconSet("go-down"), i18n("Bottom Sidebar"),3);
 
         connect(p, TQT_SIGNAL(activated(int)),
               this, TQT_SLOT(buttonPopupActivate(int)));

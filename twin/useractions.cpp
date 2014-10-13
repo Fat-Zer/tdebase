@@ -58,9 +58,9 @@ TQPopupMenu* Workspace::clientPopup()
         advanced_popup->setCheckable( TRUE );
         advanced_popup->setFont(TDEGlobalSettings::menuFont());
         connect( advanced_popup, TQT_SIGNAL( activated(int) ), this, TQT_SLOT( clientPopupActivated(int) ) );
-        advanced_popup->insertItem( SmallIconSet( "up" ),
+        advanced_popup->insertItem( SmallIconSet( "go-up" ),
             i18n("Keep &Above Others")+'\t'+keys->shortcut("Window Above Other Windows").seq(0).toString(), Options::KeepAboveOp );
-        advanced_popup->insertItem( SmallIconSet( "down" ),
+        advanced_popup->insertItem( SmallIconSet( "go-down" ),
             i18n("Keep &Below Others")+'\t'+keys->shortcut("Window Below Other Windows").seq(0).toString(), Options::KeepBelowOp );
         advanced_popup->insertItem( SmallIconSet( "window_fullscreen" ),
             i18n("&Fullscreen")+'\t'+keys->shortcut("Window Fullscreen").seq(0).toString(), Options::FullScreenOp );

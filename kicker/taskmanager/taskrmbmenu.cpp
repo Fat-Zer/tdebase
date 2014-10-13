@@ -210,12 +210,12 @@ TQPopupMenu* TaskRMBMenu::makeAdvancedMenu(Task::Ptr t)
 
     menu->setCheckable(true);
 
-    id = menu->insertItem(SmallIconSet("up"),
+    id = menu->insertItem(SmallIconSet("go-up"),
                           i18n("Keep &Above Others"),
                           t, TQT_SLOT(toggleAlwaysOnTop()));
     menu->setItemChecked(id, t->isAlwaysOnTop());
 
-    id = menu->insertItem(SmallIconSet("down"),
+    id = menu->insertItem(SmallIconSet("go-down"),
                           i18n("Keep &Below Others"),
                           t, TQT_SLOT(toggleKeptBelowOthers()));
     menu->setItemChecked(id, t->isKeptBelowOthers());

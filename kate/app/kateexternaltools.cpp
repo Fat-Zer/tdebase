@@ -581,11 +581,11 @@ KateExternalToolsConfigWidget::KateExternalToolsConfigWidget( TQWidget *parent, 
   lo->addWidget( b, 5, 3 );
   connect( b, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotInsertSeparator()) );
 
-  btnMoveUp = new TQPushButton( SmallIconSet("up"), "", this );
+  btnMoveUp = new TQPushButton( SmallIconSet("go-up"), "", this );
   lo->addWidget( btnMoveUp, 2, 4 );
   connect( btnMoveUp, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotMoveUp()) );
 
-  btnMoveDwn = new TQPushButton( SmallIconSet("down"), "", this );
+  btnMoveDwn = new TQPushButton( SmallIconSet("go-down"), "", this );
   lo->addWidget( btnMoveDwn, 3, 4 );
   connect( btnMoveDwn, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotMoveDown()) );
 

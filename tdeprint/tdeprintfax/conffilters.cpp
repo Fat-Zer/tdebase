@@ -54,9 +54,9 @@ ConfFilters::ConfFilters(TQWidget *parent, const char *name)
 	m_change = new TQPushButton(this);
 	m_change->setIconSet(BarIconSet("filter"));
 	m_up = new TQPushButton(this);
-	m_up->setIconSet(BarIconSet("up"));
+	m_up->setIconSet(BarIconSet("go-up"));
 	m_down = new TQPushButton(this);
-	m_down->setIconSet(BarIconSet("down"));
+	m_down->setIconSet(BarIconSet("go-down"));
 	connect(m_add, TQT_SIGNAL(clicked()), TQT_SLOT(slotAdd()));
 	connect(m_change, TQT_SIGNAL(clicked()), TQT_SLOT(slotChange()));
 	connect(m_remove, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemove()));

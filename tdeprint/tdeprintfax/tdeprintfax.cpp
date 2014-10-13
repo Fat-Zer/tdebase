@@ -70,12 +70,12 @@ KdeprintFax::KdeprintFax(TQWidget *parent, const char *name)
 	m_files = new TDEListBox(mainw);
 	connect( m_files, TQT_SIGNAL( currentChanged( TQListBoxItem* ) ), TQT_SLOT( slotCurrentChanged() ) );
 	m_upbtn = new KPushButton( mainw );
-	m_upbtn->setIconSet( SmallIconSet( "up" ) );
+	m_upbtn->setIconSet( SmallIconSet( "go-up" ) );
 	TQToolTip::add( m_upbtn, i18n( "Move up" ) );
 	connect( m_upbtn, TQT_SIGNAL( clicked() ), TQT_SLOT( slotMoveUp() ) );
 	m_upbtn->setEnabled( false );
 	m_downbtn = new KPushButton( mainw );
-	m_downbtn->setIconSet( SmallIconSet( "down" ) );
+	m_downbtn->setIconSet( SmallIconSet( "go-down" ) );
 	TQToolTip::add( m_downbtn, i18n( "Move down" ) );
 	connect( m_downbtn, TQT_SIGNAL( clicked() ), TQT_SLOT( slotMoveDown() ) );
 	m_downbtn->setEnabled( false );
