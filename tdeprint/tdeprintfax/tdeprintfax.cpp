@@ -188,7 +188,7 @@ KdeprintFax::~KdeprintFax()
 
 void KdeprintFax::initActions()
 {
-	new TDEAction(i18n("&Add File..."), "filenew", Qt::Key_Insert, TQT_TQOBJECT(this), TQT_SLOT(slotAdd()), actionCollection(), "file_add");
+	new TDEAction(i18n("&Add File..."), "document-new", Qt::Key_Insert, TQT_TQOBJECT(this), TQT_SLOT(slotAdd()), actionCollection(), "file_add");
 	new TDEAction(i18n("&Remove File"), "remove", Qt::Key_Delete, TQT_TQOBJECT(this), TQT_SLOT(slotRemove()), actionCollection(), "file_remove");
 	new TDEAction(i18n("&Send Fax"), "connect_established", Qt::Key_Return, TQT_TQOBJECT(this), TQT_SLOT(slotFax()), actionCollection(), "fax_send");
 	new TDEAction(i18n("A&bort"), "process-stop", Qt::Key_Escape, TQT_TQOBJECT(this), TQT_SLOT(slotAbort()), actionCollection(), "fax_stop");

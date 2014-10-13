@@ -574,7 +574,7 @@ void KonqOperations::doFileCopy()
         if (!mlst.isEmpty() && (sMoving || (sReading && sDeleting)) && !linkOnly )
             popup.insertItem(SmallIconSet("goto"), i18n( "&Move Here" ) + "\t" + KKey::modFlagLabel( KKey::SHIFT ), 2 );
         if ( sReading && !linkOnly)
-            popup.insertItem(SmallIconSet("editcopy"), i18n( "&Copy Here" ) + "\t" + KKey::modFlagLabel( KKey::CTRL ), 1 );
+            popup.insertItem(SmallIconSet("edit-copy"), i18n( "&Copy Here" ) + "\t" + KKey::modFlagLabel( KKey::CTRL ), 1 );
         popup.insertItem(SmallIconSet("www"), i18n( "&Link Here" ) + "\t" + KKey::modFlagLabel( (KKey::ModFlag)( KKey::CTRL|KKey::SHIFT ) ), 3 );
         if (bSetWallpaper)
             popup.insertItem(SmallIconSet("background"), i18n( "Set as &Wallpaper" ), 4 );

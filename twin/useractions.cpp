@@ -109,7 +109,7 @@ TQPopupMenu* Workspace::clientPopup()
             popup->insertSeparator();
             }
 
-        popup->insertItem( SmallIconSet( "fileclose" ), i18n("&Close")+'\t'+keys->shortcut("Window Close").seq(0).toString(), Options::CloseOp );
+        popup->insertItem( SmallIconSet( "window-close" ), i18n("&Close")+'\t'+keys->shortcut("Window Close").seq(0).toString(), Options::CloseOp );
         }
     return popup;
     }

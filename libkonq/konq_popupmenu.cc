@@ -528,7 +528,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
         {
             if (d->m_itemFlags & KParts::BrowserExtension::ShowCreateDirectory)
             {
-                TDEAction *actNewDir = new TDEAction( i18n( "Create &Folder..." ), "folder_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewDir() ), &m_ownActions, "newdir" );
+                TDEAction *actNewDir = new TDEAction( i18n( "Create &Folder..." ), "folder-new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewDir() ), &m_ownActions, "newdir" );
                 addAction( actNewDir );
                 addSeparator();
             }

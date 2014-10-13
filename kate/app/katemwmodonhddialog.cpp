@@ -60,8 +60,8 @@ class KateDocItem : public TQCheckListItem
 KateMwModOnHdDialog::KateMwModOnHdDialog( DocVector docs, TQWidget *parent, const char *name )
   : KDialogBase( parent, name, true, i18n("Documents Modified on Disk"),
                  User1|User2|User3, User3, false,
-                 KGuiItem (i18n("&Ignore"), "fileclose"),
-                 KGuiItem (i18n("&Overwrite"), "filesave"),
+                 KGuiItem (i18n("&Ignore"), "window-close"),
+                 KGuiItem (i18n("&Overwrite"), "document-save"),
                  KGuiItem (i18n("&Reload"), "reload") )
 {
   setButtonWhatsThis( User1, i18n(

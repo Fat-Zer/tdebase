@@ -849,7 +849,7 @@ void TDEIO_Print::showJobs(KMPrinter *prt, bool completed)
 				 .arg(buildMenu(TQStringList::split('|', i18n("Active jobs|Completed jobs"), false),
 							 TQStringList::split('|', "?jobs|?completed_jobs", true),
 							 (completed ? 1 : 0)))
-				 .arg("fileprint")
+				 .arg("document-print")
 				 .arg(i18n("All jobs"));
 	}
 	content = content.arg(i18n("ID")).arg(i18n("Owner")).arg(i18n("Printer")).arg(i18n("Name")).arg(i18n("State"));

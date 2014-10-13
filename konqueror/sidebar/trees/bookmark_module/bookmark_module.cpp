@@ -56,11 +56,11 @@ KonqSidebarBookmarkModule::KonqSidebarBookmarkModule( KonqSidebarTree * parentTr
             this,   TQT_SLOT(slotOpenChange(TQListViewItem*)));
 
     m_collection = new TDEActionCollection( this, "bookmark actions" );
-    (void) new TDEAction( i18n("&Create New Folder"), "folder_new", 0, this,
+    (void) new TDEAction( i18n("&Create New Folder"), "folder-new", 0, this,
                         TQT_SLOT( slotCreateFolder() ), m_collection, "create_folder");
-    (void) new TDEAction( i18n("Delete Folder"), "editdelete", 0, this,
+    (void) new TDEAction( i18n("Delete Folder"), "edit-delete", 0, this,
                         TQT_SLOT( slotDelete() ), m_collection, "delete_folder");
-    (void) new TDEAction( i18n("Delete Bookmark"), "editdelete", 0, this,
+    (void) new TDEAction( i18n("Delete Bookmark"), "edit-delete", 0, this,
                         TQT_SLOT( slotDelete() ), m_collection, "delete_bookmark");
     (void) new TDEAction( i18n("Properties"), "edit", 0, this,
                         TQT_SLOT( slotProperties() ), m_collection, "item_properties");
@@ -70,7 +70,7 @@ KonqSidebarBookmarkModule::KonqSidebarBookmarkModule( KonqSidebarTree * parentTr
                         TQT_SLOT( slotOpenTab() ), m_collection, "open_tab");
     (void) new TDEAction( i18n("Open Folder in Tabs"), "tab_new", 0, this,
                         TQT_SLOT( slotOpenTab() ), m_collection, "folder_open_tabs");
-    (void) new TDEAction( i18n("Copy Link Address"), "editcopy", 0, this,
+    (void) new TDEAction( i18n("Copy Link Address"), "edit-copy", 0, this,
                         TQT_SLOT( slotCopyLocation() ), m_collection, "copy_location");
 
     KStdAction::editBookmarks( KonqBookmarkManager::self(), TQT_SLOT( slotEditBookmarks() ),
@@ -309,7 +309,7 @@ void KonqSidebarBookmarkModule::slotDelete()
                     : i18n("Are you sure you wish to remove the bookmark\n\"%1\"?").arg(bookmark.text()),
             folder ? i18n("Bookmark Folder Deletion")
                     : i18n("Bookmark Deletion"),
-            KGuiItem( i18n("&Delete"), "editdelete"), KStdGuiItem::cancel())
+            KGuiItem( i18n("&Delete"), "edit-delete"), KStdGuiItem::cancel())
             != KMessageBox::Yes
         )
         return;

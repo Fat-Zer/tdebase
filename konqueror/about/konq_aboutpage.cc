@@ -192,7 +192,7 @@ TQString KonqAboutPageFactory::intro()
 
     TDEIconLoader *iconloader = TDEGlobal::iconLoader();
     TQString back_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("forward", TDEIcon::Small ):iconloader->iconPath("back", TDEIcon::Small );
-    TQString gohome_icon_path = iconloader->iconPath("gohome", TDEIcon::Small );
+    TQString gohome_icon_path = iconloader->iconPath("go-home", TDEIcon::Small );
     TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", TDEIcon::Small ):iconloader->iconPath("1rightarrow", TDEIcon::Small );
 
     res = res.arg( locate( "data", "tdeui/about/kde_infopage.css" ) );

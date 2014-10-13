@@ -1592,7 +1592,7 @@ void ClockApplet::aboutToShowContextMenu()
         menu->insertItem(SmallIcon("kcontrol"), i18n("Date && Time &Format..."), 104, 5);
     }
 
-    menu->insertItem(SmallIcon("editcopy"), i18n("C&opy to Clipboard"), copyMenu, 105, 6);
+    menu->insertItem(SmallIcon("edit-copy"), i18n("C&opy to Clipboard"), copyMenu, 105, 6);
     if (!bImmutable)
     {
         menu->insertSeparator(7);

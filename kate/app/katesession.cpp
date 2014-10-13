@@ -620,8 +620,8 @@ KateSessionChooser::KateSessionChooser (TQWidget *parent, const TQString &lastSe
                   , KDialogBase::User2
                   , true
                   , KStdGuiItem::quit ()
-                  , KGuiItem (i18n ("Open Session"), "fileopen")
-                  , KGuiItem (i18n ("New Session"), "filenew")
+                  , KGuiItem (i18n ("Open Session"), "document-open")
+                  , KGuiItem (i18n ("New Session"), "document-new")
                 )
 {
   TQHBox *page = new TQHBox (this);
@@ -717,7 +717,7 @@ KateSessionOpenDialog::KateSessionOpenDialog (TQWidget *parent)
                   , KDialogBase::User2
                   , false
                   , KStdGuiItem::cancel ()
-                  , KGuiItem( i18n("&Open"), "fileopen")
+                  , KGuiItem( i18n("&Open"), "document-open")
                 )
 {
   TQHBox *page = new TQHBox (this);

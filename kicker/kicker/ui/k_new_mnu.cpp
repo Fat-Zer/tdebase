@@ -1347,7 +1347,7 @@ void KMenu::insertStaticExitItems()
     ksmserver.setGroup("General");
     if (ksmserver.readEntry( "loginMode" ) == "restoreSavedSession")
     {
-        m_exitView->leftView()->insertItem("filesave", i18n("Save Session"),
+        m_exitView->leftView()->insertItem("document-save", i18n("Save Session"),
                                i18n("Save current Session for next login"),
                                "kicker:/savesession", nId++, index++ );
     }
@@ -2466,7 +2466,7 @@ void KMenu::doQuery (bool return_pressed)
             categorised_hit_total[ACTIONS] ++;
             HitMenuItem *hit_item = new HitMenuItem (description, TQString(),
                     exe.isEmpty() ? filterData.uri() : exe, TQString(),
-                    (++max_category_id [ACTIONS]), ACTIONS, exe.isEmpty() ? "fileopen": "run");
+                    (++max_category_id [ACTIONS]), ACTIONS, exe.isEmpty() ? "document-open": "run");
             int index = getHitMenuItemPosition (hit_item);
             m_searchResultsWidget->insertItem(iconForHitMenuItem(hit_item), hit_item->display_name,
                     hit_item->display_info,

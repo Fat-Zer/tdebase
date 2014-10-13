@@ -236,7 +236,7 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
     act->plug(toolbar);
 #ifdef HAVE_XFT
     toolbar->insertLineSeparator();
-    act=new TDEAction(i18n("Print..."), "fileprint", 0, TQT_TQOBJECT(this), TQT_SLOT(print()), itsDirOp->actionCollection(), "print");
+    act=new TDEAction(i18n("Print..."), "document-print", 0, TQT_TQOBJECT(this), TQT_SLOT(print()), itsDirOp->actionCollection(), "print");
     act->plug(toolbar);
 #endif
 

@@ -388,7 +388,7 @@ void PanelKMenu::initialize()
     ksmserver.setGroup("General");
     if (ksmserver.readEntry( "loginMode" ) == "restoreSavedSession")
     {
-        insertItem(KickerLib::menuIconSet("filesave"), i18n("Save Session"), this, TQT_SLOT(slotSaveSession()));
+        insertItem(KickerLib::menuIconSet("document-save"), i18n("Save Session"), this, TQT_SLOT(slotSaveSession()));
     }
 
     if (kapp->authorize("lock_screen"))

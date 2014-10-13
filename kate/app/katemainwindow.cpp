@@ -213,7 +213,7 @@ void KateMainWindow::setupMainWindow ()
   filelist = new KateFileList (this, m_viewManager, ft, "filelist");
   filelist->readConfig(KateApp::self()->config(), "Filelist");
 
-  KateMDI::ToolView *t = createToolView("kate_fileselector", KMultiTabBar::Left, SmallIcon("fileopen"), i18n("Filesystem Browser"));
+  KateMDI::ToolView *t = createToolView("kate_fileselector", KMultiTabBar::Left, SmallIcon("document-open"), i18n("Filesystem Browser"));
   fileselector = new KateFileSelector( this, m_viewManager, t, "operator");
   connect(fileselector->dirOperator(),TQT_SIGNAL(fileSelected(const KFileItem*)),this,TQT_SLOT(fileSelected(const KFileItem*)));
 
@@ -302,10 +302,10 @@ void KateMainWindow::setupActions()
   slotWindowActivated ();
 
   // session actions
-  new TDEAction(i18n("Menu entry Session->New", "&New"), "filenew", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionNew()), actionCollection(), "sessions_new");
-  new TDEAction(i18n("&Open..."), "fileopen", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionOpen()), actionCollection(), "sessions_open");
-  new TDEAction(i18n("&Save"), "filesave", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionSave()), actionCollection(), "sessions_save");
-  new TDEAction(i18n("Save &As..."), "filesaveas", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionSaveAs()), actionCollection(), "sessions_save_as");
+  new TDEAction(i18n("Menu entry Session->New", "&New"), "document-new", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionNew()), actionCollection(), "sessions_new");
+  new TDEAction(i18n("&Open..."), "document-open", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionOpen()), actionCollection(), "sessions_open");
+  new TDEAction(i18n("&Save"), "document-save", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionSave()), actionCollection(), "sessions_save");
+  new TDEAction(i18n("Save &As..."), "document-save-as", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionSaveAs()), actionCollection(), "sessions_save_as");
   new TDEAction(i18n("&Manage..."), "view_choose", 0, TQT_TQOBJECT(KateSessionManager::self()), TQT_SLOT(sessionManage()), actionCollection(), "sessions_manage");
 
   // quick open menu ;)

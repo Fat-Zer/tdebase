@@ -34,7 +34,7 @@ ConfigDlg::ConfigDlg(TQWidget *parent, const char *name)
 	TQVBox	*page1 = addVBoxPage(i18n("Personal"), i18n("Personal Settings"), DesktopIcon("tdmconfig"));
 	m_general = new ConfGeneral(page1, "Personal");
 
-	TQVBox	*page2 = addVBoxPage(i18n("Page setup"), i18n("Page Setup"), DesktopIcon("editcopy"));
+	TQVBox	*page2 = addVBoxPage(i18n("Page setup"), i18n("Page Setup"), DesktopIcon("edit-copy"));
 	m_fax = new ConfFax(page2, "Fax");
 
 	TQVBox	*page3 = addVBoxPage(i18n("System"), i18n("Fax System Selection"), DesktopIcon("tdeprintfax"));

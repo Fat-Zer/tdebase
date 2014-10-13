@@ -879,7 +879,7 @@ bool Sidebar_Widget::eventFilter(TQObject *obj, TQEvent *ev)
 						m_buttonPopup->insertItem(SmallIconSet("www"), i18n("Set URL..."),2);
 						m_buttonPopup->insertItem(SmallIconSet("icons"), i18n("Set Icon..."),1);
 						m_buttonPopup->insertSeparator();
-						m_buttonPopup->insertItem(SmallIconSet("editdelete"), i18n("Remove"),3);
+						m_buttonPopup->insertItem(SmallIconSet("edit-delete"), i18n("Remove"),3);
 						m_buttonPopup->insertSeparator();
 						m_buttonPopup->insertItem(SmallIconSet("configure"), i18n("Configure Navigation Panel"), m_menu, 4);
 						connect(m_buttonPopup, TQT_SIGNAL(activated(int)),

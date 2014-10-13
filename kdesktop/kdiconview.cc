@@ -449,7 +449,7 @@ void KDIconView::createActions()
 
         TDEConfig config("kdeglobals", true, false);
         config.setGroup( "KDE" );
-        (void) new TDEAction( i18n( "&Delete" ), "editdelete", SHIFT+Key_Delete, TQT_TQOBJECT(this), TQT_SLOT( slotDelete() ), &m_actionCollection, "del" );
+        (void) new TDEAction( i18n( "&Delete" ), "edit-delete", SHIFT+Key_Delete, TQT_TQOBJECT(this), TQT_SLOT( slotDelete() ), &m_actionCollection, "del" );
 
         // Initial state of the actions (cut/copy/paste/...)
         slotSelectionChanged();

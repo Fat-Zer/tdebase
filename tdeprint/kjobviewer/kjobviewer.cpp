@@ -137,7 +137,7 @@ void KJobViewerApp::initialize()
         if (!m_tray)
         {
             m_tray = new JobTray(this);
-            m_tray->setPixmap(m_tray->loadIcon("fileprint"));
+            m_tray->setPixmap(m_tray->loadIcon("document-print"));
 
         }
 

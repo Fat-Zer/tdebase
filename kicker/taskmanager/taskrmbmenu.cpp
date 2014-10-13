@@ -115,7 +115,7 @@ void TaskRMBMenu::fillMenu(Task::Ptr t)
         insertSeparator();
     }
 
-    id = insertItem(SmallIcon("fileclose"), i18n("&Close"), t, TQT_SLOT(close()));
+    id = insertItem(SmallIcon("window-close"), i18n("&Close"), t, TQT_SLOT(close()));
     setItemEnabled(id, !checkActions || t->info().actionSupported(NET::ActionClose));
 }
 

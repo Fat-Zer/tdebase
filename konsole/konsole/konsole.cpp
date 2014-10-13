@@ -710,7 +710,7 @@ void Konsole::makeGUI()
 
       m_options->insertSeparator();
 
-      TDEAction *save_settings = new TDEAction(i18n("&Save as Default"), "filesave", 0, TQT_TQOBJECT(this),
+      TDEAction *save_settings = new TDEAction(i18n("&Save as Default"), "document-save", 0, TQT_TQOBJECT(this),
                                         TQT_SLOT(slotSaveSettings()), actions, "save_default");
       save_settings->plug(m_options);
 
@@ -882,7 +882,7 @@ void Konsole::makeGUI()
             TQT_SLOT( activateSession( int ) ) );
 
    m_tabPopupMenu->insertSeparator();
-   m_tabPopupMenu->insertItem( SmallIcon("fileclose"), i18n("C&lose Session"), TQT_TQOBJECT(this),
+   m_tabPopupMenu->insertItem( SmallIcon("window-close"), i18n("C&lose Session"), TQT_TQOBJECT(this),
                           TQT_SLOT(slotTabCloseSession()) );
 
    if (m_options) {
@@ -1100,9 +1100,9 @@ void Konsole::makeBasicGUI()
 
   m_shortcuts = new TDEActionCollection(this);
 
-  m_copyClipboard = new TDEAction(i18n("&Copy"), "editcopy", 0, TQT_TQOBJECT(this),
+  m_copyClipboard = new TDEAction(i18n("&Copy"), "edit-copy", 0, TQT_TQOBJECT(this),
                                  TQT_SLOT(slotCopyClipboard()), m_shortcuts, "edit_copy");
-  m_pasteClipboard = new TDEAction(i18n("&Paste"), "editpaste", Qt::SHIFT+Qt::Key_Insert, TQT_TQOBJECT(this),
+  m_pasteClipboard = new TDEAction(i18n("&Paste"), "edit-paste", Qt::SHIFT+Qt::Key_Insert, TQT_TQOBJECT(this),
                                  TQT_SLOT(slotPasteClipboard()), m_shortcuts, "edit_paste");
   m_pasteSelection = new TDEAction(i18n("Paste Selection"), Qt::CTRL+Qt::SHIFT+Qt::Key_Insert, TQT_TQOBJECT(this),
                                  TQT_SLOT(slotPasteSelection()), m_shortcuts, "pasteselection");
@@ -1123,7 +1123,7 @@ void Konsole::makeBasicGUI()
                                TQT_SLOT(slotFindPrevious()), m_shortcuts, "find_previous");
   m_findPrevious->setEnabled( b_histEnabled );
 
-  m_saveHistory = new TDEAction(i18n("S&ave History As..."), "filesaveas", 0, TQT_TQOBJECT(this),
+  m_saveHistory = new TDEAction(i18n("S&ave History As..."), "document-save-as", 0, TQT_TQOBJECT(this),
                               TQT_SLOT(slotSaveHistory()), m_shortcuts, "save_history");
   m_saveHistory->setEnabled(b_histEnabled );
 
@@ -1171,7 +1171,7 @@ void Konsole::makeBasicGUI()
   connect( m_fullscreen,TQT_SIGNAL(toggled(bool)), TQT_TQOBJECT(this),TQT_SLOT(updateFullScreen(bool)));
   m_fullscreen->setChecked(b_fullscreen);
 
-  m_saveProfile = new TDEAction( i18n( "Save Sessions &Profile..." ), SmallIconSet("filesaveas"), 0, TQT_TQOBJECT(this),
+  m_saveProfile = new TDEAction( i18n( "Save Sessions &Profile..." ), SmallIconSet("document-save-as"), 0, TQT_TQOBJECT(this),
                          TQT_SLOT( slotSaveSessionsProfile() ), m_shortcuts, "save_sessions_profile" );
 
   //help menu
@@ -1180,9 +1180,9 @@ void Konsole::makeBasicGUI()
      // Don't steal F1 (handbook) accel (esp. since it not visible in
      // "Configure Shortcuts").
 
-  m_closeSession = new TDEAction(i18n("C&lose Session"), "fileclose", 0, TQT_TQOBJECT(this),
+  m_closeSession = new TDEAction(i18n("C&lose Session"), "window-close", 0, TQT_TQOBJECT(this),
                                TQT_SLOT(confirmCloseCurrentSession()), m_shortcuts, "close_session");
-  m_print = new TDEAction(i18n("&Print Screen..."), "fileprint", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPrint() ), m_shortcuts, "file_print");
+  m_print = new TDEAction(i18n("&Print Screen..."), "document-print", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPrint() ), m_shortcuts, "file_print");
   m_quit = new TDEAction(i18n("&Quit"), "system-log-out", 0, TQT_TQOBJECT(this), TQT_SLOT( close() ), m_shortcuts, "file_quit");
 
   TDEShortcut shortcut(Qt::CTRL+Qt::ALT+Qt::Key_N);
@@ -1268,7 +1268,7 @@ bool Konsole::queryClose()
                 	  "Are you sure you want to quit?" ),
 	    	    i18n("Really Quit?"),
 	    	    KStdGuiItem::quit(),
-	    	    KGuiItem(i18n("C&lose Session"),"fileclose")
+	    	    KGuiItem(i18n("C&lose Session"),"window-close")
 		)
 	    ) {
 		case KMessageBox::Yes :

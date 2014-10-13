@@ -142,7 +142,7 @@ BGDialog::BGDialog(TQWidget* parent, TDEConfig* _config, bool _multidesktop)
    }
 
    // background image settings
-   TQIconSet iconSet = SmallIconSet(TQString::fromLatin1("fileopen"));
+   TQIconSet iconSet = SmallIconSet(TQString::fromLatin1("document-open"));
    TQPixmap pixMap = iconSet.pixmap( TQIconSet::Small, TQIconSet::Normal );
    m_urlWallpaperButton->setIconSet( iconSet );
    m_urlWallpaperButton->setFixedSize( pixMap.width()+8, pixMap.height()+8 );

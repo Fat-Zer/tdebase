@@ -48,7 +48,7 @@ ConfFilters::ConfFilters(TQWidget *parent, const char *name)
 	connect(m_filters, TQT_SIGNAL(doubleClicked(TQListViewItem*)), TQT_SLOT(slotChange()));
 
 	m_add = new TQPushButton(this);
-	m_add->setPixmap(BarIcon("filenew"));
+	m_add->setPixmap(BarIcon("document-new"));
 	m_remove = new TQPushButton(this);
 	m_remove->setIconSet(BarIconSet("remove"));
 	m_change = new TQPushButton(this);

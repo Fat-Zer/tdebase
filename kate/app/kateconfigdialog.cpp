@@ -95,7 +95,7 @@ KateConfigDialog::KateConfigDialog ( KateMainWindow *parent, Kate::View *view )
 
   //BEGIN General page
   path << i18n("Application") << i18n("General");
-  TQFrame* frGeneral = addPage(path, i18n("General Options"), BarIcon("gohome", TDEIcon::SizeSmall));
+  TQFrame* frGeneral = addPage(path, i18n("General Options"), BarIcon("go-home", TDEIcon::SizeSmall));
 
   TQVBoxLayout *lo = new TQVBoxLayout( frGeneral );
   lo->setSpacing(KDialog::spacingHint());
@@ -273,7 +273,7 @@ KateConfigDialog::KateConfigDialog ( KateMainWindow *parent, Kate::View *view )
   path << i18n("Application") << i18n("File Selector");
 
   TQVBox *page = addVBoxPage( path, i18n("File Selector Settings"),
-                              BarIcon("fileopen", TDEIcon::SizeSmall) );
+                              BarIcon("document-open", TDEIcon::SizeSmall) );
   fileSelConfigPage = new KFSConfigPage( page, "file selector config page",
                                          mainWindow->fileselector );
   connect( fileSelConfigPage, TQT_SIGNAL( changed() ), this, TQT_SLOT( slotChanged() ) );

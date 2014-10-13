@@ -72,7 +72,7 @@ void PrintMenu::initialize()
     insertItem(SmallIconSet("kcontrol"), i18n("Print Manager"), PRINT_MANAGER_ID);
     insertItem(SmallIconSet("konqueror"), i18n("Print Browser (Konqueror)"), PRINT_BROWSER_ID);
     insertSeparator();
-    insertItem(SmallIconSet("fileprint"), i18n("Print File..."), KPRINTER_ID);
+    insertItem(SmallIconSet("document-print"), i18n("Print File..."), KPRINTER_ID);
 
     // printer list
     TQPtrList<KMPrinter>    *l = KMManager::self()->printerList();

@@ -340,7 +340,7 @@ void KPager::showPopupMenu( WId wid, TQPoint pos)
             m_mnu->insertItem(i18n("&To Desktop"), m_dmnu );
             m_mnu->insertSeparator();
 
-            m_mnu->insertItem(SmallIcon("fileclose"),i18n("&Close"), CloseOp);
+            m_mnu->insertItem(SmallIcon("window-close"),i18n("&Close"), CloseOp);
 
             m_mnu->insertSeparator();
 	    m_prefs_action->plug(m_mnu);

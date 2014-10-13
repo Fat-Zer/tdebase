@@ -76,7 +76,7 @@ KonqProfileDlg::KonqProfileDlg( KonqViewManager *manager, const TQString & prese
 : KDialogBase( parent, "konq_profile_dialog", true, i18n( "Profile Management" ),
     KDialogBase::Close | BTN_RENAME | BTN_DELETE | BTN_SAVE, BTN_SAVE, true,
     KGuiItem( i18n( "&Rename Profile" ) ),
-    KGuiItem( i18n( "&Delete Profile" ), "editdelete"),
+    KGuiItem( i18n( "&Delete Profile" ), "edit-delete"),
     KStdGuiItem::save() )
 {
   m_pViewManager = manager;

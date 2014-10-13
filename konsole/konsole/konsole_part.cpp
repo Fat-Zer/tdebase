@@ -450,7 +450,7 @@ void konsolePart::makeGUI()
 
      // Save Settings
      m_options->insertSeparator();
-     TDEAction *saveSettings = new TDEAction(i18n("&Save as Default"), "filesave", 0, this, 
+     TDEAction *saveSettings = new TDEAction(i18n("&Save as Default"), "document-save", 0, this, 
                     TQT_SLOT(saveProperties()), actions, "save_default");
      saveSettings->plug(m_options);
      if (TDEGlobalSettings::insertTearOffHandle())
@@ -463,11 +463,11 @@ void konsolePart::makeGUI()
                                TQT_SLOT(setSelectionEnd()), actions, "selection_end");
   selectionEnd->plug(m_popupMenu);
 
-  TDEAction *copyClipboard = new TDEAction(i18n("&Copy"), "editcopy", 0,
+  TDEAction *copyClipboard = new TDEAction(i18n("&Copy"), "edit-copy", 0,
                                         TQT_TQOBJECT(te), TQT_SLOT(copyClipboard()), actions, "edit_copy");
   copyClipboard->plug(m_popupMenu);
 
-  TDEAction *pasteClipboard = new TDEAction(i18n("&Paste"), "editpaste", 0,
+  TDEAction *pasteClipboard = new TDEAction(i18n("&Paste"), "edit-paste", 0,
                                         TQT_TQOBJECT(te), TQT_SLOT(pasteClipboard()), actions, "edit_paste");
   pasteClipboard->plug(m_popupMenu);
 
@@ -483,7 +483,7 @@ void konsolePart::makeGUI()
      m_popupMenu->insertSeparator();
   }
 
-  TDEAction *closeSession = new TDEAction(i18n("&Close Terminal Emulator"), "fileclose", 0, this,
+  TDEAction *closeSession = new TDEAction(i18n("&Close Terminal Emulator"), "window-close", 0, this,
                                       TQT_SLOT(closeCurrentSession()), actions, "close_session");
   closeSession->plug(m_popupMenu);
   if (TDEGlobalSettings::insertTearOffHandle())

@@ -105,7 +105,7 @@ void KEBApp::createActions() {
 
     // actions
     (void) new TDEAction(
-        i18n("&Delete"), "editdelete", Key_Delete,
+        i18n("&Delete"), "edit-delete", Key_Delete,
         TQT_TQOBJECT(actn), TQT_SLOT( slotDelete() ), actionCollection(), "delete");
     (void) new TDEAction(
         i18n("Rename"), "text", Key_F2,
@@ -126,7 +126,7 @@ void KEBApp::createActions() {
         i18n("Recursive Sort"), 0,
         TQT_TQOBJECT(actn), TQT_SLOT( slotRecursiveSort() ), actionCollection(), "recursivesort");
     (void) new TDEAction(
-        i18n("&New Folder..."), "folder_new", CTRL+Key_N,
+        i18n("&New Folder..."), "folder-new", CTRL+Key_N,
         TQT_TQOBJECT(actn), TQT_SLOT( slotNewFolder() ), actionCollection(), "newfolder");
     (void) new TDEAction(
         i18n("&New Bookmark"), "www", 0,
@@ -154,7 +154,7 @@ void KEBApp::createActions() {
         i18n("Collapse &All Folders"), 0,
         TQT_TQOBJECT(actn), TQT_SLOT( slotCollapseAll() ), actionCollection(), "collapseall" );
     (void) new TDEAction(
-        i18n("&Open in Konqueror"), "fileopen", 0,
+        i18n("&Open in Konqueror"), "document-open", 0,
         TQT_TQOBJECT(actn), TQT_SLOT( slotOpenLink() ), actionCollection(), "openlink" );
     (void) new TDEAction(
         i18n("Check &Status"), "bookmark", 0,

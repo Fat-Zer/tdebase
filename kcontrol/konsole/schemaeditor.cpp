@@ -317,7 +317,7 @@ void SchemaEditor::removeCurrent()
 	int code = KMessageBox::warningContinueCancel(this,
 	    i18n("You are trying to remove a system schema. Are you sure?"),
 	    i18n("Removing System Schema"),
-	    KGuiItem(i18n("&Delete"), "editdelete"));
+	    KGuiItem(i18n("&Delete"), "edit-delete"));
 	if (code != KMessageBox::Continue)
 	    return;
     }

@@ -108,16 +108,16 @@ TopLevel::TopLevel( const char *name )
   new TDEAction( i18n( "&New Worksheet..." ), "tab_new", 0, TQT_TQOBJECT(mWorkSpace),
 		   TQT_SLOT( newWorkSheet() ), actionCollection(), "new_worksheet" );
   
-  new TDEAction( i18n( "Import Worksheet..." ), "fileopen", 0, TQT_TQOBJECT(mWorkSpace),
+  new TDEAction( i18n( "Import Worksheet..." ), "document-open", 0, TQT_TQOBJECT(mWorkSpace),
 		   TQT_SLOT( loadWorkSheet() ), actionCollection(), "import_worksheet" );
   
-  mActionOpenRecent = new TDERecentFilesAction( i18n( "&Import Recent Worksheet" ),"fileopen", 0,
+  mActionOpenRecent = new TDERecentFilesAction( i18n( "&Import Recent Worksheet" ),"document-open", 0,
 		   TQT_TQOBJECT(mWorkSpace), TQT_SLOT( loadWorkSheet( const KURL& ) ), actionCollection(), "recent_import_worksheet" );	
   
   new TDEAction( i18n( "&Remove Worksheet" ), "tab_remove", 0, TQT_TQOBJECT(mWorkSpace),
 		   TQT_SLOT( deleteWorkSheet() ), actionCollection(), "remove_worksheet" );
 
-  new TDEAction( i18n( "&Export Worksheet..." ), "filesaveas", 0, TQT_TQOBJECT(mWorkSpace),
+  new TDEAction( i18n( "&Export Worksheet..." ), "document-save-as", 0, TQT_TQOBJECT(mWorkSpace),
 		   TQT_SLOT( saveWorkSheetAs() ), actionCollection(), "export_worksheet" );
    
   KStdAction::quit( TQT_TQOBJECT(this), TQT_SLOT( close() ), actionCollection() );

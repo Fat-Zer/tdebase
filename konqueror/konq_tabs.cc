@@ -282,7 +282,7 @@ void KonqFrameTabs::setTabIcon( const KURL &url, TQWidget* sender )
   //kdDebug(1202) << "KonqFrameTabs::setTabIcon( " << url << " , " << sender << " )" << endl;
   TQIconSet iconSet;
   if (m_permanentCloseButtons)
-    iconSet =  SmallIcon( "fileclose" );
+    iconSet =  SmallIcon( "window-close" );
   else
     iconSet =  SmallIconSet( KonqPixmapProvider::self()->iconNameFor( url.url() ) );
   if (tabIconSet( sender ).pixmap().serialNumber() != iconSet.pixmap().serialNumber())

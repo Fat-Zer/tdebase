@@ -64,7 +64,7 @@ public:
 };
 
 KNewMenu::KNewMenu( TDEActionCollection * _collec, const char *name ) :
-  TDEActionMenu( i18n( "Create New" ), "filenew", _collec, name ),
+  TDEActionMenu( i18n( "Create New" ), "document-new", _collec, name ),
   menuItemsVersion( 0 )
 {
     //kdDebug(1203) << "KNewMenu::KNewMenu " << this << endl;
@@ -76,7 +76,7 @@ KNewMenu::KNewMenu( TDEActionCollection * _collec, const char *name ) :
 }
 
 KNewMenu::KNewMenu( TDEActionCollection * _collec, TQWidget *parentWidget, const char *name ) :
-  TDEActionMenu( i18n( "Create New" ), "filenew", _collec, name ),
+  TDEActionMenu( i18n( "Create New" ), "document-new", _collec, name ),
   menuItemsVersion( 0 )
 {
     d = new KNewMenuPrivate;

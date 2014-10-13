@@ -252,7 +252,7 @@ void kthememanager::slotRemoveTheme()
     {
         TQString themeName = cur->text( 0 );
         if ( KMessageBox::warningContinueCancel( this, "<qt>" + i18n( "Do you really want to remove the theme <b>%1</b>?" ).arg( themeName ),
-                                                 i18n( "Remove Theme" ), KGuiItem( i18n( "&Remove" ), "editdelete" ) )
+                                                 i18n( "Remove Theme" ), KGuiItem( i18n( "&Remove" ), "edit-delete" ) )
              == KMessageBox::Continue )
         {
             KTheme::remove( themeName );

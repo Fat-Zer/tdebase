@@ -3813,7 +3813,7 @@ void KonqMainWindow::initActions()
   {
      (void) new TDEAction( i18n( "Open &Terminal" ), "openterm", Key_F4, TQT_TQOBJECT(this), TQT_SLOT( slotOpenTerminal() ), actionCollection(), "open_terminal" );
   }
-  (void) new TDEAction( i18n( "&Open Location..." ), "fileopen", TDEStdAccel::shortcut(TDEStdAccel::Open), TQT_TQOBJECT(this), TQT_SLOT( slotOpenLocation() ), actionCollection(), "open_location" );
+  (void) new TDEAction( i18n( "&Open Location..." ), "document-open", TDEStdAccel::shortcut(TDEStdAccel::Open), TQT_TQOBJECT(this), TQT_SLOT( slotOpenLocation() ), actionCollection(), "open_location" );
 
   m_paFindFiles = new TDEToggleAction( i18n( "&Find File..." ), "filefind", TDEStdAccel::shortcut(TDEStdAccel::Find), TQT_TQOBJECT(this), TQT_SLOT( slotToolFind() ), actionCollection(), "findfile" );
 
@@ -3848,7 +3848,7 @@ void KonqMainWindow::initActions()
   connect( m_paHistory, TQT_SIGNAL( menuAboutToShow() ), TQT_TQOBJECT(this), TQT_SLOT( slotGoMenuAboutToShow() ) );
   connect( m_paHistory, TQT_SIGNAL( activated( int ) ), TQT_TQOBJECT(this), TQT_SLOT( slotGoHistoryActivated( int ) ) );
 
-  m_paHome = new TDEAction( i18n( "Home" ), "gohome", TDEStdAccel::shortcut(TDEStdAccel::Home), actionCollection(), "home" );
+  m_paHome = new TDEAction( i18n( "Home" ), "go-home", TDEStdAccel::shortcut(TDEStdAccel::Home), actionCollection(), "home" );
   connect( m_paHome, TQT_SIGNAL( activated( TDEAction::ActivationReason, TQt::ButtonState) ), TQT_TQOBJECT(this),
 	   TQT_SLOT( slotHome(TDEAction::ActivationReason, TQt::ButtonState) ) );
 
@@ -3957,7 +3957,7 @@ void KonqMainWindow::initActions()
   connect( m_paTrash, TQT_SIGNAL( activated( TDEAction::ActivationReason, TQt::ButtonState ) ),
            TQT_TQOBJECT(this), TQT_SLOT( slotTrashActivated( TDEAction::ActivationReason, TQt::ButtonState ) ) );
 
-  m_paDelete = new TDEAction( i18n( "&Delete" ), "editdelete", SHIFT+Key_Delete, actionCollection(), "del" );
+  m_paDelete = new TDEAction( i18n( "&Delete" ), "edit-delete", SHIFT+Key_Delete, actionCollection(), "del" );
   // F5 is the default key binding for Reload.... a la Windows. mc users want F5 for Copy and F6 for move, but I can't make that default.
   m_paCopyFiles = new TDEAction( i18n("Copy &Files..."), "copyfiles", Key_F7, TQT_TQOBJECT(this), TQT_SLOT( slotCopyFiles() ), actionCollection(), "copyfiles" );
   m_paMoveFiles = new TDEAction( i18n("M&ove Files..."), "movefiles", Key_F8, TQT_TQOBJECT(this), TQT_SLOT( slotMoveFiles() ), actionCollection(), "movefiles" );
