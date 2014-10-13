@@ -1111,7 +1111,7 @@ void Konsole::makeBasicGUI()
                                 TQT_SLOT(slotClearTerminal()), m_shortcuts, "clear_terminal");
   m_resetClearTerminal = new TDEAction(i18n("&Reset && Clear Terminal"), 0, TQT_TQOBJECT(this),
                                      TQT_SLOT(slotResetClearTerminal()), m_shortcuts, "reset_clear_terminal");
-  m_findHistory = new TDEAction(i18n("&Find in History..."), "find", 0, TQT_TQOBJECT(this),
+  m_findHistory = new TDEAction(i18n("&Find in History..."), "edit-find", 0, TQT_TQOBJECT(this),
                               TQT_SLOT(slotFindHistory()), m_shortcuts, "find_history");
   m_findHistory->setEnabled(b_histEnabled);
 

@@ -781,7 +781,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 
 		buttonlay->addStretch( 1 );
 		// End session
-		KPushButton* btnLogout = new KPushButton( KGuiItem( i18n("&End Current Session"), "undo"), frame );
+		KPushButton* btnLogout = new KPushButton( KGuiItem( i18n("&End Current Session"), "edit-undo"), frame );
 				TQToolTip::add( btnLogout, i18n( "<qt><h3>End Current Session</h3><p>Log out of the current session to login with a different user</p></qt>" ) );
 		btnFont = btnLogout->font();
 		buttonlay->addWidget( btnLogout );

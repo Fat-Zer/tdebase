@@ -183,7 +183,7 @@ GrepTool::GrepTool(TQWidget *parent, const char *name)
   KButtonBox *actionbox = new KButtonBox(this, Qt::Vertical);
   layout->addWidget(actionbox, 0, 2);
   actionbox->addStretch();
-  btnSearch = static_cast<KPushButton*>(actionbox->addButton(KGuiItem(i18n("Find"),"find")));
+  btnSearch = static_cast<KPushButton*>(actionbox->addButton(KGuiItem(i18n("Find"),"edit-find")));
   btnSearch->setDefault(true);
   btnClear = static_cast<KPushButton*>(actionbox->addButton( KStdGuiItem::clear() ));
   actionbox->addStretch();
@@ -472,7 +472,7 @@ void GrepTool::childExited()
 //   int status = childproc->exitStatus();
   lbResult->unsetCursor();
   btnClear->setEnabled( true );
-  btnSearch->setGuiItem( KGuiItem(i18n("Find"), "find") );
+  btnSearch->setGuiItem( KGuiItem(i18n("Find"), "edit-find") );
 
   if ( ! errbuf.isEmpty() )
   {

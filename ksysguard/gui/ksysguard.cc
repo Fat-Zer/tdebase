@@ -133,7 +133,7 @@ TopLevel::TopLevel( const char *name )
   new TDEAction( i18n( "&Worksheet Properties" ), "configure", 0, TQT_TQOBJECT(mWorkSpace),
                TQT_SLOT( configure() ), actionCollection(), "configure_sheet" );
 
-  new TDEAction( i18n( "Load Standard Sheets" ), "revert",
+  new TDEAction( i18n( "Load Standard Sheets" ), "document-revert",
                0, TQT_TQOBJECT(this), TQT_SLOT( resetWorkSheets() ),
                actionCollection(), "revert_all_worksheets"  );
 

@@ -404,7 +404,7 @@ KMenu::KMenu()
     m_searchFrame->stackUnder( m_resizeHandle );
     m_isresizing = false;
 
-    m_searchPixmap->setPixmap( BarIcon( "find", 32 ) );
+    m_searchPixmap->setPixmap( BarIcon( "edit-find", 32 ) );
 
     TQFont f = font();
     f.setPointSize( kMax( 7, (f.pointSize() * 4 / 5 ) + KickerSettings::kickoffFontPointSizeOffset() ) );
@@ -1337,7 +1337,7 @@ void KMenu::insertStaticExitItems()
 
     m_exitView->leftView()->insertSeparator( nId++, i18n("Session"), index++ );
     if (kapp->authorize("logout"))
-       m_exitView->leftView()->insertItem( "undo", i18n( "Logout" ),
+       m_exitView->leftView()->insertItem( "edit-undo", i18n( "Logout" ),
                                    i18n( "End session" ), "kicker:/logout", nId++, index++ );
     if (kapp->authorize("lock_screen"))
        m_exitView->leftView()->insertItem( "system-lock-screen", i18n( "Lock" ),
@@ -2496,7 +2496,7 @@ void KMenu::doQuery (bool return_pressed)
 
     // start search plugin only with at least 3 characters
     if (query_str.length()<3 || !m_search_plugin || (m_search_plugin && !m_search_plugin->daemonRunning()) ) {
-      m_searchPixmap->setPixmap( BarIcon( "find", 32 ) );
+      m_searchPixmap->setPixmap( BarIcon( "edit-find", 32 ) );
       fillOverflowCategory();
       if (query_str.length()>2 && m_current_menu_items.isEmpty())
 	  reportError (i18n("No matches found"));
@@ -2568,7 +2568,7 @@ void KMenu::insertSearchResult(HitMenuItem* item)
 
 void KMenu::searchOver()
 {
-    m_searchPixmap->setPixmap( BarIcon( "find", 32 ) );
+    m_searchPixmap->setPixmap( BarIcon( "edit-find", 32 ) );
     fillOverflowCategory();
     if (m_current_menu_items.isEmpty()) {
         kdDebug() << "No matches found" << endl;

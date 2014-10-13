@@ -41,7 +41,7 @@ public:
 
 KonqExtensionManager::KonqExtensionManager(TQWidget *parent, KonqMainWindow *mainWindow, KParts::ReadOnlyPart* activePart) :
   KDialogBase(Plain, i18n("Configure"), Default | Cancel | Apply | Ok | User1,
-              Ok, parent, "extensionmanager", false, true, KGuiItem(i18n("&Reset"), "undo"))
+              Ok, parent, "extensionmanager", false, true, KGuiItem(i18n("&Reset"), "edit-undo"))
 {
 	d = new KonqExtensionManagerPrivate;
 	showButton(User1, false);

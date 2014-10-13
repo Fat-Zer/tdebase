@@ -69,7 +69,7 @@ Kfind::Kfind(TQWidget *parent, const char *name)
   lay->addStretch(1);
   mTopLayout->addWidget(mButtonBox);
 
-  mSearch = new KPushButton( KGuiItem(i18n("&Find"), "find"), mButtonBox );
+  mSearch = new KPushButton( KGuiItem(i18n("&Find"), "edit-find"), mButtonBox );
   mButtonBox->setSpacing( (tabWidget->sizeHint().height()-4*mSearch->sizeHint().height()) / 4);
   connect( mSearch, TQT_SIGNAL(clicked()), this, TQT_SLOT( startSearch() ) );
   mStop = new KPushButton( KGuiItem(i18n("Stop"), "process-stop"), mButtonBox );

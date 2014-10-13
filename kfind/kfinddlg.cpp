@@ -37,7 +37,7 @@ KfindDlg::KfindDlg(const KURL & url, TQWidget *parent, const char *name)
   enableButton(User1, false); // Disable "Stop"
   enableButton(User2, false); // Disable "Save As..."
 
-  setButtonApply(KGuiItem(i18n("&Find"), "find"));
+  setButtonApply(KGuiItem(i18n("&Find"), "edit-find"));
 
   isResultReported = false;
 

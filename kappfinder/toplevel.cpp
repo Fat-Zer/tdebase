@@ -77,7 +77,7 @@ TopLevel::TopLevel( const TQString &destDir, TQWidget *parent, const char *name 
   layout->addWidget( mSummary );
 
   KButtonBox* bbox = new KButtonBox( this );
-  mScanButton = bbox->addButton( KGuiItem( i18n( "Scan" ), "find"), TQT_TQOBJECT(this), TQT_SLOT( slotScan() ) );
+  mScanButton = bbox->addButton( KGuiItem( i18n( "Scan" ), "edit-find"), TQT_TQOBJECT(this), TQT_SLOT( slotScan() ) );
   bbox->addStretch( 5 );
   mSelectButton = bbox->addButton( i18n( "Select All" ), TQT_TQOBJECT(this),
                                    TQT_SLOT( slotSelectAll() ) );
