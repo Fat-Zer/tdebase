@@ -404,7 +404,7 @@ void konsolePart::makeGUI()
 
      // Select line spacing
      selectLineSpacing = new TDESelectAction(i18n("Li&ne Spacing"),
-        SmallIconSet("leftjust"), 0, this,
+        SmallIconSet("format-justify-left"), 0, this,
         TQT_SLOT(slotSelectLineSpacing()), settingsActions );
 
      TQStringList lineSpacingList;

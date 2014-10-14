@@ -3891,7 +3891,7 @@ void KonqMainWindow::initActions()
   KStdAction::configureToolbars( TQT_TQOBJECT(this), TQT_SLOT( slotConfigureToolbars() ), actionCollection() );
 
   m_paConfigureExtensions = new TDEAction( i18n("Configure Extensions..."), 0, TQT_TQOBJECT(this), TQT_SLOT( slotConfigureExtensions()), actionCollection(), "options_configure_extensions");
-  m_paConfigureSpellChecking = new TDEAction( i18n("Configure Spell Checking..."), "spellcheck", 0,TQT_TQOBJECT(this), TQT_SLOT( slotConfigureSpellChecking()), actionCollection(), "configurespellcheck");
+  m_paConfigureSpellChecking = new TDEAction( i18n("Configure Spell Checking..."), "tools-check-spelling", 0,TQT_TQOBJECT(this), TQT_SLOT( slotConfigureSpellChecking()), actionCollection(), "configurespellcheck");
 
   // Window menu
   m_paSplitViewHor = new TDEAction( i18n( "Split View &Left/Right" ), "view_left_right", CTRL+SHIFT+Key_L, TQT_TQOBJECT(this), TQT_SLOT( slotSplitViewHorizontal() ), actionCollection(), "splitviewh" );
