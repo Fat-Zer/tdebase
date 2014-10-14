@@ -64,7 +64,7 @@ KonqSidebarBookmarkModule::KonqSidebarBookmarkModule( KonqSidebarTree * parentTr
                         TQT_SLOT( slotDelete() ), m_collection, "delete_bookmark");
     (void) new TDEAction( i18n("Properties"), "edit", 0, this,
                         TQT_SLOT( slotProperties() ), m_collection, "item_properties");
-    (void) new TDEAction( i18n("Open in New Window"), "window_new", 0, this,
+    (void) new TDEAction( i18n("Open in New Window"), "window-new", 0, this,
                         TQT_SLOT( slotOpenNewWindow() ), m_collection, "open_window");
     (void) new TDEAction( i18n("Open in New Tab"), "tab_new", 0, this,
                         TQT_SLOT( slotOpenTab() ), m_collection, "open_tab");

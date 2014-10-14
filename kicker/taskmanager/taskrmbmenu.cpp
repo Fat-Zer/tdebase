@@ -220,7 +220,7 @@ TQPopupMenu* TaskRMBMenu::makeAdvancedMenu(Task::Ptr t)
                           t, TQT_SLOT(toggleKeptBelowOthers()));
     menu->setItemChecked(id, t->isKeptBelowOthers());
 
-    id = menu->insertItem(SmallIconSet("window_fullscreen"),
+    id = menu->insertItem(SmallIconSet("view-fullscreen"),
                           i18n("&Fullscreen"),
                           t, TQT_SLOT(toggleFullScreen()));
     menu->setItemChecked(id, t->isFullScreen());

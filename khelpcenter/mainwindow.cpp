@@ -248,8 +248,8 @@ void MainWindow::setupActions()
     History::self().setupActions( actionCollection() );
 
     new TDEAction( i18n( "Configure Fonts..." ), TDEShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotConfigureFonts() ), actionCollection(), "configure_fonts" );
-    new TDEAction( i18n( "Increase Font Sizes" ), "viewmag+", TDEShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotIncFontSizes() ), actionCollection(), "incFontSizes" );
-    new TDEAction( i18n( "Decrease Font Sizes" ), "viewmag-", TDEShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotDecFontSizes() ), actionCollection(), "decFontSizes" );
+    new TDEAction( i18n( "Increase Font Sizes" ), "zoom-in", TDEShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotIncFontSizes() ), actionCollection(), "incFontSizes" );
+    new TDEAction( i18n( "Decrease Font Sizes" ), "zoom-out", TDEShortcut(), TQT_TQOBJECT(this), TQT_SLOT( slotDecFontSizes() ), actionCollection(), "decFontSizes" );
 }
 
 void MainWindow::slotCopySelectedText()

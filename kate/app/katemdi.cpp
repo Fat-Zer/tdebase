@@ -464,7 +464,7 @@ bool Sidebar::eventFilter(TQObject *obj, TQEvent *ev)
 
         p->insertTitle(SmallIcon("view_remove"), i18n("Behavior"), 50);
 
-        p->insertItem(w->persistent ? SmallIconSet("window_nofullscreen") : SmallIconSet("window_fullscreen"), w->persistent ? i18n("Make Non-Persistent") : i18n("Make Persistent"), 10);
+        p->insertItem(w->persistent ? SmallIconSet("view-restore") : SmallIconSet("view-fullscreen"), w->persistent ? i18n("Make Non-Persistent") : i18n("Make Persistent"), 10);
 
         p->insertTitle(SmallIcon("move"), i18n("Move To"), 51);
 

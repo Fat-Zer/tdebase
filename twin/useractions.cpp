@@ -62,7 +62,7 @@ TQPopupMenu* Workspace::clientPopup()
             i18n("Keep &Above Others")+'\t'+keys->shortcut("Window Above Other Windows").seq(0).toString(), Options::KeepAboveOp );
         advanced_popup->insertItem( SmallIconSet( "go-down" ),
             i18n("Keep &Below Others")+'\t'+keys->shortcut("Window Below Other Windows").seq(0).toString(), Options::KeepBelowOp );
-        advanced_popup->insertItem( SmallIconSet( "window_fullscreen" ),
+        advanced_popup->insertItem( SmallIconSet( "view-fullscreen" ),
             i18n("&Fullscreen")+'\t'+keys->shortcut("Window Fullscreen").seq(0).toString(), Options::FullScreenOp );
         advanced_popup->insertItem( i18n("&No Border")+'\t'+keys->shortcut("Window No Border").seq(0).toString(), Options::NoBorderOp );
 	advanced_popup->insertItem( i18n("Shad&ow"), Options::ShadowOp );

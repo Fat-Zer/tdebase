@@ -364,8 +364,8 @@ void konsolePart::makeGUI()
      selectBell->plug(m_options);
 
       m_fontsizes = new TDEActionMenu( i18n( "Font" ), SmallIconSet( "text" ), settingsActions, 0L );
-      m_fontsizes->insert( new TDEAction( i18n( "&Enlarge Font" ), SmallIconSet( "viewmag+" ), 0, this, TQT_SLOT( biggerFont() ), settingsActions, "enlarge_font" ) );
-      m_fontsizes->insert( new TDEAction( i18n( "&Shrink Font" ), SmallIconSet( "viewmag-" ), 0, this, TQT_SLOT( smallerFont() ), settingsActions, "shrink_font" ) );
+      m_fontsizes->insert( new TDEAction( i18n( "&Enlarge Font" ), SmallIconSet( "zoom-in" ), 0, this, TQT_SLOT( biggerFont() ), settingsActions, "enlarge_font" ) );
+      m_fontsizes->insert( new TDEAction( i18n( "&Shrink Font" ), SmallIconSet( "zoom-out" ), 0, this, TQT_SLOT( smallerFont() ), settingsActions, "shrink_font" ) );
       m_fontsizes->insert( new TDEAction( i18n( "Se&lect..." ), SmallIconSet( "font" ), 0, this, TQT_SLOT( slotSelectFont() ), settingsActions, "select_font" ) );
       m_fontsizes->plug(m_options);
 

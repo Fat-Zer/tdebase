@@ -238,7 +238,7 @@ HitMenuItem *KickoffBeaglePlugin::hitToHitMenuItem (int category, Hit *hit)
 		    info = (*hit)[vCard_PREFEMAIL];
 		    uri = "mailto:"+(*hit)[vCard_PREFEMAIL];
 		    mimetype = hit->getMimeType ();
-		    icon = "mail_new";
+		    icon = "mail-message-new";
 
 		    HitMenuItem * first_item=new HitMenuItem (title, info, uri, mimetype, 0, category, icon, score);
 		    kickoffSearchInterface()->addHitMenuItem(first_item);

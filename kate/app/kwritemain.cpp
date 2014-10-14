@@ -150,7 +150,7 @@ void KWrite::setupActions()
                                          actionCollection());
   m_recentFiles->setWhatsThis(i18n("This lists files which you have opened recently, and allows you to easily open them again."));
 
-  TDEAction *a=new TDEAction(i18n("&New Window"), "window_new", 0, TQT_TQOBJECT(this), TQT_SLOT(newView()),
+  TDEAction *a=new TDEAction(i18n("&New Window"), "window-new", 0, TQT_TQOBJECT(this), TQT_SLOT(newView()),
               actionCollection(), "view_new_view");
   a->setWhatsThis(i18n("Create another view containing the current document"));
 

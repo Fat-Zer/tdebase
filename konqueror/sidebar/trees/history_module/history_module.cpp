@@ -75,7 +75,7 @@ KonqSidebarHistoryModule::KonqSidebarHistoryModule( KonqSidebarTree * parentTree
 	     TQT_SLOT( slotItemExpanded( TQListViewItem * )));
 
     m_collection = new TDEActionCollection( this, "history actions" );
-    (void) new TDEAction( i18n("New &Window"), "window_new", 0, this,
+    (void) new TDEAction( i18n("New &Window"), "window-new", 0, this,
  			TQT_SLOT( slotNewWindow() ), m_collection, "open_new");
     (void) new TDEAction( i18n("&Remove Entry"), "edit-delete", 0, this,
 			TQT_SLOT( slotRemoveEntry() ), m_collection, "remove");

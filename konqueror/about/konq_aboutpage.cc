@@ -342,7 +342,7 @@ TQString KonqAboutPageFactory::tips()
     TQString locationbar_erase_icon_path =
 	    iconloader->iconPath("locationbar_erase", TDEIcon::Small );
     TQString window_fullscreen_icon_path =
-	    iconloader->iconPath("window_fullscreen", TDEIcon::Small );
+	    iconloader->iconPath("view-fullscreen", TDEIcon::Small );
     TQString view_left_right_icon_path =
 	    iconloader->iconPath("view_left_right", TDEIcon::Small );
     TQString continue_icon_path = TQApplication::reverseLayout()?iconloader->iconPath("1leftarrow", TDEIcon::Small ):iconloader->iconPath("1rightarrow", TDEIcon::Small );

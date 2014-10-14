@@ -49,7 +49,7 @@ KateMailDialog::KateMailDialog( TQWidget *parent, KateMainWindow  *mainwin )
                 KGuiItem( i18n("&Show All Documents >>") ) ),
     mainWindow( mainwin )
 {
-  setButtonGuiItem( KDialogBase::Ok, KGuiItem( i18n("&Mail..."), "mail_send") );
+  setButtonGuiItem( KDialogBase::Ok, KGuiItem( i18n("&Mail..."), "mail-send") );
   mw = makeVBoxMainWidget();
   mw->installEventFilter( this );
 

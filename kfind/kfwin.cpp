@@ -410,7 +410,7 @@ void KfindWindow::slotContextMenu(TDEListView *,TQListViewItem *item,const TQPoi
      //menu = new TDEPopupMenu(item->text(0), this);
      m_menu->insertTitle(item->text(0));
      m_menu->insertItem(SmallIcon("document-open"),i18n("Menu item", "Open"), this, TQT_SLOT(openBinding()));
-     m_menu->insertItem(SmallIcon("window_new"),i18n("Open Folder"), this, TQT_SLOT(openFolder()));
+     m_menu->insertItem(SmallIcon("window-new"),i18n("Open Folder"), this, TQT_SLOT(openFolder()));
      m_menu->insertSeparator();
      m_menu->insertItem(SmallIcon("edit-copy"),i18n("Copy"), this, TQT_SLOT(copySelection()));
      m_menu->insertItem(SmallIcon("edit-delete"),i18n("Delete"), this, TQT_SLOT(deleteFiles()));

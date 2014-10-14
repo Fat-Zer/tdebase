@@ -499,7 +499,7 @@ void KonqPopupMenu::setup(KonqPopupFlags kpf)
     if ( ((kpf & ShowNewWindow) != 0) && sReading )
     {
         TQString openStr = isKDesktop ? i18n( "&Open" ) : i18n( "Open in New &Window" );
-        actNewWindow = new TDEAction( openStr, "window_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewView() ), &m_ownActions, "newview" );
+        actNewWindow = new TDEAction( openStr, "window-new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewView() ), &m_ownActions, "newview" );
     }
 
     if ( actNewWindow && !isKDesktop )

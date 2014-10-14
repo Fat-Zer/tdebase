@@ -353,7 +353,7 @@ void KRandRSystemTray::configChanged()
 
 		KRandrPassivePopup::message(
 		i18n("Screen configuration has changed"),
-		currentScreen()->changedMessage(), SmallIcon("window_fullscreen"),
+		currentScreen()->changedMessage(), SmallIcon("view-fullscreen"),
 		this, "ScreenChangeNotification");
 	}
 
@@ -409,7 +409,7 @@ void KRandRSystemTray::populateMenu(TDEPopupMenu* menu)
 {
 	int lastIndex = 0;
 
-	menu->insertTitle(SmallIcon("window_fullscreen"), i18n("Screen Size"));
+	menu->insertTitle(SmallIcon("view-fullscreen"), i18n("Screen Size"));
 
 	int numSizes = currentScreen()->numSizes();
 	int* sizeSort = new int[numSizes];
@@ -889,7 +889,7 @@ void KRandRSystemTray::deviceChanged (TDEGenericDevice* device) {
 	if (device->type() == TDEGenericDeviceType::Monitor) {
 		KRandrPassivePopup::message(
 		i18n("New display output options are available!"),
-		i18n("A screen has been added, removed, or changed"), SmallIcon("window_fullscreen"),
+		i18n("A screen has been added, removed, or changed"), SmallIcon("view-fullscreen"),
 		this, "ScreenChangeNotification");
 
 		reloadDisplayConfiguration();

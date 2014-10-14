@@ -137,8 +137,8 @@ KonqDirPart::KonqDirPart( TQObject *parent, const char *name )
 
     actionCollection()->setHighlightingEnabled( true );
 
-    m_paIncIconSize = new TDEAction( i18n( "Enlarge Icons" ), "viewmag+", 0, this, TQT_SLOT( slotIncIconSize() ), actionCollection(), "incIconSize" );
-    m_paDecIconSize = new TDEAction( i18n( "Shrink Icons" ), "viewmag-", 0, this, TQT_SLOT( slotDecIconSize() ), actionCollection(), "decIconSize" );
+    m_paIncIconSize = new TDEAction( i18n( "Enlarge Icons" ), "zoom-in", 0, this, TQT_SLOT( slotIncIconSize() ), actionCollection(), "incIconSize" );
+    m_paDecIconSize = new TDEAction( i18n( "Shrink Icons" ), "zoom-out", 0, this, TQT_SLOT( slotDecIconSize() ), actionCollection(), "decIconSize" );
 
     m_paDefaultIcons = new TDERadioAction( i18n( "&Default Size" ), 0, actionCollection(), "modedefault" );
     d->aEnormousIcons = new TDERadioAction( i18n( "&Huge" ), 0,

@@ -257,7 +257,7 @@ void KateMainWindow::setupActions()
 
   KStdAction::quit( TQT_TQOBJECT(this), TQT_SLOT( slotFileQuit() ), actionCollection(), "file_quit" )->setWhatsThis(i18n("Close this window"));
 
-  a=new TDEAction(i18n("&New Window"), "window_new", 0, TQT_TQOBJECT(this), TQT_SLOT(newWindow()), actionCollection(), "view_new_view");
+  a=new TDEAction(i18n("&New Window"), "window-new", 0, TQT_TQOBJECT(this), TQT_SLOT(newWindow()), actionCollection(), "view_new_view");
   a->setWhatsThis(i18n("Create a new Kate view (a new window with the same document list)."));
 
   if ( KateApp::self()->authorize("shell_access") )

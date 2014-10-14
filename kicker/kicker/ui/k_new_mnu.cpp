@@ -2270,7 +2270,7 @@ void KMenu::searchAddressbook()
             }
 
             hit_item = new HitMenuItem (i18n("Send Email to %1").arg(realName), (*it).preferredEmail(),
-                                "mailto:"+(*it).preferredEmail(), TQString(), 0, ACTIONS, "mail_new");
+                                "mailto:"+(*it).preferredEmail(), TQString(), 0, ACTIONS, "mail-message-new");
 
         			insertSearchResult(hit_item);
         }
@@ -2400,7 +2400,7 @@ void KMenu::doQuery (bool return_pressed)
     if (emailRegExp.exactMatch(query_str)) {
       categorised_hit_total[ACTIONS] ++;
       HitMenuItem *hit_item = new HitMenuItem (i18n("Send Email to %1").arg(query_str), TQString(),
-                                "mailto:"+query_str, TQString(), (++max_category_id [ACTIONS]), ACTIONS, "mail_new");
+                                "mailto:"+query_str, TQString(), (++max_category_id [ACTIONS]), ACTIONS, "mail-message-new");
       int index = getHitMenuItemPosition (hit_item);
       m_searchResultsWidget->insertItem(iconForHitMenuItem(hit_item), hit_item->display_name, hit_item->display_info, "mailto:"+query_str, max_category_id [ACTIONS], index);
     }
@@ -3848,7 +3848,7 @@ void KMenu::insertSuspendOption( int &nId, int &index )
 
     if ( standby && !disableSuspend ) {
         m_exitView->leftView()->insertItem(
-            "player_pause",
+            "media-playback-pause",
             i18n( "Standby" ),
             i18n( "Pause without logging out" ),
             "kicker:/standby", nId++, index++ );

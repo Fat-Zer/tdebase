@@ -3507,9 +3507,9 @@ void Konsole::loadSessionCommands()
 void Konsole::createSessionMenus()
 {
   if (no2command.isEmpty()) { // All sessions have been deleted
-    m_session->insertItem(SmallIconSet("window_new"),
+    m_session->insertItem(SmallIconSet("window-new"),
                           i18n("New &Window"), SESSION_NEW_WINDOW_ID);
-    m_tabbarSessionsCommands->insertItem(SmallIconSet("window_new"),
+    m_tabbarSessionsCommands->insertItem(SmallIconSet("window-new"),
                           i18n("New &Window"), SESSION_NEW_WINDOW_ID);
     return;
   }
@@ -3525,9 +3525,9 @@ void Konsole::createSessionMenus()
     comment=txt.prepend(i18n("New "));
   insertItemSorted(m_session, SmallIconSet(icon),
                    comment.replace('&',"&&"), SESSION_NEW_SHELL_ID);
-  m_session->insertItem(SmallIconSet("window_new"),
+  m_session->insertItem(SmallIconSet("window-new"),
                         i18n("New &Window"), SESSION_NEW_WINDOW_ID);
-  m_tabbarSessionsCommands->insertItem(SmallIconSet("window_new"),
+  m_tabbarSessionsCommands->insertItem(SmallIconSet("window-new"),
                         i18n("New &Window"), SESSION_NEW_WINDOW_ID);
   m_session->insertSeparator();
   m_tabbarSessionsCommands->insertSeparator();

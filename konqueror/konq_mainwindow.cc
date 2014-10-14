@@ -3805,7 +3805,7 @@ void KonqMainWindow::initActions()
 
   (void) new TDEAction( i18n( "&Edit File Type..." ), 0, actionCollection(), "editMimeType" );
   (void) new TDEAction( i18n( "Properties" ), ALT+Key_Return, actionCollection(), "properties" );
-  (void) new TDEAction( i18n( "New &Window" ), "window_new", TDEStdAccel::shortcut(TDEStdAccel::New), TQT_TQOBJECT(this), TQT_SLOT( slotNewWindow() ), actionCollection(), "new_window" );
+  (void) new TDEAction( i18n( "New &Window" ), "window-new", TDEStdAccel::shortcut(TDEStdAccel::New), TQT_TQOBJECT(this), TQT_SLOT( slotNewWindow() ), actionCollection(), "new_window" );
   (void) new TDEAction( i18n( "&Duplicate Window" ), "window_duplicate", CTRL+Key_D, TQT_TQOBJECT(this), TQT_SLOT( slotDuplicateWindow() ), actionCollection(), "duplicate_window" );
   (void) new TDEAction( i18n( "Send &Link Address..." ), "mail_generic", 0, TQT_TQOBJECT(this), TQT_SLOT( slotSendURL() ), actionCollection(), "sendURL" );
   (void) new TDEAction( i18n( "S&end File..." ), "mail_generic", 0, TQT_TQOBJECT(this), TQT_SLOT( slotSendFile() ), actionCollection(), "sendPage" );
@@ -4110,7 +4110,7 @@ void KonqMainWindow::slotFillContextMenu( const KBookmark &bk, TQPopupMenu * pm 
   else
   {
     popupItems.append( new KFileItem( bk.url(), TQString::null, KFileItem::Unknown) );
-    pm->insertItem( SmallIcon("window_new"), i18n( "Open in New Window" ), this, TQT_SLOT( slotPopupNewWindow() ) );
+    pm->insertItem( SmallIcon("window-new"), i18n( "Open in New Window" ), this, TQT_SLOT( slotPopupNewWindow() ) );
     pm->insertItem( SmallIcon(tab_new_x), i18n( "Open in New Tab" ), this, TQT_SLOT( slotPopupNewTabRight() ) );
   }
 }
@@ -4762,7 +4762,7 @@ void KonqMainWindow::slotPopupMenu( KXMLGUIClient *client, const TQPoint &_globa
         actNewWindow = new TDEAction( i18n( "Open in T&his Window" ), 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupThisWindow() ), konqyMenuClient->actionCollection(), "sameview" );
         actNewWindow->setToolTip( i18n( "Open the document in current window" ) );
       }
-      actNewWindow = new TDEAction( i18n( "Open in New &Window" ), "window_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewWindow() ), konqyMenuClient->actionCollection(), "newview" );
+      actNewWindow = new TDEAction( i18n( "Open in New &Window" ), "window-new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotPopupNewWindow() ), konqyMenuClient->actionCollection(), "newview" );
       actNewWindow->setToolTip( i18n( "Open the document in a new window" ) );
 
       //Set tab_new_x to point to the correct icon based on NewTabsInFront
