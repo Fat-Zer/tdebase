@@ -121,7 +121,7 @@ bool ObjKsTheme::loadTDEConfig( TDEConfig *cfg, const TQString& activeTheme, boo
   m_icons.append( cfg->readEntry( "Icon4", "window_list" ) );
   m_icons.append( cfg->readEntry( "Icon5", "desktop" ) );
   m_icons.append( cfg->readEntry( "Icon6", "style" ) );
-  m_icons.append( cfg->readEntry( "Icon7", "kcmsystem" ) );
+  m_icons.append( cfg->readEntry( "Icon7", "preferences-system" ) );
   m_icons.append( cfg->readEntry( "Icon8", "go" ) );
 
   m_text.clear();
