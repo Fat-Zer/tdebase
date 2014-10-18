@@ -12,7 +12,10 @@
 #
 #################################################
 
+# required stuff
 tde_setup_architecture_flags( )
+find_package( TQt )
+find_package( TDE )
 
 
 ##### check for libdl ###########################
@@ -90,8 +93,21 @@ endif( )
 
 if( WITH_GCC_VISIBILITY )
   if( NOT UNIX )
-    tde_message_fatal(FATAL_ERROR "\ngcc visibility support was requested, but your system is not *NIX" )
+    tde_message_fatal( "gcc visibility support was requested, but your system is not *NIX" )
   endif( NOT UNIX )
+  tde_save_and_set( CMAKE_REQUIRED_INCLUDES "${TDE_INCLUDE_DIR}" )
+  check_cxx_source_compiles( "
+    #include <kdemacros.h>
+      #ifndef __KDE_HAVE_GCC_VISIBILITY
+      #error gcc visibility is not enabled in tdelibs
+      #endif
+      int main() { return 0; } "
+    HAVE_GCC_VISIBILITY
+  )
+  tde_restore( CMAKE_REQUIRED_INCLUDES )
+  if( NOT HAVE_GCC_VISIBILITY )
+    tde_message_fatal( "gcc visibility support was requested, but not supported in tdelibs" )
+  endif( NOT HAVE_GCC_VISIBILITY )
   set( __KDE_HAVE_GCC_VISIBILITY 1 )
   set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden")
   set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden")
@@ -334,8 +350,8 @@ else( )
   set( WITHOUT_ARTS 1 )
 endif( )
 
-# libart
 
+# libart
 if( WITH_LIBART )
   pkg_search_module( LIBART libart-2.0 )
   if( NOT LIBART_FOUND )
@@ -343,12 +359,6 @@ if( WITH_LIBART )
   endif( NOT LIBART_FOUND )
   set( HAVE_LIBART 1 )
 endif( WITH_LIBART )
-
-
-# required stuff
-find_package( TQt )
-find_package( TDE )
-
 
 
 # dbus (tdm, kdesktop, twin/compton-tde.c)
