@@ -33,6 +33,9 @@
 #ifdef HAVE_STATVFS
 # include <sys/statvfs.h>
 #else
+# ifdef __OpenBSD__
+#  include <sys/param.h>
+# endif
 # include <sys/mount.h>
 # define statvfs statfs
 # define f_frsize f_bsize
