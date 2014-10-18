@@ -93,7 +93,13 @@
 #include "flipscrollview.h"
 #include "itemview.h"
 #include <dmctl.h>
+#ifdef __OpenBSD__
+#include <sys/statvfs.h>
+#include <sys/param.h>
+#include <sys/mount.h>
+#else
 #include <sys/vfs.h>
+#endif
 #include <mykickoffsearchinterface.h>
 
 #include "media_watcher.h"
