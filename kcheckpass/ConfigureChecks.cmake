@@ -9,8 +9,6 @@
 #
 #################################################
 
-find_library( CRYPT_LIBRARY crypt )
-
 if( WITH_PAM AND (NOT DEFINED KCHECKPASS_PAM_SERVICE) )
   set( KCHECKPASS_PAM_SERVICE "kde" CACHE INTERNAL "" )
 endif( )

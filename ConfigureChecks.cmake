@@ -54,6 +54,18 @@ if( WITH_PAM AND (BUILD_KCHECKPASS OR BUILD_TDM) )
 endif( )
 
 
+# crypt
+set( CRYPT_LIBRARY crypt )
+check_library_exists( ${CRYPT_LIBRARY} crypt "" HAVE_CRYPT )
+if( NOT HAVE_CRYPT )
+  unset( CRYPT_LIBRARY )
+  check_function_exists( crypt LIBC_HAVE_CRYPT )
+  if( LIBC_HAVE_CRYPT )
+    set( HAVE_CRYPT 1 CACHE INTERNAL "" FORCE )
+  endif( LIBC_HAVE_CRYPT )
+endif( NOT HAVE_CRYPT )
+
+
 # hal (ksmserver, tdeioslaves)
 if( WITH_HAL )
   pkg_search_module( HAL hal )
