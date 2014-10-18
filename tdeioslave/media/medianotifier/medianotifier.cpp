@@ -19,7 +19,13 @@
 
 #include "medianotifier.h"
 
+#ifdef __OpenBSD__
+#include <sys/statvfs.h>
+#include <sys/param.h>
+#include <sys/mount.h>
+#else
 #include <sys/vfs.h>
+#endif
 
 #include <tqfile.h>
 #include <tqfileinfo.h>
