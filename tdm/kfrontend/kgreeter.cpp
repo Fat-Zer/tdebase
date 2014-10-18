@@ -71,7 +71,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <fcntl.h>
 #include <sys/types.h>
 #include <utmp.h>
+#ifdef HAVE_UTMPX
 #include <utmpx.h>
+#endif
 
 #include <stdio.h>
 #include <string.h>
@@ -1294,13 +1296,14 @@ void ControlPipeHandlerObject::run(void) {
 			umask(0);
 			struct stat buffer;
 			int status;
-			char *fifo_parent_dir = strdup(FIFO_DIR);
-			dirname(fifo_parent_dir);
+			char *fifo_parent_dir;
+			char *fifo_dir = strdup(FIFO_DIR);
+			fifo_parent_dir = dirname(fifo_dir);
 			status = stat(fifo_parent_dir, &buffer);
 			if (status != 0) {
-				mkdir(fifo_parent_dir, 0644);
+				mkdir(fifo_parent_dir, 0755);
 			}
-			free(fifo_parent_dir);
+			free(fifo_dir);
 			status = stat(FIFO_DIR, &buffer);
 			if (status == 0) {
 				int file_mode = ((buffer.st_mode & S_IRWXU) >> 6) * 100;
@@ -1313,7 +1316,7 @@ void ControlPipeHandlerObject::run(void) {
 					return;
 				}
 			}
-			mkdir(FIFO_DIR,0600);
+			mkdir(FIFO_DIR,0700);
 			mknod(mPipeFilename.ascii(), S_IFIFO|0600, 0);
 			chmod(mPipeFilename.ascii(), 0600);
 		

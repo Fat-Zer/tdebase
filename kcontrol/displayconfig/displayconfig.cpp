@@ -57,6 +57,9 @@
 #include "displayconfig.h"
 
 using namespace std;
+#ifdef __OpenBSD__
+#define abs __gnu_cxx::abs
+#endif
 
 /**** DLL Interface ****/
 typedef KGenericFactory<KDisplayConfig, TQWidget> KDisplayCFactory;
@@ -742,8 +745,10 @@ void KDisplayConfig::setRealResolutionSliderValue(int index) {
 KDisplayConfig::KDisplayConfig(TQWidget *parent, const char *name, const TQStringList &)
   : TDECModule(KDisplayCFactory::instance(), parent, name), iccTab(0), numberOfProfiles(0), numberOfScreens(0), m_randrsimple(0), activeProfileName(""), m_gammaApplyTimer(0)
 {
+#ifdef __TDE_HAVE_TDEHWLIB
 	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
 	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
+#endif
 
 	m_randrsimple = new KRandrSimpleAPI();
 
@@ -859,6 +864,7 @@ KDisplayConfig::~KDisplayConfig()
 }
 
 void KDisplayConfig::deviceChanged (TDEGenericDevice* device) {
+#ifdef __TDE_HAVE_TDEHWLIB
 	if (device->type() == TDEGenericDeviceType::Monitor) {
 		if (base->rescanHardware->isEnabled()) {
 			base->rescanHardware->setEnabled(false);
@@ -866,6 +872,7 @@ void KDisplayConfig::deviceChanged (TDEGenericDevice* device) {
 			base->rescanHardware->setEnabled(true);
 		}
 	}
+#endif
 }
 
 void KDisplayConfig::updateExtendedMonitorInformation () {

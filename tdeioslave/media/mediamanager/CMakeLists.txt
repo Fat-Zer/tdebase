@@ -36,30 +36,21 @@ install( FILES mediamanager.desktop DESTINATION ${SERVICES_INSTALL_DIR}/kded )
 set( target kded_mediamanager )
 
 if( WITH_HAL )
-  set( ${target}_SRCS
-    mediamanager.cpp mediamanager.skel medialist.cpp
-    backendbase.cpp fstabbackend.cpp removablebackend.cpp
-    mediadirnotify.cpp mediadirnotify.skel
-    decryptdialog.ui dialog.cpp
-    halbackend.cpp linuxcdpolling.cpp tdehardwarebackend.cpp
-  )
-
-  tde_add_kpart( ${target} AUTOMOC
-    SOURCES ${${target}_SRCS}
-    LINK mediacommon-static tdeinit_kded-shared ${HAL_LIBRARIES} -lhal-storage ${DBUS_TQT_LIBRARIES}
-    DESTINATION ${PLUGIN_INSTALL_DIR}
-  )
-else( )
-  set( ${target}_SRCS
-    mediamanager.cpp mediamanager.skel medialist.cpp
-    backendbase.cpp fstabbackend.cpp removablebackend.cpp
-    decryptdialog.ui dialog.cpp
-    mediadirnotify.cpp mediadirnotify.skel tdehardwarebackend.cpp
-  )
-
-  tde_add_kpart( ${target} AUTOMOC
-    SOURCES ${${target}_SRCS}
-    LINK mediacommon-static tdeinit_kded-shared
-    DESTINATION ${PLUGIN_INSTALL_DIR}
-  )
+  set( HAL_MEDIA_BACKEND halbackend.cpp linuxcdpolling.cpp )
+  set( HAL_MEDIA_LIBRARIES ${HAL_LIBRARIES} -lhal-storage ${DBUS_TQT_LIBRARIES} )
 endif( )
+
+if( WITH_TDEHWLIB )
+  set( TDEHWBACKEND tdehardwarebackend.cpp )
+endif( WITH_TDEHWLIB )
+
+tde_add_kpart( ${target} AUTOMOC
+  SOURCES
+    mediamanager.cpp mediamanager.skel medialist.cpp
+    backendbase.cpp fstabbackend.cpp removablebackend.cpp
+    decryptdialog.ui dialog.cpp
+    mediadirnotify.cpp mediadirnotify.skel
+    ${HAL_MEDIA_BACKEND} ${TDEHWBACKEND}
+  LINK mediacommon-static tdeinit_kded-shared ${HAL_MEDIA_LIBRARIES}
+  DESTINATION ${PLUGIN_INSTALL_DIR}
+)

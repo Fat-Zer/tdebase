@@ -45,7 +45,9 @@
 #include <pwd.h>
 #include <errno.h>
 
+#ifndef __OpenBSD__
 #include <sys/prctl.h>
+#endif
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -249,7 +251,9 @@ int create_socket()
 
 int main(int argc, char *argv[])
 {
+#ifndef __OpenBSD__
     prctl(PR_SET_DUMPABLE, 0);
+#endif
 
     TDEAboutData aboutData("tdesud", I18N_NOOP("TDE su daemon"),
             Version, I18N_NOOP("Daemon used by tdesu"),

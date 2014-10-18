@@ -25,7 +25,11 @@
 #include <kglobalaccel.h>
 
 #include <libtderandr/libtderandr.h>
+#ifdef __TDE_HAVE_TDEHWLIB
 #include <tdehardwaredevices.h>
+#else
+#define TDEGenericDevice void
+#endif
 
 class KHelpMenu;
 class TDEPopupMenu;

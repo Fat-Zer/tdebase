@@ -35,7 +35,11 @@
 #include <dcopobject.h>
 
 #include <libtderandr/libtderandr.h>
+#ifdef __TDE_HAVE_TDEHWLIB
 #include <tdehardwaredevices.h>
+#else
+#define TDEGenericDevice void
+#endif
 
 #include "monitorworkspace.h"
 #include "displayconfigbase.h"

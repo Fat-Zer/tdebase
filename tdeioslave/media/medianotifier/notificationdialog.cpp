@@ -28,7 +28,9 @@
 #include <tqlabel.h>
 #include <tqcheckbox.h>
 #include <tqpushbutton.h>
+#ifdef __TDE_HAVE_TDEHWLIB
 #include <tdehardwaredevices.h>
+#endif
 
 #include "actionlistboxitem.h"
 #include "notificationdialogview.h"

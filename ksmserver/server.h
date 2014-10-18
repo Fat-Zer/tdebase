@@ -23,7 +23,9 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tqtimer.h>
 #include <dcopobject.h>
 
+#ifdef __TDE_HAVE_TDEHWLIB
 #include <tdehardwaredevices.h>
+#endif
 
 #include "server2.h"
 
@@ -251,7 +253,9 @@ private:
 
     WindowMap legacyWindows;
 
+#ifdef __TDE_HAVE_TDEHWLIB
     TDEHardwareDevices* hwDevices;
+#endif
     int initialClientCount;
     int phase2ClientCount;
     int protectionTimerCounter;

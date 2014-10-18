@@ -52,7 +52,9 @@
 #include <kdebug.h>
 #include <tdeglobal.h>
 #include <tdeglobalsettings.h>
+#ifdef __TDE_HAVE_TDEHWLIB
 #include <tdehardwaredevices.h>
+#endif
 #include <kiconloader.h>
 #include <klineedit.h>
 #include <tdelocale.h>
@@ -93,7 +95,13 @@
 #include "flipscrollview.h"
 #include "itemview.h"
 #include <dmctl.h>
+#ifdef __OpenBSD__
+#include <sys/statvfs.h>
+#include <sys/param.h>
+#include <sys/mount.h>
+#else
 #include <sys/vfs.h>
+#endif
 #include <mykickoffsearchinterface.h>
 
 #include "media_watcher.h"
@@ -1359,10 +1367,10 @@ void KMenu::insertStaticExitItems()
     }
 
     bool maysd = false;
-#ifdef COMPILE_HALBACKEND
+#if defined(COMPILE_HALBACKEND)
     if (ksmserver.readBoolEntry( "offerShutdown", true ) && DM().canShutdown())
         maysd = true;
-#else
+#elif defined(__TDE_HAVE_TDEHWLIB)
     TDERootSystemDevice* rootDevice = TDEGlobal::hardwareDevices()->rootSystemDevice();
     if( rootDevice ) {
         maysd = rootDevice->canPowerOff();
@@ -3792,7 +3800,7 @@ void KMenu::insertSuspendOption( int &nId, int &index )
     bool suspend_freeze = false;
     bool standby = false;
     bool suspend_disk = false;
-#ifdef COMPILE_HALBACKEND
+#if defined(COMPILE_HALBACKEND)
     suspend_ram = libhal_device_get_property_bool(m_halCtx,
         "/org/freedesktop/Hal/devices/computer",
         "power_management.can_suspend",
@@ -3807,7 +3815,7 @@ void KMenu::insertSuspendOption( int &nId, int &index )
         "/org/freedesktop/Hal/devices/computer",
         "power_management.can_hibernate",
         NULL);
-#else // COMPILE_HALBACKEND
+#elif defined(__TDE_HAVE_TDEHWLIB) // COMPILE_HALBACKEND
     TDERootSystemDevice* rootDevice = TDEGlobal::hardwareDevices()->rootSystemDevice();
     if (rootDevice) {
         suspend_ram = rootDevice->canSuspend();
@@ -3868,7 +3876,7 @@ void KMenu::slotSuspend(int id)
         DCOPRef("kdesktop", "KScreensaverIface").call("lock()");
     }
 
-#ifdef COMPILE_HALBACKEND
+#if defined(COMPILE_HALBACKEND)
     DBusMessage* msg = NULL;
 
     if (m_dbusConn) {
@@ -3901,7 +3909,7 @@ void KMenu::slotSuspend(int id)
         }
         dbus_message_unref(msg);
     }
-#else // COMPILE_HALBACKEND
+#elif defined(__TDE_HAVE_TDEHWLIB) // COMPILE_HALBACKEND
     TDERootSystemDevice* rootDevice = TDEGlobal::hardwareDevices()->rootSystemDevice();
     if (rootDevice) {
         if (id == 1) {
@@ -3916,10 +3924,12 @@ void KMenu::slotSuspend(int id)
             return;
         }
     }
+#else
+    error = false;
 #endif
-    if (error)
+    if (error) {
         KMessageBox::error(this, i18n("Suspend failed"));
-
+    }
 }
 
 void KMenu::runUserCommand()

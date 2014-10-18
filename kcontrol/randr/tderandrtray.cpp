@@ -92,8 +92,10 @@ KRandRSystemTray::KRandRSystemTray(TQWidget* parent, const char *name)
 		applyIccConfiguration(cur_profile, NULL);
 	}
 
+#ifdef __TDE_HAVE_TDEHWLIB
 	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
 	connect(hwdevices, TQT_SIGNAL(hardwareUpdated(TDEGenericDevice*)), this, TQT_SLOT(deviceChanged(TDEGenericDevice*)));
+#endif
 }
 
 /*!
@@ -886,6 +888,7 @@ void KRandRSystemTray::slotOutputChanged(int parameter)
 }
 
 void KRandRSystemTray::deviceChanged (TDEGenericDevice* device) {
+#ifdef __TDE_HAVE_TDEHWLIB
 	if (device->type() == TDEGenericDeviceType::Monitor) {
 		KRandrPassivePopup::message(
 		i18n("New display output options are available!"),
@@ -895,6 +898,7 @@ void KRandRSystemTray::deviceChanged (TDEGenericDevice* device) {
 		reloadDisplayConfiguration();
 		applyHotplugRules(locateLocal("config", "/", true));
 	}
+#endif
 }
 
 void KRandRSystemTray::slotHelpContents()

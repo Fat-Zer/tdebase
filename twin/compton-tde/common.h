@@ -389,9 +389,11 @@ typedef void (*f_CopySubBuffer) (Display *dpy, GLXDrawable drawable, int x, int 
 
 #ifdef CONFIG_GLX_SYNC
 // Looks like duplicate typedef of the same type is safe?
+#ifndef __OpenBSD__
 typedef int64_t GLint64;
 typedef uint64_t GLuint64;
 typedef struct __GLsync *GLsync;
+#endif
 
 #ifndef GL_SYNC_FLUSH_COMMANDS_BIT
 #define GL_SYNC_FLUSH_COMMANDS_BIT 0x00000001
