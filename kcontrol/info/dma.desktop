@@ -173,7 +173,7 @@ Comment[zh_CN]=DMA 信息
 Comment[zh_TW]=DMA 資訊
 Comment[zu]=Ulwazi lwe-DMA
 
-Keywords=dma;DMA-Channels;System Information
+Keywords=dma;DMA-Channels;System Information;
 Keywords[af]=dma;DMA-Channels;System Informasie
 Keywords[az]=dma;DMA-Kanalları;Sistem Haqqında Mə'lumat
 Keywords[be]=каналы DMA;сістэмная інфармацыя;dma;DMA-Channels;System Information
@@ -207,7 +207,7 @@ Keywords[it]=DMA;canali DMA;informazioni sul sistema
 Keywords[ja]=dma;DMA-チャンネル;システムの情報
 Keywords[ka]=dma;DMA-არხები;ინფორმაცია სისტემის შესახებ
 Keywords[km]=dma;ផ្លូវ DMA;ព័ត៌មាន​ប្រព័ន្ធ
-Keywords[lo]=dma;DMA-Channels;System InformationKeywords=dma;DMA-Channels;System Information
+Keywords[lo]=dma;DMA-Channels;System InformationKeywords=dma;DMA-Channels;System Information;
 Keywords[lt]=dma;DMA-Kanalai;Sistemos Informacija
 Keywords[lv]=dma;DMA-Kanāli;Sistēmas Informācija
 Keywords[mk]=dma;DMA-Channels;System Information;DMA канали;канали;Информации за системот

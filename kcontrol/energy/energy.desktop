@@ -172,7 +172,7 @@ Comment[zh_CN]=显示器电源管理设置
 Comment[zh_TW]=顯示器電源管理的設定值
 Comment[zu]=Izilungiselelo zokuvezwa kokuphathwa kwamandla
 
-Keywords=energy;saver;apm;acpi;dpms;timeout;blanking;stand by;suspend;power
+Keywords=energy;saver;apm;acpi;dpms;timeout;blanking;stand by;suspend;power;
 Keywords[az]=enerji;apm;acpi;zamanaşımı;boşaltma;güç;karartma;ekran
 Keywords[be]=энергія;зберагальнік;збераганне;тэрмін чакання;ачышчэнне;выключэнне;сілкаванне;сон;energy;saver;apm;acpi;dpms;timeout;blanking;stand by;suspend;power
 Keywords[bg]=ток; захранване; прекъсване; батерия; батерии; контакт; energy; saver; apm; acpi; dpms; timeout; blanking; stand by; suspend; power

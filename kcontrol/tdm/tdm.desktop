@@ -172,7 +172,7 @@ Comment[zh_CN]=配置登录管理器(TDM)
 Comment[zh_TW]=設定登入管理程式 (TDM)
 Comment[zu]=Hlanganisela imenenja yokungena ngaphakathi (TDM)
 
-Keywords=tdm;display manager;xdm;users;login;greeting;Logo;styles;language;country;fonts;background;wallpapers;sessions;shutdown;restart
+Keywords=tdm;display manager;xdm;users;login;greeting;Logo;styles;language;country;fonts;background;wallpapers;sessions;shutdown;restart;
 Keywords[ar]=tdm;display manager;xdm;users;login;greeting;Logo;styles;language;country;fonts;background;wallpapers;sessions;shutdown;restart;مدير العرض;المستخدمون مستخدمون;المستخدمين;مستخدمين;دخول;الدخول;تحية;التحية;اللغة;المظهر; البلد;الخطوط;الخط;خطوط;خط;خلفية;ورق حائط;جلسات;اغلاق;اعادة تشغيل
 Keywords[az]=tdm;görünüş idarəçi;xdm;istifadəçilər;iclas açma;qarşılama;loqo;tərzlər;dil;ölkə;yazı növləri;arxa plan;divar kağızları;iclaslar;qapat;təkrar başlat
 Keywords[be]=кіраўнік дысплея;кіраўнік уваходу;карыстальнікі;уваход;запрашэнне;лагатып;стылі;стыль;мова;краіна;шрыфты;фон;шпалеры;сесіі;сесія;выключэнне;перазагрузка;tdm;display manager;xdm;users;login;greeting;Logo;styles;language;country;fonts;background;wallpapers;sessions;shutdown;restart

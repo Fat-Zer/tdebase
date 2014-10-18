@@ -165,7 +165,7 @@ Comment[zh_CN]=配置键盘和鼠标设置
 Comment[zh_TW]=設定鍵盤與滑鼠的設定值
 Comment[zu]=Hlanganisela izilungiselelo zebhodi yokhiye kanye neze-mouse
 
-Keywords=shade;maximise;maximize;minimize;minimise;lower;operations menu;titlebar;resize
+Keywords=shade;maximise;maximize;minimize;minimise;lower;operations menu;titlebar;resize;
 Keywords[ar]=ظلل;كبر كبّر;صغر صغّر;خفض;عمليات;قائمة;تغيير القياس;تظليل;تكبير;تصغير;الى الأسفل;قائمة العمليات;شريط العنوان;تحجيم
 Keywords[be]=Згарнуць;Найбольшыць;Найменшыць;Змяніць памер;Меню аперацыяў;Меню дзеянняў;Загаловак;shade;maximise;maximize;minimize;minimise;lower;operations menu;titlebar;resize
 Keywords[bg]=сгъване; максимизиране; минимизиране; заглавие; промяна; размер; shade; maximise; maximize; minimize; minimise; lower; operations menu; titlebar; resize

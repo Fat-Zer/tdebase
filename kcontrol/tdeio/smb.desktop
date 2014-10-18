@@ -163,7 +163,7 @@ Comment[zh_CN]=配置您可以浏览的 Windows (SMB) 文件系统
 Comment[zh_TW]=設定您可以瀏覽的 Windows (SMB) 檔案系統
 Comment[zu]=Sebenzisa ukuhlanganisela ukuthi imaphi amasistimu amafayela ama-window (SMB) ongacinga kuwo
 
-Keywords=SMB;SAMBA;SMB client;Windows network;LAN;Network;neighborhood;Server;Broadcast;WINS;Share;Login;Passwords
+Keywords=SMB;SAMBA;SMB client;Windows network;LAN;Network;neighborhood;Server;Broadcast;WINS;Share;Login;Passwords;
 Keywords[ar]=SMB;SAMBA;زبون SMB;شبكة Windows;شبكة المنطقة المحلية;الشبكة;الجوار;الخادم;البث;WINS;المشاركة;تسجيل الدخول;كلمات المرور
 Keywords[az]=SMB;SAMBA;SMB alıcı;Windows şəbəkəsi;LAN;Şəbəkə;qonşular;Giriş;Parol;Paylaşım;WINS;yayın
 Keywords[be]=Кліент SMB;Сетка Windows;Навакольнае асяроддзе;Сетка;асяроддзе;Сервер;Публікацыя;Агульныя файлы;Уваход;Пароль;Паролі;Уліковы запіс;Сесія;SMB;SAMBA;SMB client;Windows network;LAN;Network;neighborhood;Server;Broadcast;WINS;Share;Login;Passwords

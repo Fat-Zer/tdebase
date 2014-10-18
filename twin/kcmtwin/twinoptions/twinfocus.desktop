@@ -155,7 +155,7 @@ Comment[zh_CN]=配置窗口焦点策略
 Comment[zh_TW]=設定視窗焦點政策
 Comment[zu]=Hlanganisela umthetho wokunaka kwe-window
 
-Keywords=focus;placement;auto raise;raise;click raise;keyboard;CDE;alt-tab;all desktop
+Keywords=focus;placement;auto raise;raise;click raise;keyboard;CDE;alt-tab;all desktop;
 Keywords[af]=focus;placement;auto raise;raise;click raise;keyboard;CDE;alt-tab;all werkskerm
 Keywords[be]=Фокус;Рамяшчэнне;Клавіятура;Усе працоўныя сталы;focus;placement;auto raise;raise;click raise;keyboard;CDE;alt-tab;all desktop
 Keywords[bg]=фокус; активиране; автоматично; щракане; focus; placement; auto raise; raise; click raise; keyboard; CDE; alt-tab; all desktop

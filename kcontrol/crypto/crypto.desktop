@@ -156,7 +156,7 @@ Comment[zh_CN]=配置 SSL，管理证书和其它加密设置
 Comment[zh_TW]=設定 SSL、管理憑證和其它的加密設定
 Comment[zu]=Hlanganisela i-SSL, phatha izitifiketi, kanye nezinye izilungiselelo zokuqaqa umbhalo ongaqondakali
 
-Keywords=Crypto;Krypto;Cryptography;encryption;SSL;https;certificates;ciphers;TLS;secure;security
+Keywords=Crypto;Krypto;Cryptography;encryption;SSL;https;certificates;ciphers;TLS;secure;security;
 Keywords[ar]=Crypto;Krypto;Cryptography;encryption;SSL;https;certificates;ciphers;TLS;secure;security;تشفير;التشفير;شهادات;الشهادات;الشفرات;آمن;الأمن
 Keywords[az]=Şifr;şifrləmə;kriptoqrafiya;SSL;https;vəsiqə;TLS;təhlüükəsizlik;e'tibarlı
 Keywords[be]=Крыптаграфія;шыфраванне;бяспека;бяспечны;Crypto;Krypto;Cryptography;encryption;SSL;https;certificates;ciphers;TLS;secure;security

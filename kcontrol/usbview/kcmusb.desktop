@@ -167,7 +167,7 @@ Comment[zh_CN]=查看连接到该计算机的 USB 设备
 Comment[zh_TW]=查看連接到這台電腦的 USB 裝置
 Comment[zu]=Buka amathuluzi e-USB ananyathiselwe kule khomputha
 
-Keywords=USB;devices;viewer;control
+Keywords=USB;devices;viewer;control;
 Keywords[ar]=USB;أجهزة;عارض;متحكم
 Keywords[az]=USB;avadanlıqlar;göstərici;idarə
 Keywords[be]=Прылады;Прагляд;Праглядальнік;Кіраванне;USB;devices;viewer;control

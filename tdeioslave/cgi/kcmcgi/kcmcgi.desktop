@@ -162,7 +162,7 @@ Comment[zh_CN]=配置 CGI TDEIO 仆人
 Comment[zh_TW]=設定 CGI TDEIO slave
 Comment[zu]=Hlanganisela i-CGI TDEIO slave
 
-Keywords=CGI;TDEIO;Slave;Paths
+Keywords=CGI;TDEIO;Slave;Paths;
 Keywords[ar]=CGI;TDEIO;Slave;Paths;مسارات
 Keywords[az]=CGI;TDEIO;Slave;Paths;Cığırlar
 Keywords[be]=Шляхі;CGI;TDEIO;Slave;Paths

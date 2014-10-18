@@ -163,7 +163,7 @@ Comment[xh]=Cwangcisa i lisa, reslisa ne ioslaves
 Comment[zh_CN]=设置 lisa、reslisa 和 ioslaves
 Comment[zu]=lungiselela i-lisa, i-reslisa ne-ioslaves
 
-Keywords=samba;smb;windows;network
+Keywords=samba;smb;windows;network;
 Keywords[az]=xml;rpc;daemon;demon;port;qapı;network;şəbəkə;samba;smb;windows
 Keywords[be]=Сетка;Навакольнае асяроддзе;samba;smb;windows;network
 Keywords[bg]=самба; мрежа; локална; преглед; връзка; samba; smb; windows; network
