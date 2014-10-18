@@ -71,7 +71,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <fcntl.h>
 #include <sys/types.h>
 #include <utmp.h>
+#ifdef HAVE_UTMPX
 #include <utmpx.h>
+#endif
 
 #include <stdio.h>
 #include <string.h>

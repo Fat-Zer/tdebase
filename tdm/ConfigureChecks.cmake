@@ -85,7 +85,7 @@ unset( BSD_UTMP )
 if( NOT HAVE_UTMPX )
     check_function_exists( getutent have_getutent )
     if( NOT have_getutent )
-        set( BSD_UTMP 1 )
+        set( BSD_UTMP 1 CACHE INTERNAL "" FORCE )
     endif( )
 endif( )
 
