@@ -33,7 +33,9 @@ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
 #include <tdelocale.h>
 #include <tdeconfig.h>
 #include <tdeapplication.h>
+#ifdef __TDE_HAVE_TDEHWLIB
 #include <tdehardwaredevices.h>
+#endif
 #include <kdebug.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>
@@ -805,7 +807,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 		bool canSuspend = false;
 		bool canHibernate = false;
 
-#ifdef COMPILE_HALBACKEND
+#if defined(COMPILE_HALBACKEND)
 		// Query HAL for suspend/resume support
 		m_halCtx = libhal_ctx_new();
 
@@ -860,7 +862,7 @@ KSMShutdownDlg::KSMShutdownDlg( TQWidget* parent,
 				canHibernate = true;
 			}
 		}
-#else // COMPILE_HALBACKEND
+#elif defined(__TDE_HAVE_TDEHWLIB) // COMPILE_HALBACKEND
 		TDERootSystemDevice* rootDevice = TDEGlobal::hardwareDevices()->rootSystemDevice();
 		if (rootDevice) {
 			canFreeze = rootDevice->canFreeze();

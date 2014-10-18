@@ -33,7 +33,9 @@
 #include <kprocess.h>
 #include <tdestartupinfo.h>
 #include <kmimetype.h>
+#ifdef __TDE_HAVE_TDEHWLIB
 #include <tdehardwaredevices.h>
+#endif
 
 #include "dialog.h"
 #include "tdeio_media_mounthelper.h"
@@ -187,6 +189,7 @@ MountHelper::MountHelper() : TDEApplication()
 
 void MountHelper::invokeEject(const TQString &device, bool quiet)
 {
+#ifdef __TDE_HAVE_TDEHWLIB
 	// Try TDE HW library eject first...
 	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
 	TDEGenericDevice *hwdevice = hwdevices->findByDeviceNode(device);
@@ -197,6 +200,7 @@ void MountHelper::invokeEject(const TQString &device, bool quiet)
 			::exit(0);
 		}
 	}
+#endif
 
 	// Then fall back to tdeeject if needed
 	TDEProcess *proc = new TDEProcess(TQT_TQOBJECT(this));
