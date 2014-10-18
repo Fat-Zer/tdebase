@@ -3,7 +3,7 @@
 # A script to perform R14.0.0 XDG compliance updates.
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201407050
+SCRIPT_VERSION=201410170
 
 # This script should be needed to run only once, but corner cases
 # and file/directory permissions could cause incomplete updates.
@@ -606,6 +606,14 @@ if [ "$R14_VERSION" -lt "201310050" ]; then
       mv $i $ir
     done
   fi
+fi
+
+# Update TDENewStuff
+if [ "$R14_VERSION" -lt "201410170" ]; then
+  Log "Updating TDENewStuff providers and status."
+  find "$PROFILE_DIR"/share/config -type f -print0 2>/dev/null | \
+    xargs -r0 grep -ZIEl "^\[KNewStuff" | \
+    xargs -r0 sed -i -e "/^\[KNewStuff/,/^\[|$/{" -e "s|^\[KNewStuff|[TDENewStuff|" -e "s|^ProvidersUrl=[^ ]*|ProvidersUrl=https://www.trinitydesktop.org/ocs/providers.xml|" -e "}"
 fi
 
 Log "Renaming some configuration files and directories."
