@@ -660,13 +660,13 @@ void Konsole::makeGUI()
                            TQT_SLOT( smallerFont() ), actions,
                            "shrink_font" ) );
       m_fontsizes->insert( new TDEAction( i18n( "Se&lect..." ),
-                           SmallIconSet( "font" ), 0, TQT_TQOBJECT(this),
+                           SmallIconSet( "font-x-generic" ), 0, TQT_TQOBJECT(this),
                            TQT_SLOT( slotSelectFont() ), actions,
                            "select_font" ) );
       if ( b_installBitmapFonts )
       {
          m_fontsizes->insert( new TDEAction( i18n( "&Install Bitmap..." ),
-                              SmallIconSet( "font" ), 0, TQT_TQOBJECT(this),
+                              SmallIconSet( "font-x-generic" ), 0, TQT_TQOBJECT(this),
                               TQT_SLOT( slotInstallBitmapFonts() ), actions,
                               "install_fonts" ) );
       }

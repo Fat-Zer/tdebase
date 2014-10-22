@@ -1,5 +1,5 @@
 [Desktop Entry]
-Icon=zip_mount
+Icon=application-vnd.tde.overlay.zip_mount
 Type=MimeType
 MimeType=media/zip_mounted
 Comment=Mounted Zip Disk

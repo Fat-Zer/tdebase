@@ -10,6 +10,6 @@ makedir=false
 deleting=false
 moving=false
 linking=false
-Icon=postscript
+Icon=application-postscript
 DocPath=tdeioslave/print/index.html
 defaultMimetype=application/octet-stream

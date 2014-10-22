@@ -211,7 +211,7 @@ CKCmFontInst::CKCmFontInst(TQWidget *parent, const char *, const TQStringList&)
         itsListAct->plug(toolbar);
     }
 
-    itsShowBitmapAct=new TDEToggleAction(i18n("Show Bitmap Fonts"), "font_bitmap", 0, TQT_TQOBJECT(this), TQT_SLOT(filterFonts()), 
+    itsShowBitmapAct=new TDEToggleAction(i18n("Show Bitmap Fonts"), "application-x-font-snf", 0, TQT_TQOBJECT(this), TQT_SLOT(filterFonts()), 
                                        itsDirOp->actionCollection(), "showbitmap");
     itsShowBitmapAct->setChecked(showBitmap);
     itsShowBitmapAct->plug(toolbar);

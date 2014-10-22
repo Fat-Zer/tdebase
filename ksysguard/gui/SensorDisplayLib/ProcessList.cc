@@ -203,7 +203,7 @@ ProcessList::ProcessList(TQWidget *parent, const char* name)
 		aliases.insert("bash", new TQString("shell"));
 		aliases.insert("cat", new TQString("tools"));
 		aliases.insert("egrep", new TQString("tools"));
-		aliases.insert("emacs", new TQString("wordprocessing"));
+		aliases.insert("emacs", new TQString("application-vnd.oasis.opendocument.text"));
 		aliases.insert("fgrep", new TQString("tools"));
 		aliases.insert("find", new TQString("tools"));
 		aliases.insert("grep", new TQString("tools"));
@@ -215,8 +215,8 @@ ProcessList::ProcessList(TQWidget *parent, const char* name)
 		aliases.insert("su", new TQString("tools"));
 		aliases.insert("tcsh", new TQString("shell"));
 		aliases.insert("tee", new TQString("tools"));
-		aliases.insert("vi", new TQString("wordprocessing"));
-		aliases.insert("vim", new TQString("wordprocessing"));
+		aliases.insert("vi", new TQString("application-vnd.oasis.opendocument.text"));
+		aliases.insert("vim", new TQString("application-vnd.oasis.opendocument.text"));
 	}
 
 	/* The filter mode is controlled by a combo box of the parent. If

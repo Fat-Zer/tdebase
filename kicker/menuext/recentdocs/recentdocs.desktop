@@ -135,6 +135,6 @@ Comment[vi]=Thực đơn chứa các tài liệu bạn mới truy cập gần đ
 Comment[wa]=Dressêye des documints ki vs avoz eployîz enawaire
 Comment[zh_CN]=您最近使用过的文档的菜单
 Comment[zh_TW]=您最近使用過的文件選單
-Icon=document
+Icon=text-x-text-x-generic
 
 X-TDE-Library=kickermenu_recentdocs

@@ -145,4 +145,4 @@ Comment[zh_CN]=输入文本文件名：
 Comment[zh_TW]=輸入純文字檔案名稱:
 Type=Link
 URL=.source/TextFile.txt
-Icon=txt
+Icon=text-plain

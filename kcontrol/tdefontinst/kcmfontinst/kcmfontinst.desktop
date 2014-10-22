@@ -1,6 +1,6 @@
 [Desktop Entry]
 Exec=tdecmshell kcmfontinst
-Icon=fonts
+Icon=font-x-generics
 Type=Application
 X-DocPath=kcontrol/kcmfontinst/index.html
 

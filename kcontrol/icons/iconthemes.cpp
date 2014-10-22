@@ -66,7 +66,7 @@ IconThemesConfig::IconThemesConfig(TQWidget *parent, const char *name)
   m_previewFolder=new TQLabel(m_preview);
   m_previewFolder->setPixmap(DesktopIcon("folder"));
   m_previewDocument=new TQLabel(m_preview);
-  m_previewDocument->setPixmap(DesktopIcon("document"));
+  m_previewDocument->setPixmap(DesktopIcon("text-x-generic"));
 
   lh2->addStretch(10);
   lh2->addWidget(m_previewExec);

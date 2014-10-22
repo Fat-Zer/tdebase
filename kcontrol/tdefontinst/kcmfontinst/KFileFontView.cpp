@@ -475,7 +475,7 @@ TQDragObject *CKFileFontView::dragObject()
         urls.append( (*it)->url() );
 
     if(urls.count()> 1)
-        pixmap = DesktopIcon("tdemultiple", TDEIcon::SizeSmall);
+        pixmap = DesktopIcon("application-vnd.tde.tdemultiple", TDEIcon::SizeSmall);
     if(pixmap.isNull())
         pixmap = currentFileItem()->pixmap(TDEIcon::SizeSmall);
 

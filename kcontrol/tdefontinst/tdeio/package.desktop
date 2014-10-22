@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=fonts/package
-Icon=font
+Icon=font-x-generic
 Patterns=*.fonts.tar.gz
 Comment=Fonts Package
 Comment[af]=Skriftipes Paket

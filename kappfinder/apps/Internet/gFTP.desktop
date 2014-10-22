@@ -75,5 +75,5 @@ GenericName[zh_CN]=FTP 浏览器
 GenericName[zh_TW]=FTP 瀏覽器
 Exec=gftp
 Terminal=false
-Icon=gftp
+Icon=application-x-tex-gftp
 Type=Application

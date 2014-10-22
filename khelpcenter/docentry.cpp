@@ -69,7 +69,7 @@ TQString DocEntry::icon() const
   if ( !docExists() ) return "unknown";
 
   if ( isDirectory() ) return "contents2";
-  else return "document2";
+  else return "text-x-generic-template";
 }
 
 void DocEntry::setUrl( const TQString &url )

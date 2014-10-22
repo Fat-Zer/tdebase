@@ -394,7 +394,7 @@ void kthememanager::queryLNFModules()
     // For now use a static list
     TDEIconLoader * il = TDEGlobal::iconLoader();
     dlg->btnBackground->setIconSet( il->loadIconSet( "background", TDEIcon::Desktop, 32 ) );
-    dlg->btnColors->setIconSet( il->loadIconSet( "colorscm", TDEIcon::Desktop, 32 ) );
+    dlg->btnColors->setIconSet( il->loadIconSet( "application-x-kcsrc", TDEIcon::Desktop, 32 ) );
     dlg->btnStyle->setIconSet( il->loadIconSet( "style", TDEIcon::Desktop, 32 ) );
     dlg->btnIcons->setIconSet( il->loadIconSet( "icons", TDEIcon::Desktop, 32 ) );
     dlg->btnFonts->setIconSet( il->loadIconSet( "fonts", TDEIcon::Desktop, 32 ) );

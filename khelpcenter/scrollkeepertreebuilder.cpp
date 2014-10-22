@@ -156,7 +156,7 @@ int ScrollKeeperTreeBuilder::insertSection( NavigatorItem *parent,
 void ScrollKeeperTreeBuilder::insertDoc( NavigatorItem *parent,
                                          const TQDomNode &docNode )
 {
-  DocEntry *entry = new DocEntry( "", "", "document2" );
+  DocEntry *entry = new DocEntry( "", "", "text-x-generic-template" );
   NavigatorItem *docItem = new NavigatorItem( entry, parent );
   docItem->setAutoDeleteDocEntry( true );
   mItems.append( docItem );

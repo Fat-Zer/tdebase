@@ -8,5 +8,5 @@ listing=Name,Type,Size,Date,Access,Owner,Group,Link
 reading=true
 source=true
 DocPath=tdeioslave/zip/index.html
-Icon=zip
+Icon=application-vnd.tde.overlay.zip
 Class=:local

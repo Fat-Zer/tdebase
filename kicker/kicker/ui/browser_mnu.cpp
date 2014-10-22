@@ -547,7 +547,7 @@ void PanelBrowserMenu::initIconMap()
     _icons->insert("kdisknav", SmallIcon("kdisknav"));
     _icons->insert("kfm", SmallIcon("kfm"));
     _icons->insert("terminal", SmallIcon("terminal"));
-    _icons->insert("txt", SmallIcon("txt"));
+    _icons->insert("txt", SmallIcon("text-plain"));
     _icons->insert("exec", SmallIcon("exec"));
     _icons->insert("chardevice", SmallIcon("chardevice"));
 }

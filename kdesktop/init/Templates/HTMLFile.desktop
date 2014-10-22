@@ -145,4 +145,4 @@ Comment[zh_CN]=输入 HTML 文件名：
 Comment[zh_TW]=輸入 HTML 檔案名稱：
 Type=Link
 URL=.source/HTMLFile.html
-Icon=html
+Icon=text-x-text-html

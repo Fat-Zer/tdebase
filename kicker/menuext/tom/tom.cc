@@ -496,7 +496,7 @@ void TOM::initialize()
     m_recentDocsMenu->setFont(m_largerFont);
     connect(m_recentDocsMenu, TQT_SIGNAL(aboutToShow()), this, TQT_SLOT(initializeRecentDocs()));
     connect(m_recentDocsMenu, TQT_SIGNAL(activated(int)), this, TQT_SLOT(openRecentDocument(int)));
-    insertItem(DesktopIcon("document", TDEIcon::SizeMedium), i18n("Recent Documents"), m_recentDocsMenu);
+    insertItem(DesktopIcon("text-x-generic", TDEIcon::SizeMedium), i18n("Recent Documents"), m_recentDocsMenu);
     m_submenus.append(m_recentDocsMenu);
 
     TDEPopupMenu* recentApps = new TDEPopupMenu(this, "recentApps");

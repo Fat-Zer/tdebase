@@ -1,5 +1,5 @@
 [Desktop Entry]
-Icon=zip_unmount
+Icon=application-vnd.tde.overlay.zip_unmount
 Type=MimeType
 MimeType=media/zip_unmounted
 Comment=Unmounted Zip Disk

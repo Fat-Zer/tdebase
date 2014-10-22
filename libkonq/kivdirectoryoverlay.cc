@@ -97,7 +97,7 @@ void KIVDirectoryOverlay::slotCompleted()
     }
     
     if ( best * 2 < total ) {
-        m_bestIcon = "tdemultiple";
+        m_bestIcon = "application-vnd.tde.tdemultiple";
     }
 
     if (!m_bestIcon.isNull()) {
