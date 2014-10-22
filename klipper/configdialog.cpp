@@ -259,7 +259,7 @@ ActionWidget::ActionWidget( const ActionList *list, ConfigDialog* configWidget, 
     TQListViewItem *after = 0L; // QListView's default inserting really sucks
     ActionListIterator it( *list );
 
-    const TQPixmap& doc = SmallIcon( "application-vnd.tde.misc" );
+    const TQPixmap& doc = SmallIcon( "misc" );
     const TQPixmap& exec = SmallIcon( "exec" );
 
     for ( action = it.current(); action; action = ++it ) {
@@ -361,7 +361,7 @@ void ActionWidget::slotItemChanged( TQListViewItem *item, const TQPoint&, int co
 void ActionWidget::slotAddAction()
 {
     TQListViewItem *item = new TQListViewItem( listView );
-    item->setPixmap( 0, SmallIcon( "application-vnd.tde.misc" ));
+    item->setPixmap( 0, SmallIcon( "misc" ));
     item->setText( 0, i18n("Click here to set the regexp"));
     item->setText( 1, i18n("<new action>"));
 }

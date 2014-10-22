@@ -202,7 +202,7 @@ void KEBApp::createActions() {
         i18n("Export to &Opera Bookmarks..."), "opera", 0,
         TQT_TQOBJECT(actn), TQT_SLOT( slotExportOpera() ), actionCollection(), "exportOpera");
     (void) new TDEAction(
-        i18n("Export to &HTML Bookmarks..."), "html", 0,
+        i18n("Export to &HTML Bookmarks..."), "text-html", 0,
         TQT_TQOBJECT(actn), TQT_SLOT( slotExportHTML() ), actionCollection(), "exportHTML");
     (void) new TDEAction(
         i18n("Export to &IE Bookmarks..."), 0,
