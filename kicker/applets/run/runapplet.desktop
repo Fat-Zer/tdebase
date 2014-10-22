@@ -125,6 +125,6 @@ Comment[vi]=Chạy một lệnh đơn mà không cần mở một thiết bị �
 Comment[wa]=Lancî ene comande seule sins terminå
 Comment[zh_CN]=调用单条命令而无须使用终端窗口
 Comment[zh_TW]=不使用終端機視窗而送出單行指令
-Icon=exec
+Icon=application-x-executable
 X-TDE-Library=run_panelapplet
 X-TDE-UniqueApplet=true

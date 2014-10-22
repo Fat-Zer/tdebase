@@ -70,7 +70,7 @@ TQPopupMenu* Workspace::clientPopup()
             i18n("Window &Shortcut...")+'\t'+keys->shortcut("Setup Window Shortcut").seq(0).toString(), Options::SetupWindowShortcutOp );
         advanced_popup->insertSeparator();
         advanced_popup->insertItem( SmallIconSet( "suspend" ), i18n("&Suspend Application"), Options::SuspendWindowOp );
-        advanced_popup->insertItem( SmallIconSet( "exec" ), i18n("&Resume Application"), Options::ResumeWindowOp );
+        advanced_popup->insertItem( SmallIconSet( "application-x-executable" ), i18n("&Resume Application"), Options::ResumeWindowOp );
         advanced_popup->insertSeparator();
         advanced_popup->insertItem( SmallIconSet( "wizard" ), i18n("&Special Window Settings..."), Options::WindowRulesOp );
         advanced_popup->insertItem( SmallIconSet( "wizard" ), i18n("&Special Application Settings..."), Options::ApplicationRulesOp );

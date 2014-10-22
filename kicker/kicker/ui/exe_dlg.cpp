@@ -50,7 +50,7 @@ PanelExeDialog::PanelExeDialog(const TQString& title, const TQString& descriptio
                                const TQString &cmd, bool inTerm,
                                TQWidget *parent, const char *name)
     : KDialogBase(parent, name, false, i18n("Non-TDE Application Configuration"), Ok|Cancel, Ok, true),
-      m_icon(icon.isEmpty() ? "exec" : icon),
+      m_icon(icon.isEmpty() ? "application-x-executable" : icon),
       m_iconChanged(false)
 {
     setCaption(i18n("Non-TDE Application Configuration"));

@@ -62,7 +62,7 @@ IconThemesConfig::IconThemesConfig(TQWidget *parent, const char *name)
 
   TQHBoxLayout *lh2=new TQHBoxLayout( m_preview );
   m_previewExec=new TQLabel(m_preview);
-  m_previewExec->setPixmap(DesktopIcon("exec"));
+  m_previewExec->setPixmap(DesktopIcon("application-x-executable"));
   m_previewFolder=new TQLabel(m_preview);
   m_previewFolder->setPixmap(DesktopIcon("folder"));
   m_previewDocument=new TQLabel(m_preview);

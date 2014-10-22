@@ -849,7 +849,7 @@ void Minicli::setIcon ()
     m_iconName = TQString::fromLatin1("kmenu");
 
   TQPixmap icon;
-  if ((m_iconName == "exec") && (m_filterData->iconName() == "exec")) {
+  if ((m_iconName == "application-x-executable") && (m_filterData->iconName() == "application-x-executable")) {
     TQPixmap potentialIcon = m_filterData->customIconPixmap();
     if (!potentialIcon.isNull()) {
       icon = potentialIcon;

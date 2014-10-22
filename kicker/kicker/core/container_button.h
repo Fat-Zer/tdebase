@@ -176,7 +176,7 @@ public:
                              const TQString &cmdLine, bool inTerm,
                              TQPopupMenu* opMenu, TQWidget* parent = 0);
     TQString appletType() const { return "ExecButton"; }
-    virtual TQString icon() const { return "exec"; }
+    virtual TQString icon() const { return "application-x-executable"; }
     virtual TQString visibleName() const { return i18n("Non-TDE Application"); }
 };
 

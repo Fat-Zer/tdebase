@@ -1,6 +1,6 @@
 [Desktop Entry]
 Exec=
-Icon=exec
+Icon=application-x-executable
 Path=
 Terminal=false
 Type=Application

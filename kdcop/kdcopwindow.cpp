@@ -114,7 +114,7 @@ DCOPBrowserApplicationItem::DCOPBrowserApplicationItem
 {
   setExpandable(true);
   setText(0, TQString::fromUtf8(app_));
-  setPixmap(0,  TDEGlobal::iconLoader()->loadIcon( TQString::fromLatin1( "exec" ), TDEIcon::Small ));
+  setPixmap(0,  TDEGlobal::iconLoader()->loadIcon( TQString::fromLatin1( "application-x-executable" ), TDEIcon::Small ));
 
 
 	/* Get the icon:  we use the icon from a mainwindow in that class.
@@ -323,7 +323,7 @@ KDCOPWindow::KDCOPWindow(TQWidget *parent, const char * name)
     new TDEAction
     (
      i18n("&Execute"),
-      "exec",
+      "application-x-executable",
      CTRL + Key_E,
      TQT_TQOBJECT(this),
      TQT_SLOT(slotCallFunction()),

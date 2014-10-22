@@ -75,7 +75,7 @@ protected:
 
     // reimplemented from PanelButton
     virtual TQString tileName() { return "URL"; }
-    TQString defaultIcon() const { return "exec"; };
+    TQString defaultIcon() const { return "application-x-executable"; };
 
     // handle drag and drop actions
     virtual void dropEvent(TQDropEvent *ev);

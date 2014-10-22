@@ -260,7 +260,7 @@ ActionWidget::ActionWidget( const ActionList *list, ConfigDialog* configWidget, 
     ActionListIterator it( *list );
 
     const TQPixmap& doc = SmallIcon( "misc" );
-    const TQPixmap& exec = SmallIcon( "exec" );
+    const TQPixmap& exec = SmallIcon( "application-x-executable" );
 
     for ( action = it.current(); action; action = ++it ) {
         item = new TQListViewItem( listView, after,
@@ -341,7 +341,7 @@ void ActionWidget::slotContextMenu( TDEListView *, TQListViewItem *item,
         TQListViewItem *cmdItem = new TQListViewItem( p, item,
                          i18n("Click here to set the command to be executed"),
                          i18n("<new command>") );
-        cmdItem->setPixmap( 0, SmallIcon( "exec" ) );
+        cmdItem->setPixmap( 0, SmallIcon( "application-x-executable" ) );
     }
     else if ( id == rmCmd )
         delete item;
@@ -355,7 +355,7 @@ void ActionWidget::slotItemChanged( TQListViewItem *item, const TQPoint&, int co
         return;
     ClipCommand command( item->text(0), item->text(1) );
         item->setPixmap( 0, SmallIcon( command.pixmap.isEmpty() ?
-                                                   "exec" : command.pixmap ) );
+                                                   "application-x-executable" : command.pixmap ) );
 }
 
 void ActionWidget::slotAddAction()

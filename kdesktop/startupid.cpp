@@ -182,7 +182,7 @@ void StartupId::start_startupid( const TQString& icon_P )
     TQPixmap icon_pixmap = TDEGlobal::iconLoader()->loadIcon( icon_P, TDEIcon::Small, 0,
         TDEIcon::DefaultState, 0, true ); // return null pixmap if not found
     if( icon_pixmap.isNull())
-        icon_pixmap = SmallIcon( "exec" );
+        icon_pixmap = SmallIcon( "application-x-executable" );
     if( startup_widget == NULL )
         {
         startup_widget = new TQWidget( NULL, NULL, WX11BypassWM );

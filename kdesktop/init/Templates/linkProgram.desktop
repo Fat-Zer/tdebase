@@ -148,6 +148,6 @@ Comment[xh]=Ikhonkco Elitsha Lwesicelo
 Comment[zh_CN]=新建应用程序链接
 Comment[zh_TW]=新建應用程式連結
 Comment[zu]=Isixhumanisi esisha esiya kumyaleli
-Icon=exec
+Icon=application-x-executable
 Type=Link
 URL=.source/Program.desktop

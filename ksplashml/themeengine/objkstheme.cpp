@@ -116,7 +116,7 @@ bool ObjKsTheme::loadTDEConfig( TDEConfig *cfg, const TQString& activeTheme, boo
 
   m_icons.clear();
   m_icons.append( cfg->readEntry( "Icon1", "filetypes" ) );
-  m_icons.append( cfg->readEntry( "Icon2", "exec" ) );
+  m_icons.append( cfg->readEntry( "Icon2", "application-x-executable" ) );
   m_icons.append( cfg->readEntry( "Icon3", "key_bindings" ) );
   m_icons.append( cfg->readEntry( "Icon4", "window_list" ) );
   m_icons.append( cfg->readEntry( "Icon5", "desktop" ) );

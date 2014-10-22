@@ -56,7 +56,7 @@ protected:
     virtual void startDrag();
     virtual void dropEvent(TQDropEvent *);
     virtual void dragEnterEvent(TQDragEnterEvent *);
-    TQString defaultIcon() const { return "exec"; };
+    TQString defaultIcon() const { return "application-x-executable"; };
     bool checkForBackingFile();
 
     KService::Ptr  _service;
