@@ -79,5 +79,5 @@ Name[zh_TW]=系統紀錄檔檢視器
 Name[zu]=Umbukisi Wenqubo eqoshiwe Yesistimu
 Exec=logview
 Terminal=false
-Icon=text-x-text-x-logview
+Icon=text-x-logview
 Type=Application
