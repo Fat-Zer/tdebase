@@ -139,6 +139,6 @@ Comment[vi]=Thực đơn cho hệ thống in ấn
 Comment[wa]=Dresseŷe pol sistinme d' imprimaedje
 Comment[zh_CN]=打印系统菜单
 Comment[zh_TW]=用於列印系統的選單
-Icon=fileprint
+Icon=document-print
 
 X-TDE-Library=kickermenu_tdeprint
