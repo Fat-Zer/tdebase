@@ -543,17 +543,17 @@ KSMShutdownIPFeedback::KSMShutdownIPFeedback()
 		system("krootbacking &");
 	}
 
+	m_screenGeometry = TQApplication::desktop()->geometry();
+
 	// eliminate nasty flicker on first show
-	m_root.resize( kapp->desktop()->width(), kapp->desktop()->height() );
-	TQImage blendedImage = TQImage( kapp->desktop()->width(), kapp->desktop()->height(), 32 );
+	m_root.resize(m_screenGeometry.width(), m_screenGeometry.height());
 	TQPainter p;
 	p.begin( &m_root );
-	blendedImage.setAlphaBuffer(false);
-	p.drawImage( 0, 0, blendedImage );
+	p.fillRect( 0, 0, m_root.width(), m_root.height(), TQBrush(tqRgba(0, 0, 0, 0)) );
 	p.end();
 
 	setBackgroundPixmap( m_root );
-	setGeometry( TQApplication::desktop()->geometry() );
+	setGeometry( m_screenGeometry );
 	setBackgroundMode( TQWidget::NoBackground );
 }
 

@@ -157,6 +157,7 @@ private:
     void windowAdded( WId window, bool managed );
     void resume( bool force );
     static TQVariant getConf(void *ctx, const char *key, const TQVariant &dflt);
+    void generateBackingImages();
     void fullyOnline();
 
     bool        mLocked;
@@ -228,6 +229,7 @@ private:
     TQPixmap    backingPixmap;
     KRootPixmap  *m_rootPixmap;
     int         mBackingStartupDelayTimer;
+    TQPixmap    mArgbTransparentBackgroundPixmap;
 
     KSMModalDialog* m_startupStatusDialog;
 

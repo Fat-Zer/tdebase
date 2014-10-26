@@ -359,6 +359,7 @@ void LockProcess::init(bool child, bool useBlankOnly)
     XGetWindowAttributes(tqt_xdisplay(), RootWindow(tqt_xdisplay(), tqt_xscreen()), &rootAttr);
     mRootWidth = rootAttr.width;
     mRootHeight = rootAttr.height;
+    generateBackingImages();
 
     // Connect all signals
     connect( mForceContinualLockDisplayTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(displayLockDialogIfNeeded()) );
@@ -988,6 +989,7 @@ void LockProcess::desktopResized()
     }
     mRootWidth = rootAttr.width;
     mRootHeight = rootAttr.height;
+    generateBackingImages();
 
     mBusy = true;
     mHackDelayStartupTimer->stop();
@@ -1281,24 +1283,27 @@ void LockProcess::ungrabInput()
 
 //---------------------------------------------------------------------------
 //
+// Generate requisite backing images for ARGB mode
+//
+void LockProcess::generateBackingImages()
+{
+	if (argb_visual) {
+		mArgbTransparentBackgroundPixmap.resize(mRootWidth, mRootHeight);
+		TQPainter p;
+		p.begin( &mArgbTransparentBackgroundPixmap );
+		p.fillRect( 0, 0, mArgbTransparentBackgroundPixmap.width(), mArgbTransparentBackgroundPixmap.height(), TQBrush(tqRgba(0, 0, 0, 0)) );
+		p.end();
+	}
+}
+
+//---------------------------------------------------------------------------
+//
 // Set a fully transparent ARGB background image.
 //
 void LockProcess::setTransparentBackgroundARGB()
 {
 	// eliminate nasty flicker on first show
-	TQImage m_grayImage = TQImage( TQApplication::desktop()->width(), TQApplication::desktop()->height(), 32 );
-	m_grayImage = m_grayImage.convertDepth(32);
-	m_grayImage.setAlphaBuffer(false);
-	m_grayImage.fill(0);	// Set the alpha buffer to 0 (fully transparent)
-	m_grayImage.setAlphaBuffer(true);
-	TQPixmap m_root;
-	m_root.resize(mRootWidth, mRootHeight);
-	TQPainter p;
-	p.begin( &m_root );
-	m_grayImage.setAlphaBuffer(false);
-	p.drawImage( 0, 0, m_grayImage );
-	p.end();
-	setBackgroundPixmap( m_root );
+	setBackgroundPixmap( mArgbTransparentBackgroundPixmap );
 }
 
 void LockProcess::saverReadyIfNeeded()
@@ -1635,6 +1640,7 @@ bool LockProcess::startHack()
 			mSuspended = false;
 		}
 
+		XChangeActivePointerGrab( tqt_xdisplay(), GRABEVENTS, TQCursor(tqblankCursor).handle(), CurrentTime);
 		if (mHackProc.start() == true)
 		{
 #ifdef HAVE_SETPRIORITY
@@ -1965,8 +1971,7 @@ int LockProcess::execDialog( TQDialog *dlg )
     if (mDialogs.isEmpty())
     {
         suspend();
-        XChangeActivePointerGrab( tqt_xdisplay(), GRABEVENTS,
-                TQCursor(tqarrowCursor).handle(), CurrentTime);
+        XChangeActivePointerGrab( tqt_xdisplay(), GRABEVENTS, TQCursor(tqarrowCursor).handle(), CurrentTime);
     }
     mDialogs.prepend( dlg );
     fakeFocusIn( dlg->winId());
@@ -1996,8 +2001,7 @@ int LockProcess::execDialog( TQDialog *dlg )
         else {
            cursorHandle = TQCursor(tqbusyCursor).handle();
         }
-        XChangeActivePointerGrab( tqt_xdisplay(), GRABEVENTS,
-                cursorHandle, CurrentTime);
+        XChangeActivePointerGrab( tqt_xdisplay(), GRABEVENTS, cursorHandle, CurrentTime);
         if (trinity_desktop_lock_use_system_modal_dialogs) {
             // Slight delay before screensaver resume to allow the dialog window to fully disappear
             if (hackResumeTimer == NULL) {
