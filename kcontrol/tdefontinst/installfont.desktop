@@ -75,5 +75,5 @@ Name[vi]=Cài đặt
 Name[wa]=Astaler
 Name[zh_CN]=安装
 Name[zh_TW]=安裝
-Icon=font-x-generics
+Icon=font-x-generic
 Exec=kfmclient copy %U fonts:/

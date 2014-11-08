@@ -1,6 +1,6 @@
 [Desktop Entry]
 Exec=tdecmshell fonts
-Icon=font-x-generics
+Icon=font-x-generic
 Type=Application
 X-DocPath=kcontrol/fonts/index.html
 

@@ -83,4 +83,4 @@ X-TDE-ServiceTypes=KParts/ReadOnlyPart,Browser/View
 X-TDE-Library=libtdefontviewpart
 Type=Service
 X-TDE-InitialPreference=1
-Icon=font-x-generics
+Icon=font-x-generic
