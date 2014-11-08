@@ -209,7 +209,7 @@ bool DocEntry::readFromFile( const TQString &fileName )
   mName = file.readName();
   mSearch = file.readEntry( "X-DOC-Search" );
   mIcon = file.readIcon();
-  mUrl = file.readPathEntry( "DocPath" );
+  mUrl = file.readPathEntry( "X-DocPath" );
   mInfo = file.readEntry( "Info" );
   if ( mInfo.isNull() ) mInfo = file.readEntry( "Comment" );
   mLang = file.readEntry( "Lang", "en" );

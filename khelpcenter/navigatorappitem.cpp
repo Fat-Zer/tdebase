@@ -163,7 +163,7 @@ TQString NavigatorAppItem::key( int column, bool ascending ) const
 
 TQString NavigatorAppItem::documentationURL( KService *s )
 {
-  TQString docPath = s->property( "DocPath" ).toString();
+  TQString docPath = s->property( "X-DocPath" ).toString();
   if ( docPath.isEmpty() )
     return TQString::null;
   
