@@ -602,7 +602,6 @@ void KBackgroundManager::slotCrossFadeTimeout()
     }
 
     if (mAlpha <= 0.0 || mBenchmark.elapsed() > 300 ) {
-        bool do_cleanup = true;
         mAlpha = 1;
         m_crossTimer->stop();
         KPixmap pixm(mNextScreen);
@@ -626,12 +625,10 @@ void KBackgroundManager::slotCrossFadeTimeout()
  */
 void KBackgroundManager::slotImageDone(int desk)
 {
-    bool t_useViewports = 1;
     TQSize s(m_pKwinmodule->numberOfViewports(m_pKwinmodule->currentDesktop()));
     m_numberOfViewports = s.width() * s.height();
     if (m_numberOfViewports < 1) {
         m_numberOfViewports = 1;
-        t_useViewports = 0;
     }
 
     KPixmap *pm = new KPixmap();
@@ -897,8 +894,11 @@ void KBackgroundManager::changeWallpaper()
 void KBackgroundManager::setExport(int _export)
 {
 //    kdDebug() << "KBackgroundManager enabling exports.\n";
+    bool changed = (_export != m_bExport);
     applyExport(_export);
-    slotChangeDesktop(0);
+    if (changed) {
+        slotChangeDesktop(0);
+    }
 }
 
 // DCOP exported
