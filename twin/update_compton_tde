@@ -1,0 +1,46 @@
+#!/bin/bash
+#
+# (c) 2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
+# Released under the GPL v2/v3
+#
+# NOTE
+# This script cannot typically be run as-is against the tree
+# Specifically the code below the bash call is highly likely to fail!
+#
+# In a nutshell, due to bad behaviour from GIT in this use case, this
+# script is more of a starting point than an actual automated update...
+#
+
+set -e
+
+TDEBASE_WORKING_DIRECTORY=~/TEMP2/tdebase-trinity-14.0.0-r1664
+
+mkdir TEMP
+cd TEMP
+git clone https://github.com/chjj/compton.git
+cd compton
+git subtree split -P src -b compton-tde
+cd ..
+
+mkdir compton-tde
+cd compton-tde
+git init
+git pull ../compton compton-tde
+
+rm -rf .git/refs/original
+git reflog expire --all
+git gc --aggressive --prune=now
+git reflog expire --all --expire-unreachable=0
+git repack -A -d
+git prune
+
+cd ..
+
+cd compton-tde
+git remote add -f compton-update $TDEBASE_WORKING_DIRECTORY/twin/TEMP/compton-tde
+git merge --no-commit compton-update/master
+echo "Now resolve conflicts, exit when done..."
+bash
+git read-tree --prefix=twin/compton-tde/ -u compton-update/master
+git commit -m "Merge compton changes"
+git pull -s subtree compton-update master
