@@ -273,7 +273,7 @@ free_reg_data(reg_data_t *pregd) {
  */
 static inline void
 free_paint(session_t *ps, paint_t *ppaint) {
-  free_texture(ps, &ppaint->ptex);
+  free_paint_glx(ps, ppaint);
   free_picture(ps, &ppaint->pict);
   free_pixmap(ps, &ppaint->pixmap);
 }
@@ -292,6 +292,7 @@ free_wpaint(session_t *ps, win *w) {
  */
 static inline void
 free_win_res(session_t *ps, win *w) {
+  free_win_res_glx(ps, w);
   free_region(ps, &w->extents);
   free_paint(ps, &w->paint);
   free_region(ps, &w->border_size);
@@ -302,9 +303,6 @@ free_win_res(session_t *ps, win *w) {
   free(w->class_instance);
   free(w->class_general);
   free(w->role);
-#ifdef CONFIG_VSYNC_OPENGL_GLSL
-  free_glx_bc(ps, &w->glx_blur_cache);
-#endif
 }
 
 /**
@@ -356,7 +354,7 @@ isdamagenotify(session_t *ps, const XEvent *ev) {
  */
 static inline XTextProperty *
 make_text_prop(session_t *ps, char *str) {
-  XTextProperty *pprop = cmalloc(1, XTextProperty);
+  XTextProperty *pprop = ccalloc(1, XTextProperty);
 
   if (XmbTextListToTextProperty(ps->dpy, &str, 1,  XStringStyle, pprop)) {
     cxfree(pprop->value);
@@ -678,20 +676,37 @@ static win *
 paint_preprocess(session_t *ps, win *list);
 
 static void
-render(session_t *ps, int x, int y, int dx, int dy, int wid, int hei,
+render_(session_t *ps, int x, int y, int dx, int dy, int wid, int hei,
     double opacity, bool argb, bool neg,
     Picture pict, glx_texture_t *ptex,
-    XserverRegion reg_paint, const reg_data_t *pcache_reg);
+    XserverRegion reg_paint, const reg_data_t *pcache_reg
+#ifdef CONFIG_VSYNC_OPENGL_GLSL
+    , const glx_prog_main_t *pprogram
+#endif
+    );
+
+#ifdef CONFIG_VSYNC_OPENGL_GLSL
+#define \
+   render(ps, x, y, dx, dy, wid, hei, opacity, argb, neg, pict, ptex, reg_paint, pcache_reg, pprogram) \
+  render_(ps, x, y, dx, dy, wid, hei, opacity, argb, neg, pict, ptex, reg_paint, pcache_reg, pprogram)
+#else
+#define \
+   render(ps, x, y, dx, dy, wid, hei, opacity, argb, neg, pict, ptex, reg_paint, pcache_reg, pprogram) \
+  render_(ps, x, y, dx, dy, wid, hei, opacity, argb, neg, pict, ptex, reg_paint, pcache_reg)
+#endif
 
 static inline void
-win_render(session_t *ps, win *w, int x, int y, int wid, int hei, double opacity, XserverRegion reg_paint, const reg_data_t *pcache_reg, Picture pict) {
+win_render(session_t *ps, win *w, int x, int y, int wid, int hei,
+    double opacity, XserverRegion reg_paint, const reg_data_t *pcache_reg,
+    Picture pict) {
   const int dx = (w ? w->a.x: 0) + x;
   const int dy = (w ? w->a.y: 0) + y;
-  const bool argb = (w && w->mode == WMODE_ARGB);
+  const bool argb = (w && (WMODE_ARGB == w->mode || ps->o.force_win_blend));
   const bool neg = (w && w->invert_color);
 
   render(ps, x, y, dx, dy, wid, hei, opacity, argb, neg,
-      pict, (w ? w->paint.ptex: ps->root_tile_paint.ptex), reg_paint, pcache_reg);
+      pict, (w ? w->paint.ptex: ps->root_tile_paint.ptex),
+      reg_paint, pcache_reg, (w ? &ps->o.glx_prog_win: NULL));
 }
 
 static inline void
@@ -838,10 +853,19 @@ static void
 win_update_prop_shadow(session_t *ps, win *w);
 
 static void
+win_set_shadow(session_t *ps, win *w, bool shadow_new);
+
+static void
 win_determine_shadow(session_t *ps, win *w);
 
 static void
+win_set_invert_color(session_t *ps, win *w, bool invert_color_new);
+
+static void
 win_determine_invert_color(session_t *ps, win *w);
+
+static void
+win_set_blur_background(session_t *ps, win *w, bool blur_background_new);
 
 static void
 win_determine_blur_background(session_t *ps, win *w);
@@ -1204,10 +1228,10 @@ swopti_handle_timeout(session_t *ps, struct timeval *ptv);
 static inline bool
 ensure_glx_context(session_t *ps) {
   // Create GLX context
-  if (!ps->glx_context)
+  if (!glx_has_context(ps))
     glx_init(ps, false);
 
-  return ps->glx_context;
+  return ps->psglx->context;
 }
 #endif
 
@@ -1254,7 +1278,7 @@ init_alpha_picts(session_t *ps);
 static bool
 init_dbe(session_t *ps);
 
-static void
+static bool
 init_overlay(session_t *ps);
 
 static void

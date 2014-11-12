@@ -17,6 +17,7 @@
 // === Options ===
 
 // Debug options, enable them using -D in CFLAGS
+// #define DEBUG_BACKTRACE  1
 // #define DEBUG_REPAINT    1
 // #define DEBUG_EVENTS     1
 // #define DEBUG_RESTACK    1
@@ -81,6 +82,10 @@
 
 #ifndef COMPTON_VERSION
 #define COMPTON_VERSION "unknown"
+#endif
+
+#if defined(DEBUG_ALLOC_REG)
+#define DEBUG_BACKTRACE 1
 #endif
 
 // === Includes ===
@@ -154,8 +159,6 @@
 #define GLX_BACK_BUFFER_AGE_EXT 0x20F4
 #endif
 
-#endif
-
 // === Macros ===
 
 #define MSTR_(s)        #s
@@ -195,6 +198,11 @@
 /// Macro used for shortening some debugging code.
 #define CASESTRRET(s)   case s: return #s
 
+// X resource checker
+#ifdef DEBUG_XRC
+#include "xrescheck.h"
+#endif
+
 // === Constants ===
 #if !(COMPOSITE_MAJOR > 0 || COMPOSITE_MINOR >= 2)
 #error libXcomposite version unsupported
@@ -222,7 +230,7 @@
 #define MS_PER_SEC 1000
 
 #define XRFILTER_CONVOLUTION  "convolution"
-#define XRFILTER_GUASSIAN     "gaussian"
+#define XRFILTER_GAUSSIAN     "gaussian"
 #define XRFILTER_BINOMIAL     "binomial"
 
 /// @brief Maximum OpenGL FBConfig depth.
@@ -454,7 +462,6 @@ struct _glx_texture {
   unsigned depth;
   bool y_inverted;
 };
-#endif
 
 #ifdef CONFIG_VSYNC_OPENGL_GLSL
 typedef struct {
@@ -480,6 +487,26 @@ typedef struct {
   /// Height of the textures.
   int height;
 } glx_blur_cache_t;
+
+typedef struct {
+  /// GLSL program.
+  GLuint prog;
+  /// Location of uniform "opacity" in window GLSL program.
+  GLint unifm_opacity;
+  /// Location of uniform "invert_color" in blur GLSL program.
+  GLint unifm_invert_color;
+  /// Location of uniform "tex" in window GLSL program.
+  GLint unifm_tex;
+} glx_prog_main_t;
+
+#define GLX_PROG_MAIN_INIT { \
+  .prog = 0, \
+  .unifm_opacity = -1, \
+  .unifm_invert_color = -1, \
+  .unifm_tex = -1, \
+}
+
+#endif
 #endif
 
 typedef struct {
@@ -547,10 +574,12 @@ typedef struct _options_t {
   int glx_swap_method;
   /// Whether to use GL_EXT_gpu_shader4 to (hopefully) accelerates blurring.
   bool glx_use_gpushader4;
-  /// Whether to try to detect WM windows and mark them as focused.
-  bool mark_wmwin_focused;
-  /// Whether to mark override-redirect windows as focused.
-  bool mark_ovredir_focused;
+  /// Custom fragment shader for painting windows, as a string.
+  char *glx_fshader_win_str;
+#ifdef CONFIG_VSYNC_OPENGL_GLSL
+  /// Custom GLX program used for painting window.
+  glx_prog_main_t glx_prog_win;
+#endif
   /// Whether to fork to background.
   bool fork_after_register;
   /// Whether to detect rounded corners.
@@ -558,6 +587,8 @@ typedef struct _options_t {
   /// Whether to paint on X Composite overlay window instead of root
   /// window.
   bool paint_on_overlay;
+  /// Force painting of window content with blending.
+  bool force_win_blend;
   /// Resize damage for a specific number of pixels.
   int resize_damage;
   /// Whether to unredirect all windows if a full-screen opaque window
@@ -572,6 +603,10 @@ typedef struct _options_t {
   switch_t redirected_force;
   /// Whether to stop painting. Controlled through D-Bus.
   switch_t stoppaint_force;
+  /// Whether to re-redirect screen on root size change.
+  bool reredir_on_root_change;
+  /// Whether to reinitialize GLX on root size change.
+  bool glx_reinit_on_root_change;
   /// Whether to enable D-Bus support.
   bool dbus;
   /// Path to log file.
@@ -582,8 +617,14 @@ typedef struct _options_t {
   Window benchmark_wid;
   /// A list of conditions of windows not to paint.
   c2_lptr_t *paint_blacklist;
+  /// Whether to avoid using XCompositeNameWindowPixmap(), for debugging.
+  bool no_name_pixmap;
   /// Whether to work under synchronized mode for debugging.
   bool synchronize;
+  /// Whether to show all X errors.
+  bool show_all_xerrors;
+  /// Whether to avoid acquiring X Selection.
+  bool no_x_selection;
 
   // === VSync & software optimization ===
   /// User-specified refresh rate.
@@ -631,6 +672,8 @@ typedef struct _options_t {
   time_ms_t fade_delta;
   /// Whether to disable fading on window open/close.
   bool no_fading_openclose;
+  /// Whether to disable fading on ARGB managed destroyed windows.
+  bool no_fading_destroyed_argb;
   /// Whether to disable fading on opacity change
   bool no_fading_opacitychange;
   /// Fading blacklist. A linked list of conditions.
@@ -683,6 +726,10 @@ typedef struct _options_t {
   // === Focus related ===
   /// Consider windows of specific types to be always focused.
   bool wintype_focus[NUM_WINTYPES];
+  /// Whether to try to detect WM windows and mark them as focused.
+  bool mark_wmwin_focused;
+  /// Whether to mark override-redirect windows as focused.
+  bool mark_ovredir_focused;
   /// Whether to use EWMH _NET_ACTIVE_WINDOW to find active window.
   bool use_ewmh_active_win;
   /// A list of windows always to be considered focused.
@@ -700,6 +747,65 @@ typedef struct _options_t {
   /// Whether compton needs to track window leaders.
   bool track_leader;
 } options_t;
+
+#ifdef CONFIG_VSYNC_OPENGL
+/// Structure containing GLX-dependent data for a compton session.
+typedef struct {
+  // === OpenGL related ===
+  /// GLX context.
+  GLXContext context;
+  /// Whether we have GL_ARB_texture_non_power_of_two.
+  bool has_texture_non_power_of_two;
+  /// Pointer to glXGetVideoSyncSGI function.
+  f_GetVideoSync glXGetVideoSyncSGI;
+  /// Pointer to glXWaitVideoSyncSGI function.
+  f_WaitVideoSync glXWaitVideoSyncSGI;
+   /// Pointer to glXGetSyncValuesOML function.
+  f_GetSyncValuesOML glXGetSyncValuesOML;
+  /// Pointer to glXWaitForMscOML function.
+  f_WaitForMscOML glXWaitForMscOML;
+  /// Pointer to glXSwapIntervalSGI function.
+  f_SwapIntervalSGI glXSwapIntervalProc;
+  /// Pointer to glXSwapIntervalMESA function.
+  f_SwapIntervalMESA glXSwapIntervalMESAProc;
+  /// Pointer to glXBindTexImageEXT function.
+  f_BindTexImageEXT glXBindTexImageProc;
+  /// Pointer to glXReleaseTexImageEXT function.
+  f_ReleaseTexImageEXT glXReleaseTexImageProc;
+  /// Pointer to glXCopySubBufferMESA function.
+  f_CopySubBuffer glXCopySubBufferProc;
+#ifdef CONFIG_GLX_SYNC
+  /// Pointer to the glFenceSync() function.
+  f_FenceSync glFenceSyncProc;
+  /// Pointer to the glIsSync() function.
+  f_IsSync glIsSyncProc;
+  /// Pointer to the glDeleteSync() function.
+  f_DeleteSync glDeleteSyncProc;
+  /// Pointer to the glClientWaitSync() function.
+  f_ClientWaitSync glClientWaitSyncProc;
+  /// Pointer to the glWaitSync() function.
+  f_WaitSync glWaitSyncProc;
+  /// Pointer to the glImportSyncEXT() function.
+  f_ImportSyncEXT glImportSyncEXT;
+#endif
+#ifdef DEBUG_GLX_MARK
+  /// Pointer to StringMarkerGREMEDY function.
+  f_StringMarkerGREMEDY glStringMarkerGREMEDY;
+  /// Pointer to FrameTerminatorGREMEDY function.
+  f_FrameTerminatorGREMEDY glFrameTerminatorGREMEDY;
+#endif
+  /// Current GLX Z value.
+  int z;
+  /// FBConfig-s for GLX pixmap of different depths.
+  glx_fbconfig_t *fbconfigs[OPENGL_MAX_DEPTH + 1];
+#ifdef CONFIG_VSYNC_OPENGL_GLSL
+  glx_blur_pass_t blur_passes[MAX_BLUR_PASS];
+#endif
+} glx_session_t;
+
+#define CGLX_SESSION_INIT { .context = NULL }
+
+#endif
 
 /// Structure containing all necessary data for a compton session.
 typedef struct _session_t {
@@ -742,6 +848,10 @@ typedef struct _session_t {
   XdbeBackBuffer root_dbe;
   /// Window ID of the window we register as a symbol.
   Window reg_win;
+#ifdef CONFIG_VSYNC_OPENGL
+  /// Pointer to GLX data.
+  glx_session_t *psglx;
+#endif
 
   // === Operation related ===
   /// Program options.
@@ -784,10 +894,6 @@ typedef struct _session_t {
   /// Pointer to the <code>next</code> member of tail element of the error
   /// ignore linked list.
   ignore_t **ignore_tail;
-#ifdef CONFIG_VSYNC_OPENGL
-  /// Current GLX Z value.
-  int glx_z;
-#endif
   // Cached blur convolution kernels.
   XFixed *blur_kerns_cache[MAX_BLUR_PASS];
   /// Reset program after next paint.
@@ -845,57 +951,6 @@ typedef struct _session_t {
   // === DRM VSync related ===
   /// File descriptor of DRI device file. Used for DRM VSync.
   int drm_fd;
-#endif
-
-#ifdef CONFIG_VSYNC_OPENGL
-  // === OpenGL related ===
-  /// GLX context.
-  GLXContext glx_context;
-  /// Whether we have GL_ARB_texture_non_power_of_two.
-  bool glx_has_texture_non_power_of_two;
-  /// Pointer to glXGetVideoSyncSGI function.
-  f_GetVideoSync glXGetVideoSyncSGI;
-  /// Pointer to glXWaitVideoSyncSGI function.
-  f_WaitVideoSync glXWaitVideoSyncSGI;
-   /// Pointer to glXGetSyncValuesOML function.
-  f_GetSyncValuesOML glXGetSyncValuesOML;
-  /// Pointer to glXWaitForMscOML function.
-  f_WaitForMscOML glXWaitForMscOML;
-  /// Pointer to glXSwapIntervalSGI function.
-  f_SwapIntervalSGI glXSwapIntervalProc;
-  /// Pointer to glXSwapIntervalMESA function.
-  f_SwapIntervalMESA glXSwapIntervalMESAProc;
-  /// Pointer to glXBindTexImageEXT function.
-  f_BindTexImageEXT glXBindTexImageProc;
-  /// Pointer to glXReleaseTexImageEXT function.
-  f_ReleaseTexImageEXT glXReleaseTexImageProc;
-  /// Pointer to glXCopySubBufferMESA function.
-  f_CopySubBuffer glXCopySubBufferProc;
-#ifdef CONFIG_GLX_SYNC
-  /// Pointer to the glFenceSync() function.
-  f_FenceSync glFenceSyncProc;
-  /// Pointer to the glIsSync() function.
-  f_IsSync glIsSyncProc;
-  /// Pointer to the glDeleteSync() function.
-  f_DeleteSync glDeleteSyncProc;
-  /// Pointer to the glClientWaitSync() function.
-  f_ClientWaitSync glClientWaitSyncProc;
-  /// Pointer to the glWaitSync() function.
-  f_WaitSync glWaitSyncProc;
-  /// Pointer to the glImportSyncEXT() function.
-  f_ImportSyncEXT glImportSyncEXT;
-#endif
-#ifdef DEBUG_GLX_MARK
-  /// Pointer to StringMarkerGREMEDY function.
-  f_StringMarkerGREMEDY glStringMarkerGREMEDY;
-  /// Pointer to FrameTerminatorGREMEDY function.
-  f_FrameTerminatorGREMEDY glFrameTerminatorGREMEDY;
-#endif
-  /// FBConfig-s for GLX pixmap of different depths.
-  glx_fbconfig_t *glx_fbconfigs[OPENGL_MAX_DEPTH + 1];
-#ifdef CONFIG_VSYNC_OPENGL_GLSL
-  glx_blur_pass_t glx_blur_passes[MAX_BLUR_PASS];
-#endif
 #endif
 
   // === X extension related ===
@@ -1130,6 +1185,8 @@ typedef struct _win {
   /// Do not fade if it's false. Change on window type change.
   /// Used by fading blacklist in the future.
   bool fade;
+  /// Fade state on last paint.
+  bool fade_last;
   /// Override value of window fade state. Set by D-Bus method calls.
   switch_t fade_force;
   /// Callback to be called after fading completed.
@@ -1144,6 +1201,8 @@ typedef struct _win {
   // Shadow-related members
   /// Whether a window has shadow. Calculated.
   bool shadow;
+  /// Shadow state on last paint.
+  bool shadow_last;
   /// Override value of window shadow state. Set by D-Bus method calls.
   switch_t shadow_force;
   /// Opacity of the shadow. Affected by window opacity and frame opacity.
@@ -1170,12 +1229,16 @@ typedef struct _win {
 
   /// Whether to invert window color.
   bool invert_color;
+  /// Color inversion state on last paint.
+  bool invert_color_last;
   /// Override value of window color inversion state. Set by D-Bus method
   /// calls.
   switch_t invert_color_force;
 
   /// Whether to blur window background.
   bool blur_background;
+  /// Background state on last paint.
+  bool blur_background_last;
 
   /// Whether to show black background
   bool show_black_background;
@@ -1224,13 +1287,13 @@ extern session_t *ps_g;
 static inline void
 print_timestamp(session_t *ps);
 
-#ifdef DEBUG_ALLOC_REG
+#ifdef DEBUG_BACKTRACE
 
 #include <execinfo.h>
-#define BACKTRACE_SIZE  5
+#define BACKTRACE_SIZE  25
 
 /**
- * Print current backtrace, excluding the first two items.
+ * Print current backtrace.
  *
  * Stolen from glibc manual.
  */
@@ -1243,11 +1306,13 @@ print_backtrace(void) {
   size = backtrace(array, BACKTRACE_SIZE);
   strings = backtrace_symbols(array, size);
 
-  for (size_t i = 2; i < size; i++)
+  for (size_t i = 0; i < size; i++)
      printf ("%s\n", strings[i]);
 
   free(strings);
 }
+
+#ifdef DEBUG_ALLOC_REG
 
 /**
  * Wrapper of <code>XFixesCreateRegion</code>, for debugging.
@@ -1277,6 +1342,8 @@ XFixesDestroyRegion_(Display *dpy, XserverRegion reg,
 
 #define XFixesCreateRegion(dpy, p, n) XFixesCreateRegion_(dpy, p, n, __func__, __LINE__)
 #define XFixesDestroyRegion(dpy, reg) XFixesDestroyRegion_(dpy, reg, __func__, __LINE__)
+#endif
+
 #endif
 
 // === Functions ===
@@ -1874,6 +1941,18 @@ bkend_use_glx(session_t *ps) {
 }
 
 /**
+ * Check if there's a GLX context.
+ */
+static inline bool
+glx_has_context(session_t *ps) {
+#ifdef CONFIG_VSYNC_OPENGL
+  return ps->psglx && ps->psglx->context;
+#else
+  return false;
+#endif
+}
+
+/**
  * Check if a window is really focused.
  */
 static inline bool
@@ -1975,7 +2054,15 @@ rect_is_fullscreen(session_t *ps, int x, int y, unsigned wid, unsigned hei) {
 static inline bool
 win_is_fullscreen(session_t *ps, const win *w) {
   return rect_is_fullscreen(ps, w->a.x, w->a.y, w->widthb, w->heightb)
-      && !w->bounding_shaped;
+      && (!w->bounding_shaped || w->rounded_corners);
+}
+
+/**
+ * Check if a window will be painted solid.
+ */
+static inline bool
+win_is_solid(session_t *ps, const win *w) {
+  return WMODE_SOLID == w->mode && !ps->o.force_win_blend;
 }
 
 /**
@@ -2080,11 +2167,21 @@ glx_init(session_t *ps, bool need_render);
 void
 glx_destroy(session_t *ps);
 
+bool
+glx_reinit(session_t *ps, bool need_render);
+
 void
 glx_on_root_change(session_t *ps);
 
 bool
 glx_init_blur(session_t *ps);
+
+#ifdef CONFIG_VSYNC_OPENGL_GLSL
+bool
+glx_load_prog_main(session_t *ps,
+    const char *vshader_str, const char *fshader_str,
+    glx_prog_main_t *pprogram);
+#endif
 
 bool
 glx_bind_pixmap(session_t *ps, glx_texture_t **pptex, Pixmap pixmap,
@@ -2121,10 +2218,24 @@ glx_dim_dst(session_t *ps, int dx, int dy, int width, int height, float z,
     GLfloat factor, XserverRegion reg_tgt, const reg_data_t *pcache_reg);
 
 bool
-glx_render(session_t *ps, const glx_texture_t *ptex,
+glx_render_(session_t *ps, const glx_texture_t *ptex,
     int x, int y, int dx, int dy, int width, int height, int z,
-    double opacity, bool neg,
-    XserverRegion reg_tgt, const reg_data_t *pcache_reg);
+    double opacity, bool argb, bool neg,
+    XserverRegion reg_tgt, const reg_data_t *pcache_reg
+#ifdef CONFIG_VSYNC_OPENGL_GLSL
+    , const glx_prog_main_t *pprogram
+#endif
+    );
+
+#ifdef CONFIG_VSYNC_OPENGL_GLSL
+#define \
+   glx_render(ps, ptex, x, y, dx, dy, width, height, z, opacity, argb, neg, reg_tgt, pcache_reg, pprogram) \
+  glx_render_(ps, ptex, x, y, dx, dy, width, height, z, opacity, argb, neg, reg_tgt, pcache_reg, pprogram)
+#else
+#define \
+   glx_render(ps, ptex, x, y, dx, dy, width, height, z, opacity, argb, neg, reg_tgt, pcache_reg, pprogram) \
+  glx_render_(ps, ptex, x, y, dx, dy, width, height, z, opacity, argb, neg, reg_tgt, pcache_reg)
+#endif
 
 bool
 glx_render_specified_color(session_t *ps, int color, int dx, int dy, int width, int height, int z,
@@ -2133,12 +2244,19 @@ glx_render_specified_color(session_t *ps, int color, int dx, int dy, int width, 
 void
 glx_swap_copysubbuffermesa(session_t *ps, XserverRegion reg);
 
+unsigned char *
+glx_take_screenshot(session_t *ps, int *out_length);
+
 #ifdef CONFIG_VSYNC_OPENGL_GLSL
 GLuint
 glx_create_shader(GLenum shader_type, const char *shader_str);
 
 GLuint
 glx_create_program(const GLuint * const shaders, int nshaders);
+
+GLuint
+glx_create_program_from_str(const char *vert_shader_str,
+    const char *frag_shader_str);
 #endif
 
 /**
@@ -2147,7 +2265,7 @@ glx_create_program(const GLuint * const shaders, int nshaders);
 static inline void
 free_texture_r(session_t *ps, GLuint *ptexture) {
   if (*ptexture) {
-    assert(ps->glx_context);
+    assert(glx_has_context(ps));
     glDeleteTextures(1, ptexture);
     *ptexture = 0;
   }
@@ -2214,19 +2332,39 @@ free_texture(session_t *ps, glx_texture_t **pptex) {
 }
 
 /**
+ * Free GLX part of paint_t.
+ */
+static inline void
+free_paint_glx(session_t *ps, paint_t *ppaint) {
+  free_texture(ps, &ppaint->ptex);
+}
+
+/**
+ * Free GLX part of win.
+ */
+static inline void
+free_win_res_glx(session_t *ps, win *w) {
+  free_paint_glx(ps, &w->paint);
+  free_paint_glx(ps, &w->shadow_paint);
+#ifdef CONFIG_VSYNC_OPENGL_GLSL
+  free_glx_bc(ps, &w->glx_blur_cache);
+#endif
+}
+
+/**
  * Add a OpenGL debugging marker.
  */
 static inline void
 glx_mark_(session_t *ps, const char *func, XID xid, bool start) {
 #ifdef DEBUG_GLX_MARK
-  if (bkend_use_glx(ps) && ps->glStringMarkerGREMEDY) {
+  if (glx_has_context(ps) && ps->psglx->glStringMarkerGREMEDY) {
     if (!func) func = "(unknown)";
     const char *postfix = (start ? " (start)": " (end)");
     char *str = malloc((strlen(func) + 12 + 2
           + strlen(postfix) + 5) * sizeof(char));
     strcpy(str, func);
     sprintf(str + strlen(str), "(%#010lx)%s", xid, postfix);
-    ps->glStringMarkerGREMEDY(strlen(str), str);
+    ps->psglx->glStringMarkerGREMEDY(strlen(str), str);
     free(str);
   }
 #endif
@@ -2240,8 +2378,8 @@ glx_mark_(session_t *ps, const char *func, XID xid, bool start) {
 static inline void
 glx_mark_frame(session_t *ps) {
 #ifdef DEBUG_GLX_MARK
-  if (bkend_use_glx(ps) && ps->glFrameTerminatorGREMEDY)
-    ps->glFrameTerminatorGREMEDY();
+  if (glx_has_context(ps) && ps->psglx->glFrameTerminatorGREMEDY)
+    ps->psglx->glFrameTerminatorGREMEDY();
 #endif
 }
 
@@ -2389,6 +2527,28 @@ c2_matchd(session_t *ps, win *w, const c2_lptr_t *condlst,
 #endif
 
 /**
+ * @brief Dump the given data to a file.
+ */
+static inline bool
+write_binary_data(const char *path, const unsigned char *data, int length) {
+  if (!data)
+    return false;
+  FILE *f = fopen(path, "wb");
+  if (!f) {
+    printf_errf("(\"%s\"): Failed to open file for writing.", path);
+    return false;
+  }
+  int wrote_len = fwrite(data, sizeof(unsigned char), length, f);
+  fclose(f);
+  if (wrote_len != length) {
+    printf_errf("(\"%s\"): Failed to write all blocks: %d / %d", path,
+        wrote_len, length);
+    return false;
+  }
+  return true;
+}
+
+/**
  * @brief Dump raw bytes in HEX format.
  *
  * @param data pointer to raw data
@@ -2423,3 +2583,4 @@ hexdump(const char *data, int len) {
   fflush(stdout);
 }
 
+#endif
