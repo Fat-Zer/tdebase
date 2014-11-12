@@ -2100,11 +2100,11 @@ paint_all(session_t *ps, XserverRegion region, XserverRegion region_real, win *t
             {
               if (w->show_root_tile) {
                 glx_render(ps, ps->root_tile_paint.ptex, w->a.x, w->a.y, w->a.x, w->a.y, w->widthb, w->heightb,
-                    ps->glx_z, 1.0, false, reg_paint, &cache_reg);
+                    ps->psglx->z, 1.0, false, false, reg_paint, &cache_reg, NULL);
               }
               else if (w->show_black_background) {
                 glx_render_specified_color(ps, 0, w->a.x, w->a.y, w->widthb, w->heightb,
-                    ps->glx_z, reg_paint, &cache_reg);
+                    ps->psglx->z, reg_paint, &cache_reg);
               }
               break;
             }
