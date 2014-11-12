@@ -263,7 +263,9 @@ void TDMUsersWidget::slotUserSelected()
 	p.load( m_userPixDir + ".default.face.icon" );
 	rstuserbutton->setEnabled( false );
     }
-    userbutton->setPixmap( p.smoothScale( 48, 48, TQ_ScaleMin ) );
+    if (!p.isNull()) {
+	    userbutton->setPixmap( p.smoothScale( 48, 48, TQ_ScaleMin ) );
+    }
 }
 
 
