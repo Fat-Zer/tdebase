@@ -1108,8 +1108,6 @@ void KonqKfmIconView::showDirectoryOverlay(KFileIVI* item)
 
 void KonqKfmIconView::showFreeSpaceOverlay(KFileIVI* item)
 {
-    KFileItem* fileItem = item->item();
-
     m_paOutstandingFreeSpaceOverlays.append(item);
     if (m_paOutstandingFreeSpaceOverlays.count() == 1)
     {
@@ -1295,6 +1293,10 @@ void KonqKfmIconView::determineIcon( KFileIVI * item )
   //int oldSerial = item->pixmap()->serialNumber();
 
   (void) item->item()->determineMimeType();
+
+  if (item->item()->isMimeTypeKnown()) {
+      item->mimeTypeAndIconDetermined();
+  }
 
   item->setIcon( iconSize(), item->state(), true, true );
   item->setMouseOverAnimation( item->item()->iconName() );

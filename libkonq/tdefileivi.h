@@ -208,6 +208,8 @@ public:
 
     virtual int compare( TQIconViewItem *i ) const;
 
+    void mimeTypeAndIconDetermined();
+
 protected:
     virtual void dropped( TQDropEvent *e, const TQValueList<TQIconDragItem> &  );
 
@@ -240,7 +242,7 @@ private:
 
     /** Check if a thumbnail will be generated and calc the size of the icon */
     void updatePixmapSize();
-    
+
     int m_size, m_state;
     bool m_bDisabled;
     bool m_bThumbnail;
