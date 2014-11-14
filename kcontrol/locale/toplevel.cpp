@@ -206,6 +206,23 @@ void TDELocaleApplication::save()
   emit changed(false);
 }
 
+TQString TDELocaleApplication::handbookSection() const
+{
+ 	int index = m_tab->currentPageIndex();
+ 	if (index == 0)
+		return "locale-locale";
+	else if (index == 1)
+		return "locale-numbers";
+	else if (index == 2)
+		return "locale-money";
+	else if (index == 3)
+		return "locale-datetime";
+	else if (index == 4)
+		return "locale-other";
+ 	else
+ 		return TQString::null;
+}
+
 void TDELocaleApplication::defaults()
 {
 	load( true );

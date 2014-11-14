@@ -329,6 +329,20 @@ void LayoutConfig::save()
 }
 
 
+TQString LayoutConfig::handbookSection() const
+{
+ 	int index = widget->tabWidget->currentPageIndex();
+ 	if (index == 0)
+		return "layout-config";
+	else if (index == 1)
+		return "switching-config";
+	else if (index == 2)
+		return "xkboptions-config";
+	else
+ 		return TQString::null;
+}
+
+
 void LayoutConfig::updateStickyLimit()
 {
     int layoutsCnt = widget->listLayoutsDst->childCount();

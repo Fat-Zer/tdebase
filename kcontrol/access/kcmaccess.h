@@ -70,6 +70,7 @@ public:
   void load(bool useDefaults);
   void save();
   void defaults();
+  virtual TQString handbookSection() const;
 
 protected slots:
 
@@ -83,6 +84,7 @@ protected slots:
 
 private:
 
+	TQTabWidget* tabWidget;
   TQCheckBox *systemBell, *customBell, *visibleBell;
   TQRadioButton *invertScreen, *flashScreen;
   TQLabel    *soundLabel, *colorLabel;

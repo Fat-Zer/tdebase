@@ -235,8 +235,8 @@ KAccessConfig::KAccessConfig(TQWidget *parent, const char *)
   setAboutData( about );
 
   TQVBoxLayout *main = new TQVBoxLayout(this, 0, KDialogBase::spacingHint());
-  TQTabWidget *tab = new TQTabWidget(this);
-  main->addWidget(tab);
+  tabWidget = new TQTabWidget(this);
+  main->addWidget(tabWidget);
 
   // bell settings ---------------------------------------
   TQWidget *bell = new TQWidget(this);
@@ -341,7 +341,7 @@ KAccessConfig::KAccessConfig(TQWidget *parent, const char *)
 
   // -----------------------------------------------------
 
-  tab->addTab(bell, i18n("&Bell"));
+  tabWidget->addTab(bell, i18n("&Bell"));
 
 
   // modifier key settings -------------------------------
@@ -404,7 +404,7 @@ KAccessConfig::KAccessConfig(TQWidget *parent, const char *)
 
   vbox->addStretch();
 
-  tab->addTab(modifiers, i18n("&Modifier Keys"));
+  tabWidget->addTab(modifiers, i18n("&Modifier Keys"));
 
   // key filter settings ---------------------------------
   TQWidget *filters = new TQWidget(this);
@@ -480,7 +480,7 @@ KAccessConfig::KAccessConfig(TQWidget *parent, const char *)
 
   vbox->addStretch();
 
-  tab->addTab(filters, i18n("&Keyboard Filters"));
+  tabWidget->addTab(filters, i18n("&Keyboard Filters"));
 
   // gestures --------------------------------------------
   TQWidget *features = new TQWidget(this);
@@ -551,7 +551,7 @@ KAccessConfig::KAccessConfig(TQWidget *parent, const char *)
 
   vbox->addStretch();
 
-  tab->addTab(features, i18n("Activation Gestures"));
+  tabWidget->addTab(features, i18n("Activation Gestures"));
 
   load();
 }
@@ -728,6 +728,22 @@ void KAccessConfig::save()
   delete config;
 
   emit changed(false);
+}
+
+
+TQString KAccessConfig::handbookSection() const
+{
+ 	int index = tabWidget->currentPageIndex();
+ 	if (index == 0)
+		return "accessibility-intro";
+	else if (index == 1)
+		return "modifier-keys";
+	else if (index == 2)
+		return "keyboard-filters";
+	else if (index == 3)
+		return "action-gestures";
+ 	else
+ 		return TQString::null;
 }
 
 
