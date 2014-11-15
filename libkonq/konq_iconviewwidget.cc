@@ -709,14 +709,16 @@ void KonqIconViewWidget::setItemTextPos( ItemTextPos pos )
     // can't call gridXValue() because this already would need the new itemTextPos()
     int sz = m_size ? m_size : TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop );
 
-    if ( m_bSetGridX )
-        if ( pos == TQIconView::Bottom )
+    if ( m_bSetGridX ) {
+        if ( pos == TQIconView::Bottom ) {
             setGridX( TQMAX( sz + 50, previewIconSize( sz ) + 13 ) );
+        }
         else
         {
             setMaxItemWidth( TQMAX( sz, previewIconSize( sz ) ) + m_pSettings->iconTextWidth() );
             setGridX( -1 );
         }
+    }
 
     TDEIconView::setItemTextPos( pos );
 }
@@ -773,14 +775,16 @@ void KonqIconViewWidget::gridValues( int* x, int* y, int* dx, int* dy,
 
 void KonqIconViewWidget::calculateGridX()
 {
-    if ( m_bSetGridX )
-        if ( itemTextPos() == TQIconView::Bottom )
+    if ( m_bSetGridX ) {
+        if ( itemTextPos() == TQIconView::Bottom ) {
             setGridX( gridXValue() );
+        }
         else
         {
             setMaxItemWidth( gridXValue() );
             setGridX( -1 );
         }
+    }
 }
 
 int KonqIconViewWidget::gridXValue() const

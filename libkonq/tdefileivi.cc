@@ -570,10 +570,42 @@ void KFileIVI::updatePixmapSize()
 
     KonqIconViewWidget* view = static_cast<KonqIconViewWidget*>( iconView() );
 
-    TQSize pixSize = TQSize( size, size );
-    if ( pixSize != pixmapSize() ) {
-        setPixmapSize( pixSize );
+    bool mimeDetermined = false;
+    if ( m_fileitem->isMimeTypeKnown() ) {
+        mimeDetermined = true;
     }
+
+    if (mimeDetermined) {
+        bool changed = false;
+        if ( view && view->canPreview( item() ) ) {
+            int previewSize = view->previewIconSize( size );
+            if (previewSize != size) {
+                setPixmapSize( TQSize( previewSize, previewSize ) );
+                changed = true;
+            }
+        }
+        else {
+            TQSize pixSize = TQSize( size, size );
+            if ( pixSize != pixmapSize() ) {
+                setPixmapSize( pixSize );
+                changed = true;
+            }
+        }
+        if (changed) {
+            view->adjustItems();
+        }
+    }
+    else {
+        TQSize pixSize = TQSize( size, size );
+        if ( pixSize != pixmapSize() ) {
+            setPixmapSize( pixSize );
+        }
+    }
+}
+
+void KFileIVI::mimeTypeAndIconDetermined()
+{
+    updatePixmapSize();
 }
 
 /* vim: set noet sw=4 ts=8 softtabstop=4: */
