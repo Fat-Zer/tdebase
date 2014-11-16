@@ -3,8 +3,8 @@ MountPoint=
 Dev=
 ReadOnly=false
 Type=FSDevice
-Icon=application-vnd.tde.overlay.zip_mount
-UnmountIcon=application-vnd.tde.overlay.zip_unmount
+Icon=zip_mount
+UnmountIcon=zip_unmount
 Actions=Eject;
 X-TDE-Priority=TopLevel
 [Desktop Action Eject]

@@ -3,8 +3,8 @@ MountPoint=
 Dev=
 ReadOnly=false
 Type=FSDevice
-Icon=application-x-cdrom_mount
-UnmountIcon=application-x-cdrom_unmount
+Icon=cdrom_mount
+UnmountIcon=cdrom_unmount
 Actions=Eject;
 X-TDE-Priority=TopLevel
 [Desktop Action Eject]
