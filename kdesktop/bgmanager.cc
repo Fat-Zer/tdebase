@@ -399,8 +399,9 @@ void KBackgroundManager::slotChangeDesktop(int desk)
     // Do we have this or an identical config already running?
     for (unsigned i=0; i<m_Renderer.size(); i++)
     {
-        if (((m_Renderer[i]->hash() == m_Renderer[edesk]->hash()) && (m_Renderer[i]->isActive())) && (desk != 0))
+        if (((m_Renderer[i]->hash() == m_Renderer[edesk]->hash()) && (m_Renderer[i]->isActive())) && (desk != 0)) {
             return;
+        }
     }
 
     renderBackground(edesk);
@@ -665,7 +666,7 @@ void KBackgroundManager::slotImageDone(int desk)
                 TQApplication::desktop()->screen()->backgroundPixmap() );
             }
 
-            //TODO Find a way to discover if CrossFade effect needs to run  
+            //TODO Find a way to discover if CrossFade effect needs to run
             if (mOldScreen){
                 crossInit = true;
                 m_crossTimer->start(70);
@@ -685,17 +686,18 @@ void KBackgroundManager::slotImageDone(int desk)
             do_cleanup = false;
         }
     }
-    if (m_bExport || !m_bCommon)
+    if (m_bExport || !m_bCommon) {
 	addCache(pm, r->hash(), desk);
-    else
+    }
+    else {
         delete pm;
+    }
 
-    if (current)
-        //exportBackground(desk, realDesktop());
-        exportBackground(desk, desk);
+    if (current) {
+        exportBackground(desk, realDesktop());
+    }
 
-    if( do_cleanup )
-    {
+    if( do_cleanup ) {
         r->saveCacheFile();
         r->cleanup();
     }
