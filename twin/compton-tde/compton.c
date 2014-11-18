@@ -3006,8 +3006,9 @@ calc_win_size(session_t *ps, win *w) {
  */
 static void
 calc_shadow_geometry(session_t *ps, win *w) {
-  w->shadow_dx = ps->o.shadow_offset_x * w->shadow_size;
-  w->shadow_dy = ps->o.shadow_offset_y * w->shadow_size;
+  static const int shadowRadius = 100;
+  w->shadow_dx = (((- ps->o.shadow_radius * 7 / 5) - ps->o.shadow_offset_x * shadowRadius / 100) * w->shadow_size) / 100;
+  w->shadow_dy = (((- ps->o.shadow_radius * 7 / 5) - ps->o.shadow_offset_y * shadowRadius / 100) * w->shadow_size) / 100;
   w->shadow_width = w->widthb + ps->gaussian_map->size;
   w->shadow_height = w->heightb + ps->gaussian_map->size;
 }
@@ -6065,7 +6066,7 @@ get_cfg(session_t *ps, int argc, char *const *argv, bool first_pass) {
 
   for (i = 0; i < NUM_WINTYPES; ++i) {
     ps->o.wintype_fade[i] = false;
-    ps->o.wintype_shadow[i] = false;
+    ps->o.wintype_shadow[i] = true;
     ps->o.wintype_opacity[i] = 1.0;
   }
 
@@ -7269,8 +7270,8 @@ session_init(session_t *ps_old, int argc, char **argv) {
       .shadow_green = 0.0,
       .shadow_blue = 0.0,
       .shadow_radius = 12,
-      .shadow_offset_x = -15,
-      .shadow_offset_y = -15,
+      .shadow_offset_x = 0,
+      .shadow_offset_y = 0,
       .shadow_opacity = .75,
       .clear_shadow = false,
       .shadow_blacklist = NULL,
