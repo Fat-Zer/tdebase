@@ -124,8 +124,6 @@ void write_pid_file(pid_t pid)
     strcat(filename, home);
     strcat(filename, configfile);
 
-    printf("writing '%s' as pidfile\n\n", filename);
-
     /* now that we did all that by way of introduction...write the file! */
     FILE *pFile;
     char buffer[255];
@@ -162,8 +160,6 @@ void delete_pid_file()
     memset(filename,0,n);
     strcat(filename, home);
     strcat(filename, configfile);
-
-    printf("deleting '%s' as pidfile\n\n", filename);
 
     /* now that we did all that by way of introduction...delete the file! */
     unlink(filename);
