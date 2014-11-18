@@ -1347,8 +1347,11 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
 
   useOpenGL = new TQCheckBox(i18n("Use OpenGL compositor (best performance)"),tGroup);
   vLay->addWidget(useOpenGL);
+  blurBackground = new TQCheckBox(i18n("Blur the background of transparent windows"),tGroup);
+  vLay->addWidget(blurBackground);
   if (TDECompositor != "compton-tde") {
       useOpenGL->hide();
+      blurBackground->hide();
   }
 
   vLay->addStretch();
@@ -1362,6 +1365,9 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
   vLay2->addWidget(useShadows);
   useShadowsOnMenuWindows = new TQCheckBox(i18n("Use shadows on menus (requires menu fade effect to be disabled in the Styles module)"),sGroup);
   vLay2->addWidget(useShadowsOnMenuWindows);
+  if (TDECompositor != "compton-tde") {
+      useShadowsOnMenuWindows->hide();
+  }
 
   vLay2->addSpacing(11);
 
@@ -1477,6 +1483,8 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
   connect(keepAboveAsActive, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(disableARGB, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(useOpenGL, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(useOpenGL, TQT_SIGNAL(toggled(bool)), blurBackground, TQT_SLOT(setEnabled(bool)));
+  connect(blurBackground, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(useShadows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(useShadowsOnMenuWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(removeShadowsOnResize, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
@@ -1513,6 +1521,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
   connect(useTranslucency, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(disableARGB, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(useOpenGL, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
+  connect(blurBackground, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(useShadows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(useShadowsOnMenuWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(inactiveWindowShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
@@ -1586,6 +1595,8 @@ void KTranslucencyConfig::load( void )
 
   disableARGB->setChecked(conf_.readBoolEntry("DisableARGB",FALSE));
   useOpenGL->setChecked(conf_.readBoolEntry("useOpenGL",FALSE));
+  blurBackground->setChecked(conf_.readBoolEntry("blurBackground",FALSE));
+  blurBackground->setEnabled(useOpenGL->isChecked());
 
   useShadows->setChecked(conf_.readEntry("Compmode","").compare("CompClientShadows") == 0);
   useShadowsOnMenuWindows->setChecked(conf_.readBoolEntry("ShadowsOnMenuWindows",TRUE));
@@ -1658,6 +1669,7 @@ void KTranslucencyConfig::save( void )
   conf_->writeEntry("ShadowsOnMenuWindows",useShadowsOnMenuWindows->isChecked());
   conf_->writeEntry("DisableARGB",disableARGB->isChecked());
   conf_->writeEntry("useOpenGL",useOpenGL->isChecked());
+  conf_->writeEntry("blurBackground",blurBackground->isChecked());
   conf_->writeEntry("ShadowOffsetY",-1*shadowTopOffset->value());
   conf_->writeEntry("ShadowOffsetX",-1*shadowLeftOffset->value());
 
@@ -1719,6 +1731,13 @@ void KTranslucencyConfig::save( void )
 
       stream << "backend = \"" << (useOpenGL->isChecked()?"glx":"xrender") << "\";\n";
       stream << "vsync = \"" << (useOpenGL->isChecked()?"opengl":"none") << "\";\n";
+
+      stream << "blur-background = \"" << ((blurBackground->isChecked() && useOpenGL->isChecked())?"true":"false") << "\";\n";
+      stream << "blur-background-fixed = true;\n";
+      stream << "blur-background-exclude = [\n";
+      stream << "  \"window_type = 'dock'\",\n";
+      stream << "  \"window_type = 'desktop'\"\n";
+      stream << "];\n";
 
       // Global settings
       stream << "no-dock-shadow = true;\n";
