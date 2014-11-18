@@ -285,7 +285,6 @@ private:
   KIntNumInput *fadeOutSpeed;
   KColorButton *shadowColor;
   TDEConfig *config;
-  void processShadowLockouts();
   bool standAlone;
   bool alphaActivated;
   bool resetKompmgr_;
@@ -298,6 +297,7 @@ private:
 private slots:
   void resetKompmgr();
   void showWarning(bool alphaActivated);
+  void processShadowLockouts();
 
 };
 #endif

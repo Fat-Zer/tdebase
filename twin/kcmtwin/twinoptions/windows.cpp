@@ -1500,14 +1500,8 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
   connect(fadeInSpeed, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(fadeOutSpeed, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
 
-  connect(useShadows, TQT_SIGNAL(toggled(bool)), dockWindowShadowSize, TQT_SLOT(processShadowLockouts()));
-  connect(useShadows, TQT_SIGNAL(toggled(bool)), menuWindowShadowSize, TQT_SLOT(processShadowLockouts()));
-  connect(useShadows, TQT_SIGNAL(toggled(bool)), activeWindowShadowSize, TQT_SLOT(processShadowLockouts()));
-  connect(useShadows, TQT_SIGNAL(toggled(bool)), inactiveWindowShadowSize, TQT_SLOT(processShadowLockouts()));
-  connect(useShadows, TQT_SIGNAL(toggled(bool)), baseShadowSize, TQT_SLOT(processShadowLockouts()));
-  connect(useShadows, TQT_SIGNAL(toggled(bool)), shadowTopOffset, TQT_SLOT(processShadowLockouts()));
-  connect(useShadows, TQT_SIGNAL(toggled(bool)), shadowLeftOffset, TQT_SLOT(processShadowLockouts()));
-  connect(useShadows, TQT_SIGNAL(toggled(bool)), shadowColor, TQT_SLOT(processShadowLockouts()));
+  connect(useShadows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(processShadowLockouts()));
+  connect(useShadowsOnMenuWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(processShadowLockouts()));
 
   load();
 
