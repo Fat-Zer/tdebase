@@ -257,8 +257,15 @@ run_fade(session_t *ps, win *w, unsigned steps) {
     return;
   }
 
-  if (!w->fade)
+#ifdef DEBUG_FADE
+  if (w->fade) {
+    printf_dbgf("(%#010lx): run_fade opacity: %u target: %u\n", w->id, w->opacity, w->opacity_tgt);
+  }
+#endif
+
+  if (!w->fade) {
     w->opacity = w->opacity_tgt;
+  }
   else if (steps) {
     // Use double below because opacity_t will probably overflow during
     // calculations
@@ -2406,6 +2413,10 @@ map_win(session_t *ps, Window id) {
   w->in_openclose = true;
   set_fade_callback(ps, w, finish_map_win, true);
   win_determine_fade(ps, w);
+  if (w->fade) {
+    // Make sure the new window fades in properly
+    w->opacity = 0;
+  }
 
   win_determine_blur_background(ps, w);
 
@@ -2424,6 +2435,10 @@ map_win(session_t *ps, Window id) {
     cdbus_ev_win_mapped(ps, w);
   }
 #endif
+
+#ifdef DEBUG_FADE
+  printf_dbgf("(%#010lx): map_win opacity: %u target: %u\n", w->id, w->opacity, w->opacity_tgt);
+#endif
 }
 
 static void
@@ -2436,6 +2451,7 @@ finish_map_win(session_t *ps, win *w) {
     win_determine_fade(ps, w);
   }
 #ifdef DEBUG_FADE
+  printf_dbgf("(%#010lx): finish_map_win opacity: %u target: %u\n", w->id, w->opacity, w->opacity_tgt);
   printf_dbgf("(%#010lx): end\n", w->id);
 #endif
 }
@@ -2676,8 +2692,12 @@ static void
 calc_opacity(session_t *ps, win *w) {
   opacity_t opacity = OPAQUE;
 
-  if (w->destroyed || IsViewable != w->a.map_state)
+  if (w->destroyed || IsViewable != w->a.map_state) {
+#ifdef DEBUG_FADE
+    printf_dbgf("(%#010lx): calc_opacity forcing full transparency\n");
+#endif
     opacity = 0;
+  }
   else {
     // Try obeying opacity property and window type opacity firstly
     if (OPAQUE == (opacity = w->opacity_prop)
@@ -2696,6 +2716,9 @@ calc_opacity(session_t *ps, win *w) {
       opacity = ps->o.active_opacity;
   }
 
+#ifdef DEBUG_FADE
+  printf_dbgf("(%#010lx): calc_opacity opacity: %u\n", w->id, opacity);
+#endif
   w->opacity_tgt = opacity;
 }
 
@@ -2739,8 +2762,12 @@ win_determine_fade(session_t *ps, win *w) {
 #endif
     w->fade = false;
   }
-  else if (ps->o.no_fading_opacitychange && (!w->in_openclose))
+  else if (ps->o.no_fading_opacitychange && (!w->in_openclose)) {
+#ifdef DEBUG_FADE
+    printf_dbgf("(): no_fading_opacitychange and !in_openclose\n");
+#endif
     w->fade = false;
+  }
   else if (ps->o.no_fading_destroyed_argb && w->destroyed
       && WMODE_ARGB == w->mode && w->client_win && w->client_win != w->id) {
 #ifdef DEBUG_FADE
