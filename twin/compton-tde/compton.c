@@ -7704,8 +7704,6 @@ session_init(session_t *ps_old, int argc, char **argv) {
 
   cxinerama_upd_scrs(ps);
 
-  fprintf(stderr, "Started\n");
-
   // Create registration window
   if (!ps->reg_win && !register_cm(ps))
     exit(1);

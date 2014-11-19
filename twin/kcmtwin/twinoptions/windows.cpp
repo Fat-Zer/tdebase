@@ -1365,8 +1365,11 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
   vLay2->addWidget(useShadows);
   useShadowsOnMenuWindows = new TQCheckBox(i18n("Use shadows on menus (requires menu fade effect to be disabled in the Styles module)"),sGroup);
   vLay2->addWidget(useShadowsOnMenuWindows);
+  useShadowsOnToolTipWindows = new TQCheckBox(i18n("Use shadows on tooltips"),sGroup);
+  vLay2->addWidget(useShadowsOnToolTipWindows);
   if (TDECompositor != "compton-tde") {
       useShadowsOnMenuWindows->hide();
+      useShadowsOnToolTipWindows->hide();
   }
 
   vLay2->addSpacing(11);
@@ -1447,6 +1450,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
 
   fadeInWindows = new TQCheckBox(i18n("Fade-in windows (including popups)"),eGroup);
   fadeInMenuWindows = new TQCheckBox(i18n("Fade-in menus (requires menu fade effect to be disabled in the Styles module)"),eGroup);
+  fadeInToolTipWindows = new TQCheckBox(i18n("Fade-in tooltips"),eGroup);
   fadeOnOpacityChange = new TQCheckBox(i18n("Fade between opacity changes"),eGroup);
   fadeInSpeed = new KIntNumInput(100, eGroup);
   fadeInSpeed->setRange(1,100);
@@ -1456,6 +1460,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
   fadeOutSpeed->setLabel(i18n("Fade-out speed:"));
   vLay3->addWidget(fadeInWindows);
   vLay3->addWidget(fadeInMenuWindows);
+  vLay3->addWidget(fadeInToolTipWindows);
   vLay3->addWidget(fadeOnOpacityChange);
   vLay3->addWidget(fadeInSpeed);
   vLay3->addWidget(fadeOutSpeed);
@@ -1487,6 +1492,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
   connect(blurBackground, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(useShadows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(useShadowsOnMenuWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(useShadowsOnToolTipWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(removeShadowsOnResize, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(removeShadowsOnMove, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
 
@@ -1504,12 +1510,14 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
   connect(shadowColor, TQT_SIGNAL(changed(const TQColor&)), TQT_SLOT(changed()));
   connect(fadeInWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(fadeInMenuWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
+  connect(fadeInToolTipWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(fadeOnOpacityChange, TQT_SIGNAL(toggled(bool)), TQT_SLOT(changed()));
   connect(fadeInSpeed, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
   connect(fadeOutSpeed, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(changed()));
 
   connect(useShadows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(processShadowLockouts()));
   connect(useShadowsOnMenuWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(processShadowLockouts()));
+  connect(useShadowsOnToolTipWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(processShadowLockouts()));
 
   load();
 
@@ -1524,6 +1532,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
   connect(blurBackground, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(useShadows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(useShadowsOnMenuWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
+  connect(useShadowsOnToolTipWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(inactiveWindowShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
   connect(baseShadowSize, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
   connect(shadowTopOffset, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
@@ -1531,6 +1540,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
   connect(shadowColor, TQT_SIGNAL(changed(const TQColor&)), TQT_SLOT(resetKompmgr()));
   connect(fadeInWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(fadeInMenuWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
+  connect(fadeInToolTipWindows, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(fadeOnOpacityChange, TQT_SIGNAL(toggled(bool)), TQT_SLOT(resetKompmgr()));
   connect(fadeInSpeed, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
   connect(fadeOutSpeed, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(resetKompmgr()));
@@ -1540,7 +1550,7 @@ KTranslucencyConfig::KTranslucencyConfig (bool _standAlone, TDEConfig *_config, 
 
 void KTranslucencyConfig::processShadowLockouts()
 {
-    bool enabled = (useShadows->isChecked() || useShadowsOnMenuWindows->isChecked());
+    bool enabled = (useShadows->isChecked() || useShadowsOnMenuWindows->isChecked() || useShadowsOnToolTipWindows->isChecked());
 
     dockWindowShadowSize->setEnabled(enabled);
     menuWindowShadowSize->setEnabled(enabled);
@@ -1600,6 +1610,7 @@ void KTranslucencyConfig::load( void )
 
   useShadows->setChecked(conf_.readEntry("Compmode","").compare("CompClientShadows") == 0);
   useShadowsOnMenuWindows->setChecked(conf_.readBoolEntry("ShadowsOnMenuWindows",TRUE));
+  useShadowsOnToolTipWindows->setChecked(conf_.readBoolEntry("ShadowsOnToolTipWindows",TRUE));
   shadowTopOffset->setValue(-1*(conf_.readNumEntry("ShadowOffsetY",0)));
   shadowLeftOffset->setValue(-1*(conf_.readNumEntry("ShadowOffsetX",0)));
 
@@ -1621,6 +1632,7 @@ void KTranslucencyConfig::load( void )
 
   fadeInWindows->setChecked(conf_.readBoolEntry("FadeWindows",FALSE));
   fadeInMenuWindows->setChecked(conf_.readBoolEntry("FadeMenuWindows",FALSE));
+  fadeInToolTipWindows->setChecked(conf_.readBoolEntry("FadeToolTipWindows",FALSE));
   fadeOnOpacityChange->setChecked(conf_.readBoolEntry("FadeTrans",FALSE));
   fadeInSpeed->setValue((int)(conf_.readDoubleNumEntry("FadeInStep",0.070)*1000.0));
   fadeOutSpeed->setValue((int)(conf_.readDoubleNumEntry("FadeOutStep",0.070)*1000.0));
@@ -1667,6 +1679,7 @@ void KTranslucencyConfig::save( void )
 
   conf_->writeEntry("Compmode",useShadows->isChecked()?"CompClientShadows":"");
   conf_->writeEntry("ShadowsOnMenuWindows",useShadowsOnMenuWindows->isChecked());
+  conf_->writeEntry("ShadowsOnToolTipWindows",useShadowsOnToolTipWindows->isChecked());
   conf_->writeEntry("DisableARGB",disableARGB->isChecked());
   conf_->writeEntry("useOpenGL",useOpenGL->isChecked());
   conf_->writeEntry("blurBackground",blurBackground->isChecked());
@@ -1682,6 +1695,7 @@ void KTranslucencyConfig::save( void )
   conf_->writeEntry("ShadowRadius",baseShadowSize->value());
   conf_->writeEntry("FadeWindows",fadeInWindows->isChecked());
   conf_->writeEntry("FadeMenuWindows",fadeInMenuWindows->isChecked());
+  conf_->writeEntry("FadeToolTipWindows",fadeInToolTipWindows->isChecked());
   conf_->writeEntry("FadeTrans",fadeOnOpacityChange->isChecked());
   conf_->writeEntry("FadeInStep",fadeInSpeed->value()/1000.0);
   conf_->writeEntry("FadeOutStep",fadeOutSpeed->value()/1000.0);
@@ -1712,8 +1726,10 @@ void KTranslucencyConfig::save( void )
       bool fadeOpacity = fadeOnOpacityChange->isChecked();
       bool fadeWindows = fadeInWindows->isChecked();
       bool fadeMenuWindows = fadeInMenuWindows->isChecked();
+      bool fadeToolTipWindows = fadeInToolTipWindows->isChecked();
       bool shadows = useShadows->isChecked();
       bool shadowsOnMenuWindows = useShadowsOnMenuWindows->isChecked();
+      bool shadowsOnToolTipWindows = useShadowsOnToolTipWindows->isChecked();
       stream << "fading = " << ((fadeWindows || fadeMenuWindows || fadeOpacity)?"true":"false") << ";\n";
       stream << "no-fading-opacitychange = " << (fadeOpacity?"false":"true") << ";\n";
       stream << "no-fading-openclose = " << ((fadeWindows||fadeMenuWindows)?"false":"true") << ";\n";
@@ -1722,8 +1738,19 @@ void KTranslucencyConfig::save( void )
       stream << "  menu = { shadow = " << (shadowsOnMenuWindows?"true":"false") << "; fade = " << (fadeMenuWindows?"true":"false") << "; no-fading-openclose = " << (fadeMenuWindows?"false":"true") << "; }" << "\n";
       stream << "  dropdown_menu = { shadow = " << (shadowsOnMenuWindows?"true":"false") << "; fade = " << (fadeMenuWindows?"true":"false") << "; no-fading-openclose = " << (fadeMenuWindows?"false":"true") << "; }" << "\n";
       stream << "  popup_menu = { shadow = " << (shadowsOnMenuWindows?"true":"false") << "; fade = " << (fadeMenuWindows?"true":"false") << "; no-fading-openclose = " << (fadeMenuWindows?"false":"true") << "; }" << "\n";
+      stream << "  tooltip = { shadow = " << (shadowsOnToolTipWindows?"true":"false") << "; fade = " << (fadeToolTipWindows?"true":"false") << "; no-fading-openclose = " << (fadeToolTipWindows?"false":"true") << "; }" << "\n";
       stream << "  normal = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
       stream << "  dialog = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
+      stream << "  unknown = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
+      stream << "  toolbar = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
+      stream << "  utility = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
+      stream << "  splash = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
+
+      stream << "  notify = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
+      stream << "  combo = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
+      stream << "  desktop = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
+      stream << "  dnd = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
+      stream << "  dock = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
       stream << "}" << "\n";
 
       stream << "fade-in-step = " << (fadeInSpeed->value()/1000.0) << ";\n";
@@ -1798,11 +1825,13 @@ void KTranslucencyConfig::defaults()
   dockWindowOpacity->setEnabled(false);
   useShadows->setChecked(FALSE);
   useShadowsOnMenuWindows->setChecked(TRUE);
+  useShadowsOnToolTipWindows->setChecked(TRUE);
   removeShadowsOnMove->setChecked(FALSE);
   removeShadowsOnResize->setChecked(FALSE);
   shadowColor->setColor(Qt::black);
   fadeInWindows->setChecked(FALSE);
   fadeInMenuWindows->setChecked(FALSE);
+  fadeInToolTipWindows->setChecked(FALSE);
   fadeOnOpacityChange->setChecked(FALSE);
   fadeInSpeed->setValue(70);
   fadeOutSpeed->setValue(70);

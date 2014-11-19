@@ -263,9 +263,11 @@ private:
   TQCheckBox *blurBackground;
   TQCheckBox *fadeInWindows;
   TQCheckBox *fadeInMenuWindows;
+  TQCheckBox *fadeInToolTipWindows;
   TQCheckBox *fadeOnOpacityChange;
   TQCheckBox *useShadows;
   TQCheckBox *useShadowsOnMenuWindows;
+  TQCheckBox *useShadowsOnToolTipWindows;
   TQCheckBox *removeShadowsOnResize;
   TQCheckBox *removeShadowsOnMove;
   TQGroupBox *sGroup;
