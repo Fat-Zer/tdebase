@@ -1342,7 +1342,7 @@ Description:
 
 Key: ServerTimeout
 Type: int
-Default: 15
+Default: 60
 User: core
 Instance: #:*/
 Comment:
