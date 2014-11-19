@@ -234,22 +234,20 @@ Workspace::Workspace( bool restore )
         }
     else if (!disable_twin_composition_manager)
         {
-        // If kompmgr is already running, send it SIGTERM
-        // Attempt to load the kompmgr pid file
-        const char *home;
-        struct passwd *p;
-        p = getpwuid(getuid());
-        if (p)
-            home = p->pw_dir;
-        else
-            home = getenv("HOME");
+        // If compton-tde is already running, send it SIGTERM
+        // Attempt to load the compton-tde pid file
         char *filename;
-        const char *configfile = "/.kompmgr.pid";
-        int n = strlen(home)+strlen(configfile)+1;
+        const char *pidfile = "compton-tde.pid";
+        char uidstr[sizeof(uid_t)*8+1];
+        sprintf(uidstr, "%d", getuid());
+        int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
         filename = (char*)malloc(n*sizeof(char));
         memset(filename,0,n);
-        strcat(filename, home);
-        strcat(filename, configfile);
+        strcat(filename, P_tmpdir);
+        strcat(filename, "/.");
+        strcat(filename, uidstr);
+        strcat(filename, "-");
+        strcat(filename, pidfile);
 
         // Now that we did all that by way of introduction...read the file!
         FILE *pFile;
@@ -258,7 +256,7 @@ Workspace::Workspace( bool restore )
         int kompmgrpid = 0;
         if (pFile)
             {
-            printf("[twin-workspace] Using '%s' as kompmgr pidfile\n\n", filename);
+            printf("[twin-workspace] Using '%s' as compton-tde pidfile\n\n", filename);
             // obtain file size
             fseek (pFile , 0 , SEEK_END);
             unsigned long lSize = ftell (pFile);
@@ -1085,22 +1083,20 @@ void Workspace::slotReconfigure()
         {
         bool tmp = options->useTranslucency;
 
-        // If kompmgr is already running, sending SIGUSR2 will force a reload of its settings
-        // Attempt to load the kompmgr pid file
-        const char *home;
-        struct passwd *p;
-        p = getpwuid(getuid());
-        if (p)
-            home = p->pw_dir;
-        else
-            home = getenv("HOME");
+        // If compton-tde is already running, sending SIGUSR2 will force a reload of its settings
+        // Attempt to load the compton-tde pid file
         char *filename;
-        const char *configfile = "/.kompmgr.pid";
-        int n = strlen(home)+strlen(configfile)+1;
+        const char *pidfile = "compton-tde.pid";
+        char uidstr[sizeof(uid_t)*8+1];
+        sprintf(uidstr, "%d", getuid());
+        int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
         filename = (char*)malloc(n*sizeof(char));
         memset(filename,0,n);
-        strcat(filename, home);
-        strcat(filename, configfile);
+        strcat(filename, P_tmpdir);
+        strcat(filename, "/.");
+        strcat(filename, uidstr);
+        strcat(filename, "-");
+        strcat(filename, pidfile);
 
         // Now that we did all that by way of introduction...read the file!
         FILE *pFile;
@@ -1109,7 +1105,7 @@ void Workspace::slotReconfigure()
         int kompmgrpid = 0;
         if (pFile)
             {
-            printf("[twin-workspace] Using '%s' as kompmgr pidfile\n\n", filename);
+            printf("[twin-workspace] Using '%s' as compton-tde pidfile\n\n", filename);
             // obtain file size
             fseek (pFile , 0 , SEEK_END);
             unsigned long lSize = ftell (pFile);

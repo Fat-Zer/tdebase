@@ -105,24 +105,18 @@ int my_exit_code = 3;
 void write_pid_file(pid_t pid)
 {
 #ifdef WRITE_PID_FILE
-#ifdef USE_ENV_HOME
-    const char *home = getenv("HOME");
-#else
-    const char *home;
-    struct passwd *p;
-    p = getpwuid(getuid());
-    if (p)
-        home = p->pw_dir;
-    else
-        home = getenv("HOME");
-#endif
     const char *filename;
-    const char *configfile = "/.compton-tde.pid";
-    int n = strlen(home)+strlen(configfile)+1;
+    const char *pidfile = "compton-tde.pid";
+    char uidstr[sizeof(uid_t)*8+1];
+    sprintf(uidstr, "%d", getuid());
+    int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
     filename = (char*)malloc(n*sizeof(char));
     memset(filename,0,n);
-    strcat(filename, home);
-    strcat(filename, configfile);
+    strcat(filename, P_tmpdir);
+    strcat(filename, "/.");
+    strcat(filename, uidstr);
+    strcat(filename, "-");
+    strcat(filename, pidfile);
 
     /* now that we did all that by way of introduction...write the file! */
     FILE *pFile;
@@ -142,24 +136,18 @@ void write_pid_file(pid_t pid)
 void delete_pid_file()
 {
 #ifdef WRITE_PID_FILE
-#ifdef USE_ENV_HOME
-    const char *home = getenv("HOME");
-#else
-    const char *home;
-    struct passwd *p;
-    p = getpwuid(getuid());
-    if (p)
-        home = p->pw_dir;
-    else
-        home = getenv("HOME");
-#endif
     const char *filename;
-    const char *configfile = "/.compton-tde.pid";
-    int n = strlen(home)+strlen(configfile)+1;
+    const char *pidfile = "compton-tde.pid";
+    char uidstr[sizeof(uid_t)*8+1];
+    sprintf(uidstr, "%d", getuid());
+    int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
     filename = (char*)malloc(n*sizeof(char));
     memset(filename,0,n);
-    strcat(filename, home);
-    strcat(filename, configfile);
+    strcat(filename, P_tmpdir);
+    strcat(filename, "/.");
+    strcat(filename, uidstr);
+    strcat(filename, "-");
+    strcat(filename, pidfile);
 
     /* now that we did all that by way of introduction...delete the file! */
     unlink(filename);
