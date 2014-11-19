@@ -1631,8 +1631,8 @@ void KTranslucencyConfig::load( void )
     shadowColor->setColor(TQColor(r,g,b));
 
   fadeInWindows->setChecked(conf_.readBoolEntry("FadeWindows",FALSE));
-  fadeInMenuWindows->setChecked(conf_.readBoolEntry("FadeMenuWindows",FALSE));
-  fadeInToolTipWindows->setChecked(conf_.readBoolEntry("FadeToolTipWindows",FALSE));
+  fadeInMenuWindows->setChecked(conf_.readBoolEntry("FadeMenuWindows",TRUE));
+  fadeInToolTipWindows->setChecked(conf_.readBoolEntry("FadeToolTipWindows",TRUE));
   fadeOnOpacityChange->setChecked(conf_.readBoolEntry("FadeTrans",FALSE));
   fadeInSpeed->setValue((int)(conf_.readDoubleNumEntry("FadeInStep",0.070)*1000.0));
   fadeOutSpeed->setValue((int)(conf_.readDoubleNumEntry("FadeOutStep",0.070)*1000.0));
@@ -1815,7 +1815,7 @@ void KTranslucencyConfig::defaults()
   menuWindowShadowSize->setValue(1);
   activeWindowShadowSize->setValue(2);
   inactiveWindowShadowSize->setValue(1);
-  baseShadowSize->setValue(1);
+  baseShadowSize->setValue(4);
   shadowTopOffset->setValue(0);
   shadowLeftOffset->setValue(0);
 
@@ -1830,8 +1830,8 @@ void KTranslucencyConfig::defaults()
   removeShadowsOnResize->setChecked(FALSE);
   shadowColor->setColor(Qt::black);
   fadeInWindows->setChecked(FALSE);
-  fadeInMenuWindows->setChecked(FALSE);
-  fadeInToolTipWindows->setChecked(FALSE);
+  fadeInMenuWindows->setChecked(TRUE);
+  fadeInToolTipWindows->setChecked(TRUE);
   fadeOnOpacityChange->setChecked(FALSE);
   fadeInSpeed->setValue(70);
   fadeOutSpeed->setValue(70);
