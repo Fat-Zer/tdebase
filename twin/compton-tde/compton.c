@@ -105,26 +105,18 @@ int my_exit_code = 3;
 void write_pid_file(pid_t pid)
 {
 #ifdef WRITE_PID_FILE
-#ifdef USE_ENV_HOME
-    const char *home = getenv("HOME");
-#else
-    const char *home;
-    struct passwd *p;
-    p = getpwuid(getuid());
-    if (p)
-        home = p->pw_dir;
-    else
-        home = getenv("HOME");
-#endif
     const char *filename;
-    const char *configfile = "/.compton-tde.pid";
-    int n = strlen(home)+strlen(configfile)+1;
+    const char *pidfile = "compton-tde.pid";
+    char uidstr[sizeof(uid_t)*8+1];
+    sprintf(uidstr, "%d", getuid());
+    int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
     filename = (char*)malloc(n*sizeof(char));
     memset(filename,0,n);
-    strcat(filename, home);
-    strcat(filename, configfile);
-
-    printf("writing '%s' as pidfile\n\n", filename);
+    strcat(filename, P_tmpdir);
+    strcat(filename, "/.");
+    strcat(filename, uidstr);
+    strcat(filename, "-");
+    strcat(filename, pidfile);
 
     /* now that we did all that by way of introduction...write the file! */
     FILE *pFile;
@@ -144,26 +136,18 @@ void write_pid_file(pid_t pid)
 void delete_pid_file()
 {
 #ifdef WRITE_PID_FILE
-#ifdef USE_ENV_HOME
-    const char *home = getenv("HOME");
-#else
-    const char *home;
-    struct passwd *p;
-    p = getpwuid(getuid());
-    if (p)
-        home = p->pw_dir;
-    else
-        home = getenv("HOME");
-#endif
     const char *filename;
-    const char *configfile = "/.compton-tde.pid";
-    int n = strlen(home)+strlen(configfile)+1;
+    const char *pidfile = "compton-tde.pid";
+    char uidstr[sizeof(uid_t)*8+1];
+    sprintf(uidstr, "%d", getuid());
+    int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
     filename = (char*)malloc(n*sizeof(char));
     memset(filename,0,n);
-    strcat(filename, home);
-    strcat(filename, configfile);
-
-    printf("deleting '%s' as pidfile\n\n", filename);
+    strcat(filename, P_tmpdir);
+    strcat(filename, "/.");
+    strcat(filename, uidstr);
+    strcat(filename, "-");
+    strcat(filename, pidfile);
 
     /* now that we did all that by way of introduction...delete the file! */
     unlink(filename);
@@ -257,8 +241,15 @@ run_fade(session_t *ps, win *w, unsigned steps) {
     return;
   }
 
-  if (!w->fade)
+#ifdef DEBUG_FADE
+  if (w->fade) {
+    printf_dbgf("(%#010lx): run_fade opacity: %u target: %u\n", w->id, w->opacity, w->opacity_tgt);
+  }
+#endif
+
+  if (!w->fade) {
     w->opacity = w->opacity_tgt;
+  }
   else if (steps) {
     // Use double below because opacity_t will probably overflow during
     // calculations
@@ -291,6 +282,9 @@ set_fade_callback(session_t *ps, win *w,
   w->fade_callback = callback;
   // Must be the last line as the callback could destroy w!
   if (exec_callback && old_callback) {
+#ifdef DEBUG_FADE
+    printf_dbgf("(%#010lx): exec callback\n", w->id);
+#endif
     old_callback(ps, w);
     // Although currently no callback function affects window state on
     // next paint, it could, in the future
@@ -2403,6 +2397,10 @@ map_win(session_t *ps, Window id) {
   w->in_openclose = true;
   set_fade_callback(ps, w, finish_map_win, true);
   win_determine_fade(ps, w);
+  if (w->fade) {
+    // Make sure the new window fades in properly
+    w->opacity = 0;
+  }
 
   win_determine_blur_background(ps, w);
 
@@ -2421,14 +2419,25 @@ map_win(session_t *ps, Window id) {
     cdbus_ev_win_mapped(ps, w);
   }
 #endif
+
+#ifdef DEBUG_FADE
+  printf_dbgf("(%#010lx): map_win opacity: %u target: %u\n", w->id, w->opacity, w->opacity_tgt);
+#endif
 }
 
 static void
 finish_map_win(session_t *ps, win *w) {
   w->in_openclose = false;
+#ifdef DEBUG_FADE
+  printf_dbgf("(%#010lx)\n", w->id);
+#endif
   if (ps->o.no_fading_openclose) {
     win_determine_fade(ps, w);
   }
+#ifdef DEBUG_FADE
+  printf_dbgf("(%#010lx): finish_map_win opacity: %u target: %u\n", w->id, w->opacity, w->opacity_tgt);
+  printf_dbgf("(%#010lx): end\n", w->id);
+#endif
 }
 
 static void
@@ -2667,8 +2676,12 @@ static void
 calc_opacity(session_t *ps, win *w) {
   opacity_t opacity = OPAQUE;
 
-  if (w->destroyed || IsViewable != w->a.map_state)
+  if (w->destroyed || IsViewable != w->a.map_state) {
+#ifdef DEBUG_FADE
+    printf_dbgf("(%#010lx): calc_opacity forcing full transparency\n");
+#endif
     opacity = 0;
+  }
   else {
     // Try obeying opacity property and window type opacity firstly
     if (OPAQUE == (opacity = w->opacity_prop)
@@ -2687,6 +2700,9 @@ calc_opacity(session_t *ps, win *w) {
       opacity = ps->o.active_opacity;
   }
 
+#ifdef DEBUG_FADE
+  printf_dbgf("(%#010lx): calc_opacity opacity: %u\n", w->id, opacity);
+#endif
   w->opacity_tgt = opacity;
 }
 
@@ -2718,14 +2734,29 @@ calc_dim(session_t *ps, win *w) {
  */
 static void
 win_determine_fade(session_t *ps, win *w) {
-  if (UNSET != w->fade_force)
-    w->fade = w->fade_force;
-  else if (ps->o.no_fading_opacitychange && (!w->in_openclose))
+  if (UNSET != w->fade_force) {
+#ifdef DEBUG_FADE
+      printf_dbgf("(%#010lx): fade forced\n", w->id);
+#endif
+      w->fade = w->fade_force;
+  }
+  else if (ps->o.no_fading_openclose && (w->in_openclose || w->destroyed)) {
+#ifdef DEBUG_FADE
+    printf_dbgf("(): no_fading_openclose and in_openclose\n");
+#endif
     w->fade = false;
-  else if (ps->o.no_fading_openclose && w->in_openclose)
+  }
+  else if (ps->o.no_fading_opacitychange && (!w->in_openclose)) {
+#ifdef DEBUG_FADE
+    printf_dbgf("(): no_fading_opacitychange and !in_openclose\n");
+#endif
     w->fade = false;
+  }
   else if (ps->o.no_fading_destroyed_argb && w->destroyed
       && WMODE_ARGB == w->mode && w->client_win && w->client_win != w->id) {
+#ifdef DEBUG_FADE
+    printf_dbgf("(): no_fading_destroyed_argb\n");
+#endif
     w->fade = false;
     // Prevent it from being overwritten by last-paint value
     w->fade_last = false;
@@ -2733,11 +2764,29 @@ win_determine_fade(session_t *ps, win *w) {
   // Ignore other possible causes of fading state changes after window
   // gets unmapped
   else if (IsViewable != w->a.map_state) {
+#ifdef DEBUG_FADE
+    printf_dbgf("(): ignored: !IsViewable\n");
+#endif
   }
-  else if (win_match(ps, w, ps->o.fade_blacklist, &w->cache_fblst))
+  else if (win_match(ps, w, ps->o.fade_blacklist, &w->cache_fblst)) {
+
     w->fade = false;
-  else
-    w->fade = ps->o.wintype_fade[w->window_type];
+  }
+  else if (ps->o.wintype_fade[w->window_type] != NULL) {
+      w->fade = ps->o.wintype_fade[w->window_type];
+#ifdef DEBUG_FADE
+      printf_dbgf("(%#010lx): via wintype_fade[%s]\n",
+          w->id, WINTYPES[w->window_type]);
+#endif
+  } else {
+#ifdef DEBUG_FADE
+    printf_dbgf("(): fallthrough\n");
+#endif
+  }
+
+#ifdef DEBUG_FADE
+  printf_dbgf("(%#010lx): fade = %d\n", w->id, w->fade ? w->fade : NULL);
+#endif
 }
 
 /**
@@ -3006,8 +3055,9 @@ calc_win_size(session_t *ps, win *w) {
  */
 static void
 calc_shadow_geometry(session_t *ps, win *w) {
-  w->shadow_dx = ps->o.shadow_offset_x * w->shadow_size;
-  w->shadow_dy = ps->o.shadow_offset_y * w->shadow_size;
+  static const int shadowRadius = 100;
+  w->shadow_dx = (((- ps->o.shadow_radius * 7 / 5) - ps->o.shadow_offset_x * shadowRadius / 100) * w->shadow_size) / 100;
+  w->shadow_dy = (((- ps->o.shadow_radius * 7 / 5) - ps->o.shadow_offset_y * shadowRadius / 100) * w->shadow_size) / 100;
   w->shadow_width = w->widthb + ps->gaussian_map->size;
   w->shadow_height = w->heightb + ps->gaussian_map->size;
 }
@@ -6065,7 +6115,7 @@ get_cfg(session_t *ps, int argc, char *const *argv, bool first_pass) {
 
   for (i = 0; i < NUM_WINTYPES; ++i) {
     ps->o.wintype_fade[i] = false;
-    ps->o.wintype_shadow[i] = false;
+    ps->o.wintype_shadow[i] = true;
     ps->o.wintype_opacity[i] = 1.0;
   }
 
@@ -7269,8 +7319,8 @@ session_init(session_t *ps_old, int argc, char **argv) {
       .shadow_green = 0.0,
       .shadow_blue = 0.0,
       .shadow_radius = 12,
-      .shadow_offset_x = -15,
-      .shadow_offset_y = -15,
+      .shadow_offset_x = 0,
+      .shadow_offset_y = 0,
       .shadow_opacity = .75,
       .clear_shadow = false,
       .shadow_blacklist = NULL,
@@ -7641,8 +7691,6 @@ session_init(session_t *ps_old, int argc, char **argv) {
     exit(1);
 
   cxinerama_upd_scrs(ps);
-
-  fprintf(stderr, "Started\n");
 
   // Create registration window
   if (!ps->reg_win && !register_cm(ps))

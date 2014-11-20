@@ -3,6 +3,7 @@
  *
  * Copyright (c) 1997 Patrick Dowler dowler@morgul.fsh.uvic.ca
  * Copyright (c) 2001 Waldo Bastian bastian@kde.org
+ * Copyright (c) 2011-2014 Timothy Pearson <kb9vqf@pearsoncomputing.net>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -259,10 +260,14 @@ private:
   TQCheckBox *keepAboveAsActive;
   TQCheckBox *disableARGB;
   TQCheckBox *useOpenGL;
+  TQCheckBox *blurBackground;
   TQCheckBox *fadeInWindows;
   TQCheckBox *fadeInMenuWindows;
+  TQCheckBox *fadeInToolTipWindows;
   TQCheckBox *fadeOnOpacityChange;
   TQCheckBox *useShadows;
+  TQCheckBox *useShadowsOnMenuWindows;
+  TQCheckBox *useShadowsOnToolTipWindows;
   TQCheckBox *removeShadowsOnResize;
   TQCheckBox *removeShadowsOnMove;
   TQGroupBox *sGroup;
@@ -283,7 +288,7 @@ private:
   KIntNumInput *fadeOutSpeed;
   KColorButton *shadowColor;
   TDEConfig *config;
-  bool     standAlone;
+  bool standAlone;
   bool alphaActivated;
   bool resetKompmgr_;
   bool kompmgrAvailable();
@@ -295,6 +300,7 @@ private:
 private slots:
   void resetKompmgr();
   void showWarning(bool alphaActivated);
+  void processShadowLockouts();
 
 };
 #endif

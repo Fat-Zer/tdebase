@@ -31,8 +31,8 @@ inline TQPixmap crossFade(const TQPixmap &pix1, const TQPixmap &pix2, double r_a
     mw = pix1.width();
     mh = pix1.height();
 
-    int alpha = 0xffff * (1-r_alpha);
-    
+    short unsigned int alpha = 0xffff * (1-r_alpha);
+
     XRenderColor clr = { 0, 0, 0, alpha }; 
     XRenderPictureAttributes pa;
     pa.repeat = True;
