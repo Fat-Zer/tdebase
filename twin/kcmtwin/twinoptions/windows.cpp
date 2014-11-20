@@ -1751,7 +1751,7 @@ void KTranslucencyConfig::save( void )
       stream << "  desktop = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; };" << "\n";
       stream << "  dnd = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; };" << "\n";
       stream << "  dock = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; };" << "\n";
-      stream << "}" << "\n";
+      stream << "};" << "\n";
 
       stream << "fade-in-step = " << (fadeInSpeed->value()/1000.0) << ";\n";
       stream << "fade-out-step = " << (fadeOutSpeed->value()/1000.0) << ";\n";
