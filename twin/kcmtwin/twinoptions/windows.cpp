@@ -1735,22 +1735,22 @@ void KTranslucencyConfig::save( void )
       stream << "no-fading-openclose = " << ((fadeWindows||fadeMenuWindows)?"false":"true") << ";\n";
       stream << "wintypes:" << "\n";
       stream << "{" << "\n";
-      stream << "  menu = { shadow = " << (shadowsOnMenuWindows?"true":"false") << "; fade = " << (fadeMenuWindows?"true":"false") << "; no-fading-openclose = " << (fadeMenuWindows?"false":"true") << "; }" << "\n";
-      stream << "  dropdown_menu = { shadow = " << (shadowsOnMenuWindows?"true":"false") << "; fade = " << (fadeMenuWindows?"true":"false") << "; no-fading-openclose = " << (fadeMenuWindows?"false":"true") << "; }" << "\n";
-      stream << "  popup_menu = { shadow = " << (shadowsOnMenuWindows?"true":"false") << "; fade = " << (fadeMenuWindows?"true":"false") << "; no-fading-openclose = " << (fadeMenuWindows?"false":"true") << "; }" << "\n";
-      stream << "  tooltip = { shadow = " << (shadowsOnToolTipWindows?"true":"false") << "; fade = " << (fadeToolTipWindows?"true":"false") << "; no-fading-openclose = " << (fadeToolTipWindows?"false":"true") << "; }" << "\n";
-      stream << "  normal = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
-      stream << "  dialog = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
-      stream << "  unknown = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
-      stream << "  toolbar = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
-      stream << "  utility = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
-      stream << "  splash = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
+      stream << "  menu = { shadow = " << (shadowsOnMenuWindows?"true":"false") << "; fade = " << (fadeMenuWindows?"true":"false") << "; no-fading-openclose = " << (fadeMenuWindows?"false":"true") << "; };" << "\n";
+      stream << "  dropdown_menu = { shadow = " << (shadowsOnMenuWindows?"true":"false") << "; fade = " << (fadeMenuWindows?"true":"false") << "; no-fading-openclose = " << (fadeMenuWindows?"false":"true") << "; };" << "\n";
+      stream << "  popup_menu = { shadow = " << (shadowsOnMenuWindows?"true":"false") << "; fade = " << (fadeMenuWindows?"true":"false") << "; no-fading-openclose = " << (fadeMenuWindows?"false":"true") << "; };" << "\n";
+      stream << "  tooltip = { shadow = " << (shadowsOnToolTipWindows?"true":"false") << "; fade = " << (fadeToolTipWindows?"true":"false") << "; no-fading-openclose = " << (fadeToolTipWindows?"false":"true") << "; };" << "\n";
+      stream << "  normal = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; };" << "\n";
+      stream << "  dialog = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; };" << "\n";
+      stream << "  unknown = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; };" << "\n";
+      stream << "  toolbar = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; };" << "\n";
+      stream << "  utility = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; };" << "\n";
+      stream << "  splash = { shadow = " << (shadows?"true":"false") << "; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; };" << "\n";
 
-      stream << "  notify = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
-      stream << "  combo = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
-      stream << "  desktop = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
-      stream << "  dnd = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
-      stream << "  dock = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; }" << "\n";
+      stream << "  notify = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; };" << "\n";
+      stream << "  combo = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; };" << "\n";
+      stream << "  desktop = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; };" << "\n";
+      stream << "  dnd = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; };" << "\n";
+      stream << "  dock = { shadow = false; fade = " << (fadeWindows?"true":"false") << "; no-fading-openclose = " << (fadeWindows?"false":"true") << "; };" << "\n";
       stream << "}" << "\n";
 
       stream << "fade-in-step = " << (fadeInSpeed->value()/1000.0) << ";\n";
