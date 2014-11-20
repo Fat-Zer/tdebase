@@ -1234,6 +1234,25 @@ void KCryptoConfig::save()
   emit changed(false);
 }
 
+TQString KCryptoConfig::handbookSection() const
+{
+ 	int index = tabs->currentPageIndex();
+ 	if (index == 0)
+		return "ssl_tab";
+	else if (index == 1)
+		return "openssl";
+	else if (index == 2)
+		return "your-certificates";
+	else if (index == 3)
+		return "authentication";
+	else if (index == 4)
+		return "peer-ssl-certificates";
+	else if (index == 5)
+		return "ssl-signers";
+ 	else
+ 		return TQString::null;
+}
+
 void KCryptoConfig::defaults()
 {
    load( true );

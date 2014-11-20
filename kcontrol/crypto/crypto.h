@@ -226,6 +226,7 @@ public:
   void load( bool useDefaults );
   void save();
   void defaults();
+  virtual TQString handbookSection() const;
 
 #ifdef HAVE_SSL
   bool loadCiphers();

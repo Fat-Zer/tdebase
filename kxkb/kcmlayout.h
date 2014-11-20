@@ -26,7 +26,8 @@ public:
   void save();
   void defaults();
   void initUI();
-
+  virtual TQString handbookSection() const;
+  
 protected:
   TQString createOptionString();
   void updateIndicator(TQListViewItem* selLayout);

@@ -197,7 +197,11 @@ You can easily manage them from here.</para>
 
 <para>The list box shows which site and personal certificates &tde;
 knows about.  You can easily manage them from here.</para>
+</sect2>
 
+<sect2 id="ssl-signers">
+<title>The <guilabel>SSL Signers</guilabel> Tab</title>
+<para>We apologize. This section has not been written yet.</para>
 </sect2>
 
 </sect1>

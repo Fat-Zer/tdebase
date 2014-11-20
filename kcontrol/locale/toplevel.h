@@ -53,6 +53,7 @@ public:
   virtual void save();
   virtual void defaults();
   virtual TQString quickHelp() const;
+  virtual TQString handbookSection() const;
 
 signals:
   void languageChanged();
@@ -68,14 +69,14 @@ public slots:
 private:
   TDELocale *m_locale;
 
-  TQTabWidget          *m_tab;
+  TQTabWidget           *m_tab;
   TDELocaleConfig       *m_localemain;
   TDELocaleConfigNumber *m_localenum;
   TDELocaleConfigMoney  *m_localemon;
   TDELocaleConfigTime   *m_localetime;
   TDELocaleConfigOther  *m_localeother;
 
-  TQGroupBox           *m_gbox;
+  TQGroupBox            *m_gbox;
   TDELocaleSample       *m_sample;
 
   TDEConfig * m_globalConfig;
