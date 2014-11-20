@@ -33,9 +33,11 @@
 audible cues, or who have difficulty using a keyboard.</para>
 
 <para>
-The module is divided into two tabs: <link
-linkend="access-bell"><guilabel>Bell</guilabel></link> and <link
-linkend="access-kb"><guilabel>Keyboard</guilabel></link>.
+The module is divided into four tabs tabs: 
+<link linkend="access-bell"><guilabel>Bell</guilabel></link>,
+<link linkend="modifier-keys"><guilabel>Modifier Keys</guilabel></link>,
+<link linkend="keyboard-filters"><guilabel>Keyboard Filters</guilabel></link>
+and <link linkend="action-gestures"><guilabel>Action Gestures</guilabel></link>.
 </para>
 
 <sect3 id="access-bell">
@@ -89,16 +91,12 @@ bell.  The default value is 500ms, or half a second.
 </para>
 
 </sect3>
+</sect2>
 
-<sect3 id="access-kb">
-<title><guilabel>Keyboard</guilabel></title>
+<sect2 id="modifier-keys">
+<title>Modifier Keys</title>
 
-<para>There are three sections to this panel.</para>
-
-<variablelist>
-<varlistentry>
-<term><guilabel>Use Sticky Keys</guilabel></term>
-<listitem>
+<para><guilabel>Use Sticky Keys</guilabel></para>
 <para>
 If this option is enabled, you can press and release the &Shift;,
 &Alt; or &Ctrl; keys, and then press another key to get a key combo
@@ -144,9 +142,13 @@ de-select the &Shift; key, press it again.
 </listitem>
 </varlistentry>
 </variablelist>
-</listitem>
-</varlistentry>
 
+</sect2>
+
+<sect2 id="keyboard-filters">
+<title>Keyboard Filters</title>
+
+<variablelist>
 <varlistentry>
 <term><guilabel>Slow keys</guilabel></term>
 <listitem>
@@ -170,8 +172,11 @@ accepted. This prevents accidental multiple key strokes.
 </varlistentry>
 </variablelist>
 
-</sect3>
+</sect2>
 
+<sect2 id="action-gestures">
+<title>Action Gestures</title>
+<para>We apologize. This section has not been written yet.</para>
 </sect2>
 
 </sect1>

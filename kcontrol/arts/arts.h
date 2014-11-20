@@ -60,7 +60,8 @@ public:
   void load( bool useDefaults );
   void save();
   void defaults();
-
+  virtual TQString handbookSection() const;
+  
   bool artsdIsRunning();
 
 private slots:
@@ -88,6 +89,7 @@ private:
   TQLineEdit *deviceName;
   TQSpinBox *samplingRate;
   KIntNumInput *suspendTime;
+  TQTabWidget *tab;
   generalTab *general;
   hardwareTab *hardware;
   TDEConfig *config;

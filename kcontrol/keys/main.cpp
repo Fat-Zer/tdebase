@@ -129,12 +129,10 @@ TQString KeyModule::handbookSection() const
 {
 	int index = m_pTab->currentPageIndex();
 	if (index == 0) {
-		//return "key-bindings-intro";
-		return TQString::null;
+		return "key-bindings-intro";
 	}
 	else if (index == 1) {
-		//return "key-bindings-use";
-		return TQString::null;
+		return "key-bindings-shortcuts";
 	}
 	else if (index == 2) {
 		return "key-bindings-modifiers";

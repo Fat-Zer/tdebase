@@ -152,7 +152,7 @@ KArtsModule::KArtsModule(TQWidget *parent, const char *name)
 	initAudioIOList();
 
 	TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
-	TQTabWidget *tab = new TQTabWidget(this);
+	tab = new TQTabWidget(this);
 	layout->addWidget(tab);
 
 	general = new generalTab(tab);
@@ -410,6 +410,17 @@ void KArtsModule::save()
 		updateWidgets();
 	}
 	emit changed( false );
+}
+
+TQString KArtsModule::handbookSection() const
+{
+ 	int index = tab->currentPageIndex();
+ 	if (index == 0)
+		return "sndserver-general";
+	else if (index == 1)
+		return "sndserver-soundio";
+ 	else
+ 		return TQString::null;
 }
 
 int KArtsModule::userSavedChanges()
