@@ -1429,7 +1429,7 @@ void Client::imposeCachedShadow(TQPixmap &pixmap, TQRegion exposed)
     QRgb pixel;
     double opacity;
     int red, green, blue, pixelRed, pixelGreen, pixelBlue;
-    int subW, subH, w, h, x, y, zeroX, zeroY;
+    int subW, subH, w, x, y, zeroX, zeroY;
     TQImage image;
     TQMemArray<TQRect>::Iterator it, itEnd;
     TQMemArray<TQRect> rectangles;
@@ -1446,7 +1446,6 @@ void Client::imposeCachedShadow(TQPixmap &pixmap, TQRegion exposed)
     yOffset = options->shadowYOffset(isActive());
     options->shadowColour(isActive()).rgb(&red, &green, &blue);
     w = pixmap.width();
-    h = pixmap.height();
 
     itEnd = rectangles.end();
     for (it = rectangles.begin(); it != itEnd; ++it) {
@@ -1487,7 +1486,7 @@ void Client::imposeRegionShadow(TQPixmap &pixmap, TQRegion occluded,
     QRgb pixel;
     double decay, factor, opacity;
     int red, green, blue, pixelRed, pixelGreen, pixelBlue;
-    int halfMaxIntersects, lineIntersects, maxIntersects, maxY;
+    int lineIntersects, maxIntersects, maxY;
     int irBottom, irLeft, irRight, irTop, yIncrement;
     int subW, subH, w, h, zeroX, zeroY;
     TQImage image;
@@ -1505,7 +1504,6 @@ void Client::imposeRegionShadow(TQPixmap &pixmap, TQRegion occluded,
     yOffset = options->shadowYOffset(isActive());
     options->shadowColour(isActive()).rgb(&red, &green, &blue);
     maxIntersects = thickness * thickness * 4 + (thickness * 4) + 1;
-    halfMaxIntersects = maxIntersects / 2;
     lineIntersects = thickness * 2 + 1;
     factor = maxIntersects / maxOpacity;
     decay = (lineIntersects / 0.0125 - factor) / pow((double)maxIntersects, 3.0);

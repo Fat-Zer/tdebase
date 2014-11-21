@@ -1584,7 +1584,7 @@ bool Client::motionNotifyEvent( Window w, int /*state*/, int x, int y, int x_roo
         handleMoveResize( x, y, x_root, y_root );
     return true;
     }
-    
+
 void Client::focusInEvent( XFocusInEvent* e )
     {
     if( e->window != window())

@@ -408,7 +408,9 @@ bool Workspace::activateNextClient( Client* c )
     if( c != NULL )
         {
         if( c == active_client )
+            {
             setActiveClient( NULL, Allowed );
+            }
         should_get_focus.remove( c );
         }
     if( focusChangeEnabled())
@@ -442,7 +444,10 @@ bool Workspace::activateNextClient( Client* c )
             if( get_focus == NULL )
                 get_focus = findDesktop( true, currentDesktop());
             if( get_focus != NULL )
+                {
                 requestFocus( get_focus );
+                get_focus->setActive( true, true );
+                }
             else
                 focusToNull();
             }
@@ -855,7 +860,7 @@ void Client::setActive( bool act, bool updateOpacity_)
         return;
     active = act;
     workspace()->setActiveClient( act ? this : NULL, Allowed );
-    
+
     if (updateOpacity_) updateOpacity();
     if (isModal() && transientFor())
     {
@@ -863,7 +868,7 @@ void Client::setActive( bool act, bool updateOpacity_)
         else if (!transientFor()->custom_opacity) transientFor()->setOpacity(options->translucentActiveWindows, options->activeWindowOpacity);
     }
     updateShadowSize();
-    
+
     if ( active )
     {
         Notify::raise( Notify::Activate );
@@ -891,6 +896,7 @@ void Client::setActive( bool act, bool updateOpacity_)
         removeShadow();
 
         if (options->shadowEnabled(false))
+            {
             if (this == workspace()->topClientOnDesktop(desktop()))
                 {
                 /* If the newly deactivated window is the top client on the
@@ -899,10 +905,15 @@ void Client::setActive( bool act, bool updateOpacity_)
                  * activated window's shadow.
                  */
                 if ((shadowAfterClient = workspace()->activeClient()))
+                    {
                     drawShadowAfter(shadowAfterClient);
+                    }
                 }
             else
+                {
                 drawDelayedShadow();
+                }
+            }
         }
 
     if( !active )

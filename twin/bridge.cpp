@@ -21,6 +21,10 @@ Bridge::Bridge( Client* cl )
     {
     }
 
+Bridge::~Bridge()
+    {
+    }
+
 #define BRIDGE_HELPER( rettype, prototype, args1, args2, cst ) \
 rettype Bridge::prototype ( args1 ) cst \
     { \

@@ -58,8 +58,9 @@ TQString KonqPixmapProvider::iconNameFor( const TQString& url )
     TQString icon;
     if ( it != iconMap.end() ) {
         icon = it.data();
-        if ( !icon.isEmpty() )
+        if ( !icon.isEmpty() ) {
 	    return icon;
+	}
     }
 
     if ( url.isEmpty() ) {
