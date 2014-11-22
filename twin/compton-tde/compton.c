@@ -1260,6 +1260,7 @@ paint_preprocess(session_t *ps, win *list) {
       w->fade = w->fade_last;
       win_set_invert_color(ps, w, w->invert_color_last);
       win_set_blur_background(ps, w, w->blur_background_last);
+      win_set_greyscale_background(ps, w, w->greyscale_background_last);
     }
 
     // Update window opacity target and dim state if asked
@@ -1407,6 +1408,7 @@ paint_preprocess(session_t *ps, win *list) {
         w->fade_last = w->fade;
         w->invert_color_last = w->invert_color;
         w->blur_background_last = w->blur_background;
+        w->greyscale_background_last = w->greyscale_background;
       }
     }
   }
@@ -1546,6 +1548,53 @@ xr_blur_dst(session_t *ps, Picture tgt_buffer,
   return true;
 }
 
+/**
+ * @brief Make an area on a buffer greyscale.
+ *
+ * @param ps current session
+ * @param tgt_buffer a buffer as both source and destination
+ * @param x x pos
+ * @param y y pos
+ * @param wid width
+ * @param hei height
+ * @param reg_clip a clipping region to be applied on intermediate buffers
+ *
+ * @return true if successful, false otherwise
+ */
+static bool
+xr_greyscale_dst(session_t *ps, Picture tgt_buffer,
+    int x, int y, int wid, int hei, XserverRegion reg_clip) {
+
+  // Directly copying from tgt_buffer to it does not work, so we create a
+  // Picture in the middle.
+  Picture tmp_picture = xr_build_picture(ps, wid, hei, NULL);
+
+  if (!tmp_picture) {
+    printf_errf("(): Failed to build intermediate Picture.");
+    return false;
+  }
+
+  if (reg_clip && tmp_picture)
+    XFixesSetPictureClipRegion(ps->dpy, tmp_picture, reg_clip, 0, 0);
+
+  Picture src_pict = tgt_buffer, dst_pict = tmp_picture;
+
+  XRenderComposite(ps->dpy, PictOpHSLLuminosity, src_pict, None,
+      dst_pict, x, y, 0, 0, 0, 0, wid, hei);
+
+      XserverRegion tmp = src_pict;
+      src_pict = dst_pict;
+      dst_pict = tmp;
+
+  if (src_pict != tgt_buffer)
+    XRenderComposite(ps->dpy, PictOpSrc, src_pict, None, tgt_buffer,
+        0, 0, 0, 0, x, y, wid, hei);
+
+  free_picture(ps, &tmp_picture);
+
+  return true;
+}
+
 /*
  * WORK-IN-PROGRESS!
 static void
@@ -1640,6 +1689,35 @@ win_blur_background(session_t *ps, win *w, Picture tgt_buffer,
       // TODO: Handle frame opacity
       glx_blur_dst(ps, x, y, wid, hei, ps->psglx->z - 0.5, factor_center,
           reg_paint, pcache_reg, &w->glx_blur_cache);
+      break;
+#endif
+    default:
+      assert(0);
+  }
+}
+
+/**
+ * Set the background of a window to greyscale.
+ */
+static inline void
+win_greyscale_background(session_t *ps, win *w, Picture tgt_buffer,
+    XserverRegion reg_paint, const reg_data_t *pcache_reg) {
+  const int x = w->a.x;
+  const int y = w->a.y;
+  const int wid = w->widthb;
+  const int hei = w->heightb;
+
+  switch (ps->o.backend) {
+    case BKEND_XRENDER:
+    case BKEND_XR_GLX_HYBRID:
+      {
+        xr_greyscale_dst(ps, tgt_buffer, x, y, wid, hei, reg_paint);
+      }
+      break;
+#ifdef CONFIG_VSYNC_OPENGL_GLSL
+    case BKEND_GLX:
+      glx_greyscale_dst(ps, x, y, wid, hei, ps->psglx->z - 0.5,
+          reg_paint, pcache_reg, &w->glx_greyscale_cache);
       break;
 #endif
     default:
@@ -2111,6 +2189,11 @@ paint_all(session_t *ps, XserverRegion region, XserverRegion region_real, win *t
           win_blur_background(ps, w, ps->tgt_buffer.pict, reg_paint, &cache_reg);
         }
 
+        // Set window background to greyscale
+        if (w->greyscale_background && (!win_is_solid(ps, w))) {
+          win_greyscale_background(ps, w, ps->tgt_buffer.pict, reg_paint, &cache_reg);
+        }
+
         // Painting the window
         win_paint_win(ps, w, reg_paint, &cache_reg);
       }
@@ -2403,6 +2486,7 @@ map_win(session_t *ps, Window id) {
   }
 
   win_determine_blur_background(ps, w);
+  win_determine_greyscale_background(ps, w);
 
   w->damaged = false;
 
@@ -2517,6 +2601,28 @@ wid_get_opacity_prop(session_t *ps, Window wid, opacity_t def) {
 static double
 get_opacity_percent(win *w) {
   return ((double) w->opacity) / OPAQUE;
+}
+
+static Bool
+get_window_transparency_filter_greyscale(const session_t *ps, Window w)
+{
+	Atom actual;
+	int format;
+	unsigned long n, left;
+
+	unsigned char *data;
+	int result = XGetWindowProperty (ps->dpy, w, ps->atom_win_type_tde_transparency_filter_greyscale, 0L, 1L, False,
+			XA_ATOM, &actual, &format,
+			&n, &left, &data);
+
+	if (result == Success && data != None && format == 32 )
+	{
+		Atom a;
+		a = *(long*)data;
+		XFree ( (void *) data);
+		return True;
+	}
+	return False;
 }
 
 static Bool
@@ -2950,6 +3056,32 @@ win_determine_blur_background(session_t *ps, win *w) {
   win_set_blur_background(ps, w, blur_background_new);
 }
 
+static void
+win_set_greyscale_background(session_t *ps, win *w, bool greyscale_background_new) {
+  if (w->greyscale_background == greyscale_background_new) return;
+
+  w->greyscale_background = greyscale_background_new;
+
+  // Only consider window damaged if it's previously painted with background
+  // set to greyscale
+  if (!win_is_solid(ps, w))
+    add_damage_win(ps, w);
+}
+
+/**
+ * Determine if a window should have a greyscale background.
+ */
+static void
+win_determine_greyscale_background(session_t *ps, win *w) {
+  if (IsViewable != w->a.map_state)
+    return;
+
+  bool greyscale_background_new = (get_window_transparency_filter_greyscale(ps, w) ||
+    (ps->o.greyscale_background && !win_match(ps, w, ps->o.greyscale_background_blacklist, &w->cache_bbblst)));
+
+  win_set_greyscale_background(ps, w, greyscale_background_new);
+}
+
 /**
  * Update window opacity according to opacity rules.
  */
@@ -3006,6 +3138,8 @@ win_on_factor_change(session_t *ps, win *w) {
     win_update_focused(ps, w);
   if (ps->o.blur_background_blacklist)
     win_determine_blur_background(ps, w);
+  if (ps->o.greyscale_background_blacklist)
+    win_determine_greyscale_background(ps, w);
   if (ps->o.opacity_rules)
     win_update_opacity_rule(ps, w);
   if (IsViewable == w->a.map_state && ps->o.paint_blacklist)
@@ -3273,6 +3407,7 @@ add_win(session_t *ps, Window id, Window prev) {
     .invert_color_force = UNSET,
 
     .blur_background = false,
+    .greyscale_background = false,
 
     .show_black_background = false,
     .show_root_tile = false,
@@ -5037,6 +5172,11 @@ usage(int ret) {
     "  11x11gaussian.\n"
     "--blur-background-exclude condition\n"
     "  Exclude conditions for background blur.\n"
+    "--greyscale-background\n"
+    "  Set background of semi-transparent / ARGB windows to greyscale.\n"
+    "  The switch name may change without prior notifications.\n"
+    "--greyscale-background-exclude condition\n"
+    "  Exclude conditions for greyscale background.\n"
     "--resize-damage integer\n"
     "  Resize damaged region by a specific number of pixels. A positive\n"
     "  value enlarges it while a negative one shrinks it. Useful for\n"
@@ -5909,12 +6049,16 @@ parse_config(session_t *ps, struct options_tmp *pcfgtmp) {
   parse_cfg_condlst(ps, &cfg, &ps->o.invert_color_list, "invert-color-include");
   // --blur-background-exclude
   parse_cfg_condlst(ps, &cfg, &ps->o.blur_background_blacklist, "blur-background-exclude");
+  // --greyscale-background-exclude
+  parse_cfg_condlst(ps, &cfg, &ps->o.greyscale_background_blacklist, "greyscale-background-exclude");
   // --opacity-rule
   parse_cfg_condlst_opct(ps, &cfg, "opacity-rule");
   // --unredir-if-possible-exclude
   parse_cfg_condlst(ps, &cfg, &ps->o.unredir_if_possible_blacklist, "unredir-if-possible-exclude");
   // --blur-background
   lcfg_lookup_bool(&cfg, "blur-background", &ps->o.blur_background);
+  // --greyscale-background
+  lcfg_lookup_bool(&cfg, "greyscale-background", &ps->o.greyscale_background);
   // --blur-background-frame
   lcfg_lookup_bool(&cfg, "blur-background-frame",
       &ps->o.blur_background_frame);
@@ -6066,6 +6210,8 @@ get_cfg(session_t *ps, int argc, char *const *argv, bool first_pass) {
     { "no-fading-opacitychange", no_argument, NULL, 321 },
     { "reredir-on-root-change", no_argument, NULL, 731 },
     { "glx-reinit-on-root-change", no_argument, NULL, 732 },
+    { "greyscale-background", no_argument, NULL, 733 },
+    { "greyscale-background-exclude", required_argument, NULL, 734 },
     // Must terminate with a NULL entry
     { NULL, 0, NULL, 0 },
   };
@@ -6339,6 +6485,11 @@ get_cfg(session_t *ps, int argc, char *const *argv, bool first_pass) {
       P_CASEBOOL(321, no_fading_opacitychange);
       P_CASEBOOL(731, reredir_on_root_change);
       P_CASEBOOL(732, glx_reinit_on_root_change);
+      P_CASEBOOL(733, greyscale_background);
+      case 734:
+        // --greyscale-background-exclude
+        condlst_add(ps, &ps->o.greyscale_background_blacklist, optarg);
+        break;
       default:
         usage(1);
         break;
@@ -6479,6 +6630,7 @@ init_atoms(session_t *ps) {
 
   ps->atom_win_type_tde_transparent_to_black = get_atom(ps, "_TDE_TRANSPARENT_TO_BLACK");
   ps->atom_win_type_tde_transparent_to_desktop = get_atom(ps, "_TDE_TRANSPARENT_TO_DESKTOP");
+  ps->atom_win_type_tde_transparency_filter_greyscale = get_atom(ps, "_TDE_TRANSPARENCY_FILTER_GREYSCALE");
 }
 
 #ifdef CONFIG_XRANDR
@@ -7350,6 +7502,7 @@ session_init(session_t *ps_old, int argc, char **argv) {
       .blur_background_fixed = false,
       .blur_background_blacklist = NULL,
       .blur_kerns = { NULL },
+      .greyscale_background = false,
       .inactive_dim = 0.0,
       .inactive_dim_fixed = false,
       .invert_color_list = NULL,
@@ -7447,6 +7600,7 @@ session_init(session_t *ps_old, int argc, char **argv) {
     .atom_win_type = None,
     .atom_win_type_tde_transparent_to_black = None,
     .atom_win_type_tde_transparent_to_desktop = None,
+    .atom_win_type_tde_transparency_filter_greyscale = None,
     .atoms_wintypes = { 0 },
     .track_atom_lst = NULL,
 
@@ -7851,6 +8005,7 @@ session_destroy(session_t *ps) {
   free_wincondlst(&ps->o.focus_blacklist);
   free_wincondlst(&ps->o.invert_color_list);
   free_wincondlst(&ps->o.blur_background_blacklist);
+  free_wincondlst(&ps->o.greyscale_background_blacklist);
   free_wincondlst(&ps->o.opacity_rules);
   free_wincondlst(&ps->o.paint_blacklist);
   free_wincondlst(&ps->o.unredir_if_possible_blacklist);

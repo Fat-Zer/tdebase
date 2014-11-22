@@ -871,6 +871,12 @@ static void
 win_determine_blur_background(session_t *ps, win *w);
 
 static void
+win_set_greyscale_background(session_t *ps, win *w, bool greyscale_background_new);
+
+static void
+win_determine_greyscale_background(session_t *ps, win *w);
+
+static void
 win_on_wtype_change(session_t *ps, win *w);
 
 static void

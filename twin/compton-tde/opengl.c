@@ -1386,6 +1386,175 @@ glx_blur_dst_end:
 #endif
 
 bool
+glx_greyscale_dst(session_t *ps, int dx, int dy, int width, int height, float z,
+    XserverRegion reg_tgt, const reg_data_t *pcache_reg, glx_greyscale_cache_t *pbc) {
+  bool ret = false;
+
+  // Calculate copy region size
+  glx_greyscale_cache_t ibc = { .width = 0, .height = 0 };
+  if (!pbc)
+    pbc = &ibc;
+
+#ifdef DEBUG_GLX
+  printf_dbgf("(): %d, %d, %d, %d\n", dx, dy, width, height);
+#endif
+
+  // Free textures if size inconsistency discovered
+  if (width != pbc->width || height != pbc->height)
+    free_glx_gc_resize(ps, pbc);
+
+  // Generate FBO and textures if needed
+  if (!pbc->textures[0])
+    pbc->textures[0] = glx_gen_texture(ps, GL_TEXTURE_2D, width, height);
+  GLuint tex_scr1 = pbc->textures[0];
+  pbc->width = width;
+  pbc->height = height;
+
+  if (!tex_scr1) {
+    printf_errf("(): Failed to allocate texture.");
+    goto glx_greyscale_dst_end;
+  }
+
+  // Texture scaling factor
+  GLfloat texfac_x = 1.0f, texfac_y = 1.0f;
+  texfac_x /= width;
+  texfac_y /= height;
+
+  // Greyscale conversion in OpenGL ES taken nearly verbatim from this answer on Stack Overflow: http://stackoverflow.com/a/9690145
+
+  // Enable texture unit 0 to divide RGB values in our texture by 2
+  glActiveTexture(GL_TEXTURE0);
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D, tex_scr1);
+
+  // Read destination pixels into the GL texture
+  glx_copy_region_to_tex(ps, GL_TEXTURE_2D, dx, dy, dx, dy, width, height);
+
+  // Finish setting up texture
+  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
+  glClientActiveTexture(GL_TEXTURE0);
+
+  // GL_MODULATE is Arg0 * Arg1    
+  glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_MODULATE);
+
+  // Configure Arg0
+  glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_RGB, GL_TEXTURE);
+  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_COLOR);
+
+  // Configure Arg1
+  float multipliers[4] = {.5, .5, .5, 0.0};
+  glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_RGB, GL_CONSTANT);
+  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR);
+  glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, (GLfloat*)&multipliers);
+
+  // Enable texture unit 1 to increase RGB values by .5
+  glActiveTexture(GL_TEXTURE1);
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D, tex_scr1);
+  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
+  glClientActiveTexture(GL_TEXTURE1);
+
+  // GL_ADD is Arg0 + Arg1
+  glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_ADD);
+
+  // Configure Arg0
+  glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_RGB, GL_PREVIOUS);
+  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_COLOR);
+
+  // Configure Arg1
+  GLfloat additions[4] = {.5, .5, .5, 0.0};
+  glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_RGB, GL_CONSTANT);
+  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR);
+  glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, (GLfloat*)&additions);
+
+  // Enable texture combiner 2 to get a DOT3_RGB product of your RGB values
+  glActiveTexture(GL_TEXTURE2);
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D, tex_scr1);
+  glClientActiveTexture(GL_TEXTURE2);
+  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
+
+  // GL_DOT3_RGB is 4*((Arg0r - 0.5) * (Arg1r - 0.5) + (Arg0g - 0.5) * (Arg1g - 0.5) + (Arg0b - 0.5) * (Arg1b - 0.5))
+  glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_DOT3_RGB);   
+
+  // Configure Arg0
+  glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_RGB, GL_PREVIOUS);
+  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_COLOR);
+
+  // Configure Arg1
+  // We want this to adjust our DOT3 by R*0.3 + G*0.59 + B*0.11
+  // So, our actual adjustment will need to take into consideration
+  // the fact that OpenGL will subtract .5 from our Arg1
+  // and we need to also take into consideration that we have divided 
+  // our RGB values by 2 and we are multiplying the entire
+  // DOT3 product by 4
+  // So, for Red adjustment you will get :
+  //    .65 = (4*(0.3))/2 + 0.5  = (0.3/2) + 0.5
+  GLfloat weights[4] = {.65, .795, .555, 1.};
+  glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_RGB, GL_CONSTANT);
+  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR);
+  glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, (GLfloat*)&weights);
+
+  // Render!
+  {
+    P_PAINTREG_START();
+    {
+        const GLfloat rx = (crect.x - dx) * texfac_x;
+        const GLfloat ry = (height - (crect.y - dy)) * texfac_y;
+        const GLfloat rxe = rx + crect.width * texfac_x;
+        const GLfloat rye = ry - crect.height * texfac_y;
+        GLfloat rdx = crect.x;
+        GLfloat rdy = ps->root_height - crect.y;
+        GLfloat rdxe = rdx + crect.width;
+        GLfloat rdye = rdy - crect.height;
+
+#ifdef DEBUG_GLX
+        printf_dbgf("(): %f, %f, %f, %f -> %f, %f, %f, %f\n", rx, ry, rxe, rye, rdx, rdy, rdxe, rdye);
+#endif
+
+        glTexCoord2f(rx, ry);
+        glVertex3f(rdx, rdy, z);
+
+        glTexCoord2f(rxe, ry);
+        glVertex3f(rdxe, rdy, z);
+
+        glTexCoord2f(rxe, rye);
+        glVertex3f(rdxe, rdye, z);
+
+        glTexCoord2f(rx, rye);
+        glVertex3f(rdx, rdye, z);
+    }
+    P_PAINTREG_END();
+  }
+
+  glEnd();
+
+  // Clean up by disabling your texture combiners or texture units.
+  glActiveTexture(GL_TEXTURE2);
+  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+  glDisable(GL_TEXTURE_2D);
+
+  glActiveTexture(GL_TEXTURE1);
+  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+  glDisable(GL_TEXTURE_2D);
+
+  glActiveTexture(GL_TEXTURE0);
+  glClientActiveTexture(GL_TEXTURE0);
+  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+  ret = true;
+
+glx_greyscale_dst_end:
+  if (&ibc == pbc) {
+    free_glx_gc(ps, pbc);
+  }
+
+  glx_check_err(ps);
+
+  return ret;
+}
+
+bool
 glx_dim_dst(session_t *ps, int dx, int dy, int width, int height, float z,
     GLfloat factor, XserverRegion reg_tgt, const reg_data_t *pcache_reg) {
   // It's possible to dim in glx_render(), but it would be over-complicated

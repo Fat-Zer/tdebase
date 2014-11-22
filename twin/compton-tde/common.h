@@ -490,6 +490,17 @@ typedef struct {
 } glx_blur_cache_t;
 
 typedef struct {
+  /// Framebuffer used for greyscale conversion.
+  GLuint fbo;
+  /// Textures used for greyscale conversion.
+  GLuint textures[2];
+  /// Width of the textures.
+  int width;
+  /// Height of the textures.
+  int height;
+} glx_greyscale_cache_t;
+
+typedef struct {
   /// GLSL program.
   GLuint prog;
   /// Location of uniform "opacity" in window GLSL program.
@@ -714,6 +725,10 @@ typedef struct _options_t {
   c2_lptr_t *blur_background_blacklist;
   /// Blur convolution kernel.
   XFixed *blur_kerns[MAX_BLUR_PASS];
+  /// Whether to set background of semi-transparent / ARGB windows to greyscale.
+  bool greyscale_background;
+  /// Greyscale background blacklist. A linked list of conditions.
+  c2_lptr_t *greyscale_background_blacklist;
   /// How much to dim an inactive window. 0.0 - 1.0, 0 to disable.
   double inactive_dim;
   /// Whether to use fixed inactive dim opacity, instead of deciding
@@ -1047,10 +1062,12 @@ typedef struct _session_t {
   Atom atom_compton_shadow;
   /// Atom of property <code>_NET_WM_WINDOW_TYPE</code>.
   Atom atom_win_type;
-  /// Atom of property <code>_KDE_TRANSPARENT_TO_BLACK</code>.
+  /// Atom of property <code>_TDE_TRANSPARENT_TO_BLACK</code>.
   Atom atom_win_type_tde_transparent_to_black;
-  /// Atom of property <code>_KDE_TRANSPARENT_TO_DESKTOP</code>.
+  /// Atom of property <code>_TDE_TRANSPARENT_TO_DESKTOP</code>.
   Atom atom_win_type_tde_transparent_to_desktop;
+  /// Atom of property <code>_TDE_TRANSPARENCY_FILTER_GREYSCALE</code>.
+  Atom atom_win_type_tde_transparency_filter_greyscale;
   /// Array of atoms of all possible window types.
   Atom atoms_wintypes[NUM_WINTYPES];
   /// Linked list of additional atoms to track.
@@ -1241,6 +1258,11 @@ typedef struct _win {
   /// Background state on last paint.
   bool blur_background_last;
 
+  /// Whether to set window background to greyscale.
+  bool greyscale_background;
+  /// Background state on last paint.
+  bool greyscale_background_last;
+
   /// Whether to show black background
   bool show_black_background;
 
@@ -1250,6 +1272,9 @@ typedef struct _win {
 #ifdef CONFIG_VSYNC_OPENGL_GLSL
   /// Textures and FBO background blur use.
   glx_blur_cache_t glx_blur_cache;
+
+  /// Textures and FBO greyscale background use.
+  glx_greyscale_cache_t glx_greyscale_cache;
 #endif
 } win;
 
@@ -2219,6 +2244,10 @@ glx_dim_dst(session_t *ps, int dx, int dy, int width, int height, float z,
     GLfloat factor, XserverRegion reg_tgt, const reg_data_t *pcache_reg);
 
 bool
+glx_greyscale_dst(session_t *ps, int dx, int dy, int width, int height, float z,
+    XserverRegion reg_tgt, const reg_data_t *pcache_reg, glx_greyscale_cache_t *pbc);
+
+bool
 glx_render_(session_t *ps, const glx_texture_t *ptex,
     int x, int y, int dx, int dy, int width, int height, int z,
     double opacity, bool argb, bool neg,
@@ -2306,6 +2335,26 @@ free_glx_bc(session_t *ps, glx_blur_cache_t *pbc) {
   free_glx_fbo(ps, &pbc->fbo);
   free_glx_bc_resize(ps, pbc);
 }
+
+/**
+ * Free data in glx_greyscale_cache_t on resize.
+ */
+static inline void
+free_glx_gc_resize(session_t *ps, glx_greyscale_cache_t *pbc) {
+  free_texture_r(ps, &pbc->textures[0]);
+  free_texture_r(ps, &pbc->textures[1]);
+  pbc->width = 0;
+  pbc->height = 0;
+}
+
+/**
+ * Free a glx_greyscale_cache_t
+ */
+static inline void
+free_glx_gc(session_t *ps, glx_greyscale_cache_t *pbc) {
+  free_glx_fbo(ps, &pbc->fbo);
+  free_glx_gc_resize(ps, pbc);
+}
 #endif
 #endif
 
@@ -2349,6 +2398,7 @@ free_win_res_glx(session_t *ps, win *w) {
   free_paint_glx(ps, &w->shadow_paint);
 #ifdef CONFIG_VSYNC_OPENGL_GLSL
   free_glx_bc(ps, &w->glx_blur_cache);
+  free_glx_gc(ps, &w->glx_greyscale_cache);
 #endif
 }
 
