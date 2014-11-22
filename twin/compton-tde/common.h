@@ -493,7 +493,7 @@ typedef struct {
   /// Framebuffer used for greyscale conversion.
   GLuint fbo;
   /// Textures used for greyscale conversion.
-  GLuint textures[2];
+  GLuint textures[1];
   /// Width of the textures.
   int width;
   /// Height of the textures.
