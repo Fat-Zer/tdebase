@@ -401,7 +401,7 @@ DM::lockSwitchVT( int vt )
 		kapp->dcopClient()->call("kdesktop", "KScreensaverIface", "lock()", data, replyType, replyData);
 		if (!switchVT( vt )) {
 			// Switching VT failed; unlock...
-			kapp->dcopClient()->call("kdesktop", "KScreensaverIface", "unlock()", data, replyType, replyData);
+			// kapp->dcopClient()->call("kdesktop", "KScreensaverIface", "unlock()", data, replyType, replyData);
 		}
 	}
 }
