@@ -392,13 +392,17 @@ DM::switchVT( int vt )
 void
 DM::lockSwitchVT( int vt )
 {
-	if (switchVT( vt )) {
+	if (isSwitchable()) {
 		TQByteArray data;
 		TQCString replyType;
 		TQByteArray replyData;
 		// Block here until lock is complete
 		// If this is not done the desktop of the locked session will be shown after VT switch until the lock fully engages!
 		kapp->dcopClient()->call("kdesktop", "KScreensaverIface", "lock()", data, replyType, replyData);
+		if (!switchVT( vt )) {
+			// Switching VT failed; unlock...
+			kapp->dcopClient()->call("kdesktop", "KScreensaverIface", "unlock()", data, replyType, replyData);
+		}
 	}
 }
 
