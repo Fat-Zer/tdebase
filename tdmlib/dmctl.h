@@ -32,10 +32,10 @@ struct SessEnt {
 typedef TQValueList<SessEnt> SessList;
 
 class DM {
-
 #ifdef Q_WS_X11
 
 public:
+
 	DM();
 	~DM();
 

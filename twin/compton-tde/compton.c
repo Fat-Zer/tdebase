@@ -196,7 +196,6 @@ void handle_siguser (int sig)
         my_exit_code=3;
         setuid(uidnum);
         write_pid_file(getpid());
-
     }
     else {
         uidnum = getuid();

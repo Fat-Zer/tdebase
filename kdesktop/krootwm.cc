@@ -52,6 +52,8 @@
 #include <tdemessagebox.h>
 #include <kuser.h>
 #include <tqfile.h>
+#include <ntqthread.h>
+#include <tqeventloop.h>
 
 #include "krootwm.h"
 #include "kdiconview.h"
@@ -71,6 +73,15 @@ extern TQCString kdesktop_name, kicker_name, twin_name;
 
 KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop), startup(FALSE)
 {
+  m_helperThread = new TQEventLoopThread;
+  m_helperThread->start();
+  m_threadHelperObject = new KRootWmThreadHelperObject;
+  m_threadHelperObject->moveToThread(m_helperThread);
+  connect(this, TQT_SIGNAL(terminateHelperThread()), m_threadHelperObject, TQT_SLOT(terminateThread()));
+  connect(this, TQT_SIGNAL(asyncLock()), m_threadHelperObject, TQT_SLOT(slotLock()));
+  connect(this, TQT_SIGNAL(asyncLockAndDoNewSession()), m_threadHelperObject, TQT_SLOT(lockAndDoNewSession()));
+  connect(this, TQT_SIGNAL(asyncSlotSessionActivated(int)), m_threadHelperObject, TQT_SLOT(slotSessionActivated(int)));
+
   s_rootWm = this;
   m_actionCollection = new TDEActionCollection(_desktop, this, "KRootWm::m_actionCollection");
   m_pDesktop = _desktop;
@@ -213,6 +224,11 @@ KRootWm::KRootWm(KDesktop* _desktop) : TQObject(_desktop), startup(FALSE)
 
 KRootWm::~KRootWm()
 {
+  terminateHelperThread();
+  m_helperThread->wait();
+  delete m_threadHelperObject;
+  delete m_helperThread;
+
   delete m_actionCollection;
   delete desktopMenu;
   delete windowListMenu;
@@ -820,7 +836,7 @@ void KRootWm::slotCascadeWindows() {
 
 
 void KRootWm::slotLock() {
-    kapp->dcopClient()->send(kdesktop_name, "KScreensaverIface", "lock()", TQString(""));
+	asyncLock();
 }
 
 
@@ -864,10 +880,40 @@ void KRootWm::slotPopulateSessions()
         }
 }
 
+void KRootWmThreadHelperObject::terminateThread() {
+	TQEventLoop* eventLoop = TQApplication::eventLoop();
+	if (eventLoop) {
+		eventLoop->exit(0);
+	}
+}
+
+void KRootWmThreadHelperObject::slotLock() {
+	// Block here until lock is complete
+	// If this is not done the desktop of the locked session will be shown after VT switch until the lock fully engages!
+	// Force remote call to ensure that blocking is enforced even though this call is being made from inside the kdesktop_name application...
+	// If this is not done DCOP will translate the call into a send and the desktop of the locked session will be shown after VT switch as above
+	system("dcop kdesktop KScreensaverIface lock");
+}
+
+void KRootWmThreadHelperObject::lockAndDoNewSession() {
+	// Block here until lock is complete
+	// If this is not done the desktop of the locked session will be shown after VT switch until the lock fully engages!
+	// Force remote call to ensure that blocking is enforced even though this call is being made from inside the kdesktop_name application...
+	// If this is not done DCOP will translate the call into a send and the desktop of the locked session will be shown after VT switch as above
+	if (system("dcop kdesktop KScreensaverIface lock") == 0) {
+		DM().startReserve();
+	}
+}
+
+void KRootWmThreadHelperObject::slotSessionActivated(int vt) {
+	DM().lockSwitchVT( vt );
+}
+
 void KRootWm::slotSessionActivated( int ent )
 {
-    if (ent > 0 && !sessionsMenu->isItemChecked( ent ))
-        DM().lockSwitchVT( ent );
+    if (ent > 0 && !sessionsMenu->isItemChecked( ent )) {
+        asyncSlotSessionActivated( ent );
+    }
 }
 
 void KRootWm::slotNewSession()
@@ -903,10 +949,12 @@ void KRootWm::doNewSession( bool lock )
     if (result==KMessageBox::Cancel)
         return;
 
-    if (lock)
-        slotLock();
-
-    DM().startReserve();
+    if (lock) {
+        asyncLockAndDoNewSession();
+    }
+    else {
+        DM().startReserve();
+    }
 }
 
 void KRootWm::slotMenuItemActivated(int /* item */ )

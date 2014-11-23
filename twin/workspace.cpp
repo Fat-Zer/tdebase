@@ -225,60 +225,73 @@ Workspace::Workspace( bool restore )
     }
 
     // start kompmgr - i wanted to put this into main.cpp, but that would prevent dcop support, as long as Application was no dcop_object
+
+    // If compton-tde is already running, send it SIGTERM
+    // Attempt to load the compton-tde pid file
+    char *filename;
+    const char *pidfile = "compton-tde.pid";
+    char uidstr[sizeof(uid_t)*8+1];
+    sprintf(uidstr, "%d", getuid());
+    int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
+    filename = (char*)malloc(n*sizeof(char)+1);
+    memset(filename,0,n);
+    strcat(filename, P_tmpdir);
+    strcat(filename, "/.");
+    strcat(filename, uidstr);
+    strcat(filename, "-");
+    strcat(filename, pidfile);
+
+    // Now that we did all that by way of introduction...read the file!
+    FILE *pFile;
+    char buffer[255];
+    pFile = fopen(filename, "r");
+    int kompmgrpid = 0;
+    if (pFile)
+        {
+        printf("[twin-workspace] Using '%s' as compton-tde pidfile\n\n", filename);
+        // obtain file size
+        fseek (pFile , 0 , SEEK_END);
+        unsigned long lSize = ftell (pFile);
+        if (lSize > 254)
+            lSize = 254;
+        rewind (pFile);
+        size_t result = fread (buffer, 1, lSize, pFile);
+        fclose(pFile);
+        kompmgrpid = atoi(buffer);
+        }
+
+    free(filename);
+    filename = NULL;
+
     if (options->useTranslucency)
         {
         kompmgr = new TDEProcess;
         connect(kompmgr, TQT_SIGNAL(receivedStderr(TDEProcess*, char*, int)), TQT_SLOT(handleKompmgrOutput(TDEProcess*, char*, int)));
         *kompmgr << TDE_COMPOSITOR_BINARY;
-        startKompmgr();
+        if (kompmgrpid)
+            {
+            if (kill(kompmgrpid, 0) < 0)
+                {
+                // Stale PID file detected; (re)start compositor!
+                startKompmgr();
+                }
+            }
+        else
+            {
+            startKompmgr();
+            }
         }
     else if (!disable_twin_composition_manager)
         {
-        // If compton-tde is already running, send it SIGTERM
-        // Attempt to load the compton-tde pid file
-        char *filename;
-        const char *pidfile = "compton-tde.pid";
-        char uidstr[sizeof(uid_t)*8+1];
-        sprintf(uidstr, "%d", getuid());
-        int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
-        filename = (char*)malloc(n*sizeof(char)+1);
-        memset(filename,0,n);
-        strcat(filename, P_tmpdir);
-        strcat(filename, "/.");
-        strcat(filename, uidstr);
-        strcat(filename, "-");
-        strcat(filename, pidfile);
-
-        // Now that we did all that by way of introduction...read the file!
-        FILE *pFile;
-        char buffer[255];
-        pFile = fopen(filename, "r");
-        int kompmgrpid = 0;
-        if (pFile)
-            {
-            printf("[twin-workspace] Using '%s' as compton-tde pidfile\n\n", filename);
-            // obtain file size
-            fseek (pFile , 0 , SEEK_END);
-            unsigned long lSize = ftell (pFile);
-            if (lSize > 254)
-                lSize = 254;
-            rewind (pFile);
-            size_t result = fread (buffer, 1, lSize, pFile);
-            fclose(pFile);
-            kompmgrpid = atoi(buffer);
-            }
-
-        free(filename);
-        filename = NULL;
 
         if (kompmgrpid)
-                {
-                kill(kompmgrpid, SIGTERM);
-                }
-            else
-                {
-                stopKompmgr();
-                }
+            {
+            kill(kompmgrpid, SIGTERM);
+            }
+        else
+            {
+            stopKompmgr();
+            }
         }
     }
 

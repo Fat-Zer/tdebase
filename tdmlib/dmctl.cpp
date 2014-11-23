@@ -393,15 +393,15 @@ void
 DM::lockSwitchVT( int vt )
 {
 	if (isSwitchable()) {
-		TQByteArray data;
-		TQCString replyType;
-		TQByteArray replyData;
 		// Block here until lock is complete
 		// If this is not done the desktop of the locked session will be shown after VT switch until the lock fully engages!
-		kapp->dcopClient()->call("kdesktop", "KScreensaverIface", "lock()", data, replyType, replyData);
-		if (!switchVT( vt )) {
-			// Switching VT failed; unlock...
-			// kapp->dcopClient()->call("kdesktop", "KScreensaverIface", "unlock()", data, replyType, replyData);
+		// Force remote call to ensure that blocking is enforced even if this call is being made from inside the "kdesktop" application...
+		// If this is not done DCOP will translate the call into a send and the desktop of the locked session will be shown after VT switch as above
+		if (system("dcop kdesktop KScreensaverIface lock") == 0) {
+			if (!switchVT( vt )) {
+				// Switching VT failed; unlock...
+				// system("dcop kdesktop KScreensaverIface unlock")
+			}
 		}
 	}
 }
@@ -484,3 +484,5 @@ DM::type()
 }
 
 #endif // Q_WS_X11
+
+#include "dmctl.moc"

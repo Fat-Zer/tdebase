@@ -56,6 +56,9 @@ enum {
   ITEM_LOGOUT
 };
 
+class TQEventLoopThread;
+class KRootWmThreadHelperObject;
+
 /**
  * This class is the handler for the menus (root popup menu and desktop menubar)
  */
@@ -123,6 +126,12 @@ public slots:
   void slotOpenTerminal();
   void slotLockNNewSession();
 
+signals:
+  void terminateHelperThread();
+  void asyncLock();
+  void asyncLockAndDoNewSession();
+  void asyncSlotSessionActivated(int vt);
+
 private:
   KDesktop* m_pDesktop;
 
@@ -166,6 +175,9 @@ private:
 
   static KRootWm * s_rootWm;
 
+  TQEventLoopThread* m_helperThread;
+  KRootWmThreadHelperObject* m_threadHelperObject;
+
 
 private slots:
 
@@ -173,6 +185,17 @@ private slots:
   void slotFileNewAboutToShow();
   void slotWindowListAboutToShow();
   void slotConfigClosed();
+};
+
+class KRootWmThreadHelperObject : public TQObject
+{
+	TQ_OBJECT
+
+	public slots:
+		void terminateThread();
+		void slotLock();
+		void lockAndDoNewSession();
+		void slotSessionActivated(int vt);
 };
 
 #endif
