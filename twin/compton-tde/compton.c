@@ -214,6 +214,9 @@ void handle_siguser (int sig)
         ps_g->cshadow_picture = solid_picture(ps_g, true, 1, ps_g->o.shadow_red, ps_g->o.shadow_green, ps_g->o.shadow_blue);
 
         /* regenerate shadows using the new settings */
+        ps_g->gaussian_map = make_gaussian_map(ps_g->o.shadow_radius);
+        presum_gaussian(ps_g, ps_g->gaussian_map);
+
         init_alpha_picts(ps_g);
         init_filters(ps_g);
     }
