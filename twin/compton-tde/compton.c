@@ -202,6 +202,12 @@ void handle_siguser (int sig)
         uidnum = getuid();
     }
     if ((sig == SIGUSR1) || (sig == SIGUSR2)) {
+        /* force redetection of the configuration file location */
+        if (ps_g->o.config_file) {
+          free(ps_g->o.config_file);
+          ps_g->o.config_file = NULL;
+        }
+
         get_cfg(ps_g, 0, 0, false); /* reload the configuration file */
 
         /* set background/shadow picture using the new settings */
@@ -5762,6 +5768,9 @@ open_config_file(char *cpath, char **ppath) {
   char *path = cpath;
   FILE *f = NULL;
 
+  uid_t uid = getuid();
+  struct passwd *pw = getpwuid(uid);
+
   if (path) {
     f = fopen(path, "r");
     if (f && ppath)
@@ -5791,6 +5800,27 @@ open_config_file(char *cpath, char **ppath) {
   // Then check user configuration file in $HOME
   if ((home = getenv("HOME")) && strlen(home)) {
     path = mstrjoin(home, config_filename_legacy);
+    f = fopen(path, "r");
+    if (f && ppath)
+      *ppath = path;
+    else
+      free(path);
+    if (f)
+      return f;
+  }
+
+  // Then check user configuration files in the system-defined home directory
+  if (pw != NULL) {
+    path = mstrjoin(pw->pw_dir, config_filename);
+    f = fopen(path, "r");
+    if (f && ppath)
+      *ppath = path;
+    else
+      free(path);
+    if (f)
+      return f;
+
+    path = mstrjoin(pw->pw_dir, config_filename_legacy);
     f = fopen(path, "r");
     if (f && ppath)
       *ppath = path;
