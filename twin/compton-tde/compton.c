@@ -941,6 +941,9 @@ recheck_focus(session_t *ps) {
 }
 
 static Bool
+determine_window_transparency_filter_greyscale(const session_t *ps, Window w);
+
+static Bool
 determine_window_transparent_to_black(const session_t *ps, Window w);
 
 static Bool
@@ -1585,18 +1588,13 @@ xr_greyscale_dst(session_t *ps, Picture tgt_buffer,
   if (reg_clip && tmp_picture)
     XFixesSetPictureClipRegion(ps->dpy, tmp_picture, reg_clip, 0, 0);
 
-  Picture src_pict = tgt_buffer, dst_pict = tmp_picture;
+  XRenderComposite(ps->dpy, PictOpSrc, ps->black_picture, None,
+      tmp_picture, 0, 0, 0, 0, 0, 0, wid, hei);
+  XRenderComposite(ps->dpy, PictOpHSLLuminosity, tgt_buffer, None,
+      tmp_picture, x, y, 0, 0, 0, 0, wid, hei);
 
-  XRenderComposite(ps->dpy, PictOpHSLLuminosity, src_pict, None,
-      dst_pict, x, y, 0, 0, 0, 0, wid, hei);
-
-      XserverRegion tmp = src_pict;
-      src_pict = dst_pict;
-      dst_pict = tmp;
-
-  if (src_pict != tgt_buffer)
-    XRenderComposite(ps->dpy, PictOpSrc, src_pict, None, tgt_buffer,
-        0, 0, 0, 0, x, y, wid, hei);
+  XRenderComposite(ps->dpy, PictOpSrc, tmp_picture, None, tgt_buffer,
+      0, 0, 0, 0, x, y, wid, hei);
 
   free_picture(ps, &tmp_picture);
 
@@ -2440,6 +2438,7 @@ map_win(session_t *ps, Window id) {
 
   /* This needs to be here since we don't get PropertyNotify when unmapped */
   w->opacity = wid_get_opacity_prop(ps, w->id, OPAQUE);
+  w->greyscale_background = determine_window_transparency_filter_greyscale(ps, id);
   w->show_root_tile = determine_window_transparent_to_desktop(ps, id);
   w->show_black_background = determine_window_transparent_to_black(ps, id);
 
@@ -2494,7 +2493,6 @@ map_win(session_t *ps, Window id) {
   }
 
   win_determine_blur_background(ps, w);
-  win_determine_greyscale_background(ps, w);
 
   w->damaged = false;
 
@@ -2674,6 +2672,41 @@ get_window_transparent_to_black(const session_t *ps, Window w)
 		XFree ( (void *) data);
 		return True;
 	}
+	return False;
+}
+
+static Bool
+determine_window_transparency_filter_greyscale (const session_t *ps, Window w)
+{
+	Window       root_return, parent_return;
+	Window      *children = NULL;
+	unsigned int nchildren, i;
+	Bool         type;
+
+	type = get_window_transparency_filter_greyscale (ps, w);
+	if (type == True) {
+		return True;
+	}
+
+	if (!XQueryTree (ps->dpy, w, &root_return, &parent_return, &children,
+				&nchildren))
+	{
+		/* XQueryTree failed. */
+		if (children)
+			XFree ((void *)children);
+		return False;
+	}
+
+	for (i = 0;i < nchildren;i++)
+	{
+		type = determine_window_transparency_filter_greyscale (ps, children[i]);
+		if (type == True)
+			return True;
+	}
+
+	if (children)
+		XFree ((void *)children);
+
 	return False;
 }
 
@@ -3084,7 +3117,7 @@ win_determine_greyscale_background(session_t *ps, win *w) {
   if (IsViewable != w->a.map_state)
     return;
 
-  bool greyscale_background_new = (get_window_transparency_filter_greyscale(ps, w) ||
+  bool greyscale_background_new = (determine_window_transparency_filter_greyscale(ps, w) ||
     (ps->o.greyscale_background && !win_match(ps, w, ps->o.greyscale_background_blacklist, &w->cache_bbblst)));
 
   win_set_greyscale_background(ps, w, greyscale_background_new);
