@@ -484,5 +484,3 @@ DM::type()
 }
 
 #endif // Q_WS_X11
-
-#include "dmctl.moc"
