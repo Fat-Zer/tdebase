@@ -2034,6 +2034,23 @@ void KDisplayConfig::defaults()
 	load( true );
 }
 
+TQString KDisplayConfig::handbookSection() const
+{
+ 	int index = base->mainTabContainerWidget->currentPageIndex();
+ 	if (index == 0)
+		return "displayconfig-global";
+	else if (index == 1)
+		return "displayconfig-resolution";
+	else if (index == 2)
+		return "displayconfig-brightness";
+	else if (index == 3)
+		return "displayconfig-power";
+	else if (index == 4)
+		return "displayconfig-colors";
+ 	else
+ 		return TQString::null;
+}
+
 TQString KDisplayConfig::quickHelp() const
 {
 	return i18n("<h1>Monitor & Display Configuration</h1> This module allows you to configure monitors attached to your"

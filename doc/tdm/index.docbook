@@ -667,7 +667,7 @@ stretched to fit all four corners.</para> </listitem>
 </sect2>
 
 <sect2 id="tdmconfig-shutdown">
-<title><guilabel>Shutdown</guilabel></title>
+<title>Shutdown</title>
 
 <para><guilabel>Allow Shutdown</guilabel></para>
 <para>Use this drop down box to choose who is allowed to shut down:</para>
