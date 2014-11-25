@@ -78,6 +78,46 @@ bool supportsCompMgr()
     return damageExt && compositeExt && xfixesExt;
 }
 
+pid_t getCompositorPID() {
+    // Attempt to load the compton-tde pid file
+    char *filename;
+    const char *pidfile = "compton-tde.pid";
+    char uidstr[sizeof(uid_t)*8+1];
+    sprintf(uidstr, "%d", getuid());
+    int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
+    filename = (char*)malloc(n*sizeof(char)+1);
+    memset(filename,0,n);
+    strcat(filename, P_tmpdir);
+    strcat(filename, "/.");
+    strcat(filename, uidstr);
+    strcat(filename, "-");
+    strcat(filename, pidfile);
+
+    // Now that we did all that by way of introduction...read the file!
+    FILE *pFile;
+    char buffer[255];
+    pFile = fopen(filename, "r");
+    pid_t kompmgrpid = 0;
+    if (pFile)
+        {
+        printf("[twin-workspace] Using '%s' as compton-tde pidfile\n\n", filename);
+        // obtain file size
+        fseek (pFile , 0 , SEEK_END);
+        unsigned long lSize = ftell (pFile);
+        if (lSize > 254)
+            lSize = 254;
+        rewind (pFile);
+        size_t result = fread (buffer, 1, lSize, pFile);
+        fclose(pFile);
+        kompmgrpid = atoi(buffer);
+        }
+
+    free(filename);
+    filename = NULL;
+
+    return kompmgrpid;
+}
+
 // Rikkus: This class is too complex. It needs splitting further.
 // It's a nightmare to understand, especially with so few comments :(
 
@@ -227,41 +267,7 @@ Workspace::Workspace( bool restore )
     // start kompmgr - i wanted to put this into main.cpp, but that would prevent dcop support, as long as Application was no dcop_object
 
     // If compton-tde is already running, send it SIGTERM
-    // Attempt to load the compton-tde pid file
-    char *filename;
-    const char *pidfile = "compton-tde.pid";
-    char uidstr[sizeof(uid_t)*8+1];
-    sprintf(uidstr, "%d", getuid());
-    int n = strlen(P_tmpdir)+strlen(uidstr)+strlen(pidfile)+3;
-    filename = (char*)malloc(n*sizeof(char)+1);
-    memset(filename,0,n);
-    strcat(filename, P_tmpdir);
-    strcat(filename, "/.");
-    strcat(filename, uidstr);
-    strcat(filename, "-");
-    strcat(filename, pidfile);
-
-    // Now that we did all that by way of introduction...read the file!
-    FILE *pFile;
-    char buffer[255];
-    pFile = fopen(filename, "r");
-    int kompmgrpid = 0;
-    if (pFile)
-        {
-        printf("[twin-workspace] Using '%s' as compton-tde pidfile\n\n", filename);
-        // obtain file size
-        fseek (pFile , 0 , SEEK_END);
-        unsigned long lSize = ftell (pFile);
-        if (lSize > 254)
-            lSize = 254;
-        rewind (pFile);
-        size_t result = fread (buffer, 1, lSize, pFile);
-        fclose(pFile);
-        kompmgrpid = atoi(buffer);
-        }
-
-    free(filename);
-    filename = NULL;
+    pid_t kompmgrpid = getCompositorPID();
 
     if (options->useTranslucency)
         {
@@ -2817,6 +2823,12 @@ void Workspace::startKompmgr()
         TQTimer::singleShot( 200, this, TQT_SLOT(startKompmgr()) );
         return;
     }
+    pid_t kompmgrpid = getCompositorPID();
+    if (kill(kompmgrpid, 0) >= 0)
+        {
+        // Active PID file detected; do not attempt to restart
+        return;
+        }
     if (!kompmgr || kompmgr->isRunning()) {
         kompmgrReloadSettings();
         return;
