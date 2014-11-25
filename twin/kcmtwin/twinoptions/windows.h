@@ -261,6 +261,7 @@ private:
   TQCheckBox *disableARGB;
   TQCheckBox *useOpenGL;
   TQCheckBox *blurBackground;
+  TQCheckBox *greyscaleBackground;
   TQCheckBox *fadeInWindows;
   TQCheckBox *fadeInMenuWindows;
   TQCheckBox *fadeInToolTipWindows;

@@ -2512,10 +2512,10 @@ map_win(session_t *ps, Window id) {
 
   /* This needs to be here since we don't get PropertyNotify when unmapped */
   w->opacity = wid_get_opacity_prop(ps, w->id, OPAQUE);
-  w->greyscale_background = determine_window_transparency_filter_greyscale(ps, id);
   w->greyscale_blended_background = determine_window_transparency_filter_greyscale_blended(ps, id);
   w->show_root_tile = determine_window_transparent_to_desktop(ps, id);
   w->show_black_background = determine_window_transparent_to_black(ps, id);
+  win_determine_greyscale_background(ps, w);
 
   // Update window mode here to check for ARGB windows
   win_determine_mode(ps, w);
