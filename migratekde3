@@ -130,6 +130,16 @@ else
 fi
 unset BIN_DIR
 
+# Trap when the user runs this script while in a Trinity session.
+# Most files can be updated "live" but some can't, such as kdeglobals.
+if [ "$TDE_FULL_SESSION" != "" ] && [ "$TDE_SESSION_UID" != "" ] && [ "`ps ax | grep \`tail -n1 $HOME/.DCOPserver_\`uname -n\`__0 2>/dev/null\` | grep -v grep`" != "" ]; then
+  MESSAGE="You are running this script while a Trinity session is active.\nMost files can be updated \"live\" but some cannot, such as kdeglobals.\n\nThis script probably will not complete successfully. :-)"
+  # Are we in X? Display an X dialog explaining breakage.
+  printf "%b" "$MESSAGE\n"
+  Wait_For_Response "Continue?"
+  Proceed_From_Response
+fi
+
 echo
 echo "This script migrates an existing KDE3 profile directory."
 echo "The definition of a KDE3 profile directory includes some"
@@ -170,16 +180,6 @@ if [ "$TDEHOME_LINK" != "" ]; then
     unset TDEHOME_LINK
     exit 0
   fi
-fi
-
-# Trap when the user runs this script while in a Trinity session.
-# Most files can be updated "live" but some can't, such as kdeglobals.
-if [ "$TDE_FULL_SESSION" != "" ] || [ "$TDE_SESSION_UID" != "" ] || [ -f $HOME/.DCOPserver_`uname -n`__* ]; then
-  MESSAGE="You are running this script while a Trinity session is active.\nMost files can be updated \"live\" but some cannot, such as kdeglobals.\n\nThis script might complete successfully and might not. Probably not. :-)"
-  # Are we in X? Display an X dialog explaining breakage.
-  printf "%b" "$MESSAGE\n"
-  Wait_For_Response "Continue?"
-  Proceed_From_Response
 fi
 
 if [ -d "$HOME/.trinity" ] && [ "$BACKUP" = "true" ]; then

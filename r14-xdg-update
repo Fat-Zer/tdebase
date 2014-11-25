@@ -3,7 +3,7 @@
 # A script to perform R14.0.0 XDG compliance updates.
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201410170
+SCRIPT_VERSION=201411240
 
 # This script should be needed to run only once, but corner cases
 # and file/directory permissions could cause incomplete updates.
@@ -91,7 +91,7 @@ fi
 
 unset KDEGLOBALS_KEY_VALUE
 
-WARNING_MESSAGE="Trinity R14 XDG compliance updates will not be performed.\n\nWithout R14 XDG compliance updates, some Trinity apps will fail to\nfunction properly.\n\nFailures include the following:\n\n* Many left-side icon lists will not populate,\n  such as the Panel and Konqueror configuration dialogs.\n\n* User-defined keyboard shortcuts fail (khotkeysrc).\n  System defined shortcuts remain functional.\n\n* User-defined app preferences fail (profilerc).\n\n* Konqueror navigation/sidebar panel won't open.\n\n* User-defined konqueror service menus, kicker customization,\n* konqueror sidebar, Recent Documents list fail.\n\nPlease exercise appropriate action.\n"
+WARNING_MESSAGE="Trinity R14 XDG compliance updates have been interrupted.\n\nWithout R14 XDG compliance updates, some Trinity apps will fail to\nfunction properly.\n\nFailures include the following:\n\n* Many left-side icon lists will not populate,\n  such as the Panel and Konqueror configuration dialogs.\n\n* User-defined keyboard shortcuts fail (khotkeysrc).\n  System defined shortcuts remain functional.\n\n* User-defined app preferences fail (profilerc).\n\n* Konqueror navigation/sidebar panel won't open.\n\n* User-defined konqueror service menus, kicker customization,\n* konqueror sidebar, Recent Documents list fail.\n\nPlease exercise appropriate action.\n"
 
 # As the user should not be logged into a Trinity session when running
 # this script, or an administrator might run this script remotely, the
@@ -175,14 +175,14 @@ if [ "$TDEHOME_LINK" != "" ]; then
   if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
     echo "[r14-xdg-update] Warning! The profile directory $PROFILE_DIR is a" 1>&2
     echo "                 sym link to $TDEHOME_LINK!" 1>&2
-    echo "                 R14 updates will not be performed because Trinity needs its own" 1>&2
+    echo "                 R14 updates will not continue because Trinity needs its own" 1>&2
     echo "                 separate profile directory." 1>&2
     echo "                 Without R14 updates some Trinity apps will fail to function correctly." 1>&2
   fi
-  MESSAGE="Oops! The profile directory $PROFILE_DIR is a sym link to $TDEHOME_LINK.\n\n${WARNING_MESSAGE}\nPossible remedies:\n\n* Contact your system administrator.\n\n* Break the sym link to force creating a fresh Trinity profile.\n\n* Use the migratekde3 script to migrate a KDE3 profile to Trinity."
+  MESSAGE="Oops! The profile directory $PROFILE_DIR is a sym link to $TDEHOME_LINK.\n\n${WARNING_MESSAGE}\nPossible remedies:\n\n* Contact your system administrator.\n\n* Manually break the sym link to force creating a fresh Trinity profile.\n\n* Use the ${TDEDIR}/bin/migratekde3 script to migrate a KDE3 profile to Trinity."
   # Are we in X? Display an X dialog explaining breakage.
   if [ "$USER_DIR" = "$HOME" ] && [ "$DISPLAY" != "" ]; then
-    MESSAGE="${MESSAGE}\n\nSelecting the Continue button means retaining the KDE3 profile and\nbreaking the sym link. With the sym link broken, run the migratekde3\nscript before restarting Trinity to migrate a KDE3 profile or\nallow Trinity to create a fresh profile."
+    MESSAGE="${MESSAGE}\n\nSelecting the Continue button means preserving the KDE3 profile and\nbreaking the sym link. With the sym link broken, the ${TDEDIR}/bin/migratekde3\nscript will run to migrate the KDE3 profile to Trinity."
     printf "%b" "$MESSAGE" | xmessage -center -file - -buttons Continue,Quit > /dev/null 2>/dev/null
     EXIT_CODE="$?"
     unset TDEHOME_LINK
@@ -193,7 +193,7 @@ if [ "$TDEHOME_LINK" != "" ]; then
       exit 1
     else
       # User selected the Continue button: continue this script and start TDE.
-      Log "The user chose to continue, which will break the sym link."
+      Log "The user chose to continue to break the sym link."
       BREAK_SYMLINK="true"
     fi
   else
@@ -207,20 +207,21 @@ if [ "$TDEHOME_LINK" != "" ]; then
   if [ "$BREAK_SYMLINK" = "true" ]; then
     unlink "$USER_DIR/.trinity" 2>/dev/null
     if [ "`readlink \"$USER_DIR/.trinity\"`" = "" ]; then
-      MESSAGE="Sym link broken. With the sym link broken, run the migratekde3\nscript before restarting Trinity to migrate a KDE3 profile or\nallow Trinity to create a fresh profile."
+      MESSAGE="Sym link broken. With the sym link broken, will now attempt\nto migrate the KDE3 profile."
       Message_Prefix
       printf "%b" "$MESSAGE"
       echo
+      ${TDEDIR}/bin/migratekde3
     else
       MESSAGE="Unable to break the sym link. Check file and directory privileges. Quitting."
       Message_Prefix
       echo "$MESSAGE"
       echo
+      unset PROFILE_DIR
+      unset TDEHOME_LINK
+      exit 1
     fi
   fi
-  unset PROFILE_DIR
-  unset TDEHOME_LINK
-  exit 1
 fi
 unset TDEHOME_LINK
 
