@@ -48,6 +48,7 @@ public:
   void load();
   void save();
   void defaults();
+  virtual TQString handbookSection() const;
 
 public slots:
 

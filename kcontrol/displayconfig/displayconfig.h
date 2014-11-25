@@ -67,6 +67,7 @@ public:
 	void load( bool useDefaults);
 	void save();
 	void defaults();
+  virtual TQString handbookSection() const;
 
 	TQString quickHelp() const;
 

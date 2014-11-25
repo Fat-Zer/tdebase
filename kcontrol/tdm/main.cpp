@@ -274,6 +274,25 @@ void TDModule::defaults()
     }
 }
 
+TQString TDModule::handbookSection() const
+{
+ 	int index = tab->currentPageIndex();
+ 	if (index == 0)
+		return "tdmconfig-appearance";
+	else if (index == 1)
+		return "tdmconfig-font";
+	else if (index == 2)
+		return "tdmconfig-background";
+	else if (index == 3)
+		return "tdmconfig-shutdown";
+	else if (index == 4)
+		return "tdmconfig-users";
+	else if (index == 5)
+		return "tdmconfig-convenience";
+ 	else
+ 		return TQString::null;
+}
+
 void TDModule::propagateUsers()
 {
   groupmap.clear();
