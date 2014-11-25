@@ -531,6 +531,106 @@ glx_init_blur(session_t *ps) {
 #endif
 }
 
+// RAJJA FIXME
+/**
+ * Initialize GLX greyscale filter.
+ */
+bool
+glx_init_greyscale(session_t *ps) {
+#ifdef CONFIG_VSYNC_OPENGL_GLSL
+  {
+    char *lc_numeric_old = mstrcpy(setlocale(LC_NUMERIC, NULL));
+    // Enforce LC_NUMERIC locale "C" here to make sure decimal point is sane
+    setlocale(LC_NUMERIC, "C");
+
+    // Adapted from http://trac.openscenegraph.org/projects/osg//wiki/Support/Tutorials/ShadersSampleGrayingOut
+    static const char *FRAG_SHADER_GREYSCALE =
+      "#version 110\n"
+      "uniform sampler2D tex_scr;\n"
+      "uniform sampler2D alpha_scr;\n"
+      "uniform int enable_blend;\n"
+      "uniform vec4 greyscale_weights; // [0.3, 0.59, 0.11, 1.0]\n"
+      "\n"
+      "void main( void )\n"
+      "{\n"
+      "    // Fetch the regular RGB texel color from the source texture\n"
+      "    vec4 texel_color = texture2D( tex_scr, gl_TexCoord[0].xy );\n"
+      "\n"
+      "    //\n"
+      "    // Converting to grayscale:\n"
+      "    //\n"
+      "    // Converting an image to grayscale is done by taking a weighted average of\n"
+      "    // the red, green and blue color components. The standard weights for this\n" 
+      "    // type of conversion are (0.30, 0.59, 0.11). Therefore, the gray component\n" 
+      "    // or luminance that we need to compute can be defined as a luminance\n" 
+      "    // filter like so:\n"
+      "    //\n"
+      "    // luminance = 0.30*R + 0.59*G + 0.11*B\n"
+      "    //\n"
+      "    // If we think of our RGB colors as vectors, we can see that this \n"
+      "    // calculation is actually just a dot product.\n"
+      "    //\n"
+      "\n"
+      "    vec4 scaledColor = texel_color * greyscale_weights;\n"
+      "    float luminance = scaledColor.r + scaledColor.g + scaledColor.b;\n"
+      "\n"
+      "    if (enable_blend == 1) {\n"
+      "       // Fetch the regular RGB texel color from the blend texture\n"
+      "       vec4 blend_texel = texture2D( alpha_scr, vec2(gl_TexCoord[0].x, 1.0 - gl_TexCoord[0].y) );\n"
+      "       vec4 grey_pixel = vec4(luminance,luminance,luminance,1);\n"
+      "       gl_FragColor = mix(texel_color, grey_pixel, blend_texel.a);\n"
+      "    }\n"
+      "    else {\n"
+      "       gl_FragColor = vec4(luminance,luminance,luminance,1);\n"
+      "    }\n"
+      "\n"
+      "}";
+
+      glx_greyscale_t *greyscale_glsl = &ps->psglx->greyscale_glsl;
+      greyscale_glsl->frag_shader = glx_create_shader(GL_FRAGMENT_SHADER, FRAG_SHADER_GREYSCALE);
+
+      if (!greyscale_glsl->frag_shader) {
+        printf_errf("(): Failed to create fragment shader.");
+        return false;
+      }
+
+      // Build program
+      greyscale_glsl->prog = glx_create_program(&greyscale_glsl->frag_shader, 1);
+      if (!greyscale_glsl->prog) {
+        printf_errf("(): Failed to create GLSL program.");
+        return false;
+      }
+
+      // Get uniform addresses
+#define P_GET_UNIFM_LOC(name, target) { \
+      greyscale_glsl->target = glGetUniformLocation(greyscale_glsl->prog, name); \
+      if (greyscale_glsl->target < 0) { \
+        printf_errf("(): Failed to get location of uniform '" name "'. Might be troublesome."); \
+      } \
+    }
+
+      P_GET_UNIFM_LOC("greyscale_weights", unifm_greyscale_weights);
+      P_GET_UNIFM_LOC("enable_blend", unifm_enable_blend);
+      P_GET_UNIFM_LOC("tex_scr", unifm_tex_scr);
+      P_GET_UNIFM_LOC("alpha_scr", unifm_alpha_scr);
+
+#undef P_GET_UNIFM_LOC
+
+    // Restore LC_NUMERIC
+    setlocale(LC_NUMERIC, lc_numeric_old);
+    free(lc_numeric_old);
+  }
+
+
+  glx_check_err(ps);
+
+  return true;
+#else
+  printf_errf("(): GLSL support not compiled in. Cannot do greyscale with GLX backend.");
+  return false;
+#endif
+}
+
 #ifdef CONFIG_VSYNC_OPENGL_GLSL
 
 /**
@@ -1387,113 +1487,62 @@ glx_blur_dst_end:
 
 bool
 glx_greyscale_dst(session_t *ps, int dx, int dy, int width, int height, float z,
-    XserverRegion reg_tgt, const reg_data_t *pcache_reg, glx_greyscale_cache_t *pbc) {
+    glx_texture_t *ptex, XserverRegion reg_tgt, const reg_data_t *pcache_reg, glx_greyscale_cache_t *gsc) {
+
+  glx_greyscale_t *greyscale_glsl = &ps->psglx->greyscale_glsl;
+  assert(greyscale_glsl->prog);
+
   bool ret = false;
 
   // Calculate copy region size
   glx_greyscale_cache_t ibc = { .width = 0, .height = 0 };
-  if (!pbc)
-    pbc = &ibc;
+  if (!gsc)
+    gsc = &ibc;
 
 #ifdef DEBUG_GLX
   printf_dbgf("(): %d, %d, %d, %d\n", dx, dy, width, height);
 #endif
 
   // Free textures if size inconsistency discovered
-  if (width != pbc->width || height != pbc->height)
-    free_glx_gc_resize(ps, pbc);
+  if (width != gsc->width || height != gsc->height)
+    free_glx_gc_resize(ps, gsc);
 
-  // Generate FBO and textures if needed
-  if (!pbc->textures[0])
-    pbc->textures[0] = glx_gen_texture(ps, GL_TEXTURE_2D, width, height);
-  GLuint tex_scr1 = pbc->textures[0];
-  pbc->width = width;
-  pbc->height = height;
+  // Generate textures
+  if (!gsc->textures[0])
+    gsc->textures[0] = glx_gen_texture(ps, GL_TEXTURE_2D, width, height);
+  GLuint tex_scr1 = gsc->textures[0];
+  gsc->width = width;
+  gsc->height = height;
 
   if (!tex_scr1) {
     printf_errf("(): Failed to allocate texture.");
     goto glx_greyscale_dst_end;
   }
 
+  glEnable(GL_TEXTURE_2D);
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, tex_scr1);
+  if (ptex) {
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, ptex->texture);
+  }
+  glActiveTexture(GL_TEXTURE0);
+
+  // Read destination pixels into the GL texture
+  glx_copy_region_to_tex(ps, GL_TEXTURE_2D, dx, dy, dx, dy, width, height);
+
   // Texture scaling factor
   GLfloat texfac_x = 1.0f, texfac_y = 1.0f;
   texfac_x /= width;
   texfac_y /= height;
 
-  // Greyscale conversion in OpenGL ES taken nearly verbatim from this answer on Stack Overflow: http://stackoverflow.com/a/9690145
-
-  // Enable texture unit 0 to divide RGB values in our texture by 2
-  glActiveTexture(GL_TEXTURE0);
-  glEnable(GL_TEXTURE_2D);
-  glBindTexture(GL_TEXTURE_2D, tex_scr1);
-
-  // Read destination pixels into the GL texture
-  glx_copy_region_to_tex(ps, GL_TEXTURE_2D, dx, dy, dx, dy, width, height);
-
-  // Finish setting up texture
-  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
-  glClientActiveTexture(GL_TEXTURE0);
-
-  // GL_MODULATE is Arg0 * Arg1    
-  glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_MODULATE);
-
-  // Configure Arg0
-  glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_RGB, GL_TEXTURE);
-  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_COLOR);
-
-  // Configure Arg1
-  float multipliers[4] = {.5, .5, .5, 0.0};
-  glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_RGB, GL_CONSTANT);
-  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR);
-  glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, (GLfloat*)&multipliers);
-
-  // Enable texture unit 1 to increase RGB values by .5
-  glActiveTexture(GL_TEXTURE1);
-  glEnable(GL_TEXTURE_2D);
-  glBindTexture(GL_TEXTURE_2D, tex_scr1);
-  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
-  glClientActiveTexture(GL_TEXTURE1);
-
-  // GL_ADD is Arg0 + Arg1
-  glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_ADD);
-
-  // Configure Arg0
-  glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_RGB, GL_PREVIOUS);
-  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_COLOR);
-
-  // Configure Arg1
-  GLfloat additions[4] = {.5, .5, .5, 0.0};
-  glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_RGB, GL_CONSTANT);
-  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR);
-  glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, (GLfloat*)&additions);
-
-  // Enable texture combiner 2 to get a DOT3_RGB product of your RGB values
-  glActiveTexture(GL_TEXTURE2);
-  glEnable(GL_TEXTURE_2D);
-  glBindTexture(GL_TEXTURE_2D, tex_scr1);
-  glClientActiveTexture(GL_TEXTURE2);
-  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
-
-  // GL_DOT3_RGB is 4*((Arg0r - 0.5) * (Arg1r - 0.5) + (Arg0g - 0.5) * (Arg1g - 0.5) + (Arg0b - 0.5) * (Arg1b - 0.5))
-  glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_DOT3_RGB);   
-
-  // Configure Arg0
-  glTexEnvi(GL_TEXTURE_ENV, GL_SRC0_RGB, GL_PREVIOUS);
-  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_COLOR);
-
-  // Configure Arg1
-  // We want this to adjust our DOT3 by R*0.3 + G*0.59 + B*0.11
-  // So, our actual adjustment will need to take into consideration
-  // the fact that OpenGL will subtract .5 from our Arg1
-  // and we need to also take into consideration that we have divided 
-  // our RGB values by 2 and we are multiplying the entire
-  // DOT3 product by 4
-  // So, for Red adjustment you will get :
-  //    .65 = (4*(0.3))/2 + 0.5  = (0.3/2) + 0.5
-  GLfloat weights[4] = {.65, .795, .555, 1.};
-  glTexEnvi(GL_TEXTURE_ENV, GL_SRC1_RGB, GL_CONSTANT);
-  glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR);
-  glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, (GLfloat*)&weights);
+//   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+  glUseProgram(greyscale_glsl->prog);
+  // These coefficients exactly match the non-GL greyscale conversion which uses the XRender PictOpHSLLuminosity operation
+  glUniform4f(greyscale_glsl->unifm_greyscale_weights, 0.3, 0.59, 0.11, 1.0);
+  glUniform1i(greyscale_glsl->unifm_enable_blend, ((ptex)?1:0));
+  glUniform1i(greyscale_glsl->unifm_tex_scr, 0);
+  glUniform1i(greyscale_glsl->unifm_alpha_scr, 1);
 
   // Render!
   {
@@ -1527,26 +1576,21 @@ glx_greyscale_dst(session_t *ps, int dx, int dy, int width, int height, float z,
     P_PAINTREG_END();
   }
 
-  glEnd();
-
-  // Clean up by disabling your texture combiners or texture units.
-  glActiveTexture(GL_TEXTURE2);
-  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-  glDisable(GL_TEXTURE_2D);
-
-  glActiveTexture(GL_TEXTURE1);
-  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-  glDisable(GL_TEXTURE_2D);
-
-  glActiveTexture(GL_TEXTURE0);
-  glClientActiveTexture(GL_TEXTURE0);
-  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+  glUseProgram(0);
 
   ret = true;
 
 glx_greyscale_dst_end:
-  if (&ibc == pbc) {
-    free_glx_gc(ps, pbc);
+  if (ptex) {
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, 0);
+  }
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, 0);
+  glDisable(GL_TEXTURE_2D);
+
+  if (&ibc == gsc) {
+    free_glx_gc(ps, gsc);
   }
 
   glx_check_err(ps);

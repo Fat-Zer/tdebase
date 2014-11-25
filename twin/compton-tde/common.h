@@ -490,6 +490,21 @@ typedef struct {
 } glx_blur_cache_t;
 
 typedef struct {
+  /// Fragment shader for greyscale.
+  GLuint frag_shader;
+  /// GLSL program for greyscale.
+  GLuint prog;
+  /// Location of uniform "greyscale_weights" in greyscale GLSL program.
+  GLint unifm_greyscale_weights;
+  /// Location of uniform "enable_blend" in greyscale GLSL program.
+  GLint unifm_enable_blend;
+  /// Location of uniform "tex_scr" in greyscale GLSL program.
+  GLint unifm_tex_scr;
+  /// Location of uniform "alpha_scr" in greyscale GLSL program.
+  GLint unifm_alpha_scr;
+} glx_greyscale_t;
+
+typedef struct {
   /// Framebuffer used for greyscale conversion.
   GLuint fbo;
   /// Textures used for greyscale conversion.
@@ -817,6 +832,9 @@ typedef struct {
 #ifdef CONFIG_VSYNC_OPENGL_GLSL
   glx_blur_pass_t blur_passes[MAX_BLUR_PASS];
 #endif
+#ifdef CONFIG_VSYNC_OPENGL_GLSL
+  glx_greyscale_t greyscale_glsl;
+#endif
 } glx_session_t;
 
 #define CGLX_SESSION_INIT { .context = NULL }
@@ -1068,6 +1086,8 @@ typedef struct _session_t {
   Atom atom_win_type_tde_transparent_to_desktop;
   /// Atom of property <code>_TDE_TRANSPARENCY_FILTER_GREYSCALE</code>.
   Atom atom_win_type_tde_transparency_filter_greyscale;
+  /// Atom of property <code>_TDE_TRANSPARENCY_FILTER_GREYSCALE_BLEND</code>.
+  Atom atom_win_type_tde_transparency_filter_greyscale_blend;
   /// Array of atoms of all possible window types.
   Atom atoms_wintypes[NUM_WINTYPES];
   /// Linked list of additional atoms to track.
@@ -1262,6 +1282,11 @@ typedef struct _win {
   bool greyscale_background;
   /// Background state on last paint.
   bool greyscale_background_last;
+
+  /// Whether to set window background to blended greyscale.
+  bool greyscale_blended_background;
+  /// Blended greyscale alpha divisor.
+  int greyscale_blended_background_alpha_divisor;
 
   /// Whether to show black background
   bool show_black_background;
@@ -2202,6 +2227,9 @@ glx_on_root_change(session_t *ps);
 bool
 glx_init_blur(session_t *ps);
 
+bool
+glx_init_greyscale(session_t *ps);
+
 #ifdef CONFIG_VSYNC_OPENGL_GLSL
 bool
 glx_load_prog_main(session_t *ps,
@@ -2245,7 +2273,7 @@ glx_dim_dst(session_t *ps, int dx, int dy, int width, int height, float z,
 
 bool
 glx_greyscale_dst(session_t *ps, int dx, int dy, int width, int height, float z,
-    XserverRegion reg_tgt, const reg_data_t *pcache_reg, glx_greyscale_cache_t *pbc);
+    glx_texture_t *ptex, XserverRegion reg_tgt, const reg_data_t *pcache_reg, glx_greyscale_cache_t *pbc);
 
 bool
 glx_render_(session_t *ps, const glx_texture_t *ptex,
@@ -2342,7 +2370,6 @@ free_glx_bc(session_t *ps, glx_blur_cache_t *pbc) {
 static inline void
 free_glx_gc_resize(session_t *ps, glx_greyscale_cache_t *pbc) {
   free_texture_r(ps, &pbc->textures[0]);
-  free_texture_r(ps, &pbc->textures[1]);
   pbc->width = 0;
   pbc->height = 0;
 }
