@@ -26,7 +26,7 @@
 
 class TQTabWidget;
 
-class LanBrowser:public TDECModule
+class LanBrowser : public TDECModule
 {
    Q_OBJECT
    public:
@@ -34,6 +34,7 @@ class LanBrowser:public TDECModule
       virtual void load();
       virtual void save();
 
+      virtual TQString handbookDocPath() const;
       virtual TQString handbookSection() const;
 
    private:

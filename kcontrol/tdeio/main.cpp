@@ -165,26 +165,26 @@ void LanBrowser::save()
    emit changed(false);
 }
 
+TQString LanBrowser::handbookDocPath() const
+{
+	int index = tabs.currentPageIndex();
+	if (index == smbPageTabNumber)
+		return TQString::null;
+	else if (index == lisaPageTabNumber)
+		return "kcontrol/lanbrowser/index.html";
+	else if (index == tdeioLanPageTabNumber)
+		return "kcontrol/lanbrowser/index.html";
+	else
+		return TQString::null;
+}
+
 TQString LanBrowser::handbookSection() const
 {
 	int index = tabs.currentPageIndex();
-	if (index == smbPageTabNumber) {
-		//return "windows-shares";
+	if (index == smbPageTabNumber)
+		return "windows-shares";
+	else
 		return TQString::null;
-	}
-	else if (index == lisaPageTabNumber) {
-		// FIXME
-		// Documentation does not yet exist!
-		return "";
-	}
-	else if (index == tdeioLanPageTabNumber) {
-		// FIXME
-		// Documentation does not yet exist!
-		return "";
-	}
-	else {
-		return TQString::null;
-	}
 }
 
 #include "main.moc"
