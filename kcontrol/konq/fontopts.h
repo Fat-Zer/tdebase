@@ -60,6 +60,7 @@ public:
   virtual void load( bool readDefaults );
   virtual void save();
   virtual void defaults();
+  virtual TQString handbookSection() const;
 
 public slots:
   void slotFontSize(int i);

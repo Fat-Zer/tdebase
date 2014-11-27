@@ -43,6 +43,7 @@ public:
   virtual void load( bool useDefaults );
   virtual void save();
   virtual void defaults();
+  virtual TQString handbookSection() const;
 
 protected slots:
 

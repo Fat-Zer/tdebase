@@ -65,13 +65,14 @@ TQString HelpWidget::text() const
 bool HelpWidget::clicked(const TQString & _url)
 {
     TQString textUrl = _url;
-
-    if ( textUrl.isNull() ) {
-        return true;
-    }
-
     ConfigModule* dockModule = _dock->module();
-    if ( dockModule) {
+    if (dockModule) {
+        TQString localDocPath = dockModule->module()->handbookDocPath();        
+        if (localDocPath != "")
+          textUrl = localDocPath;       
+        if (textUrl.isNull())
+          return true;
+        
         TQString section = dockModule->module()->handbookSection();
         if (section != "") {
             textUrl = TQString( "%1#%2" ).arg( textUrl ).arg( section );

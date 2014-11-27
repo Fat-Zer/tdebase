@@ -344,6 +344,11 @@ void KonqFontOptions::save()
     kapp->dcopClient()->send( appname, "KDesktopIface", "configure()", data );
 }
 
+TQString KonqFontOptions::handbookSection() const
+{
+  return "fileman-appearance";
+}
+
 void KonqFontOptions::slotTextBackgroundClicked()
 {
     m_pTextBackground->setEnabled( m_cbTextBackground->isChecked() );

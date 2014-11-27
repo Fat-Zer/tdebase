@@ -291,6 +291,11 @@ void KBehaviourOptions::save()
     kapp->dcopClient()->send( "kdesktop", "KDesktopIface", "configure()", data );
 }
 
+TQString KBehaviourOptions::handbookSection() const
+{
+  return "fileman-behav";
+}
+
 void KBehaviourOptions::updateWinPixmap(bool b)
 {
   if (b)

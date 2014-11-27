@@ -320,6 +320,14 @@ void ProxyWidget::clientChanged(bool state)
   emit changed(state);
 }
 
+TQString ProxyWidget::handbookDocPath() const
+{
+  if (_client)
+    return _client->handbookDocPath();
+  else
+    return TQString::null;
+}
+
 TQString ProxyWidget::handbookSection() const
 {
   if (_client)

@@ -37,6 +37,8 @@ public:
   virtual void save();
   virtual void defaults();
   virtual TQString quickHelp() const;
+  virtual TQString handbookDocPath() const;
+  virtual TQString handbookSection() const;
 
 private:
    

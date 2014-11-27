@@ -48,6 +48,7 @@ public:
     virtual void load();
     virtual void save();
     virtual void defaults();
+    virtual TQString handbookSection() const;
 
 protected:
     void load(bool useDefaults);

@@ -211,6 +211,11 @@ void KPreviewOptions::save()
     kapp->dcopClient()->send( "konqueror*", "KonquerorIface", "reparseConfiguration()", data );
 }
 
+TQString KPreviewOptions::handbookSection() const
+{
+  return "fileman-previews";
+}
+
 void KPreviewOptions::changed()
 {
     emit TDECModule::changed(true);

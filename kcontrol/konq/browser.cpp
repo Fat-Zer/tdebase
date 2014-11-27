@@ -95,6 +95,28 @@ void KBrowserOptions::save()
      kuick->save();
 }
 
+TQString KBrowserOptions::handbookDocPath() const
+{
+ 	int index = m_tab->currentPageIndex();
+	if (kuick && index == 3)
+		return "konq-plugins/kuick/index.html";
+ 	else
+ 		return TQString::null;
+}
+
+TQString KBrowserOptions::handbookSection() const
+{
+ 	int index = m_tab->currentPageIndex();
+ 	if (index == 0)
+		return "fileman-appearance";
+	else if (index == 1)
+		return "fileman-behav";
+	else if (index == 2)
+		return "fileman-previews";
+ 	else
+ 		return TQString::null;
+}
+
 TQString KBrowserOptions::quickHelp() const
 {
   TQWidget *w = m_tab->currentPage();

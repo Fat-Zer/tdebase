@@ -32,9 +32,6 @@
 url="help:/kcontrol/tdehtml/index.html">own configuration
 modules</ulink>.</para></note>
 
-<sect2 id="fileman-use">
-<title>Use</title>
-
 <para> The configuration options for the file manager are
 organized under tabs as follows:</para>
 
@@ -61,7 +58,7 @@ previews.</para>
 </varlistentry>
 </variablelist>
 
-<sect3 id="fileman-appearance">
+<sect2 id="fileman-appearance">
 <title>Appearance</title>
 
 <para>The following settings determine how text and colors are displayed in
@@ -129,9 +126,9 @@ size.</para>
 </listitem>
 </varlistentry>
 </variablelist>
-</sect3>
+</sect2>
 
-<sect3 id="fileman-behav">
+<sect2 id="fileman-behav">
 <title>Behavior</title>
 
 <variablelist>
@@ -232,9 +229,9 @@ folder you will be shown.</para>
 window.  If any box is checked, &konqueror; asks for confirmation before
 performing the corresponding action.</para>
 
-</sect3>
+</sect2>
 
-<sect3>
+<sect2 id="fileman-previews">
 <title>Previews</title>
 
 <para>&konqueror; has a
@@ -287,8 +284,6 @@ the <guilabel>Use thumbnails embedded in files</guilabel> to make use
 of these. This will save time waiting for thumbnails to be created
 when viewing a folder full of images you have not previously seen in
 &konqueror;.</para>
-
-</sect3>
 
 </sect2>
 
