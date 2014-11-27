@@ -958,19 +958,17 @@ TQString KWinDecorationModule::quickHelp() const
 
 TQString KWinDecorationModule::handbookSection() const
 {
-	// FIXME
-	// Incomplete context-sensitive help documentation currently exists for this module!
 	int index = tabWidget->currentPageIndex();
-	if (index == 0) {
-		//return "window-deco-general";
-		return TQString::null;
-	}
-	else if (index == 1) {
+	if (index == 0)
+		return "window-deco-general";
+	else if (index == 1)
 		return "window-deco-buttons";
-	}
-	else {
+	else if (index == 2)
+		return "window-deco-shadows";
+	else if (index == 3)
+		return "window-deco-manager";
+	else
 		return TQString::null;
-	}
 }
 
 void KWinDecorationModule::resetKWin()
