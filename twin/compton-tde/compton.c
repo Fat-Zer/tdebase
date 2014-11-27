@@ -944,6 +944,9 @@ static Bool
 determine_window_transparency_filter_greyscale(const session_t *ps, Window w);
 
 static Bool
+determine_window_transparency_filter_greyscale_blended(const session_t *ps, Window w);
+
+static Bool
 determine_window_transparent_to_black(const session_t *ps, Window w);
 
 static Bool
@@ -1590,6 +1593,7 @@ xr_greyscale_dst(session_t *ps, Picture tgt_buffer,
 
   XRenderComposite(ps->dpy, PictOpSrc, ps->black_picture, None,
       tmp_picture, 0, 0, 0, 0, 0, 0, wid, hei);
+
   XRenderComposite(ps->dpy, PictOpHSLLuminosity, tgt_buffer, None,
       tmp_picture, x, y, 0, 0, 0, 0, wid, hei);
 
@@ -1723,7 +1727,7 @@ win_greyscale_background(session_t *ps, win *w, Picture tgt_buffer,
 #ifdef CONFIG_VSYNC_OPENGL_GLSL
     case BKEND_GLX:
       glx_greyscale_dst(ps, x, y, wid, hei, ps->psglx->z - 0.5,
-          reg_paint, pcache_reg, &w->glx_greyscale_cache);
+          NULL, reg_paint, pcache_reg, &w->glx_greyscale_cache);
       break;
 #endif
     default:
@@ -1821,6 +1825,71 @@ win_paint_win(session_t *ps, win *w, XserverRegion reg_paint,
 
   Picture pict = w->paint.pict;
 
+  if (w->greyscale_blended_background) {
+    // Set window background to greyscale
+    switch (ps->o.backend) {
+      case BKEND_XRENDER:
+      case BKEND_XR_GLX_HYBRID:
+        {
+          // Blend here such that 0 window alpha is fully colored and 100 window alpha is fully greyscale
+          // PictOpInReverse is used to copy alpha from the source to the destination while preserving destination color
+          // provided that the source has alpha set to 1 (equivalent of CAIRO_OPERATOR_DEST_IN)
+          const int x = w->a.x;
+          const int y = w->a.y;
+          const int wid = w->widthb;
+          const int hei = w->heightb;
+          XserverRegion reg_clip = reg_paint;
+          Picture tgt_buffer = ps->tgt_buffer.pict;
+
+          // Apply clipping region to save some CPU
+          if (reg_paint) {
+            XserverRegion reg = copy_region(ps, reg_paint);
+            XFixesTranslateRegion(ps->dpy, reg, -x, -y);
+            XFixesSetPictureClipRegion(ps->dpy, pict, 0, 0, reg);
+            free_region(ps, &reg);
+          }
+
+          // Create greyscale version of background
+          Picture greyscale_picture = xr_build_picture(ps, wid, hei, w->pictfmt);
+          XRenderComposite(ps->dpy, PictOpSrc, tgt_buffer, None,
+              greyscale_picture, x, y, 0, 0, 0, 0, wid, hei);
+          win_greyscale_background(ps, w, greyscale_picture, reg_paint, pcache_reg);
+
+          Picture tmp_picture = xr_build_picture(ps, wid, hei, w->pictfmt);
+
+          if (!tmp_picture) {
+            printf_errf("(): Failed to build intermediate Picture.");
+          }
+          else {
+            if (reg_clip && tmp_picture)
+              XFixesSetPictureClipRegion(ps->dpy, tmp_picture, reg_clip, 0, 0);
+
+            // Transfer greyscale picture to temporary picture
+            XRenderComposite(ps->dpy, PictOpSrc, greyscale_picture, None,
+              tmp_picture, 0, 0, 0, 0, 0, 0, wid, hei);
+
+            // Transfer alpha of window to temporary picture
+            XRenderComposite(ps->dpy, PictOpInReverse, pict, None,
+                tmp_picture, 0, 0, 0, 0, 0, 0, wid, hei);
+
+            // Blend greyscale picture over main color buffer
+            XRenderComposite(ps->dpy, PictOpOver, tmp_picture, None, tgt_buffer,
+                0, 0, 0, 0, x, y, wid, hei);
+
+            free_picture(ps, &tmp_picture);
+            free_picture(ps, &greyscale_picture);
+          }
+        }
+        break;
+#ifdef CONFIG_VSYNC_OPENGL
+      case BKEND_GLX:
+        glx_greyscale_dst(ps, x, y, wid, hei, ps->psglx->z - 0.5,
+            w->paint.ptex, reg_paint, pcache_reg, &w->glx_greyscale_cache);
+        break;
+#endif
+    }
+  }
+
   // Invert window color, if required
   if (bkend_use_xrender(ps) && w->invert_color) {
     Picture newpict = xr_build_picture(ps, wid, hei, w->pictfmt);
@@ -1846,7 +1915,12 @@ win_paint_win(session_t *ps, win *w, XserverRegion reg_paint,
     }
   }
 
-  const double dopacity = get_opacity_percent(w);
+  double dopacity = get_opacity_percent(w);
+
+  if (w->greyscale_blended_background) {
+    double scaling_factor = (1.0 / w->greyscale_blended_background_alpha_divisor);
+    dopacity = dopacity * scaling_factor;
+  }
 
   if (!w->frame_opacity) {
     win_render(ps, w, 0, 0, wid, hei, dopacity, reg_paint, pcache_reg, pict);
@@ -2438,9 +2512,10 @@ map_win(session_t *ps, Window id) {
 
   /* This needs to be here since we don't get PropertyNotify when unmapped */
   w->opacity = wid_get_opacity_prop(ps, w->id, OPAQUE);
-  w->greyscale_background = determine_window_transparency_filter_greyscale(ps, id);
+  w->greyscale_blended_background = determine_window_transparency_filter_greyscale_blended(ps, id);
   w->show_root_tile = determine_window_transparent_to_desktop(ps, id);
   w->show_black_background = determine_window_transparent_to_black(ps, id);
+  win_determine_greyscale_background(ps, w);
 
   // Update window mode here to check for ARGB windows
   win_determine_mode(ps, w);
@@ -2632,6 +2707,28 @@ get_window_transparency_filter_greyscale(const session_t *ps, Window w)
 }
 
 static Bool
+get_window_transparency_filter_greyscale_blended(const session_t *ps, Window w)
+{
+	Atom actual;
+	int format;
+	unsigned long n, left;
+
+	unsigned char *data;
+	int result = XGetWindowProperty (ps->dpy, w, ps->atom_win_type_tde_transparency_filter_greyscale_blend, 0L, 1L, False,
+			XA_ATOM, &actual, &format,
+			&n, &left, &data);
+
+	if (result == Success && data != None && format == 32 )
+	{
+		Atom a;
+		a = *(long*)data;
+		XFree ( (void *) data);
+		return True;
+	}
+	return False;
+}
+
+static Bool
 get_window_transparent_to_desktop(const session_t *ps, Window w)
 {
 	Atom actual;
@@ -2700,6 +2797,41 @@ determine_window_transparency_filter_greyscale (const session_t *ps, Window w)
 	for (i = 0;i < nchildren;i++)
 	{
 		type = determine_window_transparency_filter_greyscale (ps, children[i]);
+		if (type == True)
+			return True;
+	}
+
+	if (children)
+		XFree ((void *)children);
+
+	return False;
+}
+
+static Bool
+determine_window_transparency_filter_greyscale_blended (const session_t *ps, Window w)
+{
+	Window       root_return, parent_return;
+	Window      *children = NULL;
+	unsigned int nchildren, i;
+	Bool         type;
+
+	type = get_window_transparency_filter_greyscale_blended (ps, w);
+	if (type == True) {
+		return True;
+	}
+
+	if (!XQueryTree (ps->dpy, w, &root_return, &parent_return, &children,
+				&nchildren))
+	{
+		/* XQueryTree failed. */
+		if (children)
+			XFree ((void *)children);
+		return False;
+	}
+
+	for (i = 0;i < nchildren;i++)
+	{
+		type = determine_window_transparency_filter_greyscale_blended (ps, children[i]);
 		if (type == True)
 			return True;
 	}
@@ -3449,6 +3581,8 @@ add_win(session_t *ps, Window id, Window prev) {
 
     .blur_background = false,
     .greyscale_background = false,
+    .greyscale_blended_background = false,
+    .greyscale_blended_background_alpha_divisor = 2,
 
     .show_black_background = false,
     .show_root_tile = false,
@@ -6696,6 +6830,7 @@ init_atoms(session_t *ps) {
   ps->atom_win_type_tde_transparent_to_black = get_atom(ps, "_TDE_TRANSPARENT_TO_BLACK");
   ps->atom_win_type_tde_transparent_to_desktop = get_atom(ps, "_TDE_TRANSPARENT_TO_DESKTOP");
   ps->atom_win_type_tde_transparency_filter_greyscale = get_atom(ps, "_TDE_TRANSPARENCY_FILTER_GREYSCALE");
+  ps->atom_win_type_tde_transparency_filter_greyscale_blend = get_atom(ps, "_TDE_TRANSPARENCY_FILTER_GREYSCALE_BLEND");
 }
 
 #ifdef CONFIG_XRANDR
@@ -7134,6 +7269,22 @@ init_filters(session_t *ps) {
         }
 #endif
     }
+  }
+
+  // Greyscale filter
+  switch (ps->o.backend) {
+    case BKEND_XRENDER:
+    case BKEND_XR_GLX_HYBRID:
+      {
+        break;
+      }
+#ifdef CONFIG_VSYNC_OPENGL
+    case BKEND_GLX:
+      {
+        if (!glx_init_greyscale(ps))
+          return false;
+      }
+#endif
   }
 
   return true;
@@ -7666,6 +7817,7 @@ session_init(session_t *ps_old, int argc, char **argv) {
     .atom_win_type_tde_transparent_to_black = None,
     .atom_win_type_tde_transparent_to_desktop = None,
     .atom_win_type_tde_transparency_filter_greyscale = None,
+    .atom_win_type_tde_transparency_filter_greyscale_blend = None,
     .atoms_wintypes = { 0 },
     .track_atom_lst = NULL,
 

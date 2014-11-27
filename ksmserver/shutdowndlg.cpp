@@ -87,6 +87,11 @@ KSMShutdownFeedback::KSMShutdownFeedback()
 		m_grayImage.setAlphaBuffer(false);
 		m_grayImage.fill(0);	// Set the alpha buffer to 0 (fully transparent)
 		m_grayImage.setAlphaBuffer(true);
+
+		// Signal that we want a greyscale filter on the transparency
+		Atom kde_wm_transparent_greyscale_filter;
+		kde_wm_transparent_greyscale_filter = XInternAtom(tqt_xdisplay(), "_TDE_TRANSPARENCY_FILTER_GREYSCALE_BLEND", False);
+		XChangeProperty(tqt_xdisplay(), winId(), kde_wm_transparent_greyscale_filter, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
 	}
 	else {
 		// The hacks below aren't needed any more because Qt3 supports true transparency for the fading logout screen when composition is available
@@ -135,10 +140,10 @@ void KSMShutdownFeedback::slotPaintEffect()
 				m_root.resize( width(), height() );
 				TQImage blendedImage = m_grayImage;
 				TQPainter p;
-							p.begin( &m_root );
-							blendedImage.setAlphaBuffer(false);
-							p.drawImage( 0, 0, blendedImage );
-							p.end();
+				p.begin( &m_root );
+				blendedImage.setAlphaBuffer(false);
+				p.drawImage( 0, 0, blendedImage );
+				p.end();
 
 				setBackgroundPixmap( m_root );
 				setGeometry( TQApplication::desktop()->geometry() );
@@ -150,7 +155,7 @@ void KSMShutdownFeedback::slotPaintEffect()
 				uchar * end = m_grayImage.bits() + m_grayImage.numBytes();
 
 				while ( r != end ) {
-					*reinterpret_cast<TQRgb*>(r) = tqRgba(0, 0, 0, 128);
+					*reinterpret_cast<TQRgb*>(r) = tqRgba(0, 0, 0, 255);
 					r += 4;
 				}
 
@@ -220,7 +225,6 @@ void KSMShutdownFeedback::slotPaintEffect()
 			{
 				TQImage img( imgWidth, y2-start_y1, 32 );
 				memcpy( img.bits(), m_grayImage.scanLine( start_y1 ), ( y2-start_y1 ) * imgWidth * 4 );
-				register uchar * rs = m_unfadedImage.scanLine( start_y1 );
 				register uchar * rd = img.bits();
 				for( int y = start_y1; y < y2; ++y )
 				{
@@ -228,8 +232,8 @@ void KSMShutdownFeedback::slotPaintEffect()
 					short int opac = static_cast<short int>( 128 - cosf( M_PI*(y-y1)/heightUnit )*128.0f );
 					for( short int x = 0; x < imgWidth; ++x )
 					{
-						*reinterpret_cast<TQRgb*>(rd) = tqRgba(0, 0, 0, ((255.0-opac)/(255.0/127.0)));
-						rs += 4; rd += 4;
+						*reinterpret_cast<TQRgb*>(rd) = tqRgba(0, 0, 0, ((255.0-opac)));
+						rd += 4;
 					}
 				}
 				bitBlt( this, 0, start_y1, &img );
