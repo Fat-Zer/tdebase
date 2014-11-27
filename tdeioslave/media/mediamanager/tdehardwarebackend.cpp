@@ -140,6 +140,12 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 		return;
 	}
 
+	// Respect the device's hidden flag--we will still make the device available via the tdeioslave
+	// but we will not generate popups or other notifications on device insertion
+	if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Hidden)) {
+		allowNotification = false;
+	}
+
 	// Add volume block devices
 	if (sdevice->isDiskOfType(TDEDiskDeviceType::HDD)) {
 		/* We only list volumes that...

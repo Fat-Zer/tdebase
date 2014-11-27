@@ -415,6 +415,9 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Hotpluggable)) {
 				status_text += "Hotpluggable<br>";
 			}
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Hidden)) {
+				status_text += "Hidden<br>";
+			}
 			if (status_text == "<qt>") {
 				status_text += "<i>Unavailable</i>";
 			}
