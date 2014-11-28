@@ -446,7 +446,6 @@ bool Workspace::activateNextClient( Client* c )
             if( get_focus != NULL )
                 {
                 requestFocus( get_focus );
-                get_focus->setActive( true, true );
                 }
             else
                 focusToNull();
