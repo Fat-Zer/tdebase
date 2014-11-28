@@ -424,6 +424,10 @@ void MediaImpl::createMediumEntry(TDEIO::UDSEntry& entry,
 	addAtom(entry, TDEIO::UDS_MIME_TYPE, 0, medium.mimeType());
 	addAtom(entry, TDEIO::UDS_GUESSED_MIME_TYPE, 0, "inode/directory");
 
+	if (medium.softHidden()) {
+		addAtom(entry, TDEIO::UDS_HIDDEN , true);
+	}
+
 	if (!medium.iconName().isEmpty())
 	{
 		addAtom(entry, TDEIO::UDS_ICON_NAME, 0, medium.iconName());

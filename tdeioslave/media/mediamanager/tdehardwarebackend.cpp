@@ -161,7 +161,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 			//
 		}
 		/* We also don't display devices that underlie other devices;
-		/* e.g. the raw partition of a device mapper volume
+		*  e.g. the raw partition of a device mapper volume
 		*/
 		else if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::UsedByDevice)) {
 			//
@@ -179,6 +179,14 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 				else {
 					medium->setHidden(false);
 				}
+			}
+
+			// Hide udev hidden devices by default but allow the user to override if desired via Show Hidden Files
+			if (sdevice->checkDiskStatus(TDEDiskDeviceStatus::Hidden)) {
+				medium->setSoftHidden(true);
+			}
+			else {
+				medium->setSoftHidden(false);
 			}
 
 			// Insert medium into list

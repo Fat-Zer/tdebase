@@ -45,7 +45,8 @@ public:
 	static const uint ENCRYPTED = 		13;
 	static const uint CLEAR_DEVICE_UDI = 	14;
 	static const uint HIDDEN = 		15;
-	static const uint PROPERTIES_COUNT = 	16;
+	static const uint SOFT_HIDDEN = 	16;
+	static const uint PROPERTIES_COUNT = 	17;
 	static const TQString SEPARATOR;
 
 	Medium(const TQString id, TQString uuid, const TQString name);
@@ -67,29 +68,31 @@ public:
 	TQString baseURL() const { return m_properties[BASE_URL]; }
 	TQString mimeType() const { return m_properties[MIME_TYPE]; }
 	TQString iconName() const { return m_properties[ICON_NAME]; }
- 	bool isEncrypted() const { return m_properties[ENCRYPTED]=="true"; };
- 	TQString clearDeviceUdi() const { return m_properties[CLEAR_DEVICE_UDI]; };
- 	bool hidden() const { return m_properties[HIDDEN]=="true"; };
+	bool isEncrypted() const { return m_properties[ENCRYPTED]=="true"; };
+	TQString clearDeviceUdi() const { return m_properties[CLEAR_DEVICE_UDI]; };
+	bool hidden() const { return m_properties[HIDDEN]=="true"; };
+	bool softHidden() const { return m_properties[SOFT_HIDDEN]=="true"; };
 
 	bool needMounting() const;
- 	bool needDecryption() const;
+	bool needDecryption() const;
 	KURL prettyBaseURL() const;
 	TQString prettyLabel() const;
 
 	void setName(const TQString &name);
 	void setLabel(const TQString &label);
 	void setUserLabel(const TQString &label);
- 	void setEncrypted(bool state);
- 	void setHidden(bool state);
+	void setEncrypted(bool state);
+	void setHidden(bool state);
+	void setSoftHidden(bool state);
 
 	bool mountableState(bool mounted);
 	void mountableState(const TQString &deviceNode,
 	                    const TQString &mountPoint,
 	                    const TQString &fsType, bool mounted);
- 	void mountableState(const TQString &deviceNode,
- 	                    const TQString &clearDeviceUdi,
- 	                    const TQString &mountPoint,
- 	                    const TQString &fsType, bool mounted);
+	void mountableState(const TQString &deviceNode,
+				const TQString &clearDeviceUdi,
+				const TQString &mountPoint,
+				const TQString &fsType, bool mounted);
 	void unmountableState(const TQString &baseURL = TQString::null);
 
 	void setMimeType(const TQString &mimeType);

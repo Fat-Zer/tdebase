@@ -42,6 +42,7 @@ Medium::Medium(const TQString id, TQString uuid, const TQString name)
 	m_properties+= "false"; /* ENCRYPTED */
 	m_properties+= TQString::null; /* CLEAR_DEVICE_UDI */
 	m_properties+= "false"; /* HIDDEN */
+	m_properties+= "false"; /* SOFT_HIDDEN */
 
 	loadUserLabel();
 
@@ -67,6 +68,7 @@ Medium::Medium()
 	m_properties+= TQString::null; /* ENCRYPTED */
 	m_properties+= TQString::null; /* CLEAR_DEVICE_UDI */
 	m_properties+= "false";        /* HIDDEN */
+	m_properties+= "false";        /* SOFT_HIDDEN */
 	
 	m_halmounted = false;
 }
@@ -94,6 +96,7 @@ const Medium Medium::create(const TQStringList &properties)
 		m.m_properties[ENCRYPTED] = properties[ENCRYPTED];
 		m.m_properties[CLEAR_DEVICE_UDI] = properties[CLEAR_DEVICE_UDI];
 		m.m_properties[HIDDEN] = properties[HIDDEN];
+		m.m_properties[SOFT_HIDDEN] = properties[SOFT_HIDDEN];
 	}
 
 	return m;
@@ -143,6 +146,11 @@ void Medium::setEncrypted(bool state)
 void Medium::setHidden(bool state)
 {
 	m_properties[HIDDEN] = ( state ? "true" : "false" );
+}
+
+void Medium::setSoftHidden(bool state)
+{
+	m_properties[SOFT_HIDDEN] = ( state ? "true" : "false" );
 }
 
 void Medium::setUserLabel(const TQString &label)
