@@ -86,6 +86,7 @@ public:
     bool dontLock();
 
     bool runSecureDialog();
+    bool inSecureDialog();
 
     void setChildren(TQValueList<int> children) { child_sockets = children; }
     void setParent(int fd) { mParent = fd; }
@@ -225,6 +226,10 @@ private:
     bool        mOverrideHackStartupEnabled;
     bool        mResizingDesktopLock;
     bool        mFullyOnlineSent;
+
+    bool        mClosingWindows;
+    bool        mInSecureDialog;
+    bool        mHackActive;
 
     TQPixmap    backingPixmap;
     KRootPixmap  *m_rootPixmap;

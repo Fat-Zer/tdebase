@@ -159,15 +159,14 @@ extern bool trinity_desktop_lock_hide_active_windows;
 extern bool trinity_desktop_lock_hide_cancel_button;
 extern bool trinity_desktop_lock_forced;
 
+extern LockProcess* trinity_desktop_lock_process;
+
 extern bool argb_visual;
 extern pid_t kdesktop_pid;
 
 extern TQXLibWindowList trinity_desktop_lock_hidden_window_list;
 
 bool trinity_desktop_lock_autohide_lockdlg = TRUE;
-bool trinity_desktop_lock_closing_windows = FALSE;
-bool trinity_desktop_lock_in_sec_dlg = FALSE;
-bool trinity_desktop_hack_active = FALSE;
 
 #define ENABLE_CONTINUOUS_LOCKDLG_DISPLAY \
 if (!mForceContinualLockDisplayTimer->isActive()) mForceContinualLockDisplayTimer->start(100, FALSE); \
@@ -213,6 +212,9 @@ LockProcess::LockProcess()
       mOverrideHackStartupEnabled(false),
       mResizingDesktopLock(false),
       mFullyOnlineSent(false),
+      mClosingWindows(false),
+      mInSecureDialog(false),
+      mHackActive(false),
       m_rootPixmap(NULL),
       mBackingStartupDelayTimer(0),
       m_startupStatusDialog(NULL),
@@ -418,7 +420,7 @@ static int signal_pipe[2];
 
 static void sigterm_handler(int)
 {
-    if (!trinity_desktop_lock_in_sec_dlg) {
+    if ((!trinity_desktop_lock_process) || (!trinity_desktop_lock_process->inSecureDialog())) {
         // Exit uncleanly
         char tmp = 'U';
         if (::write( signal_pipe[1], &tmp, 1) == -1) {
@@ -437,7 +439,7 @@ static void sighup_handler(int)
 
 bool LockProcess::closeCurrentWindow()
 {
-    trinity_desktop_lock_closing_windows = TRUE;
+    mClosingWindows = TRUE;
     if (currentDialog != NULL) {
         mForceReject = true;
         if (dynamic_cast<SAKDlg*>(currentDialog)) {
@@ -452,12 +454,12 @@ bool LockProcess::closeCurrentWindow()
     }
 
     if( mDialogs.isEmpty() ) {
-        trinity_desktop_lock_closing_windows = FALSE;
+        mClosingWindows = FALSE;
         mForceReject = false;
         return false;
     }
     else {
-        trinity_desktop_lock_closing_windows = TRUE;
+        mClosingWindows = TRUE;
         return true;
     }
 }
@@ -621,9 +623,9 @@ void LockProcess::startSecureDialog()
 	if (forcecontdisp) {
 		DISABLE_CONTINUOUS_LOCKDLG_DISPLAY
 	}
-	trinity_desktop_lock_in_sec_dlg = false;
+	mInSecureDialog = false;
 	if (ret == 0) {
-		trinity_desktop_lock_closing_windows = 1;
+		mClosingWindows = 1;
 		kapp->quit();
 	}
 	if (ret == 1) {
@@ -669,14 +671,14 @@ void LockProcess::startSecureDialog()
 		return;
 	}
 	if (ret == 2) {
-		trinity_desktop_lock_closing_windows = 1;
+		mClosingWindows = 1;
 		if (system("ksysguard &") == -1) {
                     // Error handler to shut up gcc warnings
                 }
 		kapp->quit();
 	}
 	if (ret == 3) {
-		trinity_desktop_lock_closing_windows = 1;
+		mClosingWindows = 1;
 		DCOPRef("ksmserver","ksmserver").send("logout", (int)TDEApplication::ShutdownConfirmYes, (int)TDEApplication::ShutdownTypeNone, (int)TDEApplication::ShutdownModeInteractive);
 		kapp->quit();
 	}
@@ -699,7 +701,7 @@ bool LockProcess::runSecureDialog()
 	tqApp->processEvents();
 #endif
 
-	trinity_desktop_lock_in_sec_dlg = true;
+	mInSecureDialog = true;
 	if (startSaver()) {
 		mBackingStartupDelayTimer = 0;
 		TQTimer::singleShot(0, this, TQT_SLOT(startSecureDialog()));
@@ -708,6 +710,11 @@ bool LockProcess::runSecureDialog()
 	else {
 		return false;
 	}
+}
+
+bool LockProcess::inSecureDialog()
+{
+	return mInSecureDialog;
 }
 
 //---------------------------------------------------------------------------
@@ -1223,7 +1230,7 @@ bool LockProcess::grabKeyboard()
 bool LockProcess::grabMouse()
 {
     HANDLE cursorHandle;
-    if (trinity_desktop_hack_active) {
+    if (mHackActive) {
        cursorHandle = TQCursor(tqblankCursor).handle();
     }
     else {
@@ -1351,7 +1358,7 @@ bool LockProcess::startSaver(bool notify_ready)
 		slotPaintBackground(rootWinSnapShot);
 	}
 
-	if (((!(trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced)) && (!trinity_desktop_lock_in_sec_dlg)) && (mHackStartupEnabled || mOverrideHackStartupEnabled)) {
+	if (((!(trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced)) && (!mInSecureDialog)) && (mHackStartupEnabled || mOverrideHackStartupEnabled)) {
 		if (argb_visual) {
 			setTransparentBackgroundARGB();
 		}
@@ -1377,7 +1384,7 @@ bool LockProcess::startSaver(bool notify_ready)
 		}
 	}
 
-	if (trinity_desktop_lock_in_sec_dlg == FALSE) {
+	if (mInSecureDialog == FALSE) {
 		if (trinity_desktop_lock_delay_screensaver_start && trinity_desktop_lock_forced && trinity_desktop_lock_use_system_modal_dialogs) {
 			ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
 			if (mHackStartupEnabled) mHackDelayStartupTimer->start(mHackDelayStartupTimeout, TRUE);
@@ -1554,7 +1561,7 @@ void LockProcess::repaintRootWindowIfNeeded()
 
 bool LockProcess::startHack()
 {
-    trinity_desktop_hack_active = TRUE;
+    mHackActive = TRUE;
 
     if ((mEnsureVRootWindowSecurityTimer) && (!mEnsureVRootWindowSecurityTimer->isActive())) mEnsureVRootWindowSecurityTimer->start(250, FALSE);
 
@@ -1715,7 +1722,7 @@ void LockProcess::stopHack()
     }
     setCursor( tqarrowCursor );
 
-    trinity_desktop_hack_active = FALSE;
+    mHackActive = FALSE;
 }
 
 //---------------------------------------------------------------------------
@@ -1724,7 +1731,7 @@ void LockProcess::hackExited(TDEProcess *)
 {
 	// Hack exited while we're supposed to be saving the screen.
 	// Make sure the saver window is black.
-	trinity_desktop_hack_active = FALSE;
+	mHackActive = FALSE;
 	usleep(100);
 	TQApplication::syncX();
 	if (!trinity_desktop_lock_use_system_modal_dialogs) {
@@ -1771,13 +1778,13 @@ void LockProcess::displayLockDialogIfNeeded()
 		m_startupStatusDialog->closeSMDialog();
 		m_startupStatusDialog = NULL;
 	}
-	if (!trinity_desktop_lock_in_sec_dlg) {
+	if (!mInSecureDialog) {
 		if (trinity_desktop_lock_use_system_modal_dialogs) {
 			if (!mBusy) {
 				mBusy = true;
 				if (mLocked) {
 					if (checkPass()) {
-						trinity_desktop_lock_closing_windows = true;
+						mClosingWindows = true;
 						stopSaver();
 						kapp->quit();
 					}
@@ -1886,7 +1893,7 @@ bool LockProcess::checkPass()
 
         // Make sure we never launch the SAK or login dialog if windows are being closed down
         // Otherwise we can get stuck in an irrecoverable state where any attempt to show the login screen is instantly aborted
-        if (trinity_desktop_lock_closing_windows) {
+        if (mClosingWindows) {
             return 0;
         }
 
@@ -1906,7 +1913,7 @@ bool LockProcess::checkPass()
             // Wait for SAK press before continuing...
             SAKDlg inDlg( this );
             execDialog( &inDlg );
-            if (trinity_desktop_lock_closing_windows) {
+            if (mClosingWindows) {
                 return 0;
             }
         }
@@ -1995,7 +2002,7 @@ int LockProcess::execDialog( TQDialog *dlg )
     mDialogs.remove( dlg );
     if( mDialogs.isEmpty() ) {
         HANDLE cursorHandle;
-        if (trinity_desktop_hack_active) {
+        if (mHackActive) {
            cursorHandle = TQCursor(tqblankCursor).handle();
         }
         else {
@@ -2179,7 +2186,7 @@ bool LockProcess::x11Event(XEvent *event)
                     ENABLE_CONTINUOUS_LOCKDLG_DISPLAY
                     if (mHackStartupEnabled) mHackDelayStartupTimer->start(mHackDelayStartupTimeout, TRUE);
                 }
-                if ((!mLocked) && (!trinity_desktop_lock_in_sec_dlg))
+                if ((!mLocked) && (!mInSecureDialog))
                 {
                     stopSaver();
                     kapp->quit();
@@ -2193,7 +2200,7 @@ bool LockProcess::x11Event(XEvent *event)
             else {
                 if (!mLocked || checkPass())
                 {
-                    trinity_desktop_lock_closing_windows = true;
+                    mClosingWindows = true;
                     stopSaver();
                     kapp->quit();
                 }
@@ -2704,7 +2711,7 @@ void LockProcess::processInputPipeCommand(TQString inputcommand) {
 				closeCurrentWindow();
 			}
 		}
-		trinity_desktop_lock_closing_windows = false;
+		mClosingWindows = false;
 		mInfoMessageDisplayed = false;
 		mDialogControlLock = false;
 	}
@@ -2728,7 +2735,7 @@ void LockProcess::processInputPipeCommand(TQString inputcommand) {
 		inDlg.setUnlockIcon();
 		execDialog( &inDlg );
 		mForceReject = false;
-		trinity_desktop_lock_closing_windows = false;
+		mClosingWindows = false;
 		return;
 	}
 	if ((command[0] == 'E') || (command[0] == 'W') || (command[0] == 'I') || (command[0] == 'K')) {
@@ -2754,7 +2761,7 @@ void LockProcess::processInputPipeCommand(TQString inputcommand) {
 		if (command[0] == 'E') inDlg.setErrorIcon();
 		execDialog( &inDlg );
 		mForceReject = false;
-		trinity_desktop_lock_closing_windows = false;
+		mClosingWindows = false;
 		return;
 	}
 	if (command[0] == 'Q') {
@@ -2790,7 +2797,7 @@ void LockProcess::processInputPipeCommand(TQString inputcommand) {
 			}
 		}
 		mForceReject = false;
-		trinity_desktop_lock_closing_windows = false;
+		mClosingWindows = false;
 		return;
 	}
 }

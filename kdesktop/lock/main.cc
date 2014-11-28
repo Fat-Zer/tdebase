@@ -73,6 +73,8 @@ bool trinity_desktop_lock_hide_active_windows = FALSE;
 bool trinity_desktop_lock_hide_cancel_button = FALSE;
 bool trinity_desktop_lock_forced = FALSE;
 
+LockProcess* trinity_desktop_lock_process = NULL;
+
 bool signalled_forcelock;
 bool signalled_dontlock;
 bool signalled_securedialog;
@@ -82,6 +84,7 @@ bool in_internal_mode = FALSE;
 
 bool argb_visual = FALSE;
 pid_t kdesktop_pid = -1;
+bool trinity_desktop_lock_settings_initialized = FALSE;
 
 static void sigusr1_handler(int)
 {
@@ -241,6 +244,8 @@ int main( int argc, char **argv )
 
     XSetErrorHandler(trapXErrors);
 
+    MyApp* app = NULL;
+
     while (1 == 1) {
         signalled_forcelock = FALSE;
         signalled_dontlock = FALSE;
@@ -311,12 +316,14 @@ int main( int argc, char **argv )
             }
         }
 
+        if (!app) {
 #ifdef COMPOSITE
-        MyApp app(TDEApplication::openX11RGBADisplay());
-        argb_visual = app.isX11CompositionAvailable();
+            app = new MyApp(TDEApplication::openX11RGBADisplay());
+            argb_visual = app->isX11CompositionAvailable();
 #else
-        MyApp app;
+            app = new MyApp;
 #endif
+        }
 
         TDELockFile lock(locateLocal("tmp", "kdesktop_lock_lockfile"));
         lock.setStaleTime(0);
@@ -357,17 +364,17 @@ int main( int argc, char **argv )
         }
 
         kdDebug() << "app " << kdesktop_screen_number << " " << starting_screen << " " << child << " " << child_sockets.count() << " " << parent_connection << endl;
-        app.disableSessionManagement();
+        app->disableSessionManagement();
         TDEGlobal::locale()->insertCatalogue("libdmctl");
 
         struct stat st;
         KSimpleConfig* tdmconfig;
         OPEN_TDMCONFIG_AND_SET_GROUP
 
-        LockProcess process;
+        trinity_desktop_lock_process = new LockProcess;
 
         // Start loading core functions, such as the desktop wallpaper interface
-        app.processEvents();
+        app->processEvents();
 
         if (args->isSet( "internal" )) {
             kdesktop_pid = atoi(args->getOption( "internal" ));
@@ -428,7 +435,7 @@ int main( int argc, char **argv )
 
 		// Disable reception of all X11 events on the root window
 		XSelectInput( tqt_xdisplay(), tqt_xrootwin(), 0 );
-		app.processEvents();
+		app->processEvents();
 
                 // wait for SIGUSR1, SIGUSR2, SIGWINCH, SIGTTIN, or SIGTTOU
                 sigsuspend(&new_mask);
@@ -438,10 +445,15 @@ int main( int argc, char **argv )
             }
         }
 
-        // load settings here so that they actually reflect reality
-        // there is no way to force a reload once KDesktopSettings::instance has been called!
+        // (re)load settings here so that they actually reflect reality
         // we need to read from the right rc file - possibly taking screen number in account
-        KDesktopSettings::instance("kdesktoprc");
+        if (!trinity_desktop_lock_settings_initialized) {
+            KDesktopSettings::instance("kdesktoprc");
+            trinity_desktop_lock_settings_initialized = true;
+        }
+        else {
+            KDesktopSettings::self()->readConfig();
+        }
         trinity_desktop_lock_use_system_modal_dialogs = !KDesktopSettings::useUnmanagedLockWindows();
         trinity_desktop_lock_delay_screensaver_start = KDesktopSettings::delaySaverStart();
         if (trinity_desktop_lock_use_system_modal_dialogs) {
@@ -464,32 +476,32 @@ int main( int argc, char **argv )
             trinity_desktop_lock_forced = TRUE;
         }
 
-        process.init(child, (args->isSet( "blank" ) || (signalled_blank == TRUE)));
+        trinity_desktop_lock_process->init(child, (args->isSet( "blank" ) || (signalled_blank == TRUE)));
         if (!child) {
-            process.setChildren(child_sockets);
+            trinity_desktop_lock_process->setChildren(child_sockets);
         }
         else {
-            process.setParent(parent_connection);
+            trinity_desktop_lock_process->setParent(parent_connection);
         }
 
         bool rt;
         if( (((!child) && (args->isSet( "forcelock" ))) || (signalled_forcelock == TRUE))) {
-            rt = process.lock();
+            rt = trinity_desktop_lock_process->lock();
         }
         else if( child || (args->isSet( "dontlock" ) || (signalled_dontlock == TRUE))) {
-            rt = process.dontLock();
+            rt = trinity_desktop_lock_process->dontLock();
         }
         else if( child || (args->isSet( "securedialog" ) || (signalled_securedialog == TRUE))) {
             int retcode = tde_sak_verify_calling_process();
             if (retcode == 0) {
-                rt = process.runSecureDialog();
+                rt = trinity_desktop_lock_process->runSecureDialog();
             }
             else {
                 return 1;
             }
         }
         else {
-            rt = process.defaultSave();
+            rt = trinity_desktop_lock_process->defaultSave();
         }
         if (!rt) {
             return 0;
@@ -497,7 +509,7 @@ int main( int argc, char **argv )
 
         if (in_internal_mode == FALSE) {
             trinity_desktop_lock_hidden_window_list.clear();
-            int ret = app.exec();
+            int ret = app->exec();
             restore_hidden_override_redirect_windows();
             return ret;
         }
@@ -507,18 +519,23 @@ int main( int argc, char **argv )
                 return 12;
             }
             trinity_desktop_lock_hidden_window_list.clear();
-            app.exec();
+            app->exec();
             restore_hidden_override_redirect_windows();
             if (kill(kdesktop_pid, SIGUSR1) < 0) {
                 // The controlling kdesktop process probably died.  Commit suicide...
                 return 12;
             }
 
+            delete trinity_desktop_lock_process;
+            trinity_desktop_lock_process = NULL;
+
+#if 0
             // FIXME
             // We should not have to return (restart) at all,
             // but it seems that some X11 connections are left active,
             // preventing the lock process from restarting properly in the while() loop above.
             return 0;
+#endif
         }
     }
 }

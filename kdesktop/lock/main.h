@@ -36,6 +36,6 @@ signals:
     void mouseInteraction(XEvent *event);
 private:
     time_t lastTick;
-};      
+};
 
 #endif
