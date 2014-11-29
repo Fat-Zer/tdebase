@@ -731,8 +731,8 @@ void Client::destroyNotifyEvent( XDestroyWindowEvent* e )
         return;
     destroyClient();
     }
-    
-    
+
+
 bool         blockAnimation = FALSE;
 
 /*!

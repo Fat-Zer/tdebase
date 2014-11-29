@@ -311,14 +311,14 @@ void Workspace::requestFocus( Client* c, bool force )
     {
     takeActivity( c, ActivityFocus | ( force ? ActivityFocusForce : 0 ), false);
     }
-    
+
 void Workspace::takeActivity( Client* c, int flags, bool handled )
     {
-     // the 'if( c == active_client ) return;' optimization mustn't be done here
+     // the 'if( c == active_client ) return;' optimization must not be done here
     if (!focusChangeEnabled() && ( c != active_client) )
         flags &= ~ActivityFocus;
 
-    if ( !c ) 
+    if ( !c )
         {
         focusToNull();
         return;
@@ -328,7 +328,7 @@ void Workspace::takeActivity( Client* c, int flags, bool handled )
         {
         Client* modal = c->findModal();
         if( modal != NULL && modal != c )	
-            { 
+            {
             next_active_client = modal;
             if( !modal->isOnDesktop( c->desktop()))
                 {
@@ -353,7 +353,7 @@ void Workspace::takeActivity( Client* c, int flags, bool handled )
         {
         if( c->wantsInput() && ( flags & ActivityFocus ))
             {
-        // client cannot accept focus, but at least the window should be active (window menu, et. al. )
+            // client cannot accept focus, but at least the window should be active (window menu, et. al. )
             c->setActive( true );
             focusToNull();
             }

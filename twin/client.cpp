@@ -612,7 +612,7 @@ void Client::hideClient( bool hide )
     hidden = hide;
     updateVisibility();
     }
-    
+
 /*!
   Returns whether the window is minimizable or not
  */
@@ -2200,9 +2200,13 @@ void Client::takeFocus( allowed_t )
     if ( rules()->checkAcceptFocus( input ))
         {
         XSetInputFocus( tqt_xdisplay(), window(), RevertToPointerRoot, GET_QT_X_TIME() );
+        // Signal that we took focus!
+        setActive( true, true );
         }
     if ( Ptakefocus )
+        {
         sendClientMessage(window(), atoms->wm_protocols, atoms->wm_take_focus);
+        }
     workspace()->setShouldGetFocus( this );
     }
 
@@ -2745,7 +2749,7 @@ void Client::autoRaise()
     workspace()->raiseClient( this );
     cancelAutoRaise();
     }
-    
+
 void Client::cancelAutoRaise()
     {
     delete autoRaiseTimer;
@@ -2773,7 +2777,7 @@ void Client::setOpacity(bool translucent, uint opacity)
         XChangeProperty(tqt_xdisplay(), window(), atoms->net_wm_window_opacity, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &data, 1L);
         }
     }
-    
+
 void Client::setShadowSize(uint shadowSize)
     {
     // ignoring all individual settings - if we control a window, we control it's shadow
@@ -2781,7 +2785,7 @@ void Client::setShadowSize(uint shadowSize)
     long data = shadowSize;
     XChangeProperty(tqt_xdisplay(), frameId(), atoms->net_wm_window_shadow, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &data, 1L);
     }
-        
+
 void Client::updateOpacity()
 // extra syncscreen flag allows to avoid double syncs when active state changes (as it will usually change for two windows)
     {

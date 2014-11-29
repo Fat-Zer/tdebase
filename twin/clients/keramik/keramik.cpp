@@ -1156,7 +1156,6 @@ void KeramikClient::updateMask()
 
 	TQRegion r;
 	register int w, y = 0;
-	int nrects;
 
 	if ( TQApplication::reverseLayout() ) {
 
@@ -1168,8 +1167,6 @@ void KeramikClient::updateMask()
 			r += TQRegion( x + 9,  y++, w - 15, 1 );
 			r += TQRegion( x + 7,  y++, w - 12, 1 );
 		} else {
-			nrects = 8;
-
 			// Do we have a large titlebar with a retracted caption bubble?
 			// (i.e. the style is set to use large caption bubbles, we're
 			//       not maximized and not active)
@@ -1191,15 +1188,12 @@ void KeramikClient::updateMask()
 
 		// If the caption bubble is visible and extends above the titlebar
 		if ( largeCaption && captionRect.width() >= 25 ) {
-			nrects = 11;
 			register int x = captionRect.left();
 			w = captionRect.width();
 			r += TQRegion( x + 8, y++, w - 19, 1 );
 			r += TQRegion( x + 6, y++, w - 15, 1 );
 			r += TQRegion( x + 5, y++, w - 12, 1 );
 		} else {
-			nrects = 8;
-
 			// Do we have a large titlebar with a retracted caption bubble?
 			// (i.e. the style is set to use large caption bubbles, we're
 			//       not maximized and not active)

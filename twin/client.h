@@ -122,7 +122,7 @@ class Client : public TQObject, public KDecorationDefines
         bool isOnCurrentDesktop() const;
         bool isOnAllDesktops() const;
         void setOnAllDesktops( bool set );
-        
+
         bool isOnScreen( int screen ) const; // true if it's at least partially there
         int screen() const; // the screen where the center is
 
@@ -274,7 +274,7 @@ class Client : public TQObject, public KDecorationDefines
         void NETMoveResize( int x_root, int y_root, NET::Direction direction );
         void NETMoveResizeWindow( int flags, int x, int y, int width, int height );
         void restackWindow( Window above, int detail, NET::RequestSource source, Time timestamp, bool send_event = false );
-        
+
         void gotPing( Time timestamp );
 
         static TQCString staticWindowRole(WId);
