@@ -2511,7 +2511,7 @@ map_win(session_t *ps, Window id) {
   XFlush(ps->dpy);
 
   /* This needs to be here since we don't get PropertyNotify when unmapped */
-  w->opacity = wid_get_opacity_prop(ps, w->id, OPAQUE);
+  calc_opacity(ps, w);
   w->greyscale_blended_background = determine_window_transparency_filter_greyscale_blended(ps, id);
   w->show_root_tile = determine_window_transparent_to_desktop(ps, id);
   w->show_black_background = determine_window_transparent_to_black(ps, id);
@@ -2562,10 +2562,6 @@ map_win(session_t *ps, Window id) {
   w->in_openclose = true;
   set_fade_callback(ps, w, finish_map_win, true);
   win_determine_fade(ps, w);
-  if (w->fade) {
-    // Make sure the new window fades in properly
-    w->opacity = 0;
-  }
 
   win_determine_blur_background(ps, w);
 
