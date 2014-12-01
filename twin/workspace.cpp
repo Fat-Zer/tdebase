@@ -109,7 +109,10 @@ pid_t getCompositorPID() {
         rewind (pFile);
         size_t result = fread (buffer, 1, lSize, pFile);
         fclose(pFile);
-        kompmgrpid = atoi(buffer);
+        if (result > 0)
+            {
+            kompmgrpid = atoi(buffer);
+            }
         }
 
     free(filename);
@@ -1133,7 +1136,10 @@ void Workspace::slotReconfigure()
             rewind (pFile);
             size_t result = fread (buffer, 1, lSize, pFile);
             fclose(pFile);
-            kompmgrpid = atoi(buffer);
+            if (result > 0)
+                {
+                kompmgrpid = atoi(buffer);
+                }
             }
 
         free(filename);
@@ -1921,9 +1927,9 @@ void Workspace::killWindowId( Window window_to_kill )
         client = findClient( FrameIdMatchPredicate( window ));
         if( client != NULL ) // found the client
             break;
-        Window parent = NULL;
-        Window root = NULL;
-        Window* children = NULL;
+        Window parent = 0L;
+        Window root = 0L;
+        Window* children = 0L;
         unsigned int children_count;
         XQueryTree( tqt_xdisplay(), window, &root, &parent, &children, &children_count );
         if( children != NULL )
@@ -1931,7 +1937,7 @@ void Workspace::killWindowId( Window window_to_kill )
         if( window == root ) // we didn't find the client, probably an override-redirect window
             break;
         window = parent; // go up
-        if( window == NULL )
+        if( window == 0L )
             break;
         }
     if( client != NULL )
@@ -1951,9 +1957,9 @@ void Workspace::suspendWindowId( Window window_to_suspend )
         client = findClient( FrameIdMatchPredicate( window ));
         if( client != NULL ) // found the client
             break;
-        Window parent = NULL;
-        Window root = NULL;
-        Window* children = NULL;
+        Window parent = 0L;
+        Window root = 0L;
+        Window* children = 0L;
         unsigned int children_count;
         XQueryTree( tqt_xdisplay(), window, &root, &parent, &children, &children_count );
         if( children != NULL )
@@ -1961,7 +1967,7 @@ void Workspace::suspendWindowId( Window window_to_suspend )
         if( window == root ) // we didn't find the client, probably an override-redirect window
             break;
         window = parent; // go up
-        if( window == NULL )
+        if( window == 0L )
             break;
         }
     if( client != NULL )
@@ -1981,9 +1987,9 @@ void Workspace::resumeWindowId( Window window_to_resume )
         client = findClient( FrameIdMatchPredicate( window ));
         if( client != NULL ) // found the client
             break;
-        Window parent = NULL;
-        Window root = NULL;
-        Window* children = NULL;
+        Window parent = 0L;
+        Window root = 0L;
+        Window* children = 0L;
         unsigned int children_count;
         XQueryTree( tqt_xdisplay(), window, &root, &parent, &children, &children_count );
         if( children != NULL )
@@ -1991,7 +1997,7 @@ void Workspace::resumeWindowId( Window window_to_resume )
         if( window == root ) // we didn't find the client, probably an override-redirect window
             break;
         window = parent; // go up
-        if( window == NULL )
+        if( window == 0L )
             break;
         }
     if( client != NULL )
@@ -2012,9 +2018,9 @@ bool Workspace::isResumeableWindowID( Window window_to_check )
         client = findClient( FrameIdMatchPredicate( window ));
         if( client != NULL ) // found the client
             break;
-        Window parent = NULL;
-        Window root = NULL;
-        Window* children = NULL;
+        Window parent = 0L;
+        Window root = 0L;
+        Window* children = 0L;
         unsigned int children_count;
         XQueryTree( tqt_xdisplay(), window, &root, &parent, &children, &children_count );
         if( children != NULL )
@@ -2022,7 +2028,7 @@ bool Workspace::isResumeableWindowID( Window window_to_check )
         if( window == root ) // we didn't find the client, probably an override-redirect window
             break;
         window = parent; // go up
-        if( window == NULL )
+        if( window == 0L )
             break;
         }
     if( client != NULL )
@@ -2824,7 +2830,7 @@ void Workspace::startKompmgr()
         return;
     }
     pid_t kompmgrpid = getCompositorPID();
-    if (kill(kompmgrpid, 0) >= 0)
+    if (kompmgrpid && kill(kompmgrpid, 0) >= 0)
         {
         // Active PID file detected; do not attempt to restart
         return;
