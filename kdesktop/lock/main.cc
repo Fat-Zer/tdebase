@@ -529,13 +529,11 @@ int main( int argc, char **argv )
             delete trinity_desktop_lock_process;
             trinity_desktop_lock_process = NULL;
 
-#if 0
             // FIXME
             // We should not have to return (restart) at all,
             // but it seems that some X11 connections are left active,
             // preventing the lock process from restarting properly in the while() loop above.
             return 0;
-#endif
         }
     }
 }
