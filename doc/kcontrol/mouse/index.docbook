@@ -46,7 +46,7 @@ or trackball, providing access to special features.
 </para>
 
 <sect2 id="mouse-general">
-<title><guilabel>General</guilabel></title>
+<title>General</title>
 
 <variablelist>
 <varlistentry>
@@ -128,7 +128,7 @@ checked, &tde; gives you visual feedback whenever you click on something and act
 </sect2>
 
 <sect2 id="cursor-theme">
-<title><guilabel>Cursor Theme</guilabel></title>
+<title>Cursor Theme</title>
 
 <para>
 This tab allows you to select from a number of cursor themes. A preview of the cursor display is shown above the listbox.
@@ -240,7 +240,7 @@ scroll.</para>
 </sect2>
 
 <sect2 id="mouse-navigation">
-<title><guilabel>Mouse Navigation</guilabel></title>
+<title>Mouse Navigation</title>
 
 <para>
 This tab allows you to configure the keyboard number pad keys as a mouse-type device. This may be useful when you are working on a device without another pointing device, or where you have no other use for the number pad.
@@ -310,7 +310,7 @@ This is the slope of the acceleration curve for mouse key acceleration.
 </sect2>
 
 <sect2 id="logitech-mouse">
-<title><guilabel>Logitech Support</guilabel></title>
+<title>Logitech Support</title>
 
 <para>
 Some Logitech USB mice support special features, such as switching to a higher resolution, or
