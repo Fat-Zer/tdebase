@@ -93,38 +93,7 @@ Application names
 
 </itemizedlist>
 
-<para>A change log is available at the Trinity wiki:
-<ulink url="http://www.trinitydesktop.org/wiki/bin/view/Documentation/Releases_R14_0_0">Change log</ulink></para>
-
 <para>An exhaustive list of renaming changes is available at the end of this document.</para>
-
-<sect2 id="release-notes-project-changes">
-<title>Project Changes</title>
-
-<itemizedlist>
-
-<listitem><para>
-Migrated from SVN to GIT.
-</para></listitem>
-<listitem><para>
-Began migrating from automake to cmake.
-</para></listitem>
-<listitem><para>
-Added support for ARM architectures.
-</para></listitem>
-<listitem><para>
-Continuing efforts to improve XDG compliance.
-</para></listitem>
-<listitem><para>
-Continuing efforts to update documentation.
-</para></listitem>
-<listitem><para>
-Continuing efforts to update locale and translation files.
-</para></listitem>
-
-</itemizedlist>
-
-</sect2>
 
 <sect2 id="release-notes-usability-changes">
 <title>Usability Changes</title>
@@ -195,11 +164,88 @@ been made to conform to such style as much as possible.</para>
 
 </sect2>
 
+<sect2 id="release-notes-major-improvements">
+<title>Major Improvements from 3.5.13</title>
+
+<itemizedlist>
+<listitem><para>
+New HAL-independent hardware support based on udev. HAL support is  still available for those systems (such as *bsd) that require it.
+</para></listitem>
+<listitem><para>
+Significant renaming of applications, libraries and packages to  avoid conflicts with other desktop environments (most notably KDE) allowing TDE to be installed in parallel with other DE.
+</para></listitem>
+<listitem><para>
+Switched from 'plain' Qt3 to the 'new' TQt3 interface, an enhanced  version of Qt3 with a particular eye on improved stability and multi-threading support.
+</para></listitem>
+<listitem><para>
+A new TQt interface layer between TDE libraries/applications and  TQt3. This allows selective adaptation of some Qt4 programming widgets.
+</para></listitem>
+<listitem><para>
+Support for network-manager 0.9 and newer.
+</para></listitem>
+<listitem><para>
+Switched compositor from Kompmgr to Compton.
+</para></listitem>
+<listitem><para>
+Added support for ARM architectures and RaspBian.
+</para></listitem>
+<listitem><para>
+New website design.
+</para></listitem>
+</itemizedlist>
+
+</sect2>
+
 <sect2 id="release-notes-new-or-improved-features">
 <title>New or Improved Features</title>
 
 <itemizedlist>
 
+<listitem><para>
+Migrated the TDE source repository to GIT. 
+</para></listitem>
+<listitem><para>
+Significant branding overhaul and restyling. 
+</para></listitem>
+<listitem><para>
+Further improved XDG compliance. 
+</para></listitem>
+<listitem><para>
+Additional theme engines available. 
+</para></listitem>
+<listitem><para>
+Continued migration from autotools to cmake. 
+</para></listitem>
+<listitem><para>
+TDE-style dialog box support for LibreOffice. 
+</para></listitem>
+<listitem><para>
+Improved Secure Attention Key. 
+</para></listitem>
+<listitem><para>
+Mac-like window switching. 
+</para></listitem>
+<listitem><para>
+Kate sort plugin now available. 
+</para></listitem>
+<listitem><para>
+Rearrangeable items in the taskbar. 
+</para></listitem>
+<listitem><para>
+Show Icons Only option for taskbar. 
+</para></listitem>
+<listitem><para>
+Improved application crash report framework, now also including source code commit references for better debugging. 
+</para></listitem>
+<listitem><para>
+A mouse double-click speed test option in the control panel. 
+</para></listitem>
+<listitem><para>
+A smooth crossfade effect is now available when changing the desktop wallpaper. 
+</para></listitem>
+<listitem><para>
+Improved project documentation and localization. 
+</para></listitem>
 <listitem><para>
 Faster startup and logout.
 </para></listitem>
@@ -208,9 +254,6 @@ Improved Konqueror speed for listing files in folder.
 </para></listitem>
 <listitem><para>
 Ability to force Kate into MDI mode all the time.
-</para></listitem>
-<listitem><para>
-Built-in hardware detection libraries and support to fully replace HAL.
 </para></listitem>
 <listitem><para>
 File copy window focus enhancement: focus is now on the file name edit line by default.
@@ -225,9 +268,6 @@ Improved Logout Status Dialog.
 Improved support for global and individual panels.
 </para></listitem>
 <listitem><para>
-Mac like window switching for apps.
-</para></listitem>
-<listitem><para>
 New Desktop Device Icons: My Computer, My Documents, My Network Places, Printers, Web Browser.
 </para></listitem>
 <listitem><para>
@@ -235,9 +275,6 @@ Rearrangeable (draggable) items in the taskbar.
 </para></listitem>
 <listitem><para>
 Reduced TDE menu clutter and duplication.
-</para></listitem>
-<listitem><para>
-Icons only mode available for taskbar.
 </para></listitem>
 <listitem><para>
 Accelerator key for Konsole main menu can be enabled when desired.
@@ -255,25 +292,13 @@ The number of files in the Kate MRU (Most Recently Used) list is user-configurab
 Added a progress bar to the logout status dialog.
 </para></listitem>
 <listitem><para>
-Added a mouse doubleclick test option in the control panel.
-</para></listitem>
-<listitem><para>
-Kate syntax highlighting files have been updated and the lookup moved to the TDE repository.
-</para></listitem>
-<listitem><para>
-Kate sort plugin now available
+Kate syntax highlighting files have been updated and the lookup moved to the TDE repository
 </para></listitem>
 <listitem><para>
 tdecmshell --list output is now sorted alphabetically.
 </para></listitem>
 <listitem><para>
-Improved application crash report framework, which now also includes source code commit references for better debugging.
-</para></listitem>
-<listitem><para>
-Additional xdg folders support in Kickoff menu.
-</para></listitem>
-<listitem><para>
-A smooth crossfade effect is now available when changing the desktop wallpaper.
+Additional xdg folders support in Kickoff menu
 </para></listitem>
 <listitem><para>
 Fixed Konqueror selection handling when using arrow keys.
@@ -295,19 +320,19 @@ GTK3/TQt Theme Engine
 Kate Sort plugin
 </para></listitem>
 <listitem><para>
-KControl LDAP Manager
-</para></listitem>
-<listitem><para>
-KControl Autostart
-</para></listitem>
-<listitem><para>
 Kasablanca
+</para></listitem>
+<listitem><para>
+KBibTex
 </para></listitem>
 <listitem><para>
 KBiff
 </para></listitem>
 <listitem><para>
-KBibTex
+KControl LDAP Manager
+</para></listitem>
+<listitem><para>
+KControl Autostart
 </para></listitem>
 <listitem><para>
 KDbg
@@ -346,10 +371,10 @@ MPlayerthumbs
 Qt4/TQt Theme Engine
 </para></listitem>
 <listitem><para>
-tdeio-ftps
+Tdeio-ftps
 </para></listitem>
 <listitem><para>
-tdeio-sword
+Tdeio-sword
 </para></listitem>
 <listitem><para>
 TorK
