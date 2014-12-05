@@ -293,6 +293,8 @@ void MainWindow::viewUrl( const TQString &url )
 
 void MainWindow::viewUrl( const KURL &url, const KParts::URLArgs &args )
 {
+    KParts::URLArgs urlArgs = args;
+
     stop();
 
     TQString proto = url.protocol().lower();
@@ -323,7 +325,15 @@ void MainWindow::viewUrl( const KURL &url, const KParts::URLArgs &args )
 
     History::self().createEntry();
 
-    mDoc->browserExtension()->setURLArgs( args );
+    if (mDoc->baseURL() != url) {
+        if ( proto == "help" ) {
+            // Ensure that changing the handbook section works by forcing a reload of the page,
+            // thereby allowing the help tdeioslave to re-parse the fragment identifier
+            urlArgs.reload = true;
+            mDoc->gotoAnchor("");
+        }
+    }
+    mDoc->browserExtension()->setURLArgs( urlArgs );
 
     if ( proto == TQString::fromLatin1("glossentry") ) {
         TQString decodedEntryId = KURL::decode_string( url.encodedPathAndQuery() );
