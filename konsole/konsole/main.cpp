@@ -164,11 +164,12 @@ extern "C" int KDE_EXPORT kdemain(int argc, char* argv[])
 
   TDEAboutData aboutData( "konsole", I18N_NOOP("Konsole"),
     KONSOLE_VERSION, description, TDEAboutData::License_GPL_V2,
-    "Copyright (c) 1997-2006, Lars Doelle");
-  aboutData.addAuthor("Robert Knight",I18N_NOOP("Maintainer"), "robertknight@gmail.com");
+    "Copyright (c) 2011-2014, The Trinity Desktop project\nCopyright (c) 1997-2006, Lars Doelle");
+  aboutData.addAuthor( "Timothy Pearson", I18N_NOOP("Maintainer, Trinity bugfixes"), "kb9vqf@pearsoncomputing.net" );
+  aboutData.addAuthor("Robert Knight",I18N_NOOP("Previous Maintainer"), "robertknight@gmail.com");
   aboutData.addAuthor("Lars Doelle",I18N_NOOP("Author"), "lars.doelle@on-line.de");
   aboutData.addCredit("Kurt V. Hindenburg",
-    I18N_NOOP("bug fixing and improvements"), 
+    I18N_NOOP("bug fixing and improvements"),
     "kurt.hindenburg@gmail.com");
   aboutData.addCredit("Waldo Bastian",
     I18N_NOOP("bug fixing and improvements"),

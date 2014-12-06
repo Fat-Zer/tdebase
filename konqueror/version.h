@@ -1,3 +1,4 @@
 #ifndef _VERSION_H
-#define KONQUEROR_VERSION "3.5.10"
+#include "config.h"
+#define KONQUEROR_VERSION VERSION
 #endif
