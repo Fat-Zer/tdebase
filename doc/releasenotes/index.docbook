@@ -190,6 +190,9 @@ Switched compositor from Kompmgr to Compton.
 Added support for ARM architectures and RaspBian.
 </para></listitem>
 <listitem><para>
+MIME detection system now based on libmagic.
+</para></listitem>
+<listitem><para>
 New website design.
 </para></listitem>
 </itemizedlist>
