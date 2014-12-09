@@ -3,7 +3,7 @@
 # A script to perform R14.0.0 XDG compliance updates.
 
 SCRIPT_NAME="`basename \`readlink -f $0\``"
-SCRIPT_VERSION=201411240
+SCRIPT_VERSION=201412080
 
 # This script should be needed to run only once, but corner cases
 # and file/directory permissions could cause incomplete updates.
@@ -269,15 +269,17 @@ if [ "$USER_DIR" = "$HOME" ]; then
   fi
 fi
 
+# Get directories for temporary files
+# All three directories are for temporary files. The cache directory is
+# intended for persistent temporary data (is expected to remain across reboots
+# and shutdowns). The other two directories are for non-persistent data and
+# can be deleted across reboots and shutdowns.
+CACHE_DIR="`readlink $PROFILE_DIR/cache-\`uname -n\``"
+SOCKET_DIR="`readlink $PROFILE_DIR/socket-\`uname -n\``"
+TMP_DIR="`readlink $PROFILE_DIR/tmp-\`uname -n\``"
+
 if [ "$R14_VERSION" -lt "201309150" ]; then
   Log "Updating temp file locations."
-  # All three directories are for temporary files. The cache directory is
-  # intended for persistent temporary data (is expected to remain across reboots
-  # and shutdowns). The other two directories are for non-persistent data and
-  # can be deleted across reboots and shutdowns.
-  CACHE_DIR="`readlink $PROFILE_DIR/cache-\`uname -n\``"
-  SOCKET_DIR="`readlink $PROFILE_DIR/socket-\`uname -n\``"
-  TMP_DIR="`readlink $PROFILE_DIR/tmp-\`uname -n\``"
   # Delete the non-persistent temporary directories. This is safe at any time.
   unlink $PROFILE_DIR/socket-`uname -n` 2>/dev/null
   unlink $PROFILE_DIR/tmp-`uname -n` 2>/dev/null
@@ -317,6 +319,47 @@ if [ "$R14_VERSION" -lt "201309150" ]; then
   fi
 fi
 
+if [ "$R14_VERSION" -lt "201412080" ]; then
+  Log "Updating references of temporary paths."
+  # Get base for temporary directories
+  if [ "$CACHE_DIR" = "" ]; then
+    CACHE_BASE_DIR=/var/tmp
+  else
+    CACHE_BASE_DIR=`dirname $CACHE_DIR`
+  fi
+  if [ "$SOCKET_DIR" = "" ]; then
+    SOCKET_BASE_DIR=/tmp
+  else
+    SOCKET_BASE_DIR=`dirname $SOCKET_DIR`
+  fi
+  if [ "$TMP_DIR" = "" ]; then
+    TMP_BASE_DIR=/tmp
+  else
+    TMP_BASE_DIR=`dirname $TMP_DIR`
+  fi
+  # Exclude user data files --- we don't want to touch those files.
+  find "$PROFILE_DIR" \
+       -path $PROFILE_DIR/share/apps/amarok/albumcovers -prune -o \
+       -path $PROFILE_DIR/share/apps/basket/baskets -prune -o \
+       -path $PROFILE_DIR/share/apps/juk/covers -prune -o \
+       -path $PROFILE_DIR/share/apps/kget/logs -prune -o \
+       -path $PROFILE_DIR/share/apps/kmail/autosave -prune -o \
+       -path $PROFILE_DIR/share/apps/kmail/dimap -prune -o \
+       -path $PROFILE_DIR/share/apps/kmail/imap -prune -o \
+       -path $PROFILE_DIR/share/apps/kmail/mail -prune -o \
+       -path $PROFILE_DIR/share/apps/kmail/search -prune -o \
+       -path $PROFILE_DIR/share/apps/knotes -prune -o \
+       -path $PROFILE_DIR/share/apps/kopete/logs -prune -o \
+       -type f -print0 2>/dev/null | \
+    xargs -r0 grep -ZIEl "($TMP_BASE_DIR/kde|$SOCKET_BASE_DIR/ksocket|$CACHE_BASE_DIR/kde[0-9]*cache)-" | \
+    xargs -r0 sed -ri -e "s|$TMP_BASE_DIR/kde-|$TMP_BASDE_DIR/tde-|g" \
+                      -e "s|$SOCKET_BASE_DIR/ksocket-|$SOCKET_BASE_DIR/tdesocket-|g" \
+                      -e "s|$CACHE_BASE_DIR/kde[0-9]*cache-|$CACHE_BASE_DIR/tdecache-|g"
+  # Cleanup variables
+  unset CACHE_BASE_DIR
+  unset SOCKET_BASE_DIR
+  unset TMP_BASE_DIR
+fi
 if [ "$R14_VERSION" -lt "201309150" ]; then
   Log "Updating references of $TDEDIR/share/applications/kde to share/applications/tde."
   # Exclude KMail mail files --- we don't want to touch those files.
