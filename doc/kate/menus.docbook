@@ -1084,6 +1084,14 @@ word.</para></listitem>
 </varlistentry>
 
 <varlistentry>
+<term><anchor id="tools-delete-line"/><menuchoice>
+<guimenu>Tools</guimenu>
+<guimenuitem>Delete Line</guimenuitem>
+</menuchoice></term>
+<listitem><para>Delete the current line.</para></listitem>
+</varlistentry>
+
+<varlistentry>
 <term><anchor id="tools-join-lines"/><menuchoice>
 <shortcut>
 <keycombo action="simul">&Ctrl;<keycap>J</keycap></keycombo>

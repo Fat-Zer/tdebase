@@ -1562,6 +1562,14 @@ word.</para></listitem>
 
 <varlistentry>
 <term><menuchoice>
+<guimenu>Tools</guimenu>
+<guimenuitem>Delete Line</guimenuitem>
+</menuchoice></term>
+<listitem><para>Delete the current line.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
 <shortcut>
 <keycombo action="simul">&Ctrl;<keycap>J</keycap></keycombo>
 </shortcut>
