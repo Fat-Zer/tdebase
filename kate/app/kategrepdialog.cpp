@@ -149,13 +149,22 @@ GrepTool::GrepTool(TQWidget *parent, const char *name)
   lFiles->setFixedSize(lFiles->sizeHint());
   loInput->addWidget(lFiles, 2, 0, Qt::AlignRight | Qt::AlignVCenter);
 
+  TQBoxLayout *loFiles = new TQHBoxLayout( 2 );
+  loInput->addLayout( loFiles, 2, 1 );
+
   cmbFiles = new KComboBox(true, this);
   lFiles->setBuddy(TQT_TQWIDGET(cmbFiles->focusProxy()));
   cmbFiles->setMinimumSize(cmbFiles->sizeHint());
   cmbFiles->setInsertionPolicy(TQComboBox::NoInsertion);
   cmbFiles->setDuplicatesEnabled(false);
   cmbFiles->insertStringList(lastSearchFiles);
-  loInput->addWidget(cmbFiles, 2, 1);
+  loFiles->addWidget(cmbFiles);
+
+  cbHideErrors = new TQCheckBox( i18n("Hide errors"), this );
+  cbHideErrors->setMinimumWidth( cbHideErrors->sizeHint().width() );
+  cbHideErrors->setChecked( config->readBoolEntry( "HideErrors", false ) );
+  loFiles->addWidget(cbHideErrors);
+  loFiles->setStretchFactor(cmbFiles, 100);
 
   TQLabel *lDir = new TQLabel(i18n("Folder:"), this);
   lDir->setFixedSize(lDir->sizeHint());
@@ -199,8 +208,8 @@ GrepTool::GrepTool(TQWidget *parent, const char *name)
 
   TQWhatsThis::add(lPattern,
     i18n("<p>Enter the expression you want to search for here."
-     "<p>If 'regular expression' is unchecked, any non-space letters in your "
-     "expression will be escaped with a backslash character."
+     "<p>If 'regular expression' is unchecked, all characters that are not "
+     "letters in your expression will be escaped with a backslash character."
      "<p>Possible meta characters are:<br>"
      "<b>.</b> - Matches any character<br>"
      "<b>^</b> - Matches the beginning of a line<br>"
@@ -243,6 +252,9 @@ GrepTool::GrepTool(TQWidget *parent, const char *name)
     i18n("The results of the grep run are listed here. Select a\n"
      "filename/line number combination and press Enter or doubleclick\n"
      "on the item to show the respective line in the editor."));
+  TQWhatsThis::add( cbHideErrors, i18n(
+      "<p>If this is checked, the dialog window showing the search errors "
+      "will not be displayed at the end of the search.") );
 
   // event filter, do something relevant for RETURN
   cmbPattern->installEventFilter( this );
@@ -460,6 +472,7 @@ void GrepTool::finish()
   config->writeEntry("Recursive", cbRecursive->isChecked());
   config->writeEntry("CaseSensitive", cbCasesensitive->isChecked());
   config->writeEntry("Regex", cbRegex->isChecked());
+  config->writeEntry("HideErrors", cbHideErrors->isChecked());
 }
 
 void GrepTool::slotCancel()
@@ -474,9 +487,12 @@ void GrepTool::childExited()
   btnClear->setEnabled( true );
   btnSearch->setGuiItem( KGuiItem(i18n("Find"), "edit-find") );
 
-  if ( ! errbuf.isEmpty() )
+  if ( !errbuf.isEmpty())
   {
-    KMessageBox::information( parentWidget(), i18n("<strong>Error:</strong><p>") + errbuf, i18n("Grep Tool Error") );
+    if (!cbHideErrors->isChecked())
+    {
+      KMessageBox::information( parentWidget(), i18n("<strong>Error:</strong><p>") + errbuf, i18n("Grep Tool Error") );
+    }
     errbuf.truncate(0);
   }
   else

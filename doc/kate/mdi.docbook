@@ -341,6 +341,14 @@ It is possible to specify multiple patterns by separating them with commas
 </varlistentry>
 
 <varlistentry>
+<term><guilabel>Hide errors</guilabel></term>
+<listitem>
+<para>If checked, the dialog window showing the search errors will
+not be displayed at the end of the search.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
 <term><guilabel>Folder</guilabel></term>
 <listitem>
 <para>The folder to search for files.</para>

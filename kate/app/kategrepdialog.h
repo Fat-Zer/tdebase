@@ -79,7 +79,9 @@ private:
     KComboBox *cmbFiles, *cmbPattern;
     KURLRequester *cmbDir;
     TQCheckBox *cbRecursive;
-    TQCheckBox *cbCasesensitive, *cbRegex;
+    TQCheckBox *cbCasesensitive;
+    TQCheckBox *cbRegex;
+    TQCheckBox *cbHideErrors;
     TQListBox *lbResult;
     KPushButton *btnSearch, *btnClear;
     TDEProcess *childproc;
