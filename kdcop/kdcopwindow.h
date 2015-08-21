@@ -30,7 +30,7 @@ class KDCOPWindow : public TDEMainWindow
   protected slots:
 
     void slotCurrentChanged( TQListViewItem* item );
-    void slotCallFunction();
+    void slotItemExecuted();
     void slotCallFunction( TQListViewItem* item );
     void slotApplicationRegistered(const TQCString &);
     void slotApplicationUnregistered(const TQCString &);

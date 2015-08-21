@@ -326,7 +326,7 @@ KDCOPWindow::KDCOPWindow(TQWidget *parent, const char * name)
       "application-x-executable",
      CTRL + Key_E,
      TQT_TQOBJECT(this),
-     TQT_SLOT(slotCallFunction()),
+     TQT_SLOT(slotItemExecuted()),
      actionCollection(),
      "execute"
     );
@@ -378,7 +378,7 @@ void KDCOPWindow::slotCurrentChanged( TQListViewItem* i )
 }
 
 
-void KDCOPWindow::slotCallFunction()
+void KDCOPWindow::slotItemExecuted()
 {
   slotCallFunction( mainView->lv->currentItem() );
 }
@@ -395,7 +395,10 @@ void KDCOPWindow::slotCallFunction( TQListViewItem* it )
   DCOPBrowserItem * item = static_cast<DCOPBrowserItem *>(it);
 
   if (item->type() != DCOPBrowserItem::Function)
+  {
+    it->setOpen(!it->isOpen());
     return;
+  }
 
   DCOPBrowserFunctionItem * fitem =
     static_cast<DCOPBrowserFunctionItem *>(item);
