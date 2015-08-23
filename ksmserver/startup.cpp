@@ -389,6 +389,7 @@ void KSMServer::finishStartup()
         startupNotifierIPDlg=0;
     }
 
+    m_startupCompleted = true;
     setupXIOErrorHandler(); // From now on handle X errors as normal shutdown.
 }
 

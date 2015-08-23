@@ -61,6 +61,7 @@ k_dcop:
     void autoStart2Done();
     void kcmPhase1Done();
     void kcmPhase2Done();
+    bool startupCompleted();
 public:
     KSMServer( const TQString& windowManager, const TQString& windowManagerAddArgs, bool only_local );
     ~KSMServer();
@@ -181,7 +182,7 @@ private:
     TQString windowWmClientMachine(WId w);
     WId windowWmClientLeader(WId w);
     TQCString windowSessionId(WId w, WId leader);
-    
+
     bool checkStartupSuspend();
     void finishStartup();
     void resumeStartupInternal();
@@ -235,6 +236,7 @@ private:
     TQTimer startupSuspendTimeoutTimer;
     bool waitAutoStart2;
     bool waitKcmInit2;
+    bool m_startupCompleted;
     TQTimer pendingShutdown;
     TDEApplication::ShutdownConfirm pendingShutdown_confirm;
     TDEApplication::ShutdownType pendingShutdown_sdtype;

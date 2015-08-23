@@ -592,6 +592,7 @@ KSMServer::KSMServer( const TQString& windowManager, const TQString& windowManag
     state = Idle;
     dialogActive = false;
     saveSession = false;
+    m_startupCompleted = false;
     wmPhase1WaitingCount = 0;
     TDEConfig* config = TDEGlobal::config();
     config->setGroup("General" );
@@ -989,4 +990,9 @@ bool KSMServer::isCrashHandler( const TQString& program ) const
 bool KSMServer::defaultSession() const
 {
     return sessionGroup.isEmpty();
+}
+
+bool KSMServer::startupCompleted()
+{
+	  return m_startupCompleted;
 }
