@@ -191,6 +191,10 @@ private slots:
 	void mountDisk();
 	void unmountDisk();
 
+	void cryptographicCardInserted();
+	void cryptographicCardRemoved();
+	void updateCryptographicCardStatusDisplay();
+
 private:
 	TDEGenericDevice* m_device;
 	DevicePropertiesDialogBase* base;

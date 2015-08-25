@@ -47,6 +47,8 @@
 #include <stdio.h>
 #include <tqstring.h>
 
+#include <tdecryptographiccarddevice.h>
+
 #include "hwmanager.h"
 
 using namespace std;
@@ -144,6 +146,9 @@ void TDEHWManager::populateTreeView()
 		TDEGenericHardwareList hwlist = hwdevices->listByDeviceClass(TDEGenericDeviceType::RootSystem);
 		TDEGenericDevice *hwdevice;
 		for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
+			if (hwdevice->type() == TDEGenericDeviceType::CryptographicCard) {
+				static_cast<TDECryptographicCardDevice*>(hwdevice)->enableCardMonitoring(true);
+			}
 			DeviceIconItem* item = new DeviceIconItem(base->deviceTree, hwdevice->detailedFriendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
 			if ((!selected_syspath.isNull()) && (hwdevice->systemPath() == selected_syspath)) {
 				base->deviceTree->ensureItemVisible(item);
@@ -160,6 +165,9 @@ void TDEHWManager::populateTreeView()
 				TDEGenericDevice *hwdevice;
 				TDEGenericHardwareList hwlist = hwdevices->listByDeviceClass((TDEGenericDeviceType::TDEGenericDeviceType)i);
 				for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
+					if (hwdevice->type() == TDEGenericDeviceType::CryptographicCard) {
+						static_cast<TDECryptographicCardDevice*>(hwdevice)->enableCardMonitoring(true);
+					}
 					DeviceIconItem* item = new DeviceIconItem(rootitem, hwdevice->detailedFriendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
 					if ((!selected_syspath.isNull()) && (hwdevice->systemPath() == selected_syspath)) {
 						base->deviceTree->ensureItemVisible(item);
@@ -177,6 +185,9 @@ void TDEHWManager::populateTreeViewLeaf(DeviceIconItem *parent, bool show_by_con
 		TDEGenericHardwareList hwlist = hwdevices->listAllPhysicalDevices();
 		TDEGenericDevice *hwdevice;
 		for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
+			if (hwdevice->type() == TDEGenericDeviceType::CryptographicCard) {
+				static_cast<TDECryptographicCardDevice*>(hwdevice)->enableCardMonitoring(true);
+			}
 			if (hwdevice->parentDevice() == parent->device()) {
 				DeviceIconItem* item = new DeviceIconItem(parent, hwdevice->detailedFriendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
 				if ((!selected_syspath.isNull()) && (hwdevice->systemPath() == selected_syspath)) {

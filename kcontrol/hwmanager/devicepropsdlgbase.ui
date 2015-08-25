@@ -1528,6 +1528,60 @@
 			    </spacer>
 		    </grid>
             </widget>
+	    <widget class="TQWidget">
+		    <property name="name">
+			    <cstring>tabCryptographicCard</cstring>
+		    </property>
+		    <attribute name="title">
+			    <string>Cryptographic Card</string>
+		    </attribute>
+		    <grid>
+			    <property name="name">
+				    <cstring>unnamed</cstring>
+			    </property>
+			    <widget class="TQGroupBox" row="0" column="0">
+				    <property name="name">
+					    <cstring>groupInput</cstring>
+				    </property>
+				    <property name="title">
+					    <string>Card Status</string>
+				    </property>
+				    <grid>
+					    <property name="name">
+						    <cstring>unnamed</cstring>
+					    </property>
+					    <widget class="TQLabel" row="0" column="0" colspan="1">
+						    <property name="name">
+							    <cstring>labelCardStatus</cstring>
+						    </property>
+						    <property name="text">
+							    <string></string>
+						    </property>
+						    <property name="alignment">
+							    <set>AlignTop|AlignLeft</set>
+						    </property>
+					    </widget>
+				    </grid>
+			    </widget>
+			    <spacer row="8" column="0">
+				    <property name="name" stdset="0">
+					    <cstring>Spacer4</cstring>
+				    </property>
+				    <property name="orientation">
+					    <enum>Vertical</enum>
+				    </property>
+				    <property name="sizeType">
+					    <enum>Expanding</enum>
+				    </property>
+				    <property name="sizeHint">
+					    <size>
+						    <width>20</width>
+						    <height>20</height>
+					    </size>
+				    </property>
+			    </spacer>
+		    </grid>
+            </widget>
         </widget>
     </grid>
 </widget>

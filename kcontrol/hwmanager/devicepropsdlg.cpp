@@ -283,6 +283,9 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 		if (m_device->type() != TDEGenericDeviceType::Event) {
 			base->tabBarWidget->removePage(base->tabEvent);
 		}
+		if (m_device->type() != TDEGenericDeviceType::CryptographicCard) {
+			base->tabBarWidget->removePage(base->tabCryptographicCard);
+		}
 
 		if (m_device->type() == TDEGenericDeviceType::CPU) {
 			connect(base->comboCPUGovernor, TQT_SIGNAL(activated(const TQString &)), this, TQT_SLOT(setCPUGovernor(const TQString &)));
@@ -753,6 +756,38 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 			}
 			base->labelEventSwitchActive->setText(activeSwitches);
 		}
+
+		if (m_device->type() == TDEGenericDeviceType::CryptographicCard) {
+			TDECryptographicCardDevice* cdevice = static_cast<TDECryptographicCardDevice*>(m_device);
+
+			connect(cdevice, TQT_SIGNAL(cardInserted()), this, TQT_SLOT(cryptographicCardInserted()));
+			connect(cdevice, TQT_SIGNAL(cardRemoved()), this, TQT_SLOT(cryptographicCardRemoved()));
+
+			updateCryptographicCardStatusDisplay();
+		}
+	}
+}
+
+void DevicePropertiesDialog::cryptographicCardInserted() {
+	updateCryptographicCardStatusDisplay();
+}
+
+void DevicePropertiesDialog::cryptographicCardRemoved() {
+	updateCryptographicCardStatusDisplay();
+}
+
+void DevicePropertiesDialog::updateCryptographicCardStatusDisplay() {
+	TDECryptographicCardDevice* cdevice = static_cast<TDECryptographicCardDevice*>(m_device);
+
+	int status = cdevice->cardPresent();
+	if ((status < 0) ||(status > 1)) {
+		base->labelCardStatus->setText(i18n("Unknown"));
+	}
+	else if (status == 0) {
+		base->labelCardStatus->setText(i18n("Empty"));
+	}
+	else if (status == 1) {
+		base->labelCardStatus->setText(i18n("Inserted") + TQString("<br>") + i18n("ATR: %1").arg(cdevice->cardATR()));
 	}
 }
 
