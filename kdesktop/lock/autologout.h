@@ -1,6 +1,6 @@
 //===========================================================================
 //
-// This file is part of the KDE project
+// This file is part of the TDE project
 //
 // Copyright (c) 1999 Martin R. Jones <mjones@kde.org>
 // Copyright (c) 2003 Oswald Buddenhagen <ossi@kde.org>
@@ -22,29 +22,29 @@ class TQProgressBar;
 
 class AutoLogout : public TQDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
-public:
-    AutoLogout(LockProcess *parent);
-    ~AutoLogout();
-    virtual void show();
- 
-protected:
-    virtual void timerEvent(TQTimerEvent *);
+	public:
+		AutoLogout(LockProcess *parent);
+		~AutoLogout();
+		virtual void show();
 
-private slots:
-    void slotActivity();
+	protected:
+		virtual void timerEvent(TQTimerEvent *);
 
-private:
-    void        updateInfo(int);
-    TQFrame      *frame;
-    TQGridLayout *frameLayout;
-    TQLabel      *mStatusLabel;
-    int         mCountdownTimerId;
-    int         mRemaining;
-    TQTimer      countDownTimer;
-    TQProgressBar *mProgressRemaining;
-    void logout();
+	private slots:
+		void slotActivity();
+
+	private:
+		void        updateInfo(int);
+		TQFrame      *frame;
+		TQGridLayout *frameLayout;
+		TQLabel      *mStatusLabel;
+		int         mCountdownTimerId;
+		int         mRemaining;
+		TQTimer      countDownTimer;
+		TQProgressBar *mProgressRemaining;
+		void logout();
 };
 
 #endif

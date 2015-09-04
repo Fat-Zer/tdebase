@@ -233,18 +233,18 @@ LockProcess::LockProcess()
 #endif
 
 	setupSignals();
-	
+
 	// Set up atoms
 	kde_wm_system_modal_notification = XInternAtom(tqt_xdisplay(), "_TDE_WM_MODAL_SYS_NOTIFICATION", False);
 	kde_wm_transparent_to_desktop = XInternAtom(tqt_xdisplay(), "_TDE_TRANSPARENT_TO_DESKTOP", False);
 	kde_wm_transparent_to_black = XInternAtom(tqt_xdisplay(), "_TDE_TRANSPARENT_TO_BLACK", False);
-	
+
 	kapp->installX11EventFilter(this);
-	
+
 	mForceContinualLockDisplayTimer = new TQTimer( this );
 	mHackDelayStartupTimer = new TQTimer( this );
 	mEnsureVRootWindowSecurityTimer = new TQTimer( this );
-	
+
 	if (!argb_visual) {
 		// Try to get the root pixmap
 		if (!m_rootPixmap) m_rootPixmap = new KRootPixmap(this);
@@ -252,7 +252,7 @@ LockProcess::LockProcess()
 		m_rootPixmap->setCustomPainting(true);
 		m_rootPixmap->start();
 	}
-	
+
 	// Get root window attributes
 	XWindowAttributes rootAttr;
 	XGetWindowAttributes(tqt_xdisplay(), RootWindow(tqt_xdisplay(), tqt_xscreen()), &rootAttr);
@@ -261,12 +261,12 @@ LockProcess::LockProcess()
 		TQToolTip::add( &w, "foo" );
 	}
 	XSelectInput( tqt_xdisplay(), tqt_xrootwin(), SubstructureNotifyMask | rootAttr.your_event_mask );
-	
+
 	// Add non-TDE path
 	TDEGlobal::dirs()->addResourceType("scrsav",
 					TDEGlobal::dirs()->kde_default("apps") +
 					"System/ScreenSavers/");
-	
+
 	// Add KDE specific screensaver path
 	TQString relPath="System/ScreenSavers/";
 	KServiceGroup::Ptr servGroup = KServiceGroup::baseGroup( "screensavers");
@@ -277,11 +277,11 @@ LockProcess::LockProcess()
 	TDEGlobal::dirs()->addResourceType("scrsav",
 					TDEGlobal::dirs()->kde_default("apps") +
 					relPath);
-	
+
 	// virtual root property
 	gXA_VROOT = XInternAtom (tqt_xdisplay(), "__SWM_VROOT", False);
 	gXA_SCREENSAVER_VERSION = XInternAtom (tqt_xdisplay(), "_SCREENSAVER_VERSION", False);
-	
+
 	TQStringList dmopt = TQStringList::split(TQChar(','),
 				TQString::fromLatin1( ::getenv( "XDM_MANAGED" )));
 	for (TQStringList::ConstIterator it = dmopt.begin(); it != dmopt.end(); ++it) {
@@ -295,7 +295,7 @@ LockProcess::LockProcess()
 #endif
 
 	greetPlugin.library = 0;
-	
+
 	TDECrash::setCrashHandler(segv_handler);
 }
 
@@ -334,18 +334,18 @@ LockProcess::~LockProcess()
 		mEnsureVRootWindowSecurityTimer->stop();
 		delete mEnsureVRootWindowSecurityTimer;
 	}
-	
+
 	if (greetPlugin.library) {
 		if (greetPlugin.info->done)
 		greetPlugin.info->done();
 		greetPlugin.library->unload();
 	}
-	
+
 	if (m_rootPixmap) {
 		m_rootPixmap->stop();
 		delete m_rootPixmap;
 	}
-	
+
 	mPipeOpen = false;
 	mPipeOpen_out = false;
 }
@@ -363,7 +363,7 @@ void LockProcess::init(bool child, bool useBlankOnly)
 	mRootWidth = rootAttr.width;
 	mRootHeight = rootAttr.height;
 	generateBackingImages();
-	
+
 	// Connect all signals
 	connect( mForceContinualLockDisplayTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(displayLockDialogIfNeeded()) );
 	connect( mHackDelayStartupTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(closeDialogAndStartHack()) );
@@ -399,15 +399,15 @@ void LockProcess::init(bool child, bool useBlankOnly)
 
 	child_saver = child;
 	mUseBlankOnly = useBlankOnly;
-	
+
 	mShowLockDateTime = KDesktopSettings::showLockDateTime();
 	mlockDateTime = TQDateTime::currentDateTime();
-	
+
 	mHackDelayStartupTimeout = trinity_desktop_lock_delay_screensaver_start?KDesktopSettings::timeout()*1000:10*1000;
 	mHackStartupEnabled = trinity_desktop_lock_use_system_modal_dialogs?KDesktopSettings::screenSaverEnabled():true;
-	
+
 	configure();
-	
+
 	mControlPipeHandlerThread = new TQEventLoopThread();
 	mControlPipeHandler = new ControlPipeHandlerObject();
 	mControlPipeHandler->mParent = this;
@@ -453,7 +453,7 @@ bool LockProcess::closeCurrentWindow()
 			currentDialog->close();
 		}
 	}
-	
+
 	if( mDialogs.isEmpty() ) {
 		mClosingWindows = FALSE;
 		mForceReject = false;
@@ -506,7 +506,7 @@ void LockProcess::setupSignals()
 	sigaddset(&(act.sa_mask), SIGHUP);
 	act.sa_flags = 0;
 	sigaction(SIGHUP, &act, 0L);
-	
+
 	if (pipe(signal_pipe) == -1) {
 		// Error handler to shut up gcc warnings
 	}
@@ -733,17 +733,17 @@ void LockProcess::configure()
 	}
 	else
 		mLockGrace = -1;
-	
+
 	if ( KDesktopSettings::autoLogout() ) {
 		mAutoLogout = true;
 		mAutoLogoutTimeout = KDesktopSettings::autoLogoutTimeout();
 		mAutoLogoutTimerId = startTimer(mAutoLogoutTimeout * 1000); // in milliseconds
 	}
-	
+
 	mPriority = KDesktopSettings::priority();
 	if (mPriority < 0) mPriority = 0;
 	if (mPriority > 19) mPriority = 19;
-	
+
 	mSaver = KDesktopSettings::saver();
 	if (mSaver.isEmpty() || mUseBlankOnly) {
 		mSaver = "KBlankscreen.desktop";
@@ -754,9 +754,9 @@ void LockProcess::configure()
 		mSaverExec = "";
 		}
 	}
-	
+
 	readSaver();
-	
+
 	mPlugins = KDesktopSettings::pluginsUnlock();
 	if (mPlugins.isEmpty()) {
 		mPlugins = TQStringList("classic");
@@ -772,7 +772,7 @@ void LockProcess::readSaver()
 {
 	if (!mSaver.isEmpty()) {
 		TQString file = locate("scrsav", mSaver);
-	
+
 		bool opengl = kapp->authorize("opengl_screensavers");
 		bool manipulatescreen = kapp->authorize("manipulatescreen_screensavers");
 		KDesktopFile config(file, true);
@@ -793,9 +793,9 @@ void LockProcess::readSaver()
 				}
 			}
 		}
-	
+
 		kdDebug(1204) << "mForbidden: " << (mForbidden ? "true" : "false") << endl;
-	
+
 		if (trinity_desktop_lock_use_system_modal_dialogs) {
 			if (config.hasActionGroup("InWindow")) {
 				config.setActionGroup("InWindow");
@@ -882,7 +882,7 @@ void LockProcess::createSaverWindow()
 
 	attrs.override_redirect = 1;
 	hide();
-	
+
 	if (argb_visual) {
 		// The GL visual selection can return a visual with invalid depth
 		// Check for this and use a fallback visual if needed
@@ -892,7 +892,7 @@ void LockProcess::createSaverWindow()
 			info = NULL;
 			flags &= ~CWColormap;
 		}
-	
+
 		attrs.background_pixel = 0;
 		attrs.border_pixel = 0;
 		flags |= CWBackPixel;
@@ -916,33 +916,33 @@ void LockProcess::createSaverWindow()
 	if (info) {
 		XFree( info );
 	}
-	
+
 	m_saverRootWindow = XCreateWindow( x11Display(), RootWindow( x11Display(), x11Screen()), x(), y(), width(), height(), 0, x11Depth(), InputOutput, visual, flags, &attrs );
 	create( m_saverRootWindow );
-	
+
 	// Some xscreensaver hacks check for this property
 	const char *version = "KDE 2.0";
 	XChangeProperty (tqt_xdisplay(), winId(),
 			gXA_SCREENSAVER_VERSION, XA_STRING, 8, PropModeReplace,
 			(unsigned char *) version, strlen(version));
-	
+
 	XSetWindowAttributes attr;
 	attr.event_mask = KeyPressMask | ButtonPressMask | PointerMotionMask | VisibilityChangeMask | ExposureMask;
 	XChangeWindowAttributes(tqt_xdisplay(), winId(), CWEventMask, &attr);
-	
+
 	// Signal that we want to be transparent to the desktop, not to windows behind us...
 	XChangeProperty(tqt_xdisplay(), m_saverRootWindow, kde_wm_transparent_to_desktop, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
-	
+
 	// erase();
-	
+
 	// set NoBackground so that the saver can capture the current
 	// screen state if necessary
 	// this is a security risk and has been deactivated--welcome to the 21st century folks!
 	// setBackgroundMode(TQWidget::NoBackground);
-	
+
 	setGeometry(0, 0, mRootWidth, mRootHeight);
 	saverReadyIfNeeded();
-	
+
 	// HACK
 	// Hide all tooltips and notification windows
 	{
@@ -952,7 +952,7 @@ void LockProcess::createSaverWindow()
 		unsigned int noOfChildren = 0;
 		XWindowAttributes childAttr;
 		Window childTransient;
-	
+
 		if (XQueryTree(x11Display(), rootWindow, &rootWindow, &parent, &children, &noOfChildren) && noOfChildren>0 ) {
 			for (unsigned int i=0; i<noOfChildren; i++) {
 				if (XGetWindowAttributes(x11Display(), children[i], &childAttr) && XGetTransientForHint(x11Display(), children[i], &childTransient)) {
@@ -967,7 +967,7 @@ void LockProcess::createSaverWindow()
 			}
 		}
 	}
-	
+
 	kdDebug(1204) << "Saver window Id: " << winId() << endl;
 }
 
@@ -982,15 +982,15 @@ void LockProcess::desktopResized()
 	mRootWidth = rootAttr.width;
 	mRootHeight = rootAttr.height;
 	generateBackingImages();
-	
+
 	mBusy = true;
 	mHackDelayStartupTimer->stop();
 	stopHack();
 	DISABLE_CONTINUOUS_LOCKDLG_DISPLAY
 	mResizingDesktopLock = true;
-	
+
 	backingPixmap = TQPixmap();
-	
+
 	if (trinity_desktop_lock_use_system_modal_dialogs) {
 		// Temporarily hide the entire screen with a new override redirect window
 		if (m_maskWidget) {
@@ -1005,7 +1005,7 @@ void LockProcess::desktopResized()
 		}
 		XSync(tqt_xdisplay(), False);
 		saverReadyIfNeeded();
-	
+
 		if (mEnsureScreenHiddenTimer) {
 			mEnsureScreenHiddenTimer->stop();
 		}
@@ -1015,12 +1015,12 @@ void LockProcess::desktopResized()
 		}
 		mEnsureScreenHiddenTimer->start(DESKTOP_WALLPAPER_OBTAIN_TIMEOUT_MS, true);
 	}
-	
+
 	// Resize the background widget
 	setGeometry(0, 0, mRootWidth, mRootHeight);
 	XSync(tqt_xdisplay(), False);
 	saverReadyIfNeeded();
-	
+
 	// Black out the background widget to hide ugly resize tiling artifacts
 	if (argb_visual) {
 		setTransparentBackgroundARGB();
@@ -1029,7 +1029,7 @@ void LockProcess::desktopResized()
 		setBackgroundColor(black);
 	}
 	erase();
-	
+
 	// This slot needs to be able to execute very rapidly so as to prevent the user's desktop from ever
 	// being displayed, so we finish the hack restarting/display prettying operations in a separate timed slot
 	if (resizeTimer == NULL) {
@@ -1110,20 +1110,20 @@ void LockProcess::saveVRoot()
 	Window rootReturn, parentReturn, *children;
 	unsigned int numChildren;
 	Window root = RootWindowOfScreen(ScreenOfDisplay(tqt_xdisplay(), tqt_xscreen()));
-	
+
 	gVRoot = 0;
 	gVRootData = 0;
-	
+
 	int (*oldHandler)(Display *, XErrorEvent *);
 	oldHandler = XSetErrorHandler(ignoreXError);
-	
+
 	if (XQueryTree(tqt_xdisplay(), root, &rootReturn, &parentReturn, &children, &numChildren)) {
 		for (unsigned int i = 0; i < numChildren; i++) {
 			Atom actual_type;
 			int actual_format;
 			unsigned long nitems, bytesafter;
 			unsigned char *newRoot = 0;
-			
+
 			if ((XGetWindowProperty(tqt_xdisplay(), children[i], gXA_VROOT, 0, 1,
 				False, XA_WINDOW, &actual_type, &actual_format, &nitems, &bytesafter,
 				&newRoot) == Success) && newRoot) {
@@ -1138,7 +1138,7 @@ void LockProcess::saveVRoot()
 			XFree((char *)children);
 		}
 	}
-	
+
 	XSetErrorHandler(oldHandler);
 }
 
@@ -1151,10 +1151,10 @@ void LockProcess::setVRoot(Window win, Window vr)
 	if (gVRoot) {
 		removeVRoot(gVRoot);
 	}
-	
+
 	unsigned long rw = RootWindowOfScreen(ScreenOfDisplay(tqt_xdisplay(), tqt_xscreen()));
 	unsigned long vroot_data[1] = { vr };
-	
+
 	Window rootReturn;
 	Window parentReturn;
 	Window *children = NULL;
@@ -1175,7 +1175,7 @@ void LockProcess::setVRoot(Window win, Window vr)
 			top = parentReturn;
 		}
 	}
-	
+
 	XChangeProperty(tqt_xdisplay(), top, gXA_VROOT, XA_WINDOW, 32, PropModeReplace, (unsigned char *)vroot_data, 1);
 }
 
@@ -1196,7 +1196,7 @@ bool LockProcess::grabKeyboard()
 {
 	int rv = XGrabKeyboard( tqt_xdisplay(), TQApplication::desktop()->winId(),
 		True, GrabModeAsync, GrabModeAsync, CurrentTime );
-	
+
 	return (rv == GrabSuccess);
 }
 
@@ -1219,7 +1219,7 @@ bool LockProcess::grabMouse()
 	int rv = XGrabPointer( tqt_xdisplay(), TQApplication::desktop()->winId(),
 		True, GRABEVENTS, GrabModeAsync, GrabModeAsync, None,
 		cursorHandle, CurrentTime );
-	
+
 	return (rv == GrabSuccess);
 }
 
@@ -1230,14 +1230,14 @@ bool LockProcess::grabMouse()
 bool LockProcess::grabInput()
 {
 	XSync(tqt_xdisplay(), False);
-	
+
 	if (!grabKeyboard()) {
 		usleep(100000);
 		if (!grabKeyboard()) {
 			return false;
 		}
 	}
-	
+
 #ifndef KEEP_MOUSE_UNGRABBED
 	if (!grabMouse()) {
 		usleep(100000);
@@ -1247,9 +1247,9 @@ bool LockProcess::grabInput()
 		}
 	}
 #endif
-	
+
 	lockXF86();
-	
+
 	return true;
 }
 
@@ -1543,11 +1543,11 @@ void LockProcess::repaintRootWindowIfNeeded()
 bool LockProcess::startHack()
 {
 	mHackActive = TRUE;
-	
+
 	if ((mEnsureVRootWindowSecurityTimer) && (!mEnsureVRootWindowSecurityTimer->isActive())) {
 		mEnsureVRootWindowSecurityTimer->start(250, FALSE);
 	}
-	
+
 	if (currentDialog || (!mDialogs.isEmpty())) {
 		// no resuming with dialog visible or when not visible
 		if (argb_visual) {
@@ -1566,30 +1566,30 @@ bool LockProcess::startHack()
 		saverReadyIfNeeded();
 		return false;
 	}
-	
+
 	setCursor( tqblankCursor );
 	XChangeActivePointerGrab( tqt_xdisplay(), GRABEVENTS, TQCursor(tqblankCursor).handle(), CurrentTime);
-	
+
 	if (mSaverExec.isEmpty()) {
 		return false;
 	}
-	
+
 	if (mHackProc.isRunning()) {
 		stopHack();
 	}
-	
+
 	mHackProc.clearArguments();
-	
+
 	TQTextStream ts(&mSaverExec, IO_ReadOnly);
 	TQString word;
 	ts >> word;
 	TQString path = TDEStandardDirs::findExe(word);
-	
+
 	if (!path.isEmpty()) {
 		mHackProc << path;
-	
+
 		kdDebug(1204) << "Starting hack: " << path << endl;
-	
+
 		while (!ts.atEnd()) {
 			ts >> word;
 			if (word == "%w")
@@ -1623,7 +1623,7 @@ bool LockProcess::startHack()
 				saverReadyIfNeeded();
 				mSuspended = false;
 			}
-	
+
 			XChangeActivePointerGrab( tqt_xdisplay(), GRABEVENTS, TQCursor(tqblankCursor).handle(), CurrentTime);
 			if (mHackProc.start() == true) {
 #ifdef HAVE_SETPRIORITY
@@ -1699,7 +1699,7 @@ void LockProcess::stopHack()
 		}
 	}
 	setCursor( tqarrowCursor );
-	
+
 	mHackActive = FALSE;
 }
 
@@ -1868,13 +1868,13 @@ bool LockProcess::checkPass()
 		if (mAutoLogout) {
 			killTimer(mAutoLogoutTimerId);
 		}
-	
+
 		// Make sure we never launch the SAK or login dialog if windows are being closed down
 		// Otherwise we can get stuck in an irrecoverable state where any attempt to show the login screen is instantly aborted
 		if (mClosingWindows) {
 			return 0;
 		}
-	
+
 		if (trinity_desktop_lock_use_sak) {
 			// Verify SAK operational status
 			TDEProcess* checkSAKProcess = new TDEProcess;
@@ -1886,7 +1886,7 @@ bool LockProcess::checkPass()
 				trinity_desktop_lock_use_sak = false;
 			}
 		}
-	
+
 		if (trinity_desktop_lock_use_sak) {
 			// Wait for SAK press before continuing...
 			SAKDlg inDlg( this );
@@ -1895,17 +1895,17 @@ bool LockProcess::checkPass()
 				return 0;
 			}
 		}
-	
+
 		showVkbd();
 		PasswordDlg passDlg( this, &greetPlugin, (mShowLockDateTime)?mlockDateTime:TQDateTime());
 		int ret = execDialog( &passDlg );
 		hideVkbd();
-	
+
 		if (mForceReject == true) {
 			ret = TQDialog::Rejected;
 		}
 		mForceReject = false;
-	
+
 		XWindowAttributes rootAttr;
 		XGetWindowAttributes(tqt_xdisplay(), RootWindow(tqt_xdisplay(),
 				tqt_xscreen()), &rootAttr);
@@ -1914,7 +1914,7 @@ bool LockProcess::checkPass()
 			XSelectInput( tqt_xdisplay(), tqt_xrootwin(),
 			SubstructureNotifyMask | rootAttr.your_event_mask );
 		}
-	
+
 		return ret == TQDialog::Accepted;
 	}
 	else {
@@ -1947,11 +1947,11 @@ int LockProcess::execDialog( TQDialog *dlg )
 {
 	currentDialog=dlg;
 	dlg->adjustSize();
-	
+
 	TQRect rect = dlg->geometry();
 	rect.moveCenter(TDEGlobalSettings::desktopGeometry(TQCursor::pos()).center());
 	dlg->move( rect.topLeft() );
-	
+
 	if (mDialogs.isEmpty()) {
 		suspend();
 		XChangeActivePointerGrab( tqt_xdisplay(), GRABEVENTS, TQCursor(tqarrowCursor).handle(), CurrentTime);
@@ -2102,7 +2102,7 @@ void LockProcess::doFunctionKeyBroadcast() {
 			mDialogControlLock = false;
 		}
 	}
-	
+
 	DCOPRef ref( "*", "MainApplication-Interface");
 	ref.send("sendFakeKey", DCOPArg(mkeyCode , "unsigned int"));
 }
@@ -2123,7 +2123,7 @@ bool LockProcess::x11Event(XEvent *event)
 	// XF86XK_Sleep		Ditto
 	// XF86XK_Suspend		Ditto
 	// XF86XK_Hibernate		Ditto
-	
+
 	//if ((event->type == KeyPress) || (event->type == KeyRelease)) {
 	if (event->type == KeyPress) {
 		// Multimedia keys
@@ -2145,7 +2145,7 @@ bool LockProcess::x11Event(XEvent *event)
 			return true;
 		}
 	}
-	
+
 	switch (event->type)
 	{
 		case ButtonPress:
@@ -2194,7 +2194,7 @@ bool LockProcess::x11Event(XEvent *event)
 			}
 			mBusy = false;
 			return true;
-	
+
 		case VisibilityNotify:
 			if( event->xvisibility.window == winId()) {
 				// mVisibility == false means the screensaver is not visible at all
@@ -2230,7 +2230,7 @@ bool LockProcess::x11Event(XEvent *event)
 				}
 			}
 			break;
-	
+
 		case ConfigureNotify: // from SubstructureNotifyMask on the root window
 			if(event->xconfigure.event == tqt_xrootwin()) {
 				stayOnTop();
@@ -2260,7 +2260,7 @@ bool LockProcess::x11Event(XEvent *event)
 			}
 			break;
 	}
-	
+
 	// We have grab with the grab window being the root window.
 	// This results in key events being sent to the root window,
 	// but they should be sent to the dialog if it's visible.
@@ -2276,7 +2276,7 @@ bool LockProcess::x11Event(XEvent *event)
 		tqApp->x11ProcessEvent( &ev2 );
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -2408,14 +2408,14 @@ void LockProcess::msgBox( TQMessageBox::Icon type, const TQString &txt )
 	button->setDefault( true );
 	button->setSizePolicy( TQSizePolicy( TQSizePolicy::Preferred, TQSizePolicy::Preferred ) );
 	connect( button, TQT_SIGNAL( clicked() ), &box, TQT_SLOT( accept() ) );
-	
+
 	TQVBoxLayout *vbox = new TQVBoxLayout( &box );
 	vbox->addWidget( winFrame );
 	TQGridLayout *grid = new TQGridLayout( winFrame, 2, 2, 10 );
 	grid->addWidget( label1, 0, 0, Qt::AlignCenter );
 	grid->addWidget( label2, 0, 1, Qt::AlignCenter );
 	grid->addMultiCellWidget( button, 1,1, 0,1, Qt::AlignCenter );
-	
+
 	execDialog( &box );
 }
 
@@ -2466,7 +2466,7 @@ void LockProcess::windowAdded( WId w, bool managed )
 	oldHandler = XSetErrorHandler(ignoreXError);
 	KWin::WindowInfo info = KWin::windowInfo( w, 0, NET::WM2WindowClass );
 	XSetErrorHandler(oldHandler);
-	
+
 	if( info.windowClassClass().lower() != "xvkbd" ) {
 		return;
 	}
@@ -2860,15 +2860,15 @@ void ControlPipeHandlerObject::run(void) {
 	mkdir(FIFO_DIR,0644);
 	mknod(fifo_file, S_IFIFO|0644, 0);
 	chmod(fifo_file, 0644);
-	
+
 	mParent->mPipe_fd = open(fifo_file, O_RDONLY | O_NONBLOCK);
 	if (mParent->mPipe_fd > -1) {
 		mParent->mPipeOpen = true;
 	}
-	
+
 	mknod(fifo_file_out, S_IFIFO|0600, 0);
 	chmod(fifo_file_out, 0600);
-	
+
 	mParent->mPipe_fd_out = open(fifo_file_out, O_RDWR | O_NONBLOCK);
 	if (mParent->mPipe_fd_out > -1) {
 		mParent->mPipeOpen_out = true;

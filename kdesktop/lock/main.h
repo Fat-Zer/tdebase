@@ -1,4 +1,4 @@
-/* This file is part of the KDE project
+/* This file is part of the TDE project
    Copyright (c) 2003 Oswald Buddenhagen <ossi@kde.org>
 
    This library is free software; you can redistribute it and/or
@@ -25,17 +25,20 @@
 #include <time.h>
 
 class MyApp : public TDEApplication {
-    Q_OBJECT
-public:
-    MyApp() : TDEApplication(), lastTick( 0 ) {}
-    MyApp(Display *display, Qt::HANDLE visual = 0, Qt::HANDLE colormap = 0, bool allowStyles=true) : TDEApplication(display, visual, colormap, allowStyles), lastTick( 0 ) {}
-protected:
-    bool x11EventFilter( XEvent * );
-signals:
-    void activity();
-    void mouseInteraction(XEvent *event);
-private:
-    time_t lastTick;
+	Q_OBJECT
+	public:
+		MyApp() : TDEApplication(), lastTick( 0 ) {}
+		MyApp(Display *display, Qt::HANDLE visual = 0, Qt::HANDLE colormap = 0, bool allowStyles=true) : TDEApplication(display, visual, colormap, allowStyles), lastTick( 0 ) {}
+
+	protected:
+		bool x11EventFilter( XEvent * );
+
+	signals:
+		void activity();
+		void mouseInteraction(XEvent *event);
+
+	private:
+		time_t lastTick;
 };
 
 #endif
