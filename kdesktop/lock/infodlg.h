@@ -1,8 +1,8 @@
 //===========================================================================
 //
-// This file is part of the KDE project
+// This file is part of the TDE project
 //
-// Copyright (c) 2010 Timothy Pearson <kb9vqf@pearsoncomputing.net>
+// Copyright (c) 2010 - 2015 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 //
 
 #ifndef __INFODLG_H__
@@ -26,30 +26,30 @@ class TQListView;
 //
 class InfoDlg : public TQDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
-public:
-    InfoDlg(LockProcess *parent);
-    ~InfoDlg();
-    virtual void show();
+	public:
+		InfoDlg(LockProcess *parent);
+		~InfoDlg();
+		virtual void show();
 
-    void updateLabel( TQString &txt );
-    void setUnlockIcon();
-    void setKDEIcon();
-    void setInfoIcon();
-    void setWarningIcon();
-    void setErrorIcon();
+		void updateLabel( TQString &txt );
+		void setUnlockIcon();
+		void setKDEIcon();
+		void setInfoIcon();
+		void setWarningIcon();
+		void setErrorIcon();
 
-private:
-    TQFrame      *frame;
-    TQGridLayout *frameLayout;
-    TQLabel      *mStatusLabel;
-    TQLabel      *mpixLabel;
-    int         mCapsLocked;
-    bool        mUnlockingFailed;
-    TQStringList layoutsList;
-    TQStringList::iterator currLayout;
-    int         sPid, sFd;
+	private:
+		TQFrame      *frame;
+		TQGridLayout *frameLayout;
+		TQLabel      *mStatusLabel;
+		TQLabel      *mpixLabel;
+		int         mCapsLocked;
+		bool        mUnlockingFailed;
+		TQStringList layoutsList;
+		TQStringList::iterator currLayout;
+		int         sPid, sFd;
 };
 
 #endif

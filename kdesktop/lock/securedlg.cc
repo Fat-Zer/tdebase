@@ -1,8 +1,8 @@
 //===========================================================================
 //
-// This file is part of the KDE project
+// This file is part of the TDE project
 //
-// Copyright (c) 2010-2011 Timothy Pearson <kb9vqf@pearsoncomputing.net>
+// Copyright (c) 2010 - 2015 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 
 #include <config.h>
 
@@ -64,152 +64,154 @@ extern bool trinity_desktop_lock_use_sak;
 // Simple dialog for displaying an unlock status or recurring error message
 //
 SecureDlg::SecureDlg(LockProcess *parent)
-    : TQDialog(parent, "information dialog", true, (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)WStyle_StaysOnTop):((WFlags)WX11BypassWM))),
-      mUnlockingFailed(false), retInt(NULL)
+	: TQDialog(parent, "information dialog", true, (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)WStyle_StaysOnTop):((WFlags)WX11BypassWM))),
+	mUnlockingFailed(false), retInt(NULL)
 {
-    if (trinity_desktop_lock_use_system_modal_dialogs) {
-        // Signal that we do not want any window controls to be shown at all
-        Atom kde_wm_system_modal_notification;
-        kde_wm_system_modal_notification = XInternAtom(tqt_xdisplay(), "_TDE_WM_MODAL_SYS_NOTIFICATION", False);
-        XChangeProperty(tqt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
-    }
-    setCaption(i18n("Secure Desktop Area"));
+	if (trinity_desktop_lock_use_system_modal_dialogs) {
+		// Signal that we do not want any window controls to be shown at all
+		Atom kde_wm_system_modal_notification;
+		kde_wm_system_modal_notification = XInternAtom(tqt_xdisplay(), "_TDE_WM_MODAL_SYS_NOTIFICATION", False);
+		XChangeProperty(tqt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+	}
+	setCaption(i18n("Secure Desktop Area"));
 
-    frame = new TQFrame( this );
-    if (trinity_desktop_lock_use_system_modal_dialogs)
-        frame->setFrameStyle( TQFrame::NoFrame );
-    else
-        frame->setFrameStyle( TQFrame::Panel | TQFrame::Raised );
-    frame->setLineWidth( 2 );
+	frame = new TQFrame( this );
+	if (trinity_desktop_lock_use_system_modal_dialogs) {
+		frame->setFrameStyle( TQFrame::NoFrame );
+	}
+	else {
+		frame->setFrameStyle( TQFrame::Panel | TQFrame::Raised );
+	}
+	frame->setLineWidth( 2 );
 
-    KSMModalDialogHeader* theader = new KSMModalDialogHeader( frame );
+	KSMModalDialogHeader* theader = new KSMModalDialogHeader( frame );
 
-    KUser user;
+	KUser user;
 
-    mLogonStatus = new TQLabel( frame );
-    TQString userString = user.fullName();
-    if (userString == "") {
-        userString = user.loginName();
-    }
-    if (userString != "") {
-        mLogonStatus->setText(i18n("'%1' is currently logged on").arg( user.fullName() ));
-    }
-    else {
-        mLogonStatus->setText(i18n("You are currently logged on"));	// We should never get here, and this message is somewhat obtuse, but it is better than displaying two qotation marks with no text between them...
-    }
+	mLogonStatus = new TQLabel( frame );
+	TQString userString = user.fullName();
+	if (userString == "") {
+		userString = user.loginName();
+	}
+	if (userString != "") {
+		mLogonStatus->setText(i18n("'%1' is currently logged on").arg( user.fullName() ));
+	}
+	else {
+		mLogonStatus->setText(i18n("You are currently logged on"));	// We should never get here, and this message is somewhat obtuse, but it is better than displaying two qotation marks with no text between them...
+	}
 
-    KSeparator *sep = new KSeparator( KSeparator::HLine, frame );
+	KSeparator *sep = new KSeparator( KSeparator::HLine, frame );
 
-    mLockButton = new TQPushButton( frame );
-    mLockButton->setText(i18n("Lock Session"));
+	mLockButton = new TQPushButton( frame );
+	mLockButton->setText(i18n("Lock Session"));
 
-    mTaskButton = new TQPushButton( frame );
-    mTaskButton->setText(i18n("Task Manager"));
+	mTaskButton = new TQPushButton( frame );
+	mTaskButton->setText(i18n("Task Manager"));
 
-    mShutdownButton = new TQPushButton( frame );
-    mShutdownButton->setText(i18n("Logoff Menu"));
+	mShutdownButton = new TQPushButton( frame );
+	mShutdownButton->setText(i18n("Logoff Menu"));
 
-    mCancelButton = new TQPushButton( frame );
-    mCancelButton->setText(i18n("Cancel"));
+	mCancelButton = new TQPushButton( frame );
+	mCancelButton->setText(i18n("Cancel"));
 
-    mSwitchButton = new TQPushButton( frame );
-    mSwitchButton->setText(i18n("Switch User"));
-    mSwitchButton->setEnabled(false); // FIXME
+	mSwitchButton = new TQPushButton( frame );
+	mSwitchButton->setText(i18n("Switch User"));
+	mSwitchButton->setEnabled(false); // FIXME
 
-    TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
-    unlockDialogLayout->addWidget( frame );
+	TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
+	unlockDialogLayout->addWidget( frame );
 
-    TQHBoxLayout *layStatus = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
-    layStatus->addWidget( mLogonStatus );
+	TQHBoxLayout *layStatus = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
+	layStatus->addWidget( mLogonStatus );
 
-    TQGridLayout *layPBGrid = new TQGridLayout( 0, 0, KDialog::spacingHint());
-    layPBGrid->addWidget( mLockButton, 0, 0 );
-    layPBGrid->addWidget( mTaskButton, 0, 1 );
-    layPBGrid->addWidget( mShutdownButton, 0, 2 );
-    layPBGrid->addWidget( mCancelButton, 0, 3 );
-    layPBGrid->addWidget( mSwitchButton, 1, 0 );
+	TQGridLayout *layPBGrid = new TQGridLayout( 0, 0, KDialog::spacingHint());
+	layPBGrid->addWidget( mLockButton, 0, 0 );
+	layPBGrid->addWidget( mTaskButton, 0, 1 );
+	layPBGrid->addWidget( mShutdownButton, 0, 2 );
+	layPBGrid->addWidget( mCancelButton, 0, 3 );
+	layPBGrid->addWidget( mSwitchButton, 1, 0 );
 
-    frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
-    frameLayout->addMultiCellWidget( theader, 0, 0, 0, 1, AlignTop | AlignLeft );
-    frameLayout->addMultiCellLayout( layStatus, 1, 1, 0, 1, AlignLeft | AlignVCenter);
-    frameLayout->addMultiCellWidget( sep, 2, 2, 0, 1 );
-    frameLayout->addMultiCellLayout( layPBGrid, 3, 3, 0, 1, AlignLeft | AlignVCenter);
+	frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
+	frameLayout->addMultiCellWidget( theader, 0, 0, 0, 1, AlignTop | AlignLeft );
+	frameLayout->addMultiCellLayout( layStatus, 1, 1, 0, 1, AlignLeft | AlignVCenter);
+	frameLayout->addMultiCellWidget( sep, 2, 2, 0, 1 );
+	frameLayout->addMultiCellLayout( layPBGrid, 3, 3, 0, 1, AlignLeft | AlignVCenter);
 
-    connect(mCancelButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnCancel()));
-    connect(mLockButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnLock()));
-    connect(mTaskButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnTask()));
-    connect(mShutdownButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnShutdown()));
-    connect(mSwitchButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnSwitchUser()));
+	connect(mCancelButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnCancel()));
+	connect(mLockButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnLock()));
+	connect(mTaskButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnTask()));
+	connect(mShutdownButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnShutdown()));
+	connect(mSwitchButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotBtnSwitchUser()));
 
-    TQSize dlgSz = sizeHint();
-    int btnSize = dlgSz.width();
-    btnSize = btnSize / 4;
-    btnSize = btnSize - (KDialog::spacingHint() / 2);
-    mLockButton->setFixedWidth(btnSize);
-    mTaskButton->setFixedWidth(btnSize);
-    mCancelButton->setFixedWidth(btnSize);
-    mShutdownButton->setFixedWidth(btnSize);
-    mSwitchButton->setFixedWidth(btnSize);
+	TQSize dlgSz = sizeHint();
+	int btnSize = dlgSz.width();
+	btnSize = btnSize / 4;
+	btnSize = btnSize - (KDialog::spacingHint() / 2);
+	mLockButton->setFixedWidth(btnSize);
+	mTaskButton->setFixedWidth(btnSize);
+	mCancelButton->setFixedWidth(btnSize);
+	mShutdownButton->setFixedWidth(btnSize);
+	mSwitchButton->setFixedWidth(btnSize);
 
-    installEventFilter(this);
-    setFixedSize( sizeHint() );
+	installEventFilter(this);
+	setFixedSize( sizeHint() );
 }
 
 SecureDlg::~SecureDlg()
 {
-    hide();
+	hide();
 }
 
 void SecureDlg::slotBtnCancel()
 {
-    if (retInt) *retInt = 0;
-    hide();
+	if (retInt) *retInt = 0;
+	hide();
 }
 
 void SecureDlg::slotBtnLock()
 {
-    if (retInt) *retInt = 1;
-    hide();
+	if (retInt) *retInt = 1;
+	hide();
 }
 
 void SecureDlg::slotBtnTask()
 {
-    if (retInt) *retInt = 2;
-    hide();
+	if (retInt) *retInt = 2;
+	hide();
 }
 
 void SecureDlg::slotBtnShutdown()
 {
-    if (retInt) *retInt = 3;
-    hide();
+	if (retInt) *retInt = 3;
+	hide();
 }
 
 void SecureDlg::slotBtnSwitchUser()
 {
-    if (retInt) *retInt = 4;
-    hide();
+	if (retInt) *retInt = 4;
+	hide();
 }
 
 void SecureDlg::setRetInt(int *i)
 {
-    retInt = i;
+	retInt = i;
 }
 
 void SecureDlg::closeDialogForced()
 {
-    if (retInt) *retInt = 0;
-    TQDialog::reject();
+	if (retInt) *retInt = 0;
+	TQDialog::reject();
 }
 
 void SecureDlg::reject()
 {
-    closeDialogForced();
+	closeDialogForced();
 }
 
 void SecureDlg::show()
 {
-    TQDialog::show();
-    TQApplication::flushX();
+	TQDialog::show();
+	TQApplication::flushX();
 }
 
 #include "securedlg.moc"

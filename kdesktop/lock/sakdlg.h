@@ -1,8 +1,8 @@
 //===========================================================================
 //
-// This file is part of the KDE project
+// This file is part of the TDE project
 //
-// Copyright (c) 2010 Timothy Pearson <kb9vqf@pearsoncomputing.net>
+// Copyright (c) 2010 - 2015 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 //
 
 #ifndef __SAKDLG_H__
@@ -26,32 +26,32 @@ class TQListView;
 //
 class SAKDlg : public TQDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
-public:
-    SAKDlg(LockProcess *parent);
-    ~SAKDlg();
-    virtual void show();
+	public:
+		SAKDlg(LockProcess *parent);
+		~SAKDlg();
+		virtual void show();
 
-    void updateLabel( TQString &txt );
-    void closeDialogForced();
+		void updateLabel( TQString &txt );
+		void closeDialogForced();
 
-private slots:
-    void slotSAKProcessExited();
+	private slots:
+		void slotSAKProcessExited();
 
-protected slots:
-    virtual void reject();
+	protected slots:
+		virtual void reject();
 
-private:
-    TQFrame      *frame;
-    TQGridLayout *frameLayout;
-    TQLabel      *mStatusLabel;
-    int         mCapsLocked;
-    bool        mUnlockingFailed;
-    TQStringList layoutsList;
-    TQStringList::iterator currLayout;
-    int         sPid, sFd;
-    TDEProcess*   mSAKProcess;
+	private:
+		TQFrame      *frame;
+		TQGridLayout *frameLayout;
+		TQLabel      *mStatusLabel;
+		int         mCapsLocked;
+		bool        mUnlockingFailed;
+		TQStringList layoutsList;
+		TQStringList::iterator currLayout;
+		int         sPid, sFd;
+		TDEProcess*   mSAKProcess;
 };
 
 #endif

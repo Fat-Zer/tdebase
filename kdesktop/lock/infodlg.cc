@@ -1,8 +1,8 @@
 //===========================================================================
 //
-// This file is part of the KDE project
+// This file is part of the TDE project
 //
-// Copyright (c) 2010 Timothy Pearson <kb9vqf@pearsoncomputing.net>
+// Copyright (c) 2010 - 2015 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 
 #include <config.h>
 
@@ -62,86 +62,88 @@ extern bool trinity_desktop_lock_use_system_modal_dialogs;
 // Simple dialog for displaying an unlock status or recurring error message
 //
 InfoDlg::InfoDlg(LockProcess *parent)
-    : TQDialog(parent, "information dialog", true, (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)WStyle_StaysOnTop):((WFlags)WX11BypassWM))),
-      mUnlockingFailed(false)
+	: TQDialog(parent, "information dialog", true, (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)WStyle_StaysOnTop):((WFlags)WX11BypassWM))),
+	mUnlockingFailed(false)
 {
-    if (trinity_desktop_lock_use_system_modal_dialogs) {
-        // Signal that we do not want any window controls to be shown at all
-        Atom kde_wm_system_modal_notification;
-        kde_wm_system_modal_notification = XInternAtom(tqt_xdisplay(), "_TDE_WM_MODAL_SYS_NOTIFICATION", False);
-        XChangeProperty(tqt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
-    }
-    setCaption(i18n("Information"));
+	if (trinity_desktop_lock_use_system_modal_dialogs) {
+		// Signal that we do not want any window controls to be shown at all
+		Atom kde_wm_system_modal_notification;
+		kde_wm_system_modal_notification = XInternAtom(tqt_xdisplay(), "_TDE_WM_MODAL_SYS_NOTIFICATION", False);
+		XChangeProperty(tqt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+	}
+	setCaption(i18n("Information"));
 
-    frame = new TQFrame( this );
-    if (trinity_desktop_lock_use_system_modal_dialogs)
-        frame->setFrameStyle( TQFrame::NoFrame );
-    else
-        frame->setFrameStyle( TQFrame::Panel | TQFrame::Raised );
-    frame->setLineWidth( 2 );
+	frame = new TQFrame( this );
+	if (trinity_desktop_lock_use_system_modal_dialogs) {
+		frame->setFrameStyle( TQFrame::NoFrame );
+	}
+	else {
+		frame->setFrameStyle( TQFrame::Panel | TQFrame::Raised );
+	}
+	frame->setLineWidth( 2 );
 
-    mpixLabel = new TQLabel( frame, "pixlabel" );
-    mpixLabel->setPixmap(DesktopIcon("unlock"));
+	mpixLabel = new TQLabel( frame, "pixlabel" );
+	mpixLabel->setPixmap(DesktopIcon("unlock"));
 
-    KUser user;
+	KUser user;
 
-    mStatusLabel = new TQLabel( "<b> </b>", frame );
-    mStatusLabel->setAlignment( TQLabel::AlignCenter );
+	mStatusLabel = new TQLabel( "<b> </b>", frame );
+	mStatusLabel->setAlignment( TQLabel::AlignCenter );
 
-    TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
-    unlockDialogLayout->addWidget( frame );
+	TQVBoxLayout *unlockDialogLayout = new TQVBoxLayout( this );
+	unlockDialogLayout->addWidget( frame );
 
-    TQHBoxLayout *layStatus = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
-    layStatus->addWidget( mStatusLabel );
+	TQHBoxLayout *layStatus = new TQHBoxLayout( 0, 0, KDialog::spacingHint());
+	layStatus->addWidget( mStatusLabel );
 
-    frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
-    frameLayout->addMultiCellWidget( mpixLabel, 0, 2, 0, 0, Qt::AlignTop );
-    frameLayout->addLayout( layStatus, 1, 1 );
+	frameLayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
+	frameLayout->addMultiCellWidget( mpixLabel, 0, 2, 0, 0, Qt::AlignTop );
+	frameLayout->addLayout( layStatus, 1, 1 );
 
-    installEventFilter(this);
-    setFixedSize( sizeHint() );
-}
+	installEventFilter(this);
+	setFixedSize( sizeHint() );
+	}
 
 InfoDlg::~InfoDlg()
 {
-    hide();
+	hide();
 }
 
 void InfoDlg::updateLabel(TQString &txt)
 {
-    mStatusLabel->setPaletteForegroundColor(Qt::black);
-    mStatusLabel->setText("<b>" + txt + "</b>");
+	mStatusLabel->setPaletteForegroundColor(Qt::black);
+	mStatusLabel->setText("<b>" + txt + "</b>");
 }
 
 void InfoDlg::setUnlockIcon()
 {
-    mpixLabel->setPixmap(DesktopIcon("unlock"));
+	mpixLabel->setPixmap(DesktopIcon("unlock"));
 }
 
 void InfoDlg::setKDEIcon()
 {
-    mpixLabel->setPixmap(DesktopIcon("about_kde"));
+	mpixLabel->setPixmap(DesktopIcon("about_kde"));
 }
 
 void InfoDlg::setInfoIcon()
 {
-    mpixLabel->setPixmap(DesktopIcon("messagebox_info"));
+	mpixLabel->setPixmap(DesktopIcon("messagebox_info"));
 }
 
 void InfoDlg::setWarningIcon()
 {
-    mpixLabel->setPixmap(DesktopIcon("messagebox_warning"));
+	mpixLabel->setPixmap(DesktopIcon("messagebox_warning"));
 }
 
 void InfoDlg::setErrorIcon()
 {
-    mpixLabel->setPixmap(DesktopIcon("messagebox_critical"));
+	mpixLabel->setPixmap(DesktopIcon("messagebox_critical"));
 }
 
 void InfoDlg::show()
 {
-    TQDialog::show();
-    TQApplication::flushX();
+	TQDialog::show();
+	TQApplication::flushX();
 }
 
 #include "infodlg.moc"

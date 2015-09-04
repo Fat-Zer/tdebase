@@ -1,8 +1,8 @@
 //===========================================================================
 //
-// This file is part of the KDE project
+// This file is part of the TDE project
 //
-// Copyright (c) 2010 Timothy Pearson <kb9vqf@pearsoncomputing.net>
+// Copyright (c) 2010 - 2015 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 //
 
 #ifndef __QUERYDLG_H__
@@ -28,33 +28,33 @@ class TQListView;
 //
 class QueryDlg : public TQDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
-public:
-    QueryDlg(LockProcess *parent);
-    ~QueryDlg();
-    virtual void show();
+	public:
+		QueryDlg(LockProcess *parent);
+		~QueryDlg();
+		virtual void show();
 
-    void updateLabel( TQString &txt );
-    void setUnlockIcon();
-    void setWarningIcon();
-    const char * getEntry();
+		void updateLabel( TQString &txt );
+		void setUnlockIcon();
+		void setWarningIcon();
+		const char * getEntry();
 
-private slots:
-    void slotOK();
+	private slots:
+		void slotOK();
 
-private:
-    TQFrame      *frame;
-    TQGridLayout *frameLayout;
-    TQLabel      *mStatusLabel;
-    TQLabel      *mpixLabel;
-    int         mCapsLocked;
-    bool        mUnlockingFailed;
-    TQStringList layoutsList;
-    TQStringList::iterator currLayout;
-    int         sPid, sFd;
-    KPushButton *ok;
-    KPasswordEdit *pin_box;
+	private:
+		TQFrame      *frame;
+		TQGridLayout *frameLayout;
+		TQLabel      *mStatusLabel;
+		TQLabel      *mpixLabel;
+		int         mCapsLocked;
+		bool        mUnlockingFailed;
+		TQStringList layoutsList;
+		TQStringList::iterator currLayout;
+		int         sPid, sFd;
+		KPushButton *ok;
+		KPasswordEdit *pin_box;
 };
 
 #endif

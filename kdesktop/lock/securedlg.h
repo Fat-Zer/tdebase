@@ -1,8 +1,8 @@
 //===========================================================================
 //
-// This file is part of the KDE project
+// This file is part of the TDE project
 //
-// Copyright (c) 2010 Timothy Pearson <kb9vqf@pearsoncomputing.net>
+// Copyright (c) 2010 - 2015 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 //
 
 #ifndef __SECUREDLG_H__
@@ -27,41 +27,41 @@ class TQListView;
 //
 class SecureDlg : public TQDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
-public:
-    SecureDlg(LockProcess *parent);
-    ~SecureDlg();
-    virtual void show();
+	public:
+		SecureDlg(LockProcess *parent);
+		~SecureDlg();
+		virtual void show();
 
-    void closeDialogForced();
-    void setRetInt(int *);
+		void closeDialogForced();
+		void setRetInt(int *);
 
-private slots:
-    void slotBtnCancel();
-    void slotBtnLock();
-    void slotBtnTask();
-    void slotBtnShutdown();
-    void slotBtnSwitchUser();
+	private slots:
+		void slotBtnCancel();
+		void slotBtnLock();
+		void slotBtnTask();
+		void slotBtnShutdown();
+		void slotBtnSwitchUser();
 
-protected slots:
-    virtual void reject();
+	protected slots:
+		virtual void reject();
 
-private:
-    TQFrame      *frame;
-    TQGridLayout *frameLayout;
-    TQLabel      *mLogonStatus;
-    TQButton     *mCancelButton;
-    TQButton     *mLockButton;
-    TQButton     *mTaskButton;
-    TQButton     *mShutdownButton;
-    TQButton     *mSwitchButton;
-    int         mCapsLocked;
-    bool        mUnlockingFailed;
-    TQStringList layoutsList;
-    TQStringList::iterator currLayout;
-    int         sPid, sFd;
-    int*        retInt;
+	private:
+		TQFrame      *frame;
+		TQGridLayout *frameLayout;
+		TQLabel      *mLogonStatus;
+		TQButton     *mCancelButton;
+		TQButton     *mLockButton;
+		TQButton     *mTaskButton;
+		TQButton     *mShutdownButton;
+		TQButton     *mSwitchButton;
+		int         mCapsLocked;
+		bool        mUnlockingFailed;
+		TQStringList layoutsList;
+		TQStringList::iterator currLayout;
+		int         sPid, sFd;
+		int*        retInt;
 };
 
 #endif
