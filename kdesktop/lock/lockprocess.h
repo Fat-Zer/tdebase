@@ -1,10 +1,10 @@
 //===========================================================================
 //
-// This file is part of the KDE project
+// This file is part of the TDE project
 //
 // Copyright (c) 1999 Martin R. Jones <mjones@kde.org>
 // Copyright (c) 2003 Oswald Buddenhagen <ossi@kde.org>
-// Copyright (c) 2010-2013 Timothy Pearson <kb9vqf@pearsoncomputing.net>
+// Copyright (c) 2010 - 2015 Timothy Pearson <kb9vqf@pearsoncomputing.net>
 //
 
 #ifndef __LOCKENG_H__
@@ -32,8 +32,8 @@ class KSMModalDialog;
 class LockProcess;
 
 struct GreeterPluginHandle {
-    KLibrary *library;
-    kgreeterplugin_info *info;
+	KLibrary *library;
+	kgreeterplugin_info *info;
 };
 
 #define FIFO_DIR "/tmp/tdesocket-global"
@@ -57,7 +57,7 @@ class ControlPipeHandlerObject : public TQObject
 	public slots:
 		void run();
 		void terminateThread();
-	
+
 	signals:
 		void processCommand(TQString);
 
@@ -75,195 +75,194 @@ class ControlPipeHandlerObject : public TQObject
 // Screen saver handling process.  Handles screensaver window,
 // starting screensaver hacks, and password entry.
 //
-class LockProcess
-    : public TQWidget
+class LockProcess : public TQWidget
 {
-    Q_OBJECT
-public:
-    LockProcess();
-    ~LockProcess();
+	Q_OBJECT
 
-    void init(bool child_saver = false, bool useBlankOnly = false);
+	public:
+		LockProcess();
+		~LockProcess();
 
-    bool lock();
+		void init(bool child_saver = false, bool useBlankOnly = false);
 
-    bool defaultSave();
+		bool lock();
 
-    bool dontLock();
+		bool defaultSave();
 
-    bool runSecureDialog();
-    bool inSecureDialog();
+		bool dontLock();
 
-    void setChildren(TQValueList<int> children) { child_sockets = children; }
-    void setParent(int fd) { mParent = fd; }
+		bool runSecureDialog();
+		bool inSecureDialog();
 
-    void msgBox( TQMessageBox::Icon type, const TQString &txt );
-    int execDialog( TQDialog* dlg );
+		void setChildren(TQValueList<int> children) { child_sockets = children; }
+		void setParent(int fd) { mParent = fd; }
 
-signals:
-    void terminateHelperThread();
+		void msgBox( TQMessageBox::Icon type, const TQString &txt );
+		int execDialog( TQDialog* dlg );
 
-public slots:
-    void quitSaver();
-    void preparePopup();
-    void cleanupPopup();
-    void desktopResized();
-    void doDesktopResizeFinish();
-    void doFunctionKeyBroadcast();
-    void slotPaintBackground(const TQPixmap &pm);
-    void slotForcePaintBackground();
+	signals:
+		void terminateHelperThread();
 
-protected:
-    virtual bool x11Event(XEvent *);
-    virtual void timerEvent(TQTimerEvent *);
-    virtual void resizeEvent(TQResizeEvent *);
+	public slots:
+		void quitSaver();
+		void preparePopup();
+		void cleanupPopup();
+		void desktopResized();
+		void doDesktopResizeFinish();
+		void doFunctionKeyBroadcast();
+		void slotPaintBackground(const TQPixmap &pm);
+		void slotForcePaintBackground();
 
-private slots:
-    void hackExited(TDEProcess *);
-    void signalPipeSignal();
-    bool startLock();
-    void suspend();
-    void checkDPMSActive();
-    void slotDeadTimePassed();
-    void windowAdded( WId );
-    void resumeUnforced();
-    void displayLockDialogIfNeeded();
-    void closeDialogAndStartHack();
-    bool closeCurrentWindow();
-    void repaintRootWindowIfNeeded();
-    void startSecureDialog();
-    void slotMouseActivity(XEvent *event);
-    void processInputPipeCommand(TQString command);
+	protected:
+		virtual bool x11Event(XEvent *);
+		virtual void timerEvent(TQTimerEvent *);
+		virtual void resizeEvent(TQResizeEvent *);
 
-private:
-    void configure();
-    void readSaver();
-    void createSaverWindow();
-    void hideSaverWindow();
-    void saveVRoot();
-    void setVRoot(Window win, Window rw);
-    void removeVRoot(Window win);
-    void setTransparentBackgroundARGB();
-    bool grabKeyboard();
-    bool grabMouse();
-    bool grabInput();
-    void ungrabInput();
-    void cantLock(const TQString &reason);
-    bool startSaver(bool notify_ready = false);
-    void stopSaver();
-    bool startHack();
-    void stopHack();
-    void setupSignals();
-    bool checkPass();
-    void stayOnTop();
-    void lockXF86();
-    void unlockXF86();
-    void showVkbd();
-    void hideVkbd();
-    void saverReady();
-    void saverReadyIfNeeded();
-    bool forwardVkbdEvent( XEvent* event );
-    void sendVkbdFocusInOut( WId window, Time t );
-    void windowAdded( WId window, bool managed );
-    void resume( bool force );
-    static TQVariant getConf(void *ctx, const char *key, const TQVariant &dflt);
-    void generateBackingImages();
-    void fullyOnline();
+	private slots:
+		void hackExited(TDEProcess *);
+		void signalPipeSignal();
+		bool startLock();
+		void suspend();
+		void checkDPMSActive();
+		void slotDeadTimePassed();
+		void windowAdded( WId );
+		void resumeUnforced();
+		void displayLockDialogIfNeeded();
+		void closeDialogAndStartHack();
+		bool closeCurrentWindow();
+		void repaintRootWindowIfNeeded();
+		void startSecureDialog();
+		void slotMouseActivity(XEvent *event);
+		void processInputPipeCommand(TQString command);
 
-    bool        mLocked;
-    int         mLockGrace;
-    int         mPriority;
-    bool        mBusy;
-    TDEProcess    mHackProc;
-    int         mRootWidth;
-    int         mRootHeight;
-    TQString     mSaverExec;
-    TQString     mSaver;
-    bool        mOpenGLVisual;
-    bool        child_saver;
-    TQValueList<int> child_sockets;
-    int         mParent;
-    bool        mUseBlankOnly;
-    bool        mShowLockDateTime;
-    bool        mSuspended;
-    TQTimer      mSuspendTimer;
-    bool        mVisibility;
-    TQTimer      mCheckDPMS;
-    TQValueStack< TQWidget* > mDialogs;
-    bool        mRestoreXF86Lock;
-    bool        mForbidden;
-    TQStringList mPlugins, mPluginOptions;
-    TQString     mMethod;
-    GreeterPluginHandle greetPlugin;
-    TQPixmap     mSavedScreen;
-    int         mAutoLogoutTimerId;
-    int         mAutoLogoutTimeout;
-    bool        mAutoLogout;
+	private:
+		void configure();
+		void readSaver();
+		void createSaverWindow();
+		void hideSaverWindow();
+		void saveVRoot();
+		void setVRoot(Window win, Window rw);
+		void removeVRoot(Window win);
+		void setTransparentBackgroundARGB();
+		bool grabKeyboard();
+		bool grabMouse();
+		bool grabInput();
+		void ungrabInput();
+		void cantLock(const TQString &reason);
+		bool startSaver(bool notify_ready = false);
+		void stopSaver();
+		bool startHack();
+		void stopHack();
+		void setupSignals();
+		bool checkPass();
+		void stayOnTop();
+		void lockXF86();
+		void unlockXF86();
+		void showVkbd();
+		void hideVkbd();
+		void saverReady();
+		void saverReadyIfNeeded();
+		bool forwardVkbdEvent( XEvent* event );
+		void sendVkbdFocusInOut( WId window, Time t );
+		void windowAdded( WId window, bool managed );
+		void resume( bool force );
+		static TQVariant getConf(void *ctx, const char *key, const TQVariant &dflt);
+		void generateBackingImages();
+		void fullyOnline();
 
-    TQTimer      *resizeTimer;
-    unsigned int  mkeyCode;
+		bool        mLocked;
+		int         mLockGrace;
+		int         mPriority;
+		bool        mBusy;
+		TDEProcess    mHackProc;
+		int         mRootWidth;
+		int         mRootHeight;
+		TQString     mSaverExec;
+		TQString     mSaver;
+		bool        mOpenGLVisual;
+		bool        child_saver;
+		TQValueList<int> child_sockets;
+		int         mParent;
+		bool        mUseBlankOnly;
+		bool        mShowLockDateTime;
+		bool        mSuspended;
+		TQTimer      mSuspendTimer;
+		bool        mVisibility;
+		TQTimer      mCheckDPMS;
+		TQValueStack< TQWidget* > mDialogs;
+		bool        mRestoreXF86Lock;
+		bool        mForbidden;
+		TQStringList mPlugins, mPluginOptions;
+		TQString     mMethod;
+		GreeterPluginHandle greetPlugin;
+		TQPixmap     mSavedScreen;
+		int         mAutoLogoutTimerId;
+		int         mAutoLogoutTimeout;
+		bool        mAutoLogout;
 
-    TQTimer      *hackResumeTimer;
+		TQTimer      *resizeTimer;
+		unsigned int  mkeyCode;
 
-    TDEProcess*   mVkbdProcess;
-    KWinModule* mKWinModule;
-    struct VkbdWindow
-        {
-        WId id;
-        TQRect rect;
-        };
-    TQValueList< VkbdWindow > mVkbdWindows;
-    WId         mVkbdLastEventWindow;
+		TQTimer      *hackResumeTimer;
 
-    bool        mPipeOpen;
-    int         mPipe_fd;
-    bool        mPipeOpen_out;
-    int         mPipe_fd_out;
+		TDEProcess*   mVkbdProcess;
+		KWinModule* mKWinModule;
+		struct VkbdWindow {
+			WId id;
+			TQRect rect;
+		};
+		TQValueList< VkbdWindow > mVkbdWindows;
+		WId         mVkbdLastEventWindow;
 
-    bool        mInfoMessageDisplayed;
-    bool        mDialogControlLock;
-    bool        mForceReject;
-    TQDialog     *currentDialog;
+		bool        mPipeOpen;
+		int         mPipe_fd;
+		bool        mPipeOpen_out;
+		int         mPipe_fd_out;
 
-    TQTimer*    mEnsureScreenHiddenTimer;
-    TQTimer*    mForceContinualLockDisplayTimer;
-    TQTimer*    mEnsureVRootWindowSecurityTimer;
-    TQTimer*    mHackDelayStartupTimer;
+		bool        mInfoMessageDisplayed;
+		bool        mDialogControlLock;
+		bool        mForceReject;
+		TQDialog     *currentDialog;
 
-    int         mHackDelayStartupTimeout;
-    bool        mHackStartupEnabled;
-    bool        mOverrideHackStartupEnabled;
-    bool        mResizingDesktopLock;
-    bool        mFullyOnlineSent;
+		TQTimer*    mEnsureScreenHiddenTimer;
+		TQTimer*    mForceContinualLockDisplayTimer;
+		TQTimer*    mEnsureVRootWindowSecurityTimer;
+		TQTimer*    mHackDelayStartupTimer;
 
-    bool        mClosingWindows;
-    bool        mInSecureDialog;
-    bool        mHackActive;
+		int         mHackDelayStartupTimeout;
+		bool        mHackStartupEnabled;
+		bool        mOverrideHackStartupEnabled;
+		bool        mResizingDesktopLock;
+		bool        mFullyOnlineSent;
 
-    TQPixmap    backingPixmap;
-    KRootPixmap  *m_rootPixmap;
-    int         mBackingStartupDelayTimer;
-    TQPixmap    mArgbTransparentBackgroundPixmap;
+		bool        mClosingWindows;
+		bool        mInSecureDialog;
+		bool        mHackActive;
 
-    KSMModalDialog* m_startupStatusDialog;
+		TQPixmap    backingPixmap;
+		KRootPixmap  *m_rootPixmap;
+		int         mBackingStartupDelayTimer;
+		TQPixmap    mArgbTransparentBackgroundPixmap;
 
-    TQDateTime mlockDateTime;
+		KSMModalDialog* m_startupStatusDialog;
 
-    bool m_mouseDown;
-    int m_mousePrevX;
-    int m_mousePrevY;
-    int m_dialogPrevX;
-    int m_dialogPrevY;
+		TQDateTime mlockDateTime;
 
-    bool m_notifyReadyRequested;
+		bool m_mouseDown;
+		int m_mousePrevX;
+		int m_mousePrevY;
+		int m_dialogPrevX;
+		int m_dialogPrevY;
 
-    TQWidget* m_maskWidget;
-    Window m_saverRootWindow;
+		bool m_notifyReadyRequested;
 
-    ControlPipeHandlerObject* mControlPipeHandler;
-    TQEventLoopThread*        mControlPipeHandlerThread;
+		TQWidget* m_maskWidget;
+		Window m_saverRootWindow;
 
-    friend class ControlPipeHandlerObject;
+		ControlPipeHandlerObject* mControlPipeHandler;
+		TQEventLoopThread*        mControlPipeHandlerThread;
+
+	friend class ControlPipeHandlerObject;
 };
 
 #endif
