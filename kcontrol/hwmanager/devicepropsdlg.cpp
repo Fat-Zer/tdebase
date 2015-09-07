@@ -32,13 +32,17 @@
 #undef Unsorted // Required for --enable-final (tqdir.h)
 #include <tqfiledialog.h>
 
+#include <kpassdlg.h>
 #include <kbuttonbox.h>
 #include <kcombobox.h>
 #include <tdelocale.h>
 #include <tdeapplication.h>
 #include <klineedit.h>
+#include <kpushbutton.h>
 #include <kstdguiitem.h>
 #include <tdemessagebox.h>
+
+#include "cryptpassworddlg.h"
 
 #include "devicepropsdlg.h"
 
@@ -255,6 +259,7 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 		// Remove all non-applicable tabs
 		if (m_device->type() != TDEGenericDeviceType::Disk) {
 			base->tabBarWidget->removePage(base->tabDisk);
+			base->tabBarWidget->removePage(base->tabDiskCrypt);
 		}
 		if (m_device->type() != TDEGenericDeviceType::CPU) {
 			base->tabBarWidget->removePage(base->tabCPU);
@@ -291,8 +296,21 @@ DevicePropertiesDialog::DevicePropertiesDialog(TDEGenericDevice* device, TQWidge
 			connect(base->comboCPUGovernor, TQT_SIGNAL(activated(const TQString &)), this, TQT_SLOT(setCPUGovernor(const TQString &)));
 		}
 		if (m_device->type() == TDEGenericDeviceType::Disk) {
+			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(m_device);
 			connect(base->buttonDiskMount, TQT_SIGNAL(clicked()), this, TQT_SLOT(mountDisk()));
 			connect(base->buttonDiskUnmount, TQT_SIGNAL(clicked()), this, TQT_SLOT(unmountDisk()));
+			if (sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)) {
+				connect(base->cryptLUKSAddKey, TQT_SIGNAL(clicked()), this, TQT_SLOT(cryptLUKSAddKey()));
+				connect(base->cryptLUKSDelKey, TQT_SIGNAL(clicked()), this, TQT_SLOT(cryptLUKSDelKey()));
+				connect(base->cryptLUKSKeySlotList, TQT_SIGNAL(selectionChanged()), this, TQT_SLOT(processLockouts()));
+				base->cryptLUKSKeySlotList->setAllColumnsShowFocus(true);
+				base->cryptLUKSKeySlotList->setFullWidth(true);
+				cryptLUKSPopulateList();
+				processLockouts();
+			}
+			else {
+				base->tabBarWidget->removePage(base->tabDiskCrypt);
+			}
 		}
 
 		if ((m_device->type() == TDEGenericDeviceType::OtherSensor) || (m_device->type() == TDEGenericDeviceType::ThermalSensor)) {
@@ -858,6 +876,103 @@ void DevicePropertiesDialog::unmountDisk() {
 	if (qerror != "") KMessageBox::error(this, qerror, i18n("Unmount Failed"));
 
 	populateDeviceInformation();
+}
+
+void DevicePropertiesDialog::cryptLUKSAddKey() {
+	if (m_device->type() == TDEGenericDeviceType::Disk) {
+		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(m_device);
+
+		TQListViewItem* lvi = base->cryptLUKSKeySlotList->selectedItem();
+		if (lvi) {
+			TQByteArray new_password;
+			CryptPasswordDialog* passDlg = new CryptPasswordDialog(this, i18n("Enter the new LUKS password for key slot %1").arg(lvi->text(0)));
+			if (passDlg->exec() == TQDialog::Accepted) {
+				new_password = passDlg->password();
+				delete passDlg;
+				if (!sdevice->cryptOperationsUnlockPasswordSet()) {
+					TQCString password;
+					passDlg = new CryptPasswordDialog(this, i18n("Enter the LUKS device unlock password"));
+					if (passDlg->exec() == TQDialog::Accepted) {
+						sdevice->cryptSetOperationsUnlockPassword(passDlg->password());
+					}
+					delete passDlg;
+				}
+				if (sdevice->cryptOperationsUnlockPasswordSet()) {
+					if ((lvi->text(1) == sdevice->cryptKeySlotFriendlyName(TDELUKSKeySlotStatus::Inactive)) || (KMessageBox::warningYesNo(this, i18n("<qt><b>You are about to overwrite the key in key slot %1</b><br>This action cannot be undone<p>Are you sure you want to proceed?</qt>").arg(lvi->text(0)), i18n("Confirmation Required")) == KMessageBox::Yes)) {
+						if (sdevice->cryptAddKey(lvi->text(0).toUInt(), new_password) != TDELUKSResult::Success) {
+							sdevice->cryptClearOperationsUnlockPassword();
+							KMessageBox::error(this, i18n("<qt><b>Key write failed</b><br>Please check the LUKS password and try again</qt>"), i18n("Key write failure"));
+						}
+					}
+				}
+			}
+			else {
+				delete passDlg;
+			}
+		}
+	}
+
+	cryptLUKSPopulateList();
+}
+
+void DevicePropertiesDialog::cryptLUKSDelKey() {
+	if (m_device->type() == TDEGenericDeviceType::Disk) {
+		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(m_device);
+
+		TQListViewItem* lvi = base->cryptLUKSKeySlotList->selectedItem();
+		if (lvi) {
+			if (KMessageBox::warningYesNo(this, i18n("<qt><b>You are about to purge the key in key slot %1</b><br>This action cannot be undone<p>Are you sure you want to proceed?</qt>").arg(lvi->text(0)), i18n("Confirmation Required")) == KMessageBox::Yes) {
+				if (sdevice->cryptKeySlotStatus()[lvi->text(0).toUInt()] & TDELUKSKeySlotStatus::Last) {
+					if (KMessageBox::warningYesNo(this, i18n("<qt><b>You are about to purge the last active key from the device!</b><p>This action will render the contents of the encrypted device permanently inaccessable and cannot be undone<p>Are you sure you want to proceed?</qt>"), i18n("Confirmation Required")) != KMessageBox::Yes) {
+						cryptLUKSPopulateList();
+						return;
+					}
+				}
+				if (sdevice->cryptDelKey(lvi->text(0).toUInt()) != TDELUKSResult::Success) {
+					sdevice->cryptClearOperationsUnlockPassword();
+					KMessageBox::error(this, i18n("<qt><b>Key purge failed</b><br>The key in key slot %1 is still active</qt>").arg(lvi->text(0)), i18n("Key purge failure"));
+				}
+			}
+		}
+	}
+
+	cryptLUKSPopulateList();
+}
+
+void DevicePropertiesDialog::cryptLUKSPopulateList() {
+	unsigned int i;
+	TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(m_device);
+
+	base->cryptLUKSKeySlotList->clear();
+	unsigned int count = sdevice->cryptKeySlotCount();
+	TDELUKSKeySlotStatusList status = sdevice->cryptKeySlotStatus();
+	for (i = 0; i < count; i++) {
+		new TQListViewItem(base->cryptLUKSKeySlotList, TQString("%1").arg(i), sdevice->cryptKeySlotFriendlyName(status[i]));
+	}
+
+	processLockouts();
+}
+
+void DevicePropertiesDialog::processLockouts() {
+	if (m_device->type() == TDEGenericDeviceType::Disk) {
+		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(m_device);
+
+		TQListViewItem* lvi = base->cryptLUKSKeySlotList->selectedItem();
+		if (lvi) {
+			if (lvi->text(1) == sdevice->cryptKeySlotFriendlyName(TDELUKSKeySlotStatus::Active)) {
+				base->cryptLUKSAddKey->setEnabled(true);
+				base->cryptLUKSDelKey->setEnabled(true);
+			}
+			else {
+				base->cryptLUKSAddKey->setEnabled(true);
+				base->cryptLUKSDelKey->setEnabled(false);
+			}
+		}
+		else {
+			base->cryptLUKSAddKey->setEnabled(false);
+			base->cryptLUKSDelKey->setEnabled(false);
+		}
+	}
 }
 
 void DevicePropertiesDialog::virtual_hook( int id, void* data )

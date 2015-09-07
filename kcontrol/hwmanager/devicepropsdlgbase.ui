@@ -326,7 +326,7 @@
 					    <property name="name">
 						    <cstring>unnamed</cstring>
 					    </property>
-					    <widget class="TQPushButton" row="0" column="0" colspan="1">
+					    <widget class="KPushButton" row="0" column="0" colspan="1">
 						    <property name="name">
 							    <cstring>buttonDiskMount</cstring>
 						    </property>
@@ -334,7 +334,7 @@
 							    <string>Mount</string>
 						    </property>
 					    </widget>
-					    <widget class="TQPushButton" row="0" column="1" colspan="1">
+					    <widget class="KPushButton" row="0" column="1" colspan="1">
 						    <property name="name">
 							    <cstring>buttonDiskUnmount</cstring>
 						    </property>
@@ -342,6 +342,95 @@
 							    <string>Unmount</string>
 						    </property>
 					    </widget>
+				    </grid>
+			    </widget>
+			    <spacer row="8" column="0">
+				    <property name="name" stdset="0">
+					    <cstring>Spacer4</cstring>
+				    </property>
+				    <property name="orientation">
+					    <enum>Vertical</enum>
+				    </property>
+				    <property name="sizeType">
+					    <enum>Expanding</enum>
+				    </property>
+				    <property name="sizeHint">
+					    <size>
+						    <width>20</width>
+						    <height>20</height>
+					    </size>
+				    </property>
+			    </spacer>
+		    </grid>
+            </widget>
+	    <widget class="TQWidget">
+		    <property name="name">
+			    <cstring>tabDiskCrypt</cstring>
+		    </property>
+		    <attribute name="title">
+			    <string>LUKS</string>
+		    </attribute>
+		    <grid>
+			    <property name="name">
+				    <cstring>unnamed</cstring>
+			    </property>
+			    <widget class="TQGroupBox" row="0" column="0">
+				    <property name="name">
+					    <cstring>groupLUKSProps</cstring>
+				    </property>
+				    <property name="title">
+					    <string>LUKS Information</string>
+				    </property>
+				    <grid>
+					<property name="name">
+						<cstring>unnamed</cstring>
+					</property>
+					<widget class="TDEListView" row="0" column="0" colspan="2">
+						<column>
+							<property name="text">
+								<string>Slot Number</string>
+							</property>
+							<property name="clickable">
+								<bool>true</bool>
+							</property>
+							<property name="resizeable">
+								<bool>true</bool>
+							</property>
+						</column>
+						<column>
+							<property name="text">
+								<string>Status</string>
+							</property>
+							<property name="clickable">
+								<bool>true</bool>
+							</property>
+							<property name="resizeable">
+								<bool>true</bool>
+							</property>
+						</column>
+						<property name="name">
+							<cstring>cryptLUKSKeySlotList</cstring>
+						</property>
+						<property name="rootIsDecorated">
+							<bool>false</bool>
+						</property>
+					</widget>
+					<widget class="KPushButton" row="1" column="0" colspan="1">
+						<property name="name">
+							<cstring>cryptLUKSAddKey</cstring>
+						</property>
+						<property name="text">
+							<string>Install new password into keyslot</string>
+						</property>
+					</widget>
+					<widget class="KPushButton" row="1" column="1" colspan="1">
+						<property name="name">
+							<cstring>cryptLUKSDelKey</cstring>
+						</property>
+						<property name="text">
+							<string>Delete existing password from keyslot</string>
+						</property>
+					</widget>
 				    </grid>
 			    </widget>
 			    <spacer row="8" column="0">

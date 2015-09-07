@@ -191,9 +191,15 @@ private slots:
 	void mountDisk();
 	void unmountDisk();
 
+	void cryptLUKSAddKey();
+	void cryptLUKSDelKey();
+	void cryptLUKSPopulateList();
+
 	void cryptographicCardInserted();
 	void cryptographicCardRemoved();
 	void updateCryptographicCardStatusDisplay();
+
+	void processLockouts();
 
 private:
 	TDEGenericDevice* m_device;
