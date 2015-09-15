@@ -23,6 +23,8 @@
 
 #include "cryptpassworddlgbase.h"
 
+class KSSLCertificate;
+
 /**
  *
  * Dialog to enter LUKS passwords or password files
@@ -39,7 +41,7 @@ public:
 	* Create a dialog that allows a user to enter LUKS passwords or password files
 	* @param parent     Parent widget
 	*/
-	CryptPasswordDialog(TQWidget *parent, TQString passwordPrompt, TQString caption=TQString::null);
+	CryptPasswordDialog(TQWidget *parent, TQString passwordPrompt, TQString caption=TQString::null, bool allow_card=false, KSSLCertificate* card_cert=NULL, bool* use_card=NULL);
 	virtual ~CryptPasswordDialog();
 
 	TQByteArray password();
@@ -53,6 +55,7 @@ private slots:
 private:
 	CryptPasswordDialogBase* m_base;
 	TQByteArray m_password;
+	bool* m_useCard;
 
 	class CryptPasswordDialogPrivate;
 	CryptPasswordDialogPrivate* d;

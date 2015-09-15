@@ -41,6 +41,7 @@
 #include <kpushbutton.h>
 #include <kstdguiitem.h>
 #include <tdemessagebox.h>
+#include <ksslcertificate.h>
 
 #include "cryptpassworddlg.h"
 
@@ -800,12 +801,47 @@ void DevicePropertiesDialog::updateCryptographicCardStatusDisplay() {
 	int status = cdevice->cardPresent();
 	if ((status < 0) ||(status > 1)) {
 		base->labelCardStatus->setText(i18n("Unknown"));
+		base->labelCardCertificates->setText("");
+		base->groupCardCerts->hide();
 	}
 	else if (status == 0) {
 		base->labelCardStatus->setText(i18n("Empty"));
+		base->labelCardCertificates->setText("");
+		base->groupCardCerts->hide();
 	}
 	else if (status == 1) {
 		base->labelCardStatus->setText(i18n("Inserted") + TQString("<br>") + i18n("ATR: %1").arg(cdevice->cardATR()));
+
+		X509CertificatePtrList certList = cdevice->cardX509Certificates();
+
+		if (certList.count() > 0) {
+			// Assemble list of certificates on card
+			unsigned int certificate_number = 1;
+			TQString certInfo = "<qt>";
+			X509CertificatePtrList::iterator it;
+			for (it = certList.begin(); it != certList.end(); ++it) {
+				KSSLCertificate* tdeCert = KSSLCertificate::fromX509(*it);
+				KSSLCertificate::KSSLValidation validationStatus = tdeCert->validate();
+				certInfo += i18n("Certificate #%1").arg(certificate_number) + ":<br>";
+				certInfo += i18n("Subject") + ": " + tdeCert->getSubject() + "<br>";
+				certInfo += i18n("Issuer") + ": " + tdeCert->getIssuer() + "<br>";
+				certInfo += i18n("Status") + ": " + KSSLCertificate::verifyText(validationStatus) + "<br>";
+				certInfo += i18n("Valid From") + ": " + tdeCert->getNotBefore() + "<br>";
+				certInfo += i18n("Valid Until") + ": " + tdeCert->getNotAfter() + "<br>";
+				certInfo += i18n("Serial Number") + ": " + tdeCert->getSerialNumber() + "<br>";
+				certInfo += i18n("MD5 Digest") + ": " + tdeCert->getMD5DigestText() + "<br>";
+				certInfo += "<p>";
+				delete tdeCert;
+				certificate_number++;
+			}
+			certInfo += "</qt>";
+			base->labelCardCertificates->setText(certInfo);
+			base->groupCardCerts->show();
+		}
+		else {
+			base->labelCardCertificates->setText("");
+			base->groupCardCerts->hide();
+		}
 	}
 }
 
@@ -879,27 +915,169 @@ void DevicePropertiesDialog::unmountDisk() {
 }
 
 void DevicePropertiesDialog::cryptLUKSAddKey() {
+	int retcode;
+
 	if (m_device->type() == TDEGenericDeviceType::Disk) {
 		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(m_device);
 
 		TQListViewItem* lvi = base->cryptLUKSKeySlotList->selectedItem();
 		if (lvi) {
+			TDECryptographicCardDevice* cdevice = NULL;
+			unsigned int key_slot = lvi->text(0).toUInt();
+			bool allow_card = false;
+			bool use_card = false;
+			KSSLCertificate* card_cert = NULL;
+			X509* card_cert_x509;
+			TQString disk_uuid = sdevice->diskUUID();
+			TDEGenericDevice *hwdevice;
+			TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+			TDEGenericHardwareList cardReaderList = hwdevices->listByDeviceClass(TDEGenericDeviceType::CryptographicCard);
+			for (hwdevice = cardReaderList.first(); hwdevice; hwdevice = cardReaderList.next()) {
+				cdevice = static_cast<TDECryptographicCardDevice*>(hwdevice);
+				X509CertificatePtrList certList = cdevice->cardX509Certificates();
+				if (certList.count() > 0) {
+					allow_card = true;
+					card_cert_x509 = certList[0];
+					card_cert = KSSLCertificate::fromX509(certList[0]);
+				}
+			}
 			TQByteArray new_password;
-			CryptPasswordDialog* passDlg = new CryptPasswordDialog(this, i18n("Enter the new LUKS password for key slot %1").arg(lvi->text(0)));
+			CryptPasswordDialog* passDlg = new CryptPasswordDialog(this, i18n("Enter the new LUKS password for key slot %1").arg(key_slot), TQString::null, allow_card, card_cert, &use_card);
 			if (passDlg->exec() == TQDialog::Accepted) {
 				new_password = passDlg->password();
+				if (allow_card && use_card) {
+					// Create new private key for disk device
+					if (!TQDir("/etc/trinity/luks").exists()) {
+						TQDir directory;
+						if (!directory.mkdir("/etc/trinity/luks", true)) {
+							KMessageBox::error(this, i18n("<qt><b>Key creation failed</b><br>Please check that you have write access to /etc/trinity and try again</qt>"), i18n("Key creation failure"));
+							delete card_cert;
+							return;
+						}
+					}
+					if (!TQDir("/etc/trinity/luks/card").exists()) {
+						TQDir directory;
+						if (!directory.mkdir("/etc/trinity/luks/card", true)) {
+							KMessageBox::error(this, i18n("<qt><b>Key creation failed</b><br>Please check that you have write access to /etc/trinity/luks and try again</qt>"), i18n("Key creation failure"));
+							delete card_cert;
+							return;
+						}
+					}
+					TQString cryptoFileName = TQString("/etc/trinity/luks/card/%1_slot%2").arg(disk_uuid).arg(key_slot);
+					TQFile file(cryptoFileName);
+					if (file.exists()) {
+						if (KMessageBox::warningYesNo(this, i18n("<qt><b>You are about to overwrite an existing card key for LUKS key slot %1</b><br>This action cannot be undone<p>Are you sure you want to proceed?</qt>").arg(key_slot), i18n("Confirmation Required")) != KMessageBox::Yes) {
+							delete card_cert;
+							return;
+						}
+					}
+					if (file.open(IO_WriteOnly)) {
+						TQByteArray randomKey;
+						TQByteArray encryptedRandomKey;
+
+						// Create a new secret key using the public key from the card certificate
+						if (TDECryptographicCardDevice::createNewSecretRSAKeyFromCertificate(randomKey, encryptedRandomKey, card_cert_x509) < 0) {
+							KMessageBox::error(this, i18n("<qt><b>Key creation failed</b><br>Unable to create new secret key using the provided X509 certificate</qt>"), i18n("Key creation failure"));
+							delete card_cert;
+							return;
+						}
+
+						// Write the encrypted key file to disk
+						file.writeBlock(encryptedRandomKey, encryptedRandomKey.size());
+						file.close();
+
+						// Use the secret key as the LUKS passcode
+						new_password = randomKey;
+					}
+					else {
+						KMessageBox::error(this, i18n("<qt><b>Key creation failed</b><br>Please check that you have write access to /etc/trinity/luks/card and try again</qt>"), i18n("Key creation failure"));
+						delete card_cert;
+						return;
+					}
+				}
 				delete passDlg;
 				if (!sdevice->cryptOperationsUnlockPasswordSet()) {
 					TQCString password;
-					passDlg = new CryptPasswordDialog(this, i18n("Enter the LUKS device unlock password"));
+					passDlg = new CryptPasswordDialog(this, i18n("Enter the LUKS device unlock password"), TQString::null, allow_card, card_cert, &use_card);
 					if (passDlg->exec() == TQDialog::Accepted) {
-						sdevice->cryptSetOperationsUnlockPassword(passDlg->password());
+						TQByteArray unlockPassword = passDlg->password();
+						if (use_card) {
+							// List all matching keys in directory and try each in turn...
+							TQDir luksKeyDir("/etc/trinity/luks/card/");
+							luksKeyDir.setFilter(TQDir::Files);
+							luksKeyDir.setSorting(TQDir::Unsorted);
+
+							TQValueList<TQByteArray> luksCryptedList;
+							TQValueList<TQByteArray> luksDecryptedList;
+							TQValueList<int> luksSlotNumberList;
+
+							const TQFileInfoList *luksKeyDirList = luksKeyDir.entryInfoList();
+							TQFileInfoListIterator it(*luksKeyDirList);
+							TQFileInfo *luksKeyFileInfo;
+							TQString errstr;
+							while ((luksKeyFileInfo = it.current()) != 0) {
+								if (luksKeyFileInfo->fileName().startsWith(disk_uuid) && luksKeyFileInfo->fileName().contains("_slot")) {
+									// Found candidate, try decryption
+									TQFile luksKeyFile(luksKeyFileInfo->absFilePath());
+									if (luksKeyFile.open(IO_ReadOnly)) {
+										TQByteArray keycrypted = luksKeyFile.readAll();
+										luksCryptedList.append(keycrypted);
+
+										// Parse the file name and find the matching key slot
+										int current_card_keyslot = -1;
+										TQString fileName = luksKeyFile.name();
+										int pos = fileName.find("_slot");
+										if (pos >= 0) {
+											fileName.remove(0, pos + strlen("_slot"));
+											current_card_keyslot = fileName.toInt();
+											luksSlotNumberList.append(current_card_keyslot);
+										}
+									}
+								}
+								++it;
+							}
+
+							// Decrypt LUKS keys
+							TQValueList<int> retCodeList;
+							retcode = cdevice->decryptDataEncryptedWithCertPublicKey(luksCryptedList, luksDecryptedList, retCodeList, &errstr);
+							TQValueList<TQByteArray>::iterator it2;
+							TQValueList<int>::iterator it3;
+							TQValueList<int>::iterator it4;
+							for (it2 = luksDecryptedList.begin(), it3 = retCodeList.begin(), it4 = luksSlotNumberList.begin(); it2 != luksDecryptedList.end(); ++it2, ++it3, ++it4) {
+								TQByteArray luksKeyData = *it2;
+								retcode = *it3;
+								int current_card_keyslot = *it4;
+								if (retcode == -3) {
+									// User cancelled
+									break;
+								}
+								if (retcode < 0) {
+									// ERROR
+								}
+								else {
+									// Key decryption successful, try to open LUKS device...
+									sdevice->cryptSetOperationsUnlockPassword(luksKeyData);
+									if (sdevice->cryptCheckKey(current_card_keyslot) == TDELUKSResult::Success) {
+										break;
+									}
+									else {
+										sdevice->cryptClearOperationsUnlockPassword();
+									}
+								}
+							}
+							if (!sdevice->cryptOperationsUnlockPasswordSet()) {
+								KMessageBox::error(this, i18n("<qt><b>Key write failed</b><br>Please check the LUKS password and try again</qt>"), i18n("Key write failure"));
+							}
+						}
+						else {
+							sdevice->cryptSetOperationsUnlockPassword(unlockPassword);
+						}
 					}
 					delete passDlg;
 				}
 				if (sdevice->cryptOperationsUnlockPasswordSet()) {
-					if ((lvi->text(1) == sdevice->cryptKeySlotFriendlyName(TDELUKSKeySlotStatus::Inactive)) || (KMessageBox::warningYesNo(this, i18n("<qt><b>You are about to overwrite the key in key slot %1</b><br>This action cannot be undone<p>Are you sure you want to proceed?</qt>").arg(lvi->text(0)), i18n("Confirmation Required")) == KMessageBox::Yes)) {
-						if (sdevice->cryptAddKey(lvi->text(0).toUInt(), new_password) != TDELUKSResult::Success) {
+					if ((lvi->text(1) == sdevice->cryptKeySlotFriendlyName(TDELUKSKeySlotStatus::Inactive)) || (KMessageBox::warningYesNo(this, i18n("<qt><b>You are about to overwrite the key in key slot %1</b><br>This action cannot be undone<p>Are you sure you want to proceed?</qt>").arg(key_slot), i18n("Confirmation Required")) == KMessageBox::Yes)) {
+						if (sdevice->cryptAddKey(key_slot, new_password) != TDELUKSResult::Success) {
 							sdevice->cryptClearOperationsUnlockPassword();
 							KMessageBox::error(this, i18n("<qt><b>Key write failed</b><br>Please check the LUKS password and try again</qt>"), i18n("Key write failure"));
 						}
@@ -909,6 +1087,7 @@ void DevicePropertiesDialog::cryptLUKSAddKey() {
 			else {
 				delete passDlg;
 			}
+			delete card_cert;
 		}
 	}
 
@@ -921,16 +1100,51 @@ void DevicePropertiesDialog::cryptLUKSDelKey() {
 
 		TQListViewItem* lvi = base->cryptLUKSKeySlotList->selectedItem();
 		if (lvi) {
+			unsigned int key_slot = lvi->text(0).toUInt();
 			if (KMessageBox::warningYesNo(this, i18n("<qt><b>You are about to purge the key in key slot %1</b><br>This action cannot be undone<p>Are you sure you want to proceed?</qt>").arg(lvi->text(0)), i18n("Confirmation Required")) == KMessageBox::Yes) {
-				if (sdevice->cryptKeySlotStatus()[lvi->text(0).toUInt()] & TDELUKSKeySlotStatus::Last) {
+				if (sdevice->cryptKeySlotStatus()[key_slot] & TDELUKSKeySlotStatus::Last) {
 					if (KMessageBox::warningYesNo(this, i18n("<qt><b>You are about to purge the last active key from the device!</b><p>This action will render the contents of the encrypted device permanently inaccessable and cannot be undone<p>Are you sure you want to proceed?</qt>"), i18n("Confirmation Required")) != KMessageBox::Yes) {
 						cryptLUKSPopulateList();
 						return;
 					}
 				}
-				if (sdevice->cryptDelKey(lvi->text(0).toUInt()) != TDELUKSResult::Success) {
+				if (sdevice->cryptDelKey(key_slot) != TDELUKSResult::Success) {
 					sdevice->cryptClearOperationsUnlockPassword();
 					KMessageBox::error(this, i18n("<qt><b>Key purge failed</b><br>The key in key slot %1 is still active</qt>").arg(lvi->text(0)), i18n("Key purge failure"));
+				}
+				else {
+					// See if there was a cryptographic card key associated with this device and slot
+					TQString disk_uuid = sdevice->diskUUID();
+					TQDir luksKeyDir("/etc/trinity/luks/card/");
+					luksKeyDir.setFilter(TQDir::Files);
+					luksKeyDir.setSorting(TQDir::Unsorted);
+
+					const TQFileInfoList *luksKeyDirList = luksKeyDir.entryInfoList();
+					TQFileInfoListIterator it(*luksKeyDirList);
+					TQFileInfo *luksKeyFileInfo;
+					TQString errstr;
+					while ((luksKeyFileInfo = it.current()) != 0) {
+						if (luksKeyFileInfo->fileName().startsWith(disk_uuid) && luksKeyFileInfo->fileName().contains("_slot")) {
+							// Parse the file name and find the matching key slot
+							int current_card_keyslot = -1;
+							TQString fileName = luksKeyFileInfo->absFilePath();
+							TQString fileNameSlot = fileName;
+							int pos = fileNameSlot.find("_slot");
+							if (pos >= 0) {
+								fileNameSlot.remove(0, pos + strlen("_slot"));
+								current_card_keyslot = fileNameSlot.toInt();
+								if (current_card_keyslot >= 0) {
+									if ((unsigned int)current_card_keyslot == key_slot) {
+										if (!TQFile(fileName).remove()) {
+											KMessageBox::error(this, i18n("<qt><b>Card key purge failed</b><br>The card key for slot %1 has been fully deactivated but is still present on your system<br>This does not present a significant security risk</qt>").arg(lvi->text(0)), i18n("Key purge failure"));
+										}
+										break;
+									}
+								}
+							}
+						}
+						++it;
+					}
 				}
 			}
 		}

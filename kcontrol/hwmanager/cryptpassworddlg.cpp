@@ -46,11 +46,13 @@
 #include <kpushbutton.h>
 #include <kstdguiitem.h>
 #include <tdemessagebox.h>
+#include <ksslcertificate.h>
 
 #include "cryptpassworddlg.h"
 
-CryptPasswordDialog::CryptPasswordDialog(TQWidget *parent, TQString passwordPrompt, TQString caption)
-	: KDialogBase(Plain, ((caption == "")?i18n("Enter Password"):caption), Ok|Cancel, Ok, parent, 0L, true, true)
+CryptPasswordDialog::CryptPasswordDialog(TQWidget *parent, TQString passwordPrompt, TQString caption, bool allow_card, KSSLCertificate* card_cert, bool* use_card)
+	: KDialogBase(Plain, ((caption == "")?i18n("Enter Password"):caption), Ok|Cancel, Ok, parent, 0L, true, true),
+	m_useCard(use_card)
 {
 	m_base = new CryptPasswordDialogBase(plainPage());
 
@@ -61,8 +63,19 @@ CryptPasswordDialog::CryptPasswordDialog(TQWidget *parent, TQString passwordProm
 	m_base->passwordPrompt->setText(passwordPrompt);
 	m_base->passwordIcon->setPixmap(SmallIcon("password.png"));
 
+	if (!allow_card) {
+		m_base->cardKeyButton->hide();
+		m_base->cardKeyInfo->hide();
+	}
+	else {
+		if (card_cert) {
+			m_base->cardKeyInfo->setText(card_cert->getSubject());
+		}
+	}
+
 	connect(m_base->textPasswordButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(processLockouts()));
 	connect(m_base->filePasswordButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(processLockouts()));
+	connect(m_base->cardKeyButton, TQT_SIGNAL(clicked()), this, TQT_SLOT(processLockouts()));
 	connect(m_base->textPasswordEntry, TQT_SIGNAL(textChanged(const TQString&)), this, TQT_SLOT(processLockouts()));
 	connect(m_base->filePasswordURL, TQT_SIGNAL(textChanged(const TQString&)), this, TQT_SLOT(processLockouts()));
 
@@ -78,9 +91,14 @@ CryptPasswordDialog::~CryptPasswordDialog()
 TQByteArray CryptPasswordDialog::password() {
 	if (m_base->textPasswordButton->isOn() == true) {
 		m_password.duplicate(m_base->textPasswordEntry->password(), strlen(m_base->textPasswordEntry->password()));
+		if (m_useCard) *m_useCard = false;
+	}
+	else if (m_base->filePasswordButton->isOn() == true) {
+		m_password = TQFile(m_base->filePasswordURL->url()).readAll();
+		if (m_useCard) *m_useCard = false;
 	}
 	else {
-		m_password = TQFile(m_base->filePasswordURL->url()).readAll();
+		if (m_useCard) *m_useCard = true;
 	}
 
 	return m_password;
@@ -90,7 +108,19 @@ void CryptPasswordDialog::processLockouts() {
 	if (m_base->textPasswordButton->isOn() == true) {
 		m_base->textPasswordEntry->setEnabled(true);
 		m_base->filePasswordURL->setEnabled(false);
+		m_base->textPasswordEntry->setFocus();
 		if (strlen(m_base->textPasswordEntry->password()) > 0) {
+			enableButtonOK(true);
+		}
+		else {
+			enableButtonOK(false);
+		}
+	}
+	else if (m_base->filePasswordButton->isOn() == true) {
+		m_base->textPasswordEntry->setEnabled(false);
+		m_base->filePasswordURL->setEnabled(true);
+		m_base->filePasswordURL->setFocus();
+		if (TQFile(m_base->filePasswordURL->url()).exists()) {
 			enableButtonOK(true);
 		}
 		else {
@@ -99,13 +129,8 @@ void CryptPasswordDialog::processLockouts() {
 	}
 	else {
 		m_base->textPasswordEntry->setEnabled(false);
-		m_base->filePasswordURL->setEnabled(true);
-		if (TQFile(m_base->filePasswordURL->url()).exists()) {
-			enableButtonOK(true);
-		}
-		else {
-			enableButtonOK(false);
-		}
+		m_base->filePasswordURL->setEnabled(false);
+		enableButtonOK(true);
 	}
 }
 

@@ -42,6 +42,7 @@
 #include <kgenericfactory.h>
 
 #include <unistd.h>
+#include <kpassdlg.h>
 #include <ksimpleconfig.h>
 #include <string>
 #include <stdio.h>
@@ -147,7 +148,10 @@ void TDEHWManager::populateTreeView()
 		TDEGenericDevice *hwdevice;
 		for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
 			if (hwdevice->type() == TDEGenericDeviceType::CryptographicCard) {
-				static_cast<TDECryptographicCardDevice*>(hwdevice)->enableCardMonitoring(true);
+				TDECryptographicCardDevice* cdevice = static_cast<TDECryptographicCardDevice*>(hwdevice);
+				connect(cdevice, SIGNAL(pinRequested(TQString,TDECryptographicCardDevice*)), this, SLOT(cryptographicCardPinRequested(TQString,TDECryptographicCardDevice*)));
+				cdevice->enableCardMonitoring(true);
+				cdevice->enablePINEntryCallbacks(true);
 			}
 			DeviceIconItem* item = new DeviceIconItem(base->deviceTree, hwdevice->detailedFriendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
 			if ((!selected_syspath.isNull()) && (hwdevice->systemPath() == selected_syspath)) {
@@ -166,7 +170,10 @@ void TDEHWManager::populateTreeView()
 				TDEGenericHardwareList hwlist = hwdevices->listByDeviceClass((TDEGenericDeviceType::TDEGenericDeviceType)i);
 				for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
 					if (hwdevice->type() == TDEGenericDeviceType::CryptographicCard) {
-						static_cast<TDECryptographicCardDevice*>(hwdevice)->enableCardMonitoring(true);
+						TDECryptographicCardDevice* cdevice = static_cast<TDECryptographicCardDevice*>(hwdevice);
+						connect(cdevice, SIGNAL(pinRequested(TQString,TDECryptographicCardDevice*)), this, SLOT(cryptographicCardPinRequested(TQString,TDECryptographicCardDevice*)));
+						cdevice->enableCardMonitoring(true);
+						cdevice->enablePINEntryCallbacks(true);
 					}
 					DeviceIconItem* item = new DeviceIconItem(rootitem, hwdevice->detailedFriendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
 					if ((!selected_syspath.isNull()) && (hwdevice->systemPath() == selected_syspath)) {
@@ -186,7 +193,10 @@ void TDEHWManager::populateTreeViewLeaf(DeviceIconItem *parent, bool show_by_con
 		TDEGenericDevice *hwdevice;
 		for ( hwdevice = hwlist.first(); hwdevice; hwdevice = hwlist.next() ) {
 			if (hwdevice->type() == TDEGenericDeviceType::CryptographicCard) {
-				static_cast<TDECryptographicCardDevice*>(hwdevice)->enableCardMonitoring(true);
+				TDECryptographicCardDevice* cdevice = static_cast<TDECryptographicCardDevice*>(hwdevice);
+				connect(cdevice, SIGNAL(pinRequested(TQString,TDECryptographicCardDevice*)), this, SLOT(cryptographicCardPinRequested(TQString,TDECryptographicCardDevice*)));
+				cdevice->enableCardMonitoring(true);
+				cdevice->enablePINEntryCallbacks(true);
 			}
 			if (hwdevice->parentDevice() == parent->device()) {
 				DeviceIconItem* item = new DeviceIconItem(parent, hwdevice->detailedFriendlyName(), hwdevice->icon(base->deviceTree->iconSize()), hwdevice);
@@ -215,6 +225,17 @@ void TDEHWManager::deviceChanged(TDEGenericDevice* device) {
 			}
 		}
 		++it;
+	}
+}
+
+void TDEHWManager::cryptographicCardPinRequested(TQString prompt, TDECryptographicCardDevice* cdevice) {
+	TQCString password;
+	int result = KPasswordDialog::getPassword(password, prompt);
+	if (result == KPasswordDialog::Accepted) {
+		cdevice->setProvidedPin(password);
+	}
+	else {
+		cdevice->setProvidedPin(TQString::null);
 	}
 }
 
