@@ -1114,7 +1114,9 @@ SetGid( const char *name, int gid )
 #ifdef HAVE_INITGROUPS
 	if (initgroups( name, gid ) < 0) {
 		LogError( "initgroups for %s failed: %m\n", name );
-		setgid( 0 );
+		if (setgid(0) != 0) {
+			LogError("setgid(0) failed\n");
+		}
 		return 0;
 	}
 #endif	 /* QNX4 doesn't support multi-groups, no initgroups() */
@@ -1642,7 +1644,10 @@ StartClient()
 			}
 		} else {
 		  cdroot:
-			chdir( "/" );
+			if (chdir( "/" ) != 0) {
+				LogError( "Cannot change directory to %s\n", "/" );
+				goto logerr;
+			}
 		  tmperr:
 			ASPrintf( &lname, "/tmp/xerr-%s-%s", curuser, td->name );
 			unlink( lname );
@@ -1828,13 +1833,19 @@ ReadDmrc()
 			exit( 0 );
 		if (!(data = iniLoad( fname ))) {
 			static const int m1 = -1;
-			write( pfd[1], &m1, sizeof(int) );
-			exit( 0 );
+			if (write(pfd[1], &m1, sizeof(int)) < 0) {
+				return GE_Error;
+			}
+			exit(0);
 		}
 		len = strlen( data );
-		write( pfd[1], &len, sizeof(int) );
-		write( pfd[1], data, len + 1 );
-		exit( 0 );
+		if (write(pfd[1], &len, sizeof(int)) < 0) {
+			return GE_Error;
+		}
+		if (write(pfd[1], data, len + 1) < 0) {
+			return GE_Error;
+		}
+		exit(0);
 	}
 	close( pfd[1] );
 	free( fname );
