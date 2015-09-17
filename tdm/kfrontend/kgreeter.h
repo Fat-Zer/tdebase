@@ -112,6 +112,9 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
   public:
 	TQString curUser, curWMSession, dName;
 
+  protected slots:
+	void cryptographicCardWatcherSetup();
+
   protected:
         void readFacesList();
 	void installUserList();

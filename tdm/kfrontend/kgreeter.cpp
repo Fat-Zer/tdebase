@@ -219,17 +219,6 @@ KGreeter::KGreeter( bool framed )
 		pluginList = KGVerify::init( _pluginsLogin );
 	}
 
-	// Initialize SmartCard readers
-	TDEGenericDevice *hwdevice;
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
-	TDEGenericHardwareList cardReaderList = hwdevices->listByDeviceClass(TDEGenericDeviceType::CryptographicCard);
-	for (hwdevice = cardReaderList.first(); hwdevice; hwdevice = cardReaderList.next()) {
-		TDECryptographicCardDevice* cdevice = static_cast<TDECryptographicCardDevice*>(hwdevice);
-		connect(cdevice, TQT_SIGNAL(certificateListAvailable(TDECryptographicCardDevice*)), this, TQT_SLOT(cryptographicCardInserted(TDECryptographicCardDevice*)));
-		connect(cdevice, TQT_SIGNAL(cardRemoved(TDECryptographicCardDevice*)), this, TQT_SLOT(cryptographicCardRemoved(TDECryptographicCardDevice*)));
-		cdevice->enableCardMonitoring(true);
-	}
-
 	mControlPipeHandlerThread = new TQEventLoopThread();
 	mControlPipeHandler = new ControlPipeHandlerObject();
 	mControlPipeHandler->mKGreeterParent = this;
@@ -250,6 +239,19 @@ KGreeter::~KGreeter()
 	delete userList;
 	delete verify;
 	delete stsFile;
+}
+
+void KGreeter::cryptographicCardWatcherSetup() {
+	// Initialize SmartCard readers
+	TDEGenericDevice *hwdevice;
+	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEGenericHardwareList cardReaderList = hwdevices->listByDeviceClass(TDEGenericDeviceType::CryptographicCard);
+	for (hwdevice = cardReaderList.first(); hwdevice; hwdevice = cardReaderList.next()) {
+		TDECryptographicCardDevice* cdevice = static_cast<TDECryptographicCardDevice*>(hwdevice);
+		connect(cdevice, TQT_SIGNAL(certificateListAvailable(TDECryptographicCardDevice*)), this, TQT_SLOT(cryptographicCardInserted(TDECryptographicCardDevice*)));
+		connect(cdevice, TQT_SIGNAL(cardRemoved(TDECryptographicCardDevice*)), this, TQT_SLOT(cryptographicCardRemoved(TDECryptographicCardDevice*)));
+		cdevice->enableCardMonitoring(true);
+	}
 }
 
 void KGreeter::done(int r) {
@@ -1047,6 +1049,8 @@ KStdGreeter::KStdGreeter()
 	pluginSetup();
 
 	verify->start();
+
+	TQTimer::singleShot(0, this, SLOT(cryptographicCardWatcherSetup()));
 }
 
 void
@@ -1194,6 +1198,8 @@ KThemedGreeter::KThemedGreeter()
 	pluginSetup();
 
 	verify->start();
+
+	TQTimer::singleShot(0, this, SLOT(cryptographicCardWatcherSetup()));
 }
 
 bool

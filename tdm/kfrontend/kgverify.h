@@ -148,6 +148,7 @@ class KGVerify : public TQObject, public KGreeterPluginHandler {
 	bool capsLocked;
 	bool enabled, running, suspended, failed, delayed, cont;
 	bool authTok, isClear, timeable;
+	bool inGreeterPlugin;
 	bool abortRequested;
 
 	static void VMsgBox( TQWidget *parent, const TQString &user, TQMessageBox::Icon type, const TQString &mesg );

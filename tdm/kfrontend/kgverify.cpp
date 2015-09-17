@@ -91,6 +91,7 @@ KGVerify::KGVerify(KGVerifyHandler *_handler, KdmThemer *_themer,
 	, suspended(false)
 	, failed(false)
 	, isClear(true)
+	, inGreeterPlugin(false)
 	, abortRequested(false)
 {
 	connect( &timer, TQT_SIGNAL(timeout()), TQT_SLOT(slotTimeout()) );
@@ -360,21 +361,22 @@ KGVerify::doReject( bool initial )
 {
 	// assert( !cont );
 	if (running) {
-		Debug( "%s->abort()\n", pName.data() );
+		Debug("%s->abort()\n", pName.data());
 		greet->abort();
 	}
 	handler->verifyClear();
-	Debug( "%s->clear()\n", pName.data() );
+	Debug("%s->clear()\n", pName.data());
 	greet->clear();
 	curUser = TQString::null;
-	if (!scheduleAutoLogin( initial )) {
+	if (!scheduleAutoLogin(initial)) {
 		isClear = !(isClear && applyPreset());
 		if (running) {
 			Debug( "%s->start()\n", pName.data() );
 			greet->start();
 		}
-		if (!failed)
+		if (!failed) {
 			timer.stop();
+		}
 	}
 }
 
@@ -388,6 +390,9 @@ void // not a slot - called manually by greeter
 KGVerify::requestAbort()
 {
 	abortRequested = true;
+	if (inGreeterPlugin) {
+		greet->next();
+	}
 }
 
 void
@@ -615,7 +620,9 @@ KGVerify::handleVerify()
 			ndelay = GRecvInt();
 			Debug( "  ndelay = %d\n%s->textPrompt(...)\n", ndelay, pName.data() );
 			if (abortRequested) {
+				inGreeterPlugin = true;
 				greet->textPrompt("", echo, ndelay);
+				inGreeterPlugin = !ndelay;
 				abortRequested = false;
 			}
 			else {
@@ -623,10 +630,14 @@ KGVerify::handleVerify()
 					// Reset password entry and change text
 					setPassPromptText(msg);
 					greet->start();
+					inGreeterPlugin = true;
 					greet->textPrompt(msg, echo, ndelay);
+					inGreeterPlugin = !ndelay;
 				}
 				else {
+					inGreeterPlugin = true;
 					greet->textPrompt(msg, echo, ndelay);
+					inGreeterPlugin = !ndelay;
 				}
 			}
 			if (msg) {
@@ -641,10 +652,11 @@ KGVerify::handleVerify()
 			Debug( "  ndelay = %d\n%s->binaryPrompt(...)\n", ndelay, pName.data() );
 			if (abortRequested) {
 				gplugReturnBinary(NULL);
-				abortRequested = false;
 			}
 			else {
+				inGreeterPlugin = true;
 				greet->binaryPrompt( msg, ndelay );
+				inGreeterPlugin = !ndelay;
 			}
 			if (msg) {
 				free(msg);
@@ -679,6 +691,7 @@ KGVerify::handleVerify()
 			Debug("%s->succeeded()\n", pName.data());
 			greet->succeeded();
 			abortRequested = false;
+			inGreeterPlugin = false;
 			continue;
 		case V_CHTOK_AUTH:
 			Debug( " V_CHTOK_AUTH\n" );
@@ -695,6 +708,7 @@ KGVerify::handleVerify()
 				Debug( "%s->succeeded()\n", pName.data() );
 				greet->succeeded();
 				abortRequested = false;
+				inGreeterPlugin = false;
 				KGChTok chtok( parent, user, pluginList, curPlugin, nfunc, KGreeterPlugin::Login );
 				if (!chtok.exec()) {
 					goto retry;
@@ -706,13 +720,16 @@ KGVerify::handleVerify()
 			Debug( " V_MSG_ERR\n" );
 			msg = GRecvStr();
 			Debug( "  %s->textMessage(%\"s, true)\n", pName.data(), msg );
+			inGreeterPlugin = true;
 			if (!greet->textMessage( msg, true )) {
+				inGreeterPlugin = false;
 				Debug( "  message passed\n" );
 				if (!abortRequested) {
 					VErrBox( parent, user, msg );
 				}
 			}
 			else {
+				inGreeterPlugin = false;
 				Debug( "  message swallowed\n" );
 			}
 			if (msg) {
@@ -723,13 +740,16 @@ KGVerify::handleVerify()
 			Debug( " V_MSG_INFO\n" );
 			msg = GRecvStr();
 			Debug( "  %s->textMessage(%\"s, false)\n", pName.data(), msg );
+			inGreeterPlugin = true;
 			if (!greet->textMessage( msg, false )) {
+				inGreeterPlugin = false;
 				Debug( "  message passed\n" );
 				if (!abortRequested) {
 					VInfoBox(parent, user, msg);
 				}
 			}
 			else {
+				inGreeterPlugin = false;
 				Debug("  message swallowed\n");
 			}
 			free(msg);
@@ -751,6 +771,7 @@ KGVerify::handleVerify()
 					Debug( "%s->failed()\n", pName.data() );
 					greet->failed();
 					abortRequested = false;
+					inGreeterPlugin = false;
 					MsgBox( sorrybox,
 					        i18n("Authenticated user (%1) does not match requested user (%2).\n")
 					        .arg( ent ).arg( fixedEntity ) );
@@ -760,6 +781,7 @@ KGVerify::handleVerify()
 			Debug( "%s->succeeded()\n", pName.data() );
 			greet->succeeded();
 			abortRequested = false;
+			inGreeterPlugin = false;
 			handler->verifyOk();
 			return;
 		}
@@ -767,6 +789,7 @@ KGVerify::handleVerify()
 		Debug( "%s->failed()\n", pName.data() );
 		greet->failed();
 		abortRequested = false;
+		inGreeterPlugin = false;
 
 		// Reset password prompt text
 		setPassPromptText(TQString::null, true);
@@ -788,8 +811,9 @@ KGVerify::handleVerify()
 		running = true;
 		Debug( "%s->start()\n", pName.data() );
 		greet->start();
-		if (!cont)
+		if (!cont) {
 			return;
+		}
 		user = TQString::null;
 	}
 }
@@ -1043,8 +1067,9 @@ KGStdVerify::slotPluginSelected( int id )
 		delete greet;
 		selectPlugin( id );
 		handler->verifyPluginChanged( id );
-		if (running)
+		if (running) {
 			start();
+		}
 		parent->setUpdatesEnabled( true );
 	}
 }
@@ -1142,8 +1167,9 @@ KGThemedVerify::slotPluginSelected( int id )
 		delete greet;
 		selectPlugin( id );
 		handler->verifyPluginChanged( id );
-		if (running)
+		if (running) {
 			start();
+		}
 	}
 }
 
