@@ -152,6 +152,7 @@ public:
 	}
 
 	KdmItem *findNode( const TQString &id ) const;
+	KdmItem *findNodeByType( const TQString &type ) const;
 	virtual void setWidget( TQWidget *widget );
 	TQWidget *widget() const { return myWidget; }
 	virtual void setLayoutItem( TQLayoutItem *item );

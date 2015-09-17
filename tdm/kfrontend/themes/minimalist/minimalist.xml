@@ -37,7 +37,7 @@
 	</item>	
 	
 <!-- user field -->	
-			<item type="label">
+			<item type="label" id="username-label">
 				<pos anchor="nw" x="145" y="225"/>
 				<normal font="Sans 11" color="#dfdbd2"/>
 				<stock type="username-label"/>
@@ -58,7 +58,7 @@
 	
 <!-- password field -->
 	
-			<item type="label">
+			<item type="label" id="password-label">
 				<pos anchor="nw" x="145" y="285"/>
 				<normal font="Sans 11" color="#dfdbd2"/>
 				<stock type="password-label"/>

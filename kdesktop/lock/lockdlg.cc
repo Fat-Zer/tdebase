@@ -513,7 +513,17 @@ void PasswordDlg::handleVerify()
 		case ConvGetHidden:
 			if (!GRecvArr( &arr ))
 				break;
-			greet->textPrompt( arr, false, false );
+			if (arr && (arr[0] != 0)) {
+				// Reset password entry and change text
+				greet->start();
+				greet->textPrompt( arr, false, false );
+				// Force relayout
+				setFixedSize( sizeHint().width(), sizeHint().height() + 1 );
+				setFixedSize( sizeHint() );
+			}
+			else {
+				greet->textPrompt( arr, false, false );
+			}
 			if (arr)
 				::free( arr );
 			return;
@@ -913,6 +923,16 @@ void PasswordDlg::capsLocked()
 	XQueryPointer(tqt_xdisplay(), DefaultRootWindow( tqt_xdisplay() ), &dummy1, &dummy2, &dummy3, &dummy4, &dummy5, &dummy6, &lmask);
 	mCapsLocked = lmask & LockMask;
 	updateLabel();
+}
+
+void PasswordDlg::attemptCardLogin() {
+	greet->start();
+	greet->next();
+}
+
+void PasswordDlg::resetCardLogin() {
+	greet->abort();
+	greet->start();
 }
 
 #include "lockdlg.moc"

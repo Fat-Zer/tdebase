@@ -372,15 +372,23 @@ int main( int argc, char **argv )
 		KSimpleConfig* tdmconfig;
 		OPEN_TDMCONFIG_AND_SET_GROUP
 
+		sigset_t new_mask;
+		sigset_t orig_mask;
+
+		// Block reception of all signals in this thread
+		sigprocmask(SIG_BLOCK, &new_mask, NULL);
+
+		// Create new LockProcess, which also spawns threads inheriting the blocked signal mask
 		trinity_desktop_lock_process = new LockProcess;
+
+		// Unblock reception of all signals in this thread
+		sigprocmask(SIG_UNBLOCK, &new_mask, NULL);
 
 		// Start loading core functions, such as the desktop wallpaper interface
 		app->processEvents();
 
 		if (args->isSet( "internal" )) {
 			kdesktop_pid = atoi(args->getOption( "internal" ));
-			sigset_t new_mask;
-			sigset_t orig_mask;
 			struct sigaction act;
 
 			in_internal_mode = TRUE;

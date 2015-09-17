@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "themer/tdmthemer.h"
 #include "themer/tdmitem.h"
+#include "themer/tdmlabel.h"
 
 #include <tdeapplication.h>
 #include <tdelocale.h>
@@ -66,30 +67,31 @@ void KGVerifyHandler::updateStatus( bool, bool, int )
 {
 }
 
-KGVerify::KGVerify( KGVerifyHandler *_handler, KdmThemer *_themer,
-                    TQWidget *_parent, TQWidget *_predecessor,
-                    const TQString &_fixedUser,
-                    const PluginList &_pluginList,
-                    KGreeterPlugin::Function _func,
-                    KGreeterPlugin::Context _ctx )
+KGVerify::KGVerify(KGVerifyHandler *_handler, KdmThemer *_themer,
+			TQWidget *_parent, TQWidget *_predecessor,
+			const TQString &_fixedUser,
+			const PluginList &_pluginList,
+			KGreeterPlugin::Function _func,
+			KGreeterPlugin::Context _ctx)
 	: inherited()
-	, coreLock( 0 )
-	, fixedEntity( _fixedUser )
-	, pluginList( _pluginList )
-	, handler( _handler )
-	, themer( _themer )
-	, parent( _parent )
-	, predecessor( _predecessor )
-	, plugMenu( 0 )
-	, curPlugin( -1 )
-	, timedLeft( 0 )
-	, func( _func )
-	, ctx( _ctx )
-	, enabled( true )
-	, running( false )
-	, suspended( false )
-	, failed( false )
-	, isClear( true )
+	, coreLock(0)
+	, fixedEntity(_fixedUser)
+	, pluginList(_pluginList)
+	, handler(_handler)
+	, themer(_themer)
+	, parent(_parent)
+	, predecessor(_predecessor)
+	, plugMenu(0)
+	, curPlugin(-1)
+	, timedLeft(0)
+	, func(_func)
+	, ctx(_ctx)
+	, enabled(true)
+	, running(false)
+	, suspended(false)
+	, failed(false)
+	, isClear(true)
+	, abortRequested(false)
 {
 	connect( &timer, TQT_SIGNAL(timeout()), TQT_SLOT(slotTimeout()) );
 	connect( kapp, TQT_SIGNAL(activity()), TQT_SLOT(slotActivity()) );
@@ -269,6 +271,14 @@ KGVerify::setUser( const TQString &user )
 }
 
 void
+KGVerify::lockUserEntry(const bool lock)
+{
+	// assert( fixedEntity.isEmpty() );
+	Debug( "%s->lockUserEntry(%\"s)\n", pName.data(), lock );
+	greet->lockUserEntry(lock);
+}
+
+void
 KGVerify::setPassword( const TQString &pass )
 {
 	greet->setPassword( pass );
@@ -372,6 +382,12 @@ void // not a slot - called manually by greeter
 KGVerify::reject()
 {
 	doReject( true );
+}
+
+void // not a slot - called manually by greeter
+KGVerify::requestAbort()
+{
+	abortRequested = true;
 }
 
 void
@@ -478,27 +494,28 @@ KGVerify::VErrBox( TQWidget *parent, const TQString &user, const char *msg )
 }
 
 void // private static
-KGVerify::VInfoBox( TQWidget *parent, const TQString &user, const char *msg )
+KGVerify::VInfoBox(TQWidget *parent, const TQString &user, const char *msg)
 {
 	TQString mesg = TQString::fromLocal8Bit( msg );
 	TQRegExp rx( "^Warning: your account will expire in (\\d+) day" );
-	if (rx.search( mesg ) >= 0) {
-		int expire = rx.cap( 1 ).toInt();
+	if (rx.search(mesg) >= 0) {
+		int expire = rx.cap(1).toInt();
 		mesg = expire ?
 			i18n("Your account expires tomorrow.",
 			     "Your account expires in %n days.", expire) :
 			i18n("Your account expires today.");
-	} else {
+	}
+	else {
 		rx.setPattern( "^Warning: your password will expire in (\\d+) day" );
-		if (rx.search( mesg ) >= 0) {
-			int expire = rx.cap( 1 ).toInt();
+		if (rx.search(mesg) >= 0) {
+			int expire = rx.cap(1).toInt();
 			mesg = expire ?
 				i18n("Your password expires tomorrow.",
 				     "Your password expires in %n days.", expire) :
 				i18n("Your password expires today.");
 		}
 	}
-	VMsgBox( parent, user, infobox, mesg );
+	VMsgBox(parent, user, infobox, mesg);
 }
 
 bool // public static
@@ -597,9 +614,24 @@ KGVerify::handleVerify()
 			Debug( "  echo = %d\n", echo );
 			ndelay = GRecvInt();
 			Debug( "  ndelay = %d\n%s->textPrompt(...)\n", ndelay, pName.data() );
-			greet->textPrompt( msg, echo, ndelay );
-			if (msg)
-				free( msg );
+			if (abortRequested) {
+				greet->textPrompt("", echo, ndelay);
+				abortRequested = false;
+			}
+			else {
+				if (msg && (msg[0] != 0)) {
+					// Reset password entry and change text
+					setPassPromptText(msg);
+					greet->start();
+					greet->textPrompt(msg, echo, ndelay);
+				}
+				else {
+					greet->textPrompt(msg, echo, ndelay);
+				}
+			}
+			if (msg) {
+				free(msg);
+			}
 			return;
 		case V_GET_BINARY:
 			Debug( " V_GET_BINARY\n" );
@@ -607,9 +639,16 @@ KGVerify::handleVerify()
 			Debug( "  %d bytes prompt\n", ret );
 			ndelay = GRecvInt();
 			Debug( "  ndelay = %d\n%s->binaryPrompt(...)\n", ndelay, pName.data() );
-			greet->binaryPrompt( msg, ndelay );
-			if (msg)
-				free( msg );
+			if (abortRequested) {
+				gplugReturnBinary(NULL);
+				abortRequested = false;
+			}
+			else {
+				greet->binaryPrompt( msg, ndelay );
+			}
+			if (msg) {
+				free(msg);
+			}
 			return;
 		}
 
@@ -622,11 +661,12 @@ KGVerify::handleVerify()
 			curUser = user = TQString::fromLocal8Bit( msg );
 			// greet needs this to be able to return something useful from
 			// getEntity(). but the backend is still unable to tell a domain ...
-			Debug( "  %s->setUser(%\"s)\n", pName.data(), user.latin1() );
+			Debug("  %s->setUser(%\"s)\n", pName.data(), user.latin1());
 			greet->setUser( curUser );
-			handler->verifySetUser( curUser );
-			if (msg)
-				free( msg );
+			handler->verifySetUser(curUser);
+			if (msg) {
+				free(msg);
+			}
 			continue;
 		case V_PRE_OK: // this is only for func == AuthChAuthTok
 			Debug( " V_PRE_OK\n" );
@@ -636,8 +676,9 @@ KGVerify::handleVerify()
 			// is not implemented yet.
 			authTok = true;
 			cont = true;
-			Debug( "%s->succeeded()\n", pName.data() );
+			Debug("%s->succeeded()\n", pName.data());
 			greet->succeeded();
+			abortRequested = false;
 			continue;
 		case V_CHTOK_AUTH:
 			Debug( " V_CHTOK_AUTH\n" );
@@ -648,14 +689,16 @@ KGVerify::handleVerify()
 			Debug( " V_CHTOK\n" );
 			nfunc = KGreeterPlugin::ChAuthTok;
 			user = TQString::null;
-		  dchtok:
+		dchtok:
 			{
 				timer.stop();
 				Debug( "%s->succeeded()\n", pName.data() );
 				greet->succeeded();
+				abortRequested = false;
 				KGChTok chtok( parent, user, pluginList, curPlugin, nfunc, KGreeterPlugin::Login );
-				if (!chtok.exec())
+				if (!chtok.exec()) {
 					goto retry;
+				}
 				handler->verifyOk();
 				return;
 			}
@@ -665,11 +708,16 @@ KGVerify::handleVerify()
 			Debug( "  %s->textMessage(%\"s, true)\n", pName.data(), msg );
 			if (!greet->textMessage( msg, true )) {
 				Debug( "  message passed\n" );
-				VErrBox( parent, user, msg );
-			} else
+				if (!abortRequested) {
+					VErrBox( parent, user, msg );
+				}
+			}
+			else {
 				Debug( "  message swallowed\n" );
-			if (msg)
-				free( msg );
+			}
+			if (msg) {
+				free(msg);
+			}
 			continue;
 		case V_MSG_INFO:
 			Debug( " V_MSG_INFO\n" );
@@ -677,10 +725,14 @@ KGVerify::handleVerify()
 			Debug( "  %s->textMessage(%\"s, false)\n", pName.data(), msg );
 			if (!greet->textMessage( msg, false )) {
 				Debug( "  message passed\n" );
-				VInfoBox( parent, user, msg );
-			} else
-				Debug( "  message swallowed\n" );
-			free( msg );
+				if (!abortRequested) {
+					VInfoBox(parent, user, msg);
+				}
+			}
+			else {
+				Debug("  message swallowed\n");
+			}
+			free(msg);
 			continue;
 		}
 
@@ -698,6 +750,7 @@ KGVerify::handleVerify()
 				if (ent != fixedEntity) {
 					Debug( "%s->failed()\n", pName.data() );
 					greet->failed();
+					abortRequested = false;
 					MsgBox( sorrybox,
 					        i18n("Authenticated user (%1) does not match requested user (%2).\n")
 					        .arg( ent ).arg( fixedEntity ) );
@@ -706,12 +759,17 @@ KGVerify::handleVerify()
 			}
 			Debug( "%s->succeeded()\n", pName.data() );
 			greet->succeeded();
+			abortRequested = false;
 			handler->verifyOk();
 			return;
 		}
 
 		Debug( "%s->failed()\n", pName.data() );
 		greet->failed();
+		abortRequested = false;
+
+		// Reset password prompt text
+		setPassPromptText(TQString::null, true);
 
 		if (ret == V_AUTH) {
 			Debug( " V_AUTH\n" );
@@ -736,17 +794,36 @@ KGVerify::handleVerify()
 	}
 }
 
+void KGVerify::setPassPromptText(TQString text, bool use_default_text) {
+	if (themer) {
+		KdmItem* password_label = themer->findNode("password-label");
+		if (password_label) {
+			KdmLabel* pass_label = static_cast<KdmLabel*>(password_label);
+			if (use_default_text) {
+				pass_label->setText(pass_label->lookupStock("password-label"));
+			}
+			else {
+				pass_label->setText(text);
+			}
+			pass_label->update();
+			themer->updateGeometry(true);
+			static_cast<TQWidget *>(themer->parent())->repaint(true);
+		}
+	}
+}
+
 void
 KGVerify::gplugReturnText( const char *text, int tag )
 {
-	Debug( "%s: gplugReturnText(%\"s, %d)\n", pName.data(),
-	       tag & V_IS_SECRET ? "<masked>" : text, tag );
-	GSendStr( text );
+	Debug("%s: gplugReturnText(%\"s, %d)\n", pName.data(), tag & V_IS_SECRET ? "<masked>" : text, tag);
+	GSendStr(text);
 	if (text) {
-		GSendInt( tag );
+		GSendInt(tag);
 		handleVerify();
-	} else
+	}
+	else {
 		coreLock = 0;
+	}
 }
 
 void
@@ -755,12 +832,13 @@ KGVerify::gplugReturnBinary( const char *data )
 	if (data) {
 		unsigned const char *up = (unsigned const char *)data;
 		int len = up[3] | (up[2] << 8) | (up[1] << 16) | (up[0] << 24);
-		Debug( "%s: gplugReturnBinary(%d bytes)\n", pName.data(), len );
-		GSendArr( len, data );
+		Debug("%s: gplugReturnBinary(%d bytes)\n", pName.data(), len);
+		GSendArr(len, data);
 		handleVerify();
-	} else {
-		Debug( "%s: gplugReturnBinary(NULL)\n", pName.data() );
-		GSendArr( 0, 0 );
+	}
+	else {
+		Debug("%s: gplugReturnBinary(NULL)\n", pName.data());
+		GSendArr(0, 0);
 		coreLock = 0;
 	}
 }

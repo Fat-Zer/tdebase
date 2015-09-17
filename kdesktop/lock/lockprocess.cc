@@ -34,6 +34,7 @@
 #include <tdeapplication.h>
 #include <kservicegroup.h>
 #include <kdebug.h>
+#include <kuser.h>
 #include <tdemessagebox.h>
 #include <tdeglobalsettings.h>
 #include <tdelocale.h>
@@ -112,6 +113,8 @@ Status DPMSInfo ( Display *, CARD16 *, BOOL * );
 #include <GL/glx.h>
 #endif
 
+#define KDESKTOP_DEBUG_ID 1204
+
 #define LOCK_GRACE_DEFAULT          5000
 #define AUTOLOGOUT_DEFAULT          600
 
@@ -146,7 +149,7 @@ Atom kde_wm_transparent_to_black = 0;
 
 static void segv_handler(int)
 {
-	kdError(1204) << "A fatal exception was encountered."
+	kdError(KDESKTOP_DEBUG_ID) << "A fatal exception was encountered."
 		<< " Trapping and ignoring it so as not to compromise desktop security..."
 		<< kdBacktrace() << endl;
 	sleep(1);
@@ -272,7 +275,7 @@ LockProcess::LockProcess()
 	KServiceGroup::Ptr servGroup = KServiceGroup::baseGroup( "screensavers");
 	if (servGroup) {
 		relPath=servGroup->relPath();
-		kdDebug(1204) << "relPath=" << relPath << endl;
+		kdDebug(KDESKTOP_DEBUG_ID) << "relPath=" << relPath << endl;
 	}
 	TDEGlobal::dirs()->addResourceType("scrsav",
 					TDEGlobal::dirs()->kde_default("apps") +
@@ -288,6 +291,19 @@ LockProcess::LockProcess()
 		if ((*it).startsWith("method=")) {
 			mMethod = (*it).mid(7);
 		}
+	}
+
+	// Initialize SmartCard readers
+	TDEGenericDevice *hwdevice;
+	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEGenericHardwareList cardReaderList = hwdevices->listByDeviceClass(TDEGenericDeviceType::CryptographicCard);
+	for (hwdevice = cardReaderList.first(); hwdevice; hwdevice = cardReaderList.next()) {
+		TDECryptographicCardDevice* cdevice = static_cast<TDECryptographicCardDevice*>(hwdevice);
+		// connect(cdevice, SIGNAL(pinRequested(TQString,TDECryptographicCardDevice*)), this, SLOT(cryptographicCardPinRequested(TQString,TDECryptographicCardDevice*)));
+		connect(cdevice, TQT_SIGNAL(cardInserted(TDECryptographicCardDevice*)), this, TQT_SLOT(cryptographicCardInserted(TDECryptographicCardDevice*)));
+		connect(cdevice, TQT_SIGNAL(cardRemoved(TDECryptographicCardDevice*)), this, TQT_SLOT(cryptographicCardRemoved(TDECryptographicCardDevice*)));
+		cdevice->enableCardMonitoring(true);
+		// cdevice->enablePINEntryCallbacks(true);
 	}
 
 #ifdef KEEP_MOUSE_UNGRABBED
@@ -781,11 +797,11 @@ void LockProcess::readSaver()
 			TQStringList saverTypes = TQStringList::split(";", saverType);
 			for (uint i = 0; i < saverTypes.count(); i++) {
 				if ((saverTypes[i] == "ManipulateScreen") && !manipulatescreen) {
-					kdDebug(1204) << "Screensaver is type ManipulateScreen and ManipulateScreen is forbidden" << endl;
+					kdDebug(KDESKTOP_DEBUG_ID) << "Screensaver is type ManipulateScreen and ManipulateScreen is forbidden" << endl;
 					mForbidden = true;
 				}
 				if ((saverTypes[i] == "OpenGL") && !opengl) {
-					kdDebug(1204) << "Screensaver is type OpenGL and OpenGL is forbidden" << endl;
+					kdDebug(KDESKTOP_DEBUG_ID) << "Screensaver is type OpenGL and OpenGL is forbidden" << endl;
 					mForbidden = true;
 				}
 				if (saverTypes[i] == "OpenGL") {
@@ -794,7 +810,7 @@ void LockProcess::readSaver()
 			}
 		}
 
-		kdDebug(1204) << "mForbidden: " << (mForbidden ? "true" : "false") << endl;
+		kdDebug(KDESKTOP_DEBUG_ID) << "mForbidden: " << (mForbidden ? "true" : "false") << endl;
 
 		if (trinity_desktop_lock_use_system_modal_dialogs) {
 			if (config.hasActionGroup("InWindow")) {
@@ -968,7 +984,7 @@ void LockProcess::createSaverWindow()
 		}
 	}
 
-	kdDebug(1204) << "Saver window Id: " << winId() << endl;
+	kdDebug(KDESKTOP_DEBUG_ID) << "Saver window Id: " << winId() << endl;
 }
 
 void LockProcess::desktopResized()
@@ -1307,7 +1323,7 @@ bool LockProcess::startSaver(bool notify_ready)
 {
 	if (!child_saver && !grabInput())
 	{
-		kdWarning(1204) << "LockProcess::startSaver() grabInput() failed!!!!" << endl;
+		kdWarning(KDESKTOP_DEBUG_ID) << "LockProcess::startSaver() grabInput() failed!!!!" << endl;
 		return false;
 	}
 	mBusy = false;
@@ -1393,7 +1409,7 @@ bool LockProcess::startSaver(bool notify_ready)
 //
 void LockProcess::stopSaver()
 {
-	kdDebug(1204) << "LockProcess: stopping saver" << endl;
+	kdDebug(KDESKTOP_DEBUG_ID) << "LockProcess: stopping saver" << endl;
 	mHackProc.kill(SIGCONT);
 	stopHack();
 	mSuspended = false;
@@ -1446,30 +1462,30 @@ bool LockProcess::startLock()
 		GreeterPluginHandle plugin;
 		TQString path = KLibLoader::self()->findLibrary( ((*it)[0] == '/' ? *it : "kgreet_" + *it ).latin1() );
 		if (path.isEmpty()) {
-			kdWarning(1204) << "GreeterPlugin " << *it << " does not exist" << endl;
+			kdWarning(KDESKTOP_DEBUG_ID) << "GreeterPlugin " << *it << " does not exist" << endl;
 			continue;
 		}
 		if (!(plugin.library = KLibLoader::self()->library( path.latin1() ))) {
-			kdWarning(1204) << "Cannot load GreeterPlugin " << *it << " (" << path << ")" << endl;
+			kdWarning(KDESKTOP_DEBUG_ID) << "Cannot load GreeterPlugin " << *it << " (" << path << ")" << endl;
 			continue;
 		}
 		if (!plugin.library->hasSymbol( "kgreeterplugin_info" )) {
-			kdWarning(1204) << "GreeterPlugin " << *it << " (" << path << ") is no valid greet widget plugin" << endl;
+			kdWarning(KDESKTOP_DEBUG_ID) << "GreeterPlugin " << *it << " (" << path << ") is no valid greet widget plugin" << endl;
 			plugin.library->unload();
 			continue;
 		}
 		plugin.info = (kgreeterplugin_info*)plugin.library->symbol( "kgreeterplugin_info" );
 		if (plugin.info->method && !mMethod.isEmpty() && mMethod != plugin.info->method) {
-			kdDebug(1204) << "GreeterPlugin " << *it << " (" << path << ") serves " << plugin.info->method << ", not " << mMethod << endl;
+			kdDebug(KDESKTOP_DEBUG_ID) << "GreeterPlugin " << *it << " (" << path << ") serves " << plugin.info->method << ", not " << mMethod << endl;
 			plugin.library->unload();
 			continue;
 		}
 		if (!plugin.info->init( mMethod, getConf, this )) {
-			kdDebug(1204) << "GreeterPlugin " << *it << " (" << path << ") refuses to serve " << mMethod << endl;
+			kdDebug(KDESKTOP_DEBUG_ID) << "GreeterPlugin " << *it << " (" << path << ") refuses to serve " << mMethod << endl;
 			plugin.library->unload();
 			continue;
 		}
-		kdDebug(1204) << "GreeterPlugin " << *it << " (" << plugin.info->method << ", " << plugin.info->name << ") loaded" << endl;
+		kdDebug(KDESKTOP_DEBUG_ID) << "GreeterPlugin " << *it << " (" << plugin.info->method << ", " << plugin.info->name << ") loaded" << endl;
 		greetPlugin = plugin;
 		mLocked = true;
 		DM().setLock( true );
@@ -1588,7 +1604,7 @@ bool LockProcess::startHack()
 	if (!path.isEmpty()) {
 		mHackProc << path;
 
-		kdDebug(1204) << "Starting hack: " << path << endl;
+		kdDebug(KDESKTOP_DEBUG_ID) << "Starting hack: " << path << endl;
 
 		while (!ts.atEnd()) {
 			ts >> word;
@@ -2297,10 +2313,10 @@ void LockProcess::stayOnTop()
 		// and stack others below it
 		Window* stack = new Window[ mDialogs.count() + mVkbdWindows.count() + 1 ];
 		int count = 0;
-		for( TQValueList< VkbdWindow >::ConstIterator it = mVkbdWindows.begin(); it != mVkbdWindows.end(); ++it )
+		for( TQValueList< VkbdWindow >::ConstIterator it = mVkbdWindows.begin(); it != mVkbdWindows.end(); ++it ) {
 			stack[ count++ ] = (*it).id;
 		}
-		for( TQValueList< TQWidget* >::ConstIterator it = mDialogs.begin(); it != mDialogs.end(); ++it )
+		for( TQValueList< TQWidget* >::ConstIterator it = mDialogs.begin(); it != mDialogs.end(); ++it ) {
 			stack[ count++ ] = (*it)->winId();
 		}
 		stack[ count++ ] = winId();
@@ -2792,6 +2808,110 @@ void LockProcess::processInputPipeCommand(TQString inputcommand) {
 		mForceReject = false;
 		mClosingWindows = false;
 		return;
+	}
+}
+
+void LockProcess::cryptographicCardInserted(TDECryptographicCardDevice* cdevice) {
+	TQString login_name = TQString::null;
+	X509CertificatePtrList certList = cdevice->cardX509Certificates();
+	if (certList.count() > 0) {
+		KSSLCertificate* card_cert = NULL;
+		card_cert = KSSLCertificate::fromX509(certList[0]);
+		TQStringList cert_subject_parts = TQStringList::split("/", card_cert->getSubject(), false);
+		for (TQStringList::Iterator it = cert_subject_parts.begin(); it != cert_subject_parts.end(); ++it ) {
+			TQString lcpart = (*it).lower();
+			if (lcpart.startsWith("cn=")) {
+				login_name = lcpart.right(lcpart.length() - strlen("cn="));
+			}
+		}
+		delete card_cert;
+	}
+
+	if (login_name != "") {
+		KUser user;
+		if (login_name == user.loginName()) {
+			// Activate appropriate VT
+			DM dm;
+			SessList sess;
+			if (dm.localSessions(sess)) {
+				TQString user, loc;
+				for (SessList::ConstIterator it = sess.begin(); it != sess.end(); ++it) {
+					DM::sess2Str2(*it, user, loc);
+					if ((*it).self) {
+						// Switch VTs
+						DM().switchVT((*it).vt);
+						break;
+					}
+				}
+			}
+
+			// Pass login to the PAM stack...
+			if (dynamic_cast<SAKDlg*>(currentDialog)) {
+				dynamic_cast<SAKDlg*>(currentDialog)->closeDialogForced();
+				TQTimer::singleShot(0, this, SLOT(signalPassDlgToAttemptCardLogin()));
+			}
+			else if (dynamic_cast<SecureDlg*>(currentDialog)) {
+				dynamic_cast<SecureDlg*>(currentDialog)->closeDialogForced();
+				TQTimer::singleShot(0, this, SLOT(signalPassDlgToAttemptCardLogin()));
+			}
+			else if (dynamic_cast<PasswordDlg*>(currentDialog)) {
+				signalPassDlgToAttemptCardLogin();
+			}
+		}
+	}
+}
+
+void LockProcess::cryptographicCardRemoved(TDECryptographicCardDevice* cdevice) {
+	PasswordDlg* passDlg = dynamic_cast<PasswordDlg*>(currentDialog);
+	if (passDlg) {
+		passDlg->resetCardLogin();
+	}
+	else {
+		TQTimer::singleShot(0, this, SLOT(signalPassDlgToAttemptCardAbort()));
+	}
+}
+
+void LockProcess::signalPassDlgToAttemptCardLogin() {
+	PasswordDlg* passDlg = dynamic_cast<PasswordDlg*>(currentDialog);
+	if (passDlg) {
+		passDlg->attemptCardLogin();
+	}
+	else {
+		if (currentDialog) {
+			// Try again later
+			TQTimer::singleShot(0, this, SLOT(signalPassDlgToAttemptCardLogin()));
+		}
+	}
+}
+
+void LockProcess::signalPassDlgToAttemptCardAbort() {
+	PasswordDlg* passDlg = dynamic_cast<PasswordDlg*>(currentDialog);
+	if (passDlg) {
+		passDlg->resetCardLogin();
+	}
+	else {
+		if (currentDialog) {
+			// Try again later
+			TQTimer::singleShot(0, this, SLOT(signalPassDlgToAttemptCardAbort()));
+		}
+	}
+}
+
+void LockProcess::cryptographicCardPinRequested(TQString prompt, TDECryptographicCardDevice* cdevice) {
+	TQCString password;
+	const char * pin_entry;
+
+	QueryDlg qryDlg(this);
+	qryDlg.updateLabel(prompt);
+	qryDlg.setUnlockIcon();
+	mForceReject = false;
+	execDialog(&qryDlg);
+	if (mForceReject == false) {
+		pin_entry = qryDlg.getEntry();
+		cdevice->setProvidedPin(pin_entry);
+	}
+	else {
+		cdevice->setProvidedPin(TQString::null);
 	}
 }
 

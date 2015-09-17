@@ -180,7 +180,7 @@ PAM_conv( int num_msg,
 
 	ReInitErrorLog();
 	Debug( "PAM_conv\n" );
-	for (count = 0; count < num_msg; count++)
+	for (count = 0; count < num_msg; count++) {
 		switch (msg[count]->msg_style) {
 		case PAM_TEXT_INFO:
 			Debug( " PAM_TEXT_INFO: %s\n", msg[count]->msg );
@@ -201,9 +201,18 @@ PAM_conv( int num_msg,
 				/* case PAM_PROMPT_ECHO_ON: cannot happen */
 				case PAM_PROMPT_ECHO_OFF:
 					Debug( " PAM_PROMPT_ECHO_OFF (usecur): %s\n", msg[count]->msg );
-					if (!curpass)
-						pd->gconv( GCONV_PASS, 0 );
-					StrDup( &reply[count].resp, curpass );
+					// WARNING
+					// This is far from foolproof, but it's the best we can do at this time...
+					// Try to detect PIN entry requests
+					if (strstr(msg[count]->msg, "PIN")) {
+						reply[count].resp = pd->gconv(GCONV_HIDDEN, msg[count]->msg);
+					}
+					else {
+						if (!curpass) {
+							pd->gconv( GCONV_PASS, 0 );
+						}
+						StrDup( &reply[count].resp, curpass );
+					}
 					break;
 				default:
 					LogError( "Unknown PAM message style <%d>\n", msg[count]->msg_style );
@@ -237,6 +246,7 @@ PAM_conv( int num_msg,
 			}
 			reply[count].resp_retcode = PAM_SUCCESS; /* unused in linux-pam */
 		}
+	}
 	Debug( " PAM_conv success\n" );
 	*resp = reply;
 	return PAM_SUCCESS;
@@ -769,7 +779,6 @@ Verify( GConvFunc gconv, int rootok )
 	}
 
 #ifdef USE_PAM
-
 	Debug( " pam_acct_mgmt() ...\n" );
 	pretc = pam_acct_mgmt( pamh, 0 );
 	ReInitErrorLog();

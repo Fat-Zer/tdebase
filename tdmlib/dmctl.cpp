@@ -25,6 +25,7 @@
 #include <dcopclient.h>
 
 #include <tqregexp.h>
+#include <tqfile.h>
 
 #include <X11/Xauth.h>
 #include <X11/Xlib.h>
@@ -37,8 +38,34 @@
 #include <fcntl.h>
 #include <errno.h>
 
+#include <config.h>
+
+static TQString readcfg(const char *cfg_file) {
+	TQString ctl = "/var/run/xdmctl";
+
+	TQStringList lines;
+	TQFile file(cfg_file);
+	if ( file.open( IO_ReadOnly ) ) {
+		TQTextStream stream(&file);
+		TQString line;
+		while ( !stream.atEnd() ) {
+			line = stream.readLine();
+			TQStringList keyvaluepair = TQStringList::split("=", line, false);
+			if (keyvaluepair.count() > 1) {
+				if (keyvaluepair[0].lower() == "FifoDir") {
+					ctl = keyvaluepair[1];
+				}
+			}
+		}
+		file.close();
+	}
+
+	return ctl;
+}
+
 static int DMType = DM::Unknown;
-static const char *ctl, *dpy;
+static const char *dpy;
+static TQString ctl;
 
 DM::DM() : fd( -1 )
 {
@@ -46,16 +73,27 @@ DM::DM() : fd( -1 )
 	struct sockaddr_un sa;
 
 	if (DMType == Unknown) {
-		if (!(dpy = ::getenv( "DISPLAY" )))
-			DMType = NoDM;
-		else if ((ctl = ::getenv( "DM_CONTROL" )))
+		if (!(dpy = ::getenv( "DISPLAY" ))) {
+			// Try to read TDM control file
+			if ((ctl = readcfg(KDE_CONFDIR "/tdm/tdmrc")) != TQString::null) {
+				DMType = NewTDM;
+			}
+			else {
+				DMType = NoDM;
+			}
+		}
+		else if ((ctl = ::getenv( "DM_CONTROL" )) != TQString::null) {
 			DMType = NewTDM;
-		else if ((ctl = ::getenv( "XDM_MANAGED" )) && ctl[0] == '/')
+		}
+		else if (((ctl = ::getenv( "XDM_MANAGED" )) != TQString::null) && ctl[0] == '/') {
 			DMType = OldTDM;
-		else if (::getenv( "GDMSESSION" ))
+		}
+		else if (::getenv( "GDMSESSION" )) {
 			DMType = GDM;
-		else
+		}
+		else {
 			DMType = NoDM;
+		}
 	}
 	switch (DMType) {
 	default:
@@ -76,12 +114,17 @@ DM::DM() : fd( -1 )
 				}
 			}
 			GDMAuthenticate();
-		} else {
-			if ((ptr = const_cast<char*>(strchr( dpy, ':' ))))
-				ptr = strchr( ptr, '.' );
-			snprintf( sa.sun_path, sizeof(sa.sun_path),
-			          "%s/dmctl-%.*s/socket",
-			          ctl, ptr ? int(ptr - dpy) : 512, dpy );
+		}
+		else {
+			if (!dpy) {
+				snprintf( sa.sun_path, sizeof(sa.sun_path), "%s/dmctl/socket", ctl.ascii() );
+			}
+			else {
+				if ((ptr = const_cast<char*>(strchr( dpy, ':' )))) {
+					ptr = strchr( ptr, '.' );
+				}
+				snprintf( sa.sun_path, sizeof(sa.sun_path), "%s/dmctl-%.*s/socket", ctl.ascii(), ptr ? int(ptr - dpy) : 512, dpy );
+			}
 			if (::connect( fd, (struct sockaddr *)&sa, sizeof(sa) )) {
 				::close( fd );
 				fd = -1;
@@ -100,8 +143,9 @@ DM::DM() : fd( -1 )
 
 DM::~DM()
 {
-	if (fd >= 0)
+	if (fd >= 0) {
 		close( fd );
+	}
 }
 
 bool
@@ -172,13 +216,15 @@ DM::exec( const char *cmd, TQCString &buf )
 bool
 DM::canShutdown()
 {
-	if (DMType == OldTDM)
-		return strstr( ctl, ",maysd" ) != 0;
+	if (DMType == OldTDM) {
+		return strstr( ctl.ascii(), ",maysd" ) != 0;
+	}
 
 	TQCString re;
 
-	if (DMType == GDM)
+	if (DMType == GDM) {
 		return exec( "QUERY_LOGOUT_ACTION\n", re ) && re.find("HALT") >= 0;
+	}
 
 	return exec( "caps\n", re ) && re.find( "\tshutdown" ) >= 0;
 }
@@ -282,7 +328,7 @@ DM::numReserve()
 		return 1; /* Bleh */
 
 	if (DMType == OldTDM)
-		return strstr( ctl, ",rsvd" ) ? 1 : -1;
+		return strstr( ctl.ascii(), ",rsvd" ) ? 1 : -1;
 
 	TQCString re;
 	int p;
@@ -304,8 +350,9 @@ DM::startReserve()
 bool
 DM::localSessions( SessList &list )
 {
-	if (DMType == OldTDM)
+	if (DMType == OldTDM) {
 		return false;
+	}
 
 	TQCString re;
 
@@ -325,8 +372,9 @@ DM::localSessions( SessList &list )
 			list.append( se );
 		}
 	} else {
-		if (!exec( "list\talllocal\n", re ))
+		if (!exec( "list\talllocal\n", re )) {
 			return false;
+		}
 		TQStringList sess = TQStringList::split( TQChar('\t'), re.data() + 3 );
 		for (TQStringList::ConstIterator it = sess.begin(); it != sess.end(); ++it) {
 			TQStringList ts = TQStringList::split( TQChar(','), *it, true );

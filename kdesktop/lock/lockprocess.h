@@ -10,6 +10,11 @@
 #ifndef __LOCKENG_H__
 #define __LOCKENG_H__
 
+#include <ksslcertificate.h>
+
+#include <tdehardwaredevices.h>
+#include <tdecryptographiccarddevice.h>
+
 #include <kgreeterplugin.h>
 
 #include <kprocess.h>
@@ -134,6 +139,11 @@ class LockProcess : public TQWidget
 		void startSecureDialog();
 		void slotMouseActivity(XEvent *event);
 		void processInputPipeCommand(TQString command);
+		void cryptographicCardInserted(TDECryptographicCardDevice*);
+		void cryptographicCardRemoved(TDECryptographicCardDevice*);
+		void cryptographicCardPinRequested(TQString prompt, TDECryptographicCardDevice* cdevice);
+		void signalPassDlgToAttemptCardLogin();
+		void signalPassDlgToAttemptCardAbort();
 
 	private:
 		void configure();

@@ -21,3 +21,4 @@ include( ConfigureChecks.cmake )
 
 add_subdirectory( backend )
 add_subdirectory( kfrontend )
+add_subdirectory( cryptocardwatcher )

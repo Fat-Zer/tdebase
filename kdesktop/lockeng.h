@@ -18,6 +18,7 @@
 
 #include <tqdbusconnection.h>
 
+class TDECryptographicCardDevice;
 class DCOPClientTransaction;
 class TQT_DBusMessage;
 class TQT_DBusProxy;
@@ -134,6 +135,9 @@ private slots:
 	void handleSecureDialog();
 	void slotSAKProcessExited();
 
+	void cryptographicCardInserted(TDECryptographicCardDevice*);
+	void cryptographicCardRemoved(TDECryptographicCardDevice*);
+
 	/**
 	 * Enable wallpaper exports
 	 */
@@ -186,6 +190,7 @@ private:
 	bool mTerminationRequested;
 	bool mSaverProcessReady;
 	bool mNewVTAfterLockEngage;
+	bool mValidCryptoCardInserted;
 	int mSwitchVTAfterLockEngage;
 	struct sigaction mSignalAction;
 	TQT_DBusConnection dBusConn;

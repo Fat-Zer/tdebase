@@ -297,6 +297,10 @@ KWinbindGreeter::setUser( const TQString &user )
 	passwdEdit->selectAll();
 }
 
+void KWinbindGreeter::lockUserEntry( const bool lock ) {
+	loginEdit->setEnabled(!lock);
+}
+
 void // virtual
 KWinbindGreeter::setPassword( const TQString &pass )
 {

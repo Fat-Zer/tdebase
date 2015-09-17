@@ -100,6 +100,7 @@ class KGVerify : public TQObject, public KGreeterPluginHandler {
 	void presetEntity( const TQString &entity, int field );
 	TQString getEntity() const;
 	void setUser( const TQString &user );
+	void lockUserEntry( const bool lock );
 	void setPassword( const TQString &pass );
 	/* virtual */ void selectPlugin( int id );
 	bool entitiesLocal() const;
@@ -113,6 +114,7 @@ class KGVerify : public TQObject, public KGreeterPluginHandler {
 	void resume();
 	void accept();
 	void reject();
+	void requestAbort();
 
 	int coreLock;
 
@@ -146,6 +148,7 @@ class KGVerify : public TQObject, public KGreeterPluginHandler {
 	bool capsLocked;
 	bool enabled, running, suspended, failed, delayed, cont;
 	bool authTok, isClear, timeable;
+	bool abortRequested;
 
 	static void VMsgBox( TQWidget *parent, const TQString &user, TQMessageBox::Icon type, const TQString &mesg );
 	static void VErrBox( TQWidget *parent, const TQString &user, const char *msg );
@@ -158,6 +161,7 @@ class KGVerify : public TQObject, public KGreeterPluginHandler {
 	void performAutoLogin();
 	bool scheduleAutoLogin( bool initial );
 	void doReject( bool initial );
+	void setPassPromptText(TQString text, bool use_default_text=false);
 
   private slots:
 	//virtual void slotPluginSelected( int id ) = 0;

@@ -72,6 +72,7 @@ bool has_twin = false;
 bool is_themed = false;
 bool trinity_desktop_lock_use_sak = TRUE;
 bool trinity_desktop_synchronize_keyboard_lights = TRUE;
+bool trinity_desktop_watch_cryptographic_cards = TRUE;
 TQPoint primaryScreenPosition;
 
 static int
@@ -216,6 +217,7 @@ kg_main( const char *argv0 )
 
 	TDEProcess *tsak = 0;
 	TDEProcess *kbdl = 0;
+	TDEProcess *ccsm = 0;
 	TDEProcess *proc = 0;
 	TDEProcess *comp = 0;
 	TDEProcess *dcop = 0;
@@ -250,6 +252,12 @@ kg_main( const char *argv0 )
 		kbdl = new TDEProcess;
 		*kbdl << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + "tdekbdledsync";
 		kbdl->start();
+	}
+
+	if (trinity_desktop_watch_cryptographic_cards) {
+		ccsm = new TDEProcess;
+		*ccsm << TQCString( argv0, strrchr( argv0, '/' ) - argv0 + 2 ) + "tdecryptocardwatcher";
+		ccsm->start();
 	}
 
 	XSetErrorHandler( ignoreXError );
@@ -517,6 +525,10 @@ kg_main( const char *argv0 )
 	if (kbdl) {
 		kbdl->closeStdin();
 		kbdl->detach();
+	}
+	if (ccsm) {
+		ccsm->closeStdin();
+		ccsm->detach();
 	}
 	if (comp) {
 		if (comp->isRunning()) {

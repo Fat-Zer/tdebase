@@ -50,6 +50,7 @@ class KClassicGreeter : public TQObject, public KGreeterPlugin {
 	virtual void presetEntity( const TQString &entity, int field );
 	virtual TQString getEntity() const;
 	virtual void setUser( const TQString &user );
+	virtual void lockUserEntry( const bool lock );
 	virtual void setPassword( const TQString &pass );
 	virtual void setEnabled( bool on );
 	virtual bool textMessage( const char *message, bool error );
@@ -70,6 +71,7 @@ class KClassicGreeter : public TQObject, public KGreeterPlugin {
 	void slotActivity();
 
   private:
+	TQString passwordPrompt();
 	void setActive( bool enable );
 	void setActive2( bool enable );
 	void returnData();
@@ -81,6 +83,7 @@ class KClassicGreeter : public TQObject, public KGreeterPlugin {
 	TQString fixedUser, curUser;
 	Function func;
 	Context ctx;
+	TQGridLayout* grid;
 	int exp, pExp, has;
 	bool running, authTok;
 };

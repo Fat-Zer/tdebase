@@ -40,6 +40,9 @@ public:
 	KdmLabel( KdmItem *parent, const TQDomNode &node, const char *name = 0 );
 	void setText( const TQString &txt );
 
+	/* Method to lookup the caption associated with an item */
+	TQString lookupStock( const TQString &stock );
+
 protected:
 	// reimplemented; returns the minimum size of rendered text
 	virtual TQSize sizeHint();
@@ -71,9 +74,6 @@ public slots:
 	void slotAccel();
 
 private:
-	/* Method to lookup the caption associated with an item */
-	TQString lookupStock( const TQString &stock );
-
 	/* Lookup variables in the text */
 	TQString lookupText( const TQString &t );
 

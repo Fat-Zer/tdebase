@@ -11,10 +11,16 @@
 
 #include <stdlib.h>
 
+#include <ksslcertificate.h>
+
+#include <tdehardwaredevices.h>
+#include <tdecryptographiccarddevice.h>
+
 #include <kstandarddirs.h>
 #include <tdeapplication.h>
 #include <kservicegroup.h>
 #include <kdebug.h>
+#include <kuser.h>
 #include <tdelocale.h>
 #include <tqfile.h>
 #include <tqtimer.h>
@@ -82,6 +88,7 @@ SaverEngine::SaverEngine()
 	  mTerminationRequested(false),
 	  mSaverProcessReady(false),
 	  mNewVTAfterLockEngage(false),
+	  mValidCryptoCardInserted(false),
 	  mSwitchVTAfterLockEngage(-1),
 	  dBusLocal(0),
 	  dBusWatch(0),
@@ -158,6 +165,17 @@ SaverEngine::SaverEngine()
 	sigaddset(&mThreadBlockSet, SIGTTIN);
 	pthread_sigmask(SIG_BLOCK, &mThreadBlockSet, NULL);
 
+	// Initialize SmartCard readers
+	TDEGenericDevice *hwdevice;
+	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEGenericHardwareList cardReaderList = hwdevices->listByDeviceClass(TDEGenericDeviceType::CryptographicCard);
+	for (hwdevice = cardReaderList.first(); hwdevice; hwdevice = cardReaderList.next()) {
+		TDECryptographicCardDevice* cdevice = static_cast<TDECryptographicCardDevice*>(hwdevice);
+		connect(cdevice, TQT_SIGNAL(certificateListAvailable(TDECryptographicCardDevice*)), this, TQT_SLOT(cryptographicCardInserted(TDECryptographicCardDevice*)));
+		connect(cdevice, TQT_SIGNAL(cardRemoved(TDECryptographicCardDevice*)), this, TQT_SLOT(cryptographicCardRemoved(TDECryptographicCardDevice*)));
+		cdevice->enableCardMonitoring(true);
+	}
+
 	dBusConnect();
 }
 
@@ -184,6 +202,43 @@ SaverEngine::~SaverEngine()
 	m_helperThread->wait();
 	delete m_threadHelperObject;
 	delete m_helperThread;
+}
+
+void SaverEngine::cryptographicCardInserted(TDECryptographicCardDevice* cdevice) {
+	TQString login_name = TQString::null;
+	X509CertificatePtrList certList = cdevice->cardX509Certificates();
+	if (certList.count() > 0) {
+		KSSLCertificate* card_cert = NULL;
+		card_cert = KSSLCertificate::fromX509(certList[0]);
+		TQStringList cert_subject_parts = TQStringList::split("/", card_cert->getSubject(), false);
+		for (TQStringList::Iterator it = cert_subject_parts.begin(); it != cert_subject_parts.end(); ++it ) {
+			TQString lcpart = (*it).lower();
+			if (lcpart.startsWith("cn=")) {
+				login_name = lcpart.right(lcpart.length() - strlen("cn="));
+			}
+		}
+		delete card_cert;
+	}
+
+	if (login_name != "") {
+		KUser user;
+		if (login_name == user.loginName()) {
+			mValidCryptoCardInserted = true;
+			// Disable saver
+			enable(false);
+		}
+	}
+}
+
+void SaverEngine::cryptographicCardRemoved(TDECryptographicCardDevice* cdevice) {
+	if (mValidCryptoCardInserted) {
+		// Restore saver timeout
+		configure();
+
+		// Force lock
+		lockScreen();
+	}
+	mValidCryptoCardInserted = false;
 }
 
 //---------------------------------------------------------------------------
@@ -283,28 +338,25 @@ bool SaverEngine::enable( bool e )
 
 	mEnabled = e;
 
-	if (mEnabled)
-	{
+	if (mEnabled) {
 		if ( !mXAutoLock ) {
 			mXAutoLock = new XAutoLock();
 			connect(mXAutoLock, TQT_SIGNAL(timeout()), TQT_SLOT(idleTimeout()));
 		}
-			mXAutoLock->setTimeout(mTimeout);
-			mXAutoLock->setDPMS(true);
+		mXAutoLock->setTimeout(mTimeout);
+		mXAutoLock->setDPMS(true);
 		//mXAutoLock->changeCornerLockStatus( mLockCornerTopLeft, mLockCornerTopRight, mLockCornerBottomLeft, mLockCornerBottomRight);
 	
-			// We'll handle blanking
-			XSetScreenSaver(tqt_xdisplay(), mTimeout + 10, mXInterval, PreferBlanking, mXExposures);
-			kdDebug() << "XSetScreenSaver " << mTimeout + 10 << endl;
-	
-			mXAutoLock->start();
-	
-			kdDebug(1204) << "Saver Engine started, timeout: " << mTimeout << endl;
+		// We'll handle blanking
+		XSetScreenSaver(tqt_xdisplay(), mTimeout + 10, mXInterval, PreferBlanking, mXExposures);
+		kdDebug() << "XSetScreenSaver " << mTimeout + 10 << endl;
+
+		mXAutoLock->start();
+
+		kdDebug(1204) << "Saver Engine started, timeout: " << mTimeout << endl;
 	}
-	else
-	{
-		if (mXAutoLock)
-		{
+	else {
+		if (mXAutoLock) {
 			delete mXAutoLock;
 			mXAutoLock = 0;
 		}

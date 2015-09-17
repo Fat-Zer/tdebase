@@ -779,8 +779,8 @@ void DevicePropertiesDialog::populateDeviceInformation() {
 		if (m_device->type() == TDEGenericDeviceType::CryptographicCard) {
 			TDECryptographicCardDevice* cdevice = static_cast<TDECryptographicCardDevice*>(m_device);
 
-			connect(cdevice, TQT_SIGNAL(cardInserted()), this, TQT_SLOT(cryptographicCardInserted()));
-			connect(cdevice, TQT_SIGNAL(cardRemoved()), this, TQT_SLOT(cryptographicCardRemoved()));
+			connect(cdevice, TQT_SIGNAL(cardInserted(TDECryptographicCardDevice*)), this, TQT_SLOT(cryptographicCardInserted()));
+			connect(cdevice, TQT_SIGNAL(cardRemoved(TDECryptographicCardDevice*)), this, TQT_SLOT(cryptographicCardRemoved()));
 
 			updateCryptographicCardStatusDisplay();
 		}
@@ -926,6 +926,7 @@ void DevicePropertiesDialog::cryptLUKSAddKey() {
 			unsigned int key_slot = lvi->text(0).toUInt();
 			bool allow_card = false;
 			bool use_card = false;
+			bool luks_card_key_modified = false;
 			KSSLCertificate* card_cert = NULL;
 			X509* card_cert_x509;
 			TQString disk_uuid = sdevice->diskUUID();
@@ -988,6 +989,7 @@ void DevicePropertiesDialog::cryptLUKSAddKey() {
 
 						// Use the secret key as the LUKS passcode
 						new_password = randomKey;
+						luks_card_key_modified = true;
 					}
 					else {
 						KMessageBox::error(this, i18n("<qt><b>Key creation failed</b><br>Please check that you have write access to /etc/trinity/luks/card and try again</qt>"), i18n("Key creation failure"));
@@ -1080,6 +1082,16 @@ void DevicePropertiesDialog::cryptLUKSAddKey() {
 						if (sdevice->cryptAddKey(key_slot, new_password) != TDELUKSResult::Success) {
 							sdevice->cryptClearOperationsUnlockPassword();
 							KMessageBox::error(this, i18n("<qt><b>Key write failed</b><br>Please check the LUKS password and try again</qt>"), i18n("Key write failure"));
+						}
+						else {
+							if (luks_card_key_modified) {
+								if (KMessageBox::warningYesNo(this, i18n("<qt><b>You have created a new card-dependent key</b><br>Card-dependent keys work in conjunction with an encrypted key file stored on the host system.<br>When a card is used to boot, card-dependent keys must be updated in the initramfs image to become usable.<p>Would you like to update the initramfs image now?</qt>"), i18n("Update Required")) == KMessageBox::Yes) {
+									// Update the initramfs
+									if (system("update-initramfs -u -k all") != 0) {
+										KMessageBox::error(this, i18n("<qt><b>Initramfs update failed</b><br>Card-dependent keys may not be available for use until the root storage device is available / unlocked</qt>"), i18n("Initramfs update failure"));
+									}
+								}
+							}
 						}
 					}
 				}

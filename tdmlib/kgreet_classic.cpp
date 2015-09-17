@@ -45,6 +45,15 @@ protected:
 
 static int echoMode;
 
+TQString KClassicGreeter::passwordPrompt() {
+	if (func == Authenticate) {
+		 return i18n("&Password:");
+	}
+	else {
+		return i18n("Current &password:");
+	}
+}
+
 KClassicGreeter::KClassicGreeter( KGreeterPluginHandler *_handler,
                                   KdmThemer *themer,
                                   TQWidget *parent, TQWidget *pred,
@@ -60,7 +69,7 @@ KClassicGreeter::KClassicGreeter( KGreeterPluginHandler *_handler,
 	running( false )
 {
 	KdmItem *user_entry = 0, *pw_entry = 0;
-	TQGridLayout *grid = 0;
+	grid = 0;
 	int line = 0;
 
 	layoutItem = 0;
@@ -120,11 +129,7 @@ KClassicGreeter::KClassicGreeter( KGreeterPluginHandler *_handler,
 			passwdEdit->adjustSize();
 			pw_entry->setWidget( passwdEdit );
 		} else {
-			passwdLabel = new TQLabel( passwdEdit,
-			                          func == Authenticate ?
-			                            i18n("&Password:") :
-			                            i18n("Current &password:"),
-			                          parent );
+			passwdLabel = new TQLabel( passwdEdit, passwordPrompt(), parent );
 			grid->addWidget( passwdLabel, line, 0 );
 			grid->addWidget( passwdEdit, line++, 1 );
 		}
@@ -217,6 +222,10 @@ KClassicGreeter::setUser( const TQString &user )
 	passwdEdit->selectAll();
 }
 
+void KClassicGreeter::lockUserEntry( const bool lock ) {
+	loginEdit->setEnabled(!lock);
+}
+
 void // virtual
 KClassicGreeter::setPassword( const TQString &pass )
 {
@@ -276,10 +285,24 @@ void // virtual
 KClassicGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
 {
 	pExp = exp;
-	if (echo)
+	if (echo) {
 		exp = 0;
-	else if (!authTok)
+	}
+	else if (!authTok) {
 		exp = 1;
+		if (passwdLabel) {
+			if (prompt && (prompt[0] != 0)) {
+				passwdLabel->setText(prompt);
+			}
+			else {
+				passwdLabel->setText(passwordPrompt());
+			}
+			if (grid) {
+				grid->invalidate();
+				grid->activate();
+			}
+		}
+	}
 	else {
 		TQString pr( prompt );
 		if (pr.find( TQRegExp( "\\bpassword\\b", false ) ) >= 0) {
@@ -294,7 +317,8 @@ KClassicGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
 				                          KGreeterPluginHandler::IsSecret );
 				return;
 			}
-		} else {
+		}
+		else {
 			handler->gplugMsgBox( TQMessageBox::Critical,
 			                      i18n("Unrecognized prompt \"%1\"")
 			                      .arg( prompt ) );
@@ -392,6 +416,15 @@ KClassicGreeter::succeeded()
 void // virtual
 KClassicGreeter::failed()
 {
+	if (passwdLabel) {
+		// reset password prompt
+		passwdLabel->setText(passwordPrompt());
+		if (grid) {
+			grid->invalidate();
+			grid->activate();
+		}
+	}
+
 	// assert( running || timed_login );
 	setActive( false );
 	setActive2( false );
@@ -402,6 +435,15 @@ KClassicGreeter::failed()
 void // virtual
 KClassicGreeter::revive()
 {
+	if (passwdLabel) {
+		// reset password prompt
+		passwdLabel->setText(passwordPrompt());
+		if (grid) {
+			grid->invalidate();
+			grid->activate();
+		}
+	}
+
 	// assert( !running );
 	setActive2( true );
 	if (authTok) {
@@ -425,6 +467,15 @@ KClassicGreeter::revive()
 void // virtual
 KClassicGreeter::clear()
 {
+	if (passwdLabel) {
+		// reset password prompt
+		passwdLabel->setText(passwordPrompt());
+		if (grid) {
+			grid->invalidate();
+			grid->activate();
+		}
+	}
+
 	// assert( !running && !passwd1Edit );
 	passwdEdit->erase();
 	if (loginEdit) {

@@ -117,6 +117,12 @@ KdmThemer::findNode( const TQString &item ) const
 	return rootItem->findNode( item );
 }
 
+KdmItem *
+KdmThemer::findNodeByType( const TQString &item ) const
+{
+	return rootItem->findNodeByType( item );
+}
+
 void
 KdmThemer::updateGeometry( bool force )
 {

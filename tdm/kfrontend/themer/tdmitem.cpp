@@ -204,6 +204,22 @@ KdmItem::findNode( const TQString &_id ) const
 	return 0;
 }
 
+KdmItem *
+KdmItem::findNodeByType( const TQString &_type ) const
+{
+	if (itemType == _type)
+		return const_cast<KdmItem *>( this );
+
+	TQValueList<KdmItem *>::ConstIterator it;
+	for (it = m_children.begin(); it != m_children.end(); ++it) {
+		KdmItem *t = (*it)->findNodeByType( _type );
+		if (t)
+			return t;
+	}
+
+	return 0;
+}
+
 void
 KdmItem::setWidget( TQWidget *widget )
 {
@@ -336,11 +352,6 @@ KdmItem::paint( TQPainter *p, const TQRect &rect )
               else {
 		// We have compositing support!
 		TQRgb blend_color = tqRgba(m_backgroundModifier, m_backgroundModifier, m_backgroundModifier, 0);   // RGBA overlay
-		float alpha = tqAlpha(blend_color) / 255.;
-		int pixel = tqAlpha(blend_color) << 24 |
-				int(tqRed(blend_color) * alpha) << 16 |
-				int(tqGreen(blend_color) * alpha) << 8  |
-				int(tqBlue(blend_color) * alpha);
 
 		TQImage img( myWidget->size(), 32 );
 		img = img.convertDepth(32);

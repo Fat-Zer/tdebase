@@ -46,6 +46,8 @@ class TQListViewItem;
 class KGreeter;
 class SAKDlg;
 
+class TDECryptographicCardDevice;
+
 struct SessType {
 	TQString name, type;
 	bool hid;
@@ -138,6 +140,8 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
 
   private slots:
 	void slotLoadPrevWM();
+	void cryptographicCardInserted(TDECryptographicCardDevice*);
+	void cryptographicCardRemoved(TDECryptographicCardDevice*);
 
   private:
 	ControlPipeHandlerObject* mControlPipeHandler;

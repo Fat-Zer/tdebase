@@ -263,6 +263,10 @@ KPamGreeter::setUser( const TQString &user )
         }
 }
 
+void KPamGreeter::lockUserEntry( const bool lock ) {
+	loginEdit->setEnabled(!lock);
+}
+
 void // virtual
 KPamGreeter::setPassword( const TQString &pass )
 {

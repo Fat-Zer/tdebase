@@ -49,6 +49,9 @@ class PasswordDlg : public TQDialog, public KGreeterPluginHandler
 		virtual void gplugStart();
 		virtual void gplugActivity();
 		virtual void gplugMsgBox( TQMessageBox::Icon type, const TQString &text );
+
+		virtual void attemptCardLogin();
+		virtual void resetCardLogin();
 	
 	protected:
 		virtual void timerEvent(TQTimerEvent *);

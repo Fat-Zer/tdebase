@@ -72,8 +72,20 @@ PAM_conv (int num_msg, pam_message_type **msg,
         repl[count].resp = pd->conv(ConvGetNormal, msg[count]->msg);
         break;
       case PAM_PROMPT_ECHO_OFF:
-        repl[count].resp =
-            pd->conv(ConvGetHidden, pd->classic ? 0 : msg[count]->msg);
+        if (pd->classic) {
+          // WARNING
+          // This is far from foolproof, but it's the best we can do at this time...
+          // Try to detect PIN entry requests
+          if (strstr(msg[count]->msg, "PIN")) {
+            repl[count].resp = pd->conv(ConvGetHidden, msg[count]->msg);
+          }
+          else {
+            repl[count].resp = pd->conv(ConvGetHidden, 0);
+          }
+        }
+        else {
+          repl[count].resp = pd->conv(ConvGetHidden, msg[count]->msg);
+        }
         break;
 #ifdef PAM_BINARY_PROMPT
       case PAM_BINARY_PROMPT:

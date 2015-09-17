@@ -54,12 +54,12 @@
 						<normal alpha="0.0" color="#000000" />
 						<pos width="box" y="50%" anchor="w" height="box" />
 						<box xpadding="10" spacing="10" ypadding="0" orientation="vertical" >
-							<item type="label" >
+							<item type="label"  id="username-label">
 								<pos x="100%" anchor="ne" />
 								<normal color="#000000" font="Sans Condensed 10" />
 								<stock type="username-label" />
 							</item>
-							<item type="label" >
+							<item type="label" id="password-label">
 								<pos x="100%" anchor="ne" />
 								<normal color="#000000" font="Sans Condensed 10" />
 								<stock type="password-label" />

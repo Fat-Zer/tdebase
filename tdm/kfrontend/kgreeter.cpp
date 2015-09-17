@@ -33,6 +33,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "themer/tdmitem.h"
 #include "themer/tdmlabel.h"
 
+#include <dmctl.h>
+
+#include <ksslcertificate.h>
+
+#include <tdehardwaredevices.h>
+#include <tdecryptographiccarddevice.h>
+
 #include <tdeapplication.h>
 #include <tdelocale.h>
 #include <kstandarddirs.h>
@@ -210,6 +217,17 @@ KGreeter::KGreeter( bool framed )
 	if (curPlugin < 0) {
 		curPlugin = 0;
 		pluginList = KGVerify::init( _pluginsLogin );
+	}
+
+	// Initialize SmartCard readers
+	TDEGenericDevice *hwdevice;
+	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEGenericHardwareList cardReaderList = hwdevices->listByDeviceClass(TDEGenericDeviceType::CryptographicCard);
+	for (hwdevice = cardReaderList.first(); hwdevice; hwdevice = cardReaderList.next()) {
+		TDECryptographicCardDevice* cdevice = static_cast<TDECryptographicCardDevice*>(hwdevice);
+		connect(cdevice, TQT_SIGNAL(certificateListAvailable(TDECryptographicCardDevice*)), this, TQT_SLOT(cryptographicCardInserted(TDECryptographicCardDevice*)));
+		connect(cdevice, TQT_SIGNAL(cardRemoved(TDECryptographicCardDevice*)), this, TQT_SLOT(cryptographicCardRemoved(TDECryptographicCardDevice*)));
+		cdevice->enableCardMonitoring(true);
 	}
 
 	mControlPipeHandlerThread = new TQEventLoopThread();
@@ -827,6 +845,60 @@ KGreeter::verifySetUser( const TQString &user )
 {
 	curUser = user;
 	slotUserEntered();
+}
+
+void KGreeter::cryptographicCardInserted(TDECryptographicCardDevice* cdevice) {
+	TQString login_name = TQString::null;
+	X509CertificatePtrList certList = cdevice->cardX509Certificates();
+	if (certList.count() > 0) {
+		KSSLCertificate* card_cert = NULL;
+		card_cert = KSSLCertificate::fromX509(certList[0]);
+		TQStringList cert_subject_parts = TQStringList::split("/", card_cert->getSubject(), false);
+		for (TQStringList::Iterator it = cert_subject_parts.begin(); it != cert_subject_parts.end(); ++it ) {
+			TQString lcpart = (*it).lower();
+			if (lcpart.startsWith("cn=")) {
+				login_name = lcpart.right(lcpart.length() - strlen("cn="));
+			}
+		}
+		delete card_cert;
+	}
+
+	if (login_name != "") {
+		DM dm;
+		SessList sess;
+		bool vt_active = false;
+		bool user_active = false;
+		if (dm.localSessions(sess)) {
+			TQString user, loc;
+			for (SessList::ConstIterator it = sess.begin(); it != sess.end(); ++it) {
+				DM::sess2Str2(*it, user, loc);
+				if (user.startsWith(login_name + ": ")) {
+					// Found active session
+					user_active = true;
+				}
+				if ((*it).self) {
+					if ((*it).vt == dm.activeVT()) {
+						vt_active = true;
+					}
+				}
+			}
+		}
+
+		if (!user_active && vt_active) {
+			// Select the correct user
+			verify->setUser(login_name);
+			verifySetUser(login_name);
+			verify->lockUserEntry(true);
+
+			// Initiate login
+			verify->accept();
+		}
+	}
+}
+
+void KGreeter::cryptographicCardRemoved(TDECryptographicCardDevice* cdevice) {
+	verify->lockUserEntry(false);
+        verify->requestAbort();
 }
 
 KStdGreeter::KStdGreeter()

@@ -72,6 +72,7 @@ public:
 
 	virtual // just to put the reference in the vmt
 	KdmItem *findNode( const TQString & ) const;
+	KdmItem *findNodeByType( const TQString & ) const;
 
 	void updateGeometry( bool force ); // force = true for external calls
 

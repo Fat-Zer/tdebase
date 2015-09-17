@@ -152,6 +152,12 @@ public:
     virtual void setUser( const TQString &user ) = 0;
 
     /**
+     * Lock or unlock editing of the username entry field
+     * @param lock true to lock, false to unlock
+     */
+    virtual void lockUserEntry( const bool lock ) = 0;
+
+    /**
      * "Push" a password into the talker.
      * @param pass the password to set.
      */
@@ -183,7 +189,7 @@ public:
 
     /**
      * Prompt the user for data. Reply by calling handler->gplugReturnText().
-     * @param propmt the prompt to display. It may be null, in which case
+     * @param prompt the prompt to display. It may be null, in which case
      *  "Username"/"Password" should be shown and the replies should be tagged
      *  with the respective Is* flag.
      * @param echo if true, a normal input widget can be used, otherwise one that
