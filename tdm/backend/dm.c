@@ -51,6 +51,8 @@ from the copyright holder.
 # include <sys/vt.h>
 #endif
 
+#define MAX_VT_NUMBER 16
+
 static void SigHandler( int n );
 static int ScanConfigs( int force );
 static void StartDisplays( void );
@@ -511,7 +513,7 @@ StopToTTY( struct display *d )
 	if ((d->displayType & d_location) == dLocal)
 		switch (d->status) {
 		default:
-			rStopDisplay( d, DS_TEXTMODE | 0x100 );
+			rStopDisplay(d, DS_TEXTMODE | 0x100);
 		case reserve:
 		case textMode:
 			break;
@@ -523,9 +525,11 @@ CheckTTYMode( void )
 {
 	struct display *d;
 
-	for (d = displays; d; d = d->next)
-		if (d->status == zombie)
+	for (d = displays; d; d = d->next) {
+		if (d->status == zombie) {
 			return;
+		}
+	}
 
 	SwitchToTty();
 }
@@ -793,12 +797,12 @@ processGPipe( struct display *d )
 	case G_Console:
 #ifdef HAVE_VTS
 		if (*consoleTTYs) { /* sanity check against greeter */
-			ForEachDisplay( StopToTTY );
+			ForEachDisplay(StopToTTY);
 			CheckTTYMode();
 		}
 #else
 		if (*d->console) /* sanity check against greeter */
-			rStopDisplay( d, DS_TEXTMODE );
+			rStopDisplay(d, DS_TEXTMODE);
 #endif
 		break;
 	default:
@@ -860,12 +864,11 @@ ReapChildren( void )
 	struct display *d;
 	waitType status;
 
-	while ((pid = waitpid( -1, &status, WNOHANG )) > 0)
-	{
+	while ((pid = waitpid( -1, &status, WNOHANG)) > 0) {
 		Debug( "manager wait returns  pid %d  sig %d  core %d  code %d\n",
 		       pid, waitSig( status ), waitCore( status ), waitCode( status ) );
 		/* SUPPRESS 560 */
-		if ((d = FindDisplayByPid( pid ))) {
+		if ((d = FindDisplayByPid(pid))) {
 			d->pid = -1;
 			UnregisterInput( d->pipe.rfd );
 			GClosen (&d->pipe);
@@ -953,32 +956,38 @@ ReapChildren( void )
 					if (d->follower) {
 						d->follower->serverVT = d->serverVT;
 						d->follower = 0;
-					} else {
-						int con = open( "/dev/console", O_RDONLY );
+					}
+					else {
+						int con = open("/dev/console", O_RDONLY);
 						if (con >= 0) {
 							struct vt_stat vtstat;
 							ioctl( con, VT_GETSTATE, &vtstat );
 							if (vtstat.v_active == d->serverVT) {
 								int vt = 1;
 								struct display *di;
-								for (di = displays; di; di = di->next)
-									if (di != d && di->serverVT)
+								for (di = displays; di; di = di->next) {
+									if (di != d && di->serverVT) {
 										vt = di->serverVT;
-								for (di = displays; di; di = di->next)
+									}
+								}
+								for (di = displays; di; di = di->next) {
 									if (di != d && di->serverVT &&
 									    (di->userSess >= 0 ||
-									     di->status == remoteLogin))
+									     di->status == remoteLogin)) {
 										vt = di->serverVT;
-								ioctl( con, VT_ACTIVATE, vt );
+									}
+								}
+								ioctl(con, VT_ACTIVATE, vt);
 							}
-							ioctl( con, VT_DISALLOCATE, d->serverVT );
-							close( con );
+							ioctl(con, VT_DISALLOCATE, d->serverVT);
+							close(con);
 						}
 					}
 					d->serverVT = 0;
+					d->status = notRunning;
 				}
 #endif
-				rStopDisplay( d, d->zstatus );
+				rStopDisplay(d, d->zstatus);
 				break;
 			case phoenix:
 				Debug( "phoenix X server arises, restarting display %s\n",
@@ -1032,11 +1041,14 @@ wouldShutdown( void )
 	struct display *d;
 
 	if (sdRec.force != SHUT_CANCEL) {
-		if (sdRec.force == SHUT_FORCEMY)
-			for (d = displays; d; d = d->next)
+		if (sdRec.force == SHUT_FORCEMY) {
+			for (d = displays; d; d = d->next) {
 				if (d->status == remoteLogin ||
-				    (d->userSess >= 0 && d->userSess != sdRec.uid))
+					(d->userSess >= 0 && d->userSess != sdRec.uid)) {
 					return 0;
+				}
+			}
+		}
 		return 1;
 	}
 	return !AnyActiveDisplays();
@@ -1078,7 +1090,9 @@ SigHandler( int n )
 	int olderrno = errno;
 	char buf = (char)n;
 	/* Debug( "caught signal %d\n", n ); this hangs in syslog() */
-	write( signalFds[1], &buf, 1 );
+	if (write(signalFds[1], &buf, 1) != 1) {
+		// ERROR
+	}
 #ifdef __EMX__
 	(void)Signal( n, SigHandler );
 #endif
@@ -1178,23 +1192,27 @@ MainLoop( void )
 					break;
 				case SIGCHLD:
 					ReapChildren();
-					if (!Stopping && autoRescan)
+					if (!Stopping && autoRescan) {
 						RescanConfigs( FALSE );
+					}
 					break;
 				case SIGUSR1:
 					if (startingServer &&
-					    startingServer->serverStatus == starting)
+					    startingServer->serverStatus == starting) {
 						StartServerSuccess();
+					}
 					break;
 				}
 				continue;
 			}
 #ifdef XDMCP
-			if (ProcessListenSockets( &reads ))
+			if (ProcessListenSockets( &reads )) {
 				continue;
+			}
 #endif	/* XDMCP */
-			if (handleCtrl( &reads, 0 ))
+			if (handleCtrl( &reads, 0 )) {
 				continue;
+			}
 			/* Must be last (because of the breaks)! */
 		  again:
 			for (d = displays; d; d = d->next) {
@@ -1216,18 +1234,21 @@ MainLoop( void )
 static void
 CheckDisplayStatus( struct display *d )
 {
-	if ((d->displayType & d_origin) == dFromFile && !d->stillThere)
+	if ((d->displayType & d_origin) == dFromFile && !d->stillThere) {
 		StopDisplay( d );
+	}
 	else if ((d->displayType & d_lifetime) == dReserve &&
-	         d->status == running && d->userSess < 0 && !d->idleTimeout)
-		rStopDisplay( d, DS_RESERVE );
-	else if (d->status == notRunning)
+	         d->status == running && d->userSess < 0 && !d->idleTimeout) {
+		rStopDisplay(d, DS_RESERVE);
+	}
+	else if (d->status == notRunning) {
 		if (LoadDisplayResources( d ) < 0) {
 			LogError( "Unable to read configuration for display %s; "
 			          "stopping it.\n", d->name );
 			StopDisplay( d );
 			return;
 		}
+	}
 }
 
 static void
@@ -1260,7 +1281,7 @@ GetBusyVTs( void )
 }
 
 static void
-AllocateVT( struct display *d )
+AllocateVT(struct display *d)
 {
 	struct display *cd;
 	int i, tvt, volun;
@@ -1268,31 +1289,37 @@ AllocateVT( struct display *d )
 	if ((d->displayType & d_location) == dLocal &&
 	    d->status == notRunning && !d->serverVT && d->reqSrvVT >= 0)
 	{
-		if (d->reqSrvVT && d->reqSrvVT < 16)
+		if (d->reqSrvVT && d->reqSrvVT < MAX_VT_NUMBER) {
 			d->serverVT = d->reqSrvVT;
+		}
 		else {
 			for (i = tvt = 0;;) {
 				if (serverVTs[i]) {
-					tvt = atoi( serverVTs[i++] );
+					tvt = atoi(serverVTs[i++]);
 					volun = 0;
 					if (tvt < 0) {
 						tvt = -tvt;
 						volun = 1;
 					}
-					if (!tvt || tvt >= 16)
+					if (!tvt || tvt >= MAX_VT_NUMBER) {
 						continue;
-				} else {
-					if (++tvt >= 16)
+					}
+				}
+				else {
+					if (++tvt >= MAX_VT_NUMBER) {
 						break;
+					}
 					volun = 1;
 				}
 				for (cd = displays; cd; cd = cd->next) {
 					if (cd->reqSrvVT == tvt && /* protect from lusers */
-					    (cd->status != zombie || cd->zstatus != DS_REMOVE))
+						(cd->status != zombie || cd->zstatus != DS_REMOVE)) {
 						goto next;
+					}
 					if (cd->serverVT == tvt) {
-						if (cd->status != zombie || cd->zstatus == DS_REMOTE)
+						if (cd->status != zombie || cd->zstatus == DS_REMOTE) {
 							goto next;
+						}
 						if (!cd->follower) {
 							d->serverVT = -1;
 							cd->follower = d;
@@ -1426,27 +1453,34 @@ rStopDisplay( struct display *d, int endState )
 	AbortStartServer( d );
 	d->idleTimeout = 0;
 	if (d->serverPid != -1 || d->pid != -1) {
-		if (d->pid != -1)
+		if (d->pid != -1) {
 			TerminateProcess( d->pid, SIGTERM );
-		if (d->serverPid != -1)
+		}
+		if (d->serverPid != -1) {
 			TerminateProcess( d->serverPid, d->termSignal );
+		}
 		d->status = zombie;
 		d->zstatus = endState & 0xff;
 		Debug( " zombiefied\n" );
-	} else if (endState == DS_TEXTMODE) {
+	}
+	else if (endState == DS_TEXTMODE) {
 #ifdef HAVE_VTS
 		d->status = textMode;
 		CheckTTYMode();
-	} else if (endState == (DS_TEXTMODE | 0x100)) {
+	}
+	else if (endState == (DS_TEXTMODE | 0x100)) {
 		d->status = textMode;
 #else
 		SwitchToTty( d );
 #endif
-	} else if (endState == DS_RESERVE)
+	}
+	else if (endState == DS_RESERVE) {
 		d->status = reserve;
+	}
 #ifdef XDMCP
-	else if (endState == DS_REMOTE)
+	else if (endState == DS_REMOTE) {
 		StartRemoteLogin( d );
+	}
 #endif
 	else {
 #ifndef HAVE_VTS
@@ -1459,7 +1493,7 @@ rStopDisplay( struct display *d, int endState )
 void
 StopDisplay( struct display *d )
 {
-	rStopDisplay( d, DS_REMOVE );
+	rStopDisplay(d, DS_REMOVE);
 }
 
 static void
@@ -1511,18 +1545,19 @@ ExitDisplay(
 			he->sdRec.osname = 0;
 		}
 	}
-	if (d->status == zombie)
-		rStopDisplay( d, d->zstatus );
+	if (d->status == zombie) {
+		rStopDisplay(d, d->zstatus);
+	}
 	else {
 		if (Stopping) {
 			StopDisplay( d );
 			return;
 		}
 		if (endState != DS_RESTART ||
-		    (d->displayType & d_origin) != dFromFile)
-		{
-			rStopDisplay( d, endState );
-		} else {
+		    (d->displayType & d_origin) != dFromFile) {
+			rStopDisplay(d, endState);
+		}
+		else {
 			if (serverCmd == XS_RETRY) {
 				if ((d->displayType & d_location) == dLocal) {
 					if (he->lastExit - d->lastStart < 120) {
