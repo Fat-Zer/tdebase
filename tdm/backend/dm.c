@@ -51,7 +51,7 @@ from the copyright holder.
 # include <sys/vt.h>
 #endif
 
-#define MAX_VT_NUMBER 16
+#define MAX_VT_NUMBER 32
 
 static void SigHandler( int n );
 static int ScanConfigs( int force );
