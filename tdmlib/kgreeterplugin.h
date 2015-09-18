@@ -171,6 +171,13 @@ public:
     virtual void setEnabled( bool on ) = 0;
 
     /**
+     * En-/disable display of informational messages
+     * The default is to display all informational messages
+     * @param on the state to set
+     */
+    virtual void setInfoMessageDisplay( bool on ) = 0;
+
+    /**
      * Called when a message from the authentication backend arrives.
      * @param message the message received from the backend
      * @param error if true, @p message is an error message, otherwise it's

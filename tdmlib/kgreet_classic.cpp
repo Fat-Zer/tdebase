@@ -66,7 +66,8 @@ KClassicGreeter::KClassicGreeter( KGreeterPluginHandler *_handler,
 	ctx( _ctx ),
 	exp( -1 ),
 	pExp( -1 ),
-	running( false )
+	running( false ),
+	suppressInfoMsg(false)
 {
 	KdmItem *user_entry = 0, *pw_entry = 0;
 	grid = 0;
@@ -246,6 +247,10 @@ KClassicGreeter::setEnabled( bool enable )
 		passwdEdit->setFocus();
 }
 
+void KClassicGreeter::setInfoMessageDisplay(bool enable) {
+	suppressInfoMsg = !enable;
+}
+
 void // private
 KClassicGreeter::returnData()
 {
@@ -276,8 +281,18 @@ bool // virtual
 KClassicGreeter::textMessage( const char *text, bool err )
 {
 	if (!err &&
-	    TQString( text ).find( TQRegExp( "^Changing password for [^ ]+$" ) ) >= 0)
+	    TQString( text ).find( TQRegExp( "^Changing password for [^ ]+$" ) ) >= 0) {
 		return true;
+	}
+	if (!err && suppressInfoMsg) {
+		return true;
+	}
+	if (!err && ((TQString(text).lower().find("smartcard") >= 0) || (TQString(text).lower().find("smart card") >= 0))) {
+		// FIXME
+		// pam_pkcs11 is extremely chatty, even with no card inserted,
+		// and there is no apparent way to disable the unwanted messages!
+		return true;
+	}
 	return false;
 }
 

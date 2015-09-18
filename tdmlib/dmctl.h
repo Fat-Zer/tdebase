@@ -39,27 +39,33 @@ public:
 	DM();
 	~DM();
 
-	enum { Unknown, NoDM, NewTDM, OldTDM, GDM };
+	enum {
+		Unknown,
+		NoDM,
+		NewTDM,
+		OldTDM,
+		GDM
+	};
 
 	bool canShutdown();
-	void shutdown( TDEApplication::ShutdownType shutdownType,
-	               TDEApplication::ShutdownMode shutdownMode,
-	               const TQString &bootOption = TQString::null );
+	void shutdown(TDEApplication::ShutdownType shutdownType,
+	              TDEApplication::ShutdownMode shutdownMode,
+	              const TQString &bootOption = TQString::null);
 
-	void setLock( bool on );
+	void setLock(bool on);
 
 	bool isSwitchable();
 	int numReserve();
 	void startReserve();
-	bool localSessions( SessList &list );
-	bool switchVT( int vt );
-	void lockSwitchVT( int vt );
+	bool localSessions(SessList &list);
+	bool switchVT(int vt);
+	void lockSwitchVT(int vt);
 	int activeVT();
 
-	bool bootOptions( TQStringList &opts, int &dflt, int &curr );
+	bool bootOptions(TQStringList &opts, int &dflt, int &curr);
 
-	static TQString sess2Str( const SessEnt &se );
-	static void sess2Str2( const SessEnt &se, TQString &user, TQString &loc );
+	static TQString sess2Str(const SessEnt &se);
+	static void sess2Str2(const SessEnt &se, TQString &user, TQString &loc);
 
 	int type();
 

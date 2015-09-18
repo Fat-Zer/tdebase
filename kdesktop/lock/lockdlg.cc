@@ -43,6 +43,7 @@
 #include <tqlistview.h>
 #include <tqheader.h>
 #include <tqcheckbox.h>
+#include <tqfile.h>
 
 #include <ctype.h>
 #include <unistd.h>
@@ -79,7 +80,9 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
 	: TQDialog(parent, "password dialog", true, (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)WStyle_StaysOnTop):((WFlags)WX11BypassWM))),
 	mPlugin( plugin ),
 	mCapsLocked(-1),
-	mUnlockingFailed(false)
+	mUnlockingFailed(false),
+	validUserCardInserted(false),
+	showInfoMessages(true)
 {
 	init(plugin);
 }
@@ -92,7 +95,8 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin, TQDat
 	: TQDialog(parent, "password dialog", true, (trinity_desktop_lock_use_system_modal_dialogs?((WFlags)WStyle_StaysOnTop):((WFlags)WX11BypassWM))),
 	mPlugin( plugin ),
 	mCapsLocked(-1),
-	mUnlockingFailed(false)
+	mUnlockingFailed(false),
+	showInfoMessages(true)
 {
 	m_lockStartDT = lockStartDateTime;
 	init(plugin);
@@ -243,6 +247,7 @@ void PasswordDlg::init(GreeterPluginHandle *plugin)
 	mTimeoutTimerId = startTimer(PASSDLG_HIDE_TIMEOUT);
 	connect(tqApp, TQT_SIGNAL(activity()), TQT_SLOT(slotActivity()) );
 
+	greet->setInfoMessageDisplay(showInfoMessages);
 	greet->start();
 
 	DCOPRef kxkb("kxkb", "kxkb");
@@ -463,9 +468,27 @@ void PasswordDlg::reapVerify()
 		if (WIFEXITED(status)) {
 			switch (WEXITSTATUS(status)) {
 			case AuthOk:
-				greet->succeeded();
-				accept();
-				return;
+				{
+					KUser userinfo;
+					TQString fileName = userinfo.homeDir() + "/.tde_card_login_state";
+					TQFile flagFile(fileName);
+					if (validUserCardInserted) {
+						// Card was likely used to log in
+						if (flagFile.open(IO_WriteOnly)) {
+							flagFile.writeBlock("1\n", 2);
+							flagFile.close();
+						}
+					}
+					else {
+						// Card was not used to log in
+						flagFile.remove();
+					}
+
+					// Signal success
+					greet->succeeded();
+					accept();
+					return;
+				}
 			case AuthBad:
 				greet->failed();
 				mUnlockingFailed = true;
@@ -926,13 +949,22 @@ void PasswordDlg::capsLocked()
 }
 
 void PasswordDlg::attemptCardLogin() {
+	// FIXME
+	// pam_pkcs11 is extremely chatty with no apparent way to disable the unwanted messages
+	greet->setInfoMessageDisplay(false);
+
+	validUserCardInserted = true;
 	greet->start();
 	greet->next();
 }
 
 void PasswordDlg::resetCardLogin() {
+	validUserCardInserted = false;
 	greet->abort();
 	greet->start();
+
+	// Restore information message display settings
+        greet->setInfoMessageDisplay(showInfoMessages);
 }
 
 #include "lockdlg.moc"

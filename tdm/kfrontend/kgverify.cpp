@@ -287,6 +287,14 @@ KGVerify::setPassword( const TQString &pass )
 }
 
 void
+KGVerify::setInfoMessageDisplay(bool on)
+{
+	// assert( fixedEntity.isEmpty() );
+	Debug( "%s->setInfoMessageDisplay(%\"s)\n", pName.data(), on );
+	greet->setInfoMessageDisplay(on);
+}
+
+void
 KGVerify::start()
 {
 	authTok = (func == KGreeterPlugin::ChAuthTok);
@@ -383,6 +391,7 @@ KGVerify::doReject( bool initial )
 void // not a slot - called manually by greeter
 KGVerify::reject()
 {
+	inGreeterPlugin = false;
 	doReject( true );
 }
 

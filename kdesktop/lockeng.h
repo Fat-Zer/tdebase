@@ -143,6 +143,7 @@ private slots:
 	 */
 	void enableExports();
 	void recoverFromHackingAttempt();
+	void cardStartupTimeout();
 
 	bool dBusReconnect();
 

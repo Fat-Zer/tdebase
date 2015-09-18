@@ -34,6 +34,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #endif
 #include "sakdlg.h"
 
+#include <kuser.h>
 #include <kprocess.h>
 #include <tdecmdlineargs.h>
 #include <kcrash.h>
@@ -342,6 +343,7 @@ kg_main( const char *argv0 )
 
 	XSetIOErrorHandler( xIOErr );
 	TQString login_user;
+	TQString login_card_user;
 	TQString login_session_wm;
 
 	Display *dpy = tqt_xdisplay();
@@ -499,6 +501,7 @@ kg_main( const char *argv0 )
 		Debug( "left event loop\n" );
 
 		login_user = static_cast<KGreeter*>(dialog)->curUser;
+		login_card_user = static_cast<KGreeter*>(dialog)->cardLoginUser;
 		login_session_wm = static_cast<KGreeter*>(dialog)->curWMSession;
 
 		if (rslt != ex_greet) {
@@ -521,6 +524,24 @@ kg_main( const char *argv0 )
 	}
 
 	KGVerify::done();
+
+	KUser userinfo(login_user);
+	if (userinfo.isValid()) {
+		TQString fileName = userinfo.homeDir() + "/.tde_card_login_state";
+		TQFile flagFile(fileName);
+		if ((login_card_user != TQString::null) && (login_user == login_card_user)) {
+			// Card was likely used to log in
+			if (flagFile.open(IO_WriteOnly)) {
+				flagFile.writeBlock("1\n", 2);
+				fchown(flagFile.handle(), userinfo.uid(), userinfo.gid());
+				flagFile.close();
+			}
+		}
+		else {
+			// Card was not used to log in
+			flagFile.remove();
+		}
+	}
 
 	if (kbdl) {
 		kbdl->closeStdin();

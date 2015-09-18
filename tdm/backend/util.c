@@ -565,18 +565,22 @@ ListSessions( int flags, struct display *d, void *ctx,
 	STRUCTUTMP *ut;
 #endif
 
-	for (di = displays; di; di = di->next)
+	for (di = displays; di; di = di->next) {
 		if (((flags & lstRemote) || (di->displayType & d_location) == dLocal) &&
 		    (di->status == remoteLogin ||
-		     ((flags & lstPassive) ? di->status == running : di->userSess >= 0)))
-			emitXSess( di, d, ctx );
+		     ((flags & lstPassive) ? di->status == running : di->userSess >= 0))) {
+			emitXSess(di, d, ctx);
+		}
+	}
 
-	if (!(flags & lstTTY))
+	if (!(flags & lstTTY)) {
 		return;
+	}
 
 #ifdef BSD_UTMP
-	if ((fd = open( UTMP_FILE, O_RDONLY )) < 0)
+	if ((fd = open( UTMP_FILE, O_RDONLY )) < 0) {
 		return;
+	}
 	while (Reader( fd, ut, sizeof(ut[0]) ) == sizeof(ut[0])) {
 		if (*ut->ut_user) {	/* no idea how to list passive TTYs on BSD */
 #else
@@ -590,40 +594,43 @@ ListSessions( int flags, struct display *d, void *ctx,
 		{
 #endif
 			if (*ut->ut_host) { /* from remote or x */
-				if (!(flags & lstRemote))
+				if (!(flags & lstRemote)) {
 					continue;
-			} else {
+				}
+			}
+			else {
 				/* hack around broken konsole which does not set ut_host. */
 				/* this check is probably linux-specific. */
 				/* alternatively we could open the device and try VT_OPENQRY. */
-				if (memcmp( ut->ut_line, "tty", 3 ) ||
-				    !isdigit( ut->ut_line[3] ))
+				if (memcmp( ut->ut_line, "tty", 3 ) || !isdigit( ut->ut_line[3] )) {
 					continue;
+				}
 			}
-			if (StrNChrCnt( ut->ut_line, sizeof(ut->ut_line), ':' ))
+			if (StrNChrCnt( ut->ut_line, sizeof(ut->ut_line), ':' )) {
 				continue; /* x login */
+			}
 			switch (StrNChrCnt( ut->ut_host, sizeof(ut->ut_host), ':' )) {
-			case 1: /* x terminal */
-				continue;
-			default:
+				case 1: /* x terminal */
+					continue;
+				default:
 #ifdef IP6_MAGIC
-				/* unknown - IPv6 makes things complicated */
-				le = StrNLen( ut->ut_host, sizeof(ut->ut_host) );
-				/* cut off screen number */
-				for (dot = le; ut->ut_host[--dot] != ':'; )
-					if (ut->ut_host[dot] == '.') {
-						le = dot;
-						break;
-					}
-				for (di = displays; di; di = di->next)
-					if (!memcmp( di->name, ut->ut_host, le ) && !di->name[le])
-						goto cont; /* x terminal */
-				break;
-			  cont:
-				continue;
-			case 0: /* no x terminal */
+					/* unknown - IPv6 makes things complicated */
+					le = StrNLen( ut->ut_host, sizeof(ut->ut_host) );
+					/* cut off screen number */
+					for (dot = le; ut->ut_host[--dot] != ':'; )
+						if (ut->ut_host[dot] == '.') {
+							le = dot;
+							break;
+						}
+					for (di = displays; di; di = di->next)
+						if (!memcmp( di->name, ut->ut_host, le ) && !di->name[le])
+							goto cont; /* x terminal */
+					break;
+				cont:
+					continue;
+				case 0: /* no x terminal */
 #endif
-				break;
+					break;
 			}
 			emitTTYSess( ut, d, ctx );
 		}

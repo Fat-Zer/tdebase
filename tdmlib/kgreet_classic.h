@@ -53,6 +53,7 @@ class KClassicGreeter : public TQObject, public KGreeterPlugin {
 	virtual void lockUserEntry( const bool lock );
 	virtual void setPassword( const TQString &pass );
 	virtual void setEnabled( bool on );
+	virtual void setInfoMessageDisplay( bool on );
 	virtual bool textMessage( const char *message, bool error );
 	virtual void textPrompt( const char *prompt, bool echo, bool nonBlocking );
 	virtual bool binaryPrompt( const char *prompt, bool nonBlocking );
@@ -85,7 +86,7 @@ class KClassicGreeter : public TQObject, public KGreeterPlugin {
 	Context ctx;
 	TQGridLayout* grid;
 	int exp, pExp, has;
-	bool running, authTok;
+	bool running, authTok, suppressInfoMsg;
 };
 
 #endif /* KGREET_CLASSIC_H */

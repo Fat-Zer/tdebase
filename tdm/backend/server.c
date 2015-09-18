@@ -178,28 +178,28 @@ StartServerTimeout()
 {
 	struct display *d = startingServer;
 	switch (d->serverStatus) {
-	case ignore:
-	case awaiting:
-		break; /* cannot happen */
-	case starting:
-		LogError( "X server startup timeout, terminating\n" );
-		kill( d->serverPid, d->termSignal );
-		d->serverStatus = d->termSignal == SIGKILL ? killed : terminated;
-		serverTimeout = d->serverTimeout + now;
-		break;
-	case terminated:
-		LogInfo( "X server termination timeout, killing\n" );
-		kill( d->serverPid, SIGKILL );
-		d->serverStatus = killed;
-		serverTimeout = 10 + now;
-		break;
-	case killed:
-		LogInfo( "X server is stuck in D state; leaving it alone\n" );
-		StartServerFailed();
-		break;
-	case pausing:
-		StartServerOnce();
-		break;
+		case ignore:
+		case awaiting:
+			break; /* cannot happen */
+		case starting:
+			LogError( "X server startup timeout, terminating\n" );
+			kill( d->serverPid, d->termSignal );
+			d->serverStatus = d->termSignal == SIGKILL ? killed : terminated;
+			serverTimeout = d->serverTimeout + now;
+			break;
+		case terminated:
+			LogInfo( "X server termination timeout, killing\n" );
+			kill( d->serverPid, SIGKILL );
+			d->serverStatus = killed;
+			serverTimeout = 10 + now;
+			break;
+		case killed:
+			LogInfo( "X server is stuck in D state; leaving it alone\n" );
+			StartServerFailed();
+			break;
+		case pausing:
+			StartServerOnce();
+			break;
 	}
 }
 

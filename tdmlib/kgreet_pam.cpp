@@ -88,7 +88,8 @@ KPamGreeter::KPamGreeter( KGreeterPluginHandler *_handler,
 	ctx( _ctx ),
 	exp( -1 ),
 	pExp( -1 ),
-	running( false )
+	running( false ),
+	suppressInfoMsg(false)
 {
         ctx = Login;
 
@@ -287,6 +288,10 @@ KPamGreeter::setEnabled(bool enable)
 			authEdit[0]->setFocus();
 	}
 
+void KPamGreeter::setInfoMessageDisplay(bool enable) {
+	suppressInfoMsg = !enable;
+}
+
 void // private
 KPamGreeter::returnData()
 {
@@ -319,17 +324,22 @@ KPamGreeter::returnData()
 bool // virtual
 KPamGreeter::textMessage( const char *text, bool err )
 {
-    kg_debug(" ************** textMessage(%s, %d)\n", text, err);
+	kg_debug(" ************** textMessage(%s, %d)\n", text, err);
 
-    if (!authEdit.size())
-	    return false;
+	if (!authEdit.size()) {
+		return false;
+	}
 
-    if (getLayoutItem()) {
-      TQLabel* label = new TQLabel(TQString::fromUtf8(text), m_parentWidget);
-      getLayoutItem()->addWidget(label, state+1, 0, 0);
-    }
+	if (!err && suppressInfoMsg) {
+		return true;
+	}
 
-    return true;
+	if (getLayoutItem()) {
+		TQLabel* label = new TQLabel(TQString::fromUtf8(text), m_parentWidget);
+		getLayoutItem()->addWidget(label, state+1, 0, 0);
+	}
+
+	return true;
 }
 
 void // virtual

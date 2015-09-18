@@ -74,7 +74,8 @@ KWinbindGreeter::KWinbindGreeter( KGreeterPluginHandler *_handler,
 	ctx( _ctx ),
 	exp( -1 ),
 	pExp( -1 ),
-	running( false )
+	running( false ),
+	suppressInfoMsg(false)
 {
 	KdmItem *user_entry = 0, *pw_entry = 0, *domain_entry = 0;
 	TQGridLayout *grid = 0;
@@ -323,6 +324,10 @@ KWinbindGreeter::setEnabled( bool enable )
 		passwdEdit->setFocus();
 }
 
+void KWinbindGreeter::setInfoMessageDisplay(bool enable) {
+	suppressInfoMsg = !enable;
+}
+
 void // private
 KWinbindGreeter::returnData()
 {
@@ -352,8 +357,12 @@ bool // virtual
 KWinbindGreeter::textMessage( const char *text, bool err )
 {
 	if (!err &&
-	    TQString( text ).find( TQRegExp( "^Changing password for [^ ]+$" ) ) >= 0)
+	    TQString( text ).find( TQRegExp( "^Changing password for [^ ]+$" ) ) >= 0) {
 		return true;
+	}
+	if (!err && suppressInfoMsg) {
+		return true;
+	}
 	return false;
 }
 

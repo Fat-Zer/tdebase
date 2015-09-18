@@ -110,7 +110,7 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
 	void processInputPipeCommand(TQString command);
 
   public:
-	TQString curUser, curWMSession, dName;
+	TQString curUser, cardLoginUser, curWMSession, dName;
 
   protected slots:
 	void cryptographicCardWatcherSetup();
@@ -137,6 +137,7 @@ class KGreeter : public KGDialog, public KGVerifyHandler {
 	bool prevValid;
 	bool needLoad;
         bool themed;
+	bool showInfoMessages;
 
 	static int curPlugin;
 	static PluginList pluginList;

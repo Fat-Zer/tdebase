@@ -94,6 +94,8 @@ class PasswordDlg : public TQDialog, public KGreeterPluginHandler
 		int         mTimeoutTimerId;
 		int         mCapsLocked;
 		bool        mUnlockingFailed;
+		bool        validUserCardInserted;
+		bool        showInfoMessages;
 		TQStringList layoutsList;
 		TQStringList::iterator currLayout;
 		int         sPid, sFd;

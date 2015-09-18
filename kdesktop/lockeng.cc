@@ -176,6 +176,19 @@ SaverEngine::SaverEngine()
 		cdevice->enableCardMonitoring(true);
 	}
 
+	// Check card login status
+	KUser userinfo;
+	TQString fileName = userinfo.homeDir() + "/.tde_card_login_state";
+	TQFile flagFile(fileName);
+	if (flagFile.open(IO_ReadOnly)) {
+		TQTextStream stream(&flagFile);
+		if (stream.readLine().startsWith("1")) {
+			// Card was likely used to log in
+			TQTimer::singleShot(5000, this, SLOT(cardStartupTimeout()));
+		}
+		flagFile.close();
+	}
+
 	dBusConnect();
 }
 
@@ -204,6 +217,16 @@ SaverEngine::~SaverEngine()
 	delete m_helperThread;
 }
 
+void SaverEngine::cardStartupTimeout() {
+	if (!mValidCryptoCardInserted) {
+		// Restore saver timeout
+		configure();
+
+		// Force lock
+		lockScreen();
+	}
+}
+
 void SaverEngine::cryptographicCardInserted(TDECryptographicCardDevice* cdevice) {
 	TQString login_name = TQString::null;
 	X509CertificatePtrList certList = cdevice->cardX509Certificates();
@@ -224,7 +247,7 @@ void SaverEngine::cryptographicCardInserted(TDECryptographicCardDevice* cdevice)
 		KUser user;
 		if (login_name == user.loginName()) {
 			mValidCryptoCardInserted = true;
-			// Disable saver
+			// Disable saver startup
 			enable(false);
 		}
 	}

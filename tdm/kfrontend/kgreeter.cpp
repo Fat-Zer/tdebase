@@ -192,6 +192,7 @@ KGreeter::KGreeter( bool framed )
   , prevValid( true )
   , needLoad( false )
   , themed( framed )
+  , showInfoMessages( true )
   , closingDown( false )
 {
 	stsFile = new KSimpleConfig( _stsFile );
@@ -242,6 +243,8 @@ KGreeter::~KGreeter()
 }
 
 void KGreeter::cryptographicCardWatcherSetup() {
+	cardLoginUser = TQString::null;
+
 	// Initialize SmartCard readers
 	TDEGenericDevice *hwdevice;
 	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
@@ -892,15 +895,24 @@ void KGreeter::cryptographicCardInserted(TDECryptographicCardDevice* cdevice) {
 			verifySetUser(login_name);
 			verify->lockUserEntry(true);
 
+			// FIXME
+			// pam_pkcs11 is extremely chatty with no apparent way to disable the unwanted messages
+			verify->setInfoMessageDisplay(false);
+
 			// Initiate login
+			cardLoginUser = login_name;
 			verify->accept();
 		}
 	}
 }
 
 void KGreeter::cryptographicCardRemoved(TDECryptographicCardDevice* cdevice) {
+	cardLoginUser = TQString::null;
 	verify->lockUserEntry(false);
         verify->requestAbort();
+
+	// Restore information message display settings
+        verify->setInfoMessageDisplay(showInfoMessages);
 }
 
 KStdGreeter::KStdGreeter()
@@ -1048,6 +1060,7 @@ KStdGreeter::KStdGreeter()
 
 	pluginSetup();
 
+        verify->setInfoMessageDisplay(showInfoMessages);
 	verify->start();
 
 	TQTimer::singleShot(0, this, SLOT(cryptographicCardWatcherSetup()));
@@ -1197,6 +1210,7 @@ KThemedGreeter::KThemedGreeter()
 
 	pluginSetup();
 
+	verify->setInfoMessageDisplay(showInfoMessages);
 	verify->start();
 
 	TQTimer::singleShot(0, this, SLOT(cryptographicCardWatcherSetup()));
