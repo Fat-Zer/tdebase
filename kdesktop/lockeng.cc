@@ -247,21 +247,20 @@ void SaverEngine::cryptographicCardInserted(TDECryptographicCardDevice* cdevice)
 		KUser user;
 		if (login_name == user.loginName()) {
 			mValidCryptoCardInserted = true;
-			// Disable saver startup
-			enable(false);
 		}
 	}
 }
 
 void SaverEngine::cryptographicCardRemoved(TDECryptographicCardDevice* cdevice) {
 	if (mValidCryptoCardInserted) {
+		mValidCryptoCardInserted = false;
+
 		// Restore saver timeout
 		configure();
 
 		// Force lock
 		lockScreen();
 	}
-	mValidCryptoCardInserted = false;
 }
 
 //---------------------------------------------------------------------------
@@ -279,6 +278,10 @@ void SaverEngine::lock()
 //
 void SaverEngine::lockScreen(bool DCOP)
 {
+	if (mValidCryptoCardInserted) {
+		return;
+	}
+
 	bool ok = true;
 	if (mState != Saving)
 	{
@@ -328,9 +331,10 @@ void SaverEngine::saverLockReady()
 //---------------------------------------------------------------------------
 void SaverEngine::save()
 {
-	if (mState == Waiting)
-	{
-		startLockProcess( DefaultLock );
+	if (!mValidCryptoCardInserted) {
+		if (mState == Waiting) {
+			startLockProcess( DefaultLock );
+		}
 	}
 }
 
@@ -727,10 +731,12 @@ void SaverEngine::lockProcessWaiting()
 //
 void SaverEngine::idleTimeout()
 {
-	// disable X screensaver
-	XForceScreenSaver(tqt_xdisplay(), ScreenSaverReset );
-	XSetScreenSaver(tqt_xdisplay(), 0, mXInterval, PreferBlanking, DontAllowExposures);
-	startLockProcess( DefaultLock );
+	if (!mValidCryptoCardInserted) {
+		// disable X screensaver
+		XForceScreenSaver(tqt_xdisplay(), ScreenSaverReset );
+		XSetScreenSaver(tqt_xdisplay(), 0, mXInterval, PreferBlanking, DontAllowExposures);
+		startLockProcess( DefaultLock );
+	}
 }
 
 xautolock_corner_t SaverEngine::applyManualSettings(int action)
