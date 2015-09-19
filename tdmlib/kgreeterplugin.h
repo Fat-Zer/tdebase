@@ -164,6 +164,12 @@ public:
     virtual void setPassword( const TQString &pass ) = 0;
 
     /**
+     * Set the talker's password prompt to a custom string
+     * @param prompt the password prompt to set, or TQString::null for default
+     */
+    virtual void setPasswordPrompt( const TQString &prompt ) = 0;
+
+    /**
      * En-/disable any widgets contained in the talker.
      * Will be called only when not running.
      * @param on the state to set

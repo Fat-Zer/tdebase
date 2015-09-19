@@ -276,6 +276,10 @@ void PasswordDlg::init(GreeterPluginHandle *plugin)
 		mLayoutButton->hide(); // no kxkb running
 	}
 	capsLocked();
+
+	if (static_cast< LockProcess* >(parent())->cryptographicCardDevice()) {
+		attemptCardLogin();
+	}
 }
 
 PasswordDlg::~PasswordDlg()
@@ -954,14 +958,32 @@ void PasswordDlg::attemptCardLogin() {
 	greet->setInfoMessageDisplay(false);
 
 	validUserCardInserted = true;
-	greet->start();
-	greet->next();
+	greet->setPasswordPrompt(i18n("PIN:"));
+
+	// Force relayout
+	setFixedSize(sizeHint().width(), sizeHint().height() + 1);
+	setFixedSize(sizeHint());
+
+	// Attempt authentication if configured
+	TDECryptographicCardDevice* cdevice = static_cast< LockProcess* >(parent())->cryptographicCardDevice();
+	if (cdevice) {
+		TQString autoPIN = cdevice->autoPIN();
+		if (autoPIN != TQString::null) {
+			greet->setPassword(autoPIN);
+			greet->next();
+		}
+	}
 }
 
 void PasswordDlg::resetCardLogin() {
 	validUserCardInserted = false;
 	greet->abort();
 	greet->start();
+	greet->setPasswordPrompt(TQString::null);
+
+	// Force relayout
+	setFixedSize(sizeHint().width(), sizeHint().height() + 1);
+	setFixedSize(sizeHint());
 
 	// Restore information message display settings
         greet->setInfoMessageDisplay(showInfoMessages);

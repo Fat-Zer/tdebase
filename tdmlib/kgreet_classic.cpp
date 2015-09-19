@@ -67,6 +67,7 @@ KClassicGreeter::KClassicGreeter( KGreeterPluginHandler *_handler,
 	exp( -1 ),
 	pExp( -1 ),
 	running( false ),
+	userEntryLocked(false),
 	suppressInfoMsg(false)
 {
 	KdmItem *user_entry = 0, *pw_entry = 0;
@@ -224,6 +225,7 @@ KClassicGreeter::setUser( const TQString &user )
 }
 
 void KClassicGreeter::lockUserEntry( const bool lock ) {
+	userEntryLocked = lock;
 	loginEdit->setEnabled(!lock);
 }
 
@@ -249,6 +251,23 @@ KClassicGreeter::setEnabled( bool enable )
 
 void KClassicGreeter::setInfoMessageDisplay(bool enable) {
 	suppressInfoMsg = !enable;
+}
+
+void KClassicGreeter::setPasswordPrompt(const TQString &prompt) {
+	if (passwdLabel) {
+		passwdPromptCustomString = prompt;
+
+		if (prompt != TQString::null) {
+			passwdLabel->setText(prompt);
+		}
+		else {
+			passwdLabel->setText(passwordPrompt());
+		}
+		if (grid) {
+			grid->invalidate();
+			grid->activate();
+		}
+	}
 }
 
 void // private
@@ -311,7 +330,9 @@ KClassicGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
 				passwdLabel->setText(prompt);
 			}
 			else {
-				passwdLabel->setText(passwordPrompt());
+			 	if (passwdPromptCustomString == TQString::null) {
+					passwdLabel->setText(passwordPrompt());
+				}
 			}
 			if (grid) {
 				grid->invalidate();
@@ -349,8 +370,9 @@ KClassicGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
 		has = -1;
 	}
 
-	if (has >= exp || nonBlocking)
+	if (has >= exp || nonBlocking) {
 		returnData();
+	}
 }
 
 bool // virtual
@@ -432,7 +454,7 @@ KClassicGreeter::succeeded()
 void // virtual
 KClassicGreeter::failed()
 {
-	if (passwdLabel) {
+	if (passwdLabel && (passwdPromptCustomString == TQString::null)) {
 		// reset password prompt
 		passwdLabel->setText(passwordPrompt());
 		if (grid) {
@@ -451,7 +473,7 @@ KClassicGreeter::failed()
 void // virtual
 KClassicGreeter::revive()
 {
-	if (passwdLabel) {
+	if (passwdLabel && (passwdPromptCustomString == TQString::null)) {
 		// reset password prompt
 		passwdLabel->setText(passwordPrompt());
 		if (grid) {
@@ -483,7 +505,7 @@ KClassicGreeter::revive()
 void // virtual
 KClassicGreeter::clear()
 {
-	if (passwdLabel) {
+	if (passwdLabel && (passwdPromptCustomString == TQString::null)) {
 		// reset password prompt
 		passwdLabel->setText(passwordPrompt());
 		if (grid) {
@@ -508,10 +530,17 @@ KClassicGreeter::clear()
 void
 KClassicGreeter::setActive( bool enable )
 {
-	if (loginEdit)
-		loginEdit->setEnabled( enable );
-	if (passwdEdit)
+	if (loginEdit) {
+		if (userEntryLocked) {
+			loginEdit->setEnabled( false );
+		}
+		else {
+			loginEdit->setEnabled( enable );
+		}
+	}
+	if (passwdEdit) {
 		passwdEdit->setEnabled( enable );
+	}
 }
 
 void

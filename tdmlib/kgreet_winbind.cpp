@@ -75,6 +75,7 @@ KWinbindGreeter::KWinbindGreeter( KGreeterPluginHandler *_handler,
 	exp( -1 ),
 	pExp( -1 ),
 	running( false ),
+	userEntryLocked(false),
 	suppressInfoMsg(false)
 {
 	KdmItem *user_entry = 0, *pw_entry = 0, *domain_entry = 0;
@@ -299,6 +300,7 @@ KWinbindGreeter::setUser( const TQString &user )
 }
 
 void KWinbindGreeter::lockUserEntry( const bool lock ) {
+	userEntryLocked = lock;
 	loginEdit->setEnabled(!lock);
 }
 
@@ -326,6 +328,23 @@ KWinbindGreeter::setEnabled( bool enable )
 
 void KWinbindGreeter::setInfoMessageDisplay(bool enable) {
 	suppressInfoMsg = !enable;
+}
+
+void KWinbindGreeter::setPasswordPrompt(const TQString &prompt) {
+#if 0
+	if (passwdLabel) {
+		if (prompt != TQString::null) {
+			passwdLabel->setText(prompt);
+		}
+		else {
+			passwdLabel->setText(passwordPrompt());
+		}
+		if (grid) {
+			grid->invalidate();
+			grid->activate();
+		}
+	}
+#endif
 }
 
 void // private
@@ -537,12 +556,20 @@ KWinbindGreeter::clear()
 void
 KWinbindGreeter::setActive( bool enable )
 {
-	if (domainCombo)
+	if (domainCombo) {
 		domainCombo->setEnabled( enable );
-	if (loginEdit)
-		loginEdit->setEnabled( enable );
-	if (passwdEdit)
+	}
+	if (loginEdit) {
+		if (userEntryLocked) {
+			loginEdit->setEnabled( false );
+		}
+		else {
+			loginEdit->setEnabled( enable );
+		}
+	}
+	if (passwdEdit) {
 		passwdEdit->setEnabled( enable );
+	}
 }
 
 void

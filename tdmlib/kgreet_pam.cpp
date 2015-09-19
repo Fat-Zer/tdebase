@@ -89,6 +89,7 @@ KPamGreeter::KPamGreeter( KGreeterPluginHandler *_handler,
 	exp( -1 ),
 	pExp( -1 ),
 	running( false ),
+	userEntryLocked(false),
 	suppressInfoMsg(false)
 {
         ctx = Login;
@@ -265,6 +266,7 @@ KPamGreeter::setUser( const TQString &user )
 }
 
 void KPamGreeter::lockUserEntry( const bool lock ) {
+	userEntryLocked = lock;
 	loginEdit->setEnabled(!lock);
 }
 
@@ -284,12 +286,30 @@ KPamGreeter::setEnabled(bool enable)
 //		loginLabel->setEnabled( enable );
 		authEdit[0]->setEnabled( enable );
 		setActive( enable );
-		if (enable)
+		if (enable) {
 			authEdit[0]->setFocus();
+		}
 	}
 
 void KPamGreeter::setInfoMessageDisplay(bool enable) {
 	suppressInfoMsg = !enable;
+}
+
+void KPamGreeter::setPasswordPrompt(const TQString &prompt) {
+#if 0
+	if (passwdLabel) {
+		if (prompt != TQString::null) {
+			passwdLabel->setText(prompt);
+		}
+		else {
+			passwdLabel->setText(passwordPrompt());
+		}
+		if (grid) {
+			grid->invalidate();
+			grid->activate();
+		}
+	}
+#endif
 }
 
 void // private
@@ -349,8 +369,9 @@ KPamGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
     kg_debug("state is %d, authEdit.size is %d\n", state, authEdit.size());
 
     if (state == 0 && echo) {
-        if (loginLabel)
+        if (loginLabel) {
 	    loginLabel->setText(TQString::fromUtf8(prompt));
+	}
         else if (m_themer) {
             KdmLabel *tdmlabel = static_cast<KdmLabel*>(m_themer->findNode("user-label"));
             if (tdmlabel) {
@@ -612,8 +633,14 @@ KPamGreeter::clear()
 void
 KPamGreeter::setActive( bool enable )
 {
-	if (loginEdit)
-		loginEdit->setEnabled( enable );
+	if (loginEdit) {
+		if (userEntryLocked) {
+			loginEdit->setEnabled( false );
+		}
+		else {
+			loginEdit->setEnabled( enable );
+		}
+	}
 }
 
 void

@@ -899,9 +899,16 @@ void KGreeter::cryptographicCardInserted(TDECryptographicCardDevice* cdevice) {
 			// pam_pkcs11 is extremely chatty with no apparent way to disable the unwanted messages
 			verify->setInfoMessageDisplay(false);
 
-			// Initiate login
+			// Set up password prompt
 			cardLoginUser = login_name;
-			verify->accept();
+			verify->setPasswordPrompt(i18n("PIN:"));
+
+			TQString autoPIN = cdevice->autoPIN(); 
+			if (autoPIN != TQString::null) {
+				// Initiate login
+				verify->setPassword(autoPIN);
+				verify->accept();
+			}
 		}
 	}
 }
@@ -910,6 +917,7 @@ void KGreeter::cryptographicCardRemoved(TDECryptographicCardDevice* cdevice) {
 	cardLoginUser = TQString::null;
 	verify->lockUserEntry(false);
         verify->requestAbort();
+        verify->setPasswordPrompt(TQString::null);
 
 	// Restore information message display settings
         verify->setInfoMessageDisplay(showInfoMessages);
@@ -1128,8 +1136,9 @@ KThemedGreeter::KThemedGreeter()
 	xauth_warning = themer->findNode( "xauth-warning" ); // tdm ext
 	pam_error = themer->findNode( "pam-error" );
 	timed_label = themer->findNode( "timed-label" );
-	if (pam_error && pam_error->isA( "KdmLabel" ))
+	if (pam_error && pam_error->isA( "KdmLabel" )) {
 		static_cast<KdmLabel*>(pam_error)->setText( i18n("Login Failed.") );
+	}
 
 	KdmItem *itm;
 	if ((itm = themer->findNode( "pam-message" ))) // done via msgboxes
@@ -1290,6 +1299,10 @@ KThemedGreeter::updateStatus( bool fail, bool caps, int timedleft )
 			timedDelay = -1;
 			timed_label->hide( true );
 		}
+	}
+
+	if (cardLoginUser != TQString::null) {
+		verify->setPasswordPrompt(i18n("PIN:"));
 	}
 }
 

@@ -105,6 +105,8 @@ class LockProcess : public TQWidget
 		void msgBox( TQMessageBox::Icon type, const TQString &txt );
 		int execDialog( TQDialog* dlg );
 
+		TDECryptographicCardDevice* cryptographicCardDevice();
+
 	signals:
 		void terminateHelperThread();
 
@@ -232,7 +234,7 @@ class LockProcess : public TQWidget
 		bool        mInfoMessageDisplayed;
 		bool        mDialogControlLock;
 		bool        mForceReject;
-		TQDialog     *currentDialog;
+		TQDialog    *currentDialog;
 
 		TQTimer*    mEnsureScreenHiddenTimer;
 		TQTimer*    mForceContinualLockDisplayTimer;
@@ -250,7 +252,7 @@ class LockProcess : public TQWidget
 		bool        mHackActive;
 
 		TQPixmap    backingPixmap;
-		KRootPixmap  *m_rootPixmap;
+		KRootPixmap *m_rootPixmap;
 		int         mBackingStartupDelayTimer;
 		TQPixmap    mArgbTransparentBackgroundPixmap;
 
@@ -265,6 +267,7 @@ class LockProcess : public TQWidget
 		int m_dialogPrevY;
 
 		bool m_notifyReadyRequested;
+		TDECryptographicCardDevice* m_loginCardDevice;
 
 		TQWidget* m_maskWidget;
 		Window m_saverRootWindow;

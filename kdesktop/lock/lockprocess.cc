@@ -228,6 +228,7 @@ LockProcess::LockProcess()
 	m_dialogPrevX(0),
 	m_dialogPrevY(0),
 	m_notifyReadyRequested(false),
+	m_loginCardDevice(NULL),
 	m_maskWidget(NULL),
 	m_saverRootWindow(0)
 {
@@ -300,7 +301,7 @@ LockProcess::LockProcess()
 	for (hwdevice = cardReaderList.first(); hwdevice; hwdevice = cardReaderList.next()) {
 		TDECryptographicCardDevice* cdevice = static_cast<TDECryptographicCardDevice*>(hwdevice);
 		// connect(cdevice, SIGNAL(pinRequested(TQString,TDECryptographicCardDevice*)), this, SLOT(cryptographicCardPinRequested(TQString,TDECryptographicCardDevice*)));
-		connect(cdevice, TQT_SIGNAL(cardInserted(TDECryptographicCardDevice*)), this, TQT_SLOT(cryptographicCardInserted(TDECryptographicCardDevice*)));
+		connect(cdevice, TQT_SIGNAL(certificateListAvailable(TDECryptographicCardDevice*)), this, TQT_SLOT(cryptographicCardInserted(TDECryptographicCardDevice*)));
 		connect(cdevice, TQT_SIGNAL(cardRemoved(TDECryptographicCardDevice*)), this, TQT_SLOT(cryptographicCardRemoved(TDECryptographicCardDevice*)));
 		cdevice->enableCardMonitoring(true);
 		// cdevice->enablePINEntryCallbacks(true);
@@ -2846,6 +2847,7 @@ void LockProcess::cryptographicCardInserted(TDECryptographicCardDevice* cdevice)
 			}
 
 			// Pass login to the PAM stack...
+			m_loginCardDevice = cdevice;
 			if (dynamic_cast<SAKDlg*>(currentDialog)) {
 				dynamic_cast<SAKDlg*>(currentDialog)->closeDialogForced();
 				TQTimer::singleShot(0, this, SLOT(signalPassDlgToAttemptCardLogin()));
@@ -2867,17 +2869,18 @@ void LockProcess::cryptographicCardRemoved(TDECryptographicCardDevice* cdevice) 
 		passDlg->resetCardLogin();
 	}
 	else {
+		m_loginCardDevice = NULL;
 		TQTimer::singleShot(0, this, SLOT(signalPassDlgToAttemptCardAbort()));
 	}
 }
 
 void LockProcess::signalPassDlgToAttemptCardLogin() {
 	PasswordDlg* passDlg = dynamic_cast<PasswordDlg*>(currentDialog);
-	if (passDlg) {
+	if (passDlg && m_loginCardDevice) {
 		passDlg->attemptCardLogin();
 	}
 	else {
-		if (currentDialog) {
+		if (currentDialog && m_loginCardDevice) {
 			// Try again later
 			TQTimer::singleShot(0, this, SLOT(signalPassDlgToAttemptCardLogin()));
 		}
@@ -2913,6 +2916,10 @@ void LockProcess::cryptographicCardPinRequested(TQString prompt, TDECryptographi
 	else {
 		cdevice->setProvidedPin(TQString::null);
 	}
+}
+
+TDECryptographicCardDevice* LockProcess::cryptographicCardDevice() {
+	return m_loginCardDevice;
 }
 
 void LockProcess::fullyOnline() {

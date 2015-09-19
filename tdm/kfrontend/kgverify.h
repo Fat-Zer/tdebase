@@ -103,6 +103,7 @@ class KGVerify : public TQObject, public KGreeterPluginHandler {
 	void lockUserEntry( const bool lock );
 	void setPassword( const TQString &pass );
 	void setInfoMessageDisplay( bool on );
+	void setPasswordPrompt(const TQString &prompt);
 	/* virtual */ void selectPlugin( int id );
 	bool entitiesLocal() const;
 	bool entitiesFielded() const;

@@ -56,6 +56,7 @@ class KWinbindGreeter : public TQObject, public KGreeterPlugin {
 	virtual void setUser( const TQString &user );
 	virtual void lockUserEntry( const bool lock );
 	virtual void setPassword( const TQString &pass );
+	virtual void setPasswordPrompt( const TQString &prompt );
 	virtual void setEnabled( bool on );
 	virtual void setInfoMessageDisplay( bool on );
 	virtual bool textMessage( const char *message, bool error );
@@ -97,7 +98,7 @@ class KWinbindGreeter : public TQObject, public KGreeterPlugin {
 	Function func;
 	Context ctx;
 	int exp, pExp, has;
-	bool running, authTok, suppressInfoMsg;
+	bool running, authTok, userEntryLocked, suppressInfoMsg;
 };
 
 #endif /* KGREET_WINBIND_H */

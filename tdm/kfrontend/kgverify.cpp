@@ -295,6 +295,18 @@ KGVerify::setInfoMessageDisplay(bool on)
 }
 
 void
+KGVerify::setPasswordPrompt(const TQString &prompt)
+{
+	greet->setPasswordPrompt(prompt);
+	if (prompt != TQString::null) {
+		setPassPromptText(prompt, false);
+	}
+	else {
+		setPassPromptText(TQString::null, true);
+	}
+}
+
+void
 KGVerify::start()
 {
 	authTok = (func == KGreeterPlugin::ChAuthTok);
