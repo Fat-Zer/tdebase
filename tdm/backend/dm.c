@@ -51,7 +51,8 @@ from the copyright holder.
 # include <sys/vt.h>
 #endif
 
-#define MAX_VT_NUMBER 32
+// Limited by short return data type of VT_ACTIVATE ioctl
+#define MAX_VT_NUMBER 16
 
 static void SigHandler( int n );
 static int ScanConfigs( int force );
@@ -326,8 +327,9 @@ activateVT( int vt )
 static void
 WakeDisplay( struct display *d )
 {
-	if (d->status == textMode)
+	if (d->status == textMode) {
 		d->status = (d->displayType & d_lifetime) == dReserve ? reserve : notRunning;
+	}
 }
 #endif
 
@@ -856,7 +858,6 @@ cancelShutdown( void )
 	RescanConfigs( TRUE );
 }
 
-
 static void
 ReapChildren( void )
 {
@@ -990,13 +991,11 @@ ReapChildren( void )
 				rStopDisplay(d, d->zstatus);
 				break;
 			case phoenix:
-				Debug( "phoenix X server arises, restarting display %s\n",
-				       d->name );
+				Debug( "phoenix X server arises, restarting display %s\n", d->name );
 				d->status = notRunning;
 				break;
 			case remoteLogin:
-				Debug( "remote login X server for display %s exited\n",
-				       d->name );
+				Debug( "remote login X server for display %s exited\n", d->name );
 				d->status = ((d->displayType & d_lifetime) == dReserve) ?
 				            reserve : notRunning;
 				break;
@@ -1510,8 +1509,7 @@ ExitDisplay(
 		goodExit = TRUE;
 	}
 
-	Debug( "ExitDisplay %s, "
-	       "endState = %d, serverCmd = %d, GoodExit = %d\n",
+	Debug( "ExitDisplay %s, endState = %d, serverCmd = %d, GoodExit = %d\n",
 	       d->name, endState, serverCmd, goodExit );
 
 	d->userSess = -1;
