@@ -82,7 +82,8 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin)
 	mCapsLocked(-1),
 	mUnlockingFailed(false),
 	validUserCardInserted(false),
-	showInfoMessages(true)
+	showInfoMessages(true),
+	mCardLoginInProgress(false)
 {
 	init(plugin);
 }
@@ -96,7 +97,8 @@ PasswordDlg::PasswordDlg(LockProcess *parent, GreeterPluginHandle *plugin, TQDat
 	mPlugin( plugin ),
 	mCapsLocked(-1),
 	mUnlockingFailed(false),
-	showInfoMessages(true)
+	showInfoMessages(true),
+	mCardLoginInProgress(false)
 {
 	m_lockStartDT = lockStartDateTime;
 	init(plugin);
@@ -953,6 +955,11 @@ void PasswordDlg::capsLocked()
 }
 
 void PasswordDlg::attemptCardLogin() {
+	if (mCardLoginInProgress) {
+		return;
+	}
+	mCardLoginInProgress = true;
+
 	// FIXME
 	// pam_pkcs11 is extremely chatty with no apparent way to disable the unwanted messages
 	greet->setInfoMessageDisplay(false);
@@ -965,12 +972,13 @@ void PasswordDlg::attemptCardLogin() {
 	setFixedSize(sizeHint());
 
 	// Attempt authentication if configured
-	TDECryptographicCardDevice* cdevice = static_cast< LockProcess* >(parent())->cryptographicCardDevice();
+	TDECryptographicCardDevice* cdevice = static_cast<LockProcess*>(parent())->cryptographicCardDevice();
 	if (cdevice) {
 		TQString autoPIN = cdevice->autoPIN();
 		if (autoPIN != TQString::null) {
+			greet->start();
 			greet->setPassword(autoPIN);
-			greet->next();
+			TQTimer::singleShot(0, this, SLOT(slotOK()));
 		}
 	}
 }
@@ -987,6 +995,8 @@ void PasswordDlg::resetCardLogin() {
 
 	// Restore information message display settings
         greet->setInfoMessageDisplay(showInfoMessages);
+
+	mCardLoginInProgress = false;
 }
 
 #include "lockdlg.moc"

@@ -100,6 +100,7 @@ class PasswordDlg : public TQDialog, public KGreeterPluginHandler
 		TQStringList::iterator currLayout;
 		int         sPid, sFd;
 		TQListView   *lv;
+		bool         mCardLoginInProgress;
 		TQDateTime   m_lockStartDT;
 };
 
