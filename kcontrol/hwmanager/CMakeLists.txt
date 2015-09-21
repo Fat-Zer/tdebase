@@ -1,6 +1,6 @@
 #################################################
 #
-#  (C) 2012 Timothy Pearson
+#  (C) 2012 - 2015 Timothy Pearson
 #  kb9vqf (AT) pearsoncomputing.net
 #
 #  Improvements and feedback are welcome
@@ -37,4 +37,14 @@ tde_add_kpart( kcm_hwmanager AUTOMOC
     cryptpassworddlg.cpp cryptpassworddlgbase.ui hwmanager.skel
   LINK tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
+)
+
+##### tdehwdevicetray (executable) ##############
+
+tde_add_executable( tdehwdevicetray AUTOMOC
+  SOURCES
+    hwdevicetray_main.cpp hwdevicetray.cpp hwdevicetray_app.cpp
+    hwdevicetray_configdialog.cpp
+  LINK tdeio-shared tdeutils-shared tdeui-shared
+  DESTINATION ${BIN_INSTALL_DIR}
 )

@@ -247,6 +247,12 @@ int main( int argc, char **argv )
 	MyApp* app = NULL;
 
 	while (1 == 1) {
+		sigset_t new_mask;
+		sigset_t orig_mask;
+
+		// Block reception of all signals in this thread
+		sigprocmask(SIG_BLOCK, &new_mask, NULL);
+
 		signalled_forcelock = FALSE;
 		signalled_dontlock = FALSE;
 		signalled_securedialog = FALSE;
@@ -371,12 +377,6 @@ int main( int argc, char **argv )
 		struct stat st;
 		KSimpleConfig* tdmconfig;
 		OPEN_TDMCONFIG_AND_SET_GROUP
-
-		sigset_t new_mask;
-		sigset_t orig_mask;
-
-		// Block reception of all signals in this thread
-		sigprocmask(SIG_BLOCK, &new_mask, NULL);
 
 		// Create new LockProcess, which also spawns threads inheriting the blocked signal mask
 		trinity_desktop_lock_process = new LockProcess;

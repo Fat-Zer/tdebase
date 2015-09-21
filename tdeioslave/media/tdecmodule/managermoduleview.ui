@@ -52,6 +52,17 @@
                 <string>Select this if you want to enable application autostart after mounting a device.</string>
             </property>
         </widget>
+        <widget class="TQCheckBox">
+            <property name="name">
+                <cstring>kcfg_NotificationPopupsEnabled</cstring>
+            </property>
+            <property name="text">
+                <string>Enable notification popups</string>
+            </property>
+            <property name="whatsThis" stdset="0">
+                <string>Deselect this if you do not want action request popups to be generated when devices are plugged in.</string>
+            </property>
+        </widget>
         <widget class="TQGroupBox">
             <property name="name">
                 <cstring>groupbox_mount</cstring>
@@ -330,6 +341,7 @@ Display the short name as is; store a long name when the short name is not all u
     <tabstop>kcfg_HalBackendEnabled</tabstop>
     <tabstop>kcfg_CdPollingEnabled</tabstop>
     <tabstop>kcfg_AutostartEnabled</tabstop>
+    <tabstop>kcfg_NotificationPopupsEnabled</tabstop>
     <tabstop>option_automount</tabstop>
     <tabstop>option_ro</tabstop>
     <tabstop>option_quiet</tabstop>

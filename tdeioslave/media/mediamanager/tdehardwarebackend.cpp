@@ -146,6 +146,14 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 		allowNotification = false;
 	}
 
+	// Check if user wants the full popup to be suppressed
+	bool allowDialogNotification = allowNotification;
+	TDEConfig config("mediamanagerrc");
+	config.setGroup("Global");
+	if (!config.readBoolEntry("NotificationPopupsEnabled", true)) {
+		allowDialogNotification = false;
+	}
+
 	// Add volume block devices
 	if (sdevice->isDiskOfType(TDEDiskDeviceType::HDD)) {
 		/* We only list volumes that...
@@ -190,7 +198,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 			}
 
 			// Insert medium into list
-			m_mediaList.addMedium(medium, allowNotification);
+			m_mediaList.addMedium(medium, allowDialogNotification);
 
 			kdDebug(1219) << "TDEBackend::AddDevice inserted hard medium for " << sdevice->uniqueID() << endl;
 
@@ -233,7 +241,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 		setVolumeProperties(medium);
 
 		// Insert medium into list
-		m_mediaList.addMedium(medium, allowNotification);
+		m_mediaList.addMedium(medium, allowDialogNotification);
 
 		kdDebug(1219) << "TDEBackend::AddDevice inserted optical medium for " << sdevice->uniqueID() << endl;
 
@@ -248,6 +256,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 		) {
 		if ((sdevice->checkDiskStatus(TDEDiskDeviceStatus::Removable)) && (!(sdevice->checkDiskStatus(TDEDiskDeviceStatus::Inserted)))) {
 			allowNotification = false;
+			allowDialogNotification = false;
 		}
 
 		/* We only list volumes that...
@@ -278,7 +287,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 				}
 			}
 
-			m_mediaList.addMedium(medium, allowNotification);
+			m_mediaList.addMedium(medium, allowDialogNotification);
 
 			kdDebug(1219) << "TDEBackend::AddDevice inserted floppy medium for " << sdevice->uniqueID() << endl;
 
@@ -294,7 +303,7 @@ void TDEBackend::AddDevice(TDEStorageDevice * sdevice, bool allowNotification)
 			// Create medium
 			Medium* medium = new Medium(sdevice->uniqueID(), driveUDIFromDeviceUID(sdevice->uniqueID()), "");
 			setCameraProperties(medium);
-			m_mediaList.addMedium(medium, allowNotification);
+			m_mediaList.addMedium(medium, allowDialogNotification);
 
 			kdDebug(1219) << "TDEBackend::AddDevice inserted camera medium for " << sdevice->uniqueID() << endl;
 

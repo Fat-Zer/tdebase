@@ -24,5 +24,10 @@
       <whatsthis>Allows TDE to autostart application after a medium mount if it contains an Autostart or an Autoopen file.</whatsthis>
       <default>true</default>
     </entry>
+    <entry name="NotificationPopupsEnabled" type="Bool">
+      <label>Enable notification popups</label>
+      <whatsthis>Deselect this if you do not want action request popups to be generated when devices are plugged in.</whatsthis>
+      <default>true</default>
+    </entry>
   </group>
 </kcfg>
