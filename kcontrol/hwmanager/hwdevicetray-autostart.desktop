@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=tdehwdevicetray
+GenericName=Hardware Device Monitor
+Comment=Monitor hardware devices from the system tray
+Exec=tdehwdevicetray
+Icon=kcmdevices
+X-TDE-autostart-after=panel
+X-TDE-StartupNotify=false
+X-TDE-UniqueApplet=true
+X-TDE-autostart-condition=tdehwdevicetrayrc:General:Autostart:true
+Categories=System;Applet;

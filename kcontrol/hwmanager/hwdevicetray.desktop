@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=tdehwdevicetray
+GenericName=Hardware Device Monitor
+Comment=Monitor hardware devices from the system tray
+Exec=tdehwdevicetray
+Icon=kcmdevices
+Type=Application
+OnlyShowIn=TDE;
+Categories=Qt;TDE;System;
+X-DocPath=tdehwdevicetray/index.html
