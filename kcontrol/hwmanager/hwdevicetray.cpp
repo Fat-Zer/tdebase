@@ -143,7 +143,7 @@ void HwDeviceSystemTray::mousePressEvent(TQMouseEvent* e) {
 
 bool HwDeviceSystemTray::isMonitoredDevice(TDEStorageDevice* sdevice) {
 	// Type selection logic largely duplicated from the media manager tdeioslave
-	if ((sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)
+	if (((sdevice->isDiskOfType(TDEDiskDeviceType::LUKS)
 		|| sdevice->checkDiskStatus(TDEDiskDeviceStatus::ContainsFilesystem)
 		|| sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio)
 		|| sdevice->checkDiskStatus(TDEDiskDeviceStatus::Blank))
@@ -178,7 +178,8 @@ bool HwDeviceSystemTray::isMonitoredDevice(TDEStorageDevice* sdevice) {
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDVideo))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::Floppy))
 		|| (sdevice->isDiskOfType(TDEDiskDeviceType::Zip))
-		|| (sdevice->isDiskOfType(TDEDiskDeviceType::Jaz)))) {
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::Jaz))))
+		|| (sdevice->isDiskOfType(TDEDiskDeviceType::Camera))) {
 		return true;
 	}
 	else {
@@ -236,10 +237,16 @@ void HwDeviceSystemTray::populateMenu(TDEPopupMenu* menu) {
 			lastMountIndex = mountDiskActionMenu->popupMenu()->insertItem(hwdevice->icon(TDEIcon::SizeSmall), i18n("%1 (%2)").arg(sdevice->friendlyName(), sdevice->deviceNode()));
 			mountDiskActionMenu->popupMenu()->connectItem(lastMountIndex, this, TQT_SLOT(slotMountDevice(int)));
 			m_mountMenuIndexMap[lastMountIndex] = sdevice->diskUUID();
+			if (m_mountMenuIndexMap[lastMountIndex] == "") {
+				m_mountMenuIndexMap[lastMountIndex] = sdevice->systemPath();
+			}
 			if (sdevice->mountPath() != TQString::null) {
 				lastUnmountIndex = unmountDiskActionMenu->popupMenu()->insertItem(hwdevice->icon(TDEIcon::SizeSmall), i18n("%1 (%2)").arg(sdevice->friendlyName(), sdevice->deviceNode()));
 				unmountDiskActionMenu->popupMenu()->connectItem(lastUnmountIndex, this, TQT_SLOT(slotUnmountDevice(int)));
 				m_unmountMenuIndexMap[lastUnmountIndex] = sdevice->diskUUID();
+				if (m_unmountMenuIndexMap[lastMountIndex] == "") {
+					m_unmountMenuIndexMap[lastMountIndex] = sdevice->systemPath();
+				}
 			}
 		}
 	}
@@ -270,9 +277,9 @@ void HwDeviceSystemTray::slotMountDevice(int parameter)
 		TDEGenericHardwareList diskDeviceList = hwdevices->listByDeviceClass(TDEGenericDeviceType::Disk);
 		for (hwdevice = diskDeviceList.first(); hwdevice; hwdevice = diskDeviceList.next()) {
 			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
-			if (sdevice->diskUUID() == uuid) {
+			if ((sdevice->diskUUID() == uuid) || (sdevice->systemPath() == uuid)) {
 				if (sdevice->isDiskOfType(TDEDiskDeviceType::Camera)) {
-					new KRun(TQString("system:/media/%1").arg(sdevice->friendlyName()));
+					new KRun(TQString("media:/%1").arg(sdevice->friendlyName()));
 				}
 				else {
 					new KRun(TQString("system:/media/%1").arg(TQFileInfo(sdevice->deviceNode()).baseName(true)));
@@ -292,7 +299,7 @@ void HwDeviceSystemTray::slotUnmountDevice(int parameter)
 		TDEGenericHardwareList diskDeviceList = hwdevices->listByDeviceClass(TDEGenericDeviceType::Disk);
 		for (hwdevice = diskDeviceList.first(); hwdevice; hwdevice = diskDeviceList.next()) {
 			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
-			if (sdevice->diskUUID() == uuid) {
+			if ((sdevice->diskUUID() == uuid) || (sdevice->systemPath() == uuid)) {
 				if (sdevice->mountPath() != TQString::null) {
 					int retcode;
 					TQString errstr;
@@ -338,10 +345,14 @@ void HwDeviceSystemTray::deviceAdded(TDEGenericDevice* device) {
 	if (device->type() == TDEGenericDeviceType::Disk) {
 		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
 		if (isMonitoredDevice(sdevice)) {
+			TQString uuid = sdevice->diskUUID();
+			if (uuid == "") {
+				uuid = sdevice->systemPath();
+			}
 			m_hardwareNotifierContainer->displayMessage(
 				i18n("A disk device has been added!"),
 				i18n("%1 (%2)").arg(sdevice->friendlyName(), sdevice->deviceNode()), SmallIcon("drive-harddisk"),
-				0, 0, "ADD: " + sdevice->diskUUID());
+				0, 0, "ADD: " + uuid);
 		}
 	}
 #endif
@@ -352,10 +363,14 @@ void HwDeviceSystemTray::deviceRemoved(TDEGenericDevice* device) {
 	if (device->type() == TDEGenericDeviceType::Disk) {
 		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
 		if (isMonitoredDevice(sdevice)) {
+			TQString uuid = sdevice->diskUUID();
+			if (uuid == "") {
+				uuid = sdevice->systemPath();
+			}
 			m_hardwareNotifierContainer->displayMessage(
 				i18n("A disk device has been removed!"),
 				i18n("%1 (%2)").arg(sdevice->friendlyName(), sdevice->deviceNode()), SmallIcon("drive-harddisk"),
-				0, 0, "REMOVE: " + sdevice->diskUUID());
+				0, 0, "REMOVE: " + uuid);
 		}
 	}
 #endif
@@ -366,10 +381,14 @@ void HwDeviceSystemTray::deviceChanged(TDEGenericDevice* device) {
 	if (device->type() == TDEGenericDeviceType::Disk) {
 		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
 		if (isMonitoredDevice(sdevice)) {
+			TQString uuid = sdevice->diskUUID();
+			if (uuid == "") {
+				uuid = sdevice->systemPath();
+			}
 			m_hardwareNotifierContainer->displayMessage(
 				i18n("A disk device has been changed!"),
 				i18n("%1 (%2)").arg(sdevice->friendlyName(), sdevice->deviceNode()), SmallIcon("drive-harddisk"),
-				0, 0, "CHANGE: " + sdevice->diskUUID());
+				0, 0, "CHANGE: " + uuid);
 		}
 	}
 #endif
@@ -384,13 +403,18 @@ void HwDeviceSystemTray::devicePopupClicked(KPassivePopup* popup, TQPoint point,
 			TDEGenericHardwareList diskDeviceList = hwdevices->listByDeviceClass(TDEGenericDeviceType::Disk);
 			for (hwdevice = diskDeviceList.first(); hwdevice; hwdevice = diskDeviceList.next()) {
 				TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
-				if (sdevice->diskUUID() == uuid) {
+				if ((sdevice->diskUUID() == uuid) || (sdevice->systemPath() == uuid)) {
 					// Pop up full media notification dialog
 					DCOPClient* dcopClient = TDEApplication::dcopClient();
 					TQByteArray data;
 					TQDataStream arg(data, IO_WriteOnly);
 					bool allowNotification = true;
-					arg << TQFileInfo(sdevice->deviceNode()).baseName(true);
+					if (sdevice->isDiskOfType(TDEDiskDeviceType::Camera)) {
+						arg << sdevice->friendlyName();
+					}
+					else {
+						arg << TQFileInfo(sdevice->deviceNode()).baseName(true);
+					}
 					arg << allowNotification;
 					dcopClient->send("kded", "medianotifier", "onMediumChange(TQString, bool)", data);
 					return;
