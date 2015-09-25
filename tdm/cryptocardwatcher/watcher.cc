@@ -56,6 +56,9 @@ void CardWatcher::cryptographicCardInserted(TDECryptographicCardDevice* cdevice)
 		DM dm;
 		SessList sess;
 		bool user_active = false;
+		bool unused_session_available = false;
+		bool unused_session_active = false;
+		int unused_session_vt_number = -1;
 		if (dm.localSessions(sess)) {
 			TQString user, loc;
 			for (SessList::ConstIterator it = sess.begin(); it != sess.end(); ++it) {
@@ -63,18 +66,30 @@ void CardWatcher::cryptographicCardInserted(TDECryptographicCardDevice* cdevice)
 				if (user.startsWith(login_name + ": ")) {
 					// Found active session
 					user_active = true;
+					break;
 				}
 				if (user == "Unused") {
+					// Found active unused session
+					unused_session_available = true;
+					unused_session_vt_number = (*it).vt;
 					if ((*it).vt == dm.activeVT()) {
-						// Found active unused session
-						user_active = true;
+						unused_session_active = true;
+						break;
 					}
 				}
 			}
 		}
-		if (!user_active) {
-			// Activate new VT
-			DM().startReserve();
+		if (!user_active || unused_session_available) {
+			if (unused_session_available) {
+				if (!unused_session_active) {
+					// Switch to unused VT
+					DM().switchVT(unused_session_vt_number);
+				}
+			}
+			else {
+				// Activate new VT
+				DM().startReserve();
+			}
 		}
 	}
 }
