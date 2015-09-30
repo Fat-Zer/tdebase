@@ -124,7 +124,7 @@ void SAKDlg::slotSAKProcessExited()
 SAKDlg::~SAKDlg()
 {
 	if ((mSAKProcess) && (mSAKProcess->isRunning())) {
-		mSAKProcess->kill(SIGTERM);
+		mSAKProcess->kill(SIGKILL);
 		delete mSAKProcess;
 	}
 	hide();
