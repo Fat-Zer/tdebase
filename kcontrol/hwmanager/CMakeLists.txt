@@ -25,8 +25,12 @@ link_directories(
 ##### other data ################################
 
 install( FILES hwmanager.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
-install( FILES hwdevicetray.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
-install( FILES hwdevicetray-autostart.desktop DESTINATION ${AUTOSTART_INSTALL_DIR} )
+install( FILES hwdevicetray.desktop
+         DESTINATION ${XDG_APPS_INSTALL_DIR}
+         RENAME tdehwdevicetray.desktop )
+install( FILES hwdevicetray-autostart.desktop
+         DESTINATION ${AUTOSTART_INSTALL_DIR}
+         RENAME tdehwdevicetray-autostart.desktop )
 
 
 ##### kcm_iccconfig (module) ####################
