@@ -51,8 +51,8 @@ from the copyright holder.
 # include <sys/vt.h>
 #endif
 
-// Limited by short return data type of VT_ACTIVATE ioctl
-#define MAX_VT_NUMBER 16
+// Limited by the number of VTs configured into the kernel or 256, whichever is less
+#define MAX_VT_NUMBER 48
 
 static void SigHandler( int n );
 static int ScanConfigs( int force );
@@ -1260,21 +1260,31 @@ KickDisplay( struct display *d )
 }
 
 #ifdef HAVE_VTS
-static int active_vts;
+static unsigned long active_vts;
 
-static int
-GetBusyVTs( void )
+static unsigned long
+GetBusyVTs(void)
 {
 	struct vt_stat vtstat;
 	int con;
 
 	if (active_vts == -1) {
+		unsigned short next_available_vt = 0;
 		vtstat.v_state = 0;
 		if ((con = open( "/dev/console", O_RDONLY )) >= 0) {
-			ioctl( con, VT_GETSTATE, &vtstat );
-			close( con );
+			ioctl(con, VT_GETSTATE, &vtstat);
+			ioctl(con, VT_OPENQRY, &next_available_vt);
+			close(con);
 		}
 		active_vts = vtstat.v_state;
+		if (next_available_vt > 0xf) {
+			// Assume all VTs less than the next available VT are busy
+			// This is due to limitations in the Linux console driver
+			int i;
+			for (i = 0x10; i < next_available_vt; i++) {
+				active_vts |= (1 << i);
+			}
+		}
 	}
 	return active_vts;
 }
@@ -1326,7 +1336,7 @@ AllocateVT(struct display *d)
 						}
 					}
 				}
-				if (!volun || !((1 << tvt) & GetBusyVTs())) {
+				if (!volun || !((1 << (unsigned long)tvt) & GetBusyVTs())) {
 					d->serverVT = tvt;
 					return;
 				}
