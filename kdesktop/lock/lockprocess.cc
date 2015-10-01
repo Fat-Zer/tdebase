@@ -2831,21 +2831,6 @@ void LockProcess::cryptographicCardInserted(TDECryptographicCardDevice* cdevice)
 	if (login_name != "") {
 		KUser user;
 		if (login_name == user.loginName()) {
-			// Activate appropriate VT
-			DM dm;
-			SessList sess;
-			if (dm.localSessions(sess)) {
-				TQString user, loc;
-				for (SessList::ConstIterator it = sess.begin(); it != sess.end(); ++it) {
-					DM::sess2Str2(*it, user, loc);
-					if ((*it).self) {
-						// Switch VTs
-						DM().switchVT((*it).vt);
-						break;
-					}
-				}
-			}
-
 			// Pass login to the PAM stack...
 			m_loginCardDevice = cdevice;
 			if (dynamic_cast<SAKDlg*>(currentDialog)) {

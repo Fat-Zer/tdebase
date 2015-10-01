@@ -66,6 +66,10 @@ void CardWatcher::cryptographicCardInserted(TDECryptographicCardDevice* cdevice)
 				if (user.startsWith(login_name + ": ")) {
 					// Found active session
 					user_active = true;
+
+					// Switch VTs
+					DM().switchVT((*it).vt);
+
 					break;
 				}
 				if (user == "Unused") {
