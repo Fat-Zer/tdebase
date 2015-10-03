@@ -307,7 +307,7 @@ KClassicGreeter::textMessage( const char *text, bool err )
 		return true;
 	}
 	if ((!err && ((TQString(text).lower().find("smartcard") >= 0) || (TQString(text).lower().find("smart card") >= 0)))
-		||(err && (TQString(text).lower().find(" 2306:") >= 0))) {
+		|| (err && (TQString(text).lower().find(" 2306:") >= 0)) || (err && (TQString(text).lower().find("PKINIT") >= 0))) {
 		// FIXME
 		// pam_pkcs11 is extremely chatty, even with no card inserted,
 		// and there is no apparent way to disable the unwanted messages!

@@ -869,6 +869,12 @@ void KGreeter::cryptographicCardInserted(TDECryptographicCardDevice* cdevice) {
 	}
 
 	if (login_name != "") {
+		if (verify->cardLoginInProgress) {
+			return;
+		}
+		verify->cardLoginInProgress = true;
+		verify->cardLoginDevice = cdevice;
+
 		DM dm;
 		SessList sess;
 		bool vt_active = false;
@@ -903,12 +909,10 @@ void KGreeter::cryptographicCardInserted(TDECryptographicCardDevice* cdevice) {
 			cardLoginUser = login_name;
 			verify->setPasswordPrompt(i18n("PIN:"));
 
-			TQString autoPIN = cdevice->autoPIN(); 
-			if (autoPIN != TQString::null) {
-				// Initiate login
-				verify->setPassword(autoPIN);
-				verify->accept();
-			}
+			// Bypass initial password prompt
+			verify->start();
+			verify->setPassword("");
+			verify->accept();
 		}
 	}
 }
@@ -921,6 +925,9 @@ void KGreeter::cryptographicCardRemoved(TDECryptographicCardDevice* cdevice) {
 
 	// Restore information message display settings
         verify->setInfoMessageDisplay(showInfoMessages);
+
+	verify->cardLoginInProgress = false;
+	verify->cardLoginDevice = NULL;
 }
 
 KStdGreeter::KStdGreeter()

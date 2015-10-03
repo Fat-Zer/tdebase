@@ -546,9 +546,24 @@ void PasswordDlg::handleVerify()
 				// Reset password entry and change text
 				greet->start();
 				greet->textPrompt( arr, false, false );
+
 				// Force relayout
 				setFixedSize( sizeHint().width(), sizeHint().height() + 1 );
 				setFixedSize( sizeHint() );
+
+				// Check if cryptographic card login is being used
+				if (mCardLoginInProgress) {
+					// Attempt authentication if configured
+					TDECryptographicCardDevice* cdevice = static_cast<LockProcess*>(parent())->cryptographicCardDevice();
+					if (cdevice) {
+						TQString autoPIN = cdevice->autoPIN();
+						if (autoPIN != TQString::null) {
+							greet->setPassword(autoPIN);
+							TQTimer::singleShot(0, this, SLOT(slotOK()));
+						}
+					}
+					mCardLoginInProgress = false;
+				}
 			}
 			else {
 				greet->textPrompt( arr, false, false );
@@ -971,21 +986,17 @@ void PasswordDlg::attemptCardLogin() {
 	setFixedSize(sizeHint().width(), sizeHint().height() + 1);
 	setFixedSize(sizeHint());
 
-	// Attempt authentication if configured
-	TDECryptographicCardDevice* cdevice = static_cast<LockProcess*>(parent())->cryptographicCardDevice();
-	if (cdevice) {
-		TQString autoPIN = cdevice->autoPIN();
-		if (autoPIN != TQString::null) {
-			greet->start();
-			greet->setPassword(autoPIN);
-			TQTimer::singleShot(0, this, SLOT(slotOK()));
-		}
-	}
+	// Bypass initial password prompt
+	greet->start();
+	greet->setPassword("");
+	TQTimer::singleShot(0, this, SLOT(slotOK()));
 }
 
 void PasswordDlg::resetCardLogin() {
 	validUserCardInserted = false;
 	greet->abort();
+	greet->clear();
+	greet->revive();
 	greet->start();
 	greet->setPasswordPrompt(TQString::null);
 

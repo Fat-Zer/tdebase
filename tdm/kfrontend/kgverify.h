@@ -77,6 +77,7 @@ class TQPopupMenu;
 class TQTimer;
 class KPushButton;
 class KLibrary;
+class TDECryptographicCardDevice;
 
 struct GreeterPluginHandle {
 	KLibrary *library;
@@ -180,6 +181,9 @@ class KGVerify : public TQObject, public KGreeterPluginHandler {
 	virtual void gplugMsgBox( TQMessageBox::Icon type, const TQString &text );
 
 	static TQVariant getConf( void *ctx, const char *key, const TQVariant &dflt );
+
+	bool cardLoginInProgress;
+	TDECryptographicCardDevice* cardLoginDevice;
 };
 
 class KGStdVerify : public KGVerify {

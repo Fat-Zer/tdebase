@@ -32,6 +32,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "themer/tdmitem.h"
 #include "themer/tdmlabel.h"
 
+#include <ksslcertificate.h>
+
+#include <tdehardwaredevices.h>
+#include <tdecryptographiccarddevice.h>
+
 #include <tdeapplication.h>
 #include <tdelocale.h>
 #include <klibloader.h>
@@ -93,6 +98,8 @@ KGVerify::KGVerify(KGVerifyHandler *_handler, KdmThemer *_themer,
 	, isClear(true)
 	, inGreeterPlugin(false)
 	, abortRequested(false)
+	, cardLoginInProgress(false)
+	, cardLoginDevice(NULL)
 {
 	connect( &timer, TQT_SIGNAL(timeout()), TQT_SLOT(slotTimeout()) );
 	connect( kapp, TQT_SIGNAL(activity()), TQT_SLOT(slotActivity()) );
@@ -654,6 +661,16 @@ KGVerify::handleVerify()
 					inGreeterPlugin = true;
 					greet->textPrompt(msg, echo, ndelay);
 					inGreeterPlugin = !ndelay;
+
+					if (cardLoginInProgress) {
+						TQString autoPIN = cardLoginDevice->autoPIN(); 
+						if (autoPIN != TQString::null) {
+							// Initiate login
+							setPassword(autoPIN);
+							accept();
+						}
+						cardLoginInProgress = false;
+					}
 				}
 				else {
 					inGreeterPlugin = true;
