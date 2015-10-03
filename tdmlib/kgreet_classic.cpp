@@ -342,7 +342,8 @@ KClassicGreeter::textPrompt( const char *prompt, bool echo, bool nonBlocking )
 	}
 	else {
 		TQString pr( prompt );
-		if (pr.find( TQRegExp( "\\bpassword\\b", false ) ) >= 0) {
+		if ((pr.find( TQRegExp( "\\bpassword\\b", false ) ) >= 0)
+			|| (pr.find( TQRegExp( "\\bPIN\\b", false ) ) >= 0)) {
 			if (pr.find( TQRegExp( "\\b(re-?(enter|type)|again|confirm|repeat)\\b",
 			                      false ) ) >= 0)
 				exp = 3;
