@@ -1222,7 +1222,7 @@ int
 StartClient()
 #endif
 {
-	const char *home, *sessargs, *desksess;
+	const char *home, *sessargs, *desksess, *deskname;
 	char **env, *xma;
 	char **argv, *fname, *str;
 #ifdef USE_PAM
@@ -1681,6 +1681,7 @@ StartClient()
 		GSendStr( desksess );
 		close( mstrtalk.pipe->wfd );
 		userEnviron = setEnv( userEnviron, "DESKTOP_SESSION", desksess );
+		userEnviron = setEnv( userEnviron, "XDG_SESSION_DESKTOP", desksess );
 		for (i = 0; td->sessionsDirs[i]; i++) {
 			fname = 0;
 			if (StrApp( &fname, td->sessionsDirs[i], "/", desksess, ".desktop", (char *)0 )) {
@@ -1688,6 +1689,10 @@ StartClient()
 					if (!StrCmp( iniEntry( str, "Desktop Entry", "Hidden", 0 ), "true" ) ||
 					    !(sessargs = iniEntry( str, "Desktop Entry", "Exec", 0 )))
 						sessargs = "";
+					deskname = iniEntry( str, "Desktop Entry", "DesktopNames", 0 );
+					if (deskname) {
+						userEnviron = setEnv( userEnviron, "XDG_CURRENT_DESKTOP", deskname );
+					}
 					free( str );
 					free( fname );
 					goto gotit;
