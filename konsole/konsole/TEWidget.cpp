@@ -340,6 +340,8 @@ TEWidget::TEWidget(TQWidget *parent, const char *name)
 ,font_h(1)
 ,font_w(1)
 ,font_a(1)
+,screen_num(0)
+,screen(NULL)
 ,lines(1)
 ,columns(1)
 ,contentHeight(1)
@@ -1694,7 +1696,22 @@ void TEWidget::wheelEvent( TQWheelEvent* ev )
     return;
 
   if ( mouse_marks )
-    TQApplication::sendEvent(scrollbar, ev);
+  {
+		if (!screen || screen->hasScroll() || (scrollbar->maxValue() == 0 && screen_num == 0))
+		{
+		  // Send event to scroll bar
+    	TQApplication::sendEvent(scrollbar, ev);
+    }
+		else
+		{
+		  // Terminal window can not be scrolled, so emulate key up/key down when mouse wheel is used
+		  TQKeyEvent ke(TQEvent::KeyPress, ev->delta() > 0 ? TQt::Key_Up : TQt::Key_Down, 0, TQt::NoButton);
+      for (int i = 0;  i < TQApplication::wheelScrollLines();  ++i)
+      {
+  	    emit keyPressedSignal(&ke);
+  	  }
+		}
+	}
   else
   {
     TQPoint tL  = contentsRect().topLeft();

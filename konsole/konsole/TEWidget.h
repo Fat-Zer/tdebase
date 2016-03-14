@@ -32,6 +32,7 @@
 #include <tdepopupmenu.h>
 
 #include "TECommon.h"
+#include "TEScreen.h"
 
 
 extern unsigned short vt100_graphics[32];
@@ -142,6 +143,8 @@ public:
 
     void setRim(int rim) { rimX=rim; rimY=rim; }
 
+    void setScreen(int num, TEScreen *scr) { screen_num = num & 0x01; screen = scr; }
+
 public slots:
 
     void setSelectionEnd();
@@ -240,6 +243,10 @@ private:
 
     int bX;    // offset
     int bY;    // offset
+
+    // Required to handle mouse wheel events correctly in all cases
+		int screen_num;    // Screen number (0 or 1)
+		TEScreen *screen;  // Pointer to current screen. No ownership!!
 
     int lines;
     int columns;

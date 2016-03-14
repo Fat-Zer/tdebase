@@ -197,6 +197,7 @@ void TEmulation::setScreen(int n)
 {
   TEScreen *old = scr;
   scr = screen[n&1];
+  gui->setScreen(n&1, scr);
   if (scr != old)
      old->setBusySelecting(false);
 }
